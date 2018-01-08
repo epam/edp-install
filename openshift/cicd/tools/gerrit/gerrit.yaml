@@ -1,0 +1,317 @@
+kind: Template
+apiVersion: v1
+metadata:
+  annotations:
+    description: The Gerrit template
+    tags: gerrit,gerrit-db
+  name: gerrit
+message: "Login to Gerrit with the you EPAM GitLab account"
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: gerrit
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      volume.beta.kubernetes.io/storage-class: glusterfs-storage
+    name: gerrit-data
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: ${GERRIT_DATA_CAPACITY}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      volume.beta.kubernetes.io/storage-class: glusterfs-storage
+    name: gerrit-db
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: ${GERRIT_DB_CAPACITY}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: gerrit
+    name: gerrit
+  spec:
+    ports:
+    - name: ui
+      port: 8080
+    - name: ssh
+      port: ${GERRIT_SSH_PORT}
+    selector:
+      app: gerrit
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: gerrit-db
+    name: gerrit-db
+  spec:
+    ports:
+    - name: db
+      port: 5432
+    selector:
+      app: gerrit-db
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for Gerrit's http service.
+    name: gerrit
+    labels:
+      app: gerrit
+  spec:
+    to:
+      kind: Service
+      name: gerrit
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: gerrit
+  data:
+    config: |
+      Host git.epam.com
+          User git
+          IdentityFile /var/gerrit/review_site/id_rsa
+          StrictHostKeyChecking no
+          UserKnownHostsFile /dev/null
+    replication.config: |
+      [gerrit]
+        defaultForceUpdate = true
+      [remote "${GERRIT_PROJECT}"]
+        url = ${GERRIT_GIT_URL}
+        fetch = +refs/*:refs/*
+        mirror = true
+        projects = ${GERRIT_PROJECT}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: gerrit-db
+    name: gerrit-db
+  spec:
+    replicas: 1
+    selector:
+      app: gerrit-db
+    strategy:
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: gerrit-db
+      spec:
+        containers:
+        - name: gerrit-db
+          env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: gerrit-db
+                key: database-name
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: gerrit-db
+                key: database-user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: gerrit-db
+                key: database-password
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          - name: POD_IP
+            valueFrom: { fieldRef: { fieldPath: status.podIP } }
+          image: postgres:9.6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - exec pg_isready --host $POD_IP
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - exec pg_isready --host $POD_IP
+            initialDelaySeconds: 60
+            timeoutSeconds: 3
+            periodSeconds: 5
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: gerrit-db
+        serviceAccount: gerrit
+        volumes:
+          - name: gerrit-db
+            persistentVolumeClaim:
+              claimName: gerrit-db
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: gerrit
+    name: gerrit
+  spec:
+    replicas: 1
+    selector:
+      app: gerrit
+    strategy:
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: gerrit
+      spec:
+        initContainers:
+        - name: init-myservice
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 gerrit-db 5432 </dev/null; do echo waiting for gerrit-db; sleep 10; done;"]
+        containers:
+        - name: gerrit
+          env:
+          - name: WEBURL
+            value: ${GERRIT_WEB_URL}
+          - name: AUTH_TYPE
+            value: OAUTH
+          - name: OAUTH_GITLAB_ROOT_URL
+            value: https://git.epam.com/
+          - name: OAUTH_GITLAB_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: gitlab-oauth
+                key: secret
+          - name: OAUTH_GITLAB_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: gitlab-oauth
+                key: id
+          - name: DATABASE_TYPE
+            value: postgresql
+          - name: DB_PORT_5432_TCP_ADDR
+            value: gerrit-db
+          - name: DB_PORT_5432_TCP_PORT
+            value: "5432"
+          - name: DB_ENV_POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: ${GERRIT_DB_SECRET}
+                key: database-name
+          - name: DB_ENV_POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: ${GERRIT_DB_SECRET}
+                key: database-user
+          - name: DB_ENV_POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ${GERRIT_DB_SECRET}
+                key: database-password
+          - name: GERRIT_INIT_ARGS
+            value: --install-plugin=commit-message-length-validator --install-plugin=download-commands --install-plugin=hooks --install-plugin=reviewnotes --install-plugin=singleusergroup --install-plugin=replication
+          image: openfrontier/gerrit:${GERRIT_VERSION}
+          imagePullPolicy: IfNotPresent
+          name: gerrit
+          ports:
+          - name: ui
+            containerPort: 8080
+          - name: ssh
+            containerPort: ${GERRIT_SSH_PORT}
+          readinessProbe:
+            initialDelaySeconds: 120
+            successThreshold: 1
+            timeoutSeconds: 3
+            periodSeconds: 10
+            tcpSocket:
+              port: 8080
+          resources:
+            limits:
+              memory: ${GERRIT_MAX_MEMORY}
+          volumeMounts:
+            - mountPath: /var/gerrit/review_site
+              name: gerrit-data
+            - mountPath: /var/gerrit/review_site/etc
+              name: replication-config
+            - mountPath: /var/gerrit/.ssh
+              name: ssh-config
+        serviceAccount: gerrit
+        volumes:
+          - name: gerrit-data
+            persistentVolumeClaim:
+              claimName: gerrit-data
+          - configMap:
+              defaultMode: 420
+              items:
+                - key: replication.config
+                  path: replication.config
+              name: gerrit
+            name: replication-config
+          - configMap:
+              defaultMode: 420
+              items:
+                - key: config
+                  path: config
+              name: gerrit
+            name: ssh-config
+parameters:
+- displayName: Gerrit version
+  value: "2.14.1"
+  name: GERRIT_VERSION
+- displayName: Gerrit DB secret
+  value: "gerrit-db"
+  name: GERRIT_DB_SECRET
+- description: Volume space available for Gerrit
+  displayName: Gerrit Volume Capacity
+  name: GERRIT_DATA_CAPACITY
+  value: 2Gi
+- description: Volume space available for Gerrit DB
+  displayName: Gerrit database Volume Capacity
+  name: GERRIT_DB_CAPACITY
+  value: 2Gi
+- description: Gerrit SSH PORT(If you want that it is the same as external it would be more than 30000)
+  displayName: Gerrit ssh port
+  name: GERRIT_SSH_PORT
+  value: "29418"
+- description: Gerrit WEB URL is needed for authentication purposes
+  displayName: Gerrit WEB URL
+  name: GERRIT_WEB_URL
+  value: "http://gerrit-ci-cd.10.17.129.14.xip.io"
+- description: Gerrit target git repository for replication
+  displayName: Gerrit target git repository
+  name: GERRIT_GIT_URL
+  value: "git@git.epam.com:Alexander_Morozov/oc-petclinic.git"
+- description: Project name in Gerrit that will be replicated to git
+  displayName: Gerrit project name
+  name: GERRIT_PROJECT
+  value: "oc-petclinic"
+- description: Project name in Gerrit that will be replicated to git
+  displayName: Gerrit project name
+  name: GERRIT_PROJECT
+  value: "oc-petclinic"
+- displayName: Gerrit Max Memory
+  name: GERRIT_MAX_MEMORY
+  value: 2Gi

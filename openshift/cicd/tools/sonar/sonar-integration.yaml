@@ -1,0 +1,87 @@
+kind: Template
+apiVersion: v1
+metadata:
+  annotations:
+    description: The SonarQube template for integration with Jenkins
+    tags: sonar, jenkins
+  name: sonar-integration
+objects:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: sonar-integration
+  spec:
+    parallelism: 1
+    completions: 1
+    template:
+      metadata:
+        name: sonar-integration
+      spec:
+        initContainers:
+        - name: init-sonar
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 ${SONAR_HOST} ${SONAR_PORT} </dev/null; do echo waiting for ${SONAR_HOST}; sleep 10; done;"]
+        containers:
+        - image: python:3.6-alpine
+          imagePullPolicy: IfNotPresent
+          name: sonar-integration
+          command: ["python", "/tmp/config.py"]
+          env:
+          - name: SONAR_HOST
+            value: ${SONAR_HOST}
+          - name: SONAR_PORT
+            value: ${SONAR_PORT}
+          - name: SONAR_ADMIN
+            value: ${SONAR_ADMIN}
+          - name: SONAR_PASSWORD
+            value: ${SONAR_PASSWORD}
+          - name: AUTO_USER
+            value: ${AUTO_USER}
+          - name: AUTO_USER_PASSWORD
+            value: ${AUTO_USER_PASSWORD}
+          - name: JENKINS_PATH
+            value: ${JENKINS_PATH}
+          - name: APP_FILE
+            value: "/tmp/config.py"
+          volumeMounts:
+          - mountPath: /tmp
+            name: python-script
+          - mountPath: /opt/data/jenkins
+            name: jenkins-data
+          - mountPath: /opt/data/sonar
+            name: jenkins-data
+        volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
+        - name: sonar-data
+          persistentVolumeClaim:
+            claimName: sonar-data
+        - name: python-script
+          configMap:
+            defaultMode: 420
+            items:
+              - key: config.py
+                path: config.py
+            name: sonar-integration
+        restartPolicy: Never
+parameters:
+- displayName: SonarQube host
+  value: "sonar"
+  name: SONAR_HOST
+- displayName: SonarQube port
+  value: "9000"
+  name: SONAR_PORT
+- displayName: SonarQube admin user
+  name: SONAR_ADMIN
+  value: "admin"
+- displayName: SonarQube admin password
+  name: SONAR_PASSWORD
+  value: "admin"
+- displayName: SonarQube Auto user name
+  name: AUTO_USER
+  value: "jenkins"
+- displayName: SonarQube Auto user password
+  name: AUTO_USER_PASSWORD
+  value: "jenkins"
+

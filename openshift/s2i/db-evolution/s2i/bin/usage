@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cat <<EOF
+This is a S2I postgresql liquibase builder image.
+EOF

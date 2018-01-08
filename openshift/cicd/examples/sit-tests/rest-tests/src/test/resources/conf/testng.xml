@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Rest API test suite">
+    <test name="Owners">
+        <packages>
+            <package name="com.epam.javacc.edp.openshift.petclinic.sit.rest.owners.*"/>
+        </packages>
+    </test>
+</suite>

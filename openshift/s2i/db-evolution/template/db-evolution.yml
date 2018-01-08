@@ -1,0 +1,161 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: 'oc-db-evolution-template'
+  annotations:
+    description: "PostgreSQL database liquibase migration service"
+    tags: "database,postgresql,liquibase"
+    openshift.io/display-name: "PostgreSQL database liquibase migration"
+    openshift.io/long-description: "This template provides PostreSQL database liquibase migration service. The database host, port, name, username, and password are chosen via parameters when provisioning this service."
+    openshift.io/provider-display-name: "EPAM JavaCC"
+labels:
+   template: 'oc-db-evolution-template'
+message: 'The following service has been created in the project: \n\nName: ${NAME}\n\nSource Repository: ${SOURCE_REPOSITORY_URL}\n\nSource Repository Secret: ${SOURCE_REPOSITORY_SECRET}\n\nSource Repository Branch: ${SOURCE_REPOSITORY_REF}\n\nContext Directory: ${CONTEXT_DIRECTORY}\n\nPostgreSQL Connection URL: postgresql://${POSTGRESQL_HOST}:${POSTGRESQL_PORT}/\n\nDatabase Name: ${POSTGRESQL_DATABASE}\nUsername: ${POSTGRESQL_USER}\nPassword: ${POSTGRESQL_PASSWORD}\nLiquibase changelog relative path: ${LQB_CHANGELOG_FILE}\n'
+objects:
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: "env-config"
+    data:
+      databaseUrl: "${POSTGRESQL_URL}"
+      databaseUser: "${POSTGRESQL_USER}"
+      databasePassword: "${POSTGRESQL_PASSWORD}"
+      liquibaseChangelogFile: "${LQB_CHANGELOG_FILE}"
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      name: ${NAME}
+      labels:
+        app: ${NAME}
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+        template.alpha.openshift.io/wait-for-ready: "true"
+    spec:
+      source:
+        type: Binary
+        binary:
+          asFile: oc-petclinic-db-evolution-1.0-SNAPSHOT.tar.gz
+      strategy:
+        type: Source
+        sourceStrategy:
+          from:
+            kind: ImageStreamTag
+            name: oc-liquibase-postgresql:latest
+      output:
+        to:
+          kind: ImageStreamTag
+          name: '${NAME}:latest'
+      runPolicy: Serial
+    status:
+      lastVersion: 1
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      name: oc-liquibase-postgresql
+      annotations:
+        openshift.io/image.insecureRepository: "true"
+    spec:
+      tags:
+        - name: latest
+          from:
+            kind: DockerImage
+            name: docker.io/maxdev/oc-liquibase-postgresql:latest
+          importPolicy:
+            insecure: true
+          referencePolicy:
+            type: Source
+      dockerImageRepository: docker.io/maxdev/oc-liquibase-postgresql
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      name: ${NAME}
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: ${NAME}
+      labels:
+        app: ${NAME}
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      strategy:
+        type: Recreate
+        recreateParams:
+          timeoutSeconds: 600
+      replicas: 1
+      test: false
+      triggers:
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${NAME}
+            from:
+              kind: ImageStreamTag
+              name: ${NAME}:latest
+        - type: ConfigChange
+      selector:
+        app: ${NAME}
+        deploymentconfig: ${NAME}
+      template:
+        metadata:
+          labels:
+            app: ${NAME}
+            deploymentconfig: ${NAME}
+          annotations:
+            openshift.io/container.${NAME}.image.entrypoint: '["/usr/libexec/s2i/run"]'
+            openshift.io/generated-by: OpenShiftNewApp
+        spec:
+          containers:
+            - name: ${NAME}
+              image: ${NAME}
+              terminationMessagePath: "/dev/termination-log"
+              terminationMessagePolicy: File
+              imagePullPolicy: Always
+              env:
+                - name: DB_ENV_POSTGRES_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: env-config
+                      key: databaseUrl
+                - name: DB_ENV_POSTGRES_USER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: env-config
+                      key: databaseUser
+                - name: DB_ENV_POSTGRES_PASSWORD
+                  valueFrom:
+                    configMapKeyRef:
+                      name: env-config
+                      key: databasePassword
+                - name: LQB_ENV_CHANGELOG_FILE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: env-config
+                      key: liquibaseChangelogFile
+          restartPolicy: Always
+          terminationGracePeriodSeconds: 30
+          dnsPolicy: ClusterFirst
+parameters:
+  - "name": "NAME"
+    "displayName": "Name"
+    "description": "The name assigned to all objects defined in this template."
+    "required": true
+    "value": "oc-petclinic-db-evolution"
+  - "name": "POSTGRESQL_URL"
+    "displayName": "PostgreSQL url"
+    "required": true
+    "value": "jdbc:postgresql://postgresql:5432/petclinic"
+  - "name": "POSTGRESQL_USER"
+    "displayName": "PostgreSQL Connection Username"
+    "description": "Username for PostgreSQL user that will be used for accessing the database."
+    "required": true
+  - "name": "POSTGRESQL_PASSWORD"
+    "displayName": "PostgreSQL Connection Password"
+    "description": "Password for the PostgreSQL connection user."
+    "required": true
+  - "name": "LQB_CHANGELOG_FILE"
+    "displayName": "Liquibase changelog file"
+    "description": "Relative path to liquibase changelog"
+    "value": "db/db.changelog.xml"
+    "required": true

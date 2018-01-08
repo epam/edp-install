@@ -1,0 +1,37 @@
+---
+- hosts: localhost
+  vars:
+    sonar_url: "{{ url }}"
+  tasks:
+    - name: Check Sonar status
+      uri:
+        url: "{{ sonar_url }}"
+        status_code: 200
+      retries: 20
+      delay: 30        
+    - name: Create user
+      uri:
+        url: "{{ sonar_url }}/api/users/create?"
+        method: POST
+        user: admin
+        password: admin
+        body: "login={{ item.name }}&password={{ item.password }}&password_confirmation={{ item.password }}&name=Test5&email={{ item.email }}"
+        force_basic_auth: yes
+        status_code: 200
+      with_items:
+        - { name: 'user1', password: 'Abc+-=123', email: 'user1@email.com' }
+        - { name: 'user2', password: 'Abc+-=123', email: 'user2@email.com' }
+      ignore_errors: true
+    - name: Add user to group
+      uri:
+        url: "{{ sonar_url }}/api/user_groups/add_user?"
+        method: POST
+        user: admin
+        password: admin
+        body: "login={{ item.name }}&name={{ item.group }}"
+        force_basic_auth: yes
+        status_code: 204
+      with_items:
+        - { name: 'user1', group: 'sonar-administrators' }
+        - { name: 'user2', group: 'sonar-administrators' }
+      ignore_errors: true

@@ -1,0 +1,629 @@
+# ----------------------- Template for database application ------------------------------------
+apiVersion: v1
+kind: Template
+labels:
+  template: oc-db-evolution-template
+metadata:
+  annotations:
+    description: PostgreSQL database liquibase migration service
+    openshift.io/display-name: PostgreSQL database liquibase migration
+    openshift.io/long-description: This template provides PostreSQL database liquibase
+      migration service. The database host, port, name, username, and password are
+      chosen via parameters when provisioning this service.
+    openshift.io/provider-display-name: EPAM JavaCC
+    tags: database,postgresql,liquibase
+  name: oc-db-evolution-template
+objects:
+- apiVersion: v1
+  data:
+    databaseHost: ${POSTGRESQL_HOST}
+    databaseName: ${POSTGRESQL_DATABASE}
+    databasePassword: ${POSTGRESQL_PASSWORD}
+    databasePort: ${POSTGRESQL_PORT}
+    databaseUser: ${POSTGRESQL_USER}
+    liquibaseChangelogFile: ${LQB_CHANGELOG_FILE}
+  kind: ConfigMap
+  metadata:
+    name: env-config
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftWebConsole
+      template.alpha.openshift.io/wait-for-ready: "true"
+    labels:
+      app: ${NAME}
+    name: ${NAME}
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: ${NAME}:latest
+    runPolicy: Serial
+    source:
+      binary:
+        asFile: oc-petclinic-db-evolution-1.0-SNAPSHOT.tar.gz
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: oc-liquibase-postgresql:latest
+      type: Source
+  status:
+    lastVersion: 1
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/image.insecureRepository: "true"
+    name: oc-liquibase-postgresql
+  spec:
+    dockerImageRepository: docker.io/maxdev/oc-liquibase-postgresql
+    tags:
+    - from:
+        kind: DockerImage
+        name: docker.io/maxdev/oc-liquibase-postgresql:latest
+      importPolicy:
+        insecure: true
+      name: latest
+      referencePolicy:
+        type: Source
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: ${NAME}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    labels:
+      app: ${NAME}
+    name: ${NAME}
+  spec:
+    replicas: 1
+    selector:
+      app: ${NAME}
+      deploymentconfig: ${NAME}
+    strategy:
+      recreateParams:
+        timeoutSeconds: 600
+      type: Recreate
+    template:
+      metadata:
+        annotations:
+          openshift.io/container.${NAME}.image.entrypoint: '["/usr/libexec/s2i/run"]'
+          openshift.io/generated-by: OpenShiftNewApp
+        labels:
+          app: ${NAME}
+          deploymentconfig: ${NAME}
+      spec:
+        containers:
+        - env:
+          - name: DB_ENV_POSTGRES_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: databaseHost
+                name: env-config
+          - name: DB_ENV_POSTGRES_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: databasePort
+                name: env-config
+          - name: DB_ENV_POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                key: databaseUser
+                name: env-config
+          - name: DB_ENV_POSTGRES_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                key: databasePassword
+                name: env-config
+          - name: DB_ENV_POSTGRES_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                key: databaseName
+                name: env-config
+          - name: LQB_ENV_CHANGELOG_FILE
+            valueFrom:
+              configMapKeyRef:
+                key: liquibaseChangelogFile
+                name: env-config
+          image: ${NAME}
+          imagePullPolicy: Always
+          name: ${NAME}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${NAME}
+        from:
+          kind: ImageStreamTag
+          name: ${NAME}:latest
+      type: ImageChange
+    - type: ConfigChange
+parameters:
+- description: The name assigned to all objects defined in this template.
+  displayName: Name
+  name: NAME
+  required: true
+  value: oc-petclinic-db-evolution
+- displayName: PostgreSQL host
+  name: POSTGRESQL_HOST
+  required: true
+- displayName: PostgreSQL port
+  name: POSTGRESQL_PORT
+  required: true
+  value: "5432"
+- description: Username for PostgreSQL user that will be used for accessing the database.
+  displayName: PostgreSQL Connection Username
+  name: POSTGRESQL_USER
+  required: true
+- description: Password for the PostgreSQL connection user.
+  displayName: PostgreSQL Connection Password
+  name: POSTGRESQL_PASSWORD
+  required: true
+- description: Name of the PostgreSQL database accessed.
+  displayName: PostgreSQL Database Name
+  name: POSTGRESQL_DATABASE
+  required: true
+  value: petclinic
+- description: Relative path to liquibase changelog
+  displayName: Liquibase changelog file
+  name: LQB_CHANGELOG_FILE
+  required: true
+  value: db/db.changelog.xml
+
+
+
+
+
+
+
+
+apiVersion: v1
+kind: Template
+labels:
+  template: oc-petclinic-database-template
+message: Springboot oc-petclinic frontend for OpenShift
+metadata:
+  annotations:
+    openshift.io/display-name: OC-Petclinic database
+    tags: instant-app,jenkins
+  name: oc-petclinic-database
+objects:
+#------------------------
+apiVersion: v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/image.dockerRepositoryCheck: '2017-12-07T22:02:48Z'
+    openshift.io/image.insecureRepository: 'true'
+  creationTimestamp: '2017-12-07T22:02:45Z'
+  generation: 2
+  labels:
+    template: oc-db-evolution-template
+  name: oc-liquibase-postgresql
+  namespace: oc-petclinic
+  resourceVersion: '1218951'
+  selfLink: /oapi/v1/namespaces/oc-petclinic/imagestreams/oc-liquibase-postgresql
+  uid: 5adad3ad-db9a-11e7-a902-0050568e3e20
+spec:
+  dockerImageRepository: docker.io/maxdev/oc-liquibase-postgresql
+  lookupPolicy:
+    local: false
+  tags:
+    - annotations: null
+      from:
+        kind: DockerImage
+        name: 'docker.io/maxdev/oc-liquibase-postgresql:latest'
+      generation: 2
+      importPolicy:
+        insecure: true
+      name: latest
+      referencePolicy:
+        type: Source
+status:
+  dockerImageRepository: 'docker-registry.default.svc:5000/oc-petclinic/oc-liquibase-postgresql'
+  tags:
+    - items:
+        - created: '2017-12-07T22:02:48Z'
+          dockerImageReference: >-
+            docker.io/maxdev/oc-liquibase-postgresql@sha256:623f4148ebaae5eb6c5c5d043d358bc20f4a89a12c31757dc81013b4512a64e5
+          generation: 2
+          image: >-
+            sha256:623f4148ebaae5eb6c5c5d043d358bc20f4a89a12c31757dc81013b4512a64e5
+      tag: latest
+
+
+#----------------- BC ---------------------------
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: petclinic-frontend
+  name: petclinic-frontend
+  namespace: ci-cd
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStream
+      name: 'petclinic-frontend'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: frontend
+    git:
+      ref: master
+      uri: 'git@git.epam.com:yevgen_mospan/oc-petclinic.git'
+    sourceSecret:
+      name: mysecret
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'nodejs:6'
+        namespace: openshift
+    type: Source
+  triggers:
+    - github:
+        secret: 1ea7a3d2f3237e29
+      type: GitHub
+    - generic:
+        secret: 4e08da21fd8304ea
+      type: Generic
+    - imageChange:
+        lastTriggeredImageID: >-
+          centos/nodejs-6-centos7@sha256:cca595a47c51577be6413af8cf22811a2522590e94ccd828e62fb028843204ad
+      type: ImageChange
+    - type: ConfigChange
+#------------- Route --------------------
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      template.openshift.io/expose-uri: http://{.spec.host}{.spec.path}
+    name: ${JENKINS_SERVICE_NAME}
+  spec:
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: ${JENKINS_SERVICE_NAME}
+#-------------------------------- Service -----------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: '2017-12-05T16:05:10Z'
+  labels:
+    app: petclinic-frontend
+  name: petclinic-frontend
+  namespace: sit
+  resourceVersion: '1025733'
+  selfLink: /api/v1/namespaces/oc-petclinic/services/petclinic-frontend
+  uid: 11bb8483-d9d6-11e7-a902-0050568e3e20
+spec:
+  clusterIP: 172.30.125.52
+  ports:
+    - name: 3000-tcp
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    deploymentconfig: petclinic-frontend
+  sessionAffinity: None
+  type: ClusterIP
+
+
+
+
+
+
+
+
+
+
+
+
+#---------------------------- DC -------------------------------
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
+    name: ${JENKINS_SERVICE_NAME}
+  spec:
+    replicas: 1
+    selector:
+      name: ${JENKINS_SERVICE_NAME}
+    strategy:
+      type: Recreate
+      recreateParams:
+        timeoutSeconds: 6000
+    template:
+      metadata:
+        labels:
+          name: ${JENKINS_SERVICE_NAME}
+      spec:
+        containers:
+        - capabilities: {}
+          env:
+          - name: OPENSHIFT_ENABLE_OAUTH
+            value: ${ENABLE_OAUTH}
+          - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+            value: "true"
+          - name: OPENSHIFT_JENKINS_JVM_ARCH
+            value: ${JVM_ARCH}
+          - name: KUBERNETES_MASTER
+            value: https://kubernetes.default:443
+          - name: KUBERNETES_TRUST_CERTIFICATES
+            value: "true"
+          - name: JNLP_SERVICE_NAME
+            value: ${JNLP_SERVICE_NAME}
+          image: ' '
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 30
+            httpGet:
+              path: /login
+              port: 8080
+            initialDelaySeconds: 420
+            timeoutSeconds: 3
+          name: jenkins
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: 8080
+            initialDelaySeconds: 3
+            timeoutSeconds: 3
+          resources:
+            limits:
+              memory: ${MEMORY_LIMIT}
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          volumeMounts:
+          - mountPath: /var/lib/jenkins
+            name: ${JENKINS_SERVICE_NAME}-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        serviceAccountName: ${JENKINS_SERVICE_NAME}
+        volumes:
+        - name: ${JENKINS_SERVICE_NAME}-data
+          persistentVolumeClaim:
+            claimName: ${JENKINS_SERVICE_NAME}
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - jenkins
+        from:
+          kind: ImageStreamTag
+          name: ${JENKINS_IMAGE_STREAM_TAG}
+          namespace: ${NAMESPACE}
+        lastTriggeredImage: ""
+      type: ImageChange
+    - type: ConfigChange
+
+
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    annotations:
+      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"${JENKINS_SERVICE_NAME}"}}'
+    name: ${JENKINS_SERVICE_NAME}
+
+- apiVersion: v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: ${JENKINS_SERVICE_NAME}_edit
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: ${JENKINS_SERVICE_NAME}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      service.alpha.openshift.io/dependencies: '[{"name": "${JNLP_SERVICE_NAME}",
+        "namespace": "", "kind": "Service"}]'
+      service.openshift.io/infrastructure: "true"
+    name: ${JENKINS_SERVICE_NAME}
+  spec:
+    ports:
+    - name: web
+      nodePort: 0
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      name: ${JENKINS_SERVICE_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+#--------------------------------------------------------------------------------------
+# Pipeline
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      pipeline.alpha.openshift.io/uses: '[{"name": "jenkins", "namespace": "", "kind": "DeploymentConfig"}]'
+    labels:
+      app: cicd-pipeline
+      name: cicd-pipeline
+    name: pet-clinic-pipeline
+  spec:
+    triggers:
+      - type: GitHub
+        github:
+          secret: ${WEBHOOK_SECRET}
+      - type: Generic
+        generic:
+          secret: ${WEBHOOK_SECRET}
+    runPolicy: Serial
+    source:
+      type: None
+    strategy:
+      jenkinsPipelineStrategy:
+        jenkinsfile: |-
+          node('mvn') {
+             // define commands
+             def mvnCmd = "mvn -s configuration/cicd-settings.xml"
+
+             stage ('Build') {
+               git branch: 'master', url: 'https://github.com/spring-projects/spring-petclinic.git'
+               sh "${mvnCmd} clean install -DskipTests=true"
+               // sh "@{mvnCmd} -Dmaven.repo.local=/tmp/artifacts/m2 package -DskipTests -e -Dfabric8.skip=true -B"
+             }
+
+             stage ('Test') {
+               sh "${mvnCmd} test"
+               step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+             }
+
+             stage ('Analysis (Security, Bugs, etc)') {
+               sh "${mvnCmd} site -DskipTests=true"
+
+               step([$class: 'CheckStylePublisher', unstableTotalAll:'300'])
+               step([$class: 'PmdPublisher', unstableTotalAll:'20'])
+               step([$class: 'FindBugsPublisher', pattern: '**/findbugsXml.xml', unstableTotalAll:'20'])
+               step([$class: 'JacocoPublisher'])
+               publishHTML (target: [keepAll: true, reportDir: 'target/site', reportFiles: 'project-info.html', reportName: "Site Report"])
+             }
+
+             stage ('Push to Nexus') {
+              sh "${mvnCmd} deploy -DskipTests=true"
+             }
+
+             stage ('Deploy DEV') {
+               sh "rm -rf oc-build && mkdir -p oc-build/deployments"
+               sh "cp target/openshift-tasks.war oc-build/deployments/ROOT.war"
+               // clean up. keep the image stream
+               sh "oc delete bc,dc,svc,route -l app=tasks -n ${DEV_PROJECT}"
+               // create build. override the exit code since it complains about exising imagestream
+               sh "oc new-build --name=tasks --image-stream=jboss-eap70-openshift:1.5 --binary=true --labels=app=tasks -n ${DEV_PROJECT} || true"
+               // build image
+               sh "oc start-build tasks --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
+               // deploy image
+               sh "oc new-app tasks:latest -n ${DEV_PROJECT}"
+               sh "oc expose svc/tasks -n ${DEV_PROJECT}"
+             }
+
+             stage ('Deploy STAGE') {
+               timeout(time:15, unit:'MINUTES') {
+                  input message: "Promote to STAGE?", ok: "Promote"
+               }
+
+               def v = version()
+               // tag for stage
+               sh "oc tag ${DEV_PROJECT}/tasks:latest ${STAGE_PROJECT}/tasks:${v}"
+               // clean up. keep the imagestream
+               sh "oc delete bc,dc,svc,route -l app=tasks -n ${STAGE_PROJECT}"
+               // deploy stage image
+               sh "oc new-app tasks:${v} -n ${STAGE_PROJECT}"
+               sh "oc expose svc/tasks -n ${STAGE_PROJECT}"
+             }
+          }
+
+          def version() {
+            def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+            matcher ? matcher[0][1] : null
+          }
+      type: JenkinsPipeline
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    labels:
+      app: cicd-pipeline
+      role: jenkins-slave
+    name: jenkins-slaves
+  data:
+    maven-template: |-
+      <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+        <inheritFrom></inheritFrom>
+        <name>mvn</name>
+        <privileged>false</privileged>
+        <alwaysPullImage>false</alwaysPullImage>
+        <instanceCap>2147483647</instanceCap>
+        <idleMinutes>0</idleMinutes>
+        <label>mvn</label>
+        <serviceAccount>jenkins</serviceAccount>
+        <nodeSelector></nodeSelector>
+        <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
+        <workspaceVolume class="org.csanchez.jenkins.plugins.kubernetes.volumes.workspace.EmptyDirWorkspaceVolume">
+          <memory>false</memory>
+        </workspaceVolume>
+        <volumes />
+        <containers>
+          <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+            <name>jnlp</name>
+            <image>openshift/jenkins-slave-maven-centos7</image>
+            <privileged>false</privileged>
+            <alwaysPullImage>false</alwaysPullImage>
+            <workingDir>/tmp</workingDir>
+            <command></command>
+            <args>${computer.jnlpmac} ${computer.name}</args>
+            <ttyEnabled>false</ttyEnabled>
+            <resourceRequestCpu>200m</resourceRequestCpu>
+            <resourceRequestMemory>1Gi</resourceRequestMemory>
+            <resourceLimitCpu>1</resourceLimitCpu>
+            <resourceLimitMemory>4Gi</resourceLimitMemory>
+            <envVars/>
+          </org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+        </containers>
+        <envVars/>
+        <annotations/>
+        <imagePullSecrets/>
+      </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+parameters:
+- description: The name of the OpenShift Service exposed for the Jenkins container.
+  displayName: Jenkins Service Name
+  name: JENKINS_SERVICE_NAME
+  value: jenkins
+- description: The name of the service used for master/slave communication.
+  displayName: Jenkins JNLP Service Name
+  name: JNLP_SERVICE_NAME
+  value: jenkins-jnlp
+- description: Whether to enable OAuth OpenShift integration. If false, the static
+    account 'admin' will be initialized with the password 'password'.
+  displayName: Enable OAuth in Jenkins
+  name: ENABLE_OAUTH
+  value: "true"
+- description: Whether Jenkins runs with a 32 bit (i386) or 64 bit (x86_64) JVM.
+  displayName: Jenkins JVM Architecture
+  name: JVM_ARCH
+  value: i386
+- description: Maximum amount of memory the container can use.
+  displayName: Memory Limit
+  name: MEMORY_LIMIT
+  value: 512Mi
+- description: Volume space available for data, e.g. 512Mi, 2Gi.
+  displayName: Volume Capacity
+  name: VOLUME_CAPACITY
+  required: true
+  value: 1Gi
+- description: The OpenShift Namespace where the Jenkins ImageStream resides.
+  displayName: Jenkins ImageStream Namespace
+  name: NAMESPACE
+  value: openshift
+- description: Name of the ImageStreamTag to be used for the Jenkins image.
+  displayName: Jenkins ImageStreamTag
+  name: JENKINS_IMAGE_STREAM_TAG
+  value: jenkins:latest

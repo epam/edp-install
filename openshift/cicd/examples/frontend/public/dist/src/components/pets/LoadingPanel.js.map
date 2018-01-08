@@ -1,0 +1,1 @@
+{"version":3,"file":"LoadingPanel.js","sourceRoot":"","sources":["../../../../../src/components/pets/LoadingPanel.tsx"],"names":[],"mappings":";AAAA,MAAY,KAAK,WAAM,OAAO,CAAC,CAAA;AAE/B;kBAAe,MAAM,CACnB,qBAAC,IAAI;IACH,qBAAC,EAAE,SAAC,KAAG,CAAK;IACZ,qBAAC,IAAI,IAAC,SAAS,EAAC,iBAAiB,EAAC,MAAM,EAAC,MAAM;QAC7C,qBAAC,GAAG,IAAC,SAAS,EAAC,yBAAyB,GACtC,YACF,CAAM;KACD,CACF,CACR,CAAC"}

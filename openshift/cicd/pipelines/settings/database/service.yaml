@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fake-db
+  name: fake-db
+spec:
+  ports:
+  - name: db
+    port: 5432
+  selector:
+    app: fake-db

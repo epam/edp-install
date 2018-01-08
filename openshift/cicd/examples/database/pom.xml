@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.epam.javacc.edp.openshift.petclinic</groupId>
+    <artifactId>db-evolution</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>OC PetClinic DB Evolution</name>
+    <description>OC PetClinic DB Evolution project</description>
+
+    <organization>
+        <name>EPAM</name>
+        <url>http://www.epam.com</url>
+    </organization>
+
+    <scm>
+        <connection>scm:git:https://git.epam.com/yevgen_mospan/oc-petclinic.git</connection>
+        <url>https://git.epam.com/yevgen_mospan/oc-petclinic</url>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <liquibase.changeLogFile>db/db.changelog.xml</liquibase.changeLogFile>
+        <liquibase.verbose>true</liquibase.verbose>
+        <liquibase.dropFirst>false</liquibase.dropFirst>
+        <liquibase.contexts>ddl,dml</liquibase.contexts>
+        <liquibase.promptOnNonLocalDatabase>false</liquibase.promptOnNonLocalDatabase>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.4.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1212</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>storage</id>
+            <name>Releases</name>
+            <url>http://nexus:8081/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>storage</id>
+            <name>Snapshots</name>
+            <url>http://nexus:8081/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <finalName>oc-petclinic-db-evolution-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <changeLogFile>${liquibase.changeLogFile}</changeLogFile>
+                    <driver>${liquibase.driver}</driver>
+                    <url>${liquibase.db.url}</url>
+                    <username>${liquibase.db.username}</username>
+                    <password>${liquibase.db.password}</password>
+                    <contexts>${liquibase.contexts}</contexts>
+                    <verbose>${liquibase.verbose}</verbose>
+                    <dropFirst>${liquibase.dropFirst}</dropFirst>
+                    <promptOnNonLocalDatabase>${liquibase.promptOnNonLocalDatabase}</promptOnNonLocalDatabase>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>hsqldb</id>
+            <properties>
+                <liquibase.driver>org.hsqldb.jdbc.JDBCDriver</liquibase.driver>
+                <liquibase.db.url>jdbc:hsqldb:file:tmp/db/hsql/petclinic;shutdown=true</liquibase.db.url>
+                <liquibase.db.username>admin</liquibase.db.username>
+                <liquibase.db.password>admin</liquibase.db.password>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>postgresql</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <liquibase.driver>org.postgresql.Driver</liquibase.driver>
+                <liquibase.db.url>jdbc:postgresql://localhost/petclinic</liquibase.db.url>
+                <liquibase.db.username>super</liquibase.db.username>
+                <liquibase.db.password>admin</liquibase.db.password>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>assembly-jar-with-dependencies</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>liquibase.integration.commandline.Main</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>assembly-tar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <descriptor>src/assembly/assembly.xml</descriptor>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

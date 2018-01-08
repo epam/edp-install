@@ -1,0 +1,245 @@
+kind: Template
+apiVersion: v1
+metadata:
+  annotations:
+    description: The SonarQube template
+    tags: instant-app,sonar,sonar-db
+  name: sonar
+message: "Login to SonarQube with the default admin user: admin/admin"
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: sonar
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: sonar
+    labels:
+      app: sonar
+  spec:
+    ports:
+    - name: sonar
+      port: 9000
+    selector:
+      app: sonar
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: sonar-db
+    labels:
+      app: sonar-db
+  spec:
+    ports:
+    - name: sonar-db
+      port: 5432
+    selector:
+      app: sonar-db
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for SonarQube's http service.
+    name: sonar
+    labels:
+      app: sonar
+  spec:
+    to:
+      kind: Service
+      name: sonar
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: sonar
+    name: sonar
+  spec:
+    replicas: 1
+    selector:
+      app: sonar
+    strategy:
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          app: sonar
+      spec:
+        initContainers:
+        - name: init-sonar-db
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 sonar-db 5432 </dev/null; do echo waiting for sonar-db; sleep 10; done;"]
+        containers:
+        - image: sonarqube:${SONARQUBE_VERSION}
+          imagePullPolicy: IfNotPresent
+          name: sonar
+          env:
+          - name: SONARQUBE_JDBC_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ${SONARQUBE_DB_SECRET}
+                key: database-user
+          - name: SONARQUBE_JDBC_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ${SONARQUBE_DB_SECRET}
+                key: database-password
+          - name: SONARQUBE_JDBC_URL
+            value: jdbc:postgresql://sonar-db/sonar
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 180
+            periodSeconds: 20
+            successThreshold: 1
+            httpGet:
+              port: 9000
+              path: /
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            httpGet:
+              port: 9000
+              path: /
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 200m
+              memory: ${SONAR_MAX_MEMORY}
+            limits:
+              cpu: 1
+              memory: ${SONAR_MAX_MEMORY}
+          terminationMessagePath: /dev/termination-log
+          volumeMounts:
+          - mountPath: /opt/sonarqube/extensions/plugins
+            name: sonar-data
+        serviceAccount: sonar
+        volumes:
+        - name: sonar-data
+          persistentVolumeClaim:
+            claimName: sonar-data
+    triggers:
+    - type: ConfigChange
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: sonar-db
+    name: sonar-db
+  spec:
+    replicas: 1
+    selector:
+      app: sonar-db
+    strategy:
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: sonar-db
+      spec:
+        containers:
+        - name: sonar-db
+          env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: ${SONARQUBE_DB_SECRET}
+                key: database-name
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: ${SONARQUBE_DB_SECRET}
+                key: database-user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: ${SONARQUBE_DB_SECRET}
+                key: database-password
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          - name: POD_IP
+            valueFrom: { fieldRef: { fieldPath: status.podIP } }
+          image: postgres:9.6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - exec pg_isready --host $POD_IP
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - exec pg_isready --host $POD_IP
+            initialDelaySeconds: 60
+            timeoutSeconds: 3
+            periodSeconds: 5
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: sonar-db
+        serviceAccount: sonar
+        volumes:
+          - name: sonar-db
+            persistentVolumeClaim:
+              claimName: sonar-db
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: sonar-data
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: ${SONAR_VOLUME_CAPACITY}
+    storageClassName: glusterfs-storage
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: sonar-db
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: ${SONAR_DB_CAPACITY}
+    storageClassName: glusterfs-storage
+parameters:
+- displayName: SonarQube version
+  value: "6.7"
+  name: SONARQUBE_VERSION
+- displayName: SonarQube database secret
+  value: "sonar-db"
+  name: SONARQUBE_DB_SECRET
+- displayName: SonarQube Max Memory
+  name: SONAR_MAX_MEMORY
+  value: 2Gi
+- description: Volume space available for SonarQube
+  displayName: SonarQube Volume Capacity
+  name: SONAR_VOLUME_CAPACITY
+  value: 1Gi
+- description: Volume space available for SonarQube Database
+  displayName: SonarQube database Volume Capacity
+  name: SONAR_DB_CAPACITY
+  value: 2Gi

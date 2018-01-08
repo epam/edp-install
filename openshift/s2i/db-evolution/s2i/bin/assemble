@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+if [ $(ls ${APP_ROOT_SRC}/*.tar.gz | wc -l) -eq 1 ]; then
+    echo "Found Liquibase db evolutions tar.gz file. Unpacking..."
+	tar -xvf ${APP_ROOT_SRC}/*.tar.gz --strip 1 -C ${APP_ROOT}
+    echo "Successfully unpacked db evolutions archive."
+else
+	echo "Liquibase db evolutions tar.gz not found in ${APP_ROOT_SRC}"
+	exit 1
+fi

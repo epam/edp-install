@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+echo "Setting up liquibase..."
+: ${DB_ENV_POSTGRES_URL?"DB_ENV_POSTGRES_URL not set"}
+: ${DB_ENV_POSTGRES_USER?"DB_ENV_POSTGRES_USER not set"}
+: ${DB_ENV_POSTGRES_PASSWORD?"DB_ENV_POSTGRES_PASSWORD not set"}
+: ${LQB_ENV_CHANGELOG_FILE?"LQB_ENV_CHANGELOG_FILE not set"}
+
+echo "Applying changelogs..."
+liquibase --driver=org.postgresql.Driver \
+    --classpath=/opt/liquibase/lib/psql-jdbc.jar \
+    --changeLogFile=${APP_ROOT}/$LQB_ENV_CHANGELOG_FILE \
+    --url="${DB_ENV_POSTGRES_URL}" \
+    --username=$DB_ENV_POSTGRES_USER \
+    --password=$DB_ENV_POSTGRES_PASSWORD \
+    --logLevel=DEBUG \
+    update
+echo "Applying changelogs finished."
