@@ -1,36 +1,36 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: nexus3-persistent-template
+  template: jenkins3-persistent-template
 metadata:
-  name: nexus3-persistent
-  #namespace: team-mb
+  name: jenkins3-persistent
+  namespace: team-mb
   annotations:
     description: |-
-          Nexus service, with persistent storage.
+          jenkins service, with persistent storage.
           NOTE: You must have persistent volumes available in your cluster to use this template.
     iconClass: icon-jenkins
-    openshift.io/display-name: Nexus (Persistent - gluster)
+    openshift.io/display-name: Jenkins LTS (Persistent - gluster)
     tags: ci-cd
     #template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
-    template.openshift.io/long-description: This template deploys a Nexus server
+    template.openshift.io/long-description: This template deploys a jenkins server
       capable of managing OpenShift Pipeline builds and supporting OpenShift-based
       oauth login.
     template.openshift.io/provider-display-name: Red Hat, Inc.
     template.openshift.io/support-url: https://access.redhat.com
 objects:
-- apiVersion: v1
-  kind: ImageStream
-  metadata:
-    labels:
-      app: ${SERVICE_NAME}
-    name: ${SERVICE_NAME}
-  spec:
-    tags:
-    - from:
-        kind: DockerImage
-        name: docker.io/sonatype/nexus3:${NEXUS_VERSION}
-      name: ${NEXUS_VERSION}
+#- apiVersion: v1
+#  kind: ImageStream
+#  metadata:
+#    labels:
+#      app: ${SERVICE_NAME}
+#    name: ${SERVICE_NAME}
+#  spec:
+#    tags:
+#    - from:
+#        kind: DockerImage
+#        name: jenkins/jenkins:${JENKINS_VERSION}
+#      name: ${JENKINS_VERSION}
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -42,16 +42,6 @@ objects:
     selector:
       deploymentconfig: ${SERVICE_NAME}
     strategy:
-      recreateParams:
-        timeoutSeconds: 600
-        post:
-          failurePolicy: Abort
-          execNewPod:
-            containerName: ${SERVICE_NAME}
-            command:
-              - "/bin/bash"
-              - "-c"
-              - "curl -o /tmp/nexus-functions -s https://raw.githubusercontent.com/MerelyMax1986/nexus-functions/master/add-npm-repo.sh; source /tmp/nexus-functions; add_nexus3_npm_repos admin admin123 http://${SERVICE_NAME}:8081"
       type: Recreate
     template:
       metadata:
@@ -62,40 +52,42 @@ objects:
         - env:
           - name: CONTEXT_PATH
             value: /
-          image: ' '
+          - name: JENKINS_HOME
+            value: /var/jenkins_home
+          - name: JAVA_OPTS
+            value: -Dhudson.model.LoadStatistics.decay=0.2 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Dmail.smtp.starttls.enable=true -Djenkins.install.runSetupWizard=false
+          image: jenkins/jenkins:${JENKINS_VERSION}
           imagePullPolicy: IfNotPresent
-          livenessProbe:
-            exec:
-              command:
-              - echo
-              - ok
-            failureThreshold: 3
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 1
+          #livenessProbe:
+          #  exec:
+          #    command:
+          #    - echo
+          #    - ok
+          #  failureThreshold: 3
+          #  initialDelaySeconds: 30
+          #  periodSeconds: 10
+          #  successThreshold: 1
+          #  timeoutSeconds: 1
           name: ${SERVICE_NAME}
           ports:
-          - containerPort: 8081
+          - containerPort: 8080
             protocol: TCP
           readinessProbe:
             failureThreshold: 3
-            httpGet:
-              path: /
-              port: 8081
-              scheme: HTTP
+            tcpSocket:
+              port: 8080
             initialDelaySeconds: 30
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
-          resources:
-            limits:
-              memory: ${MAX_MEMORY}
-            requests:
-              memory: ${MAX_MEMORY}
+          #resources:
+           # limits:
+            #  memory: ${MAX_MEMORY}
+            #requests:
+            #  memory: ${MAX_MEMORY}
           terminationMessagePath: /dev/termination-log
           volumeMounts:
-          - mountPath: /nexus-data
+          - mountPath: /var/jenkins_home
             name: ${SERVICE_NAME}-data
         dnsPolicy: ClusterFirst
         restartPolicy: Always
@@ -105,17 +97,17 @@ objects:
         - name: ${SERVICE_NAME}-data
           persistentVolumeClaim:
             claimName: ${SERVICE_NAME}-pv
-    test: false
-    triggers:
-    - type: ConfigChange
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - ${SERVICE_NAME}
-        from:
-          kind: ImageStreamTag
-          name: ${SERVICE_NAME}:${NEXUS_VERSION}
-      type: ImageChange
+    #test: false
+    #triggers:
+    #- type: ConfigChange
+    #- imageChangeParams:
+    #    automatic: true
+    #    containerNames:
+    #    - ${SERVICE_NAME}
+    #    from:
+    #      kind: ImageStreamTag
+    #      name: ${SERVICE_NAME}:${JENKINS_VERSION}
+    #  type: ImageChange
 - apiVersion: v1
   kind: Service
   metadata:
@@ -124,10 +116,10 @@ objects:
     name: ${SERVICE_NAME}
   spec:
     ports:
-    - name: 8081-tcp
-      port: 8081
+    - name: 8080-tcp
+      port: 8080
       protocol: TCP
-      targetPort: 8081
+      targetPort: 8080
     selector:
       deploymentconfig: ${SERVICE_NAME}
     sessionAffinity: None
@@ -140,7 +132,7 @@ objects:
     name: ${SERVICE_NAME}
   spec:
     port:
-      targetPort: 8081-tcp
+      targetPort: 8080-tcp
     to:
       kind: Service
       name: ${SERVICE_NAME}
@@ -159,17 +151,17 @@ objects:
         storage: ${VOLUME_CAPACITY}
     storageClassName: glusterfs-storage
 parameters:
-- displayName: Sonatype Nexus service name
+- displayName: Sonatype jenkins service name
   name: SERVICE_NAME
-  value: nexus
-- displayName: Sonatype Nexus version
-  name: NEXUS_VERSION
-  value: 3.6.2
-- description: Volume space available for Sonatype Nexus e.g. 512Mi, 2Gi
-  displayName: Volume Space for Nexus
+  value: jenkins
+- displayName: Sonatype jenkins version
+  name: JENKINS_VERSION
+  value: lts
+- description: Volume space available for Sonatype jenkins e.g. 512Mi, 2Gi
+  displayName: Volume Space for jenkins
   name: VOLUME_CAPACITY
-  value: 0.5Gi
-- description: Max memory allocated to the Nexus pod
-  displayName: Max Memory
-  name: MAX_MEMORY
-  value: 1Gi
+  value: 5Gi
+#- description: Max memory allocated to the jenkins pod
+ # displayName: Max Memory
+  #name: MAX_MEMORY
+  #value: 1Gi
