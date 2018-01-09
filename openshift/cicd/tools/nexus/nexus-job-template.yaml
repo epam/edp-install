@@ -4,7 +4,7 @@ labels:
   template: nexus3-post-configuration-template
 metadata:
   name: nexus3-post-configuration
-  namespace: team-mb
+  #namespace: team-mb
   annotations:
     description: |-
           Nexus configuration to be applied.

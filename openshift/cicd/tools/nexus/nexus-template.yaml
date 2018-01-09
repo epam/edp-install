@@ -4,7 +4,7 @@ labels:
   template: nexus3-persistent-template
 metadata:
   name: nexus3-persistent
-  namespace: team-mb
+  #namespace: team-mb
   annotations:
     description: |-
           Nexus service, with persistent storage.
