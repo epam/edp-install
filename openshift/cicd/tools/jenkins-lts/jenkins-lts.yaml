@@ -1,0 +1,167 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: jenkins3-persistent-template
+metadata:
+  name: jenkins3-persistent
+  namespace: team-mb
+  annotations:
+    description: |-
+          jenkins service, with persistent storage.
+          NOTE: You must have persistent volumes available in your cluster to use this template.
+    iconClass: icon-jenkins
+    openshift.io/display-name: Jenkins LTS (Persistent - gluster)
+    tags: ci-cd
+    #template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
+    template.openshift.io/long-description: This template deploys a jenkins server
+      capable of managing OpenShift Pipeline builds and supporting OpenShift-based
+      oauth login.
+    template.openshift.io/provider-display-name: Red Hat, Inc.
+    template.openshift.io/support-url: https://access.redhat.com
+objects:
+#- apiVersion: v1
+#  kind: ImageStream
+#  metadata:
+#    labels:
+#      app: ${SERVICE_NAME}
+#    name: ${SERVICE_NAME}
+#  spec:
+#    tags:
+#    - from:
+#        kind: DockerImage
+#        name: jenkins/jenkins:${JENKINS_VERSION}
+#      name: ${JENKINS_VERSION}
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: ${SERVICE_NAME}
+    name: ${SERVICE_NAME}
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: ${SERVICE_NAME}
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          deploymentconfig: ${SERVICE_NAME}
+      spec:
+        containers:
+        - env:
+          - name: CONTEXT_PATH
+            value: /
+          - name: JENKINS_HOME
+            value: /var/jenkins_home
+          - name: JAVA_OPTS
+            value: -Dhudson.model.LoadStatistics.decay=0.2 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Dmail.smtp.starttls.enable=true -Djenkins.install.runSetupWizard=false
+          image: jenkins/jenkins:${JENKINS_VERSION}
+          imagePullPolicy: IfNotPresent
+          #livenessProbe:
+          #  exec:
+          #    command:
+          #    - echo
+          #    - ok
+          #  failureThreshold: 3
+          #  initialDelaySeconds: 30
+          #  periodSeconds: 10
+          #  successThreshold: 1
+          #  timeoutSeconds: 1
+          name: ${SERVICE_NAME}
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          #resources:
+           # limits:
+            #  memory: ${MAX_MEMORY}
+            #requests:
+            #  memory: ${MAX_MEMORY}
+          terminationMessagePath: /dev/termination-log
+          volumeMounts:
+          - mountPath: /var/jenkins_home
+            name: ${SERVICE_NAME}-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: ${SERVICE_NAME}-data
+          persistentVolumeClaim:
+            claimName: ${SERVICE_NAME}-pv
+    #test: false
+    #triggers:
+    #- type: ConfigChange
+    #- imageChangeParams:
+    #    automatic: true
+    #    containerNames:
+    #    - ${SERVICE_NAME}
+    #    from:
+    #      kind: ImageStreamTag
+    #      name: ${SERVICE_NAME}:${JENKINS_VERSION}
+    #  type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: ${SERVICE_NAME}
+    name: ${SERVICE_NAME}
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: ${SERVICE_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: ${SERVICE_NAME}
+    name: ${SERVICE_NAME}
+  spec:
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: ${SERVICE_NAME}
+      weight: 100
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: ${SERVICE_NAME}
+    name: ${SERVICE_NAME}-pv
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: ${VOLUME_CAPACITY}
+    storageClassName: glusterfs-storage
+parameters:
+- displayName: Sonatype jenkins service name
+  name: SERVICE_NAME
+  value: jenkins
+- displayName: Sonatype jenkins version
+  name: JENKINS_VERSION
+  value: lts
+- description: Volume space available for Sonatype jenkins e.g. 512Mi, 2Gi
+  displayName: Volume Space for jenkins
+  name: VOLUME_CAPACITY
+  value: 5Gi
+#- description: Max memory allocated to the jenkins pod
+ # displayName: Max Memory
+  #name: MAX_MEMORY
+  #value: 1Gi
