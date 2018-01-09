@@ -1,0 +1,14 @@
+venv/*
+target/*
+.settings/*
+.classpath
+.DS_Store
+.project
+.idea
+*.iml
+/target
+npm-debug.log
+/bin/
+
+/backend/target/*
+/database/target/*
