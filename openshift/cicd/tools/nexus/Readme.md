@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Please, ensure that you have Jenkins installed and you have **Credentials plugin** installed and enabled.
-- Please, ensure that you have turned on **CSRF Protection** on the page **http://server:port/configureSecurity/**.
+- Please, ensure that you have turned on **CSRF Protection** on the page **http://server:port/configureSecurity/**, including **Default Crumb Issuer** enabled.
 
 1. Deploy **Nexus template** from **nexus-template.yaml** to Openshift cluster
 2. Deploy **Nexus instance** from previously created template
