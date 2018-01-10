@@ -4,6 +4,7 @@
 
 - Please, ensure that you have exposed **docker-registry service** using **NodePort**. Also prepare the 5-sign port's value.
 - Please, ensure that you have some project, if there is no such one, you can create it like this
+
 ```
 oc new-project ci-cd
 ```
