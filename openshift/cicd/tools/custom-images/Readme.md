@@ -58,7 +58,7 @@ If login succeeded, you can try to push your images to the registry.
    API
 ```
 8. For pushing custom images you need to know a correct format
- ```
+```
 <registry>/<project>/<imagestream>:<tag>
 ```
 Finally, you need to tag your custom image and push it
