@@ -1,0 +1,24 @@
+# How to push custom images to Openshift docker registry
+
+## Prerequisites
+
+- Please, ensure that you have exposed **docker-registry service** using **NodePort**
+- Please, ensure that you have some project, if there is no such one, you can create it like this
+ ```
+ oc new-project pushed
+ ```
+
+## The process of installing and configuring Nexus and Jenkins
+
+1. Create special account to push,
+```
+oc create serviceaccount pusher
+```
+2. Deploy **Nexus instance** from previously created template
+3. Deploy **Nexus job template** from **nexus-job-template.yaml** to Openshift cluster
+4. Create special **Configmap** with name **nexus-integration**, for instance "oc -n your-project create configmap nexus-integration --from-file=config.py"
+5. Deploy **Nexus job instance** from previously created template in order to **configure Nexus instance** from step 2
+6. Check out that you have all necessary objects in Nexus and at least two Nexus users in Jenkins which have rights to read and publish respectively.
+
+
+See more details [here](https://blog.openshift.com/remotely-push-pull-container-images-openshift/).
