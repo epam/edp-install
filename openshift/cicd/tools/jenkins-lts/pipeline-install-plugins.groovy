@@ -129,7 +129,7 @@ plugins.each {it ->
             println("Installing " + pluginName)
             def installFuture = plugin.deploy()
             while(!installFuture.isDone()) {
-                logger.info("Waiting for plugin install: " + pluginName)
+                println("Waiting for plugin install: " + pluginName)
                 Thread.sleep(3000)
             }
             installed = true

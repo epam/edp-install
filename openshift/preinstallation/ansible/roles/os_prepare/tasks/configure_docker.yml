@@ -18,13 +18,11 @@
 
 - name: "Restart NetworkManager"
   service:
-  service:
     name: NetworkManager
     state: restarted
     enabled: yes
 
 - name: "Restart Network"
-  service:
   service:
     name: network
     state: restarted
