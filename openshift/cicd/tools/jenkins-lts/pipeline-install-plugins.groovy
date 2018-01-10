@@ -127,7 +127,11 @@ plugins.each {it ->
         def plugin = uc.getPlugin(pluginName)
         if (plugin) {
             println("Installing " + pluginName)
-            plugin.deploy()
+            def installFuture = plugin.deploy()
+            while(!installFuture.isDone()) {
+                logger.info("Waiting for plugin install: " + pluginName)
+                Thread.sleep(3000)
+            }
             installed = true
         }
     }

@@ -1,0 +1,27 @@
+---
+- name: "Stop docker service"
+  tags:
+    - stop_docker
+  service:
+    name: docker
+    state: stopped
+    enabled: no
+  ignore_errors: true
+
+- name: "Remove docker via yum"
+  tags:
+    - docker_remove
+  yum:
+    name: "{{ item }}"
+    state: absent
+  when: ansible_pkg_mgr == 'yum'
+  with_items:
+    - "docker-{{ docker_version }}"
+
+- name: "Remove old docker data"
+  tags:
+    - docker_data_remove
+  file:
+    state: absent
+    path: "/var/lib/docker"    
+

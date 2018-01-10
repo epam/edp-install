@@ -1,0 +1,31 @@
+- name: "Reload systemd"
+  command: systemctl daemon-reload
+
+- name: "Start docker"
+  service:
+    name: docker
+    state: started
+    enabled: yes
+    
+- name: "Start NetworkManager"
+  service:
+    name: NetworkManager
+    state: started
+    enabled: yes    
+
+- name: "Config network manager"
+  shell: sed 's/NM_CONTROLLED=no/NM_CONTROLLED=yes/' /etc/sysconfig/network-scripts/ifcfg-eth0 -i
+
+- name: "Restart NetworkManager"
+  service:
+  service:
+    name: NetworkManager
+    state: restarted
+    enabled: yes
+
+- name: "Restart Network"
+  service:
+  service:
+    name: network
+    state: restarted
+    enabled: yes
