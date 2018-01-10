@@ -1,0 +1,17 @@
+---
+docker_version: "1.12.6"
+docker_opts: ""
+
+packages: 
+ - wget 
+ - git
+ - net-tools
+ - bind-utils
+ - iptables-services
+ - bridge-utils
+ - bash-completion
+ - kexec-tools
+ - sos
+ - psacct
+ - docker-python
+ - python-pip

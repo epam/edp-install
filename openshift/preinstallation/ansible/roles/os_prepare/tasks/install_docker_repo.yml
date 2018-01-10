@@ -1,0 +1,29 @@
+---
+- name: "Add EPEL repository"
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    gpgkey: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
+    baseurl: https://dl.fedoraproject.org/pub/epel/$releasever/$basearch/
+  when: ansible_os_family == "RedHat"
+
+- name: "Bootstrap docker repo"
+  copy:
+    src: docker.repo
+    dest: /etc/yum.repos.d/
+    mode: 0644
+  when: ansible_os_family == "RedHat"
+
+- name: "Add Docker repository key"
+  apt_key:
+    id: "{{ apt_key_sig }}"
+    url: "{{ apt_key_url }}"
+    state: present
+  register: add_repository_key
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+
+
+- name: "Alternative | Add Docker repository key"
+  shell: "curl -sSL {{ apt_key_url }} | apt-key add -"
+  when: add_repository_key|failed and ansible_os_family == "Debian"

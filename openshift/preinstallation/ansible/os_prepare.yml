@@ -1,0 +1,9 @@
+---
+- hosts:
+    - all
+  vars_files:
+    - ansible_vars.yml
+  roles:
+    - name: "ROLE: Openshift preparation"
+      role: os_prepare
+      become: yes

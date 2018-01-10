@@ -1,0 +1,18 @@
+---
+- name: "Include OS-specific variables"
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- include: remove_previous.yml
+
+- include: enable_selinux.yml
+  when: ansible_os_family == "RedHat"
+
+- include: set_time_zone.yml
+
+- include: install_docker_repo.yml
+
+- include: install_base_packages.yml
+
+- include: install_docker.yml
+
+- include: configure_docker.yml
