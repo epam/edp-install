@@ -71,5 +71,9 @@ docker tag 445f4be0f46f ecsd00100e91.epam.com:32021/ci-cd/myimage:image-version
 ```
 oc describe is myimage
 ```
+You can use your custom images inside Openshift like this
+```
+docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2
+```
 
 See more details [here](https://blog.openshift.com/remotely-push-pull-container-images-openshift/).
