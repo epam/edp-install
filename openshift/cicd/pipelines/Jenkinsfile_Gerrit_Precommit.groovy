@@ -7,16 +7,13 @@ import groovy.json.*
 //Define common variables
 tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
-vars['npmRegistry']="http://nexus:8081/repository/npm-all/"
+vars['npmRegistry'] = "http://nexus:8081/repository/npm-all/"
 commonLib = null
-
-//GLOBAL CONSTANTS
-DEFAULT_AUTOUSER = "Auto_EPMC-JAVA_VCS"
 
 def getServiceType() {
     getChangeApiUrl = "http://${GERRIT_HOST}:8080/a/changes/?q=${GERRIT_CHANGE_ID}&o=CURRENT_REVISION&o=CURRENT_FILES"
     def authString
-    withCredentials([usernamePassword(credentialsId: 'auto_epmc-java_vcs_gerrit-http', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+    withCredentials([usernamePassword(credentialsId: 'gerrit-http', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
         authString = "${USERNAME}:${PASSWORD}".getBytes().encodeBase64().toString()
     }
     def connection = getChangeApiUrl.toURL().openConnection()
@@ -26,15 +23,20 @@ def getServiceType() {
     def paths = parsedJson[0].revisions[GERRIT_PATCHSET_REVISION].files.keySet()
     echo "[JENKINS][DEBUG] Changed paths - ${paths}"
 
-    def match = paths.join("\n") =~ /^(backend|frontend|database)\/.*/
+    def match = paths.join("\n") =~ /.*\/(backend|frontend|database)\/.*/
     return match[0][1]
 }
 
 node("master") {
+    if (!env.PIPELINES_PATH)
+        error ("[JENKINS][ERROR] PIPELINES_PATH variable is not defined, please check.")
+
+    vars['pipelinesPath'] = PIPELINES_PATH
+
     def workspace = "/tmp/workspace/${JOB_NAME}"
     dir("${workspace}@script") {
-        stash name: 'data', includes: "infrastructure/**", useDefaultExcludes: false
-        commonLib = load "infrastructure/pipelines/libs/common.groovy"
+        stash name: 'data', includes: "${vars.pipelinesPath}/**", useDefaultExcludes: false
+        commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
     }
     vars['serviceType'] = getServiceType()
     println("[JENKINS][DEBUG] Service type to build - ${vars.serviceType}")
@@ -46,9 +48,14 @@ if (vars.serviceType == "frontend")
 
 node("${buildNode}") {
     stage("INITIALIZATION") {
-        //DEFINE VARIABLES FROM JENKINS JOB PARAMETERS
-        vars['autoUser'] = env.AUTOUSER != null ? AUTOUSER : DEFAULT_AUTOUSER
+
+        vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "Auto_EPMC-JAVA_VCS"
+        vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
+
         vars['devopsRoot'] = new File("/tmp/${tmpDir}")
+        vars['mavenSettings'] = "${vars.pipelinesPath}/settings/maven/settings.xml"
+
+        vars['appPath'] = env.APP_PATH ? APP_PATH : 'openshift/cicd/examples/3-tier-app'
         vars['serviceBranch'] = GERRIT_BRANCH
         vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
         vars['serviceDir'] = "${WORKSPACE}/services"
@@ -70,11 +77,11 @@ Branch: ${vars.serviceBranch}
 """
     }
 
-    dir("${vars.devopsRoot}/infrastructure/pipelines/stages/gerrit-checkout/") { commonLib.runStage("CHECKOUT", vars) }
-    dir("${vars.devopsRoot}/infrastructure/pipelines/stages/compile/") { commonLib.runStage("COMPILE", vars) }
-    dir("${vars.devopsRoot}/infrastructure/pipelines/stages/unit-test/") { commonLib.runStage("UNIT-TESTS", vars) }
-    dir("${vars.devopsRoot}/infrastructure/pipelines/stages/sonar-preview/") { commonLib.runStage("SONAR-PREVIEW", vars) }
-    dir("${vars.devopsRoot}/infrastructure/pipelines/stages/post-to-gerrit/") { commonLib.runStage("POST-TO-GERRIT", vars) }
-    dir("${vars.devopsRoot}/infrastructure/pipelines/stages/sonar/") { commonLib.runStage("SONAR", vars) }
-    dir("${vars.devopsRoot}/infrastructure/pipelines/stages/sonar-check/") { commonLib.runStage("SONAR-CHECK", vars) }
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/gerrit-checkout/") { commonLib.runStage("CHECKOUT", vars) }
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/compile/") { commonLib.runStage("COMPILE", vars) }
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/unit-test/") { commonLib.runStage("UNIT-TESTS", vars) }
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/sonar-preview/") { commonLib.runStage("SONAR-PREVIEW", vars) }
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/post-to-gerrit/") { commonLib.runStage("POST-TO-GERRIT", vars) }
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/sonar/") { commonLib.runStage("SONAR", vars) }
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/sonar-check/") { commonLib.runStage("SONAR-CHECK", vars) }
 }

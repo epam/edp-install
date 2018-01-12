@@ -1,35 +1,59 @@
 import groovy.json.*
+import org.apache.commons.lang.RandomStringUtils
 
+tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
 commonLib = null
 
 node("master") {
+    if (!env.PIPELINES_PATH)
+        error("[JENKINS][ERROR] PIPELINES_PATH variable is not defined, please check.")
+
+    vars['pipelinesPath'] = PIPELINES_PATH
+
     def workspace = "/tmp/workspace/${JOB_NAME}"
-    vars['devopsRoot'] = "${workspace}@script"
-    commonLib = load "${vars.devopsRoot}/infrastructure/pipelines/libs/common.groovy"
-
+    dir("${workspace}@script") {
+        stash name: 'data', includes: "${vars.pipelinesPath}/**", useDefaultExcludes: false
+        commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
+    }
     if (!env.SERVICE_TYPE)
-        commonLib.failJob("[JENKINS][ERROR] vars.serviceType wasn't provided, please check")
+        commonLib.failJob("[JENKINS][ERROR] SERVICE_TYPE variable is not defined, please check.")
 
-    vars['serviceType'] = SERVICE_TYPE
+    vars['serviceType'] = env.SERVICE_TYPE
+    println("[JENKINS][DEBUG] Service type to build - ${vars.serviceType}")
+}
+
+node("backend") {
+    vars['devopsRoot'] = new File("/tmp/${tmpDir}")
+
+    vars['qaProject'] = env.QA_PROJECT ? QA_PROJECT : "qa"
+    vars['uatProject'] = env.UAT_PROJECT ? UAT_PROJECT : "uat"
+
+    try {
+        dir("${vars.devopsRoot}") {
+            unstash 'data'
+        }
+    } catch (Exception ex) {
+        commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
+    }
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.serviceType}"
     vars['imageTag'] = 'latest'
-    vars['projects'] = ['qa']
-    dir("${vars.devopsRoot}/infrastructure/pipelines/stages/deploy/") { commonLib.runStage("DEPLOY LATEST TAG", vars) }
+    vars['projects'] = ["${vars.qaProject}"]
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/deploy/") { commonLib.runStage("DEPLOY LATEST TAG", vars) }
 
 
     try {
         stage("QA APPROVEMENT") {
             input "Ready to update stable version of ${vars.serviceType} service on QA env?"
-            vars['sourceProject'] = "qa"
-            vars['targetProject'] = "uat"
-            dir("${vars.devopsRoot}/infrastructure/pipelines/stages/tag-image/") { commonLib.runStage(null, vars) }
+            vars['sourceProject'] = vars.qaProject
+            vars['targetProject'] = vars.uatProject
+            dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/tag-image/") { commonLib.runStage(null, vars) }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
 
             vars['imageTag'] = 'stable'
-            vars['projects'] = ['uat']
-            dir("${vars.devopsRoot}/infrastructure/pipelines/stages/deploy/") { commonLib.runStage(null, vars)  }
+            vars['projects'] = ["${vars.uatProject}"]
+            dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/deploy/") { commonLib.runStage(null, vars)  }
         }
 
 
@@ -40,7 +64,7 @@ node("master") {
     }
     finally {
         vars['imageTag'] = 'stable'
-        vars['projects'] = ['qa']
-        dir("${vars.devopsRoot}/infrastructure/pipelines/stages/deploy/") {commonLib.runStage("DEPLOY STABLE TAG", vars)}
+        vars['projects'] = ["${vars.uatProject}"]
+        dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/deploy/") {commonLib.runStage("DEPLOY STABLE TAG", vars)}
     }
 }

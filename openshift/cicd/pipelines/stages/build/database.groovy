@@ -4,9 +4,8 @@
  */
 def run(vars) {
     dir("${vars.serviceDir}") {
-        //sh "mvn clean install --settings ${vars.devopsRoot}/infrastructure/pipelines/settings/maven/settings.xml"
-        sh "mvn package -P assembly-jar-with-dependencies --settings ${vars.devopsRoot}/infrastructure/pipelines/settings/maven/settings.xml"
-        sh "mvn package -P assembly-tar --settings ${vars.devopsRoot}/infrastructure/pipelines/settings/maven/settings.xml"
+        sh "mvn package -P assembly-jar-with-dependencies --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        sh "mvn package -P assembly-tar --settings ${vars.devopsRoot}/${vars.mavenSettings}"
 
     }
     this.result = "success"

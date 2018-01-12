@@ -5,7 +5,7 @@
 def run(vars) {
     dir("${vars.serviceDir}") {
         withSonarQubeEnv('Sonar') {
-            sh "mvn sonar:sonar -Dsonar.branch=${vars.serviceBranch} -B --settings ${vars.devopsRoot}/infrastructure/pipelines/settings/maven/settings.xml"
+            sh "mvn sonar:sonar -Dsonar.branch=${vars.serviceBranch} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
         }
     }
     this.result = "success"

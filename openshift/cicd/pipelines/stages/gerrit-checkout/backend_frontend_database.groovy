@@ -9,9 +9,9 @@ def run(vars) {
                   doGenerateSubmoduleConfigurations: false, extensions: [],
                   submoduleCfg                     : [],
                   userRemoteConfigs                : [[refspec: "${GERRIT_REFSPEC}:${vars.gerritChange}",
-                                                       credentialsId: 'auto_epmc-java_vcs',
+                                                       credentialsId: "${vars.credentials}",
                                                        url    : "${vars.gitMicroservicesUrl}"]]])
-        vars.serviceDir = "${vars.serviceDir}/${vars.serviceType}"
+        vars.serviceDir = "${vars.serviceDir}/${vars.appPath}/${vars.serviceType}"
     }
     this.result = "success"
 }

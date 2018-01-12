@@ -23,11 +23,20 @@ spec:
       - name: fake-db
         env:
         - name: POSTGRES_DB
-          value: petclinic
+          valueFrom:
+            secretKeyRef:
+              name: fake-db
+              key: database-name
         - name: POSTGRES_USER
-          value: petclinic
+          valueFrom:
+            secretKeyRef:
+              name: fake-db
+              key: database-user
         - name: POSTGRES_PASSWORD
-          value: petclinic
+          valueFrom:
+            secretKeyRef:
+              name: fake-db
+              key: database-password
         - name: POD_IP
           valueFrom: { fieldRef: { fieldPath: status.podIP } }
         image: postgres:9.6

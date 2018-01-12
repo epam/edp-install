@@ -4,7 +4,7 @@
  */
 def run(vars) {
     dir("${vars.serviceDir}") {
-        sh "mvn compile -B --settings ${vars.devopsRoot}/infrastructure/pipelines/settings/maven/settings.xml"
+        sh "mvn compile -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
     }
     this.result = "success"
 }

@@ -8,9 +8,9 @@ def run(vars) {
         checkout([$class                           : 'GitSCM', branches: [[name: "${vars.serviceBranch}"]],
                   doGenerateSubmoduleConfigurations: false, extensions: [],
                   submoduleCfg                     : [],
-                  userRemoteConfigs                : [[credentialsId: 'auto_epmc-java_vcs',
+                  userRemoteConfigs                : [[credentialsId: "${vars.credentials}",
                                                        url    : "${vars.gitMicroservicesUrl}"]]])
-        vars.serviceDir = "${vars.serviceDir}/${vars.serviceType}"
+        vars.serviceDir = "${vars.serviceDir}/${vars.appPath}/${vars.serviceType}"
     }
     this.result = "success"
 }
