@@ -1,4 +1,4 @@
-# Installing and configuring ingress controller in Openshift
+# Orginizing routing between frontend and backend based on Nginx.
 
 ## Prerequisites
 
@@ -6,7 +6,7 @@
 
 ## Workflow
 
-1. To try this stuff, let's roll out **Ingress controller** with default account. That's why we will need to give proper rights to the account:
+1. Let's roll out **Nginx** with default account. That's why we will need to give proper rights to the account:
 ```
 oc adm policy add-scc-to-user anyuid -n sit -z default
 oc adm policy add-cluster-role-to-user cluster-admin -n sit -z default
@@ -51,4 +51,4 @@ location /some/path/ {
 Before version 1.1.12, if proxy_pass is specified without a URI, the original request URI might be passed instead of the changed URI in some cases.
 ```
 
-The above can be handy when you don't have localion, for instance, `api` in your target service. In this case, you should use trailing slash at the end of proxy_pass directive.
+The above can be handy when you don't have location, for instance, `api` in your target service. In this case, you should use trailing slash at the end of proxy_pass directive.
