@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Please, ensure that you have Jenkins installed and you have **Credentials plugin** installed and enabled.
-- Please, ensure that you have turned on **CSRF Protection** on the page **http://server:port/configureSecurity/**, including **Default Crumb Issuer** enabled.
+- Please, ensure that you have turned on **Prevent Cross Site Request Forgery exploits** within section **CSRF Protection** on the page **http://server:port/configureSecurity/**, including **Default Crumb Issuer** enabled.
 
 ## The process of installing and configuring Nexus and Jenkins
 
