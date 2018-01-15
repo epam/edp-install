@@ -1,0 +1,33 @@
+apiVersion: v1
+data:
+  default.conf: |
+    server {
+      listen 80;
+      server_name ecsd00100eed.epam.com;
+
+      location / {
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://frontend.sit:3000;
+        proxy_http_version 1.1;
+        proxy_pass_request_headers on;
+        proxy_set_header Connection "keep-alive";
+        proxy_store off;
+      }
+
+      location /api {
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://backend.sit:8080;
+        proxy_http_version 1.1;
+        proxy_pass_request_headers on;
+        proxy_set_header Connection "keep-alive";
+        proxy_store off;
+      }
+    }
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+  namespace: sit
