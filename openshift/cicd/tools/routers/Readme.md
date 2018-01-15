@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Please, choose the variant that is preffered to you:
+Please, choose the variant that is preffered to you:
 1. ingress controller (from kubernetes)
 2. nginx (standard)
-3. openshift routes (here not described, it can be found on official site)
+3. openshift routes (here is not described, it can be found on official site)
