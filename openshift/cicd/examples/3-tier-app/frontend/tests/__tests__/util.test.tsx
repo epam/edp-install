@@ -10,7 +10,7 @@ const fetchMock: any = fetch;
 describe('util', () => {
   describe('url', () => {
     it('returns url with full path', () => {
-      expect(url('xxx')).toBe('http://localhost:8080/xxx');
+      expect(url('xxx')).toBe('/xxx');
     });
   });
 
@@ -20,9 +20,9 @@ describe('util', () => {
     it('submits all data', () => {
       fetchMock.mockResponse(JSON.stringify({ 'x': 'y' }), { status: 200 });
       return submitForm('POST', '/some-enzyme', { name: 'Test' }, (status, response) => {
-        // make sure request data is passed to fetch as expected 
+        // make sure request data is passed to fetch as expected
         expect(fetchMock.mock.calls.length).toBe(1);
-        expect(fetchMock.mock.calls[0][0]).toBe('http://localhost:8080//some-enzyme');
+        expect(fetchMock.mock.calls[0][0]).toBe('//some-enzyme');
         expect(fetchMock.mock.calls[0][1].method).toBe('POST');
         expect(fetchMock.mock.calls[0][1].body).toEqual(JSON.stringify({ name: 'Test' }));
 
