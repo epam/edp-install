@@ -84,4 +84,3 @@ parameters:
 - displayName: SonarQube Auto user password
   name: AUTO_USER_PASSWORD
   value: "jenkins"
-

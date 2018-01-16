@@ -15,8 +15,6 @@ metadata:
     template.openshift.io/long-description: This template deploys a Jenkins server
       capable of managing OpenShift Pipeline builds and supporting OpenShift-based
       oauth login.
-    template.openshift.io/provider-display-name: Red Hat, Inc.
-    template.openshift.io/support-url: https://access.redhat.com
   name: jenkins-persistent-glusterfs
 objects:
 - apiVersion: v1
@@ -69,16 +67,16 @@ objects:
             value: ${ENABLE_OAUTH}
           - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
             value: "true"
-          - name: OPENSHIFT_JENKINS_JVM_ARCH
-            value: ${JVM_ARCH}
           - name: KUBERNETES_MASTER
             value: https://kubernetes.default:443
           - name: KUBERNETES_TRUST_CERTIFICATES
             value: "true"
           - name: JNLP_SERVICE_NAME
             value: ${JNLP_SERVICE_NAME}
-          image: ' '
-          imagePullPolicy: IfNotPresent
+          - name: INSTALL_PLUGINS
+            value: "analysis-core:1.92,findbugs:4.71,pmd:3.49,checkstyle:3.49,dependency-check-jenkins-plugin:2.1.1,htmlpublisher:1.14,jacoco:2.2.1,analysis-collector:1.52,test-results-analyzer:0.3.4"
+          image: openshift/jenkins-2-centos7:latest
+          imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 30
             httpGet:
@@ -93,9 +91,6 @@ objects:
               port: 8080
             initialDelaySeconds: 3
             timeoutSeconds: 3
-          resources:
-            limits:
-              memory: ${MEMORY_LIMIT}
           securityContext:
             capabilities: {}
             privileged: false
@@ -110,18 +105,6 @@ objects:
         - name: ${JENKINS_SERVICE_NAME}-data
           persistentVolumeClaim:
             claimName: ${JENKINS_SERVICE_NAME}
-    triggers:
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - jenkins
-        from:
-          kind: ImageStreamTag
-          name: ${JENKINS_IMAGE_STREAM_TAG}
-          namespace: ${NAMESPACE}
-        lastTriggeredImage: ""
-      type: ImageChange
-    - type: ConfigChange
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
@@ -172,8 +155,103 @@ objects:
       name: ${JENKINS_SERVICE_NAME}
     sessionAffinity: None
     type: ClusterIP
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    labels:
+      role: jenkins-slave
+    name: jenkins-slaves
+  data:
+    frontend-template: |-
+      <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+        <inheritFrom></inheritFrom>
+        <name>frontend</name>
+        <namespace></namespace>
+        <privileged>false</privileged>
+        <alwaysPullImage>false</alwaysPullImage>
+        <instanceCap>2147483647</instanceCap>
+        <slaveConnectTimeout>100</slaveConnectTimeout>
+        <idleMinutes>60</idleMinutes>
+        <activeDeadlineSeconds>0</activeDeadlineSeconds>
+        <label>frontend</label>
+        <serviceAccount>jenkins</serviceAccount>
+        <nodeSelector></nodeSelector>
+        <nodeUsageMode>NORMAL</nodeUsageMode>
+        <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
+        <workspaceVolume class="org.csanchez.jenkins.plugins.kubernetes.volumes.workspace.EmptyDirWorkspaceVolume">
+          <memory>false</memory>
+        </workspaceVolume>
+        <volumes/>
+        <containers>
+          <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+            <name>jnlp</name>
+            <image>docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2</image>
+            <privileged>false</privileged>
+            <alwaysPullImage>false</alwaysPullImage>
+            <workingDir>/tmp</workingDir>
+            <command></command>
+            <args>${computer.jnlpmac} ${computer.name}</args>
+            <ttyEnabled>false</ttyEnabled>
+            <resourceRequestCpu></resourceRequestCpu>
+            <resourceRequestMemory></resourceRequestMemory>
+            <resourceLimitCpu></resourceLimitCpu>
+            <resourceLimitMemory></resourceLimitMemory>
+            <envVars/>
+            <ports/>
+          </org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+        </containers>
+        <envVars/>
+        <annotations/>
+        <imagePullSecrets/>
+      </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+    backend-template: |-
+      <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+        <inheritFrom></inheritFrom>
+        <name>backend</name>
+        <namespace></namespace>
+        <privileged>false</privileged>
+        <alwaysPullImage>false</alwaysPullImage>
+        <instanceCap>2147483647</instanceCap>
+        <slaveConnectTimeout>100</slaveConnectTimeout>
+        <idleMinutes>5</idleMinutes>
+        <activeDeadlineSeconds>0</activeDeadlineSeconds>
+        <label>backend</label>
+        <serviceAccount>jenkins</serviceAccount>
+        <nodeSelector></nodeSelector>
+        <nodeUsageMode>NORMAL</nodeUsageMode>
+        <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
+        <workspaceVolume class="org.csanchez.jenkins.plugins.kubernetes.volumes.workspace.EmptyDirWorkspaceVolume">
+          <memory>false</memory>
+        </workspaceVolume>
+        <volumes>
+          <org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
+            <mountPath>/opt/caches/maven</mountPath>
+            <claimName>maven-cache</claimName>
+            <readOnly>false</readOnly>
+          </org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
+        </volumes>
+        <containers>
+          <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+            <name>jnlp</name>
+            <image>openshift/jenkins-slave-maven-centos7</image>
+            <privileged>false</privileged>
+            <alwaysPullImage>false</alwaysPullImage>
+            <workingDir>/tmp</workingDir>
+            <command></command>
+            <args>${computer.jnlpmac} ${computer.name}</args>
+            <ttyEnabled>false</ttyEnabled>
+            <resourceRequestCpu></resourceRequestCpu>
+            <resourceRequestMemory></resourceRequestMemory>
+            <resourceLimitCpu></resourceLimitCpu>
+            <resourceLimitMemory></resourceLimitMemory>
+            <ports/>
+          </org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+        </containers>
+        <envVars/>
+        <annotations/>
+        <imagePullSecrets/>
+      </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
 #--------------------------------------------------------------------------------------
-parameters:
 parameters:
 - description: The name of the OpenShift Service exposed for the Jenkins container.
   displayName: Jenkins Service Name
@@ -187,25 +265,9 @@ parameters:
     account 'admin' will be initialized with the password 'password'.
   displayName: Enable OAuth in Jenkins
   name: ENABLE_OAUTH
-  value: "true"
-- description: Whether Jenkins runs with a 32 bit (i386) or 64 bit (x86_64) JVM.
-  displayName: Jenkins JVM Architecture
-  name: JVM_ARCH
-  value: i386
-- description: Maximum amount of memory the container can use.
-  displayName: Memory Limit
-  name: MEMORY_LIMIT
-  value: 512Mi
+  value: "false"
 - description: Volume space available for data, e.g. 512Mi, 2Gi.
   displayName: Volume Capacity
   name: VOLUME_CAPACITY
   required: true
-  value: 1Gi
-- description: The OpenShift Namespace where the Jenkins ImageStream resides.
-  displayName: Jenkins ImageStream Namespace
-  name: NAMESPACE
-  value: openshift
-- description: Name of the ImageStreamTag to be used for the Jenkins image.
-  displayName: Jenkins ImageStreamTag
-  name: JENKINS_IMAGE_STREAM_TAG
-  value: jenkins:latest
+  value: 5Gi
