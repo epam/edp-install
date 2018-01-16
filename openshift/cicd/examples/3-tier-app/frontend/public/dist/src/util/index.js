@@ -1,5 +1,5 @@
 "use strict";
-const BACKEND_URL = (typeof __API_SERVER_URL__ === 'undefined' ? 'http://localhost:8080' : __API_SERVER_URL__);
+const BACKEND_URL = (typeof __API_SERVER_URL__ === 'undefined' ? '' : __API_SERVER_URL__);
 exports.url = (path) => `${BACKEND_URL}/${path}`;
 exports.submitForm = (method, path, data, onSuccess) => {
     const requestUrl = exports.url(path);

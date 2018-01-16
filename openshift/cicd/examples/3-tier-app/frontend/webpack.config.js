@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const port = process.env.PORT || 3000;
-const backend = process.env.BACKEND || 'http://localhost:8080';
+const backend = process.env.BACKEND || '';
 
 
 const entries = [

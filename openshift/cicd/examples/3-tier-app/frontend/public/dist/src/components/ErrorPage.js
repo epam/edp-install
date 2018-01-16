@@ -6,7 +6,7 @@ class ErrorPage extends React.Component {
         this.state = {};
     }
     componentDidMount() {
-        fetch('http://localhost:8080/api/oups')
+        fetch('/api/oups')
             .then(response => response.json())
             .then(error => this.setState({ error }));
     }
