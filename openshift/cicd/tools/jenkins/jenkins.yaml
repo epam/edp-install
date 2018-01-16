@@ -74,7 +74,7 @@ objects:
           - name: JNLP_SERVICE_NAME
             value: ${JNLP_SERVICE_NAME}
           - name: INSTALL_PLUGINS
-            value: "analysis-core:1.92,findbugs:4.71,pmd:3.49,checkstyle:3.49,dependency-check-jenkins-plugin:2.1.1,htmlpublisher:1.14,jacoco:2.2.1,analysis-collector:1.52,test-results-analyzer:0.3.4"
+            value: "analysis-core:1.92,findbugs:4.71,pmd:3.49,checkstyle:3.49,dependency-check-jenkins-plugin:2.1.1,htmlpublisher:1.14,jacoco:2.2.1,analysis-collector:1.52,test-results-analyzer:0.3.4,gerrit-trigger:2.27.2,sonar-gerrit:2.1,sonar:2.6.1"
           image: openshift/jenkins-2-centos7:latest
           imagePullPolicy: Always
           livenessProbe:

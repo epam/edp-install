@@ -152,4 +152,4 @@ parameters:
   value: admin
 - displayName: Jenkins service admin password
   name: JENKINS_PASSWORD
-  value: admin123
+  value: password
