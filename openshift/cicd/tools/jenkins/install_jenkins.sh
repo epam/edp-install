@@ -19,4 +19,12 @@ oc delete pvc -n ci-cd jenkins
 oc delete service -n ci-cd jenkins
 oc delete service -n ci-cd jenkins-jnlp
 oc delete serviceaccount -n ci-cd jenkins
+oc delete cm -n ci-cd jenkins-slaves
 oc delete rolebinding -n ci-cd jenkins_edit
+oc delete deploymentconfig -n ci-cd nexus
+oc delete route -n ci-cd nexus
+oc delete pvc -n ci-cd nexus-pv
+oc delete service -n ci-cd nexus
+oc delete serviceaccount -n ci-cd nexus
+oc delete job -n ci-cd nexus-integration
+oc delete cm -n ci-cd nexus-integration
