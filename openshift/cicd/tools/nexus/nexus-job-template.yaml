@@ -146,7 +146,7 @@ parameters:
   value: jenkins
 - displayName: Jenkins service port
   name: JENKINS_PORT
-  value: "8080"
+  value: "80"
 - displayName: Jenkins service admin user
   name: JENKINS_ADMIN
   value: admin
