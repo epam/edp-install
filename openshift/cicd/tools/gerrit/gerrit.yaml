@@ -308,10 +308,6 @@ parameters:
   displayName: Gerrit project name
   name: GERRIT_PROJECT
   value: "oc-petclinic"
-- description: Project name in Gerrit that will be replicated to git
-  displayName: Gerrit project name
-  name: GERRIT_PROJECT
-  value: "oc-petclinic"
 - displayName: Gerrit Max Memory
   name: GERRIT_MAX_MEMORY
   value: 2Gi
