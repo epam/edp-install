@@ -27,4 +27,7 @@ oc delete pvc -n ci-cd nexus-pv
 oc delete service -n ci-cd nexus
 oc delete serviceaccount -n ci-cd nexus
 oc delete job -n ci-cd nexus-integration
-oc delete cm -n ci-cd nexus-integration
+
+
+oc -n ci-cd adm policy add-scc-to-user anyuid -z sonar
+oc -n ci-cd adm policy add-scc-to-user anyuid -z gerrit
