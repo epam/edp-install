@@ -1,0 +1,149 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: gerrit
+  name: gerrit
+spec:
+  replicas: 1
+  selector:
+    app: gerrit
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        pod.alpha.kubernetes.io/init-containers: >-
+          [{"name":"init-myservice","image":"busybox","command":["sh","-c","while
+          ! nc -w 1 gerrit-db 5432 \u003c/dev/null; do echo waiting for
+          gerrit-db; sleep 10;
+          done;"],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}]
+        pod.beta.kubernetes.io/init-containers: >-
+          [{"name":"init-myservice","image":"busybox","command":["sh","-c","while
+          ! nc -w 1 gerrit-db 5432 \u003c/dev/null; do echo waiting for
+          gerrit-db; sleep 10;
+          done;"],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}]
+      creationTimestamp: null
+      labels:
+        app: gerrit
+    spec:
+      containers:
+        - env:
+            - name: WEBURL
+              value: 'http://gerrit-ci-cd.demo.edp.projects.epam.com'
+            - name: AUTH_TYPE
+              value: OAUTH
+            - name: OAUTH_GITLAB_ROOT_URL
+              value: 'https://git.epam.com/'
+            - name: OAUTH_GITLAB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: secret
+                  name: gitlab-oauth
+            - name: OAUTH_GITLAB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: id
+                  name: gitlab-oauth
+            - name: DATABASE_TYPE
+              value: postgresql
+            - name: DB_PORT_5432_TCP_ADDR
+              value: gerrit-db
+            - name: DB_PORT_5432_TCP_PORT
+              value: '5432'
+            - name: DB_ENV_POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  key: database-name
+                  name: gerrit-db
+            - name: DB_ENV_POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: gerrit-db
+            - name: DB_ENV_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: gerrit-db
+            - name: GERRIT_INIT_ARGS
+              value: >-
+                --install-plugin=commit-message-length-validator
+                --install-plugin=download-commands --install-plugin=hooks
+                --install-plugin=reviewnotes --install-plugin=singleusergroup
+                --install-plugin=replication
+          image: 'openfrontier/gerrit:2.14.1'
+          imagePullPolicy: IfNotPresent
+          name: gerrit
+          ports:
+            - containerPort: 8080
+              name: ui
+              protocol: TCP
+            - containerPort: 29418
+              name: ssh
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 8080
+            timeoutSeconds: 3
+          resources:
+            limits:
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /var/gerrit/review_site
+              name: gerrit-data
+            - mountPath: /var/gerrit/review_site/etc
+              name: replication-config
+            - mountPath: /var/gerrit/.ssh
+              name: ssh-config
+      dnsPolicy: ClusterFirst
+      initContainers:
+        - command:
+            - sh
+            - '-c'
+            - >-
+              while ! nc -w 1 gerrit-db 5432 </dev/null; do echo waiting for
+              gerrit-db; sleep 10; done;
+          image: busybox
+          imagePullPolicy: Always
+          name: init-myservice
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: gerrit
+      serviceAccountName: gerrit
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: gerrit-data
+          persistentVolumeClaim:
+            claimName: gerrit-data
+        - configMap:
+            defaultMode: 420
+            items:
+              - key: replication.config
+                path: replication.config
+            name: gerrit
+          name: replication-config
+        - configMap:
+            defaultMode: 420
+            items:
+              - key: config
+                path: config
+            name: gerrit
+          name: ssh-config
+  test: false
+  triggers:
+    - type: ConfigChange
