@@ -254,7 +254,8 @@ objects:
           volumeMounts:
             - mountPath: /var/gerrit/review_site
               name: gerrit-data
-            - mountPath: /var/gerrit/review_site/etc
+            - mountPath: /var/gerrit/review_site/etc/replication.config
+              subPath: replication.config
               name: replication-config
             - mountPath: /var/gerrit/.ssh
               name: ssh-config
