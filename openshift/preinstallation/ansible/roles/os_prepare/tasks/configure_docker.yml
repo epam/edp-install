@@ -1,3 +1,9 @@
+- name: "Enable overlay2 storage driver"
+  copy:
+    src: "daemon.json"
+    dest: "/etc/docker/"
+    force: yes
+
 - name: "Reload systemd"
   command: systemctl daemon-reload
 
