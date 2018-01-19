@@ -241,7 +241,7 @@ objects:
         - image: python:3.6-alpine
           imagePullPolicy: IfNotPresent
           name: sonar-integration
-          command: ["pip", "install", "requests", "&&", "python", "/tmp/config.py"]
+          command: ["/bin/sh","-c","pip install requests && python /tmp/config.py"]
           env:
           - name: SONAR_HOST
             value: ${SONAR_HOST}
@@ -281,6 +281,7 @@ objects:
                 path: config.py
             name: sonar-integration
         restartPolicy: Never
+        serviceAccount: sonar
 parameters:
 - displayName: SonarQube host
   value: "sonar"
