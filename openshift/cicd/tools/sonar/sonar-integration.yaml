@@ -3542,7 +3542,15 @@ objects:
                                                                                     None) is not None else "jenkins"
             sonar = SonarApi(**sonar_data)
 
-            if sonar.install_plugin("pmd") or sonar.install_plugin("findbugs") or sonar.install_plugin("checkstyle"):
+            need_reboot = False
+            if sonar.install_plugin("pmd"):
+                need_reboot = True
+            if sonar.install_plugin("findbugs"):
+                need_reboot = True
+            if sonar.install_plugin("checkstyle"):
+                need_reboot = True
+
+            if need_reboot:
                 print("[DEBUG] Plugins have been installed, rebooting server")
                 sonar.restart()
                 sonar_status = 'DOWN'
