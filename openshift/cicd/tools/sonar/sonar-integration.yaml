@@ -25,7 +25,7 @@ objects:
         - image: python:3.6-alpine
           imagePullPolicy: IfNotPresent
           name: sonar-integration
-          command: ["python", "/tmp/config.py"]
+          command: ["pip", "install", "requests", "&&", "python", "/tmp/config.py"]
           env:
           - name: SONAR_HOST
             value: ${SONAR_HOST}
