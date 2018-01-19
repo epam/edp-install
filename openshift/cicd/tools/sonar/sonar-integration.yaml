@@ -3636,8 +3636,6 @@ objects:
             value: ${AUTO_USER}
           - name: AUTO_USER_PASSWORD
             value: ${AUTO_USER_PASSWORD}
-          - name: JENKINS_PATH
-            value: ${JENKINS_PATH}
           - name: APP_FILE
             value: "/tmp/config.py"
           volumeMounts:
