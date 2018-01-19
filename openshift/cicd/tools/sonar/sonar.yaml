@@ -5,7 +5,7 @@ metadata:
   annotations:
     description: |-
           The SonarQube template. sonar-db secret with credentials(database-name,database-password,database-user) for database access should be create before start.
-          EXAMPLE: oc -n test-sonar-am create secret generic sonar-db --from-literal=database-user=test --from-literal=database-password=test --from-literal=database-name=test
+          EXAMPLE: oc -n test-sonar-am create secret generic sonar-db --from-literal=database-user=test --from-literal=database-password=test
           NOTE: You must have persistent volumes available in your cluster to use this template.
     iconClass: icon-jenkins
     openshift.io/display-name: EDP Sonar (Persistent - gluster)
@@ -161,10 +161,7 @@ objects:
         - name: sonar-db
           env:
           - name: POSTGRES_DB
-            valueFrom:
-              secretKeyRef:
-                name: ${SONARQUBE_DB_SECRET}
-                key: database-name
+            value: "sonar"
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
