@@ -2,7 +2,7 @@ kind: Template
 apiVersion: v1
 metadata:
   annotations:
-    description: The SonarQube template. sonar-db secret with credentials should be create before start. Example: oc -n namespace create secret generic sonar-db --from-literal=database-user=test --from-literal=database-password=test --from-literal=database-name=test
+    description: The SonarQube template. sonar-db secret with credentials(database-name,database-password,database-user) for database access should be create before start.
     tags: instant-app,sonar,sonar-db
   name: sonar
 message: "Login to SonarQube with the default admin user: admin/admin"
