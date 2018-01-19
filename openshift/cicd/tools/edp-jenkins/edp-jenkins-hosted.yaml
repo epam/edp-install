@@ -9,7 +9,7 @@ metadata:
       Jenkins service, with persistent storage.
       NOTE: You must have persistent volumes available in your cluster to use this template.
     iconClass: icon-jenkins
-    openshift.io/display-name: EDP Jenkins (Persistent - gluster)
+    openshift.io/display-name: EDP Jenkins (Persistent - HostPath)
     tags: instant-app,jenkins
     template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
     template.openshift.io/long-description: This template deploys a Jenkins server
@@ -220,7 +220,7 @@ objects:
         volumes:
         - name: ${JENKINS_SERVICE_NAME}-data
           hostPath:
-            path: /opt/data
+            path: ${HOST_PATH_VOLUME}
           #persistentVolumeClaim:
           #    claimName: jenkins-pv-claim
         - name: ${JENKINS_SERVICE_NAME}-init
@@ -409,3 +409,7 @@ parameters:
   displayName: Backend docker image.
   name: BACKEND_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"
+- description: HostPath volume path
+  displayName: HostPath volume path
+  name: HOST_PATH_VOLUME
+  value: "/tmp/jenkins-data"
