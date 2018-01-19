@@ -2,14 +2,14 @@ kind: Template
 apiVersion: v1
 metadata:
   name: sonar-integration
-    annotations:
-      description: |-
-            The SonarQube template for intergation with Jenkins
-      iconClass: icon-jenkins
-      openshift.io/display-name: EDP Sonar-integration
-      tags: ci-cd
-      template.openshift.io/provider-display-name: Red Hat, Inc.
-      template.openshift.io/support-url: https://access.redhat.com
+  annotations:
+    description: |-
+          The SonarQube template for intergation with Jenkins
+    iconClass: icon-jenkins
+    openshift.io/display-name: EDP Sonar-integration
+    tags: ci-cd
+    template.openshift.io/provider-display-name: Red Hat, Inc.
+    template.openshift.io/support-url: https://access.redhat.com
 objects:
 - apiVersion: v1
   kind: ConfigMap
