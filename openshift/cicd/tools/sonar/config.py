@@ -153,6 +153,7 @@ def main():
         "https://github.com/checkstyle/sonar-checkstyle/releases/download/3.7/checkstyle-sonar-plugin-3.7.jar",
         "%s/checkstyle-sonar-plugin-3.7.jar" % sonar_plugins_path)
 
+    print("[DEBUG] Plugins have been installed, rebooting server")
     sonar = SonarApi(**sonar_data)
     sonar.restart()
 
@@ -167,6 +168,7 @@ def main():
             print("[DEBUG] Sonar is not alive yet, waiting...")
     print("[DEBUG] Sonar is ready")
 
+    print("[DEBUG] Uploading EngEx profile")
     sonar.restore_profile("java-sonar-way-ext.xml")
 
     profile_name = "Sonar way ext"
