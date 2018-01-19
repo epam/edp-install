@@ -3381,8 +3381,6 @@ objects:
             </rules>
         </profile>
     config.py: |-
-        import urllib.request
-        import urllib.parse
         from base64 import b64encode
         import json
         import sys
@@ -3509,6 +3507,25 @@ objects:
                                         auth=(self.username, self.password))
                 return json.loads(response.text)['status']
 
+            def check_plugin_installed(self, plugin_key):
+                response = requests.get('http://' + self.host + ':' + self.port + '/api/plugins/installed',
+                                        auth=(self.username, self.password))
+                for plugin in json.loads(response.text)['plugins']:
+                    if plugin['key'] == plugin_key:
+                        return True
+                return False
+
+            def install_plugin(self, plugin_key):
+                if not self.check_plugin_installed(plugin_key):
+                    data = {'key': plugin_key}
+                    requests.post('http://' + self.host + ':' + self.port + '/api/plugins/install', data=data,
+                                         auth=(self.username, self.password))
+                    print("[DEBUG] Plugin %s has been installed" % plugin_key)
+                    return True
+                else:
+                    print("[DEBUG] Plugin %s is already installed" % plugin_key)
+                    return False
+
 
         def main():
             sonar_data = {}
@@ -3523,36 +3540,24 @@ objects:
             auto_user = os.environ['AUTO_USER'] if os.environ.get('AUTO_USER', None) is not None else "jenkins"
             auto_user_password = os.environ['AUTO_USER_PASSWORD'] if os.environ.get('AUTO_USER_PASSWORD',
                                                                                     None) is not None else "jenkins"
-
-            sonar_plugins_path = "/opt/data/sonar"
-            print("[DEBUG] Downloading plugins for sonar to folder %s" % sonar_plugins_path)
-            urllib.request.urlretrieve(
-                "https://github.com/spotbugs/sonar-findbugs/releases/download/3.6.0/sonar-findbugs-plugin-3.6.0.jar",
-                "%s/sonar-findbugs-plugin-3.6.0.jar" % sonar_plugins_path)
-            urllib.request.urlretrieve(
-                "https://github.com/SonarQubeCommunity/sonar-pmd/releases/download/2.6/sonar-pmd-plugin-2.6.jar",
-                "%s/sonar-pmd-plugin-2.6.jar" % sonar_plugins_path)
-            urllib.request.urlretrieve(
-                "https://github.com/checkstyle/sonar-checkstyle/releases/download/3.7/checkstyle-sonar-plugin-3.7.jar",
-                "%s/checkstyle-sonar-plugin-3.7.jar" % sonar_plugins_path)
-
-            print("[DEBUG] Plugins have been installed, rebooting server")
             sonar = SonarApi(**sonar_data)
-            sonar.restart()
 
-            sonar_status = 'DOWN'
-            while sonar_status != 'UP':
-                try:
-                    sonar = SonarApi(**sonar_data)
-                    if sonar.get_status() == 'UP':
-                        sonar_status = "UP"
-                except Exception:
-                    time.sleep(30)
-                    print("[DEBUG] Sonar is not alive yet, waiting...")
-            print("[DEBUG] Sonar is ready")
+            if sonar.install_plugin("pmd") or sonar.install_plugin("findbugs") or sonar.install_plugin("checkstyle"):
+                print("[DEBUG] Plugins have been installed, rebooting server")
+                sonar.restart()
+                sonar_status = 'DOWN'
+                while sonar_status != 'UP':
+                    try:
+                        sonar = SonarApi(**sonar_data)
+                        if sonar.get_status() == 'UP':
+                            sonar_status = "UP"
+                    except Exception:
+                        time.sleep(30)
+                        print("[DEBUG] Sonar is not alive yet, waiting...")
+                print("[DEBUG] Sonar is ready")
 
             print("[DEBUG] Uploading EngEx profile")
-            sonar.restore_profile("java-sonar-way-ext.xml")
+            sonar.restore_profile("/tmp/sonar/java-sonar-way-ext.xml")
 
             profile_name = "Sonar way ext"
             profile_id = sonar.get_profile_id(profile_name.replace(" ", "+"))
@@ -3589,6 +3594,7 @@ objects:
 
         if __name__ == "__main__":
             sys.exit(main())
+
 - apiVersion: batch/v1
   kind: Job
   metadata:
