@@ -57,6 +57,7 @@ objects:
       // Base classes
       //===========================
       import jenkins.model.*
+      import hudson.model.*
       import groovy.io.FileType
       //===========================
       // Global security classes
@@ -71,6 +72,12 @@ objects:
       //Kubernetes plugin
       //===========================
       import org.csanchez.jenkins.plugins.kubernetes.*
+      //===========================
+      //Sonar plugin
+      //===========================
+      import hudson.plugins.sonar.*
+      import hudson.plugins.sonar.model.*
+      //===========================
       file = new File("done.txt")
       if (file.exists()) {
         println "Configuration of Jenkins has been already done"
@@ -131,6 +138,28 @@ objects:
       //}
       //instance.save()
       //instance.doSafeRestart()
+      //===========================
+      //===========================
+      // Modifying Sonar Plugins for getting an ability to post-configure it via job
+      //===========================
+      SonarGlobalConfiguration sonarConf = Hudson.instance.getDescriptorByType(SonarGlobalConfiguration.class)
+      def sinst = new SonarInstallation(
+        "Sonar", // Name
+        "http://sonar:9000",
+        "5.3",
+        "31fd1e3aebd44bc47a6caa9d274765a44ed82e5d", // Token
+        "",
+        "",
+        "",
+        "",
+        "",
+        new TriggersConfig(),
+        "",
+        "",
+        "" // Additional Analysis Properties
+      )
+      sonarConf.setInstallations(sinst)
+      sonarConf.save()
       //===========================
       String filename = "done.txt"
       boolean success = new File(filename).createNewFile()
