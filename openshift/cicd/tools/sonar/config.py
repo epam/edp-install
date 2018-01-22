@@ -1,4 +1,3 @@
-from base64 import b64encode
 import json
 import sys
 from xml.dom.minidom import *
@@ -13,15 +12,11 @@ class SonarApi:
         self.port = kwargs["port"]
         self.username = kwargs["username"]
         self.password = kwargs["password"]
-        self.debug_level = kwargs["debug_level"]
-        self.credentials = b64encode(
-            b"%s:%s" % (bytes(self.username, encoding='utf-8'), bytes(self.password, encoding='utf-8'))).decode("ascii")
-        self.headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain",
-                        'Authorization': 'Basic %s' % self.credentials}
+        self.credentials = (self.username, self.password)
 
     def check_user_exist(self, login):
         response = requests.get('http://' + self.host + ':' + self.port + '/api/users/search?login=%s' % login,
-                                auth=(self.username, self.password))
+                                auth=self.credentials)
         for user in json.loads(response.text)['users']:
             if user['login'] == login:
                 return True
@@ -31,14 +26,14 @@ class SonarApi:
         if not self.check_user_exist(login):
             data = {'login': login, 'name': name, 'password': password}
             requests.post('http://' + self.host + ':' + self.port + '/api/users/create', data=data,
-                          auth=(self.username, self.password))
+                          auth=self.credentials)
             print("[DEBUG] User %s has been created" % login)
         else:
             print("[DEBUG] User %s is already exist" % login)
 
     def check_token_exist(self, login, token_name):
         response = requests.get('http://' + self.host + ':' + self.port + '/api/user_tokens/search?login=%s' % login,
-                                auth=(self.username, self.password))
+                                auth=self.credentials)
         for token in json.loads(response.text)['userTokens']:
             if token['name'] == token_name:
                 return True
@@ -48,7 +43,7 @@ class SonarApi:
         if not self.check_token_exist(login, token_name):
             data = {'login': login, 'name': token_name}
             response = requests.post('http://' + self.host + ':' + self.port + '/api/user_tokens/generate', data=data,
-                                     auth=(self.username, self.password))
+                                     auth=self.credentials)
 
             print("[DEBUG] Token %s for login %s has been created" % (token_name, login))
             return json.loads(response.text)['token']
@@ -57,7 +52,7 @@ class SonarApi:
 
     def check_group_exist(self, name):
         response = requests.get('http://' + self.host + ':' + self.port + '/api/user_groups/search?q=%s&f=name' % name,
-                                auth=(self.username, self.password))
+                                auth=self.credentials)
         if json.loads(response.text)['groups']:
             return True
         return False
@@ -66,7 +61,7 @@ class SonarApi:
         if not self.check_group_exist(name):
             data = {'name': name}
             requests.post('http://' + self.host + ':' + self.port + '/api/user_groups/create', data=data,
-                          auth=(self.username, self.password))
+                          auth=self.credentials)
             print("[DEBUG] Group %s has been created" % name)
         else:
             print("[DEBUG] Group %s is already exist" % name)
@@ -74,7 +69,7 @@ class SonarApi:
     def add_user_to_group(self, username, group):
         data = {'name': group, 'login': username}
         requests.post('http://' + self.host + ':' + self.port + '/api/user_groups/add_user', data=data,
-                      auth=(self.username, self.password))
+                      auth=self.credentials)
 
     def add_permission_to_user(self, login, permission):
         if permission not in ['admin', 'codeviewer', 'issueadmin', 'scan', 'user']:
@@ -83,14 +78,14 @@ class SonarApi:
             return False
         data = {'login': login, 'permission': 'scan'}
         requests.post('http://' + self.host + ':' + self.port + '/api/permissions/add_user', data=data,
-                      auth=(self.username, self.password))
+                      auth=self.credentials)
         print("[DEBUG] Permission %s for user %s has been granted" % (permission, login))
         return True
 
     def get_profile_id(self, quality_profile):
         response = requests.get(
             'http://' + self.host + ':' + self.port + '/api/qualityprofiles/search?qualityProfile=%s' % quality_profile,
-            auth=(self.username, self.password))
+            auth=self.credentials)
         profile_id = json.loads(response.text)['profiles'][0]['key']
         print("[DEBUG] Profile id of %s profile is %s" % (quality_profile, profile_id))
         return profile_id
@@ -98,35 +93,35 @@ class SonarApi:
     def activate_profile_rules(self, target_key, languages, statuses):
         data = {'activation': 'true', 'languages': languages, 'targetKey': target_key, 'statuses': statuses}
         requests.post('http://' + self.host + ':' + self.port + '/api/qualityprofiles/activate_rules', data=data,
-                      auth=(self.username, self.password))
+                      auth=self.credentials)
 
     def deactivate_profile_rules(self, target_key, statuses):
         data = {'targetKey': target_key, 'statuses': statuses}
         requests.post('http://' + self.host + ':' + self.port + '/api/qualityprofiles/deactivate_rules', data=data,
-                      auth=(self.username, self.password))
+                      auth=self.credentials)
 
     def set_default_profile(self, profile, language):
         data = {'qualityProfile': profile, 'language': language}
         requests.post('http://' + self.host + ':' + self.port + '/api/qualityprofiles/set_default', data=data,
-                      auth=(self.username, self.password))
+                      auth=self.credentials)
 
     def restore_profile(self, xml_location):
         files = {'backup': (xml_location, open(xml_location, 'r'))}
         requests.post('http://' + self.host + ':' + self.port + '/api/qualityprofiles/restore', files=files,
-                      auth=(self.username, self.password))
+                      auth=self.credentials)
 
     def restart(self):
         requests.post('http://' + self.host + ':' + self.port + '/api/system/restart',
-                      auth=(self.username, self.password))
+                      auth=self.credentials)
 
     def get_status(self):
         response = requests.get('http://' + self.host + ':' + self.port + '/api/system/status',
-                                auth=(self.username, self.password))
+                                auth=self.credentials)
         return json.loads(response.text)['status']
 
     def check_plugin_installed(self, plugin_key):
         response = requests.get('http://' + self.host + ':' + self.port + '/api/plugins/installed',
-                                auth=(self.username, self.password))
+                                auth=self.credentials)
         for plugin in json.loads(response.text)['plugins']:
             if plugin['key'] == plugin_key:
                 return True
@@ -136,7 +131,7 @@ class SonarApi:
         if not self.check_plugin_installed(plugin_key):
             data = {'key': plugin_key}
             requests.post('http://' + self.host + ':' + self.port + '/api/plugins/install', data=data,
-                                 auth=(self.username, self.password))
+                          auth=self.credentials)
             print("[DEBUG] Plugin %s has been installed" % plugin_key)
             return True
         else:
@@ -147,12 +142,11 @@ class SonarApi:
 def main():
     sonar_data = {}
     sonar_data["host"] = os.environ['SONAR_HOST'] if os.environ.get('SONAR_HOST',
-                                                                    None) is not None else "ecsd00100e91.epam.com"
-    sonar_data["port"] = os.environ['SONAR_PORT'] if os.environ.get('SONAR_PORT', None) is not None else "32469"
+                                                                    None) is not None else "sonar"
+    sonar_data["port"] = os.environ['SONAR_PORT'] if os.environ.get('SONAR_PORT', None) is not None else "9000"
     sonar_data["username"] = os.environ['SONAR_ADMIN'] if os.environ.get('SONAR_ADMIN', None) is not None else "admin"
     sonar_data['password'] = os.environ['SONAR_PASSWORD'] if os.environ.get('SONAR_PASSWORD',
                                                                             None) is not None else "admin"
-    sonar_data['debug_level'] = 7
 
     auto_user = os.environ['AUTO_USER'] if os.environ.get('AUTO_USER', None) is not None else "jenkins"
     auto_user_password = os.environ['AUTO_USER_PASSWORD'] if os.environ.get('AUTO_USER_PASSWORD',
@@ -202,8 +196,9 @@ def main():
     if not jenkins_token:
         return 0
 
-    jenkins_data_path = "/opt/data/jenkins"
-    plugin_config_file = "%s/hudson.plugins.sonar.SonarGlobalConfiguration.xml" % jenkins_data_path
+    jenkins_data = {}
+    jenkins_data['path'] = "/opt/data/jenkins"
+    plugin_config_file = "%s/hudson.plugins.sonar.SonarGlobalConfiguration.xml" % jenkins_data['path']
     if not os.path.isfile(plugin_config_file):
         print(
             "[DEBUG] There is no file %s for configuration, please make sure that Sonar plugin is installed in Jenkins")
