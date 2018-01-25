@@ -12,3 +12,5 @@ npm-debug.log
 
 /backend/target/*
 /database/target/*
+openshift/cicd/examples/3-tier-app/frontend/coverage/*
+openshift/cicd/examples/3-tier-app/frontend/.scannerwork/*
