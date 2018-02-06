@@ -48,7 +48,7 @@ node("${buildNode}") {
         vars['gerritProject'] = env.GERRIT_PROJECT ? env.GERRIT_PROJECT : env.GERRIT_PROJECT_NAME
         vars['sitProject'] = env.SIT_PROJECT ? SIT_PROJECT : "sit"
 
-        vars['gitMicroservicesUrl'] = "ssh://${vars.autoUser}@${vars.gerritHost}:29418/${vars.gerritProject}"
+        vars['gitMicroservicesUrl'] = env.GILAB_REPO ? GILAB_REPO : "ssh://${vars.autoUser}@${vars.gerritHost}:29418/${vars.gerritProject}"
 
         println("[JENKINS][DEBUG] VARIABLES - ${vars}")
 
