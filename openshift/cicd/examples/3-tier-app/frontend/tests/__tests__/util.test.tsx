@@ -1,3 +1,5 @@
+require('jest');
+
 import { url, submitForm } from '../../src/util';
 
 import * as React from 'react';
