@@ -3610,6 +3610,9 @@ objects:
         name: sonar-integration
       spec:
         initContainers:
+        - name: init-jenkins
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 jenkins 8080 </dev/null; do echo waiting for jenkins; sleep 10; done;"]
         - name: init-sonar
           image: busybox
           command: ["sh", "-c", "while ! nc -w 1 ${SONAR_HOST} ${SONAR_PORT} </dev/null; do echo waiting for ${SONAR_HOST}; sleep 10; done;"]

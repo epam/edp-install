@@ -1,0 +1,17 @@
+--- # This is a structural YAML example to up a master node
+- name: "Install Nexus app - preparation"
+  command: "{{ ocadm }} -n {{ project }} create configmap nexus-integration --from-file {{ templates_dir }}/nexus/config.py"
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+- name: "Install Nexus app"
+  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/nexus/nexus.yaml -p SERVICE_NAME={{ tools.nexus.service_name }} -p NEXUS_VERSION={{ tools.nexus.version }} -p VOLUME_CAPACITY={{ tools.nexus.volume_capacity }} -p MAX_MEMORY={{ tools.nexus.max_memory }}"
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'

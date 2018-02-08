@@ -31,9 +31,12 @@ objects:
         name: nexus-integration
       spec:
         initContainers:
-          - name: init-nexus
-            image: busybox
-            command: ["sh", "-c", "while ! nc -w 1 ${NEXUS_HOST} ${NEXUS_PORT} </dev/null; do echo waiting for ${NEXUS_HOST}; sleep 10; done;"]
+        - name: init-jenkins
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 jenkins 8080 </dev/null; do echo waiting for jenkins; sleep 10; done;"]
+        - name: init-nexus
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 ${NEXUS_HOST} ${NEXUS_PORT} </dev/null; do echo waiting for ${NEXUS_HOST}; sleep 10; done;"]
         volumes:
         - name: python-script
           configMap:
@@ -146,7 +149,7 @@ parameters:
   value: jenkins
 - displayName: Jenkins service port
   name: JENKINS_PORT
-  value: "80"
+  value: "8080"
 - displayName: Jenkins service admin user
   name: JENKINS_ADMIN
   value: admin

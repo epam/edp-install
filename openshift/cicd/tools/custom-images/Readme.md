@@ -22,8 +22,13 @@ oc create serviceaccount pusher
 ```
 
 3. Bind role with pushing rights to the account
+if you are Cluster Admin, please do the following
 ```
 oc policy add-role-to-user system:image-builder system:serviceaccount:cd-cd:pusher
+```
+if you are Project Admin, please do the following
+```
+oc policy add-role-to-user edit system:serviceaccount:ci-cd:pusher
 ```
 
 4. Investigate the created account concerning its secrets
@@ -65,6 +70,9 @@ If login succeeded, you can try to push your images to the registry.
 Finally, you need to tag your custom image and push it
 ```
 docker tag 445f4be0f46f ecsd00100e91.epam.com:32021/ci-cd/myimage:image-version
+```
+```
+docker push ecsd00100e91.epam.com:32021/ci-cd/myimage:image-version
 ```
 
 9. Check out that all is fine

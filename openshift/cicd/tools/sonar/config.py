@@ -122,6 +122,9 @@ class SonarApi:
     def check_plugin_installed(self, plugin_key):
         response = requests.get('http://' + self.host + ':' + self.port + '/api/plugins/installed',
                                 auth=self.credentials)
+        if json.loads(response.text)['plugins']:
+            return False
+
         for plugin in json.loads(response.text)['plugins']:
             if plugin['key'] == plugin_key:
                 return True

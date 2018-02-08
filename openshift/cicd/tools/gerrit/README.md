@@ -10,3 +10,9 @@ The following steps needs to be done before gerrit will be ready for deployment:
 6. oc -n ci-cd create -f gerrit.yaml
 7. Deploy gerrit from template through Openshift UI
 8. Put your private ssh key from you auto-user for replication to path /var/gerrit/review_site/id_rsa in gerrit pod
+9. To get OAUTH you need:
+```
+oc login kubernetes.default:443 --username=$OPENSHIFT_ADMIN --password=$OPENSHIFT_PASSWORD --insecure-skip-tls-verify
+oc project $OPENSHIFT_PROJECT
+oc set env dc gerrit AUTH_TYPE='OAUTH'
+```

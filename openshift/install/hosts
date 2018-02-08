@@ -1,0 +1,3 @@
+[master]
+ecsd0030007c.epam.com host_name=t-master-1
+[minion]

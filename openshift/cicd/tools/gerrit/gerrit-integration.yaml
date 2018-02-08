@@ -1,0 +1,181 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: gerrit-post-configuration-template
+metadata:
+  name: gerrit-post-configuration
+  #namespace: team-mb
+  annotations:
+    description: |-
+          EDP Gerrit configuration to be applied.
+          NOTE: You must have Gerrit and Jenkins available in your cluster to use this template.
+    iconClass: icon-jenkins
+    openshift.io/display-name: gerrit Configuration
+    tags: ci-cd
+    #template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
+    template.openshift.io/long-description: This template deploys a gerrit server
+      capable of managing OpenShift Pipeline builds and supporting OpenShift-based
+      oauth login.
+    template.openshift.io/provider-display-name: Red Hat, Inc.
+    template.openshift.io/support-url: https://access.redhat.com
+objects:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: gerrit-integration
+  data:
+    config.sh: |
+      # create admin keys and add them to admin user
+      [ ! -d /opt/data/gerrit_site/etc/ssh-keys ] && mkdir -p /opt/data/gerrit_site/etc/ssh-keys
+      cd /opt/data/gerrit_site/etc/ssh-keys
+      cat /dev/zero | ssh-keygen -b 4096 -t rsa -f id_admin_rsa -C "admin@example.com" -q -N ""
+      # add keys to admin user
+      curl -X POST -u admin:secret -H "Content-Type: text/plain" --data "$(cat id_admin_rsa.pub)"  http://{GERRIT_HOST}:{GERRIT_PORT}/a/accounts/admin/sshkeys
+
+      # creating jenkins user
+      if cat /opt/data/jenkins/.ssh/id_rsa.pub | ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit create-account --group "'Non-Interactive Users'" --ssh-key - jenkins
+      then
+        echo "Jenkins account has been successfully created"
+      else
+        echo "Jenkins account already exists"
+      fi
+
+      #ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit set-members -a Viktor_Voronin Administrators
+      #ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit set-members -a Maxim_Buslovaev Administrators
+
+      # initial conf og Gerrit
+      CHECKOUT_DIR=/git
+      #checkout project.config from All-Project.git
+      [ -d ${CHECKOUT_DIR} ] && mv ${CHECKOUT_DIR} ${CHECKOUT_DIR}.$$
+      mkdir ${CHECKOUT_DIR}
+
+      git init ${CHECKOUT_DIR}
+      cd ${CHECKOUT_DIR}
+
+      #git config
+      git config user.name  admin
+      git config user.email admin@example.com
+      git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /opt/data/gerrit_site/etc/ssh-keys/id_admin_rsa'
+
+      git remote add origin ssh://admin@${GERRIT_HOST}:29418/All-Projects
+      #checkout project.config
+      git fetch -q origin refs/meta/config:refs/remotes/origin/meta/config
+      git checkout meta/config
+
+      #add label.Jenkins-Verified
+      git config -f project.config label.Verified.function MaxWithBlock
+      git config -f project.config --add label.Verified.defaultValue  0
+      git config -f project.config --add label.Verified.value "-1 Fails"
+      git config -f project.config --add label.Verified.value "0 No score"
+      git config -f project.config --add label.Verified.value "+1 Verified"
+
+      #add label.Sonar-Verified
+      git config -f project.config label.Sonar-Verified.function MaxWithBlock
+      git config -f project.config --add label.Sonar-Verified.defaultValue  0
+      git config -f project.config --add label.Sonar-Verified.value "-1 Fails"
+      git config -f project.config --add label.Sonar-Verified.value "0 No score"
+      git config -f project.config --add label.Sonar-Verified.value "+1 Verified"
+
+      ##commit and push back
+      git add .
+      git commit -a -m "Added label - Verified and Sonar-Verified"
+
+      #Change global access right
+      ##Remove anonymous access right.
+      git config -f project.config --unset access.refs/*.read "group Anonymous Users"
+      ##add Jenkins access and verify right
+      git config -f project.config --add access.refs/heads/*.read "group Non-Interactive Users"
+      git config -f project.config --add access.refs/tags/*.read "group Non-Interactive Users"
+      git config -f project.config --add access.refs/heads/*.label-Code-Review "-1..+1 group Non-Interactive Users"
+      git config -f project.config --add access.refs/heads/*.label-Verified "-1..+1 group Non-Interactive Users"
+      git config -f project.config --add access.refs/heads/*.label-Sonar-Verified "-1..+1 group Non-Interactive Users"
+      ##add project owners' right to add verify flag
+      git config -f project.config --add access.refs/heads/*.label-Verified "-1..+1 group Project Owners"
+      git config -f project.config --add access.refs/heads/*.label-Sonar-Verified "-1..+1 group Project Owners"
+      ##commit and push back
+      git commit -a -m "Change access right." -m "Add access right for Jenkins. Remove anonymous access right"
+      git push origin meta/config:meta/config
+
+      cd -
+      rm -rf ${CHECKOUT_DIR}
+
+      # back to original auth
+      #oc login kubernetes.default:443 --username=$OPENSHIFT_ADMIN --password=$OPENSHIFT_PASSWORD --insecure-skip-tls-verify
+      #oc project $OPENSHIFT_PROJECT
+      #oc set env dc gerrit AUTH_TYPE='OAUTH'
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: gerrit-integration
+  spec:
+    parallelism: 1
+    completions: 1
+    template:
+      metadata:
+        name: gerrit-integration
+      spec:
+        initContainers:
+        - name: init-jenkins
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 jenkins 8080 </dev/null; do echo waiting for jenkins; sleep 10; done;"]
+        - name: init-gerrit
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 ${GERRIT_HOST} ${GERRIT_PORT} </dev/null; do echo waiting for ${GERRIT_HOST}; sleep 10; done;"]
+        volumes:
+        - name: python-script
+          configMap:
+            defaultMode: 420
+            name: gerrit-integration
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
+        - name: gerrit-data
+          persistentVolumeClaim:
+            claimName: gerrit-data
+        containers:
+        - name: gerrit-integration
+          image: buslovaev/gerrit-job:latest
+          imagePullPolicy: Always
+          command: ["sh", "/tmp/config.sh"]
+          env:
+          - name: GERRIT_HOST
+            value: ${GERRIT_HOST}
+          - name: GERRIT_PORT
+            value: ${GERRIT_PORT}
+          - name: GERRIT_ADMIN
+            value: ${GERRIT_ADMIN}
+          - name: GERRIT_PASSWORD
+            value: ${GERRIT_PASSWORD}
+          - name: OPENSHIFT_PROJECT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: OPENSHIFT_ADMIN
+            value: ${OPENSHIFT_ADMIN}
+          - name: OPENSHIFT_PASSWORD
+            value: ${OPENSHIFT_PASSWORD}
+          - name: APP_FILE
+            value: "/tmp/config.sh"
+          volumeMounts:
+          - mountPath: /tmp
+            name: python-script
+          - mountPath: /opt/data/jenkins
+            name: jenkins-data
+          - mountPath: /opt/data/gerrit_site
+            name: gerrit-data
+        restartPolicy: Never
+        serviceAccount: gerrit
+    backoffLimit: 1
+parameters:
+- displayName: Gerrit service name
+  name: GERRIT_HOST
+  value: gerrit
+- displayName: Gerrit service port
+  name: GERRIT_PORT
+  value: "8080"
+- displayName: Gerrit service admin user
+  name: GERRIT_ADMIN
+  value: admin
+- displayName: Gerrit service admin password
+  name: GERRIT_PASSWORD
+  value: secret

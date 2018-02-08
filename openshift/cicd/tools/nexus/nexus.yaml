@@ -44,14 +44,14 @@ objects:
     strategy:
       recreateParams:
         timeoutSeconds: 600
-        post:
-          failurePolicy: Abort
-          execNewPod:
-            containerName: ${SERVICE_NAME}
-            command:
-              - "/bin/bash"
-              - "-c"
-              - "curl -o /tmp/nexus-functions -s https://raw.githubusercontent.com/MerelyMax1986/nexus-functions/master/add-npm-repo.sh; source /tmp/nexus-functions; add_nexus3_npm_repos admin admin123 http://${SERVICE_NAME}:8081"
+        #post:
+        #  failurePolicy: Abort
+        #  execNewPod:
+        #    containerName: ${SERVICE_NAME}
+        #    command:
+        #      - "/bin/bash"
+        #      - "-c"
+        #      - "curl -o /tmp/nexus-functions -s https://raw.githubusercontent.com/MerelyMax1986/nexus-functions/master/add-npm-repo.sh; source /tmp/nexus-functions; add_nexus3_npm_repos admin admin123 http://${SERVICE_NAME}:8081"
       type: Recreate
     template:
       metadata:
@@ -70,10 +70,10 @@ objects:
               - echo
               - ok
             failureThreshold: 3
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 180
+            periodSeconds: 1
             successThreshold: 1
-            timeoutSeconds: 1
+            timeoutSeconds: 10
           name: ${SERVICE_NAME}
           ports:
           - containerPort: 8081

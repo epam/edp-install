@@ -9,7 +9,7 @@ metadata:
       Jenkins service, with persistent storage.
       NOTE: You must have persistent volumes available in your cluster to use this template.
     iconClass: icon-jenkins
-    openshift.io/display-name: EDP Jenkins (Persistent - HostPath)
+    openshift.io/display-name: EDP Jenkins (Persistent - gluster)
     tags: instant-app,jenkins
     template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
     template.openshift.io/long-description: This template deploys a Jenkins server
@@ -41,12 +41,6 @@ objects:
       requests:
         storage: ${VOLUME_CAPACITY}
     storageClassName: glusterfs-storage
-#- apiVersion: v1
-#  kind: ConfigMap
-#  metadata:
-#    name: ${JENKINS_SERVICE_NAME}-deleted
-#  data:
-#    deleted.groovy: |-
 - apiVersion: v1
   kind: ConfigMap
   metadata:
@@ -57,6 +51,7 @@ objects:
       // Base classes
       //===========================
       import jenkins.model.*
+      import hudson.model.*
       import groovy.io.FileType
       //===========================
       // Global security classes
@@ -71,6 +66,19 @@ objects:
       //Kubernetes plugin
       //===========================
       import org.csanchez.jenkins.plugins.kubernetes.*
+      //===========================
+      //Sonar plugin
+      //===========================
+      import hudson.plugins.sonar.*
+      import hudson.plugins.sonar.model.*
+      //===========================
+      //Gerrit plugin
+      //===========================
+      import com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl;
+      import com.sonyericsson.hudson.plugins.gerrit.trigger.GerritServer;
+      import com.sonyericsson.hudson.plugins.gerrit.trigger.config.Config;
+      import com.sonyericsson.hudson.plugins.gerrit.trigger.config.PluginConfig;
+      //===========================
       file = new File("done.txt")
       if (file.exists()) {
         println "Configuration of Jenkins has been already done"
@@ -132,6 +140,60 @@ objects:
       //instance.save()
       //instance.doSafeRestart()
       //===========================
+      //===========================
+      // Modifying Sonar Plugin for getting an ability to post-configure it via job
+      //===========================
+      SonarGlobalConfiguration sonarConf = Hudson.instance.getDescriptorByType(SonarGlobalConfiguration.class)
+      def sinst = new SonarInstallation(
+        "Sonar", // Name
+        "http://sonar:9000",
+        "5.3",
+        "31fd1e3aebd44bc47a6caa9d274765a44ed82e5d", // Token
+        "",
+        "",
+        "",
+        "",
+        "",
+        new TriggersConfig(),
+        "",
+        "",
+        "" // Additional Analysis Properties
+      )
+      sonarConf.setInstallations(sinst)
+      sonarConf.save()
+      //===========================
+      //===========================
+      // Modifying Gerrit Plugin for getting an ability to post-configure it via job
+      //===========================
+      def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
+
+      PluginImpl plugin = PluginImpl.getInstance();
+
+      server = new GerritServer("gerrit", false)
+
+      PluginConfig pluginConfig = plugin.getPluginConfig();
+
+      server.getConfig().setNumberOfSendingWorkerThreads(pluginConfig.getNumberOfSendingWorkerThreads());
+      server.getConfig().setGerritHostName("gerrit")
+      server.getConfig().setGerritFrontEndURL("http://gerrit:8080/")
+      server.getConfig().setGerritAuthKeyFile(new File("${JENKINS_HOME}/.ssh/id_jenkins_rsa"))
+      server.getConfig().setGerritSshPort(29418)
+      server.getConfig().setGerritUserName("jenkins")
+
+      plugin.addServer(server);
+      server.start();
+      plugin.save();
+      //===========================
+      //===========================
+      // Generatin keys for Gerrit exchange
+      def cmd = [
+        'bash',
+        '-c',
+        '''[ -d ${JENKINS_HOME}/.ssh ] && mkdir -p ${JENKINS_HOME}/.ssh
+          |cat /dev/zero | ssh-keygen -b 4096 -t rsa -f ${JENKINS_HOME}/.ssh/id_rsa -C "jenkins@example.com" -q -N ""
+          |'''.stripMargin() ]
+      println cmd.execute().text
+      //===========================
       String filename = "done.txt"
       boolean success = new File(filename).createNewFile()
       }
@@ -166,10 +228,11 @@ objects:
           - name: KUBERNETES_TRUST_CERTIFICATES
             value: "true"
           - name: JNLP_SERVICE_NAME
-            value: ${JNLP_SERVICE_NAME}
+            value: jenkins-jnlp
           - name: INSTALL_PLUGINS
-            value: "ace-editor:1.0.1,analysis-collector:1.52,analysis-core:1.92,authentication-tokens:1.1,branch-api:2.0.9,checkstyle:3.49,cloudbees-folder:6.0.4,conditional-buildstep:1.3.1,config-file-provider:2.16.2,credentials:2.1.13,dependency-check-jenkins-plugin:2.1.1,display-url-api:2.0,docker-commons:1.8,docker-workflow:1.9,durable-task:1.16,favorite:2.3.0,findbugs:4.71,gerrit-trigger:2.26.2,git-client:2.4.4,github-api:1.85.1,github-branch-source:2.0.8,github:1.26.0,git:3.3.2,git-server:1.5,handlebars:1.1,jackson2-api:2.7.3,jacoco:2.2.1,javadoc:1.0,job-dsl:1.60,jquery:1.11.2-0,junit:1.20,mapdb-api:1.0.1.0,matrix-auth:1.5,matrix-project:1.7.1,maven-plugin:2.14,mercurial:1.54,metrics:3.1.2.9,momentjs:1.1,parameterized-trigger:2.35.1,pipeline-build-step:2.5.1,pipeline-graph-analysis:1.3,pipeline-milestone-step:1.3,pipeline-model-api:1.1.4,pipeline-model-definition:1.1.4,pipeline-model-extensions:1.1.4,pipeline-stage-step:2.2,pipeline-stage-tags-metadata:1.1.4,pipeline-stage-view:2.4,plain-credentials:1.3,pmd:3.49,pubsub-light:1.8,run-condition:0.10,scm-api:2.1.1,sonar-gerrit:2.1,structs:1.7,subversion:2.9,token-macro:2.1,workflow-api:2.18,workflow-basic-steps:2.3,workflow-cps-global-lib:2.7,workflow-cps:2.39,workflow-durable-task-step:2.11,workflow-job:2.10,workflow-multibranch:2.14,workflow-remote-loader:1.2,workflow-scm-step:2.4,workflow-step-api:2.11,workflow-support:2.14,htmlpublisher:1.14,test-results-analyzer:0.3.4,sonar:2.6.1"
-            #temporary disabled: blueocean-autofavorite:1.0.0,blueocean-commons:1.1.6,blueocean-config:1.1.6,blueocean-dashboard:1.1.6,blueocean-display-url:2.0,blueocean-events:1.1.6,blueocean-github-pipeline:1.1.6,blueocean-git-pipeline:1.1.6,blueocean-i18n:1.1.6,blueocean:1.1.6,blueocean-jwt:1.1.6,blueocean-personalization:1.1.6,blueocean-pipeline-api-impl:1.1.6,blueocean-pipeline-editor:0.2.0,blueocean-pipeline-scm-api:1.1.6,blueocean-rest-impl:1.1.6,blueocean-rest:1.1.6,blueocean-web:1.1.6"
+            value: "ace-editor:1.0.1,analysis-collector:1.52,analysis-core:1.92,authentication-tokens:1.1,branch-api:2.0.9,checkstyle:3.49,cloudbees-folder:6.0.4,conditional-buildstep:1.3.1,config-file-provider:2.16.2,credentials:2.1.13,dependency-check-jenkins-plugin:2.1.1,display-url-api:2.0,docker-commons:1.8,docker-workflow:1.9,durable-task:1.16,favorite:2.3.0,findbugs:4.71,gerrit-trigger:2.26.2,git-client:2.4.4,github-api:1.85.1,github-branch-source:2.0.8,github:1.26.0,git:3.5.0,git-server:1.5,handlebars:1.1,jackson2-api:2.7.3,jacoco:2.2.1,javadoc:1.0,job-dsl:1.60,jquery:1.11.2-0,junit:1.20,mapdb-api:1.0.1.0,matrix-auth:1.5,matrix-project:1.7.1,maven-plugin:2.14,mercurial:1.54,metrics:3.1.2.9,momentjs:1.1,parameterized-trigger:2.35.1,pipeline-build-step:2.5.1,pipeline-graph-analysis:1.3,pipeline-milestone-step:1.3,pipeline-model-api:1.1.4,pipeline-model-definition:1.1.4,pipeline-model-extensions:1.1.4,pipeline-stage-step:2.2,pipeline-stage-tags-metadata:1.1.4,pipeline-stage-view:2.4,plain-credentials:1.3,pmd:3.49,pubsub-light:1.8,run-condition:0.10,scm-api:2.1.1,sonar-gerrit:2.1,structs:1.7,subversion:2.9,token-macro:2.1,workflow-api:2.18,workflow-basic-steps:2.3,workflow-cps-global-lib:2.7,workflow-cps:2.39,workflow-durable-task-step:2.11,workflow-job:2.10,workflow-multibranch:2.14,workflow-remote-loader:1.2,workflow-scm-step:2.4,workflow-step-api:2.11,workflow-support:2.14,htmlpublisher:1.14,test-results-analyzer:0.3.4,sonar:2.6.1,
+            blueocean-git-pipeline:1.4.0,blueocean-rest:1.4.0, greenballs:1.15"
+            #blueocean-autofavorite:1.0.0, blueocean-commons:1.4.0,blueocean-config:1.4.0,blueocean-dashboard:1.4.0,blueocean-display-url:2.0,blueocean-events:1.4.0,blueocean-github-pipeline:1.4.0,blueocean-git-pipeline:1.4.0,blueocean-i18n:1.4.0,blueocean:1.4.0,blueocean-jwt:1.4.0,blueocean-personalization:1.4.0,blueocean-pipeline-api-impl:1.4.0,blueocean-pipeline-editor:0.2.0,blueocean-pipeline-scm-api:1.4.0,blueocean-rest-impl:1.4.0,blueocean-rest:1.4.0,blueocean-web:1.4.0, greenballs:1.15"
           image: openshift/jenkins-2-centos7:latest
           imagePullPolicy: Always
         #  livenessProbe:
@@ -195,10 +258,10 @@ objects:
               command:
               - curl
               - localhost:8080
-            initialDelaySeconds: 600
+            initialDelaySeconds: 180
             periodSeconds: 1
-            successThreshold: 100
-            timeoutSeconds: 100
+            successThreshold: 1
+            timeoutSeconds: 10
           securityContext:
             capabilities: {}
             privileged: false
@@ -209,28 +272,17 @@ objects:
           - mountPath: /var/lib/jenkins/init.groovy.d/init.groovy
             subPath: init.groovy
             name: ${JENKINS_SERVICE_NAME}-init
-          #- mountPath: /var/lib/jenkins/init.groovy.d/deleted.groovy
-        #    subPath: deleted.groovy
-        #    name: ${JENKINS_SERVICE_NAME}-deleted
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         serviceAccountName: ${JENKINS_SERVICE_NAME}
-        nodeSelector:
-          kubernetes.io/hostname: "ecsd00100eed.epam.com"
         volumes:
         - name: ${JENKINS_SERVICE_NAME}-data
-          hostPath:
-            path: ${HOST_PATH_VOLUME}
-          #persistentVolumeClaim:
-          #    claimName: jenkins-pv-claim
+          persistentVolumeClaim:
+            claimName: ${JENKINS_SERVICE_NAME}
         - name: ${JENKINS_SERVICE_NAME}-init
           configMap:
             defaultMode: 420
             name: ${JENKINS_SERVICE_NAME}-init
-        #- name: ${JENKINS_SERVICE_NAME}-deleted
-         # configMap:
-        #    defaultMode: 420
-        #    name: ${JENKINS_SERVICE_NAME}-deleted
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
@@ -250,7 +302,7 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: ${JNLP_SERVICE_NAME}
+    name: jenkins-jnlp
   spec:
     ports:
     - name: agent
@@ -266,7 +318,7 @@ objects:
   kind: Service
   metadata:
     annotations:
-      service.alpha.openshift.io/dependencies: '[{"name": "${JNLP_SERVICE_NAME}",
+      service.alpha.openshift.io/dependencies: '[{"name": "jenkins-jnlp",
         "namespace": "", "kind": "Service"}]'
       service.openshift.io/infrastructure: "true"
     name: ${JENKINS_SERVICE_NAME}
@@ -274,7 +326,7 @@ objects:
     ports:
     - name: web
       #nodePort: 0
-      port: 80
+      port: 8080
       protocol: TCP
       targetPort: 8080
     selector:
@@ -387,10 +439,6 @@ parameters:
   displayName: Jenkins Service Name
   name: JENKINS_SERVICE_NAME
   value: jenkins
-- description: The name of the service used for master/slave communication.
-  displayName: Jenkins JNLP Service Name
-  name: JNLP_SERVICE_NAME
-  value: jnlp-jenkins
 - description: Whether to enable OAuth OpenShift integration. If false, the static
     account 'admin' will be initialized with the password 'password'.
   displayName: Enable OAuth in Jenkins
@@ -409,7 +457,3 @@ parameters:
   displayName: Backend docker image.
   name: BACKEND_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"
-- description: HostPath volume path
-  displayName: HostPath volume path
-  name: HOST_PATH_VOLUME
-  value: "/tmp/jenkins-data"

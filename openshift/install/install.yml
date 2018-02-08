@@ -1,0 +1,12 @@
+- hosts: all
+  roles:
+    - project
+    - secrets
+    - gerrit
+    - jenkins
+    - nexus
+    - sonar
+    - integration
+#- hosts: master
+#  roles:
+#    - master

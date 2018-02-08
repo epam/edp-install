@@ -1,0 +1,82 @@
+---
+# file: group_vars/all
+ansible_connection: ssh
+#ansible_ssh_user: root
+#ansible_ssh_pass: 1
+tmp_dir: "/tmp"
+work_dir: "{{ tmp_dir }}/edp-tools-installation"
+secrets_dir: "{{ work_dir }}/secrets"
+templates_dir: "{{ work_dir }}/templates"
+project: ansible-project
+ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
+secrets:
+  gerrit_db:
+    db_name: gerrit
+    db_user: gerrit
+    db_password: gerrit
+  sonar_db:
+    db_name: sonar
+    db_user: sonar
+    db_password: sonar
+  gitlab_oauth:
+    id: 1793958fcbf67ba9498781e84b8beee375420796e5ee4510c5baf7b7265566d0
+    secret: d9921be13a9980798997b28bd9b6a2fa68a33fa9fa19f466d569e48293b1b584
+tools:
+  jenkins:
+    password: password
+    service_name: jenkins
+    enable_oauth: false
+    volume_capacity: 5Gi
+    frontend_image: docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2
+    backend_image: openshift/jenkins-slave-maven-centos7
+  gerrit:
+    version: 2.14.1
+    gitlab_oauth: gitlab-oauth
+    db_secret: gerrit-db
+    volume_capacity: 5Gi
+    volume_db_capacity: 2Gi
+    web_url: "http://gerrit-infra.main.edp.projects.epam.com"
+    max_memory: 2Gi
+  nexus:
+    service_name: nexus
+    version: 3.6.2
+    volume_capacity: 5Gi
+    max_memory: 2Gi
+  sonar:
+    version: 6.7
+    db_secret: "sonar-db"
+    volume_capacity: 1Gi
+    volume_db_capacity: 2Gi
+    max_memory: 2Gi
+integration:
+  gerrit:
+    host: gerrit
+    port: 8080
+    admin: admin
+    password: secret
+  nexus:
+    host: nexus
+    port: 8081
+    admin: admin
+    password: admin123
+    npm_blob: npm-blob
+    npm_snap: npm-snapshots
+    npm_reg: npm-registry
+    npm_group: npm-group
+    read_role: npm-reader
+    read_user: npm-reader
+    read_password: npm-reader
+    publish_role: npm-publisher
+    publish_user: npm-publisher
+    publish_password: npm-publisher
+    jenkins_host: jenkins
+    jenkins_port: 8080
+    jenkins_admin: admin
+    jenkins_password: "{{ tools.jenkins.password }}"
+  sonar:
+    host: sonar
+    port: 9000
+    admin: admin
+    password: admin
+    auto_user: jenkins
+    auto_user_password: jenkins

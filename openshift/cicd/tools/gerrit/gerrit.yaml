@@ -1,12 +1,33 @@
-kind: Template
 apiVersion: v1
+kind: Template
 metadata:
   annotations:
-    description: The Gerrit template
-    tags: gerrit,gerrit-db
+    description: |-
+          Gerrit service, with persistent storage.
+          NOTE: You must have persistent volumes available in your cluster to use this template.
+    iconClass: icon-jenkins
+    openshift.io/display-name: EDP Gerrit (Persistent - gluster)
+    tags: ci-cd
+    #template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
+    template.openshift.io/long-description: This template deploys a Gerrit server
+      capable of managing OpenShift Pipeline builds and supporting OpenShift-based
+      oauth login.
+    template.openshift.io/provider-display-name: Red Hat, Inc.
+    template.openshift.io/support-url: https://access.redhat.com
   name: gerrit
 message: "Login to Gerrit with the you EPAM GitLab account"
 objects:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: gerrit-add-user-plugin
+  data:
+    config.sh: |
+      if [[ ! -f /var/gerrit/review_site/plugins/add-user-plugin-2.11.3.jar ]]
+      then
+       [ ! -d /var/gerrit/review_site/plugins ] && mkdir -p /var/gerrit/review_site/plugins
+       cp /tmp/add-user-plugin-2.11.3.jar /var/gerrit/review_site/plugins/add-user-plugin-2.11.3.jar
+      fi
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
@@ -46,7 +67,7 @@ objects:
     - name: ui
       port: 8080
     - name: ssh
-      port: ${GERRIT_SSH_PORT}
+      port: 29418
     selector:
       app: gerrit
 - apiVersion: v1
@@ -188,16 +209,33 @@ objects:
           app: gerrit
       spec:
         initContainers:
-        - name: init-myservice
+        - name: init-gerrit-db
           image: busybox
           command: ["sh", "-c", "while ! nc -w 1 gerrit-db 5432 </dev/null; do echo waiting for gerrit-db; sleep 10; done;"]
+        - name: add-user-plugin
+          volumeMounts:
+          - mountPath: /tmp/config.sh
+            subPath: config.sh
+            name: python-script
+          - mountPath: /var/gerrit/review_site
+            name: gerrit-data
+          image: buslovaev/gerrit-job:latest
+          command: ["sh", "/tmp/config.sh"]
         containers:
         - name: gerrit
           env:
+          - name: GERRIT_ADMIN_USER
+            value: 'admin'
+          - name: GERRIT_ADMIN_FULLNAME
+            value: 'Administrator'
+          - name: GERRIT_ADMIN_EMAIL
+            value: 'admin1@fabric8.io'
+          - name: GERRIT_ADMIN_PWD
+            value: 'admin123'
           - name: WEBURL
             value: ${GERRIT_WEB_URL}
           - name: AUTH_TYPE
-            value: OAUTH
+            value: DEVELOPMENT_BECOME_ANY_ACCOUNT
           - name: OAUTH_GITLAB_ROOT_URL
             value: https://git.epam.com/
           - name: OAUTH_GITLAB_CLIENT_SECRET
@@ -234,13 +272,13 @@ objects:
           - name: GERRIT_INIT_ARGS
             value: --install-plugin=commit-message-length-validator --install-plugin=download-commands --install-plugin=hooks --install-plugin=reviewnotes --install-plugin=singleusergroup --install-plugin=replication
           image: openfrontier/gerrit:${GERRIT_VERSION}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: gerrit
           ports:
           - name: ui
             containerPort: 8080
           - name: ssh
-            containerPort: ${GERRIT_SSH_PORT}
+            containerPort: 29418
           readinessProbe:
             initialDelaySeconds: 120
             successThreshold: 1
@@ -278,6 +316,10 @@ objects:
                   path: config
               name: gerrit
             name: ssh-config
+          - name: python-script
+            configMap:
+              defaultMode: 420
+              name: gerrit-add-user-plugin
 parameters:
 - displayName: Gerrit version
   value: "2.14.1"
@@ -293,22 +335,10 @@ parameters:
   displayName: Gerrit database Volume Capacity
   name: GERRIT_DB_CAPACITY
   value: 2Gi
-- description: Gerrit SSH PORT(If you want that it is the same as external it would be more than 30000)
-  displayName: Gerrit ssh port
-  name: GERRIT_SSH_PORT
-  value: "29418"
 - description: Gerrit WEB URL is needed for authentication purposes
   displayName: Gerrit WEB URL
   name: GERRIT_WEB_URL
-  value: "http://gerrit-ci-cd.10.17.129.14.xip.io"
-- description: Gerrit target git repository for replication
-  displayName: Gerrit target git repository
-  name: GERRIT_GIT_URL
-  value: "git@git.epam.com:Alexander_Morozov/oc-petclinic.git"
-- description: Project name in Gerrit that will be replicated to git
-  displayName: Gerrit project name
-  name: GERRIT_PROJECT
-  value: "oc-petclinic"
+  value: "http://gerrit-test-mb.demo.edp.projects.epam.com"
 - displayName: Gerrit Max Memory
   name: GERRIT_MAX_MEMORY
   value: 2Gi

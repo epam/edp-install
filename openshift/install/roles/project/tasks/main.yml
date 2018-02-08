@@ -1,0 +1,62 @@
+---
+#- name: Make ssh passwordless
+#  authorized_key:
+#   user: root
+#   state: present
+#   key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+# name: Update /etc/hosts from inventory
+# lineinfile: dest=/etc/hosts regexp='.*{{hostvars[item]['host_name']}}.*' line='{{ item }} {{ hostvars[item]['host_name'] }}' state=present
+# with_items: 
+#      - "{{ groups['master'] }}"
+#      - "{{ groups['minion'] }}"
+# tags:
+#   - hosts
+# name: Ansible copy directory to the remote server
+# copy:
+#   src: repo
+#   dest: /opt
+#   force: no
+- name: "Login to openshift"
+  shell: "{{ ocadm }} login -u system:admin"
+  register: can_login
+  
+- fail:
+    msg: "Sorry, we can't login to the cluster. Check permissions on the cluster's side"
+  when: can_login.stdout == "false"
+
+- name: "Check if project {{ project }} exists"
+  shell: bash -c "test \"$(echo $({{ ocadm }} get project | awk '{print $1}' | grep {{ project }}$ | wc -l))\" == \"1\" && echo true || echo false"
+  register: project_exist
+  
+- fail:
+    msg: "The project {{ project }} already exists"
+  when: project_exist.stdout == "true"
+
+- name: "Create project in Openshift"
+  shell: "{{ ocadm }} new-project {{ project }}"
+  when: project_exist.stdout == "false"
+
+- name: Creates directory for templates
+  file: path="{{ templates_dir }}" state=directory
+
+- name: Copying templates
+  copy:
+    src: "../../../../cicd/tools/jenkins"
+    dest: "{{ templates_dir }}"
+    force: yes
+- name: Copying templates
+  copy:
+    src: "../../../../cicd/tools/gerrit"
+    dest: "{{ templates_dir }}"
+    force: yes
+- name: Copying templates
+  copy:
+    src: "../../../../cicd/tools/nexus"
+    dest: "{{ templates_dir }}"
+    force: yes
+- name: Copying templates
+  copy:
+    src: "../../../../cicd/tools/sonar"
+    dest: "{{ templates_dir }}"
+    force: yes
+
