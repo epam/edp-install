@@ -176,7 +176,7 @@ objects:
       server.getConfig().setNumberOfSendingWorkerThreads(pluginConfig.getNumberOfSendingWorkerThreads());
       server.getConfig().setGerritHostName("gerrit")
       server.getConfig().setGerritFrontEndURL("http://gerrit:8080/")
-      server.getConfig().setGerritAuthKeyFile(new File("${JENKINS_HOME}/.ssh/id_jenkins_rsa"))
+      server.getConfig().setGerritAuthKeyFile(new File("${JENKINS_HOME}/.ssh/id_rsa"))
       server.getConfig().setGerritSshPort(29418)
       server.getConfig().setGerritUserName("jenkins")
 
