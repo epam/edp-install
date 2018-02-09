@@ -1,8 +1,6 @@
 ---
 # file: group_vars/all
 ansible_connection: ssh
-#ansible_ssh_user: root
-#ansible_ssh_pass: 1
 tmp_dir: "/tmp"
 work_dir: "{{ tmp_dir }}/edp-tools-installation"
 secrets_dir: "{{ work_dir }}/secrets"
