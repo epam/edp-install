@@ -24,6 +24,7 @@ node("master") {
     vars['branch'] = 'master'
     vars['RC'] = ""
     vars['RCnum']=0
+    vars['prefix']='RC'
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
