@@ -23,7 +23,7 @@ node("master") {
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['branch'] = 'master'
     vars['RC'] = ""
-    int RCnum=0
+    vars['RCnum']=0
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
