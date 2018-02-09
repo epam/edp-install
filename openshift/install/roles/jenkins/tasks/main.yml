@@ -1,4 +1,4 @@
---- # This is a structural YAML example to up a master node
+--- # Jenkins full installation
 - name: "Install Jenkins app"
   command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/jenkins/jenkins-gluster.yaml -p JENKINS_PASSWORD={{ tools.jenkins.password }} -p JENKINS_SERVICE_NAME={{ tools.jenkins.service_name }} -p ENABLE_OAUTH={{ tools.jenkins.enable_oauth }} -p VOLUME_CAPACITY={{ tools.jenkins.volume_capacity }} -p FRONTEND_IMAGE={{ tools.jenkins.frontend_image }} -p BACKEND_IMAGE={{ tools.jenkins.backend_image }}"
   register: result

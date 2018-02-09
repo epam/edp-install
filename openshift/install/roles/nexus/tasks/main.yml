@@ -1,4 +1,4 @@
---- # This is a structural YAML example to up a master node
+--- # Nexus full installation
 - name: "Install Nexus app - preparation"
   command: "{{ ocadm }} -n {{ project }} create configmap nexus-integration --from-file {{ templates_dir }}/nexus/config.py"
   register: result
@@ -7,8 +7,19 @@
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
+
 - name: "Install Nexus app"
   command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/nexus/nexus.yaml -p SERVICE_NAME={{ tools.nexus.service_name }} -p NEXUS_VERSION={{ tools.nexus.version }} -p VOLUME_CAPACITY={{ tools.nexus.volume_capacity }} -p MAX_MEMORY={{ tools.nexus.max_memory }}"
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
+
+- name: "Install Nexus-to-Jenkins integration"
+  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/nexus/nexus-integration.yaml -p NEXUS_HOST={{ integration.nexus.host }} -p NEXUS_PORT={{ integration.nexus.port }} -p NEXUS_ADMIN={{ integration.nexus.admin }} -p NEXUS_PASSWORD={{ integration.nexus.password }} -p NPM_BLOB_STORAGE={{ integration.nexus.npm_blob }} -p NPM_SNAPSHOTS={{ integration.nexus.npm_snap }} -p NPM_REGISTRY={{ integration.nexus.npm_reg }} -p NPM_GROUP={{ integration.nexus.npm_group }} -p NPM_READ_ROLE={{ integration.nexus.read_role }} -p NPM_READ_USER={{ integration.nexus.read_user }} -p NPM_READ_PASSWORD={{ integration.nexus.read_password }} -p NPM_PUBLISH_ROLE={{ integration.nexus.publish_role }} -p NPM_PUBLISH_USER={{ integration.nexus.publish_user }} -p NPM_PUBLISH_PASSWORD={{ integration.nexus.publish_password }} -p JENKINS_HOST={{ integration.nexus.jenkins_host }} -p JENKINS_PORT={{ integration.nexus.jenkins_port }} -p JENKINS_ADMIN={{ integration.nexus.jenkins_admin }} -p JENKINS_PASSWORD={{ integration.nexus.jenkins_password }} "
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
