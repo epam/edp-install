@@ -58,6 +58,7 @@ Patchset: ${vars.gerritChange}
         }
         catch (Exception ex) {
             currentBuild.displayName = "${currentBuild.displayName}-FAILED"
+            currentBuild.result = 'FAILURE'
         }
         finally {
             stage("DELETE PROJECT") {
