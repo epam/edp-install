@@ -11,7 +11,7 @@ def run(vars) {
                     """,
                 returnStdout: true
         ).trim()
-    vars['RCnum']=${vars.RC}.toInteger()+1
+    RCnum=${vars.RC}.toInteger()+1
     println("New RC number - ${RCnum}")
 }
 

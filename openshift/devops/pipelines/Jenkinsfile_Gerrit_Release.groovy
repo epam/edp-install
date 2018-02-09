@@ -23,7 +23,7 @@ node("master") {
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['branch'] = 'master'
     vars['RC'] = ""
-    vars['RCnum']=0
+    int RCnum=0
 
 
 
