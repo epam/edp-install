@@ -17,7 +17,7 @@ node("master") {
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
-            stage = load "gerrit-checkout.groovy"
+            stage = load "git-checkout.groovy"
             stage.run(vars)
         }
 
