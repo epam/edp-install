@@ -35,7 +35,7 @@ node("ansible-slave") {
 
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
-    vars['branch'] = '0.1.${RELEASE_NUMBER}-RC'
+    vars['branch'] = "0.1.${RELEASE_NUMBER}-RC"
     vars['prefix']='RELEASE'
     vars['RCnum']=RELEASE_NUMBER
 
