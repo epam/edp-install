@@ -22,6 +22,9 @@ node("master") {
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['branch'] = 'master'
+    vars['RC'] = ""
+    vars['RCnum']=0
+
 
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
