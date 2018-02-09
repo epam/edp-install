@@ -75,6 +75,8 @@ Patchset: ${vars.gerritChange}
 }
 
 node("master") {
+    vars['devopsRoot'] = "${workspace}@script"
+
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
             stage = load "git-checkout.groovy"
