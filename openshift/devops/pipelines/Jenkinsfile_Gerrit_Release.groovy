@@ -36,12 +36,7 @@ node("master") {
         }
 
         stage("CREATE BRANCH") {
-            stage = load "deploy-environment.groovy"
-            stage.run(vars)
-        }
-
-        stage("PUSH TO GERRIT") {
-            stage = load "deploy-environment.groovy"
+            stage = load "create-branch.groovy"
             stage.run(vars)
         }
 
