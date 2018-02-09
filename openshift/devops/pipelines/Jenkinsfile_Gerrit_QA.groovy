@@ -35,7 +35,7 @@ node("ansible-slave") {
 
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
-    vars['branch'] = 'master'
+    vars['branch'] = '0.1.${RELEASE_NUMBER}-RC'
     vars['prefix']='RELEASE'
     vars['RCnum']=RELEASE_NUMBER
 
@@ -70,6 +70,10 @@ Patchset: ${vars.gerritChange}
                 stage = load "delete-environment.groovy"
                 stage.run(vars)
             }
+        }
+        stage("CREATE BRANCH") {
+            stage = load "create-branch1.groovy"
+            stage.run(vars)
         }
     }
 }
