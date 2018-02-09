@@ -13,7 +13,7 @@ def run(vars) {
     if (vars.RC=="")
         vars['RCnum']=1
     else
-        vars['RCnum']=RC1.toInteger()+1
+        vars['RCnum']=vars.RC.toInteger()+1
 }
 
 return this;
