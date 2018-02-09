@@ -12,7 +12,10 @@ def run(vars) {
                 returnStdout: true
         ).trim()
     vars['RC']=RC1
-    vars['RCnum']=RC1.toInteger()+1
+    if (vars.RC=="")
+        vars['RCnum']=1
+    else
+        vars['RCnum']=RC1.toInteger()+1
     println("New RC number - ${vars.RCnum}")
 }
 

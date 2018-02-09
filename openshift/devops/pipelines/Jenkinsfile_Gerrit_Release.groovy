@@ -25,8 +25,6 @@ node("master") {
     vars['RC'] = ""
     int RCnum=0
 
-
-
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
             stage = load "git-checkout.groovy"
