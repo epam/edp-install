@@ -9,6 +9,7 @@ target/*
 /target
 npm-debug.log
 /bin/
+*.retry
 
 /backend/target/*
 /database/target/*
