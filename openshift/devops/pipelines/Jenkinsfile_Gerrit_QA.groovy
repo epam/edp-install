@@ -31,7 +31,7 @@ node("ansible-slave") {
 
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
     vars['workDir'] = "${WORKSPACE}/repository"
-    vars['ocProjectName'] = "RELEASE-${RELEASE_NUMBER}-TEST"
+    vars['ocProjectName'] = "release-${RELEASE_NUMBER}-test"
 
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
