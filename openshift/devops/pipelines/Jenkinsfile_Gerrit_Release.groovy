@@ -31,7 +31,7 @@ node("master") {
         }
 
         stage("FIND LAST RC") {
-            stage = load "deploy-environment.groovy"
+            stage = load "find-rc.groovy"
             stage.run(vars)
         }
 
