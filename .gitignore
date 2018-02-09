@@ -10,6 +10,7 @@ target/*
 npm-debug.log
 /bin/
 *.retry
+.gitkeep
 
 /backend/target/*
 /database/target/*
