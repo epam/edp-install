@@ -37,6 +37,8 @@ node("ansible-slave") {
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['branch'] = 'master'
     vars['prefix']='RELEASE'
+    vars['RCnum']=RELEASE_NUMBER
+
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}(${vars.gerritChange})"
     currentBuild.description = """Branch: ${vars.branch}
@@ -66,7 +68,7 @@ Patchset: ${vars.gerritChange}
         }
         finally {
             stage("CREATE BRANCH") {
-                stage = load "delete-environment.groovy"
+                stage = load "create-branch.groovy"
                 stage.run(vars)
             }
 
