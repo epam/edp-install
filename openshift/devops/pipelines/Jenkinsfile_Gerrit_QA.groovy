@@ -39,7 +39,6 @@ node("ansible-slave") {
     vars['prefix']='RELEASE'
     vars['RCnum']=RELEASE_NUMBER
 
-
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}(${vars.gerritChange})"
     currentBuild.description = """Branch: ${vars.branch}
 Patchset: ${vars.gerritChange}
@@ -67,11 +66,6 @@ Patchset: ${vars.gerritChange}
             currentBuild.result = 'FAILURE'
         }
         finally {
-            stage("CREATE BRANCH") {
-                stage = load "create-branch.groovy"
-                stage.run(vars)
-            }
-
             stage("DELETE PROJECT") {
                 stage = load "delete-environment.groovy"
                 stage.run(vars)
@@ -79,3 +73,11 @@ Patchset: ${vars.gerritChange}
         }
     }
 }
+
+node("master") {
+    stage("CREATE BRANCH") {
+        stage = load "create-branch.groovy"
+        stage.run(vars)
+    }
+}
+
