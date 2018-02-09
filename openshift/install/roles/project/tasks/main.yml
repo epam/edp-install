@@ -2,10 +2,11 @@
 - name: "Login to openshift"
   shell: "{{ ocadm }} login -u system:admin"
   register: can_login
+  when: ocadm != "oc"
   
 - fail:
     msg: "Sorry, we can't login to the cluster. Check permissions on the cluster's side"
-  when: can_login.stdout == "false"
+  when: not can_login|skipped and can_login.stdout == "false"
 
 - name: "Check if project {{ project }} exists"
   shell: bash -c "test \"$(echo $({{ ocadm }} get project | awk '{print $1}' | grep {{ project }}$ | wc -l))\" == \"1\" && echo true || echo false"
