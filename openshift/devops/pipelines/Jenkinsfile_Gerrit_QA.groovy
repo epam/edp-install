@@ -76,13 +76,9 @@ Patchset: ${vars.gerritChange}
 
 node("master") {
     vars['devopsRoot'] = "${workspace}@script"
+    vars['devopsRoot'] = "${WORKSPACE.replaceAll("@", "")}@script"
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
-        stage("CHECKOUT") {
-            stage = load "git-checkout.groovy"
-            stage.run(vars)
-        }
-
         stage("CREATE BRANCH") {
             stage = load "create-branch.groovy"
             stage.run(vars)
