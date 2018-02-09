@@ -60,15 +60,27 @@
   },
   "jest": {
     "coverageDirectory": "./coverage",
-    "coverageReporters": ["lcov", "text"],
-    "coveragePathIgnorePatterns": ["./node_modules/"],
-    "collectCoverageFrom": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.jsx"],
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./node_modules/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.js",
+      "src/**/*.jsx",
+      "!src/**/*.d.ts"
+    ],
     "scriptPreprocessor": "./node_modules/ts-jest/preprocessor.js",
-    "testRegex": "(/__tests__/.*\\.(test|spec))\\.(ts|tsx|js)$",
+    "testRegex": "(/__tests__/.*\\.(test|spec))\\.(ts|tsx|js|jsx)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
-      "js"
+      "js",
+      "jsx"
     ]
   }
 }
