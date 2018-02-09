@@ -52,7 +52,7 @@ Patchset: ${vars.gerritChange}
 
         try {
             stage("MANUAL APPROVE") {
-                input "Is everything ok with anvironment ${vars.ocProjectName}?"
+                input "Is everything ok with environment ${vars.ocProjectName}?"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
         }
