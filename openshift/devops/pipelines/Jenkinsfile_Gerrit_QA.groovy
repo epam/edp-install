@@ -44,6 +44,8 @@ node("ansible-slave") {
 Patchset: ${vars.gerritChange}
 """
 
+    println("pn - ${vars.ocProjectName}")
+    println("branch - ${vars.branch}")
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
             stage = load "git-checkout.groovy"
@@ -78,7 +80,7 @@ Patchset: ${vars.gerritChange}
     }
 }
 
-node("master") {
+/*node("master") {
     vars['devopsRoot'] = "${workspace}@script"
     vars['devopsRoot'] = "${WORKSPACE.replaceAll("@", "")}@script"
 
@@ -88,5 +90,5 @@ node("master") {
             stage.run(vars)
         }
     }
-}
+}*/
 
