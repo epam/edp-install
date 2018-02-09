@@ -192,7 +192,7 @@ objects:
       server.getConfig().setNumberOfSendingWorkerThreads(pluginConfig.getNumberOfSendingWorkerThreads());
       server.getConfig().setGerritHostName("gerrit")
       server.getConfig().setGerritFrontEndURL("http://gerrit:8080/")
-      server.getConfig().setGerritAuthKeyFile(new File("${JENKINS_HOME}/.ssh/id_jenkins_rsa"))
+      server.getConfig().setGerritAuthKeyFile(new File("${JENKINS_HOME}/.ssh/id_rsa"))
       server.getConfig().setGerritSshPort(29418)
       server.getConfig().setGerritUserName("jenkins")
 
@@ -206,7 +206,7 @@ objects:
         'bash',
         '-c',
         '''[ -d ${JENKINS_HOME}/.ssh ] && mkdir -p ${JENKINS_HOME}/.ssh
-          |cat /dev/zero | ssh-keygen -b 4096 -t rsa -f ${JENKINS_HOME}/.ssh/id_jenkins_rsa -C "jenkins@example.com" -q -N ""
+          |cat /dev/zero | ssh-keygen -b 4096 -t rsa -f ${JENKINS_HOME}/.ssh/id_rsa -C "jenkins@example.com" -q -N ""
           |'''.stripMargin() ]
       println cmd.execute().text
       //===========================

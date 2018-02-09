@@ -33,7 +33,7 @@ node("master") {
 
     vars['pipelinesPath'] = PIPELINES_PATH
 
-    def workspace = "/tmp/workspace/${JOB_NAME}"
+    def workspace = "${WORKSPACE.replaceAll("@", "")}@script"
     dir("${workspace}@script") {
         stash name: 'data', includes: "${vars.pipelinesPath}/**", useDefaultExcludes: false
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
