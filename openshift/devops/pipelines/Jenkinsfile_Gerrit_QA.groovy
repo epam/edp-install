@@ -39,9 +39,8 @@ node("ansible-slave") {
     vars['prefix']='RELEASE'
     vars['RCnum']=RELEASE_NUMBER
 
-    currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}(${vars.gerritChange})"
+    currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
     currentBuild.description = """Branch: ${vars.branch}
-Patchset: ${vars.gerritChange}
 """
 
     println("pn - ${vars.ocProjectName}")
