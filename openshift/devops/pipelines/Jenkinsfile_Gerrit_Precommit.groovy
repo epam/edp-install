@@ -5,7 +5,6 @@ PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
 AUTOUSER_DEFAULT = "jenkins"
 EMAIL_RECIPIENTS_DEFAULT = "Alexander_Morozov@epam.com"
 CREDENTIALS_DEFAULT = "gerrit-key"
-JENKI
 
 tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
