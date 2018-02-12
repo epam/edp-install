@@ -47,12 +47,12 @@ node("ansible-slave") {
     vars['email_recipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
     vars['workDir'] = "${WORKSPACE}/repository"
-    vars['ocProjectName'] = "release-${RELEASE_NUMBER}"
+    vars['ocProjectName'] = "release-${RC_NUMBER}"
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['version'] = '0.1'
-    vars['rcNumber'] = RELEASE_NUMBER
-    vars['branch'] = "${vars.version}.${RELEASE_NUMBER}-RC"
+    vars['rcNumber'] = RC_NUMBER
+    vars['branch'] = "${vars.version}.${RC_NUMBER}-RC"
     vars['prefix'] = "RELEASE"
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
