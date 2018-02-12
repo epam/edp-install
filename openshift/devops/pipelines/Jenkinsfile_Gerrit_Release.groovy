@@ -19,8 +19,9 @@ node("master") {
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['branch'] = 'master'
     vars['RC'] = ""
-    vars['RCnum']=0
+    vars['rcNumber']=0
     vars['prefix']='RC'
+    vars['version']='0.1'
     vars['workDir'] = "${WORKSPACE}/repository"
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {

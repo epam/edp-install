@@ -11,9 +11,9 @@ def run(vars) {
                 returnStdout: true
         ).trim()
         if (vars.RC == "")
-            vars['RCnum'] = 1
+            vars['rcNumber'] = 1
         else
-            vars['RCnum'] = vars.RC.toInteger() + 1
+            vars['rcNumber'] = vars.RC.toInteger() + 1
     }
 }
 
