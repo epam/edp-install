@@ -3,9 +3,8 @@
  * @param vars object with all pipeline variables
  */
 def run(vars) {
-        withCredentials([sshUserPrivateKey(credentialsId: 'gerrit-key', keyFileVariable: 'key', passphraseVariable: '', usernameVariable: 'git_user')]) {
-            //sh "eval `ssh-agent`"
-            //sh "ssh-add ${key}"
+    dir("${vars.workDir}") {
+        withCredentials([sshUserPrivateKey(credentialsId: "${CREDENTIALS}", keyFileVariable: 'key', passphraseVariable: '', usernameVariable: 'git_user')]) {
             sh """
                 eval `ssh-agent`
                 ssh-add ${key}
@@ -13,6 +12,7 @@ def run(vars) {
                 git checkout -b ${vars.prefix}
                 git push origin ${vars.prefix}"""
         }
+    }
 }
 
 return this;
