@@ -11,6 +11,9 @@ def run(vars) {
             sh '''
                 eval `ssh-agent`
                 ssh-add ${key}
+                git version
+                git checkout -b 0.1.${vars.RCnum}-${vars.prefix}
+                git push origin 0.1.${vars.RCnum}-${vars.prefix}
             '''
 
         }
