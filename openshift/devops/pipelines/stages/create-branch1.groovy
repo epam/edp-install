@@ -12,7 +12,7 @@ def run(vars) {
                 whoami
                 pwd
                 ls -al ~
-                ssh -o StrictHostKeyChecking=no -p ${GERRIT_PORT} jenkins@${GERRIT_HOST}
+                ssh-keyscan -p ${GERRIT_PORT} ${GERRIT_HOST} >> ~/.ssh/known_hosts
                 git remote -v
                 git version
                 git checkout -b 0.1.${vars.RCnum}-${vars.prefix}
