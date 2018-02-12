@@ -45,7 +45,13 @@ node("ansible-slave") {
 
     println("pn - ${vars.ocProjectName}")
     println("branch - ${vars.branch}")
+
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
+        stage("CHECK BRANCHES") {
+            stage = load "check-branches.groovy"
+            stage.run(vars)
+        }
+
         stage("CHECKOUT") {
             stage = load "git-checkout.groovy"
             stage.run(vars)
