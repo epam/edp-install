@@ -14,6 +14,7 @@ def run(vars) {
                 whoami
                 pwd
                 ls -al ~
+                ssh -o StrictHostKeyChecking=no jenkins@${GERRIT_HOST}
                 git remote -v
                 git version
                 git checkout -b 0.1.${vars.RCnum}-${vars.prefix}
