@@ -2,9 +2,25 @@ import groovy.json.*
 import org.apache.commons.lang.RandomStringUtils
 
 PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
+AUTOUSER_DEFAULT = "jenkins"
+EMAIL_RECIPIENTS_DEFAULT = "Alexander_Morozov@epam.com"
+CREDENTIALS_DEFAULT = "gerrit-key"
+JENKI
 
 tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
+
+vars['html_body'] = """<html>
+        <body>
+          <H3>Dear Colleague(s),</H3>
+          <div align="left">
+            Jenkins build job ${BUILD_URL} is waiting for your approve, please check.<br>
+          </div>
+          <hr>
+        </body>
+        <footer> This message has been generated automatically by <a href="${JENKINS_URL}">EDP Jenkins CI</a>. Please do not reply on this message.
+        </html>
+        """
 
 node("master") {
     vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
@@ -26,8 +42,9 @@ node("ansible-slave") {
         error("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
     }
 
-    vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
-    vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
+    vars['email_recipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
+    vars['autoUser'] = env.AUTOUSER ? AUTOUSER : AUTOUSER_DEFAULT
+    vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : CREDENTIALS_DEFAULT
     vars['branch'] = GERRIT_BRANCH
     vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
     vars['workDir'] = "${WORKSPACE}/repository"
@@ -53,6 +70,7 @@ Patchset: ${vars.gerritChange}
         try {
             stage("MANUAL APPROVE") {
                 input "Is everything ok with environment ${vars.ocProjectName}?"
+                emailext to: "${vars.email_recipients}", subject: "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", body: vars.html_body, mimeType: "text/html"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
         }
