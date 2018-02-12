@@ -10,8 +10,8 @@ def run(vars) {
                 eval `ssh-agent`
                 ssh-add ${key}
                 ssh-keyscan -p ${GERRIT_PORT} ${GERRIT_HOST} >> ~/.ssh/known_hosts
-                git checkout -b 0.1.${vars.RCnum}-${vars.prefix}
-                git push origin 0.1.${vars.RCnum}-${vars.prefix}"""
+                git checkout -b ${vars.prefix}
+                git push origin ${vars.prefix}"""
         }
 }
 
