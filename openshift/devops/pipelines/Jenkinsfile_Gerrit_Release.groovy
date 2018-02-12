@@ -5,10 +5,7 @@ import org.apache.commons.lang.RandomStringUtils
 import groovy.json.*
 
 //Define common variables
-tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
-vars['npmRegistry'] = "http://nexus:8081/repository/npm-all/"
-commonLib = null
 PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
 GERRIT_HOST = 'gerrit'
 GERRIT_PORT = '30001'
@@ -17,7 +14,7 @@ GERRIT_PROJECT = 'edp'
 
 node("master") {
     vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
-    vars['devopsRoot'] = "${workspace}@script"
+    vars['devopsRoot'] = "${WORKSPACE}@script"
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
@@ -25,6 +22,7 @@ node("master") {
     vars['RC'] = ""
     vars['RCnum']=0
     vars['prefix']='RC'
+    vars['workDir'] = "${WORKSPACE}/repository"
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
