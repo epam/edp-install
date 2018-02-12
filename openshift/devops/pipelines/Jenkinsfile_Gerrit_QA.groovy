@@ -44,10 +44,10 @@ node("ansible-slave") {
         error("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
     }
 
+    vars['email_recipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
     vars['workDir'] = "${WORKSPACE}/repository"
     vars['ocProjectName'] = "release-${RELEASE_NUMBER}-test"
-
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['branch'] = "0.1.${RELEASE_NUMBER}-RC"
