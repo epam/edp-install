@@ -68,8 +68,8 @@ Patchset: ${vars.gerritChange}
 
         try {
             stage("MANUAL APPROVE") {
-                input "Is everything ok with environment ${vars.ocProjectName}?"
                 emailext to: "${vars.email_recipients}", subject: "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", body: vars.html_body, mimeType: "text/html"
+                input "Is everything ok with environment ${vars.ocProjectName}?"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
         }
