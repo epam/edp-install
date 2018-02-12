@@ -15,7 +15,7 @@ def run(vars) {
                 pwd
                 ls -al ~
                 cp ${key} ~/.ssh/
-                git remote show origin
+                git remote -v
                 git version
                 git checkout -b 0.1.${vars.RCnum}-${vars.prefix}
                 git push origin 0.1.${vars.RCnum}-${vars.prefix}
