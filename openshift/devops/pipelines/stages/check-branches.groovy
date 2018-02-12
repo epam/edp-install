@@ -16,9 +16,11 @@ def run(vars) {
     } catch (Exception ex) {
         failed=true
     }
-    if (!failed)
-        commonLib.failJob("[JENKINS][ERROR] Release branch already exists")
-
+    if (!failed) {
+        currentBuild.displayName = "${currentBuild.displayName}-FAILED"
+        currentBuild.result = 'FAILURE'
+        error("[JENKINS][ERROR] Release branch already exists")
+    }
 
 
     this.result = "success"
