@@ -16,8 +16,7 @@ def run(vars) {
                 git remote -v
                 git version
                 git checkout -b 0.1.${vars.RCnum}-${vars.prefix}
-                git push origin 0.1.${vars.RCnum}-${vars.prefix}
-                ls"""
+                git push origin 0.1.${vars.RCnum}-${vars.prefix}"""
         }
 
 }
