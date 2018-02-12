@@ -4,8 +4,6 @@
  */
 def run(vars) {
         withCredentials([sshUserPrivateKey(credentialsId: 'gerrit-key', keyFileVariable: 'key', passphraseVariable: '', usernameVariable: 'git_user')]) {
-                // some block
-                println("key - ${key}")
             //sh "eval `ssh-agent`"
             //sh "ssh-add ${key}"
             sh """
@@ -14,13 +12,11 @@ def run(vars) {
                 whoami
                 pwd
                 ls -al ~
-                ssh -o StrictHostKeyChecking=no jenkins@${GERRIT_HOST}
+                ssh -o StrictHostKeyChecking=no jenkins@${GERRIT_HOST}:${GERRIT_PORT}
                 git remote -v
                 git version
                 git checkout -b 0.1.${vars.RCnum}-${vars.prefix}
-                git push origin 0.1.${vars.RCnum}-${vars.prefix}
-            """
-
+                git push origin 0.1.${vars.RCnum}-${vars.prefix}            """
         }
 
 }
