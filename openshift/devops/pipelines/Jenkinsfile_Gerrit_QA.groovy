@@ -5,9 +5,24 @@ PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
 GERRIT_HOST = 'gerrit'
 GERRIT_PORT = '30001'
 GERRIT_PROJECT = 'edp'
+EMAIL_RECIPIENTS_DEFAULT = "Alexander_Morozov@epam.com"
+
 
 tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
+
+vars['html_body'] = """<html>
+        <body>
+          <H3>Dear Colleague(s),</H3>
+          <div align="left">
+            Jenkins build job ${BUILD_URL} is waiting for your approve, please check.<br>
+          </div>
+          <hr>
+        </body>
+        <footer> This message has been generated automatically by <a href="${JENKINS_URL}">EDP Jenkins CI</a>. Please do not reply on this message.
+        </html>
+        """
+
 
 node("master") {
     vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
@@ -29,10 +44,10 @@ node("ansible-slave") {
         error("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
     }
 
+    vars['email_recipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
     vars['workDir'] = "${WORKSPACE}/repository"
     vars['ocProjectName'] = "release-${RELEASE_NUMBER}-test"
-
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['branch'] = "0.1.${RELEASE_NUMBER}-RC"
@@ -64,6 +79,7 @@ node("ansible-slave") {
 
         try {
             stage("MANUAL APPROVE") {
+                emailext to: "${vars.email_recipients}", subject: "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", body: vars.html_body, mimeType: "text/html"
                 input "Is everything ok with environment ${vars.ocProjectName}?"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
