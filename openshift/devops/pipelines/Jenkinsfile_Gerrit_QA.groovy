@@ -99,21 +99,8 @@ node("ansible-slave") {
             error("[JENKINS][ERROR] Manual check failed")
 
         stage("CREATE BRANCH") {
-            stage = load "create-branch1.groovy"
-            stage.run(vars)
-        }
-    }
-}
-
-/*node("master") {
-    vars['devopsRoot'] = "${workspace}@script"
-    vars['devopsRoot'] = "${WORKSPACE.replaceAll("@", "")}@script"
-
-    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
-        stage("CREATE BRANCH") {
             stage = load "create-branch.groovy"
             stage.run(vars)
         }
     }
-}*/
-
+}
