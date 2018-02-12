@@ -57,10 +57,10 @@ node("ansible-slave") {
             stage.run(vars)
         }
 
-        /*stage("DEPLOY PROJECT") {
+        stage("DEPLOY PROJECT") {
             stage = load "deploy-environment.groovy"
             stage.run(vars)
-        }*/
+        }
 
         try {
             stage("MANUAL APPROVE") {
@@ -72,12 +72,16 @@ node("ansible-slave") {
             currentBuild.displayName = "${currentBuild.displayName}-FAILED"
             currentBuild.result = 'FAILURE'
         }
-        /*finally {
+        finally {
             stage("DELETE PROJECT") {
                 stage = load "delete-environment.groovy"
                 stage.run(vars)
             }
-        }*/
+        }
+
+        if (currentBuild.result == 'FAILURE')
+            error("[JENKINS][ERROR] Manual check failed")
+
         stage("CREATE BRANCH") {
             stage = load "create-branch1.groovy"
             stage.run(vars)
