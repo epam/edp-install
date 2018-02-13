@@ -95,7 +95,9 @@ objects:
       import com.sonyericsson.hudson.plugins.gerrit.trigger.config.Config;
       import com.sonyericsson.hudson.plugins.gerrit.trigger.config.PluginConfig;
       //===========================
-      file = new File("done.txt")
+      def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
+      file = new File("${JENKINS_HOME}/done.txt")
+
       if (file.exists()) {
         println "Configuration of Jenkins has been already done"
       }
@@ -181,7 +183,6 @@ objects:
       //===========================
       // Modifying Gerrit Plugin for getting an ability to post-configure it via job
       //===========================
-      def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
 
       PluginImpl plugin = PluginImpl.getInstance();
 
@@ -210,7 +211,7 @@ objects:
           |'''.stripMargin() ]
       println cmd.execute().text
       //===========================
-      String filename = "done.txt"
+      String filename = "${JENKINS_HOME}/done.txt"
       boolean success = new File(filename).createNewFile()
       }
 - apiVersion: v1
