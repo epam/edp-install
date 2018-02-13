@@ -13,7 +13,7 @@ vars['html_body'] = """<html>
         <body>
           <H3>Dear Colleague(s),</H3>
           <div align="left">
-            Jenkins build job ${BUILD_URL} is waiting for your approve, please check.<br>
+            Jenkins <a href="${JENKINS_URL}/job/${JOB_NAME}">build job</a> is waiting for your approve, please check.<br>
           </div>
           <hr>
         </body>
