@@ -291,7 +291,7 @@ objects:
           terminationMessagePath: /dev/termination-log
           volumeMounts:
           - mountPath: /var/lib/jenkins
-            name: ${JENKINS_SERVICE_NAME}-data
+            name: jenkins-data
           - mountPath: /var/lib/jenkins/init.groovy.d/init.groovy
             subPath: init.groovy
             name: ${JENKINS_SERVICE_NAME}-init
@@ -299,9 +299,9 @@ objects:
         restartPolicy: Always
         serviceAccountName: ${JENKINS_SERVICE_NAME}
         volumes:
-        - name: ${JENKINS_SERVICE_NAME}-data
-          hostPath:
-            path: ${HOST_PATH_VOLUME}
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins
         - name: ${JENKINS_SERVICE_NAME}-init
           configMap:
             defaultMode: 420
