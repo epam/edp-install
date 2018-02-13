@@ -33,15 +33,12 @@ objects:
       curl -X POST -u admin:secret -H "Content-Type: text/plain" --data "$(cat id_admin_rsa.pub)"  http://${GERRIT_HOST}:${GERRIT_PORT}/a/accounts/admin/sshkeys
 
       # creating jenkins user
-      if cat /opt/data/jenkins/.ssh/id_rsa.pub | ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit create-account --group "'Non-Interactive Users'" --ssh-key - jenkins
+      if cat /opt/data/jenkins/.ssh/id_rsa.pub | ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit create-account --group "'Non-Interactive Users'" --full-name "'Jenkins'" --http-password jenkins  --ssh-key - jenkins
       then
         echo "Jenkins account has been successfully created"
       else
         echo "Jenkins account already exists"
       fi
-
-      #ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit set-members -a Viktor_Voronin Administrators
-      #ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit set-members -a Maxim_Buslovaev Administrators
 
       # initial conf og Gerrit
       CHECKOUT_DIR=/git
