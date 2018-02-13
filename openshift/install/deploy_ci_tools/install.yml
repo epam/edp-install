@@ -6,3 +6,4 @@
     - { role: gerrit, tags: [ 'gerrit' ] }
     - { role: nexus, tags: [ 'nexus' ] }
     - { role: sonar, tags: [ 'sonar' ] }
+    - { role: post_integration, tags: [ 'post_integration' ] }

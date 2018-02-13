@@ -1,0 +1,13 @@
+--- # Gerrit post installation
+- name: "Switching to project {{ project }}"
+  shell: "{{ ocadm }} project {{ project }}"
+
+- name: "Enabling OAUTH"
+  shell: "test \"$( {{ ocadm }} get pods --show-all | grep gerrit-integration | awk '{print $3}' )\" == \"Completed\" && echo \"true\" || echo \"false\" "
+  register: result
+  until: result.stdout.find("true") != -1
+  retries: 30
+  delay: 60
+
+- name: "Enabling OAUTH"
+  shell: "{{ ocadm }} set env dc gerrit AUTH_TYPE='OAUTH'"
