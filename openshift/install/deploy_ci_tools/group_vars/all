@@ -25,56 +25,19 @@ tools:
     service_name: jenkins
     enable_oauth: false
     volume_capacity: 5Gi
+    maven_cache_volume_capacity: 5Gi
     frontend_image: docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2
     backend_image: openshift/jenkins-slave-maven-centos7
   gerrit:
     version: 2.14.1
     gitlab_oauth: gitlab-oauth
-    db_secret: gerrit-db
     volume_capacity: 5Gi
     volume_db_capacity: 2Gi
     web_url: "http://gerrit-infra.main.edp.projects.epam.com"
-    max_memory: 2Gi
   nexus:
-    service_name: nexus
     version: 3.6.2
     volume_capacity: 5Gi
-    max_memory: 2Gi
   sonar:
     version: 6.7
-    db_secret: "sonar-db"
     volume_capacity: 1Gi
     volume_db_capacity: 2Gi
-    max_memory: 2Gi
-integration:
-  gerrit:
-    host: gerrit
-    port: 8080
-    admin: admin
-    password: secret
-  nexus:
-    host: nexus
-    port: 8081
-    admin: admin
-    password: admin123
-    npm_blob: npm-blob
-    npm_snap: npm-snapshots
-    npm_reg: npm-registry
-    npm_group: npm-group
-    read_role: npm-reader
-    read_user: npm-reader
-    read_password: npm-reader
-    publish_role: npm-publisher
-    publish_user: npm-publisher
-    publish_password: npm-publisher
-    jenkins_host: jenkins
-    jenkins_port: 8080
-    jenkins_admin: admin
-    jenkins_password: "{{ tools.jenkins.password }}"
-  sonar:
-    host: sonar
-    port: 9000
-    admin: admin
-    password: admin
-    auto_user: jenkins
-    auto_user_password: jenkins

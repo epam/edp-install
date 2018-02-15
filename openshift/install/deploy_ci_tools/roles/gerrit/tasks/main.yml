@@ -3,7 +3,13 @@
   shell: "{{ ocadm }} -n {{ project }} adm policy add-scc-to-user anyuid -z gerrit"
 
 - name: "Install Gerrit app"
-  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/gerrit/gerrit.yaml -p GERRIT_VERSION={{ tools.gerrit.version }} -p GERRIT_DB_SECRET={{ tools.gerrit.db_secret }} -p GERRIT_DATA_CAPACITY={{ tools.gerrit.volume_capacity }} -p GERRIT_DB_CAPACITY={{ tools.gerrit.volume_db_capacity }} -p GERRIT_WEB_URL={{ tools.gerrit.web_url }} -p GERRIT_MAX_MEMORY={{ tools.gerrit.max_memory }}"
+  command: |
+    {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/gerrit/gerrit.yaml 
+    -p GERRIT_VERSION={{ tools.gerrit.version }} 
+    -p GERRIT_DB_SECRET=gerrit-db 
+    -p GERRIT_DATA_CAPACITY={{ tools.gerrit.volume_capacity }} 
+    -p GERRIT_DB_CAPACITY={{ tools.gerrit.volume_db_capacity }} 
+    -p GERRIT_WEB_URL={{ tools.gerrit.web_url }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
@@ -12,7 +18,7 @@
     - '"already" not in result.stderr'
 
 - name: "Install Gerrit-to-Jenkins integration"
-  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/gerrit/gerrit-integration.yaml -p GERRIT_HOST={{ integration.gerrit.host }} -p GERRIT_PORT={{ integration.gerrit.port }} -p GERRIT_ADMIN={{ integration.gerrit.admin }} -p GERRIT_PASSWORD={{ integration.gerrit.password }} "
+  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/gerrit/gerrit-integration.yaml"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

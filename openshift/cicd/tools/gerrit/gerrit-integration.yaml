@@ -95,11 +95,6 @@ objects:
 
       cd -
       rm -rf ${CHECKOUT_DIR}
-
-      # back to original auth
-      #oc login kubernetes.default:443 --username=$OPENSHIFT_ADMIN --password=$OPENSHIFT_PASSWORD --insecure-skip-tls-verify
-      #oc project $OPENSHIFT_PROJECT
-      #oc set env dc gerrit AUTH_TYPE='OAUTH'
 - apiVersion: batch/v1
   kind: Job
   metadata:
@@ -117,7 +112,7 @@ objects:
           command: ["sh", "-c", "while ! nc -w 1 jenkins 8080 </dev/null; do echo waiting for Jenkins; sleep 10; done;"]
         - name: init-gerrit
           image: busybox
-          command: ["sh", "-c", "while ! nc -w 1 ${GERRIT_HOST} ${GERRIT_PORT} </dev/null; do echo waiting for ${GERRIT_HOST}; sleep 10; done;"]
+          command: ["sh", "-c", "while ! nc -w 1 gerrit 8080 </dev/null; do echo waiting for Gerrit; sleep 10; done;"]
         volumes:
         - name: python-script
           configMap:
@@ -136,21 +131,17 @@ objects:
           command: ["sh", "/tmp/config.sh"]
           env:
           - name: GERRIT_HOST
-            value: ${GERRIT_HOST}
+            value: gerrit
           - name: GERRIT_PORT
-            value: ${GERRIT_PORT}
+            value: "8080"
           - name: GERRIT_ADMIN
-            value: ${GERRIT_ADMIN}
+            value: admin
           - name: GERRIT_PASSWORD
-            value: ${GERRIT_PASSWORD}
+            value: secret
           - name: OPENSHIFT_PROJECT
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          - name: OPENSHIFT_ADMIN
-            value: ${OPENSHIFT_ADMIN}
-          - name: OPENSHIFT_PASSWORD
-            value: ${OPENSHIFT_PASSWORD}
           - name: APP_FILE
             value: "/tmp/config.sh"
           volumeMounts:
@@ -163,16 +154,3 @@ objects:
         restartPolicy: Never
         serviceAccount: gerrit
     backoffLimit: 1
-parameters:
-- displayName: Gerrit service name
-  name: GERRIT_HOST
-  value: gerrit
-- displayName: Gerrit service port
-  name: GERRIT_PORT
-  value: "8080"
-- displayName: Gerrit service admin user
-  name: GERRIT_ADMIN
-  value: admin
-- displayName: Gerrit service admin password
-  name: GERRIT_PASSWORD
-  value: secret

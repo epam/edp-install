@@ -1,0 +1,125 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: edp
+  annotations:
+    description: |-
+          Template for deploying EPAM Delivery Platform (EDP) aka "The Rocket" tools
+    openshift.io/display-name: EDP - The Rocket
+    template.openshift.io/provider-display-name: EPAM
+    template.openshift.io/support-url: https://www.epam.com
+objects:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: edp-deploy
+  spec:
+    parallelism: 1
+    completions: 1
+    template:
+      metadata:
+        name: edp-deploy
+      spec:
+        containers:
+        - image: ${EDP_VERSION}
+          imagePullPolicy: IfNotPresent
+          name: edp-deploy
+          env:
+          - name: GERRIT_VERSION
+            value: ${GERRIT_VERSION}
+          - name: GERRIT_DATA_CAPACITY
+            value: ${GERRIT_DATA_CAPACITY}
+          - name: GERRIT_DATA_CAPACITY
+            value: ${GERRIT_DATA_CAPACITY
+          - name: GERRIT_DB_CAPACITY
+            value: ${GERRIT_DB_CAPACITY}
+          - name: GERRIT_WEB_URL
+            value: ${GERRIT_WEB_URL}
+          - name: GERRIT_DATA_CAPACITY
+            value: ${GERRIT_DATA_CAPACITY
+          - name: JENKINS_ENABLE_OAUTH
+            value: ${JENKINS_ENABLE_OAUTH}
+          - name: JENKINS_VOLUME_CAPACITY
+            value: ${JENKINS_VOLUME_CAPACITY}
+          - name: JENKINS_MAVEN_CACHE_VOLUME_CAPACITY
+            value: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY
+          - name: JENNKINS_FRONTEND_IMAGE
+            value: ${JENNKINS_FRONTEND_IMAGE}
+          - name: JENKINS_BACKEND_IMAGE
+            value: ${JENKINS_BACKEND_IMAGE}
+          - name: NEXUS_VERSION
+            value: ${NEXUS_VERSION}
+          - name: NEXUS_VOLUME_CAPACITY
+            value: ${NEXUS_VOLUME_CAPACITY}
+          - name: SONAR_VERSION
+            value: ${SONAR_VERSION}
+          - name: SONAR_VOLUME_CAPACITY
+            value: ${SONAR_VOLUME_CAPACITY}
+          - name: SONAR_DB_CAPACITY
+            value: ${SONAR_DB_CAPACITY}
+parameters:
+- displayName: Image of EDP container
+  description: Image and tag that defines version of EDP that will be deployed
+  name: EDP_VERSION
+  value: "edp:SNAPSHOT"
+#Gerrit parameters
+- displayName: Gerrit version
+  value: "2.14.1"
+  name: GERRIT_VERSION
+- displayName: Gerrit Volume Capacity
+  description: Volume space available for Gerrit data
+  name: GERRIT_DATA_CAPACITY
+  value: 2Gi
+  required: true
+- displayName: Gerrit database Volume Capacity
+  description: Volume space available for Gerrit DB
+  name: GERRIT_DB_CAPACITY
+  value: 2Gi
+  required: true
+- displayName: Gerrit WEB URL
+  description: Gerrit WEB URL is needed for authentication purposes
+  name: GERRIT_WEB_URL
+  value: "http://gerrit-test-mb.demo.edp.projects.epam.com"
+#Jenkins parameters
+- displayName: Enable OAuth in Jenkins
+  description: Whether to enable OAuth OpenShift integration. If false, the static
+    account 'admin' will be initialized with the password 'password'.
+  displayName: Enable OAuth in Jenkins
+  name: JENKINS_ENABLE_OAUTH
+  value: "false"
+- displayName: Volume Capacity
+  description: Volume space available for Jenkins data
+  name: JENKINS_VOLUME_CAPACITY
+  value: 5Gi
+  required: true
+- displayName: Maven Cache Volume Capacity
+  description: Volume space available for maven cache data
+  name: JENKINS_MAVEN_CACHE_VOLUME_CAPACITY
+  required: true
+  value: 5Gi
+- displayName: Frontend docker image.
+  name: JENNKINS_FRONTEND_IMAGE
+  value: "docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2"
+- displayName: Backend docker image.
+  name: JENKINS_BACKEND_IMAGE
+  value: "openshift/jenkins-slave-maven-centos7"
+#Nexus parameters
+- displayName: Sonatype Nexus version
+  name: NEXUS_VERSION
+  value: "3.6.2"
+- displayName: Volume Space for Nexus
+  description: Volume space available for Sonatype Nexus data
+  name: NEXUS_VOLUME_CAPACITY
+  value: 5Gi
+#Sonar parameters
+- displayName: SonarQube version
+  value: "6.7"
+  name: SONAR_VERSION
+- description: Volume space available for SonarQube
+  displayName: SonarQube Volume Capacity
+  name: SONAR_VOLUME_CAPACITY
+  value: 1Gi
+- description: Volume space available for SonarQube Database
+  displayName: SonarQube database Volume Capacity
+  name: SONAR_DB_CAPACITY
+  value: 2Gi

@@ -82,19 +82,19 @@ objects:
           image: busybox
           command: ["sh", "-c", "while ! nc -w 1 sonar-db 5432 </dev/null; do echo waiting for sonar-db; sleep 10; done;"]
         containers:
-        - image: sonarqube:${SONARQUBE_VERSION}
+        - image: sonarqube:${SONAR_VERSION}
           imagePullPolicy: IfNotPresent
           name: sonar
           env:
           - name: SONARQUBE_JDBC_USERNAME
             valueFrom:
               secretKeyRef:
-                name: ${SONARQUBE_DB_SECRET}
+                name: sonar-db
                 key: database-user
           - name: SONARQUBE_JDBC_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: ${SONARQUBE_DB_SECRET}
+                name: sonar-db
                 key: database-password
           - name: SONARQUBE_JDBC_URL
             value: jdbc:postgresql://sonar-db/sonar
@@ -121,11 +121,7 @@ objects:
             timeoutSeconds: 5
           resources:
             requests:
-              cpu: 200m
-              memory: ${SONAR_MAX_MEMORY}
-            limits:
-              cpu: 1
-              memory: ${SONAR_MAX_MEMORY}
+              memory: 1Gi
           terminationMessagePath: /dev/termination-log
           volumeMounts:
           - mountPath: /opt/sonarqube/extensions/plugins
@@ -141,7 +137,7 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
-      app: sonar-db
+      app: sonar
     name: sonar-db
   spec:
     replicas: 1
@@ -165,12 +161,12 @@ objects:
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: ${SONARQUBE_DB_SECRET}
+                name: sonar-db
                 key: database-user
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: ${SONARQUBE_DB_SECRET}
+                name: sonar-db
                 key: database-password
           - name: PGDATA
             value: /var/lib/postgresql/data/pgdata
@@ -232,13 +228,7 @@ objects:
 parameters:
 - displayName: SonarQube version
   value: "6.7"
-  name: SONARQUBE_VERSION
-- displayName: SonarQube database secret
-  value: "sonar-db"
-  name: SONARQUBE_DB_SECRET
-- displayName: SonarQube Max Memory
-  name: SONAR_MAX_MEMORY
-  value: 2Gi
+  name: SONAR_VERSION
 - description: Volume space available for SonarQube
   displayName: SonarQube Volume Capacity
   name: SONAR_VOLUME_CAPACITY

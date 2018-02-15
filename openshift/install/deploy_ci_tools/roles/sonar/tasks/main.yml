@@ -3,7 +3,11 @@
   shell: "{{ ocadm }} -n {{ project }} adm policy add-scc-to-user anyuid -z sonar"
 
 - name: "Install Sonar app"
-  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/sonar/sonar.yaml -p SONARQUBE_VERSION={{ tools.sonar.version }} -p SONARQUBE_DB_SECRET={{ tools.sonar.db_secret }} -p SONAR_VOLUME_CAPACITY={{ tools.sonar.volume_capacity }} -p SONAR_DB_CAPACITY={{ tools.sonar.volume_db_capacity }} "
+  command: |
+    {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/sonar/sonar.yaml 
+    -p SONAR_VERSION={{ tools.sonar.version }} 
+    -p SONAR_VOLUME_CAPACITY={{ tools.sonar.volume_capacity }} 
+    -p SONAR_DB_CAPACITY={{ tools.sonar.volume_db_capacity }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
@@ -12,7 +16,7 @@
     - '"already" not in result.stderr'
 
 - name: "Install Sonar-to-Jenkins integration"
-  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/sonar/sonar-integration.yaml -p SONAR_HOST={{ integration.sonar.host }} -p SONAR_PORT={{ integration.sonar.port }} -p SONAR_ADMIN={{ integration.sonar.admin }} -p AUTO_USER={{ integration.sonar.auto_user }} -p AUTO_USER_PASSWORD={{ integration.sonar.auto_user_password }} "
+  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/sonar/sonar-integration.yaml"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

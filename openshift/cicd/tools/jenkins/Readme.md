@@ -19,7 +19,7 @@ allowHostPorts: true
 4. Prepare the catalog /opt/data/jenkins with rights chmod 777
 5. Also you need to choose one of your slaves and add it an appropriate the following label to the chosen node:
 ```
- oc label node ecsd0030007d role=jenkins
+ oc label node [your_node_name] role=jenkins
 ```
 # Jenkins EDP
 1. Deploy Jenkins template from **edp-jenkins.yaml** to Openshift cluster

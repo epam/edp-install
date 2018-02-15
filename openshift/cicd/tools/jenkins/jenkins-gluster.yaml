@@ -22,29 +22,40 @@ objects:
   metadata:
     annotations:
       template.openshift.io/expose-uri: http://{.spec.host}{.spec.path}
-    name: ${JENKINS_SERVICE_NAME}
+    name: jenkins
   spec:
     tls:
       insecureEdgeTerminationPolicy: Redirect
       termination: edge
     to:
       kind: Service
-      name: ${JENKINS_SERVICE_NAME}
+      name: jenkins
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-    name: ${JENKINS_SERVICE_NAME}
+    name: jenkins
   spec:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
-        storage: ${VOLUME_CAPACITY}
+        storage: ${JENKINS_VOLUME_CAPACITY}
+    storageClassName: glusterfs-storage
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: maven-cache
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}
     storageClassName: glusterfs-storage
 - apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: ${JENKINS_SERVICE_NAME}-init
+    name: jenkins-init
   data:
     init.groovy: |-
       //===========================
@@ -202,11 +213,11 @@ objects:
   metadata:
     annotations:
       template.alpha.openshift.io/wait-for-ready: "true"
-    name: ${JENKINS_SERVICE_NAME}
+    name: jenkins
   spec:
     replicas: 1
     selector:
-      name: ${JENKINS_SERVICE_NAME}
+      name: jenkins
     strategy:
       type: Recreate
       recreateParams:
@@ -214,13 +225,13 @@ objects:
     template:
       metadata:
         labels:
-          name: ${JENKINS_SERVICE_NAME}
+          name: jenkins
       spec:
         containers:
         - capabilities: {}
           env:
           - name: OPENSHIFT_ENABLE_OAUTH
-            value: ${ENABLE_OAUTH}
+            value: ${JENKINS_ENABLE_OAUTH}
           - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
             value: "true"
           - name: KUBERNETES_MASTER
@@ -250,44 +261,44 @@ objects:
               port: 8080
             initialDelaySeconds: 180
             timeoutSeconds: 10
-          name: ${JENKINS_SERVICE_NAME}
+          name: jenkins
           securityContext:
             capabilities: {}
             privileged: false
           terminationMessagePath: /dev/termination-log
           volumeMounts:
           - mountPath: /var/lib/jenkins
-            name: ${JENKINS_SERVICE_NAME}-data
+            name: jenkins-data
           - mountPath: /var/lib/jenkins/init.groovy.d/init.groovy
             subPath: init.groovy
-            name: ${JENKINS_SERVICE_NAME}-init
+            name: jenkins-init
         dnsPolicy: ClusterFirst
         restartPolicy: Always
-        serviceAccountName: ${JENKINS_SERVICE_NAME}
+        serviceAccountName: jenkins
         volumes:
-        - name: ${JENKINS_SERVICE_NAME}-data
+        - name: jenkins-data
           persistentVolumeClaim:
-            claimName: ${JENKINS_SERVICE_NAME}
-        - name: ${JENKINS_SERVICE_NAME}-init
+            claimName: jenkins
+        - name: jenkins-init
           configMap:
             defaultMode: 420
-            name: ${JENKINS_SERVICE_NAME}-init
+            name: jenkins-init
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
     annotations:
-      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"${JENKINS_SERVICE_NAME}"}}'
-    name: ${JENKINS_SERVICE_NAME}
+      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"jenkins"}}'
+    name: jenkins
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding
   metadata:
-    name: ${JENKINS_SERVICE_NAME}-edit
+    name: jenkins-edit
   roleRef:
     name: edit
   subjects:
   - kind: ServiceAccount
-    name: ${JENKINS_SERVICE_NAME}
+    name: jenkins
 - apiVersion: v1
   kind: Service
   metadata:
@@ -300,7 +311,7 @@ objects:
       protocol: TCP
       targetPort: 50000
     selector:
-      name: ${JENKINS_SERVICE_NAME}
+      name: jenkins
     sessionAffinity: None
     type: ClusterIP
 - apiVersion: v1
@@ -310,7 +321,7 @@ objects:
       service.alpha.openshift.io/dependencies: '[{"name": "jenkins-jnlp",
         "namespace": "", "kind": "Service"}]'
       service.openshift.io/infrastructure: "true"
-    name: ${JENKINS_SERVICE_NAME}
+    name: jenkins
   spec:
     ports:
     - name: web
@@ -319,15 +330,15 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      name: ${JENKINS_SERVICE_NAME}
+      name: jenkins
     sessionAffinity: None
     type: NodePort
 - apiVersion: v1
   kind: ConfigMap
   metadata:
     labels:
-      role: ${JENKINS_SERVICE_NAME}-slave
-    name: ${JENKINS_SERVICE_NAME}-slaves
+      role: jenkins-slave
+    name: jenkins-slaves
   data:
     frontend-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
@@ -341,7 +352,7 @@ objects:
         <idleMinutes>60</idleMinutes>
         <activeDeadlineSeconds>0</activeDeadlineSeconds>
         <label>frontend</label>
-        <serviceAccount>${JENKINS_SERVICE_NAME}</serviceAccount>
+        <serviceAccount>jenkins</serviceAccount>
         <nodeSelector></nodeSelector>
         <nodeUsageMode>NORMAL</nodeUsageMode>
         <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
@@ -352,7 +363,7 @@ objects:
         <containers>
           <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
             <name>jnlp</name>
-            <image>${FRONTEND_IMAGE}</image>
+            <image>${JENKINS_FRONTEND_IMAGE}</image>
             <privileged>false</privileged>
             <alwaysPullImage>false</alwaysPullImage>
             <workingDir>/tmp</workingDir>
@@ -383,7 +394,7 @@ objects:
         <idleMinutes>5</idleMinutes>
         <activeDeadlineSeconds>0</activeDeadlineSeconds>
         <label>backend</label>
-        <serviceAccount>${JENKINS_SERVICE_NAME}</serviceAccount>
+        <serviceAccount>jenkins</serviceAccount>
         <nodeSelector></nodeSelector>
         <nodeUsageMode>NORMAL</nodeUsageMode>
         <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
@@ -400,7 +411,7 @@ objects:
         <containers>
           <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
             <name>jnlp</name>
-            <image>${BACKEND_IMAGE}</image>
+            <image>${JENKINS_BACKEND_IMAGE}</image>
             <privileged>false</privileged>
             <alwaysPullImage>false</alwaysPullImage>
             <workingDir>/tmp</workingDir>
@@ -424,25 +435,26 @@ parameters:
   displayName: Jenkins admin initial password
   name: JENKINS_PASSWORD
   value: password
-- description: The name of the OpenShift Service exposed for the Jenkins container.
-  displayName: Jenkins Service Name
-  name: JENKINS_SERVICE_NAME
-  value: jenkins
 - description: Whether to enable OAuth OpenShift integration. If false, the static
     account 'admin' will be initialized with the password 'password'.
   displayName: Enable OAuth in Jenkins
-  name: ENABLE_OAUTH
+  name: JENKINS_ENABLE_OAUTH
   value: "false"
-- description: Volume space available for data, e.g. 512Mi, 2Gi.
+- description: Volume space available for data
   displayName: Volume Capacity
-  name: VOLUME_CAPACITY
+  name: JENKINS_VOLUME_CAPACITY
+  required: true
+  value: 5Gi
+- displayName: Maven Cache Volume Capacity
+  description: Volume space available for maven cache data
+  name: JENKINS_MAVEN_CACHE_VOLUME_CAPACITY
   required: true
   value: 5Gi
 - description: Frontend docker image.
   displayName: Frontend docker image.
-  name: FRONTEND_IMAGE
+  name: JENKINS_FRONTEND_IMAGE
   value: "docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2"
 - description: Backend docker image.
   displayName: Backend docker image.
-  name: BACKEND_IMAGE
+  name: JENKINS_BACKEND_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"

@@ -117,7 +117,7 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
-      app: gerrit-db
+      app: gerrit
     name: gerrit-db
   spec:
     replicas: 1
@@ -287,8 +287,8 @@ objects:
             tcpSocket:
               port: 8080
           resources:
-            limits:
-              memory: ${GERRIT_MAX_MEMORY}
+            requests:
+              memory: 1Gi
           volumeMounts:
             - mountPath: /var/gerrit/review_site
               name: gerrit-data
@@ -339,6 +339,3 @@ parameters:
   displayName: Gerrit WEB URL
   name: GERRIT_WEB_URL
   value: "http://gerrit-test-mb.demo.edp.projects.epam.com"
-- displayName: Gerrit Max Memory
-  name: GERRIT_MAX_MEMORY
-  value: 2Gi

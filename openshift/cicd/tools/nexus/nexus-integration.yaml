@@ -36,7 +36,7 @@ objects:
           command: ["sh", "-c", "while ! nc -w 1 jenkins 8080 </dev/null; do echo waiting for jenkins; sleep 10; done;"]
         - name: init-nexus
           image: busybox
-          command: ["sh", "-c", "while ! nc -w 1 ${NEXUS_HOST} ${NEXUS_PORT} </dev/null; do echo waiting for ${NEXUS_HOST}; sleep 10; done;"]
+          command: ["sh", "-c", "while ! nc -w 1 nexus 8081 </dev/null; do echo waiting for nexus; sleep 10; done;"]
         volumes:
         - name: python-script
           configMap:
@@ -49,41 +49,41 @@ objects:
           command: ["python", "/tmp/config.py"]
           env:
           - name: NEXUS_HOST
-            value: ${NEXUS_HOST}
+            value: nexus
           - name: NEXUS_PORT
-            value: ${NEXUS_PORT}
+            value: "8081"
           - name: NEXUS_ADMIN
-            value: ${NEXUS_ADMIN}
+            value: admin
           - name: NEXUS_PASSWORD
-            value: ${NEXUS_PASSWORD}
+            value: admin123
           - name: NPM_BLOB_STORAGE
-            value: ${NPM_BLOB_STORAGE}
+            value: npm-blob
           - name: NPM_SNAPSHOTS
-            value: ${NPM_SNAPSHOTS}
+            value: npm-snapshots
           - name: NPM_REGISTRY
-            value: ${NPM_REGISTRY}
+            value: npm-proxy
           - name: NPM_GROUP
-            value: ${NPM_GROUP}
+            value: npm-group
           - name: NPM_READ_ROLE
-            value: ${NPM_READ_ROLE}
+            value: npm-read
           - name: NPM_PUBLISH_ROLE
-            value: ${NPM_PUBLISH_ROLE}
+            value: npm-publish
           - name: NPM_READ_USER
-            value: ${NPM_READ_USER}
-          - name: NPM_PUBLISH_USER
-            value: ${NPM_PUBLISH_USER}
+            value: npm-reader
           - name: NPM_READ_PASSWORD
-            value: ${NPM_READ_PASSWORD}
+            value: npm-reader
+          - name: NPM_PUBLISH_USER
+            value: npm-publish
           - name: NPM_PUBLISH_PASSWORD
-            value: ${NPM_PUBLISH_PASSWORD}
+            value: npm-publish
           - name: JENKINS_HOST
-            value: ${JENKINS_HOST}
+            value: jenkins
           - name: JENKINS_PORT
-            value: ${JENKINS_PORT}
+            value: "8080"
           - name: JENKINS_ADMIN
-            value: ${JENKINS_ADMIN}
+            value: admin
           - name: JENKINS_PASSWORD
-            value: ${JENKINS_PASSWORD}
+            value: password
           - name: APP_FILE
             value: "/tmp/config.py"
           volumeMounts:
@@ -91,68 +91,3 @@ objects:
             name: python-script
         restartPolicy: Never
     backoffLimit: 1
-parameters:
-- displayName: Sonatype Nexus service name
-  name: NEXUS_HOST
-  value: nexus
-- displayName: Sonatype Nexus service port
-  name: NEXUS_PORT
-  value: "8081"
-- displayName: Sonatype Nexus service admin user
-  name: NEXUS_ADMIN
-  value: admin
-- displayName: Sonatype Nexus service admin password
-  name: NEXUS_PASSWORD
-  value: admin123
-- description: Blob name inside Nexus to be created
-  displayName: NPM blob name
-  name: NPM_BLOB_STORAGE
-  value: npm-blob-test
-- description: Repo name inside Nexus to be created
-  displayName: NPM snapshots repo
-  name: NPM_SNAPSHOTS
-  value: npm-snap-test
-- description: Repo name inside Nexus to be created
-  displayName: NPM regular repo
-  name: NPM_REGISTRY
-  value: npm-reg-test
-- description: Repo name inside Nexus to be created
-  displayName: NPM group repo
-  name: NPM_GROUP
-  value: npm-group-test
-- description: Role name inside Nexus to be created
-  displayName: NPM read only role
-  name: NPM_READ_ROLE
-  value: npm-read-role-test
-- description: User name inside Nexus to be created
-  displayName: NPM read only user
-  name: NPM_READ_USER
-  value: npm-read-user-test
-- description: User password inside Nexus to be created
-  displayName: NPM read only user password
-  name: NPM_READ_PASSWORD
-  value: npm-read-role-test
-- description: Role name inside Nexus to be created
-  displayName: NPM publish role name 
-  name: NPM_PUBLISH_ROLE
-  value: npm-publish-role-test
-- description: User name inside Nexus to be created
-  displayName: NPM publish user name 
-  name: NPM_PUBLISH_USER
-  value: npm-publish-user-test
-- description: User password inside Nexus to be created
-  displayName: NPM publish user password
-  name: NPM_PUBLISH_PASSWORD
-  value: npm-publish-user-test
-- displayName: Jenkins service name
-  name: JENKINS_HOST
-  value: jenkins
-- displayName: Jenkins service port
-  name: JENKINS_PORT
-  value: "8080"
-- displayName: Jenkins service admin user
-  name: JENKINS_ADMIN
-  value: admin
-- displayName: Jenkins service admin password
-  name: JENKINS_PASSWORD
-  value: password
