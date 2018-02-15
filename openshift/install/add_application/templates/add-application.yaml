@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: add-application
+metadata:
+  name: add-application
+  annotations:
+    description: |-
+          EDP add-application configuration to be applied.
+          NOTE: You must have Ci tools available in your cluster to use this template.
+    iconClass: icon-jenkins
+    openshift.io/display-name: Add an application
+    tags: ci-cd
+    template.openshift.io/documentation-url: https://kb.epam.com/display/EPMDEDP/EPMD-EDP+Home
+    template.openshift.io/long-description: This template add application for letting EDP know about it.
+    template.openshift.io/provider-display-name: EPAM
+    template.openshift.io/support-url: https://www.epam.com
+objects:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: add-application
+  spec:
+    parallelism: 1
+    completions: 1
+    template:
+      metadata:
+        name: add-application
+      spec:
+        containers:
+        - name: add-application
+          image: ${DOCKER_IMAGE}
+          imagePullPolicy: Always          
+          env:
+          - name: GIT_REPO_URL
+            value: ${GIT_REPO_URL}
+          - name: APPLICATION_TYPE
+            value: ${APPLICATION_TYPE}
+          - name: APPLICATION_NAME
+            value: ${APPLICATION_NAME}
+          - name: ENVIRONMENTS
+            value: ${ENVIRONMENTS}
+          - name: NEED_ROUTE
+            value: ${NEED_ROUTE}
+        restartPolicy: Never
+    backoffLimit: 1
+parameters:
+- displayName: Git repo url
+  description: Git repo url for replication
+  name: GIT_REPO_URL
+  value: http://url.com
+- displayName: Type of an application
+  description: Type of an application to add. Currently, spring-boot is only supported
+  name: APPLICATION_TYPE
+  value: spring-boot
+- displayName: Name of an application
+  description: Type of an application to add
+  name: APPLICATION_NAME
+  value: app-name
+- displayName: Set of environments
+  description: List of environments separated by commas. NOTE: only SIT at the moment will be supported
+  name: ENVIRONMENTS
+  value: SIT
+- displayName: The necessity of route to an application
+  description: Boolean flag for route necessity
+  name: NEED_ROUTE
+  value: FALSE
+- displayName: Docker image
+  description: Docker image for a job
+  name: DOCKER_IMAGE
+  value: path/image:latest
