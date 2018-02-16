@@ -52,6 +52,14 @@ objects:
       requests:
         storage: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}
     storageClassName: glusterfs-storage
+
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: jenkins-app-settings
+  data:
+    app.settings.json: |-
+      []
 - apiVersion: v1
   kind: ConfigMap
   metadata:
@@ -90,6 +98,16 @@ objects:
       import com.sonyericsson.hudson.plugins.gerrit.trigger.config.Config;
       import com.sonyericsson.hudson.plugins.gerrit.trigger.config.PluginConfig;
       //===========================
+      //Job-dsl plugin
+      //===========================
+      import hudson.model.FreeStyleProject;
+      import hudson.tasks.Shell;
+      import javaposse.jobdsl.plugin.*;
+      import hudson.triggers.*
+      // Security disabling for DSl plugin
+      import javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration
+      import jenkins.model.GlobalConfiguration
+      //===========================
       def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
       file = new File("${JENKINS_HOME}/done.txt")
       if (file.exists()) {
@@ -102,7 +120,10 @@ objects:
       def instance = Jenkins.instance
       instance.setCrumbIssuer(new DefaultCrumbIssuer(true))
       instance.save()
-
+      //===========================
+      // Security disabling for DSl plugin
+      GlobalConfiguration.all().get(GlobalJobDslSecurityConfiguration.class).useScriptSecurity=false
+      //===========================
       //===========================
       // Disabling Openshift sync plugin
       //===========================
@@ -200,11 +221,41 @@ objects:
       def cmd = [
         'bash',
         '-c',
-        '''[ -d ${JENKINS_HOME}/.ssh ] && mkdir -p ${JENKINS_HOME}/.ssh
+        '''[ ! -d ${JENKINS_HOME}/.ssh ] && mkdir -p ${JENKINS_HOME}/.ssh
           |cat /dev/zero | ssh-keygen -b 4096 -t rsa -f ${JENKINS_HOME}/.ssh/id_rsa -C "jenkins@example.com" -q -N ""
           |'''.stripMargin() ]
       println cmd.execute().text
       //===========================
+      //===========================
+      // Creating a job dsl
+      //===========================
+      def jobName="job-provisioning"
+      project = Jenkins.instance.createProject(FreeStyleProject, jobName)
+      project.getBuildersList().clear()
+
+      executeDslScripts = new ExecuteDslScripts()
+
+      def tTrigger = new TimerTrigger("*/5 * * * *")
+
+      project.addTrigger((Trigger)tTrigger);
+      executeDslScripts.setTargets("*.groovy")
+      //executeDslScripts.setRemovedJobAction(RemovedJobAction.DELETE)
+      //executeDslScripts.setRemovedViewAction(RemovedViewAction.DELETE)
+      executeDslScripts.setLookupStrategy(LookupStrategy.JENKINS_ROOT)
+      //executeDslScripts.setAdditionalClasspath("src/main/groovy")
+      project.getBuildersList().add(executeDslScripts)
+      project.save()
+
+      cmd = [
+        'bash',
+        '-c',
+        """set -x
+           |[ ! -d ${JENKINS_HOME}/jobs/${jobName}/workspace ] && mkdir -p ${JENKINS_HOME}/jobs/${jobName}/workspace
+           |cp ${JENKINS_HOME}/init.groovy.d/dsl/*.groovy ${JENKINS_HOME}/jobs/${jobName}/workspace/
+           |""".stripMargin() ]
+      println cmd.execute().text
+
+      //================================
       String filename = "${JENKINS_HOME}/done.txt"
       boolean success = new File(filename).createNewFile()
       }
@@ -272,6 +323,10 @@ objects:
           - mountPath: /var/lib/jenkins/init.groovy.d/init.groovy
             subPath: init.groovy
             name: jenkins-init
+          - mountPath: /var/lib/jenkins/init.groovy.d/dsl
+            name: job-dsl
+          - mountPath: /var/lib/jenkins/app-settings
+            name: app-settings
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         serviceAccountName: jenkins
@@ -283,6 +338,14 @@ objects:
           configMap:
             defaultMode: 420
             name: jenkins-init
+        - name: job-dsl
+          configMap:
+            defaultMode: 420
+            name: job-provisioning
+        - name: app-settings
+          configMap:
+            defaultMode: 420
+            name: jenkins-app-settings
 - apiVersion: v1
   kind: ServiceAccount
   metadata:

@@ -1,4 +1,17 @@
 --- # Jenkins full installation
+# The following step is a temporarary and it's going to be fixed next sprints
+- name: "Install Jenkins app - preparation"
+  command: |
+    {{ ocadm }} -n {{ project }} create configmap job-provisioning
+    --from-file {{ templates_dir }}/jenkins/job_provisioning.groovy
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+# End of step
+
 - name: "Install Jenkins app"
   command: |
     {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/jenkins/jenkins-gluster.yaml
