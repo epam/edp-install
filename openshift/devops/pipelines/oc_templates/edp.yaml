@@ -99,7 +99,7 @@ parameters:
   value: 5Gi
 - displayName: Frontend docker image.
   name: JENNKINS_FRONTEND_IMAGE
-  value: "docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2"
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/nodejs-slave:6.12.2"
 - displayName: Backend docker image.
   name: JENKINS_BACKEND_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"
