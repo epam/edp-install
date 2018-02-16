@@ -49,6 +49,8 @@ node("ansible-slave") {
     vars['workDir'] = "${WORKSPACE}/repository"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['ocProjectName'] = "cicd-post-review-${vars.gerritChange}"
+    vars['tagVersion'] = "snapshot-${vars.gerritChange}"
+    vars['imageProject'] = "infra"
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}(${vars.gerritChange})"
     currentBuild.description = """Branch: ${vars.branch}
@@ -58,6 +60,11 @@ Patchset: ${vars.gerritChange}
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
             stage = load "gerrit-checkout.groovy"
+            stage.run(vars)
+        }
+
+        stage("BUILD") {
+            stage = load "build.groovy"
             stage.run(vars)
         }
 

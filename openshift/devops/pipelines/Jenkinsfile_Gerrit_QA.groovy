@@ -54,6 +54,8 @@ node("ansible-slave") {
     vars['rcNumber'] = RC_NUMBER
     vars['branch'] = "${vars.version}.${RC_NUMBER}-RC"
     vars['prefix'] = "RELEASE"
+    vars['tagVersion'] = "${vars.version}.${rcNumber}-release"
+    vars['imageProject'] = "release"
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
     currentBuild.description = """Branch: ${vars.branch}
@@ -70,6 +72,11 @@ node("ansible-slave") {
 
         stage("CHECKOUT") {
             stage = load "git-checkout.groovy"
+            stage.run(vars)
+        }
+
+        stage("BUILD") {
+            stage = load "build.groovy"
             stage.run(vars)
         }
 

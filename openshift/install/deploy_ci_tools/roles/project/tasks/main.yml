@@ -29,7 +29,7 @@
 
 - name: Copying templates of tools
   copy:
-    src: "../../../../cicd/tools/{{ item }}"
+    src: "../../../tools/{{ item }}"
     dest: "{{ templates_dir }}"
     force: yes
   with_items:
