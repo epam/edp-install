@@ -21,16 +21,32 @@ vars['html_body'] = """<html>
         </html>
         """
 
-node("ansible-slave") {
+node("master") {
     vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
+
+    def workspace = "${WORKSPACE.replaceAll("@", "")}@script"
+    dir("${workspace}") {
+        stash name: 'data', includes: "**", useDefaultExcludes: false
+    }
+}
+
+node("ansible-slave") {
     vars['devopsRoot'] = new File("/tmp/${tmpDir}")
+
+    try {
+        dir("${vars.devopsRoot}") {
+            unstash 'data'
+        }
+    } catch (Exception ex) {
+        error("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
+    }
 
     vars['email_recipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : AUTOUSER_DEFAULT
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : CREDENTIALS_DEFAULT
     vars['branch'] = GERRIT_BRANCH
     vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
-    vars['workDir'] = "${vars.devopsRoot}"
+    vars['workDir'] = "${WORKSPACE}/repository"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['ocProjectName'] = "cicd-post-review-${vars.gerritChange}"
 
@@ -39,22 +55,11 @@ node("ansible-slave") {
 Patchset: ${vars.gerritChange}
 """
 
-    stage("CHECKOUT") {
-        try {
-            dir("${vars.devopsRoot}") {
-                checkout([$class                           : 'GitSCM', branches: [[name: "${vars.gerritChange}"]],
-                          doGenerateSubmoduleConfigurations: false, extensions: [],
-                          submoduleCfg                     : [],
-                          userRemoteConfigs                : [[refspec      : "${GERRIT_REFSPEC}:${vars.gerritChange}",
-                                                               credentialsId: "${vars.credentials}",
-                                                               url          : "${vars.gitUrl}"]]])
-            }
-        } catch (Exception ex) {
-            error("[JENKINS][ERROR] Devops repository checkout has been failed. Reason - ${ex}")
-        }
-    }
-
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
+        stage("CHECKOUT") {
+            stage = load "gerrit-checkout.groovy"
+            stage.run(vars)
+        }
 
         stage("DEPLOY PROJECT") {
             stage = load "deploy-environment.groovy"
