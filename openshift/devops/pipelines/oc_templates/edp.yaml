@@ -9,10 +9,71 @@ metadata:
     template.openshift.io/provider-display-name: EPAM
     template.openshift.io/support-url: https://www.epam.com
 objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: edp
+- apiVersion: v1
+  groupNames:
+  - system:masters
+  kind: ClusterRoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: edp-deploy-cluster-admin
+  roleRef:
+    name: cluster-admin
+  subjects:
+  - kind: ServiceAccount
+    name: edp
+    namespace: ${NAMESPACE}
+  - kind: SystemGroup
+    name: system:masters
+  userNames:
+  - system:serviceaccount:${NAMESPACE}:edp
+- apiVersion: v1
+  kind: SecurityContextConstraints
+  allowHostDirVolumePlugin: true
+  allowHostIPC: false
+  allowHostNetwork: false
+  allowHostPID: false
+  allowHostPorts: true
+  allowPrivilegedContainer: false
+  allowedCapabilities: []
+  allowedFlexVolumes: []
+  defaultAddCapabilities: []
+  fsGroup:
+    type: RunAsAny
+  groups:
+  - system:cluster-admins
+  metadata:
+    name: edp-deploy
+  priority: 10
+  readOnlyRootFilesystem: false
+  requiredDropCapabilities:
+  - MKNOD
+  runAsUser:
+    type: RunAsAny
+  seLinuxContext:
+    type: MustRunAs
+  supplementalGroups:
+    type: RunAsAny
+  users:
+  - system:serviceaccount:${NAMESPACE}:edp
+  volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - hostPath
+  - persistentVolumeClaim
+  - projected
+  - secret
 - apiVersion: batch/v1
   kind: Job
   metadata:
-    name: edp-deploy
+    name: edp-deploy-${PROJECTS_PPERFIX}
   spec:
     parallelism: 1
     completions: 1
@@ -20,48 +81,45 @@ objects:
       metadata:
         name: edp-deploy
       spec:
+        restartPolicy: Never
+        serviceAccount: edp
         containers:
         - image: ${EDP_VERSION}
           imagePullPolicy: IfNotPresent
           name: edp-deploy
-          env:
-          - name: GERRIT_VERSION
-            value: ${GERRIT_VERSION}
-          - name: GERRIT_DATA_CAPACITY
-            value: ${GERRIT_DATA_CAPACITY}
-          - name: GERRIT_DATA_CAPACITY
-            value: ${GERRIT_DATA_CAPACITY
-          - name: GERRIT_DB_CAPACITY
-            value: ${GERRIT_DB_CAPACITY}
-          - name: GERRIT_WEB_URL
-            value: ${GERRIT_WEB_URL}
-          - name: GERRIT_DATA_CAPACITY
-            value: ${GERRIT_DATA_CAPACITY
-          - name: JENKINS_ENABLE_OAUTH
-            value: ${JENKINS_ENABLE_OAUTH}
-          - name: JENKINS_VOLUME_CAPACITY
-            value: ${JENKINS_VOLUME_CAPACITY}
-          - name: JENKINS_MAVEN_CACHE_VOLUME_CAPACITY
-            value: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY
-          - name: JENNKINS_FRONTEND_IMAGE
-            value: ${JENNKINS_FRONTEND_IMAGE}
-          - name: JENKINS_BACKEND_IMAGE
-            value: ${JENKINS_BACKEND_IMAGE}
-          - name: NEXUS_VERSION
-            value: ${NEXUS_VERSION}
-          - name: NEXUS_VOLUME_CAPACITY
-            value: ${NEXUS_VOLUME_CAPACITY}
-          - name: SONAR_VERSION
-            value: ${SONAR_VERSION}
-          - name: SONAR_VOLUME_CAPACITY
-            value: ${SONAR_VOLUME_CAPACITY}
-          - name: SONAR_DB_CAPACITY
-            value: ${SONAR_DB_CAPACITY}
+          command:
+            - "ansible-playbook"
+            - "-v"
+            - "-i"
+            - "localhost,"
+            - "-e project=cicd-${PROJECTS_PPERFIX}"
+            - "-e ocadm=oc"
+            - "-e ansible_connection=local"
+            - "-e gerrit.version=${GERRIT_VERSION}"
+            - "-e tools.gerrit.volume_capacity=${GERRIT_DATA_CAPACITY}"
+            - "-e tools.gerrit.volume_db_capacity=${GERRIT_DB_CAPACITY}"
+            - "-e tools.jenkins.enable_oauth=${JENKINS_ENABLE_OAUTH}"
+            - "-e tools.jenkins.volume_capacity=${JENKINS_VOLUME_CAPACITY}"
+            - "-e tools.jenkins.maveUME_CAPACITY}"
+            - "-e tools.jenkins.frontend_image=${JENNKINS_FRONTEND_IMAGE}"
+            - "-e tools.jenkins.backend_image=${JENKINS_BACKEND_IMAGE}"
+            - "-e toous.volume_capacity=${NEXUS_VOLUME_CAPACITY}"
+            - "-e tools.sonar.version=${SONAR_VERSION}"
+            - "-e tools.sonar.volume_capacity=${SONAR_VOLUME_CAPACITY_CAPACITY}"
+            - "install/deploy_ci_tools/install.yml"
 parameters:
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed
   name: EDP_VERSION
-  value: "edp:SNAPSHOT"
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-test:test"
+- displayName: Prefix for projects
+  description: Prefix that will be added to projects created by EDP Platform
+  name: PROJECTS_PPERFIX
+  value: "test"
+- displayName: Namespace to run edp-deploy
+  description: Namespace EDP platform will be deployed from
+  name: NAMESPACE
+  value: "infra"
 #Gerrit parameters
 - displayName: Gerrit version
   value: "2.14.1"
