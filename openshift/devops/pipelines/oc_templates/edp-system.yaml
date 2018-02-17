@@ -1,0 +1,77 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: edp-system
+  annotations:
+    description: |-
+          Template for deploing service account and provide it with grants that is needed to deploy EPAM Delivery Platform (EDP) aka "The Rocket" tools
+    openshift.io/display-name: EDP - The Rocket(SYSTEM)
+    template.openshift.io/provider-display-name: EPAM
+    template.openshift.io/support-url: https://www.epam.com
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: edp
+- apiVersion: v1
+  groupNames:
+  - system:masters
+  kind: ClusterRoleBinding
+  metadata:
+    annotations:
+      openshift.io/reconcile-protect: "false"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: edp-deploy-cluster-admin
+  roleRef:
+    name: cluster-admin
+  subjects:
+  - kind: ServiceAccount
+    name: edp
+    namespace: ${NAMESPACE}
+  - kind: SystemGroup
+    name: system:masters
+  userNames:
+  - system:serviceaccount:${NAMESPACE}:edp
+- apiVersion: v1
+  kind: SecurityContextConstraints
+  allowHostDirVolumePlugin: true
+  allowHostIPC: false
+  allowHostNetwork: false
+  allowHostPID: false
+  allowHostPorts: true
+  allowPrivilegedContainer: false
+  allowedCapabilities: []
+  allowedFlexVolumes: []
+  defaultAddCapabilities: []
+  fsGroup:
+    type: RunAsAny
+  groups:
+  - system:cluster-admins
+  metadata:
+    name: edp-deploy
+  priority: 10
+  readOnlyRootFilesystem: false
+  requiredDropCapabilities:
+  - MKNOD
+  runAsUser:
+    type: RunAsAny
+  seLinuxContext:
+    type: MustRunAs
+  supplementalGroups:
+    type: RunAsAny
+  users:
+  - system:serviceaccount:${NAMESPACE}:edp
+  volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - hostPath
+  - persistentVolumeClaim
+  - projected
+  - secret
+parameters:
+- displayName: Namespace to run edp-deploy
+  description: Namespace EDP platform will be deployed from
+  name: NAMESPACE
+  value: "infra"
