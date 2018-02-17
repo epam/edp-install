@@ -31,7 +31,7 @@ objects:
             - "-v"
             - "-i"
             - "localhost,"
-            - "-e project=cicd-${PROJECTS_PPERFIX}"
+            - "-e project=cicd-${PROJECTS_PREFIX}"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
             - "-e gerrit.version=${GERRIT_VERSION}"
