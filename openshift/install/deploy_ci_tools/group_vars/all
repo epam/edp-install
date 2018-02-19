@@ -5,7 +5,7 @@ tmp_dir: "/tmp"
 work_dir: "{{ tmp_dir }}/edp-tools-installation"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/templates"
-project: ansible-project
+project: "edp-cicd"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 secrets:
   gerrit_db:
@@ -21,23 +21,23 @@ secrets:
     secret: d9921be13a9980798997b28bd9b6a2fa68a33fa9fa19f466d569e48293b1b584
 tools:
   jenkins:
-    password: password
-    service_name: jenkins
-    enable_oauth: false
-    volume_capacity: 5Gi
-    maven_cache_volume_capacity: 5Gi
-    frontend_image: docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2
-    backend_image: openshift/jenkins-slave-maven-centos7
+    password: "{{ jenkins_password | default('password') }}"
+    service_name: "{{ jenkins_service_name | default('jenkins') }}"
+    enable_oauth: "{{ jenkins_enable_oauth | default('false') }}"
+    volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
+    maven_cache_volume_capacity: "{{ jenkins_maven_cache_volume_capacity | default('5Gi') }}"
+    frontend_image: "{{ jenkins_frontend_image | default('docker-registry-default.main.edp.projects.epam.com/infra/nodejs-slave:6.12.2') }}"
+    backend_image: "{{ jenkins_backend_image | default('openshift/jenkins-slave-maven-centos7') }}"
   gerrit:
-    version: 2.14.1
-    gitlab_oauth: gitlab-oauth
-    volume_capacity: 5Gi
-    volume_db_capacity: 2Gi
-    web_url: "http://gerrit-infra.main.edp.projects.epam.com"
+    version: "{{ gerrit_version | default('2.14.1') }}"
+    gitlab_oauth: "{{ gerrit_gitlab_oauth | default('gitlab-oauth') }}"
+    volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
+    volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
+    web_url: "{{ gerrit_web_url | default('http://gerrit.main.edp.projects.epam.com') }}"
   nexus:
-    version: 3.6.2
-    volume_capacity: 5Gi
+    version: "{{ nexus_version | default('3.6.2') }}"
+    volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"
   sonar:
-    version: 6.7
-    volume_capacity: 1Gi
-    volume_db_capacity: 2Gi
+    version: "{{ sonar_version | default('6.7') }}"
+    volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
+    volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"

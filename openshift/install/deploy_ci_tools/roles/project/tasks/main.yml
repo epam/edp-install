@@ -1,4 +1,4 @@
---- 
+---
 - name: "Login to openshift"
   shell: "{{ ocadm }} login -u system:admin"
   register: can_login

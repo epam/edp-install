@@ -2,24 +2,14 @@ import groovy.json.*
 import org.apache.commons.lang.RandomStringUtils
 
 PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
+DOCKER_REGISTRY_DEFAULT = "docker-registry-default.main.edp.projects.epam.com"
 AUTOUSER_DEFAULT = "jenkins"
-EMAIL_RECIPIENTS_DEFAULT = "Alexander_Morozov@epam.com"
+EMAIL_RECIPIENTS_DEFAULT = "SpecialEPMD-EDPcoreteam@epam.com"
 CREDENTIALS_DEFAULT = "gerrit-key"
 
 tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
-
-vars['html_body'] = """<html>
-        <body>
-          <H3>Dear Colleague(s),</H3>
-          <div align="left">
-            Jenkins <a href="${JENKINS_URL}/job/${JOB_NAME}">build job</a> is waiting for your approve, please check.<br>
-          </div>
-          <hr>
-        </body>
-        <footer> This message has been generated automatically by <a href="${JENKINS_URL}">EDP Jenkins CI</a>. Please do not reply on this message.
-        </html>
-        """
+commonLib = null
 
 node("master") {
     vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
@@ -27,6 +17,7 @@ node("master") {
     def workspace = "${WORKSPACE.replaceAll("@", "")}@script"
     dir("${workspace}") {
         stash name: 'data', includes: "**", useDefaultExcludes: false
+        commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
     }
 }
 
@@ -38,18 +29,19 @@ node("ansible-slave") {
             unstash 'data'
         }
     } catch (Exception ex) {
-        error("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
+        commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
     }
 
-    vars['email_recipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
+    vars['externalDockerRegistry'] = env.DOCKER_REGISTRY ? DOCKER_REGISTRY : DOCKER_REGISTRY_DEFAULT
+    vars['emailRecipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : AUTOUSER_DEFAULT
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : CREDENTIALS_DEFAULT
     vars['branch'] = GERRIT_BRANCH
     vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
     vars['workDir'] = "${WORKSPACE}/repository"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
-    vars['ocProjectName'] = "cicd-post-review-${vars.gerritChange}"
-    vars['tagVersion'] = "snapshot-${vars.gerritChange}"
+    vars['ocProjectName'] = "edp-cicd-mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
+    vars['tagVersion'] = "snapshot-mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
     vars['imageProject'] = "infra"
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}(${vars.gerritChange})"
@@ -70,12 +62,12 @@ Patchset: ${vars.gerritChange}
 
         stage("DEPLOY PROJECT") {
             stage = load "deploy-environment.groovy"
-            stage.run(vars)
+            stage.run(vars, commonLib)
         }
 
         try {
             stage("MANUAL APPROVE") {
-                emailext to: "${vars.email_recipients}", subject: "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", body: vars.html_body, mimeType: "text/html"
+                commonLib.sendEmail("${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}", "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", "approve")
                 input "Is everything ok with environment ${vars.ocProjectName}?"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
