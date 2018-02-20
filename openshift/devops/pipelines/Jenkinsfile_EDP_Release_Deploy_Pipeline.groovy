@@ -56,27 +56,27 @@ node("ansible-slave") {
     println("branch - ${vars.branch}")
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
-        stage("CHECK BRANCHES") {
-            stage = load "check-branches.groovy"
-            stage.run(vars)
-        }
-
-        stage("CHECKOUT") {
-            stage = load "git-checkout.groovy"
-            stage.run(vars)
-        }
-
-        stage("BUILD") {
-            stage = load "build.groovy"
-            stage.run(vars)
-        }
-
-        stage("DEPLOY PROJECT") {
-            stage = load "deploy-environment.groovy"
-            stage.run(vars, commonLib)
-        }
-
         try {
+            stage("CHECK BRANCHES") {
+                stage = load "check-branches.groovy"
+                stage.run(vars)
+            }
+
+            stage("CHECKOUT") {
+                stage = load "git-checkout.groovy"
+                stage.run(vars)
+            }
+
+            stage("BUILD") {
+                stage = load "build.groovy"
+                stage.run(vars)
+            }
+
+            stage("DEPLOY PROJECT") {
+                stage = load "deploy-environment.groovy"
+                stage.run(vars, commonLib)
+            }
+
             stage("MANUAL APPROVE") {
                 commonLib.sendEmail("${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}", "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", "approve")
                 input "Is everything ok with environment ${vars.ocProjectName}?"
