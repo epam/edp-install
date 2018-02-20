@@ -38,7 +38,7 @@ node("ansible-slave") {
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : CREDENTIALS_DEFAULT
     vars['branch'] = GERRIT_BRANCH
     vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
-    vars['workDir'] = "${WORKSPACE}/repository"
+    vars['workDir'] = "${WORKSPACE}/${tmpDir}"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['ocProjectName'] = "edp-cicd-mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
     vars['tagVersion'] = "snapshot-mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
@@ -73,14 +73,14 @@ Patchset: ${vars.gerritChange}
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
         }
         catch (Exception ex) {
+            println("[JENKINS][ERROR] Exception - ${ex}")
+            println "[JENKINS][ERROR] Trace: ${ex.getStackTrace().collect { it.toString() }.join('\n')}"
             currentBuild.displayName = "${currentBuild.displayName}-FAILED"
             currentBuild.result = 'FAILURE'
         }
         finally {
-            stage("DELETE PROJECT") {
-                stage = load "delete-environment.groovy"
-                stage.run(vars)
-            }
+            stage = load "delete-environment.groovy"
+            stage.run(vars)
         }
     }
 }

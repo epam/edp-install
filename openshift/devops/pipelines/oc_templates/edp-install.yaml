@@ -38,10 +38,11 @@ objects:
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
             - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
             - "-e gerrit_web_url=${GERRIT_WEB_URL}"
+            - "-e gerrit_job_version=${GERRIT_JOB_VERSION}"
             - "-e jenkins_enable_oauth=${JENKINS_ENABLE_OAUTH}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
             - "-e jenkins_maven_cache_volume_capacity=${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}"
-            - "-e jenkins_frontend_image=${JENNKINS_FRONTEND_IMAGE}"
+            - "-e jenkins_frontend_image=${JENKINS_FRONTEND_IMAGE}"
             - "-e jenkins_backend_image=${JENKINS_BACKEND_IMAGE}"
             - "-e nexus_version=${NEXUS_VERSION}"
             - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
@@ -76,6 +77,9 @@ parameters:
   description: Gerrit WEB URL is needed for authentication purposes
   name: GERRIT_WEB_URL
   value: 'http://gerrit.main.edp.projects.epam.com'
+- displayName: Gerrit job version
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/gerrit-job:latest"
+  name: GERRIT_JOB_VERSION
 #Jenkins parameters
 - displayName: Enable OAuth in Jenkins
   description: Whether to enable OAuth OpenShift integration. If false, the static
@@ -94,8 +98,8 @@ parameters:
   required: true
   value: 10Gi
 - displayName: Frontend docker image.
-  name: JENNKINS_FRONTEND_IMAGE
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/nodejs-slave:6.12.2"
+  name: JENKINS_FRONTEND_IMAGE
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/ui-slave:latest"
 - displayName: Backend docker image.
   name: JENKINS_BACKEND_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"

@@ -18,7 +18,9 @@
     - '"already" not in result.stderr'
 
 - name: "Install Gerrit-to-Jenkins integration"
-  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/gerrit/gerrit-integration.yaml"
+  command: |
+    {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/gerrit/gerrit-integration.yaml
+    -p GERRIT_JOB_VERSION={{ tools.gerrit.job_version }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

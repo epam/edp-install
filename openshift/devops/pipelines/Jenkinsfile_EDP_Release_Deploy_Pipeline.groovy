@@ -37,7 +37,7 @@ node("ansible-slave") {
     vars['externalDockerRegistry'] = env.DOCKER_REGISTRY ? DOCKER_REGISTRY : DOCKER_REGISTRY_DEFAULT
     vars['emailRecipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
-    vars['workDir'] = "${WORKSPACE}/repository"
+    vars['workDir'] = "${WORKSPACE}/${tmpDir}"
     vars['ocProjectName'] = "release-env"
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
@@ -82,23 +82,20 @@ node("ansible-slave") {
                 input "Is everything ok with environment ${vars.ocProjectName}?"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
+
+            stage("CREATE BRANCH") {
+                stage = load "create-branch.groovy"
+                stage.run(vars)
+            }
         }
         catch (Exception ex) {
+            println("[JENKINS][ERROR] Exception - ${ex}")
+            println "[JENKINS][ERROR] Trace: ${ex.getStackTrace().collect { it.toString() }.join('\n')}"
             currentBuild.displayName = "${currentBuild.displayName}-FAILED"
             currentBuild.result = 'FAILURE'
         }
         finally {
-            stage("DELETE PROJECT") {
-                stage = load "delete-environment.groovy"
-                stage.run(vars)
-            }
-        }
-
-        if (currentBuild.result == 'FAILURE')
-            error("[JENKINS][ERROR] Manual check failed")
-
-        stage("CREATE BRANCH") {
-            stage = load "create-branch.groovy"
+            stage = load "delete-environment.groovy"
             stage.run(vars)
         }
     }

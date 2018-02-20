@@ -22,7 +22,7 @@ node("master") {
     vars['rcNumber']=0
     vars['prefix']='RC'
     vars['version']='0.1'
-    vars['workDir'] = "${WORKSPACE}/repository"
+    vars['workDir'] = "${WORKSPACE}/${tmpDir}"
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {
