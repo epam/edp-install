@@ -38,7 +38,7 @@ node("ansible-slave") {
     vars['emailRecipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
     vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
     vars['workDir'] = "${WORKSPACE}/${tmpDir}"
-    vars['ocProjectName'] = "release-env"
+    vars['ocProjectNameSuffix'] = "release-env"
     vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['version'] = '0.1'
@@ -49,10 +49,9 @@ node("ansible-slave") {
     vars['imageProject'] = "release"
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
-    currentBuild.description = """Branch: ${vars.branch}
-"""
+    currentBuild.description = """Branch: ${vars.branch}"""
 
-    println("pn - ${vars.ocProjectName}")
+    println("pn - ${vars.ocProjectNameSuffix}")
     println("branch - ${vars.branch}")
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
@@ -79,7 +78,7 @@ node("ansible-slave") {
 
             stage("MANUAL APPROVE") {
                 commonLib.sendEmail("${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}", "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", "approve")
-                input "Is everything ok with environment ${vars.ocProjectName}?"
+                input "Is everything ok with environment ${vars.ocProjectNameSuffix}?"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
 

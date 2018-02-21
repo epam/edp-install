@@ -2,7 +2,7 @@
 # The following step is a temporarary and it's going to be fixed next sprints
 - name: "Install Jenkins app - preparation"
   command: |
-    {{ ocadm }} -n {{ project }} create configmap job-provisioning
+    {{ ocadm }} -n {{ project_cicd }} create configmap job-provisioning
     --from-file {{ templates_dir }}/jenkins/job_provisioning.groovy
   register: result
   ignore_errors: true
@@ -14,7 +14,7 @@
 
 - name: "Install Jenkins app"
   command: |
-    {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/jenkins/jenkins-gluster.yaml
+    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/jenkins/jenkins-gluster.yaml
     -p JENKINS_PASSWORD={{ tools.jenkins.password }}
     -p JENKINS_ENABLE_OAUTH={{ tools.jenkins.enable_oauth }}
     -p JENKINS_VOLUME_CAPACITY={{ tools.jenkins.volume_capacity }}

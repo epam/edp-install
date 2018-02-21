@@ -1,10 +1,10 @@
 --- # Gerrit full installation
 - name: "Give rights to gerrit account"
-  shell: "{{ ocadm }} -n {{ project }} adm policy add-scc-to-user anyuid -z gerrit"
+  shell: "{{ ocadm }} -n {{ project_cicd }} adm policy add-scc-to-user anyuid -z gerrit"
 
 - name: "Install Gerrit app"
   command: |
-    {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/gerrit/gerrit.yaml 
+    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/gerrit/gerrit.yaml 
     -p GERRIT_VERSION={{ tools.gerrit.version }} 
     -p GERRIT_DB_SECRET=gerrit-db 
     -p GERRIT_DATA_CAPACITY={{ tools.gerrit.volume_capacity }} 
@@ -19,7 +19,7 @@
 
 - name: "Install Gerrit-to-Jenkins integration"
   command: |
-    {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/gerrit/gerrit-integration.yaml
+    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/gerrit/gerrit-integration.yaml
     -p GERRIT_JOB_VERSION={{ tools.gerrit.job_version }}
   register: result
   ignore_errors: true

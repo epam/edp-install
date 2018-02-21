@@ -1,10 +1,10 @@
 --- # Gerrit post installation
 - name: "Enabling OAUTH in Gerrit"
-  shell: "test $( {{ ocadm }} -n {{ project }} get pods --show-all | grep gerrit-integration | awk '{print $3}' ) == Completed && echo true"
+  shell: "test $( {{ ocadm }} -n {{ project_cicd }} get pods --show-all | grep gerrit-integration | awk '{print $3}' ) == Completed && echo true"
   register: result
   until: result.stdout == "true"
   retries: 30
   delay: 60
 
 - name: "Enabling OAUTH"
-  shell: "{{ ocadm }} -n {{ project }} set env dc gerrit AUTH_TYPE='OAUTH'"
+  shell: "{{ ocadm }} -n {{ project_cicd }} set env dc gerrit AUTH_TYPE='OAUTH'"

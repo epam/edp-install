@@ -1,6 +1,6 @@
 --- # Nexus full installation
 - name: "Install Nexus app - preparation"
-  command: "{{ ocadm }} -n {{ project }} create configmap nexus-integration --from-file {{ templates_dir }}/nexus/config.py"
+  command: "{{ ocadm }} -n {{ project_cicd }} create configmap nexus-integration --from-file {{ templates_dir }}/nexus/config.py"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
@@ -10,7 +10,7 @@
 
 - name: "Install Nexus app"
   command: |
-    {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/nexus/nexus.yaml 
+    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/nexus/nexus.yaml 
     -p NEXUS_VERSION={{ tools.nexus.version }} 
     -p NEXUS_VOLUME_CAPACITY={{ tools.nexus.volume_capacity }}
   register: result
@@ -22,7 +22,7 @@
 
 
 - name: "Install Nexus-to-Jenkins integration"
-  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/nexus/nexus-integration.yaml"
+  command: "{{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/nexus/nexus-integration.yaml"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

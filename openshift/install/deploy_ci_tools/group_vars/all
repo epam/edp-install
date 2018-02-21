@@ -5,7 +5,15 @@ tmp_dir: "/tmp"
 work_dir: "{{ tmp_dir }}/edp-tools-installation"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/templates"
-project: "edp-cicd"
+projects_suffix: ""
+projects_list: [
+    "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}",
+    "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}",
+    "{{ (projects_suffix != '') | ternary('edp-sit-', 'edp-sit')}}{{ projects_suffix }}",
+    "{{ (projects_suffix != '') | ternary('edp-qa-', 'edp-qa')}}{{ projects_suffix }}",
+    "{{ (projects_suffix != '') | ternary('edp-uat-', 'edp-uat')}}{{ projects_suffix }}"
+    ]
+project_cicd: "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 secrets:
   gerrit_db:

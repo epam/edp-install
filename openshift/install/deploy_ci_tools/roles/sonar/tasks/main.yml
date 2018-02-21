@@ -1,10 +1,10 @@
 --- # Sonar full installation
 - name: "Give rights to sonar account"
-  shell: "{{ ocadm }} -n {{ project }} adm policy add-scc-to-user anyuid -z sonar"
+  shell: "{{ ocadm }} -n {{ project_cicd }} adm policy add-scc-to-user anyuid -z sonar"
 
 - name: "Install Sonar app"
   command: |
-    {{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/sonar/sonar.yaml 
+    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/sonar/sonar.yaml 
     -p SONAR_VERSION={{ tools.sonar.version }} 
     -p SONAR_VOLUME_CAPACITY={{ tools.sonar.volume_capacity }} 
     -p SONAR_DB_CAPACITY={{ tools.sonar.volume_db_capacity }}
@@ -16,7 +16,7 @@
     - '"already" not in result.stderr'
 
 - name: "Install Sonar-to-Jenkins integration"
-  command: "{{ ocadm }} -n {{ project }} new-app -f {{ templates_dir }}/sonar/sonar-integration.yaml"
+  command: "{{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/sonar/sonar-integration.yaml"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

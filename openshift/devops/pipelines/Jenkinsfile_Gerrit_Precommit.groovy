@@ -40,8 +40,8 @@ node("ansible-slave") {
     vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
     vars['workDir'] = "${WORKSPACE}/${tmpDir}"
     vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
-    vars['ocProjectName'] = "edp-cicd-mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
-    vars['tagVersion'] = "snapshot-mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
+    vars['ocProjectNameSuffix'] = "mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
+    vars['tagVersion'] = "snapshot-${vars.ocProjectNameSuffix}"
     vars['imageProject'] = "infra"
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}(${vars.gerritChange})"
@@ -68,7 +68,7 @@ Patchset: ${vars.gerritChange}
 
             stage("MANUAL APPROVE") {
                 commonLib.sendEmail("${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}", "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", "approve")
-                input "Is everything ok with environment ${vars.ocProjectName}?"
+                input "Is everything ok with environment ${vars.ocProjectNameSufffix}?"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
         }
