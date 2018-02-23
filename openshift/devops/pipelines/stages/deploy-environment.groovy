@@ -7,7 +7,7 @@ import hudson.FilePath
 
 def run(vars, commonLib) {
     def versionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.devopsRoot}/version.json").readToString()
-    vars['edpCockpitVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-install')
+    vars['edpCockpitVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-cockpit')
 
     dir("${vars.workDir}/openshift/devops/pipelines/oc_templates") {
         openshift.withCluster() {

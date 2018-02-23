@@ -1,13 +1,5 @@
-import groovy.json.*
-import org.apache.commons.lang.RandomStringUtils
-
 PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
-DOCKER_REGISTRY_DEFAULT = "docker-registry-default.main.edp.projects.epam.com"
-AUTOUSER_DEFAULT = "jenkins"
-EMAIL_RECIPIENTS_DEFAULT = "SpecialEPMD-EDPcoreteam@epam.com"
-CREDENTIALS_DEFAULT = "gerrit-key"
 
-tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
 commonLib = null
 
@@ -22,8 +14,7 @@ node("master") {
 }
 
 node("ansible-slave") {
-    vars['devopsRoot'] = new File("/tmp/${tmpDir}")
-
+    commonLib.getConstants(vars)
     try {
         dir("${vars.devopsRoot}") {
             unstash 'data'
@@ -32,22 +23,15 @@ node("ansible-slave") {
         commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
     }
 
-    vars['externalDockerRegistry'] = env.DOCKER_REGISTRY ? DOCKER_REGISTRY : DOCKER_REGISTRY_DEFAULT
-    vars['emailRecipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
-    vars['autoUser'] = env.AUTOUSER ? AUTOUSER : AUTOUSER_DEFAULT
-    vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : CREDENTIALS_DEFAULT
-    vars['branch'] = GERRIT_BRANCH
     vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
-    vars['workDir'] = "${WORKSPACE}/${tmpDir}"
-    vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['ocProjectNameSuffix'] = "mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
     vars['tagVersion'] = "snapshot-${vars.ocProjectNameSuffix}"
-    vars['imageProject'] = "infra"
 
-    currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}(${vars.gerritChange})"
-    currentBuild.description = """Branch: ${vars.branch}
+    currentBuild.displayName = "${currentBuild.displayName}-${GERRIT_BRANCH}(${vars.gerritChange})"
+    currentBuild.description = """Branch: ${GERRIT_BRANCH}
 Patchset: ${vars.gerritChange}
 """
+    commonLib.getDebugInfo(vars)
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         try {
@@ -57,7 +41,7 @@ Patchset: ${vars.gerritChange}
             }
 
             stage("BUILD") {
-                stage = load "build.groovy"
+                stage = load "edp-install-build.groovy"
                 stage.run(vars)
             }
 

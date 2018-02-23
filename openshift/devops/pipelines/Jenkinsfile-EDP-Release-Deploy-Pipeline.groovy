@@ -1,15 +1,7 @@
 import groovy.json.*
-import org.apache.commons.lang.RandomStringUtils
 
 PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
-DOCKER_REGISTRY_DEFAULT = "docker-registry-default.main.edp.projects.epam.com"
-GERRIT_HOST = 'gerrit'
-GERRIT_PORT = '30001'
-GERRIT_PROJECT = 'edp'
-EMAIL_RECIPIENTS_DEFAULT = "SpecialEPMD-EDPcoreteam@epam.com"
 
-
-tmpDir = RandomStringUtils.random(10, true, true)
 vars = [:]
 commonLib = null
 
@@ -24,8 +16,7 @@ node("master") {
 }
 
 node("ansible-slave") {
-    vars['devopsRoot'] = new File("/tmp/${tmpDir}")
-
+    commonLib.getConstants(vars)
     try {
         dir("${vars.devopsRoot}") {
             unstash 'data'
@@ -34,25 +25,16 @@ node("ansible-slave") {
         commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
     }
 
-    vars['externalDockerRegistry'] = env.DOCKER_REGISTRY ? DOCKER_REGISTRY : DOCKER_REGISTRY_DEFAULT
-    vars['emailRecipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : EMAIL_RECIPIENTS_DEFAULT
-    vars['autoUser'] = env.AUTOUSER ? AUTOUSER : "jenkins"
-    vars['workDir'] = "${WORKSPACE}/${tmpDir}"
     vars['ocProjectNameSuffix'] = "release-env"
-    vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
-    vars['gitUrl'] = "ssh://${vars.autoUser}@${GERRIT_HOST}:${GERRIT_PORT}/${GERRIT_PROJECT}"
     vars['version'] = '0.1'
     vars['rcNumber'] = RC_NUMBER
     vars['branch'] = "${vars.version}.${RC_NUMBER}-RC"
     vars['prefix'] = "RELEASE"
     vars['tagVersion'] = "${vars.version}.${rcNumber}-release"
-    vars['imageProject'] = "release"
 
     currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
     currentBuild.description = """Branch: ${vars.branch}"""
-
-    println("pn - ${vars.ocProjectNameSuffix}")
-    println("branch - ${vars.branch}")
+    commonLib.getDebugInfo(vars)
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         try {

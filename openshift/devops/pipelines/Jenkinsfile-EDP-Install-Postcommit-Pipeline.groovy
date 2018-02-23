@@ -1,0 +1,56 @@
+import groovy.json.*
+import hudson.FilePath
+
+PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
+
+vars = [:]
+commonLib = null
+
+node("master") {
+    vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
+
+    def workspace = "${WORKSPACE.replaceAll("@.*", "")}@script"
+    dir("${workspace}") {
+        stash name: 'data', includes: "**", useDefaultExcludes: false
+        commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
+    }
+}
+
+node("ansible-slave") {
+    commonLib.getConstants(vars)
+    try {
+        dir("${vars.devopsRoot}") {
+            unstash 'data'
+        }
+    } catch (Exception ex) {
+        commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
+    }
+
+    vars['branch'] = env.GERRIT_REFNAME ? env.GERRIT_REFNAME : env.SERVICE_BRANCH
+
+    def versionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.devopsRoot}/version.json").readToString()
+    vars['tagVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-install')
+
+    currentBuild.displayName = "${currentBuild.number}-${vars.branch}"
+    currentBuild.description = """Branch: ${vars.branch}"""
+    commonLib.getDebugInfo(vars)
+
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
+        stage("CHECKOUT") {
+            stage = load "git-checkout.groovy"
+            stage.run(vars)
+        }
+
+        stage("BUILD") {
+            stage = load "edp-install-build.groovy"
+            stage.run(vars)
+
+            vars['sourceProject'] = vars.dockerImageProject
+            vars['sourceTag'] = vars.tagVersion
+            vars['targetProject'] = vars.sitProject
+            vars['targetTag'] = "latest"
+            stage = load "tag-image.groovy"
+            stage.run(vars)
+        }
+    }
+}
