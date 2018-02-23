@@ -2,7 +2,13 @@
  * Checkout from gerrit.  Parameters are defined by gerrit trigger
  * @param vars object with all pipeline variables
  */
+import groovy.json.*
+import hudson.FilePath
+
 def run(vars, commonLib) {
+    def versionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.devopsRoot}/version.json").readToString()
+    vars['edpCockpitVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-install')
+
     dir("${vars.workDir}/openshift/devops/pipelines/oc_templates") {
         openshift.withCluster() {
 
@@ -26,6 +32,7 @@ def run(vars, commonLib) {
                         "--param=SONAR_VOLUME_CAPACITY=1Gi",
                         "--param=SONAR_DB_CAPACITY=1Gi",
                         "--param=EDP_VERSION=${vars.externalDockerRegistry}/${vars.imageProject}/edp-install:${vars.tagVersion}",
+                        "--param=EDP_COCKPIT_VERSION=${vars.externalDockerRegistry}/${vars.imageProject}/edp-cockpit:${vars.edpCockpitVersion}",
                         "--param=PROJECTS_SUFFIX=${vars.ocProjectNameSuffix}", "-f edp-install.yaml").narrow('job').object()
                 timeout(30) {
                     created = false

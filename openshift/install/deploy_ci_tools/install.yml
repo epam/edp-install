@@ -6,4 +6,5 @@
     - { role: gerrit, tags: [ 'gerrit' ] }
     - { role: nexus, tags: [ 'nexus' ] }
     - { role: sonar, tags: [ 'sonar' ] }
+    - { role: edp-cockpit, tags: [ 'edp-cockpit' ] }
     - { role: post_integration, tags: [ 'post_integration' ] }

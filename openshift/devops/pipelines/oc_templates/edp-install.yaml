@@ -49,6 +49,7 @@ objects:
             - "-e sonar_version=${SONAR_VERSION}"
             - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
             - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
+            - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
             - "install/deploy_ci_tools/install.yml"
 parameters:
 - displayName: Image of EDP container
@@ -123,3 +124,7 @@ parameters:
   displayName: SonarQube database Volume Capacity
   name: SONAR_DB_CAPACITY
   value: 5Gi
+#EDP Cockpit parameters
+- displayName: Version of edp-cockpit
+  name: EDP_COCKPIT_VERSION
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot"

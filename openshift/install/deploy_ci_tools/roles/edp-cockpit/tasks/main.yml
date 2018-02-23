@@ -1,0 +1,11 @@
+--- # Jenkins full installation
+- name: "Install EDP-Cockpit app"
+  command: |
+    {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/edp-cockpit/edp-cockpit.yaml
+    -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'

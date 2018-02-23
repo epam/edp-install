@@ -14,6 +14,7 @@ projects_list: [
     "{{ (projects_suffix != '') | ternary('edp-uat-', 'edp-uat')}}{{ projects_suffix }}"
     ]
 project_cicd: "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}"
+project_cockpit: "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 secrets:
   gerrit_db:
@@ -50,3 +51,5 @@ tools:
     version: "{{ sonar_version | default('6.7') }}"
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
+  cockpit:
+    version: "{{ cockpit_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"
