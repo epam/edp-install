@@ -14,7 +14,7 @@ commonLib = null
 node("master") {
     vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
 
-    def workspace = "${WORKSPACE.replaceAll("@", "")}@script"
+    def workspace = "${WORKSPACE.replaceAll("@.*", "")}@script"
     dir("${workspace}") {
         stash name: 'data', includes: "**", useDefaultExcludes: false
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
