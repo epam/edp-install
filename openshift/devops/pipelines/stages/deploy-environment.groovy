@@ -24,15 +24,15 @@ def run(vars, commonLib) {
             try {
                 def job = openshift.newApp("--param=GERRIT_DATA_CAPACITY=1Gi",
                         "--param=GERRIT_DB_CAPACITY=1Gi",
-                        "--param=GERRIT_JOB_VERSION=${vars.externalDockerRegistry}/${vars.imageProject}/gerrit-job:${vars.tagVersion}",
+                        "--param=GERRIT_JOB_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/gerrit-job:${vars.tagVersion}",
                         "--param=JENKINS_VOLUME_CAPACITY=1Gi",
                         "--param=JENKINS_MAVEN_CACHE_VOLUME_CAPACITY=1Gi",
-                        "--param=JENKINS_FRONTEND_IMAGE=${vars.externalDockerRegistry}/${vars.imageProject}/ui-slave:${vars.tagVersion}",
+                        "--param=JENKINS_FRONTEND_IMAGE=${vars.externalDockerRegistry}/${vars.dockerImageProject}/ui-slave:${vars.tagVersion}",
                         "--param=NEXUS_VOLUME_CAPACITY=1Gi",
                         "--param=SONAR_VOLUME_CAPACITY=1Gi",
                         "--param=SONAR_DB_CAPACITY=1Gi",
-                        "--param=EDP_VERSION=${vars.externalDockerRegistry}/${vars.imageProject}/edp-install:${vars.tagVersion}",
-                        "--param=EDP_COCKPIT_VERSION=${vars.externalDockerRegistry}/${vars.imageProject}/edp-cockpit:${vars.edpCockpitVersion}",
+                        "--param=EDP_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/edp-install:${vars.tagVersion}",
+                        "--param=EDP_COCKPIT_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/edp-cockpit:${vars.edpCockpitVersion}",
                         "--param=PROJECTS_SUFFIX=${vars.ocProjectNameSuffix}", "-f edp-install.yaml").narrow('job').object()
                 timeout(30) {
                     created = false
