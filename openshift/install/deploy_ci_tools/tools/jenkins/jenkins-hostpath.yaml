@@ -196,6 +196,11 @@ objects:
       server.getConfig().setGerritAuthKeyFile(new File("${JENKINS_HOME}/.ssh/id_rsa"))
       server.getConfig().setGerritSshPort(29418)
       server.getConfig().setGerritUserName("jenkins")
+      server.getConfig().setUseRestApi(true)
+      server.getConfig().setGerritHttpUserName("jenkins")
+      server.getConfig().setGerritHttpPassword("jenkins")
+      server.getConfig().setRestCodeReview(true)
+      server.getConfig().setRestVerified(true)
 
       plugin.addServer(server);
       server.start();
