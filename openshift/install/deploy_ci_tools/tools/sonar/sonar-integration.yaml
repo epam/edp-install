@@ -3521,6 +3521,32 @@ objects:
                     print("[DEBUG] Plugin %s is already installed" % plugin_key)
                     return False
 
+            def check_jenkins_webhook_presence(self, webhook_key, webhook_name):
+                response = requests.get('http://' + self.host + ':' + self.port + '/api/settings/values', auth=self.credentials)
+                all_settings = dict(
+                    (d['key'], dict(d, index=index)) for (index, d) in enumerate(json.loads(response.text)['settings']))
+                if all_settings.get("sonar.webhooks.global") is None:
+                    return False
+                else:
+                    webhooks = dict((d['name'], dict(d, index=index)) for (index, d) in
+                                    enumerate(all_settings.get("sonar.webhooks.global")['fieldValues']))
+                    return not (webhooks.get('jenkins') is None)
+
+            def add_jenkins_webhook(self, webhook_key, webhook_name):
+                if not self.check_jenkins_webhook_presence(webhook_key, webhook_name):
+                    data = {'key': webhook_key,
+                            'fieldValues': '{"name":"jenkins","url":"http://jenkins:8080/sonarqube-webhook"}'}
+                    response = requests.post('http://' + self.host + ':' + self.port + '/api/settings/set', data=data,
+                                             auth=self.credentials)
+                    if response.status_code == 204:
+                        print("[DEBUG] Webhook for Jenkins has been added")
+                        return True
+                    else:
+                        print("[DEBUG] Webhook add request failed with {0} error".format(response.status_code))
+                else:
+                    print("[DEBUG] Webhook for Jenkins is already exist")
+                    return False
+
 
         def main():
             sonar_data = {}
@@ -3574,6 +3600,8 @@ objects:
             if not sonar.add_permission_to_user(auto_user, 'scan'):
                 print("[ERROR] Can't add permission scan for user %s" % auto_user)
                 return 1
+
+            sonar.add_jenkins_webhook('sonar.webhooks.global', 'jenkins')
 
             jenkins_token = sonar.generate_token(auto_user, "Jenkins")
             if not jenkins_token:
