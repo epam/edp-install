@@ -27,7 +27,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PetClinicApplication {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Test commit4");
+        System.out.println("Test commit5");
         SpringApplication.run(PetClinicApplication.class, args);
     }
 
