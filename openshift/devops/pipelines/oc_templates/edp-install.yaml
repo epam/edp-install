@@ -28,6 +28,7 @@ objects:
           name: edp-deploy
           command:
             - "ansible-playbook"
+            - "--tags=${APPS_TO_INSTALL}"
             - "-v"
             - "-i"
             - "localhost,"
@@ -60,6 +61,10 @@ parameters:
   description: Suffix that will be added to projects created by EDP Platform
   name: PROJECTS_SUFFIX
   value: "test"
+- displayName: Applications to install
+  description: For separate installation, defines what tools will be deployed during installation. For now it can be jenkins,nexus,gerrit,sonar,edp-cockpit.
+  name: APPS_TO_INSTALL
+  value: "all"
 #Gerrit parameters
 - displayName: Gerrit version
   value: "2.14.1"
@@ -127,4 +132,4 @@ parameters:
 #EDP Cockpit parameters
 - displayName: Version of edp-cockpit
   name: EDP_COCKPIT_VERSION
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot"
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:SNAPSHOT"

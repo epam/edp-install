@@ -5,20 +5,22 @@ vars = [:]
 commonLib = null
 
 node("master") {
-    vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
-    vars['devopsRoot'] = "${WORKSPACE.replaceAll("@.*", "")}@script"
-    commonLib = load "${vars['devopsRoot']}/${vars.pipelinesPath}/libs/common.groovy"
-    commonLib.getConstants(vars)
+    stage("INITIALIZATION") {
+        vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
+        vars['devopsRoot'] = "${WORKSPACE.replaceAll("@.*", "")}@script"
+        commonLib = load "${vars['devopsRoot']}/${vars.pipelinesPath}/libs/common.groovy"
+        commonLib.getConstants(vars)
 
-    vars['branch'] = 'master'
-    vars['RC'] = ""
-    vars['rcNumber']=0
-    vars['prefix']='RC'
-    vars['version']='0.1'
+        vars['branch'] = 'master'
+        vars['RC'] = ""
+        vars['rcNumber'] = 0
+        vars['prefix'] = 'RC'
+        vars['version'] = '0.1'
 
-    currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
-    currentBuild.description = """Branch: ${vars.branch}"""
-    commonLib.getDebugInfo(vars)
+        currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
+        currentBuild.description = "Branch: ${vars.branch}"
+        commonLib.getDebugInfo(vars)
+    }
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         stage("CHECKOUT") {

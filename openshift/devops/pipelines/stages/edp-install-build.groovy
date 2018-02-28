@@ -9,6 +9,7 @@ def run(vars) {
         vars.images.push(imageName)
         dir("${directory}") {
             def filePath = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${directory}/Dockerfile")
+            def fromDir
             switch (imageName) {
                 case "edp-install": fromDir = "${vars.workDir}"
                 default: fromDir = "."
@@ -16,10 +17,13 @@ def run(vars) {
             script {
                 openshift.withCluster() {
                     openshift.withProject() {
-                        if (!openshift.selector("buildconfig", "${imageName}").exists())
+                        if (!openshift.selector("buildconfig", "${imageName}").exists()) {
                             openshift.newBuild("--name=${imageName}", "--dockerfile=\"${filePath.readToString().tokenize('\n').join('\n')}\"")
+                            println("[JENKINS][DEBUG] Build config ${imageName} didn't exist, we've created it")
+                        }
                         openshift.selector("bc", "${imageName}").startBuild("--from-dir=${fromDir}", "--wait=true")
-                        openshift.tag("${vars.dockerImageProject}/${imageName}:latest", "${vars.dockerImageProject}/${imageName}:${vars.tagVersion}")
+                        println("[JENKINS][DEBUG] Build config ${imageName} has been completed")
+                        openshift.tag("${vars.dockerImageProject}/${imageName}:latest", "${vars.dockerImageProject}/${imageName}:${vars.edpInstallVersion}")
                     }
                 }
             }

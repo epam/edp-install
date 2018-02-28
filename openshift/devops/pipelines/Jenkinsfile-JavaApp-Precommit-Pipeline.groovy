@@ -28,7 +28,7 @@ node("java") {
         vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
 
         currentBuild.displayName = "${currentBuild.number}-${GERRIT_BRANCH}(${vars.gerritChange})"
-        currentBuild.description = """Branch: ${GERRIT_BRANCH}"""
+        currentBuild.description = "Branch: ${GERRIT_BRANCH}\r\nOwner: ${GERRIT_CHANGE_OWNER_EMAIL}"
         commonLib.getDebugInfo(vars)
     }
 

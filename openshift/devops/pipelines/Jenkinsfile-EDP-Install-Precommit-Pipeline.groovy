@@ -1,3 +1,6 @@
+import groovy.json.*
+import hudson.FilePath
+
 PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
 
 vars = [:]
@@ -14,24 +17,24 @@ node("master") {
 }
 
 node("ansible-slave") {
-    commonLib.getConstants(vars)
-    try {
-        dir("${vars.devopsRoot}") {
-            unstash 'data'
+    stage("INITIALIZATION") {
+        commonLib.getConstants(vars)
+        try {
+            dir("${vars.devopsRoot}") {
+                unstash 'data'
+            }
+        } catch (Exception ex) {
+            commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
         }
-    } catch (Exception ex) {
-        commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
+
+        vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
+        vars['ocProjectNameSuffix'] = "mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
+        vars['edpInstallVersion'] = "SNAPSHOT-${vars.ocProjectNameSuffix}"
+
+        currentBuild.displayName = "${currentBuild.displayName}-${GERRIT_BRANCH}(${vars.gerritChange})"
+        currentBuild.description = "Branch: ${GERRIT_BRANCH}\r\nOwner: ${GERRIT_CHANGE_OWNER_EMAIL}"
+        commonLib.getDebugInfo(vars)
     }
-
-    vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
-    vars['ocProjectNameSuffix'] = "mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
-    vars['tagVersion'] = "snapshot-${vars.ocProjectNameSuffix}"
-
-    currentBuild.displayName = "${currentBuild.displayName}-${GERRIT_BRANCH}(${vars.gerritChange})"
-    currentBuild.description = """Branch: ${GERRIT_BRANCH}
-Patchset: ${vars.gerritChange}
-"""
-    commonLib.getDebugInfo(vars)
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         try {
@@ -45,13 +48,21 @@ Patchset: ${vars.gerritChange}
                 stage.run(vars)
             }
 
-            stage("DEPLOY PROJECT") {
-                stage = load "deploy-environment.groovy"
+            stage("DEPLOY EDP") {
+                def versionFile = new FilePath(
+                        Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(),
+                        "${vars.workDir}/version.json"
+                ).readToString()
+                vars['edpCockpitVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-cockpit')
+                vars['edpInstallTemplate'] = "${vars.workDir}/openshift/devops/pipelines/oc_templates/edp-install.yaml"
+                stage = load "edp-install-deploy.groovy"
                 stage.run(vars, commonLib)
             }
 
             stage("MANUAL APPROVE") {
-                commonLib.sendEmail("${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}", "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", "approve")
+                commonLib.sendEmail(
+                        "${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}",
+                        "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", "approve")
                 input "Is everything ok with environment ${vars.ocProjectNameSufffix}?"
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"

@@ -41,6 +41,7 @@ def getConstants(vars) {
     DEFAULT_GERRIT_HOST = "gerrit"
     DEFAULT_GERRIT_SSH_PORT = "30001"
     DEFAULT_SIT_PROJECT_NAME = "sit"
+    DEFAULT_QA_PROJECT_NAME = "qa"
     DEFAULT_IMAGE_PROJECT_NAME = "infra"
 
     vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
@@ -57,10 +58,13 @@ def getConstants(vars) {
     vars['gitUrl'] = "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${vars.gerritProject}"
 
     vars['sitProject'] = env.SIT_PROJECT ? SIT_PROJECT : DEFAULT_SIT_PROJECT_NAME
+    vars['qaProject'] = env.QA_PROJECT ? QA_PROJECT : DEFAULT_QA_PROJECT_NAME
     vars['dockerImageProject'] = env.IMAGE_PROJECT ? IMAGE_PROJECT : DEFAULT_IMAGE_PROJECT_NAME
 
     vars['mavenSettings'] = "${vars.pipelinesPath}/settings/maven/settings.xml"
+    vars['mavenEdpGroup'] = "com.epam.edp"
     vars['nexusRepository'] = "http://nexus:8081/repository/edp"
+    vars['nexusGroupRepository'] = "http://nexus:8081/repository/maven-public"
 }
 void getDebugInfo(vars) {
     def debugOutput = ""

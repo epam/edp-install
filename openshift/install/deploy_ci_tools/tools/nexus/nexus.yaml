@@ -20,18 +20,6 @@ metadata:
     template.openshift.io/support-url: https://access.redhat.com
 objects:
 - apiVersion: v1
-  kind: ImageStream
-  metadata:
-    labels:
-      app: nexus
-    name: nexus
-  spec:
-    tags:
-    - from:
-        kind: DockerImage
-        name: docker.io/sonatype/nexus3:${NEXUS_VERSION}
-      name: ${NEXUS_VERSION}
-- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     labels:
@@ -44,14 +32,6 @@ objects:
     strategy:
       recreateParams:
         timeoutSeconds: 600
-        #post:
-        #  failurePolicy: Abort
-        #  execNewPod:
-        #    containerName: nexus
-        #    command:
-        #      - "/bin/bash"
-        #      - "-c"
-        #      - "curl -o /tmp/nexus-functions -s https://raw.githubusercontent.com/MerelyMax1986/nexus-functions/master/add-npm-repo.sh; source /tmp/nexus-functions; add_nexus3_npm_repos admin admin123 http://nexus:8081"
       type: Recreate
     template:
       metadata:

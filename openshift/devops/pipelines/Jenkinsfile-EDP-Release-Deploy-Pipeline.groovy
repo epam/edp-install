@@ -16,25 +16,27 @@ node("master") {
 }
 
 node("ansible-slave") {
-    commonLib.getConstants(vars)
-    try {
-        dir("${vars.devopsRoot}") {
-            unstash 'data'
+    stage("INITIALIZATION") {
+        commonLib.getConstants(vars)
+        try {
+            dir("${vars.devopsRoot}") {
+                unstash 'data'
+            }
+        } catch (Exception ex) {
+            commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
         }
-    } catch (Exception ex) {
-        commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
+
+        vars['ocProjectNameSuffix'] = "release-env"
+        vars['version'] = '0.1'
+        vars['rcNumber'] = RC_NUMBER
+        vars['branch'] = "${vars.version}.${RC_NUMBER}-RC"
+        vars['prefix'] = "RELEASE"
+        vars['edpInstallVersion'] = "${vars.version}.${rcNumber}-release"
+
+        currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
+        currentBuild.description = "Branch: ${vars.branch}"
+        commonLib.getDebugInfo(vars)
     }
-
-    vars['ocProjectNameSuffix'] = "release-env"
-    vars['version'] = '0.1'
-    vars['rcNumber'] = RC_NUMBER
-    vars['branch'] = "${vars.version}.${RC_NUMBER}-RC"
-    vars['prefix'] = "RELEASE"
-    vars['tagVersion'] = "${vars.version}.${rcNumber}-release"
-
-    currentBuild.displayName = "${currentBuild.displayName}-${vars.branch}"
-    currentBuild.description = """Branch: ${vars.branch}"""
-    commonLib.getDebugInfo(vars)
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
         try {
@@ -54,7 +56,8 @@ node("ansible-slave") {
             }
 
             stage("DEPLOY PROJECT") {
-                stage = load "deploy-environment.groovy"
+                vars['edpInstallTemplate'] = "${vars.workDir}/openshift/devops/pipelines/oc_templates/edp-install.yaml"
+                stage = load "edp-install-deploy.groovy"
                 stage.run(vars, commonLib)
             }
 

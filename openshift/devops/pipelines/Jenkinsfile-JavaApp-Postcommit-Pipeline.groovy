@@ -28,7 +28,7 @@ node("java") {
         vars['branch'] = env.GERRIT_REFNAME ? env.GERRIT_REFNAME : env.SERVICE_BRANCH
 
         currentBuild.displayName = "${currentBuild.number}-${vars.branch}"
-        currentBuild.description = """Branch: ${vars.branch}"""
+        currentBuild.description = "Branch: ${vars.branch}"
         commonLib.getDebugInfo(vars)
 
     }
@@ -69,6 +69,16 @@ node("java") {
         stage("DOCKER-BUILD") {
             stage = load "java-docker-build.groovy"
             stage.run(vars)
+
+            vars['images'] = ["${vars.gerritProject}"]
+            vars['sourceProject'] = vars.dockerImageProject
+            vars['sourceTag'] = "SNAPSHOT"
+            vars['targetProject'] = vars.sitProject
+            vars['targetTag'] = "SNAPSHOT"
+            stage = load "tag-image.groovy"
+            stage.run(vars)
         }
+
+        build job: 'EDP-SIT-Deploy', wait: false, parameters: []
     }
 }
