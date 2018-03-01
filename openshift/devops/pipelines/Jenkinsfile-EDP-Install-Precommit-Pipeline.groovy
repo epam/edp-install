@@ -59,6 +59,11 @@ node("ansible-slave") {
                 stage.run(vars, commonLib)
             }
 
+            stage("RUN AUTOTESTS") {
+                stage = load "java-run-autotests.groovy"
+                stage.run(vars)
+            }
+
             stage("MANUAL APPROVE") {
                 commonLib.sendEmail(
                         "${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}",

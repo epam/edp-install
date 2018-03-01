@@ -44,10 +44,13 @@ def getConstants(vars) {
     DEFAULT_SIT_PROJECT_NAME = "sit"
     DEFAULT_QA_PROJECT_NAME = "qa"
     DEFAULT_IMAGE_PROJECT_NAME = "infra"
+    DEFAULT_TEST_SUITES = "testng-smoke-suite.xml"
 
     vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
     vars['workDir'] = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
     vars['operationsTimeout'] = env.OPERATIONS_TIMEOUT ? OPERATIONS_TIMEOUT : DEFAULT_OPERATIONS_TIMEOUT
+
+    vars['testSuites'] = env.TEST_SUITES ? TEST_SUITES : DEFAULT_TEST_SUITES
 
     vars['externalDockerRegistry'] = env.DOCKER_REGISTRY ? DOCKER_REGISTRY : DEFAULT_DOCKER_REGISTRY
     vars['emailRecipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : DEFAULT_EMAIL_RECIPIENTS

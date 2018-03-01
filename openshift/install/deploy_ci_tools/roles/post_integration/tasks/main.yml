@@ -1,10 +1,23 @@
 --- # Gerrit post installation
-- name: "Enabling OAUTH in Gerrit"
-  shell: "test $( {{ ocadm }} -n {{ project_cicd }} get pods --show-all | grep gerrit-integration | awk '{print $3}' ) == Completed && echo true"
+- name: "Check integration jobs are finished"
+  shell: "test $( {{ ocadm }} -n {{ project_cicd }} get pods --show-all | grep {{ item }} | awk '{print $3}' ) == Completed && echo true"
   register: result
   until: result.stdout == "true"
   retries: 30
   delay: 60
+  with_items:
+      - gerrit-integration
+      - sonar-integration
+      - nexus-integration
 
-- name: "Enabling OAUTH"
+- name: "Enabling OAUTH for Gerrit"
   shell: "{{ ocadm }} -n {{ project_cicd }} set env dc gerrit AUTH_TYPE='OAUTH'"
+
+- name: "Check health of all deployment pods"
+  shell: "{{ ocadm }} -n {{ project_cicd }} rollout status dc/{{ item }}"
+  register: result
+  with_items:
+      - jenkins
+      - gerrit
+      - nexus
+      - sonar
