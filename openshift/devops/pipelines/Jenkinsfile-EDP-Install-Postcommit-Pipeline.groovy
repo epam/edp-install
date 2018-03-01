@@ -29,9 +29,6 @@ node("ansible-slave") {
 
         vars['branch'] = env.GERRIT_BRANCH ? GERRIT_BRANCH : env.SERVICE_BRANCH
 
-        def versionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.devopsRoot}/version.json").readToString()
-        vars['edpInstallVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-install')
-
         currentBuild.displayName = "${currentBuild.number}-${vars.branch}"
         currentBuild.description = "Branch: ${vars.branch}"
         commonLib.getDebugInfo(vars)
@@ -41,6 +38,9 @@ node("ansible-slave") {
         stage("CHECKOUT") {
             stage = load "git-checkout.groovy"
             stage.run(vars)
+
+            def versionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.workDir}/version.json").readToString()
+            vars['edpInstallVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-install')
         }
 
         stage("BUILD") {
