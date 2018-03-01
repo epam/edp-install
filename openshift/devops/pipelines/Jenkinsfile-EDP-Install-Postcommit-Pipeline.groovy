@@ -27,7 +27,7 @@ node("ansible-slave") {
             commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
         }
 
-        vars['branch'] = env.GERRIT_REFNAME ? env.GERRIT_REFNAME : env.SERVICE_BRANCH
+        vars['branch'] = env.GERRIT_BRANCH ? GERRIT_BRANCH : env.SERVICE_BRANCH
 
         def versionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.devopsRoot}/version.json").readToString()
         vars['edpInstallVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-install')

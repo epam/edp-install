@@ -25,7 +25,7 @@ node("java") {
             commonLib.failJob("[JENKINS][ERROR] Devops repository unstash has failed. Reason - ${ex}")
         }
 
-        vars['branch'] = env.GERRIT_REFNAME ? env.GERRIT_REFNAME : env.SERVICE_BRANCH
+        vars['branch'] = env.GERRIT_BRANCH ? GERRIT_BRANCH : env.SERVICE_BRANCH
 
         currentBuild.displayName = "${currentBuild.number}-${vars.branch}"
         currentBuild.description = "Branch: ${vars.branch}"
