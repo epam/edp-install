@@ -34,6 +34,7 @@ def getBody(bodyType) {
 }
 
 def getConstants(vars) {
+    DEFAULT_OPERATIONS_TIMEOUT = "30"
     DEFAULT_DOCKER_REGISTRY = "docker-registry-default.main.edp.projects.epam.com"
     DEFAULT_EMAIL_RECIPIENTS = "SpecialEPMD-EDPcoreteam@epam.com"
     DEFAULT_GERRIT_AUTOUSER = "jenkins"
@@ -46,6 +47,7 @@ def getConstants(vars) {
 
     vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
     vars['workDir'] = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
+    vars['operationsTimeout'] = env.OPERATIONS_TIMEOUT ? OPERATIONS_TIMEOUT : DEFAULT_OPERATIONS_TIMEOUT
 
     vars['externalDockerRegistry'] = env.DOCKER_REGISTRY ? DOCKER_REGISTRY : DEFAULT_DOCKER_REGISTRY
     vars['emailRecipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : DEFAULT_EMAIL_RECIPIENTS

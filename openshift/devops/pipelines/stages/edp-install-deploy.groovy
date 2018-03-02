@@ -23,7 +23,7 @@ def run(vars, commonLib) {
                         "--param=EDP_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/edp-install:${vars.edpInstallVersion}",
                         "--param=EDP_COCKPIT_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/edp-cockpit:${vars.edpCockpitVersion}",
                         "--param=PROJECTS_SUFFIX=${vars.ocProjectNameSuffix}", "-f ${vars.edpInstallTemplate}").narrow('job').object()
-                timeout(30) {
+                timeout("${vars.operationsTimeout}") {
                     created = false
                     while (!job.status.succeeded && job.status.succeeded < 1) {
                         job = openshift.selector("job/edp-deploy-${vars.ocProjectNameSuffix}").object()
@@ -33,6 +33,8 @@ def run(vars, commonLib) {
                 }
             }
             catch (Exception ex) {
+                println("[JENKINS][DEBUG] Job edp-deploy-${vars.ocProjectNameSuffix} hasn't been finished with 30 min, it will be deleted")
+                openshift.selector("job/edp-deploy-${vars.ocProjectNameSuffix}").delete()
                 if (env.GERRIT_CHANGE_OWNER_EMAIL)
                     commonLib.sendEmail("${GERRIT_CHANGE_OWNER_EMAIL}", "[EDP][JENKINS] Deploy stage for EDP-INSTALL has been failed. Reason - ${ex}", "failed")
                 commonLib.failJob("[JENKINS][ERROR] Deploy stage for EDP-INSTALL has been failed. Reason - ${ex}")

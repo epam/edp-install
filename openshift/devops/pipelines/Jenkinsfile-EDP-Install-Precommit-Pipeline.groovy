@@ -63,7 +63,9 @@ node("ansible-slave") {
                 commonLib.sendEmail(
                         "${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}",
                         "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", "approve")
-                input "Is everything ok with environment ${vars.ocProjectNameSufffix}?"
+                timeout("${vars.operationsTimeout}") {
+                    input "Is everything ok with environment ${vars.ocProjectNameSufffix}?"
+                }
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
         }
