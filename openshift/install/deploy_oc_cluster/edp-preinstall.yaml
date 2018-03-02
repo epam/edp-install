@@ -1,7 +1,7 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: edp-system
+  name: edp-preinstall
   annotations:
     description: |-
           Template for deploing service account and provide it with grants that is needed to deploy EPAM Delivery Platform (EDP) aka "The Rocket" tools
@@ -10,9 +10,30 @@ metadata:
     template.openshift.io/support-url: https://www.epam.com
 objects:
 - apiVersion: v1
+  kind: Project
+  metadata:
+    name: ${NAMESPACE}
+  spec:
+    finalizers:
+    - openshift.io/origin
+    - kubernetes
+- apiVersion: v1
+  kind: RoleBinding
+  metadata:
+    name: admin
+    namespace: ${NAMESPACE}
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: admin
+  userNames:
+  - admin
+- apiVersion: v1
   kind: ServiceAccount
   metadata:
     name: edp
+    namespace: ${NAMESPACE}
 - apiVersion: v1
   groupNames:
   - system:masters
@@ -50,6 +71,7 @@ objects:
   - system:cluster-admins
   metadata:
     name: edp-deploy
+    namespace: ${NAMESPACE}
   priority: 10
   readOnlyRootFilesystem: false
   requiredDropCapabilities:
@@ -74,4 +96,4 @@ parameters:
 - displayName: Namespace to run edp-deploy
   description: Namespace EDP platform will be deployed from
   name: NAMESPACE
-  value: "infra"
+  value: "edp-deploy"
