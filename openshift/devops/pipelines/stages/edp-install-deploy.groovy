@@ -23,7 +23,7 @@ def run(vars, commonLib) {
                         "--param=EDP_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/edp-install:${vars.edpInstallVersion}",
                         "--param=EDP_COCKPIT_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/edp-cockpit:${vars.edpCockpitVersion}",
                         "--param=PROJECTS_SUFFIX=${vars.ocProjectNameSuffix}", "-f ${vars.edpInstallTemplate}").narrow('job').object()
-                timeout("${vars.operationsTimeout}") {
+                timeout(vars.operationsTimeout.toInteger()) {
                     created = false
                     while (!job.status.succeeded && job.status.succeeded < 1) {
                         job = openshift.selector("job/edp-deploy-${vars.ocProjectNameSuffix}").object()
