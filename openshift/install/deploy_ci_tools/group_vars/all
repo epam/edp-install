@@ -26,8 +26,8 @@ secrets:
     db_user: sonar
     db_password: sonar
   gitlab_oauth:
-    id: 1793958fcbf67ba9498781e84b8beee375420796e5ee4510c5baf7b7265566d0
-    secret: d9921be13a9980798997b28bd9b6a2fa68a33fa9fa19f466d569e48293b1b584
+    id: "{{ gitlab_oauth_app_id | default('1793958fcbf67ba9498781e84b8beee375420796e5ee4510c5baf7b7265566d0') }}"
+    secret: "{{ gitlab_oauth_app_secret | default('d9921be13a9980798997b28bd9b6a2fa68a33fa9fa19f466d569e48293b1b584') }}"
 tools:
   jenkins:
     password: "{{ jenkins_password | default('password') }}"

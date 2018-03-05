@@ -14,6 +14,8 @@ def run(vars, commonLib) {
                 def job = openshift.newApp("--param=GERRIT_DATA_CAPACITY=1Gi",
                         "--param=GERRIT_DB_CAPACITY=1Gi",
                         "--param=GERRIT_JOB_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/gerrit-job:${vars.edpInstallVersion}",
+                        "--param=GITLAB_OAUTH_APP_ID=1793958fcbf67ba9498781e84b8beee375420796e5ee4510c5baf7b7265566d0",
+                        "--param=GITLAB_OAUTH_APP_SECRET=d9921be13a9980798997b28bd9b6a2fa68a33fa9fa19f466d569e48293b1b584",
                         "--param=JENKINS_VOLUME_CAPACITY=1Gi",
                         "--param=JENKINS_MAVEN_CACHE_VOLUME_CAPACITY=1Gi",
                         "--param=JENKINS_FRONTEND_IMAGE=${vars.externalDockerRegistry}/${vars.dockerImageProject}/ui-slave:${vars.edpInstallVersion}",
