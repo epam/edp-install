@@ -24,7 +24,7 @@ objects:
         serviceAccount: edp
         containers:
         - image: ${EDP_VERSION}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: edp-deploy
           command:
             - "ansible-playbook"

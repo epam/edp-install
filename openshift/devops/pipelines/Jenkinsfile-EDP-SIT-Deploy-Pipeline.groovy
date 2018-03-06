@@ -26,6 +26,7 @@ node("ansible-slave") {
         vars['edpCockpitVersion'] = "SNAPSHOT"
         vars['dockerImageProject'] = vars.sitProject
         vars['ocProjectNameSuffix'] = "sit-env"
+        vars['workDir'] = vars.devopsRoot
 
         try {
             dir("${vars.devopsRoot}") {
@@ -63,9 +64,10 @@ node("ansible-slave") {
                 stage.run(vars, commonLib)
             }
         }
-        stage("INTEGRATION TEST") {
+        stage("INTEGRATION TESTS") {
             try {
-                println("[JENKINS][DEBUG] Here will be integration test")
+                stage = load "java-run-autotests.groovy"
+                stage.run(vars)
 
                 vars['images'] = ["edp-install", "gerrit-job", "ui-slave", "edp-cockpit"]
                 vars['sourceProject'] = vars.sitProject

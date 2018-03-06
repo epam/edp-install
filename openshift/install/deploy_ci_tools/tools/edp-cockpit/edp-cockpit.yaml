@@ -58,7 +58,7 @@ objects:
       spec:
         containers:
         - image: ${EDP_COCKPIT_VERSION}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: edp-cockpit
           ports:
           - containerPort: 8080

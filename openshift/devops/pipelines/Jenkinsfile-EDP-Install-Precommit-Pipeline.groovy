@@ -77,7 +77,6 @@ node("ansible-slave") {
         catch (Exception ex) {
             println("[JENKINS][ERROR] Exception - ${ex}")
             println "[JENKINS][ERROR] Trace: ${ex.getStackTrace().collect { it.toString() }.join('\n')}"
-            currentBuild.displayName = "${currentBuild.displayName}-FAILED"
             currentBuild.result = 'FAILURE'
         }
         finally {
