@@ -29,21 +29,29 @@ objects:
     capacity:
       storage: 10Gi
     hostPath:
-      path: /opt/data/jenkins
-    storageClassName: manual
+      path: ${JENKINS_HOST_PATH_VOLUME}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
     name: jenkins
-    namespace: infra
+  spec:
+    accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: jenkins
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: maven-cache
   spec:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
-        storage: 10Gi
-    storageClassName: manual
-    volumeName: jenkins
+        storage: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}
+    storageClassName: glusterfs-storage
 - apiVersion: v1
   kind: Route
   metadata:
@@ -207,7 +215,7 @@ objects:
       plugin.save();
       //===========================
       //===========================
-      // Generatin keys for Gerrit exchange
+      // Generating keys for Gerrit exchange
       def cmd = [
         'bash',
         '-c',
@@ -247,19 +255,11 @@ objects:
                   operator: In
                   values:
                   - jenkins
-            preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
-                matchExpressions:
-                - key: role
-                  operator: In
-                  values:
-                  - jenkins
         containers:
         - capabilities: {}
           env:
           - name: OPENSHIFT_ENABLE_OAUTH
-            value: ${ENABLE_OAUTH}
+            value: ${JENKINS_ENABLE_OAUTH}
           - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
             value: "true"
           - name: KUBERNETES_MASTER
@@ -391,7 +391,7 @@ objects:
         <containers>
           <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
             <name>jnlp</name>
-            <image>${FRONTEND_IMAGE}</image>
+            <image>${JENKINS_FRONTEND_IMAGE}</image>
             <privileged>false</privileged>
             <alwaysPullImage>false</alwaysPullImage>
             <workingDir>/tmp</workingDir>
@@ -439,7 +439,7 @@ objects:
         <containers>
           <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
             <name>jnlp</name>
-            <image>${BACKEND_IMAGE}</image>
+            <image>${JENKINS_BACKEND_IMAGE}</image>
             <privileged>false</privileged>
             <alwaysPullImage>false</alwaysPullImage>
             <workingDir>/tmp</workingDir>
@@ -470,22 +470,22 @@ parameters:
 - description: Whether to enable OAuth OpenShift integration. If false, the static
     account 'admin' will be initialized with the password 'password'.
   displayName: Enable OAuth in Jenkins
-  name: ENABLE_OAUTH
+  name: JENKINS_ENABLE_OAUTH
   value: "false"
-- description: Volume space available for data, e.g. 512Mi, 2Gi.
-  displayName: Volume Capacity
-  name: VOLUME_CAPACITY
+- displayName: Maven Cache Volume Capacity
+  description: Volume space available for maven cache data
+  name: JENKINS_MAVEN_CACHE_VOLUME_CAPACITY
   required: true
   value: 5Gi
 - description: Frontend docker image.
   displayName: Frontend docker image.
-  name: FRONTEND_IMAGE
+  name: JENKINS_FRONTEND_IMAGE
   value: "docker-registry.default.svc:5000/ci-cd/nodejs-slave:6.12.2"
 - description: Backend docker image.
   displayName: Backend docker image.
-  name: BACKEND_IMAGE
+  name: JENKINS_BACKEND_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"
 - description: HostPath volume path
   displayName: HostPath volume path
-  name: HOST_PATH_VOLUME
+  name: JENKINS_HOST_PATH_VOLUME
   value: "/opt/data/jenkins"

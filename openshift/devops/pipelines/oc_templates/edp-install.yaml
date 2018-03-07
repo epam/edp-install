@@ -44,6 +44,8 @@ objects:
             - "-e gitlab_oauth_app_id=${GITLAB_OAUTH_APP_ID}"
             - "-e gitlab_oauth_app_secret=${GITLAB_OAUTH_APP_SECRET}"
             - "-e jenkins_enable_oauth=${JENKINS_ENABLE_OAUTH}"
+            - "-e jenkins_fs_type=${JENKINS_FS_TYPE}"
+            - "-e jenkins_host_path_volume=${JENKINS_HOST_PATH_VOLUME}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
             - "-e jenkins_maven_cache_volume_capacity=${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}"
             - "-e jenkins_frontend_image=${JENKINS_FRONTEND_IMAGE}"
@@ -101,6 +103,15 @@ parameters:
   value: ""
   required: true
 #Jenkins parameters
+- displayName: Jenkins filesystem type
+  description: Allowed values only 'gluster' or 'hostpath'
+  name: JENKINS_FS_TYPE
+  value: "gluster"
+  required: true
+- displayName: Jenkins HostPath volume path
+  description: Define it in case you chose 'hostpath' on the previous field. Otherwise, it should be ignored.
+  name: JENKINS_HOST_PATH_VOLUME
+  value: "/opt/data/jenkins"
 - displayName: Enable OAuth in Jenkins
   description: Whether to enable OAuth OpenShift integration. If false, the static
     account 'admin' will be initialized with the password 'password'.

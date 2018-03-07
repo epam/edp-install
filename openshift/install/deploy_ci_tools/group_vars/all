@@ -31,6 +31,8 @@ secrets:
 tools:
   jenkins:
     password: "{{ jenkins_password | default('password') }}"
+    fs_type: "{{ jenkins_fs_type | default('gluster') }}"
+    host_path_volume: "{{ jenkins_host_path_volume | default('/opt/data/jenkins') }}"
     service_name: "{{ jenkins_service_name | default('jenkins') }}"
     enable_oauth: "{{ jenkins_enable_oauth | default('false') }}"
     volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
