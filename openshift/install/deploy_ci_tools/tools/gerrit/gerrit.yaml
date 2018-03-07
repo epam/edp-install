@@ -219,7 +219,7 @@ objects:
             name: python-script
           - mountPath: /var/gerrit/review_site
             name: gerrit-data
-          image: buslovaev/gerrit-job:latest
+          image: ${GERRIT_JOB_VERSION}
           command: ["sh", "/tmp/config.sh"]
         containers:
         - name: gerrit
@@ -339,3 +339,6 @@ parameters:
   displayName: Gerrit WEB URL
   name: GERRIT_WEB_URL
   value: "http://gerrit-test-mb.demo.edp.projects.epam.com"
+- displayName: Gerrit job version
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/gerrit-job:latest"
+  name: GERRIT_JOB_VERSION
