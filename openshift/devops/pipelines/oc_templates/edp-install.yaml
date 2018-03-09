@@ -12,7 +12,7 @@ objects:
 - apiVersion: batch/v1
   kind: Job
   metadata:
-    name: edp-deploy-${PROJECTS_SUFFIX}
+    name: edp-deploy${PROJECTS_SUFFIX}
   spec:
     parallelism: 1
     completions: 1
