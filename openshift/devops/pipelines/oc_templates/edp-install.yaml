@@ -35,6 +35,7 @@ objects:
             - "-e projects_suffix=${PROJECTS_SUFFIX}"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
+            - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e gerrit_version=${GERRIT_VERSION}"
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
             - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
@@ -55,6 +56,11 @@ objects:
             - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
             - "install/deploy_ci_tools/install.yml"
 parameters:
+- displayName: DNS wildcard
+  description: DNS wildcard of your project that should be specified during Openshift cluster installation
+  name: DNS_WILDCARD
+  value: ""
+  required: true
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed
   name: EDP_VERSION
@@ -81,10 +87,6 @@ parameters:
   name: GERRIT_DB_CAPACITY
   value: 5Gi
   required: true
-- displayName: Gerrit WEB URL
-  description: Gerrit WEB URL is needed for authentication purposes
-  name: GERRIT_WEB_URL
-  value: 'http://gerrit.main.edp.projects.epam.com'
 - displayName: Gerrit job version
   value: "docker-registry-default.main.edp.projects.epam.com/infra/gerrit-job:latest"
   name: GERRIT_JOB_VERSION

@@ -42,7 +42,7 @@ tools:
     gitlab_oauth: "{{ gerrit_gitlab_oauth | default('gitlab-oauth') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
     volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
-    web_url: "{{ gerrit_web_url | default('http://gerrit.main.edp.projects.epam.com') }}"
+    web_url: "http://gerrit-{{project_cicd}}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
     job_version: "{{ gerrit_job_version | default('docker-registry-default.main.edp.projects.epam.com/infra/gerrit-job:latest') }}"
   nexus:
     version: "{{ nexus_version | default('3.6.2') }}"

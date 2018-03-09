@@ -24,6 +24,7 @@ def run(vars, commonLib) {
                         "--param=SONAR_DB_CAPACITY=1Gi",
                         "--param=EDP_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/edp-install:${vars.edpInstallVersion}",
                         "--param=EDP_COCKPIT_VERSION=${vars.externalDockerRegistry}/${vars.dockerImageProject}/edp-cockpit:${vars.edpCockpitVersion}",
+                        "--param=DNS_WILDCARD=main.edp.projects.epam.com",
                         "--param=PROJECTS_SUFFIX=${vars.ocProjectNameSuffix}", "-f ${vars.edpInstallTemplate}").narrow('job').object()
                 timeout(vars.operationsTimeout.toInteger()) {
                     created = false
