@@ -21,3 +21,5 @@
       - gerrit
       - nexus
       - sonar
+
+- include_tasks: gitlab_gerrit_configuration.yml

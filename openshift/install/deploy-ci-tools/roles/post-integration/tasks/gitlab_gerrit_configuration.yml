@@ -1,0 +1,50 @@
+---
+- name: "Copy secret from deploy project to cicd" # ToDo Replace infra namespace with edp-deploy in release
+  shell: |
+   {{ ocadm }} get secret {{ gitlab_auto_user_secret }} -o json --namespace infra | jq '.metadata.namespace = "{{ project_cicd }}"' | {{ ocadm }} create -f -
+
+- name: "Get autouser name from cicd projects secret"
+  shell: |
+   {{ ocadm }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: username
+
+- name: "Get autouser password from cicd projects secret"
+  shell: |
+   {{ ocadm }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: password
+
+- name: "Get GitLab host"
+  shell: |
+    echo "{{ gitlab_group_name }}" | sed -e 's|^[^/]*//||' -e 's|/.*$||'
+  register: gitlab_host
+
+- name: "Get GitLab group name"
+  shell: |
+    echo "{{ gitlab_group_name }}" | sed -e 's|^[^/]*//[^/]*/||'
+  register: gitlab_group
+
+- name: "Login to GitLab and get CSRF token"
+  uri:
+    url: "https://{{ gitlab_host.stdout }}/oauth/token"
+    method: POST
+    body: 'grant_type=password&username={{ username.stdout }}&password={{ password.stdout }}'
+  register: csrf_token
+
+- name: "Get group id by it's name"
+  uri:
+    url: "https://{{ gitlab_host.stdout }}/api/v4/groups/{{ gitlab_group.stdout | replace('/', '%2F') }}?simple=true&access_token={{ csrf_token.json.access_token }}"
+    method: GET
+  register: group_id
+
+- name: "Check if project EDP already exist in GitLab"
+  uri:
+    url: "https://{{ gitlab_host.stdout }}/api/v4/projects/{{ gitlab_group.stdout | replace('/', '%2F') + '%2F' + project_gitlab_edp }}?simple=true&access_token={{ csrf_token.json.access_token }}"
+  ignore_errors: True
+  register: edp_project_existence
+
+- name: "Add project to the group"
+  uri:
+    url: "https://{{ gitlab_host.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}&namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
+    method: POST
+    status_code: 201
+  when: edp_project_existence.status == 404

@@ -40,8 +40,6 @@ objects:
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
             - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
             - "-e gerrit_job_version=${GERRIT_JOB_VERSION}"
-            - "-e gitlab_oauth_app_id=${GITLAB_OAUTH_APP_ID}"
-            - "-e gitlab_oauth_app_secret=${GITLAB_OAUTH_APP_SECRET}"
             - "-e jenkins_enable_oauth=${JENKINS_ENABLE_OAUTH}"
             - "-e jenkins_fs_type=${JENKINS_FS_TYPE}"
             - "-e jenkins_host_path_volume=${JENKINS_HOST_PATH_VOLUME}"
@@ -55,6 +53,10 @@ objects:
             - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
             - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
             - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
+            - "-e gitlab_oauth_app_id=${GITLAB_OAUTH_APP_ID}"
+            - "-e gitlab_oauth_app_secret=${GITLAB_OAUTH_APP_SECRET}"
+            - "-e gitlab_auto_user_secret=${GITLAB_AUTO_USER_SECRET}"
+            - "-e gitlab_group_name=${GITLAB_GROUP_NAME_URL}"
             - "install/deploy-ci-tools/install.yml"
 parameters:
 - displayName: DNS wildcard
@@ -91,16 +93,6 @@ parameters:
 - displayName: Gerrit job version
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-gerrit-job:latest"
   name: GERRIT_JOB_VERSION
-- displayName: Gerrit Application ID
-  description: Gerrit Application ID fot OAuth integration with Gitlab
-  name: GITLAB_OAUTH_APP_ID
-  value: ""
-  required: true
-- displayName: Gerrit Application Secret
-  description: Gerrit Application Secret fot OAuth integration with Gitlab
-  name: GITLAB_OAUTH_APP_SECRET
-  value: ""
-  required: true
 #Jenkins parameters
 - displayName: Jenkins filesystem type
   description: Allowed values only 'gluster' or 'hostpath'
@@ -157,3 +149,24 @@ parameters:
 - displayName: Version of edp-cockpit
   name: EDP_COCKPIT_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:SNAPSHOT"
+#GitLab parameters
+- displayName: Gerrit Application ID
+  description: Gerrit Application ID fot OAuth integration with Gitlab
+  name: GITLAB_OAUTH_APP_ID
+  value: ""
+  required: true
+- displayName: Gerrit Application Secret
+  description: Gerrit Application Secret fot OAuth integration with Gitlab
+  name: GITLAB_OAUTH_APP_SECRET
+  value: ""
+  required: true
+- displayName: Git autouser secret name
+  description: Git autouser secret name from prerequisites
+  name: GITLAB_AUTO_USER_SECRET
+  value: auto-epmc-java-vcs-with-ssh
+  required: true
+- displayName: GitLab group name URL
+  description: GitLab URL to the project group. For example 'https://git.epam.com/epmd-edp/temp'
+  name: GITLAB_GROUP_NAME_URL
+  value: "https://git.epam.com/epmd-edp/temp"
+  required: true
