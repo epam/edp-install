@@ -62,6 +62,7 @@ node("java") {
         }
 
         stage("PUSH-TO-NEXUS") {
+            vars['artifact']['repository'] = "${vars.nexusRepository}-snapshots"
             stage = load "push-to-nexus.groovy"
             stage.run(vars)
         }
@@ -70,11 +71,12 @@ node("java") {
             stage = load "java-docker-build.groovy"
             stage.run(vars)
 
+            vars['edpJavaAppVersion'] = "${vars.pomServiceVersion}-${BUILD_NUMBER}"
             vars['images'] = ["${vars.gerritProject}"]
             vars['sourceProject'] = vars.dockerImageProject
-            vars['sourceTag'] = "SNAPSHOT"
+            vars['sourceTag'] = vars.pomServiceVersion
             vars['targetProject'] = vars.sitProject
-            vars['targetTag'] = "SNAPSHOT"
+            vars['targetTag'] = vars.edpJavaAppVersion
             stage = load "tag-image.groovy"
             stage.run(vars)
         }

@@ -40,7 +40,7 @@ node("ansible-slave") {
             stage.run(vars)
 
             def versionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.workDir}/version.json").readToString()
-            vars['edpInstallVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-install')
+            vars['edpInstallVersion'] = "${new JsonSlurperClassic().parseText(versionFile).get('edp-install')}-${BUILD_NUMBER}"
         }
 
         stage("BUILD") {
@@ -50,12 +50,13 @@ node("ansible-slave") {
             vars['sourceProject'] = vars.dockerImageProject
             vars['sourceTag'] = vars.edpInstallVersion
             vars['targetProject'] = vars.sitProject
-            vars['targetTag'] = "SNAPSHOT"
+            vars['targetTag'] = vars.edpInstallVersion
             stage = load "tag-image.groovy"
             stage.run(vars)
         }
 
         stage("PUSH-TO-NEXUS") {
+            vars['artifact']['repository'] = "${vars.nexusRepository}-snapshots"
             vars['artifact'] = [:]
             vars['artifact']['version'] = vars.edpInstallVersion
             vars['artifact']['id'] = "edp-install"
