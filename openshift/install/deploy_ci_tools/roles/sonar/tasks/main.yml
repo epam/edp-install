@@ -15,6 +15,15 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
 
+- name: "Create Sonar integration config map"
+  command: "{{ ocadm }} -n {{ project_cicd }} create configmap sonar-integration --from-file {{ templates_dir }}/sonar/config.py --from-file={{ templates_dir }}/sonar/java-sonar-way-ext.xml"
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
 - name: "Install Sonar-to-Jenkins integration"
   command: "{{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/sonar/sonar-integration.yaml"
   register: result

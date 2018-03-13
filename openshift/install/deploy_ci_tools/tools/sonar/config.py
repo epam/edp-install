@@ -53,7 +53,7 @@ class SonarApi:
     def check_group_exist(self, name):
         response = requests.get('http://' + self.host + ':' + self.port + '/api/user_groups/search?q=%s&f=name' % name,
                                 auth=self.credentials)
-        if json.loads(response.text)['groups']:
+        if 'groups' in json.loads(response.text).keys():
             return True
         return False
 
@@ -122,7 +122,7 @@ class SonarApi:
     def check_plugin_installed(self, plugin_key):
         response = requests.get('http://' + self.host + ':' + self.port + '/api/plugins/installed',
                                 auth=self.credentials)
-        if json.loads(response.text)['plugins']:
+        if 'plugins' not in json.loads(response.text).keys():
             return False
 
         for plugin in json.loads(response.text)['plugins']:
