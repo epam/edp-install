@@ -11,11 +11,11 @@ def run(vars, commonLib) {
             openshift.withProject("${vars.dockerImageProject}") {
                 //TODO Remove this when central logging will be implemented
                 try {
-                    openshift.selector("job/edp-deploy-${vars.ocProjectNameSuffix}").delete()
-                    println("[JENKINS][DEBUG] Job edp-deploy-${vars.ocProjectNameSuffix} has been deleted")
+                    openshift.selector("job/edp-deploy${vars.ocProjectNameSuffix}").delete()
+                    println("[JENKINS][DEBUG] Job edp-deploy${vars.ocProjectNameSuffix} has been deleted")
                 }
                 catch (Exception ex) {
-                    println("[JENKINS][DEBUG] Job edp-deploy-${vars.ocProjectNameSuffix} not found")
+                    println("[JENKINS][DEBUG] Job edp-deploy${vars.ocProjectNameSuffix} not found")
                 }
 
                 try {
@@ -25,7 +25,7 @@ def run(vars, commonLib) {
                     timeout(vars.operationsTimeout.toInteger()) {
                         created = false
                         while (!job.status.succeeded && job.status.succeeded < 1) {
-                            job = openshift.selector("job/edp-deploy-${vars.ocProjectNameSuffix}").object()
+                            job = openshift.selector("job/edp-deploy${vars.ocProjectNameSuffix}").object()
                             println("[JENKINS][DEBUG] Job hasn't finished yet. Current job status - ${job.status}")
                             sleep(60)
                         }
@@ -38,7 +38,7 @@ def run(vars, commonLib) {
                 }
                 finally {
                     //TODO Start to use this code when central logging will be implemented
-                    //openshift.selector("job/edp-deploy-${vars.ocProjectNameSuffix}").delete()
+                    //openshift.selector("job/edp-deploy${vars.ocProjectNameSuffix}").delete()
                 }
             }
         }

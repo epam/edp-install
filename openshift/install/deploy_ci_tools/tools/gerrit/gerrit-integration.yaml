@@ -25,6 +25,9 @@ objects:
     name: gerrit-integration
   data:
     config.sh: |
+      [ -f ~/.ssh/known_hosts ] ||  mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
+      ssh-keyscan -p 29418 -t rsa gerrit >> ~/.ssh/known_hosts
+
       # create admin keys and add them to admin user
       [ ! -d /opt/data/gerrit_site/etc/ssh-keys ] && mkdir -p /opt/data/gerrit_site/etc/ssh-keys
       cd /opt/data/gerrit_site/etc/ssh-keys
@@ -37,7 +40,7 @@ objects:
       then
         echo "Jenkins account has been successfully created"
       else
-        echo "Jenkins account already exists"
+        echo "Adding Jenkins account has been failed or it's already exist"
       fi
 
       # initial conf og Gerrit
@@ -48,6 +51,9 @@ objects:
 
       git init ${CHECKOUT_DIR}
       cd ${CHECKOUT_DIR}
+
+      eval "$(ssh-agent -s)"
+      ssh-add /opt/data/gerrit_site/etc/ssh-keys/id_admin_rsa
 
       #git config
       git config user.name  admin
@@ -95,6 +101,7 @@ objects:
 
       cd -
       rm -rf ${CHECKOUT_DIR}
+      kill ${SSH_AGENT_PID}
 - apiVersion: batch/v1
   kind: Job
   metadata:

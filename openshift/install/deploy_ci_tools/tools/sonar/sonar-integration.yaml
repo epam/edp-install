@@ -3535,7 +3535,7 @@ objects:
             def add_jenkins_webhook(self, webhook_key, webhook_name):
                 if not self.check_jenkins_webhook_presence(webhook_key, webhook_name):
                     data = {'key': webhook_key,
-                            'fieldValues': '{"name":"jenkins","url":"http://jenkins:8080/sonarqube-webhook"}'}
+                            'fieldValues': '{"name":"jenkins","url":"http://jenkins:8080/sonarqube-webhook/"}'}
                     response = requests.post('http://' + self.host + ':' + self.port + '/api/settings/set', data=data,
                                              auth=self.credentials)
                     if response.status_code == 204:
