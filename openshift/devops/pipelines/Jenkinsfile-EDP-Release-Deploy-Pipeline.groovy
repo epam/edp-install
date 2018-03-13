@@ -78,6 +78,7 @@ node("ansible-slave") {
             currentBuild.result = 'FAILURE'
         }
         finally {
+            vars['ocProjectNameSuffixes']=["$vars.ocProjectNameSuffix"]
             stage = load "delete-environment.groovy"
             stage.run(vars)
         }

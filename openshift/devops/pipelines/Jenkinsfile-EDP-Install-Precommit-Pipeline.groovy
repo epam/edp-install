@@ -79,11 +79,12 @@ node("ansible-slave") {
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
         }
         catch (Exception ex) {
-            println("[JENKINS][ERROR] Exception - ${ex}")
             println "[JENKINS][ERROR] Trace: ${ex.getStackTrace().collect { it.toString() }.join('\n')}"
             currentBuild.result = 'FAILURE'
+            error "[JENKINS][ERROR] Exception - ${ex}"
         }
         finally {
+            vars['ocProjectNameSuffixes']=["$vars.ocProjectNameSuffix"]
             stage = load "delete-environment.groovy"
             stage.run(vars)
         }
