@@ -56,8 +56,8 @@ node("ansible-slave") {
         }
 
         stage("PUSH-TO-NEXUS") {
-            vars['artifact']['repository'] = "${vars.nexusRepository}-snapshots"
             vars['artifact'] = [:]
+            vars['artifact']['repository'] = "${vars.nexusRepository}-snapshots"
             vars['artifact']['version'] = vars.edpInstallVersion
             vars['artifact']['id'] = "edp-install"
             vars['artifact']['path'] = "${vars.workDir}/openshift/devops/pipelines/oc_templates/edp-install.yaml"
