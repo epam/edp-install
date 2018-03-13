@@ -5,7 +5,7 @@ def run(vars) {
                 if (!openshift.selector("buildconfig", "${vars.gerritProject}").exists())
                     openshift.newBuild("--name=${vars.gerritProject}", "--image-stream=s2i-java", "--binary=true")
                 openshift.selector("bc", "${vars.gerritProject}").startBuild("--from-dir=${vars.workDir}/target", "--wait=true")
-                openshift.tag("${vars.dockerImageProject}/${vars.gerritProject}:latest","${vars.dockerImageProject}/${vars.gerritProject}:SNAPSHOT")
+                openshift.tag("${vars.dockerImageProject}/${vars.gerritProject}:latest","${vars.dockerImageProject}/${vars.gerritProject}:${vars.edpJavaAppVersion}")
             }
         }
     }

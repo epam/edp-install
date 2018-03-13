@@ -1,5 +1,6 @@
 //Define common variables
 vars = [:]
+vars['artifact'] = [:]
 commonLib = null
 
 PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
@@ -67,17 +68,24 @@ node("java") {
             stage.run(vars)
         }
 
-        stage("DOCKER-BUILD") {
+        stage("BUILD") {
+            vars['edpJavaAppVersion'] = "${vars.pomServiceVersion}-${BUILD_NUMBER}"
             stage = load "java-docker-build.groovy"
             stage.run(vars)
 
-            vars['edpJavaAppVersion'] = "${vars.pomServiceVersion}-${BUILD_NUMBER}"
             vars['images'] = ["${vars.gerritProject}"]
             vars['sourceProject'] = vars.dockerImageProject
-            vars['sourceTag'] = vars.pomServiceVersion
+            vars['sourceTag'] = vars.edpJavaAppVersion
             vars['targetProject'] = vars.sitProject
-            vars['targetTag'] = vars.edpJavaAppVersion
-            stage = load "tag-image.groovy"
+            vars['targetTags'] = [vars.sourceTag, "master"]
+
+            stage = load "promote-images.groovy"
+            stage.run(vars)
+        }
+
+        stage("GIT-TAG") {
+            vars['gitTag'] = vars.edpJavaAppVersion
+            stage = load "git-tag.groovy"
             stage.run(vars)
         }
 

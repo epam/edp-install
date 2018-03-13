@@ -29,7 +29,7 @@ node("ansible-slave") {
 
         vars['gerritChange'] = "change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
         vars['ocProjectNameSuffix'] = "mr-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
-        vars['edpInstallVersion'] = "SNAPSHOT-${vars.ocProjectNameSuffix}"
+        vars['edpInstallVersion'] = "${vars.ocProjectNameSuffix}"
 
         currentBuild.displayName = "${currentBuild.displayName}-${GERRIT_BRANCH}(${vars.gerritChange})"
         currentBuild.description = "Branch: ${GERRIT_BRANCH}\r\nOwner: ${GERRIT_CHANGE_OWNER_EMAIL}"

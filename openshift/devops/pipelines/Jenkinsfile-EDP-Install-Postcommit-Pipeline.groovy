@@ -4,6 +4,7 @@ import hudson.FilePath
 PIPELINES_PATH_DEFAULT = "openshift/devops/pipelines"
 
 vars = [:]
+vars['artifact'] = [:]
 commonLib = null
 
 node("master") {
@@ -50,18 +51,24 @@ node("ansible-slave") {
             vars['sourceProject'] = vars.dockerImageProject
             vars['sourceTag'] = vars.edpInstallVersion
             vars['targetProject'] = vars.sitProject
-            vars['targetTag'] = vars.edpInstallVersion
-            stage = load "tag-image.groovy"
+            vars['targetTags'] = [vars.sourceTag, "master"]
+
+            stage = load "promote-images.groovy"
             stage.run(vars)
         }
 
         stage("PUSH-TO-NEXUS") {
-            vars['artifact'] = [:]
             vars['artifact']['repository'] = "${vars.nexusRepository}-snapshots"
             vars['artifact']['version'] = vars.edpInstallVersion
             vars['artifact']['id'] = "edp-install"
             vars['artifact']['path'] = "${vars.workDir}/openshift/devops/pipelines/oc_templates/edp-install.yaml"
             stage = load "push-single-artifact-to-nexus.groovy"
+            stage.run(vars)
+        }
+
+        stage("GIT-TAG") {
+            vars['gitTag'] = vars['edpInstallVersion']
+            stage = load "git-tag.groovy"
             stage.run(vars)
         }
 
