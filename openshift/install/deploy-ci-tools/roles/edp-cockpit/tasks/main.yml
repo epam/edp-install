@@ -3,6 +3,7 @@
   command: |
     {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/edp-cockpit/edp-cockpit.yaml
     -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
+    -p PROJECT_CICD={{ project_cicd }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

@@ -83,10 +83,17 @@ objects:
             requests:
               memory: 1Gi
           terminationMessagePath: /dev/termination-log
+          env:
+          - name: PROJECT_CICD
+            value: ${PROJECT_CICD}
     triggers:
     - type: ConfigChange
 parameters:
 - displayName: Version of edp-cockpit
   name: EDP_COCKPIT_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot"
+- displayName: Project CICD name
+  name: PROJECT_CICD
+  value: "edp-cicd"
+
 
