@@ -23,7 +23,6 @@ def run(vars) {
                         }
                         openshift.selector("bc", "${imageName}").startBuild("--from-dir=${fromDir}", "--wait=true")
                         println("[JENKINS][DEBUG] Build config ${imageName} has been completed")
-                        openshift.tag("${vars.dockerImageProject}/${imageName}:latest", "${vars.dockerImageProject}/${imageName}:${vars.edpInstallVersion}")
                     }
                 }
             }

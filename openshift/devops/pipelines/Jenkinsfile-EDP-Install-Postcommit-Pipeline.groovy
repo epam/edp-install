@@ -45,13 +45,14 @@ node("ansible-slave") {
         }
 
         stage("BUILD") {
+            println("[JENKINS][DEBUG] We are going to build docker images for EDP-Install with version ${vars.edpInstallVersion}")
             stage = load "edp-install-build.groovy"
             stage.run(vars)
 
             vars['sourceProject'] = vars.dockerImageProject
-            vars['sourceTag'] = vars.edpInstallVersion
-            vars['targetProject'] = vars.sitProject
-            vars['targetTags'] = [vars.sourceTag, "master"]
+            vars['sourceTag'] = "latest"
+            vars['targetProjects'] = [vars.dockerImageProject, vars.sitProject]
+            vars['targetTags'] = [vars.edpInstallVersion, "master"]
 
             stage = load "promote-images.groovy"
             stage.run(vars)

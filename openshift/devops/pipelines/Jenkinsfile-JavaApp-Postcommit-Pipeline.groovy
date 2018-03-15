@@ -70,14 +70,15 @@ node("java") {
 
         stage("BUILD") {
             vars['edpJavaAppVersion'] = "${vars.pomServiceVersion}-${BUILD_NUMBER}"
+            println("[JENKINS][DEBUG] We are going to build docker image for ${vars.gerritProject} with version ${vars.edpJavaAppVersion}")
             stage = load "java-docker-build.groovy"
             stage.run(vars)
 
-            vars['images'] = ["${vars.gerritProject}"]
+            vars['images'] = [vars.gerritProject]
             vars['sourceProject'] = vars.dockerImageProject
-            vars['sourceTag'] = vars.edpJavaAppVersion
-            vars['targetProject'] = vars.sitProject
-            vars['targetTags'] = [vars.sourceTag, "master"]
+            vars['sourceTag'] = "latest"
+            vars['targetProjects'] = [vars.dockerImageProject, vars.sitProject]
+            vars['targetTags'] = [vars.edpJavaAppVersion, "master"]
 
             stage = load "promote-images.groovy"
             stage.run(vars)
