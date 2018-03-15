@@ -340,5 +340,5 @@ parameters:
   name: GERRIT_WEB_URL
   value: "http://gerrit-test-mb.demo.edp.projects.epam.com"
 - displayName: Gerrit job version
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/gerrit-job:latest"
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-gerrit-job:latest"
   name: GERRIT_JOB_VERSION

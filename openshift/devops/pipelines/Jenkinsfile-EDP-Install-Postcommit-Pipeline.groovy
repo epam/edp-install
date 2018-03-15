@@ -63,7 +63,7 @@ node("ansible-slave") {
             vars['artifact']['repository'] = "${vars.nexusRepository}-snapshots"
             vars['artifact']['version'] = vars.edpInstallVersion
             vars['artifact']['id'] = "edp-install"
-            vars['artifact']['path'] = "${vars.workDir}/openshift/devops/pipelines/oc_templates/edp-install.yaml"
+            vars['artifact']['path'] = "${vars.workDir}/openshift/devops/pipelines/oc-templates/edp-install.yaml"
             stage = load "push-single-artifact-to-nexus.groovy"
             stage.run(vars)
         }

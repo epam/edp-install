@@ -55,7 +55,7 @@ objects:
             - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
             - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
             - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
-            - "install/deploy_ci_tools/install.yml"
+            - "install/deploy-ci-tools/install.yml"
 parameters:
 - displayName: DNS wildcard
   description: DNS wildcard of your project that should be specified during Openshift cluster installation
@@ -89,7 +89,7 @@ parameters:
   value: 5Gi
   required: true
 - displayName: Gerrit job version
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/gerrit-job:latest"
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-gerrit-job:latest"
   name: GERRIT_JOB_VERSION
 - displayName: Gerrit Application ID
   description: Gerrit Application ID fot OAuth integration with Gitlab
@@ -129,7 +129,7 @@ parameters:
   value: 10Gi
 - displayName: Frontend docker image.
   name: JENKINS_FRONTEND_IMAGE
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/ui-slave:latest"
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-ui-slave:latest"
 - displayName: Backend docker image.
   name: JENKINS_BACKEND_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"

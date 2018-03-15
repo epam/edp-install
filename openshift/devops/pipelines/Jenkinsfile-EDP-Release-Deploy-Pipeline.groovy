@@ -56,7 +56,7 @@ node("ansible-slave") {
             }
 
             stage("DEPLOY PROJECT") {
-                vars['edpInstallTemplate'] = "${vars.workDir}/openshift/devops/pipelines/oc_templates/edp-install.yaml"
+                vars['edpInstallTemplate'] = "${vars.workDir}/openshift/devops/pipelines/oc-templates/edp-install.yaml"
                 stage = load "edp-install-deploy.groovy"
                 stage.run(vars, commonLib)
             }

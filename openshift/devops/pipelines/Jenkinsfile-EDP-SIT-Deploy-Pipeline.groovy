@@ -69,7 +69,7 @@ node("ansible-slave") {
                 stage = load "java-run-autotests.groovy"
                 stage.run(vars)
 
-                vars['images'] = ["edp-install", "gerrit-job", "ui-slave", "edp-cockpit"]
+                vars['images'] = ["edp-install", "edp-gerrit-job", "edp-ui-slave", "edp-cockpit"]
                 vars['sourceProject'] = vars.sitProject
                 vars['sourceTag'] = "SNAPSHOT"
                 vars['targetProject'] = vars.qaProject

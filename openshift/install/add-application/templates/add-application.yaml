@@ -54,7 +54,7 @@ objects:
                       - "-e sonar_version=${SONAR_VERSION}"
                       - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
                       - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
-                      - "install/deploy_ci_tools/install.yml"
+                      - "install/deploy-ci-tools/install.yml"
           env:
           - name: GIT_REPO_URL
             value: ${GIT_REPO_URL}

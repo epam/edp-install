@@ -37,7 +37,7 @@ tools:
     enable_oauth: "{{ jenkins_enable_oauth | default('false') }}"
     volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
     maven_cache_volume_capacity: "{{ jenkins_maven_cache_volume_capacity | default('5Gi') }}"
-    frontend_image: "{{ jenkins_frontend_image | default('docker-registry-default.main.edp.projects.epam.com/infra/ui-slave:latest') }}"
+    frontend_image: "{{ jenkins_frontend_image | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-ui-slave:latest') }}"
     backend_image: "{{ jenkins_backend_image | default('openshift/jenkins-slave-maven-centos7') }}"
   gerrit:
     version: "{{ gerrit_version | default('2.14.1') }}"
@@ -45,7 +45,7 @@ tools:
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
     volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
     web_url: "http://gerrit-{{project_cicd}}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
-    job_version: "{{ gerrit_job_version | default('docker-registry-default.main.edp.projects.epam.com/infra/gerrit-job:latest') }}"
+    job_version: "{{ gerrit_job_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-gerrit-job:latest') }}"
   nexus:
     version: "{{ nexus_version | default('3.6.2') }}"
     volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"

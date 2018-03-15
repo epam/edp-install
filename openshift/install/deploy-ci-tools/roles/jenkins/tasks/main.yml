@@ -3,7 +3,7 @@
 - name: "Install Jenkins app - preparation"
   command: |
     {{ ocadm }} -n {{ project_cicd }} create configmap job-provisioning
-    --from-file {{ templates_dir }}/jenkins/job_provisioning.groovy
+    --from-file {{ templates_dir }}/jenkins/job-provisioning.groovy
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

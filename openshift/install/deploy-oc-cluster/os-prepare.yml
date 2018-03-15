@@ -5,5 +5,5 @@
     - ansible_vars.yml
   roles:
     - name: "ROLE: Openshift preparation"
-      role: os_prepare
+      role: os-prepare
       become: yes
