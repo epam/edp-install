@@ -1,7 +1,7 @@
 import hudson.FilePath
 
 def run(vars) {
-    def imagesDirectories = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.workDir}/openshift/custom-images").listDirectories()
+    def imagesDirectories = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.workDir}/openshift/install/custom-images").listDirectories()
 
     vars['images'] = []
     imagesDirectories.each() { directory ->
