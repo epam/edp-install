@@ -49,11 +49,7 @@ node("ansible-slave") {
             }
 
             stage("DEPLOY EDP") {
-                def versionFile = new FilePath(
-                        Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(),
-                        "${vars.workDir}/version.json"
-                ).readToString()
-                vars['edpCockpitVersion'] = new JsonSlurperClassic().parseText(versionFile).get('edp-cockpit')
+                vars['edpCockpitVersion'] = "master"
                 vars['edpInstallTemplate'] = "${vars.workDir}/openshift/devops/pipelines/oc_templates/edp-install.yaml"
                 stage = load "edp-install-deploy.groovy"
                 stage.run(vars, commonLib)
