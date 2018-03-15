@@ -51,6 +51,9 @@ node("ansible-slave") {
                 vars['sourceTag'] = "latest"
                 vars['targetProjects'] = [vars.dockerImageProject]
                 vars['targetTags'] = [vars.edpInstallVersion]
+
+                stage = load "promote-images.groovy"
+                stage.run(vars)
             }
 
             stage("DEPLOY EDP") {
