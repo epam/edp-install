@@ -46,6 +46,11 @@ node("ansible-slave") {
             stage("BUILD") {
                 stage = load "edp-install-build.groovy"
                 stage.run(vars)
+
+                vars['sourceProject'] = vars.dockerImageProject
+                vars['sourceTag'] = "latest"
+                vars['targetProjects'] = [vars.dockerImageProject]
+                vars['targetTags'] = [vars.edpInstallVersion]
             }
 
             stage("DEPLOY EDP") {

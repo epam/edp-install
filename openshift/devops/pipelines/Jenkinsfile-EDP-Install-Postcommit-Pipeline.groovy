@@ -42,6 +42,7 @@ node("ansible-slave") {
 
             def versionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(), "${vars.workDir}/version.json").readToString()
             vars['edpInstallVersion'] = "${new JsonSlurperClassic().parseText(versionFile).get('edp-install')}-${BUILD_NUMBER}"
+            currentBuild.displayName = "${currentBuild.number}-${vars.edpInstallVersion}"
         }
 
         stage("BUILD") {

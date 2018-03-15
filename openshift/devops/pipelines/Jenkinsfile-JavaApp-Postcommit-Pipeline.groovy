@@ -70,6 +70,7 @@ node("java") {
 
         stage("BUILD") {
             vars['edpJavaAppVersion'] = "${vars.pomServiceVersion}-${BUILD_NUMBER}"
+            currentBuild.displayName = "${currentBuild.number}-${vars.edpJavaAppVersion}"
             println("[JENKINS][DEBUG] We are going to build docker image for ${vars.gerritProject} with version ${vars.edpJavaAppVersion}")
             stage = load "java-docker-build.groovy"
             stage.run(vars)
