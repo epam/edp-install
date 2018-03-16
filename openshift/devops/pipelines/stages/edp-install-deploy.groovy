@@ -29,9 +29,9 @@ def run(vars, commonLib) {
                 timeout(vars.operationsTimeout.toInteger()) {
                     created = false
                     while (!job.status.succeeded && job.status.succeeded < 1) {
-                        job = openshift.selector("job/edp-deploy${vars.ocProjectNameSuffix}").object()
                         println("[JENKINS][DEBUG] Job hasn't finished yet. Current job status - ${job.status}")
                         sleep(60)
+                        job = openshift.selector("job/edp-deploy${vars.ocProjectNameSuffix}").object()
                     }
                 }
             }

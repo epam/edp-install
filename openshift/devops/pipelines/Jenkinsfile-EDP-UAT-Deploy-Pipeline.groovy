@@ -4,6 +4,15 @@ vars = [:]
 vars['artifact'] = [:]
 commonLib = null
 
+@NonCPS
+def check_version() {
+    def matcher = (env["EDP-PLATFORM_VERSION"] =~ /^(\d+\.\d+)\.\d+$/)
+    if (matcher.count < 1)
+        commonLib.failJob("[JENKINS][ERROR] Incorrect version(${env["EDP-PLATFORM_VERSION"]}) format for EDP_PLATFORM_VERSION. Correct example - X.X.X.")
+    else
+        vars['edpReleaseVersion'] = matcher[0][1].replace(".","-")
+}
+
 node("master") {
     vars['pipelinesPath'] = env.PIPELINES_PATH ? PIPELINES_PATH : PIPELINES_PATH_DEFAULT
 
@@ -20,10 +29,13 @@ node("ansible-slave") {
         if (!env["EDP-PLATFORM_VERSION"])
             commonLib.failJob("[JENKINS][ERROR] Parameter EDP_PLATFORM_VERSION is mandatory to specify, please check it.")
 
+        this.check_version()
+
         vars['edpPlatformVersion'] = env["EDP-PLATFORM_VERSION"]
         vars['edpInstallVersion'] = env["EDP-INSTALL_VERSION"] ? env["EDP-INSTALL_VERSION"] : "master"
         vars['edpCockpitVersion'] = env["EDP-COCKPIT_VERSION"] ? env["EDP-COCKPIT_VERSION"] : "master"
         vars['dockerImageProject'] = vars.uatProject
+        vars['releaseProject'] = "release-${vars.edpReleaseVersion}"
         vars['ocProjectNameSuffix'] = "${vars.uatProject}-${BUILD_NUMBER}"
         vars['workDir'] = vars.devopsRoot
 
@@ -65,7 +77,7 @@ node("ansible-slave") {
             try {
                 stage = load "java-run-autotests.groovy"
                 stage.run(vars)
-                currentBuild.description = "${currentBuild.description}\r\nSIT test has been passed"
+                currentBuild.description = "SIT test has been passed"
             }
             catch (Exception ex) {
                 error "[JENKINS][ERROR] Integration tests have been failed"
@@ -84,8 +96,39 @@ node("ansible-slave") {
                     vars['ocProjectNameSuffixes']=[vars.ocProjectNameSuffix]
                     stage = load "delete-environment.groovy"
                     stage.run(vars)
+                    error "[JENKINS][ERROR] Manual approve has not been passed"
                 }
             }
+        }
+
+        stage("RELEASE ARTIFACTS") {
+            sh "oc new-project ${vars.releaseProject} \
+                --display-name=\"EDP Release ${vars.edpReleaseVersion.replace("-",".")}\" \
+                --description=\"Release artifacts for EDP Platform version ${vars.edpReleaseVersion.replace("-",".")}\""
+            sh "oc -n ${vars.releaseProject} adm policy add-role-to-user admin admin"
+
+            vars['images'] = ["edp-install", "edp-ui-slave", "edp-gerrit-job"]
+            vars['sourceTag'] = vars.edpInstallVersion
+            vars['sourceProject'] = vars.uatProject
+            vars['targetTags'] = [vars.sourceTag]
+            vars['targetProjects'] = [vars.releaseProject]
+            stage = load "promote-images.groovy"
+            stage.run(vars)
+
+            vars['images'] = ["edp-cockpit"]
+            vars['sourceTag'] = vars.edpCockpitVersion
+            vars['sourceProject'] = vars.uatProject
+            vars['targetTags'] = [vars.sourceTag]
+            vars['targetProjects'] = [vars.releaseProject]
+            stage = load "promote-images.groovy"
+            stage.run(vars)
+
+            vars['artifact']['repository'] = "${vars.nexusRepository}-releases"
+            vars['artifact']['version'] = vars.edpInstallVersion
+            vars['artifact']['id'] = "edp-install"
+            vars['artifact']['path'] = "${vars.workDir}/edp-install.yaml"
+            stage = load "push-single-artifact-to-nexus.groovy"
+            stage.run(vars)
         }
 
         vars['projectMask'] = vars.uatProject
