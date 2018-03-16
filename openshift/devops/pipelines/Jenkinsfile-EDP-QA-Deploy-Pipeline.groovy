@@ -19,8 +19,8 @@ node("ansible-slave") {
         commonLib.getConstants(vars)
         vars['edpInstallVersion'] = env["EDP-INSTALL_VERSION"] ? env["EDP-INSTALL_VERSION"] : "master"
         vars['edpCockpitVersion'] = env["EDP-COCKPIT_VERSION"] ? env["EDP-COCKPIT_VERSION"] : "master"
-        vars['dockerImageProject'] = vars.sitProject
-        vars['ocProjectNameSuffix'] = "sit-${env.BUILD_NUMBER}"
+        vars['dockerImageProject'] = vars.qaProject
+        vars['ocProjectNameSuffix'] = "qa-${env.BUILD_NUMBER}"
         vars['workDir'] = vars.devopsRoot
 
         try {
@@ -67,32 +67,45 @@ node("ansible-slave") {
                 }
             }
 
+            // Manual approve here
+            stage("QA APPROVEMENT") {
+                try {
+                    input "Ready to update stable version of ${vars.serviceType} service on QA env?"
+                    currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
+                }
+                catch (Exception ex) {
+                    // QA has not been approved. Removing current build
+                    vars['ocProjectNameSuffixes'] = ["$vars.ocProjectNameSuffix"]
+                    stage = load "delete-environment.groovy"
+                    stage.run(vars)
+                    currentBuild.displayName = "${currentBuild.displayName}-NOT-APPROVED"
+                    error("[JENKINS][DEBUG] Promote image has not been approved. Deleting build")
+                }
+
+            }
             stage("PROMOTE IMAGES") {
                 vars['images'] = ["edp-install", "edp-ui-slave", "edp-gerrit-job"]
                 vars['sourceTag'] = vars.edpInstallVersion
                 vars['targetTags'] = [vars.sourceTag, vars.edpInstallVersion]
-                vars['targetProjects'] = [vars.qaProject]
-                vars['sourceProject'] = vars.sitProject
-
+                vars['targetProjects'] = [vars.uatProject]
+                vars['sourceProject'] = vars.qaProject
+                println("[JENKINS][DEBUG] - $vars")
                 stage = load "promote-images.groovy"
                 stage.run(vars)
 
                 vars['images'] = ["edp-cockpit"]
                 vars['sourceTag'] = vars.edpCockpitVersion
                 vars['targetTags'] = [vars.sourceTag, vars.edpCockpitVersion]
-                vars['targetProjects'] = [vars.qaProject]
-                vars['sourceProject'] = vars.sitProject
-
+                vars['targetProjects'] = [vars.uatProject]
+                vars['sourceProject'] = vars.qaProject
+                println("[JENKINS][DEBUG] - $vars")
                 stage = load "promote-images.groovy"
                 stage.run(vars)
 
             }
-            // Integration tests passed so we should delete all except last
-            vars['projectMask'] = "sit"
-
+            vars['projectMask'] = "qa"
             stage = load "filter-projects.groovy"
             stage.run(vars)
-            // Integration tests passed so we should delete all except last
             stage = load "delete-environment.groovy"
             stage.run(vars)
 
