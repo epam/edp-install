@@ -73,7 +73,7 @@ node("ansible-slave") {
                         "${GERRIT_CHANGE_OWNER_EMAIL},${vars.emailRecipients}",
                         "[EDP][JENKINS] Precommit pipeline is waiting for manual approve", "approve")
                 timeout(vars.operationsTimeout.toInteger()) {
-                    input "Is everything ok with environment ${vars.ocProjectNameSufffix}?"
+                    input "Is everything ok with environment ${vars.ocProjectNameSuffix}?"
                 }
             }
             currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
@@ -84,7 +84,7 @@ node("ansible-slave") {
             error "[JENKINS][ERROR] Exception - ${ex}"
         }
         finally {
-            vars['ocProjectNameSuffixes']=["$vars.ocProjectNameSuffix"]
+            vars['ocProjectNameSuffixes']=[vars.ocProjectNameSuffix]
             stage = load "delete-environment.groovy"
             stage.run(vars)
         }

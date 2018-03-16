@@ -1,11 +1,11 @@
 def run(vars) {
     dir("${vars.workDir}") {
         vars['hash'] = sh(
-                script: "oc get is ${vars.artifact.id} -n ${vars.sitProject} -o jsonpath=\'{@.spec.tags[?(@.name==\"master\")].from.name}\'",
+                script: "oc get is ${vars.artifact.id} -n ${vars.dockerImageProject} -o jsonpath=\'{@.spec.tags[?(@.name==\"master\")].from.name}\'",
                 returnStdout: true
         ).trim()
         vars['tags'] = sh(
-                script: "oc get is ${vars.artifact.id} -n ${vars.sitProject} -o jsonpath=\'{@.spec.tags[?(@.from.name==\"${vars.hash}\")].name}\'",
+                script: "oc get is ${vars.artifact.id} -n ${vars.dockerImageProject} -o jsonpath=\'{@.spec.tags[?(@.from.name==\"${vars.hash}\")].name}\'",
                 returnStdout: true
         ).trim().tokenize()
         // Test results count

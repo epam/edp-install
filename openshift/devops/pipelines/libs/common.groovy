@@ -43,6 +43,7 @@ def getConstants(vars) {
     DEFAULT_GERRIT_SSH_PORT = "30001"
     DEFAULT_SIT_PROJECT_NAME = "sit"
     DEFAULT_QA_PROJECT_NAME = "qa"
+    DEFAULT_UAT_PROJECT_NAME = "uat"
     DEFAULT_IMAGE_PROJECT_NAME = "infra"
     DEFAULT_TEST_SUITES = "testng-smoke-suite.xml"
 
@@ -64,6 +65,7 @@ def getConstants(vars) {
 
     vars['sitProject'] = env.SIT_PROJECT ? SIT_PROJECT : DEFAULT_SIT_PROJECT_NAME
     vars['qaProject'] = env.QA_PROJECT ? QA_PROJECT : DEFAULT_QA_PROJECT_NAME
+    vars['uatProject'] = env.UAT_PROJECT ? UAT_PROJECT : DEFAULT_UAT_PROJECT_NAME
     vars['dockerImageProject'] = env.IMAGE_PROJECT ? IMAGE_PROJECT : DEFAULT_IMAGE_PROJECT_NAME
 
     vars['mavenSettings'] = "${vars.pipelinesPath}/settings/maven/settings.xml"
