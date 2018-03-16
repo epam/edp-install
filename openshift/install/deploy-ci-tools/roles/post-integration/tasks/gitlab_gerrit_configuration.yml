@@ -3,9 +3,14 @@
   shell: |
    {{ ocadm }} get secret {{ gitlab_auto_user_secret }} -o json --namespace infra | jq '.metadata.namespace = "{{ project_cicd }}"' | {{ ocadm }} create -f -
 
-- name: "Get autouser name from cicd projects secret"
+- name: "Get autouser email from cicd projects secret"
   shell: |
    {{ ocadm }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: user_mail
+
+- name: "Get autouser name from cicd projects secret"
+  shell: |
+   echo "{{ user_mail.stdout }}" | cut -d@ -f1
   register: username
 
 - name: "Get autouser password from cicd projects secret"
@@ -27,7 +32,7 @@
   uri:
     url: "https://{{ gitlab_host.stdout }}/oauth/token"
     method: POST
-    body: 'grant_type=password&username={{ username.stdout }}&password={{ password.stdout }}'
+    body: 'grant_type=password&username={{ user_mail.stdout }}&password={{ password.stdout }}'
   register: csrf_token
 
 - name: "Get group id by it's name"
@@ -42,9 +47,39 @@
   ignore_errors: True
   register: edp_project_existence
 
-- name: "Add project to the group"
-  uri:
-    url: "https://{{ gitlab_host.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}&namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
-    method: POST
-    status_code: 201
+- block:
+  - name: "Add project to the group"
+    uri:
+      url: "https://{{ gitlab_host.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}&namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
+      method: POST
+      status_code: 201
+
+  - name: "Get ssh key from cicd projects secret"
+    shell: |
+     {{ ocadm }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "ssh-privatekey" }}'{% endraw %} | base64 --decode
+    register: ssh_key
+
+  - local_action: copy content={{ ssh_key.stdout }} dest={{ tmp_dir }}/private.key mode=0400
+
+  - name: "Clone GitLab repository"
+    git:
+      repo: "git@{{ gitlab_host.stdout }}:{{ gitlab_group.stdout }}/{{ project_gitlab_edp }}.git"
+      dest: "{{ tmp_dir }}/{{ project_gitlab_edp }}"
+      key_file: "{{ tmp_dir }}/private.key"
+      accept_hostkey: true
+      force: true
+    ignore_errors: true
+
+  - name: "Copying pipelines"
+    copy:
+      src: "../../../../install/application-pipelines"
+      dest: "{{ tmp_dir }}/{{ project_gitlab_edp }}"
+      force: yes
+
+  - name: "Push to Gitlab"
+    shell: |
+     cd {{ tmp_dir }}/{{ project_gitlab_edp }}
+     git config user.email "{{ user_mail.stdout }}"
+     git config user.name "{{ username.stdout }}"
+     ssh-agent bash -c 'ssh-add {{ tmp_dir }}/private.key; git add . && git commit -m "Add pipelines" && git push origin master'
   when: edp_project_existence.status == 404
