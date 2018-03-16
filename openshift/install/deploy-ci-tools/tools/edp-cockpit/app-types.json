@@ -1,0 +1,11 @@
+[
+  {
+    "language": "Java",
+    "buildTools": [
+      "Maven"
+    ],
+    "frameworks": [
+      "SpringBoot"
+    ]
+  }
+]

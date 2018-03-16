@@ -1,4 +1,15 @@
---- # Jenkins full installation
+--- # Cockpit full installation
+- name: "Install config map for storing available application types"
+  command: |
+    {{ ocadm }} -n {{ project_cockpit }} create configmap app-types
+    --from-file {{ templates_dir }}/edp-cockpit/app-types.json
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
 - name: "Install EDP-Cockpit app"
   command: |
     {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/edp-cockpit/edp-cockpit.yaml

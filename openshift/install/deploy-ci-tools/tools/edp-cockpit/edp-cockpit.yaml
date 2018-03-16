@@ -86,6 +86,11 @@ objects:
           env:
           - name: PROJECT_CICD
             value: ${PROJECT_CICD}
+          - name: EDP_APPLICATION_TYPES
+            valueFrom:
+              configMapKeyRef:
+                name: app-types
+                key: app-types.json
     triggers:
     - type: ConfigChange
 parameters:
