@@ -17,8 +17,62 @@ def run(vars) {
                 }
             }
         }
+        try {
+            withCredentials([usernamePassword(credentialsId: 'Auto_EPMC-JAVA_VCS', passwordVariable: 'password', usernameVariable: 'username')]) {
+                   token = getAuthToken(username, password)
+            }
+            project_id = getProjectID(token, "edp-" + vars.ocProjectNameSuffix)
+            deleteProject(project_id, token)
+        } catch (Exception ex) {
+            println("[JENKINS][ERROR] Exception - ${ex}")
+        }
     }
     this.result = "success"
+}
+
+def getAuthToken(user, pass) {
+    def url = new URL("https://git.epam.com/oauth/token")
+    def conn = url.openConnection()
+    conn.setRequestMethod("POST")
+    conn.setRequestProperty("Content-Type", "application/json")
+    conn.doOutput = true
+
+    def authString = "{\"grant_type\": \"password\", \"username\": \"${user}\", \"password\": \"${pass}\"}"
+
+    def writer = new OutputStreamWriter(conn.outputStream)
+    writer.write(authString)
+    writer.flush()
+    writer.close()
+    conn.connect()
+
+    def result = parseJSON(conn.content.text)
+    return result.access_token
+}
+
+def getProjectID(authToken, project_name) {
+
+    def url = new URL(vars.gitLabApiUrl + "/projects/epmd-edp%2Ftemp%2F${project_name}")
+    def result = parseJSON(url.getText(requestProperties:["Authorization":"Bearer ${authToken}"]))
+    return result.id
+}
+
+def deleteProject(projectID, token) {
+    def url = new URL(vars.gitLabApiUrl + "/projects/${projectID}?access_token=${token}")
+    def conn = url.openConnection()
+    conn.setRequestMethod("DELETE")
+    conn.setRequestProperty("Content-Type", "application/json")
+    conn.doOutput = true
+
+    def writer = new OutputStreamWriter(conn.outputStream)
+    writer.flush()
+    writer.close()
+    conn.connect()
+
+    def result = parseJSON(conn.content.text)
+}
+
+def parseJSON(json) {
+    return new groovy.json.JsonSlurperClassic().parseText(json)
 }
 
 return this;

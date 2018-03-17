@@ -64,6 +64,7 @@ def getConstants(vars) {
     vars['gerritSshPort'] = env.GERRIT_SSH_PORT ? env.GERRIT_SSH_PORT : DEFAULT_GERRIT_SSH_PORT
     vars['gerritProject'] = env.GERRIT_PROJECT ? env.GERRIT_PROJECT : env.GERRIT_PROJECT_NAME
     vars['gitUrl'] = "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${vars.gerritProject}"
+    vars['gitLabApiUrl'] = "https://git.epam.com/api/v4"
 
     vars['sitProject'] = env.SIT_PROJECT ? SIT_PROJECT : DEFAULT_SIT_PROJECT_NAME
     vars['qaProject'] = env.QA_PROJECT ? QA_PROJECT : DEFAULT_QA_PROJECT_NAME
