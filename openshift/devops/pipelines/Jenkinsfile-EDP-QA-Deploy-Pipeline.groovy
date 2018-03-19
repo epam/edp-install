@@ -32,83 +32,85 @@ node("ansible-slave") {
         }
 
         commonLib.getDebugInfo(vars)
-
-        dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
-            stage("PULL EDP-INSTALL TEMPLATE") {
-                vars['artifact']['id'] = "edp-install"
-                stage = load "extract-version-from-json.groovy"
-                stage.run(vars)
-                vars['edpInstallVersion'] = vars.artifact.version
-
-                vars['artifact']['packaging'] = "yaml"
-                stage = load "pull-single-artifact-from-nexus.groovy"
-                stage.run(vars)
-                vars['edpInstallTemplate'] = "${vars.workDir}/edp-install.yaml"
-
-                vars['artifact']['id'] = "edp-cockpit"
-                stage = load "extract-version-from-json.groovy"
-                stage.run(vars)
-                vars['edpCockpitVersion'] = vars.artifact.version
-            }
-
-            stage("INSTALL EDP") {
-                stage = load "edp-install-deploy.groovy"
-                stage.run(vars, commonLib)
-            }
-
-            stage("INTEGRATION TESTS") {
-                try {
-                    stage = load "java-run-autotests.groovy"
-                    stage.run(vars)
-
-                }
-                catch (Exception ex) {
-                    error "[JENKINS][DEBUG] Integration tests have been failed"
-                }
-            }
-
-            // Manual approve here
-            stage("QA APPROVEMENT") {
-                try {
-                    input "Ready to update stable version of ${vars.serviceType} service on QA env?"
-                    currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
-                }
-                catch (Exception ex) {
-                    // QA has not been approved. Removing current build
-                    vars['ocProjectNameSuffixes'] = ["$vars.ocProjectNameSuffix"]
-                    stage = load "delete-environment.groovy"
-                    stage.run(vars)
-                    currentBuild.displayName = "${currentBuild.displayName}-NOT-APPROVED"
-                    error("[JENKINS][DEBUG] Promote image has not been approved. Deleting build")
-                }
-
-            }
-            stage("PROMOTE IMAGES") {
-                vars['images'] = ["edp-install", "edp-ui-slave", "edp-gerrit-job"]
-                vars['sourceTag'] = vars.edpInstallVersion
-                vars['targetTags'] = [vars.sourceTag, vars.edpInstallVersion]
-                vars['targetProjects'] = [vars.uatProject]
-                vars['sourceProject'] = vars.qaProject
-                println("[JENKINS][DEBUG] - $vars")
-                stage = load "promote-images.groovy"
-                stage.run(vars)
-
-                vars['images'] = ["edp-cockpit"]
-                vars['sourceTag'] = vars.edpCockpitVersion
-                vars['targetTags'] = [vars.sourceTag, vars.edpCockpitVersion]
-                vars['targetProjects'] = [vars.uatProject]
-                vars['sourceProject'] = vars.qaProject
-                println("[JENKINS][DEBUG] - $vars")
-                stage = load "promote-images.groovy"
-                stage.run(vars)
-
-            }
-            vars['projectMask'] = "qa"
-            stage = load "filter-projects.groovy"
+    }
+    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
+        stage("RETRIEVE ARTIFACTS") {
+            vars['artifact']['id'] = "edp-install"
+            stage = load "extract-version-from-json.groovy"
             stage.run(vars)
-            stage = load "delete-environment.groovy"
+            vars['edpInstallVersion'] = vars.artifact.version
+            currentBuild.description = "EDP-Install version ${vars.edpInstallVersion}"
+
+            vars['artifact']['packaging'] = "yaml"
+            stage = load "pull-single-artifact-from-nexus.groovy"
+            stage.run(vars)
+            vars['edpInstallTemplate'] = "${vars.workDir}/edp-install.yaml"
+
+            vars['artifact']['id'] = "edp-cockpit"
+            stage = load "extract-version-from-json.groovy"
+            stage.run(vars)
+            vars['edpCockpitVersion'] = vars.artifact.version
+            currentBuild.description = "${currentBuild.description}\r\nEDP-Cockpit version ${vars.edpCockpitVersion}"
+        }
+
+        stage("INSTALL EDP") {
+            stage = load "edp-install-deploy.groovy"
+            stage.run(vars, commonLib)
+        }
+
+        stage("INTEGRATION TESTS") {
+            try {
+                stage = load "java-run-autotests.groovy"
+                stage.run(vars)
+                currentBuild.description = "${currentBuild.description}\r\nSIT test has been passed"
+            }
+            catch (Exception ex) {
+                error "[JENKINS][DEBUG] Integration tests have been failed"
+            }
+        }
+
+        // Manual approve here
+        stage("QA APPROVEMENT") {
+            try {
+                input "Ready to update stable version of ${vars.serviceType} service on QA env?"
+                currentBuild.displayName = "${currentBuild.displayName}-APPROVED"
+                currentBuild.description = "${currentBuild.description}\r\nManual approve has been passed"
+            }
+            catch (Exception ex) {
+                // QA has not been approved. Removing current build
+                vars['ocProjectNameSuffixes'] = ["$vars.ocProjectNameSuffix"]
+                stage = load "delete-environment.groovy"
+                stage.run(vars)
+                currentBuild.displayName = "${currentBuild.displayName}-NOT-APPROVED"
+                error("[JENKINS][DEBUG] Promote image has not been approved. Deleting build")
+            }
+
+        }
+        stage("PROMOTE IMAGES") {
+            vars['images'] = ["edp-install", "edp-ui-slave", "edp-gerrit-job"]
+            vars['sourceTag'] = vars.edpInstallVersion
+            vars['targetTags'] = [vars.sourceTag, vars.edpInstallVersion]
+            vars['targetProjects'] = [vars.uatProject]
+            vars['sourceProject'] = vars.qaProject
+            println("[JENKINS][DEBUG] - $vars")
+            stage = load "promote-images.groovy"
+            stage.run(vars)
+
+            vars['images'] = ["edp-cockpit"]
+            vars['sourceTag'] = vars.edpCockpitVersion
+            vars['targetTags'] = [vars.sourceTag, vars.edpCockpitVersion]
+            vars['targetProjects'] = [vars.uatProject]
+            vars['sourceProject'] = vars.qaProject
+            println("[JENKINS][DEBUG] - $vars")
+            stage = load "promote-images.groovy"
             stage.run(vars)
 
         }
+        vars['projectMask'] = "qa"
+        stage = load "filter-projects.groovy"
+        stage.run(vars)
+        stage = load "delete-environment.groovy"
+        stage.run(vars)
+
     }
 }

@@ -36,6 +36,7 @@ def getBody(bodyType) {
 def getConstants(vars) {
     DEFAULT_OPERATIONS_TIMEOUT = "30"
     DEFAULT_DOCKER_REGISTRY = "docker-registry-default.main.edp.projects.epam.com"
+    DEFAULT_DOCKER_REGISTRY_PORT = "30212"
     DEFAULT_EMAIL_RECIPIENTS = "SpecialEPMD-EDPcoreteam@epam.com"
     DEFAULT_GERRIT_AUTOUSER = "jenkins"
     DEFAULT_GERRIT_CREDENTIALS = "gerrit-key"
@@ -54,6 +55,7 @@ def getConstants(vars) {
     vars['testSuites'] = env.TEST_SUITES ? TEST_SUITES : DEFAULT_TEST_SUITES
 
     vars['externalDockerRegistry'] = env.DOCKER_REGISTRY ? DOCKER_REGISTRY : DEFAULT_DOCKER_REGISTRY
+    vars['externalDockerRegistryPort'] = env.DOCKER_REGISTRY_PORT ? DOCKER_REGISTRY_PORT : DEFAULT_DOCKER_REGISTRY_PORT
     vars['emailRecipients'] = env.EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS : DEFAULT_EMAIL_RECIPIENTS
     vars['gerritAutoUser'] = env.GERRIT_AUTOUSER ? GERRIT_AUTOUSER : DEFAULT_GERRIT_AUTOUSER
     vars['credentials'] = env.GERRIT_CREDENTIALS ? GERRIT_CREDENTIALS : DEFAULT_GERRIT_CREDENTIALS

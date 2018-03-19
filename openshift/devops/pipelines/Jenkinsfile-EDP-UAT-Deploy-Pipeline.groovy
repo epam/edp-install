@@ -51,24 +51,26 @@ node("ansible-slave") {
     }
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/") {
-        stage("PULL EDP-INSTALL TEMPLATE") {
+        stage("RETRIEVE ARTIFACTS") {
             vars['artifact']['id'] = "edp-install"
             stage = load "extract-version-from-json.groovy"
             stage.run(vars)
             vars['edpInstallVersion'] = vars.artifact.version
+            currentBuild.description = "EDP-Install version ${vars.edpInstallVersion}"
 
             vars['artifact']['packaging'] = "yaml"
             stage = load "pull-single-artifact-from-nexus.groovy"
             stage.run(vars)
             vars['edpInstallTemplate'] = "${vars.workDir}/edp-install.yaml"
-        }
 
-        stage("INSTALL EDP") {
             vars['artifact']['id'] = "edp-cockpit"
             stage = load "extract-version-from-json.groovy"
             stage.run(vars)
             vars['edpCockpitVersion'] = vars.artifact.version
+            currentBuild.description = "${currentBuild.description}\r\nEDP-Cockpit version ${vars.edpCockpitVersion}"
+        }
 
+        stage("INSTALL EDP") {
             stage = load "edp-install-deploy.groovy"
             stage.run(vars, commonLib)
         }
@@ -77,7 +79,7 @@ node("ansible-slave") {
             try {
                 stage = load "java-run-autotests.groovy"
                 stage.run(vars)
-                currentBuild.description = "SIT test has been passed"
+                currentBuild.description = "${currentBuild.description}\r\nSIT test has been passed"
             }
             catch (Exception ex) {
                 error "[JENKINS][ERROR] Integration tests have been failed"
@@ -106,6 +108,7 @@ node("ansible-slave") {
                 --display-name=\"EDP Release ${vars.edpReleaseVersion.replace("-",".")}\" \
                 --description=\"Release artifacts for EDP Platform version ${vars.edpReleaseVersion.replace("-",".")}\""
             sh "oc -n ${vars.releaseProject} adm policy add-role-to-user admin admin"
+            sh "oc -n ${vars.releaseProject} policy add-role-to-group registry-viewer system:unauthenticated"
 
             vars['images'] = ["edp-install", "edp-ui-slave", "edp-gerrit-job"]
             vars['sourceTag'] = vars.edpInstallVersion
@@ -121,6 +124,9 @@ node("ansible-slave") {
             vars['targetTags'] = [vars.sourceTag]
             vars['targetProjects'] = [vars.releaseProject]
             stage = load "promote-images.groovy"
+            stage.run(vars)
+
+            stage = load "release-edp-install-yaml.groovy"
             stage.run(vars)
 
             vars['artifact']['repository'] = "${vars.nexusRepository}-releases"
