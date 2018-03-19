@@ -18,6 +18,8 @@ project_cockpit: "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cock
 project_gitlab_edp: "{{ (projects_suffix != '') | ternary('edp-', 'edp')}}{{ projects_suffix }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 secrets:
+  gerrit_admin:
+    password: secret
   gerrit_db:
     db_name: gerrit
     db_user: gerrit

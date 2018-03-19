@@ -28,10 +28,7 @@ objects:
       [ -f ~/.ssh/known_hosts ] ||  mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
       ssh-keyscan -p 29418 -t rsa gerrit >> ~/.ssh/known_hosts
 
-      # create admin keys and add them to admin user
-      [ ! -d /opt/data/gerrit_site/etc/ssh-keys ] && mkdir -p /opt/data/gerrit_site/etc/ssh-keys
       cd /opt/data/gerrit_site/etc/ssh-keys
-      cat /dev/zero | ssh-keygen -b 4096 -t rsa -f id_admin_rsa -C "admin@example.com" -q -N ""
       # add keys to admin user
       curl -X POST -u admin:secret -H "Content-Type: text/plain" --data "$(cat id_admin_rsa.pub)"  http://${GERRIT_HOST}:${GERRIT_PORT}/a/accounts/admin/sshkeys
 
@@ -102,6 +99,9 @@ objects:
       cd -
       rm -rf ${CHECKOUT_DIR}
       kill ${SSH_AGENT_PID}
+
+      #change default gerrit admin password
+      ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit set-account --http-password ${GERRIT_PASSWORD} admin
 - apiVersion: batch/v1
   kind: Job
   metadata:
@@ -121,6 +121,10 @@ objects:
           image: busybox
           command: ["sh", "-c", "while ! nc -w 1 gerrit 8080 </dev/null; do echo waiting for Gerrit; sleep 10; done;"]
         volumes:
+        - name: gerrit-admin-secret-volume
+          secret:
+            secretName: gerrit-admin
+            defaultMode: 256
         - name: python-script
           configMap:
             defaultMode: 420
@@ -144,7 +148,10 @@ objects:
           - name: GERRIT_ADMIN
             value: admin
           - name: GERRIT_PASSWORD
-            value: secret
+            valueFrom:
+              secretKeyRef:
+                name: gerrit-admin
+                key: password
           - name: OPENSHIFT_PROJECT
             valueFrom:
               fieldRef:
@@ -152,6 +159,8 @@ objects:
           - name: APP_FILE
             value: "/tmp/config.sh"
           volumeMounts:
+          - name: gerrit-admin-secret-volume
+            mountPath: /opt/data/gerrit_site/etc/ssh-keys
           - mountPath: /tmp
             name: python-script
           - mountPath: /opt/data/jenkins
