@@ -72,7 +72,7 @@
 
   - name: "Copying pipelines"
     copy:
-      src: "../../../../../application-pipelines"
+      src: "../../application-pipelines"
       dest: "{{ tmp_dir }}/{{ project_gitlab_edp }}"
       force: yes
 
@@ -83,3 +83,54 @@
      git config user.name "{{ username.stdout }}"
      ssh-agent bash -c 'ssh-add {{ tmp_dir }}/private.key; git add . && git commit -m "Add pipelines" && git push origin master'
   when: edp_project_existence.status == 404
+
+# Gerrit related tasks
+- name: "Get gerrit-admin ssh key from secret"
+  shell: |
+    {{ ocadm }} get secret gerrit-admin --template={% raw %}'{{ index .data "id_admin_rsa" }}'{% endraw %} | base64 --decode
+  register: gerrit_admin_ssh
+
+- local_action: copy content={{ gerrit_admin_ssh.stdout }} dest={{ tmp_dir }}/gerrit_admin.key mode=0400
+
+- name: "Create .ssh directory"
+  file:
+    path: ~/.ssh
+    state: directory
+
+- name: "Config ssh"
+  copy:
+    content: |
+      Host gerrit.{{ project_cicd }}*
+        HostName gerrit.{{ project_cicd }}
+        User admin
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ tmp_dir }}/gerrit_admin.key
+        IdentitiesOnly yes
+
+      Host {{ gitlab_host.stdout }}
+        HostName {{ gitlab_host.stdout }}
+        User git
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ tmp_dir }}/private.key
+        IdentitiesOnly yes
+    dest: ~/.ssh/config
+
+- name: "Create project in Gerrit"
+  shell: "ssh -p 29418 admin@gerrit.{{ project_cicd }} gerrit create-project {{ project_gitlab_edp }}"
+
+- name: "Pull GitLab"
+  command: "git pull origin master"
+  args:
+    chdir: "{{ tmp_dir }}/{{ project_gitlab_edp }}"
+
+- name: "Add remote link to gerrit"
+  shell: "git remote set-url --push origin ssh://admin@gerrit.{{ project_cicd }}:29418/{{ project_gitlab_edp }}"
+  args:
+    chdir: "{{ tmp_dir }}/{{ project_gitlab_edp }}"
+
+- name: "Push to gerrit"
+  shell: "git push --all"
+  args:
+    chdir: "{{ tmp_dir }}/{{ project_gitlab_edp }}"
