@@ -11,6 +11,10 @@
     -p GERRIT_DB_CAPACITY={{ tools.gerrit.volume_db_capacity }} 
     -p GERRIT_WEB_URL={{ tools.gerrit.web_url }}
     -p GERRIT_JOB_VERSION={{ tools.gerrit.job_version }}
+    -p GITLAB_GROUP_HOST={{ gitlab_group_name | urlsplit('hostname') }}
+    -p GITLAB_GROUP_PATH={{ gitlab_group_name | urlsplit('path') | regex_replace('^/{1}', '') }}
+    -p GITLAB_PROJECT_NAME={{ project_gitlab_edp }}
+    -p GITLAB_AUTOUSER_SECRET_NAME={{ gitlab_auto_user_secret }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

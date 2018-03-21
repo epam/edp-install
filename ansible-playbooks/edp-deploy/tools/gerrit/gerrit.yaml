@@ -100,19 +100,20 @@ objects:
     name: gerrit
   data:
     config: |
-      Host git.epam.com
+      Host ${GITLAB_GROUP_HOST}
           User git
-          IdentityFile /var/gerrit/review_site/id_rsa
+          IdentityFile /var/gerrit/review_site/etc/autouser/ssh-keys/ssh-privatekey
           StrictHostKeyChecking no
           UserKnownHostsFile /dev/null
     replication.config: |
       [gerrit]
         defaultForceUpdate = true
-      [remote "${GERRIT_PROJECT}"]
-        url = ${GERRIT_GIT_URL}
+      [remote "${GITLAB_PROJECT_NAME}"]
+        url = ${GITLAB_GROUP_HOST}:${GITLAB_GROUP_PATH}/${GITLAB_PROJECT_NAME}.git
         fetch = +refs/*:refs/*
-        mirror = true
-        projects = ${GERRIT_PROJECT}
+        push = +refs/heads/*:refs/heads/*
+        projects = ${GITLAB_PROJECT_NAME}
+        replicatePermissions = false
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -274,6 +275,8 @@ objects:
           image: openfrontier/gerrit:${GERRIT_VERSION}
           imagePullPolicy: IfNotPresent
           name: gerrit
+          securityContext:
+            fsGroup: 1000
           ports:
           - name: ui
             containerPort: 8080
@@ -290,6 +293,8 @@ objects:
             requests:
               memory: 1Gi
           volumeMounts:
+            - name: ${GITLAB_AUTOUSER_SECRET_NAME}
+              mountPath: /var/gerrit/review_site/etc/autouser/ssh-keys
             - mountPath: /var/gerrit/review_site
               name: gerrit-data
             - mountPath: /var/gerrit/review_site/etc/replication.config
@@ -299,6 +304,10 @@ objects:
               name: ssh-config
         serviceAccount: gerrit
         volumes:
+          - name: ${GITLAB_AUTOUSER_SECRET_NAME}
+            secret:
+              secretName: ${GITLAB_AUTOUSER_SECRET_NAME}
+              defaultMode: 256
           - name: gerrit-data
             persistentVolumeClaim:
               claimName: gerrit-data
@@ -342,3 +351,13 @@ parameters:
 - displayName: Gerrit job version
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-gerrit-job:latest"
   name: GERRIT_JOB_VERSION
+- displayName: GitLab host
+  value: "git.epam.com"
+  name: GITLAB_GROUP_HOST
+- displayName: GitLab group path
+  value: "epmd-edp/temp"
+  name: GITLAB_GROUP_PATH
+- displayName: GitLab project name
+  name: GITLAB_PROJECT_NAME
+- displayName: GitLab Autouser secret name
+  name: GITLAB_AUTOUSER_SECRET_NAME

@@ -1,8 +1,4 @@
 ---
-- name: "Copy secret from deploy project to cicd" # ToDo Replace infra namespace with edp-deploy in release
-  shell: |
-   {{ ocadm }} get secret {{ gitlab_auto_user_secret }} -o json --namespace infra | jq '.metadata.namespace = "{{ project_cicd }}"' | {{ ocadm }} create -f -
-
 - name: "Get autouser email from cicd projects secret"
   shell: |
    {{ ocadm }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode

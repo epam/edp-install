@@ -28,7 +28,7 @@ objects:
       [ -f ~/.ssh/known_hosts ] ||  mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
       ssh-keyscan -p 29418 -t rsa gerrit >> ~/.ssh/known_hosts
 
-      cd /opt/data/gerrit_site/etc/ssh-keys
+      cd /var/gerrit/review_site/etc/admin/ssh-keys
       # add keys to admin user
       curl -X POST -u admin:secret -H "Content-Type: text/plain" --data "$(cat id_admin_rsa.pub)"  http://${GERRIT_HOST}:${GERRIT_PORT}/a/accounts/admin/sshkeys
 
@@ -50,12 +50,12 @@ objects:
       cd ${CHECKOUT_DIR}
 
       eval "$(ssh-agent -s)"
-      ssh-add /opt/data/gerrit_site/etc/ssh-keys/id_admin_rsa
+      ssh-add /var/gerrit/review_site/etc/admin/ssh-keys/id_admin_rsa
 
       #git config
       git config user.name  admin
       git config user.email admin@example.com
-      git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /opt/data/gerrit_site/etc/ssh-keys/id_admin_rsa'
+      git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /var/gerrit/review_site/etc/admin/ssh-keys/id_admin_rsa'
 
       git remote add origin ssh://admin@${GERRIT_HOST}:29418/All-Projects
       #checkout project.config
@@ -160,7 +160,7 @@ objects:
             value: "/tmp/config.sh"
           volumeMounts:
           - name: gerrit-admin-secret-volume
-            mountPath: /opt/data/gerrit_site/etc/ssh-keys
+            mountPath: /var/gerrit/review_site/etc/admin/ssh-keys
           - mountPath: /tmp
             name: python-script
           - mountPath: /opt/data/jenkins
