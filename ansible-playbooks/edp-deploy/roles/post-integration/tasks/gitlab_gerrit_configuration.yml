@@ -72,7 +72,7 @@
 
   - name: "Copying pipelines"
     copy:
-      src: "../../../../../install/application-pipelines"
+      src: "../../../../../application-pipelines"
       dest: "{{ tmp_dir }}/{{ project_gitlab_edp }}"
       force: yes
 
