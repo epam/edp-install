@@ -34,6 +34,10 @@ objects:
       kind: Service
       name: edp-cockpit
 - apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: cockpit
+- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     labels:
@@ -56,6 +60,7 @@ objects:
         labels:
           app: edp-cockpit
       spec:
+        serviceAccountName: cockpit
         containers:
         - image: ${EDP_COCKPIT_VERSION}
           imagePullPolicy: Always
@@ -91,8 +96,11 @@ objects:
               configMapKeyRef:
                 name: app-types
                 key: app-types.json
+          - name: OPENSHIFT_TRUST_CERTIFICATES
+            value: ${OPENSHIFT_TRUST_CERTIFICATES}
     triggers:
     - type: ConfigChange
+
 parameters:
 - displayName: Version of edp-cockpit
   name: EDP_COCKPIT_VERSION
@@ -100,5 +108,7 @@ parameters:
 - displayName: Project CICD name
   name: PROJECT_CICD
   value: "edp-cicd"
-
+- displayName: Enable trust certificates
+  name: OPENSHIFT_TRUST_CERTIFICATES
+  value: "true"
 
