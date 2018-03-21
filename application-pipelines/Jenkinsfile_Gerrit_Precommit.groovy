@@ -23,7 +23,7 @@ def getServiceType() {
     def paths = parsedJson[0].revisions[GERRIT_PATCHSET_REVISION].files.keySet()
     echo "[JENKINS][DEBUG] Changed paths - ${paths}"
 
-    def match = paths.join("\n") =~ /.*\/(backend|frontend|database)\/.*/
+    def match = paths.join("\n") =~ /.*(backend|frontend|database)\/.*/
     return match[0][1]
 }
 
