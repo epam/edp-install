@@ -1,6 +1,0 @@
----
-- name: Delete /etc/localtime
-  command: sh -c "rm -f /etc/localtime"
-
-- name: Create symbolic link on ${timezone}
-  command: sh -c "ln -s /usr/share/zoneinfo/{{ timezone }} /etc/localtime"

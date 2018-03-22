@@ -1,1 +1,0 @@
-This folder contains all custom "Source To Image" built for EDP
