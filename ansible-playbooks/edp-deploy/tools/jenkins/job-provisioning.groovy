@@ -106,8 +106,9 @@ if (appSettings.exists()) {
     def slurper = new JsonSlurperClassic()
     def apps = slurper.parseText(appSettings.text)
     for (app in apps) {
+        vars['gerritSshPort'] = env.GERRIT_SSH_PORT ? env.GERRIT_SSH_PORT : "29418"
         def appName = app.name
-        def devopsRepo = "ssh://jenkins@gerrit:29418/devops"
+        def devopsRepo = "ssh://jenkins@gerrit:${vars.gerritSshPort}/devops"
         def pipelinePath = 'openshift/cicd/pipelines'
         def gerProject = app.name
         def serviceType = app.type

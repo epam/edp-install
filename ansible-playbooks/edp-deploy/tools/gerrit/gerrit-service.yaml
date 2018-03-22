@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gerrit
+  name: gerrit
+spec:
+  ports:
+  - name: ui
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: ssh
+    port: 29418
+    protocol: TCP
+    targetPort: 29418
+    nodePort: 0
+  selector:
+    app: gerrit
+  type: NodePort

@@ -45,10 +45,11 @@ node("${buildNode}") {
         vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
         vars['serviceBranch'] = env.GERRIT_REFNAME ? env.GERRIT_REFNAME : env.SERVICE_BRANCH
         vars['gerritHost'] = env.GERRIT_HOST ? env.GERRIT_HOST : "gerrit"
+        vars['gerritSshPort'] = env.GERRIT_SSH_PORT ? env.GERRIT_SSH_PORT : "29418"
         vars['gerritProject'] = env.GERRIT_PROJECT ? env.GERRIT_PROJECT : env.GERRIT_PROJECT_NAME
         vars['sitProject'] = env.SIT_PROJECT ? SIT_PROJECT : "sit"
 
-        vars['gitMicroservicesUrl'] = env.GILAB_REPO ? GILAB_REPO : "ssh://${vars.autoUser}@${vars.gerritHost}:29418/${vars.gerritProject}"
+        vars['gitMicroservicesUrl'] = env.GILAB_REPO ? GILAB_REPO : "ssh://${vars.autoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${vars.gerritProject}"
 
         println("[JENKINS][DEBUG] VARIABLES - ${vars}")
 

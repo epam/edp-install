@@ -109,6 +109,7 @@ objects:
       import jenkins.model.GlobalConfiguration
       //===========================
       def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
+      def GERRIT_SSH_PORT = System.getenv().get('GERRIT_SSH_PORT')
       file = new File("${JENKINS_HOME}/done.txt")
       if (file.exists()) {
         println "Configuration of Jenkins has been already done"
@@ -209,7 +210,7 @@ objects:
       server.getConfig().setGerritHostName("gerrit")
       server.getConfig().setGerritFrontEndURL("http://gerrit:8080/")
       server.getConfig().setGerritAuthKeyFile(new File("${JENKINS_HOME}/.ssh/id_rsa"))
-      server.getConfig().setGerritSshPort(29418)
+      server.getConfig().setGerritSshPort("${GERRIT_SSH_PORT}".toInteger())
       server.getConfig().setGerritUserName("jenkins")
       server.getConfig().setUseRestApi(true)
       server.getConfig().setGerritHttpUserName("jenkins")
@@ -286,6 +287,11 @@ objects:
         containers:
         - capabilities: {}
           env:
+          - name: GERRIT_SSH_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: gerrit
+                key: sshPort
           - name: OPENSHIFT_ENABLE_OAUTH
             value: ${JENKINS_ENABLE_OAUTH}
           - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT

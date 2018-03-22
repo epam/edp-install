@@ -26,14 +26,14 @@ objects:
   data:
     config.sh: |
       [ -f ~/.ssh/known_hosts ] ||  mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
-      ssh-keyscan -p 29418 -t rsa gerrit >> ~/.ssh/known_hosts
+      ssh-keyscan -p ${GERRIT_SSH_PORT} -t rsa gerrit >> ~/.ssh/known_hosts
 
       cd /var/gerrit/review_site/etc/admin/ssh-keys
       # add keys to admin user
       curl -X POST -u admin:secret -H "Content-Type: text/plain" --data "$(cat id_admin_rsa.pub)"  http://${GERRIT_HOST}:${GERRIT_PORT}/a/accounts/admin/sshkeys
 
       # creating jenkins user
-      if cat /opt/data/jenkins/.ssh/id_rsa.pub | ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit create-account --group "'Non-Interactive Users'" --full-name "'Jenkins'" --http-password jenkins  --ssh-key - jenkins
+      if cat /opt/data/jenkins/.ssh/id_rsa.pub | ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p ${GERRIT_SSH_PORT} admin@${GERRIT_HOST} gerrit create-account --group "'Non-Interactive Users'" --full-name "'Jenkins'" --http-password jenkins  --ssh-key - jenkins
       then
         echo "Jenkins account has been successfully created"
       else
@@ -57,7 +57,7 @@ objects:
       git config user.email admin@example.com
       git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /var/gerrit/review_site/etc/admin/ssh-keys/id_admin_rsa'
 
-      git remote add origin ssh://admin@${GERRIT_HOST}:29418/All-Projects
+      git remote add origin ssh://admin@${GERRIT_HOST}:${GERRIT_SSH_PORT}/All-Projects
       #checkout project.config
       git fetch -q origin refs/meta/config:refs/remotes/origin/meta/config
       git checkout meta/config
@@ -101,7 +101,7 @@ objects:
       kill ${SSH_AGENT_PID}
 
       #change default gerrit admin password
-      ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p 29418 admin@${GERRIT_HOST} gerrit set-account --http-password ${GERRIT_PASSWORD} admin
+      ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p ${GERRIT_SSH_PORT} admin@${GERRIT_HOST} gerrit set-account --http-password ${GERRIT_PASSWORD} admin
 - apiVersion: batch/v1
   kind: Job
   metadata:
@@ -145,6 +145,11 @@ objects:
             value: gerrit
           - name: GERRIT_PORT
             value: "8080"
+          - name: GERRIT_SSH_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: gerrit
+                key: sshPort
           - name: GERRIT_ADMIN
             value: admin
           - name: GERRIT_PASSWORD

@@ -113,8 +113,12 @@
         IdentitiesOnly yes
     dest: ~/.ssh/config
 
+- name: "Get gerrit ssh port"
+  shell: "{{ ocadm }} -n {{ project_cicd }} get configMap gerrit -o=jsonpath={.data.sshPort}"
+  register: "gerrit_ssh_port"
+
 - name: "Create project in Gerrit"
-  shell: "ssh -p 29418 admin@gerrit.{{ project_cicd }} gerrit create-project {{ project_gitlab_edp }}"
+  shell: "ssh -p {{ gerrit_ssh_port.stdout }} admin@gerrit.{{ project_cicd }} gerrit create-project {{ project_gitlab_edp }}"
 
 - name: "Pull GitLab"
   command: "git pull origin master"
@@ -122,7 +126,7 @@
     chdir: "{{ work_dir }}/{{ project_gitlab_edp }}"
 
 - name: "Add remote link to gerrit"
-  shell: "git remote set-url --push origin ssh://admin@gerrit.{{ project_cicd }}:29418/{{ project_gitlab_edp }}"
+  shell: "git remote set-url --push origin ssh://admin@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port.stdout }}/{{ project_gitlab_edp }}"
   args:
     chdir: "{{ work_dir }}/{{ project_gitlab_edp }}"
 

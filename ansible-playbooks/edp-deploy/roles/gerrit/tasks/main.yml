@@ -2,6 +2,18 @@
 - name: "Give rights to gerrit account"
   shell: "{{ ocadm }} -n {{ project_cicd }} adm policy add-scc-to-user anyuid -z gerrit"
 
+- name: "Create gerrit service"
+  shell: "{{ ocadm }} -n {{ project_cicd }} create -f {{ templates_dir }}/gerrit/gerrit-service.yaml"
+
+- name: "Find created nodePort value for ssh port"
+  shell: "{{ ocadm }} -n {{ project_cicd }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].nodePort}'"
+  register: "nodePort"
+
+- name: "Update service gerrit with updated target ports for ssh"
+  shell: "{{ ocadm }} -n {{ project_cicd }} patch svc gerrit --type='json' -p='[
+  {\"op\":\"replace\", \"path\":\"/spec/ports/1/port\", \"value\":{{ nodePort.stdout }}},
+  {\"op\":\"replace\", \"path\":\"/spec/ports/1/targetPort\", \"value\":{{ nodePort.stdout }}}]'"
+
 - name: "Install Gerrit app"
   command: |
     {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/gerrit/gerrit.yaml 
@@ -15,6 +27,7 @@
     -p GITLAB_GROUP_PATH={{ gitlab_group_name | urlsplit('path') | regex_replace('^/{1}', '') }}
     -p GITLAB_PROJECT_NAME={{ project_gitlab_edp }}
     -p GITLAB_AUTOUSER_SECRET_NAME={{ gitlab_auto_user_secret }}
+    -p GERRIT_SSH_PORT={{ nodePort.stdout }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

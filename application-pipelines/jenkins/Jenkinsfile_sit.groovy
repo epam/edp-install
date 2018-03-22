@@ -38,8 +38,9 @@ node("backend") {
         vars['credentials'] = env.CREDENTIALS ? CREDENTIALS : "gerrit-key"
         vars['serviceBranch'] = env.GERRIT_REFNAME ? GERRIT_REFNAME : SERVICE_BRANCH
         vars['gerritHost'] = env.GERRIT_HOST ? GERRIT_HOST : "gerrit"
+        vars['gerritSshPort'] = env.GERRIT_SSH_PORT ? env.GERRIT_SSH_PORT : "29418"
         vars['gerritProject'] = GERRIT_PROJECT_NAME
-        vars['gitMicroservicesUrl'] = "ssh://${vars.autoUser}@${vars.gerritHost}:29418/${vars.gerritProject}"
+        vars['gitMicroservicesUrl'] = "ssh://${vars.autoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${vars.gerritProject}"
 
         vars['sitProject'] = env.SIT_PROJECT ? SIT_PROJECT : "sit"
         vars['qaProject'] = env.QA_PROJECT ? QA_PROJECT : "qa"

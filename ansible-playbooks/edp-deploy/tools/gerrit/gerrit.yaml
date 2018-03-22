@@ -60,20 +60,6 @@ objects:
   kind: Service
   metadata:
     labels:
-      app: gerrit
-    name: gerrit
-  spec:
-    ports:
-    - name: ui
-      port: 8080
-    - name: ssh
-      port: 29418
-    selector:
-      app: gerrit
-- apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
       app: gerrit-db
     name: gerrit-db
   spec:
@@ -94,6 +80,8 @@ objects:
     to:
       kind: Service
       name: gerrit
+    port:
+      targetPort: ui
 - apiVersion: v1
   kind: ConfigMap
   metadata:
@@ -114,6 +102,7 @@ objects:
         push = +refs/heads/*:refs/heads/*
         projects = ${GITLAB_PROJECT_NAME}
         replicatePermissions = false
+    sshPort: ${GERRIT_SSH_PORT}
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -235,6 +224,8 @@ objects:
             value: 'admin123'
           - name: WEBURL
             value: ${GERRIT_WEB_URL}
+          - name: LISTEN_ADDR
+            value: '*:${GERRIT_SSH_PORT}'
           - name: AUTH_TYPE
             value: DEVELOPMENT_BECOME_ANY_ACCOUNT
           - name: OAUTH_GITLAB_ROOT_URL
@@ -281,7 +272,7 @@ objects:
           - name: ui
             containerPort: 8080
           - name: ssh
-            containerPort: 29418
+            containerPort: ${GERRIT_SSH_PORT}
           readinessProbe:
             initialDelaySeconds: 120
             successThreshold: 1
@@ -361,3 +352,7 @@ parameters:
   name: GITLAB_PROJECT_NAME
 - displayName: GitLab Autouser secret name
   name: GITLAB_AUTOUSER_SECRET_NAME
+- displayName: Gerrit ssh port
+  value: "29418"
+  name: GERRIT_SSH_PORT
+  required: true
