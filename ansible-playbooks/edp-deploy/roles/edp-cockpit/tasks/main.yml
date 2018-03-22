@@ -20,6 +20,17 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
 
+
+- name: "Upload template for cockpit"
+  command: |
+    {{ ocadm }} create -f {{ templates_dir }}/add-business-application.yaml
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
 - name: "Install EDP-Cockpit app"
   command: |
     {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/edp-cockpit/edp-cockpit.yaml

@@ -33,28 +33,28 @@ objects:
           imagePullPolicy: Always
           command:
             - "ansible-playbook"
-              - "-v"
-              - "-i"
-              - "localhost,"
-              - "-e project=${PROJECTS_PREFIX}"
-              - "-e ocadm=oc"
-                      - "-e ansible_connection=local"
-                      - "-e gerrit_version=${GERRIT_VERSION}"
-                      - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
-                      - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
-                      - "-e gerrit_web_url=${GERRIT_WEB_URL}"
-                      - "-e gerrit_job_version=${GERRIT_JOB_VERSION}"
-                      - "-e jenkins_enable_oauth=${JENKINS_ENABLE_OAUTH}"
-                      - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
-                      - "-e jenkins_maven_cache_volume_capacity=${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}"
-                      - "-e jenkins_frontend_image=${JENNKINS_FRONTEND_IMAGE}"
-                      - "-e jenkins_backend_image=${JENKINS_BACKEND_IMAGE}"
-                      - "-e nexus_version=${NEXUS_VERSION}"
-                      - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
-                      - "-e sonar_version=${SONAR_VERSION}"
-                      - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
-                      - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
-                      - "install/deploy-ci-tools/install.yml"
+            - "-v"
+            - "-i"
+            - "localhost,"
+            - "-e project=${PROJECTS_PREFIX}"
+            - "-e ocadm=oc"
+            - "-e ansible_connection=local"
+            - "-e gerrit_version=${GERRIT_VERSION}"
+            - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
+            - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
+            - "-e gerrit_web_url=${GERRIT_WEB_URL}"
+            - "-e gerrit_job_version=${GERRIT_JOB_VERSION}"
+            - "-e jenkins_enable_oauth=${JENKINS_ENABLE_OAUTH}"
+            - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
+            - "-e jenkins_maven_cache_volume_capacity=${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}"
+            - "-e jenkins_frontend_image=${JENNKINS_FRONTEND_IMAGE}"
+            - "-e jenkins_backend_image=${JENKINS_BACKEND_IMAGE}"
+            - "-e nexus_version=${NEXUS_VERSION}"
+            - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
+            - "-e sonar_version=${SONAR_VERSION}"
+            - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
+            - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
+            - "install/deploy-ci-tools/install.yml"
           env:
           - name: GIT_REPO_URL
             value: ${GIT_REPO_URL}
@@ -62,6 +62,12 @@ objects:
             value: ${APPLICATION_TYPE}
           - name: APPLICATION_NAME
             value: ${APPLICATION_NAME}
+          - name: APPLICATION_LANGUAGE
+            value: ${APPLICATION_LANGUAGE}
+          - name: APPLICATION_BUILD_TOOL
+            value: ${APPLICATION_BUILD_TOOL}
+          - name: APPLICATION_FRAMEWORK
+            value: ${APPLICATION_FRAMEWORK}
           - name: ENVIRONMENTS
             value: ${ENVIRONMENTS}
           - name: NEED_ROUTE
@@ -81,14 +87,26 @@ parameters:
   description: Type of an application to add
   name: APPLICATION_NAME
   value: app-name
+- displayName: Language of an application
+  description: Language of an application to add
+  name: APPLICATION_LANGUAGE
+  value: "Java"
+- displayName: Build tool of an application
+  description: Build tool of an application to add
+  name: APPLICATION_BUILD_TOOL
+  value: "Maven"
+- displayName: Framework of an application
+  description: Framework of an application to add
+  name: APPLICATION_FRAMEWORK
+  value: "Spring Boot"
 - displayName: Set of environments
-  description: List of environments separated by commas. NOTE: only SIT at the moment will be supported
+  description: List of environments separated by commas. Only SIT at the moment will be supported
   name: ENVIRONMENTS
   value: SIT
 - displayName: The necessity of route to an application
   description: Boolean flag for route necessity
   name: NEED_ROUTE
-  value: FALSE
+  value: "false"
 - displayName: Docker image
   description: Docker image for a job
   name: DOCKER_IMAGE

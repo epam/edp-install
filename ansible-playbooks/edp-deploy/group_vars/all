@@ -1,8 +1,7 @@
 ---
 # file: group_vars/all
 ansible_connection: ssh
-tmp_dir: "/tmp"
-work_dir: "{{ tmp_dir }}/edp-tools-installation"
+work_dir: "/opt/edp/"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/templates"
 projects_suffix: ""
