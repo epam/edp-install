@@ -33,33 +33,20 @@ objects:
           imagePullPolicy: Always
           command:
             - "ansible-playbook"
-            - "-v"
-            - "-i"
-            - "localhost,"
-            - "-e project=${PROJECTS_PREFIX}"
-            - "-e ocadm=oc"
-            - "-e ansible_connection=local"
-            - "-e gerrit_version=${GERRIT_VERSION}"
-            - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
-            - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
-            - "-e gerrit_web_url=${GERRIT_WEB_URL}"
-            - "-e gerrit_job_version=${GERRIT_JOB_VERSION}"
-            - "-e jenkins_enable_oauth=${JENKINS_ENABLE_OAUTH}"
-            - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
-            - "-e jenkins_maven_cache_volume_capacity=${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}"
-            - "-e jenkins_frontend_image=${JENNKINS_FRONTEND_IMAGE}"
-            - "-e jenkins_backend_image=${JENKINS_BACKEND_IMAGE}"
-            - "-e nexus_version=${NEXUS_VERSION}"
-            - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
-            - "-e sonar_version=${SONAR_VERSION}"
-            - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
-            - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
-            - "install/deploy-ci-tools/install.yml"
+              - "-v"
+              - "-i"
+              - "localhost,"
+              - "-e ocadm=oc"
+              - "-e git_repo_url=${GIT_REPO_URL}"
+              - "-e app_name=${APPLICATION_NAME}"
+              - "-e language=${APPLICATION_LANGUAGE}"
+              - "-e build_tool=${APPLICATION_BUILD_TOOL}"
+              - "-e framework=${APPLICATION_FRAMEWORK}"
+              - "-e route=${NEED_ROUTE}"
+              - "ansible-playbooks/add-business-application/add-business-application.yml"
           env:
           - name: GIT_REPO_URL
             value: ${GIT_REPO_URL}
-          - name: APPLICATION_TYPE
-            value: ${APPLICATION_TYPE}
           - name: APPLICATION_NAME
             value: ${APPLICATION_NAME}
           - name: APPLICATION_LANGUAGE
@@ -79,10 +66,6 @@ parameters:
   description: Git repo url for replication
   name: GIT_REPO_URL
   value: http://url.com
-- displayName: Type of an application
-  description: Type of an application to add. Currently, spring-boot is only supported
-  name: APPLICATION_TYPE
-  value: spring-boot
 - displayName: Name of an application
   description: Type of an application to add
   name: APPLICATION_NAME

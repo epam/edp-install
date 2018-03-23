@@ -1,0 +1,37 @@
+---
+- name: "Get current app.settings.json value"
+  command: |
+    {{ ocadm }} get cm jenkins-app-settings -n {{ project_cicd }} -o json
+  register: output
+
+- set_fact:
+     app_settings_json: "{{ output.stdout | from_json }}"
+
+- copy:
+    content: "{{ app_settings_json }}"
+    dest: "/tmp/old_cm.json"
+
+- template:
+    src: "update-cm-data.j2"
+    dest: "/tmp/update-cm-data.py"
+
+- name: "Update app.settings.json value"
+  shell: |
+   python /tmp/update-cm-data.py --git_repo {{ git_repo_url }} --name {{ app_name }} --language {{ language }}
+    --tool {{ build_tool }} --framework {{ framework }} --need_route {{ route }}
+  register: pythonOutput
+
+- name: "Replace app.settings.json with new values"
+  command: |
+   {{ ocadm }} replace -f /tmp/updated_cm.json
+
+- name: "Remove temp files"
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - /tmp/update-cm-data.py
+    - /tmp/old_cm.json
+    - /tmp/updated_cm.json
+
+
