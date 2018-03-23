@@ -1,3 +1,3 @@
 - hosts: all
   roles:
-    - { role: update-jenkins-app-settings, tags: [ 'update-jenkins-app-settings' ] }
+    - { role: update-app-settings, tags: [ 'update-app-settings' ] }
