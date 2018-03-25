@@ -1,7 +1,7 @@
 ---
 # file: group_vars/all
 ansible_connection: ssh
-work_dir: "/opt/edp/"
+work_dir: "/opt/edp"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/templates"
 projects_suffix: ""
@@ -30,6 +30,9 @@ secrets:
   gitlab_oauth:
     id: "{{ gitlab_oauth_app_id | default('1793958fcbf67ba9498781e84b8beee375420796e5ee4510c5baf7b7265566d0') }}"
     secret: "{{ gitlab_oauth_app_secret | default('d9921be13a9980798997b28bd9b6a2fa68a33fa9fa19f466d569e48293b1b584') }}"
+  keycloak_db:
+    db_user: keycloak
+    db_password: keycloak
 tools:
   jenkins:
     password: "{{ jenkins_password | default('password') }}"
@@ -58,3 +61,6 @@ tools:
   cockpit:
     version: "{{ cockpit_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"
     openshift_trust_certificates: "true"
+  keycloak:
+    image: "{{ keycloak_image | default('jboss/keycloak:3.4.3.Final') }}"
+    volume_db_capacity: "{{ keycloak_volume_db_capacity | default('2Gi') }}"

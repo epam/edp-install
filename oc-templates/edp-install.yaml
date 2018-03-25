@@ -57,6 +57,8 @@ objects:
             - "-e gitlab_oauth_app_secret=${GITLAB_OAUTH_APP_SECRET}"
             - "-e gitlab_auto_user_secret=${GITLAB_AUTO_USER_SECRET}"
             - "-e gitlab_group_name=${GITLAB_GROUP_NAME_URL}"
+            - "-e keycloak_image=${KEYCLOAK_IMAGE}"
+            - "-e keycloak_volume_db_capacity=${KEYCLOAK_DB_CAPACITY}"
             - "ansible-playbooks/edp-deploy/install.yml"
 parameters:
 - displayName: DNS wildcard
@@ -170,3 +172,11 @@ parameters:
   name: GITLAB_GROUP_NAME_URL
   value: "https://git.epam.com/epmd-edp/temp"
   required: true
+#Keycloak parameters
+- displayName: Keycloak version
+  name: KEYCLOAK_IMAGE
+  value: "jboss/keycloak:3.4.3.Final"
+- displayName: Keycloak database Volume Capacity
+  description: Volume space available for Keycloak Database
+  name: KEYCLOAK_DB_CAPACITY
+  value: 2Gi

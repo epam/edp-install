@@ -1,0 +1,15 @@
+--- # Keycloak full installation
+- name: "Give rights to keycloak account"
+  shell: "{{ ocadm }} -n {{ project_cicd }} adm policy add-scc-to-user anyuid -z keycloak"
+
+- name: "Install Keycloak app"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/keycloak/keycloak.yaml
+    -p KEYCLOAK_IMAGE={{ tools.keycloak.image }}
+    -p KEYCLOAK_DB_CAPACITY={{ tools.keycloak.volume_db_capacity }}
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'

@@ -39,4 +39,5 @@
     - nexus
     - sonar
     - edp-cockpit
+    - keycloak
 
