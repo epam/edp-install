@@ -33,17 +33,17 @@ objects:
           imagePullPolicy: Always
           command:
             - "ansible-playbook"
-              - "-v"
-              - "-i"
-              - "localhost,"
-              - "-e ocadm=oc"
-              - "-e git_repo_url=${GIT_REPO_URL}"
-              - "-e app_name=${APPLICATION_NAME}"
-              - "-e language=${APPLICATION_LANGUAGE}"
-              - "-e build_tool=${APPLICATION_BUILD_TOOL}"
-              - "-e framework=${APPLICATION_FRAMEWORK}"
-              - "-e route=${NEED_ROUTE}"
-              - "ansible-playbooks/add-business-application/add-business-application.yml"
+            - "-v"
+            - "-i"
+            - "localhost,"
+            - "-e ocadm=oc"
+            - "-e git_repo_url=${GIT_REPO_URL}"
+            - "-e app_name=${APPLICATION_NAME}"
+            - "-e language=${APPLICATION_LANGUAGE}"
+            - "-e build_tool=${APPLICATION_BUILD_TOOL}"
+            - "-e framework=${APPLICATION_FRAMEWORK}"
+            - "-e route=${NEED_ROUTE}"
+            - "ansible-playbooks/add-business-application/add-business-application.yml"
           env:
           - name: GIT_REPO_URL
             value: ${GIT_REPO_URL}
