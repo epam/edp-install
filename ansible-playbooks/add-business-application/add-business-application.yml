@@ -1,3 +1,0 @@
-- hosts: all
-  roles:
-    - { role: update-app-settings, tags: [ 'update-app-settings' ] }

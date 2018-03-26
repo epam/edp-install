@@ -37,13 +37,22 @@ objects:
             - "-i"
             - "localhost,"
             - "-e ocadm=oc"
+            - "-e ansible_connection=local"
             - "-e git_repo_url=${GIT_REPO_URL}"
             - "-e app_name=${APPLICATION_NAME}"
             - "-e language=${APPLICATION_LANGUAGE}"
             - "-e build_tool=${APPLICATION_BUILD_TOOL}"
             - "-e framework=${APPLICATION_FRAMEWORK}"
             - "-e route=${NEED_ROUTE}"
-            - "ansible-playbooks/add-business-application/add-business-application.yml"
+            - "ansible-playbooks/edp-deploy/add-business-application.yml"
+          env:
+          - name: PROJECT_CICD
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        volumeMounts:
+        - name: user-settings
+          mountPath: /tmp/config/
           env:
           - name: GIT_REPO_URL
             value: ${GIT_REPO_URL}
@@ -60,6 +69,11 @@ objects:
           - name: NEED_ROUTE
             value: ${NEED_ROUTE}
         restartPolicy: Never
+        serviceAccountName: cockpit
+      volumes:
+        - name: user-settings
+          configMap:
+            name: user-settings
     backoffLimit: 1
 parameters:
 - displayName: Git repo url
@@ -69,7 +83,7 @@ parameters:
 - displayName: Name of an application
   description: Type of an application to add
   name: APPLICATION_NAME
-  value: app-name
+  value: "app-name"
 - displayName: Language of an application
   description: Language of an application to add
   name: APPLICATION_LANGUAGE
@@ -85,7 +99,7 @@ parameters:
 - displayName: Set of environments
   description: List of environments separated by commas. Only SIT at the moment will be supported
   name: ENVIRONMENTS
-  value: SIT
+  value: "SIT"
 - displayName: The necessity of route to an application
   description: Boolean flag for route necessity
   name: NEED_ROUTE
@@ -93,4 +107,4 @@ parameters:
 - displayName: Docker image
   description: Docker image for a job
   name: DOCKER_IMAGE
-  value: path/image:latest
+  value: "registry.main.edp.projects.epam.com/infra/edp-install:master"

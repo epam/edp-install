@@ -1,29 +1,10 @@
 --- # Cockpit full installation
-- name: "Install config map for storing available application types"
-  command: |
-    {{ ocadm }} -n {{ project_cockpit }} create configmap app-types
-    --from-file {{ templates_dir }}/edp-cockpit/app-types.json
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-- name: "Bind role with service account"
-  command: |
-    {{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cockpit }}:cockpit
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-
-- name: "Upload template for cockpit"
-  command: |
-    {{ ocadm }} create -f {{ templates_dir }}/add-business-application.yaml
+- name: "Install config map for storing app types. Bind role with service account. Upload template for cockpit"
+  shell: "{{ item }}"
+  with_items:
+    - "{{ ocadm }} -n {{ project_cockpit }} create configmap app-types --from-file {{ templates_dir }}/edp-cockpit/app-types.json"
+    - "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cockpit }}:cockpit"
+    - "{{ ocadm }} create -f {{ templates_dir }}/add-business-application.yaml"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
@@ -37,6 +18,19 @@
     -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
     -p PROJECT_CICD={{ project_cicd }}
     -p OPENSHIFT_TRUST_CERTIFICATES={{ tools.cockpit.openshift_trust_certificates }}
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
+- name: "Copy cockpit SA and assign SCC"
+  shell: "{{ item }}"
+  with_items:
+    - "{{ ocadm }} -n {{ project_cockpit }} get sa cockpit -o json | jq '.metadata.namespace = \"{{ project_cicd }}\"' | {{ ocadm }} create -f -"
+    - "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:cockpit"
+    - "{{ ocadm }} adm policy add-scc-to-user edp-deploy system:serviceaccount:{{ project_cicd }}:cockpit"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

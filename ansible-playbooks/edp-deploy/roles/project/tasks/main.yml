@@ -41,3 +41,8 @@
     - edp-cockpit
     - keycloak
 
+- name: Create ConfigMap with secret name and gitlab group name URL
+  command: |
+    {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
+    --from-literal=gitlab_autouser_secret={{ gitlab_auto_user_secret }}
+    --from-literal=gitlab_group_name_url={{ gitlab_group_name }}

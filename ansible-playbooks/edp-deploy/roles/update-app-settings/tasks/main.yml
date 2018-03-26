@@ -1,7 +1,12 @@
 ---
+- name: "Create configMap if doesn't exist"
+  command: |
+   {{ ocadm }} --namespace {{ project_cicd }} create configmap business-apps-settings --from-literal=app.settings.json=[]
+  ignore_errors: yes
+
 - name: "Get current app.settings.json value"
   command: |
-    {{ ocadm }} get cm jenkins-app-settings -n {{ project_cicd }} -o json
+    {{ ocadm }} get cm business-apps-settings -n {{ project_cicd }} -o json
   register: output
 
 - set_fact:
@@ -16,14 +21,14 @@
     dest: "/tmp/update-cm-data.py"
 
 - name: "Update app.settings.json value"
-  shell: |
+  shell: >
    python /tmp/update-cm-data.py --git_repo {{ git_repo_url }} --name {{ app_name }} --language {{ language }}
-    --tool {{ build_tool }} --framework {{ framework }} --need_route {{ route }}
+   --tool {{ build_tool }} --framework {{ framework }} --need_route {{ route }}
   register: pythonOutput
 
 - name: "Replace app.settings.json with new values"
   command: |
-   {{ ocadm }} replace -f /tmp/updated_cm.json
+   {{ ocadm }} replace --namespace {{ project_cicd }} -f /tmp/updated_cm.json
 
 - name: "Remove temp files"
   file:

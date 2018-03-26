@@ -1,2 +1,0 @@
----
-ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"

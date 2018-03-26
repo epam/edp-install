@@ -1,0 +1,4 @@
+- hosts: all
+  roles:
+    - { role: update-app-settings, project_cicd: "$PROJECT_CICD", tags: [ 'update-app-settings' ] }
+    - { role: add-business-application, project_gitlab_edp: "{{ app_name }}", project_cicd: "$PROJECT_CICD", tags: [ 'add-business-application' ] }

@@ -1,0 +1,49 @@
+---
+- name: "Get project CICD from env variable"
+  shell: echo $PROJECT_CICD
+  register: project_cicd_name
+
+- name: "Get autouser secret name and gitlab URL from user-settings cm"
+  shell: |
+   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.gitlab_autouser_secret }'
+  register: autouser_secret_name
+
+- include_tasks: roles/common/tasks/get-gitlab-sshkey-from-secret.yml gitlab_auto_user_secret={{ autouser_secret_name.stdout }} project_cicd={{ project_cicd_name.stdout }}
+
+- name: "Get GitLab hostname and project path"
+  set_fact:
+     gitlab_hostname: "{{ git_repo_url | urlsplit('hostname') }}"
+     gitlab_project_path: "{{ git_repo_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
+
+- name: "Clone GitLab repository"
+  git:
+    repo: "git@{{ gitlab_hostname }}:{{ gitlab_project_path }}.git"
+    dest: "{{ work_dir }}/{{ project_gitlab_edp }}"
+    key_file: "{{ work_dir }}/private.key"
+    accept_hostkey: true
+    force: true
+  ignore_errors: true
+
+- include_tasks: roles/common/tasks/clone-repository-to-gerrit.yml gitlab_host={{ gitlab_hostname }} project_cicd={{ project_cicd_name.stdout }}
+
+- name: "Save current replication configmap values"
+  shell: |
+    {{ ocadm }} get cm gerrit -n {{ project_cicd }} -o yaml
+  register: old_replication_config
+
+- local_action: copy content="{{ old_replication_config.stdout }}" dest="/tmp/replication-config"
+
+- name: "Add replication part for new {{ project_cicd_name.stdout }} project"
+  blockinfile:
+    dest: /tmp/replication-config
+    insertbefore: '  sshPort:*'
+    block: "{{ lookup('template', 'replication-conf.j2') }}"
+    marker: ""
+
+- name: "Update replication config"
+  shell: |
+   {{ ocadm }} replace cm gerrit -n {{ project_cicd }} -f /tmp/replication-config
+
+- name: "Redeploy Gerrit pod"
+  shell: |
+   {{ ocadm }} rollout latest gerrit -n {{ project_cicd }}

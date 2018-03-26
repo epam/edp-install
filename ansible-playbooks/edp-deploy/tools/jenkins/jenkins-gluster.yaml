@@ -52,14 +52,6 @@ objects:
       requests:
         storage: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}
     storageClassName: glusterfs-storage
-
-- apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: jenkins-app-settings
-  data:
-    app.settings.json: |-
-      []
 - apiVersion: v1
   kind: ConfigMap
   metadata:
@@ -340,8 +332,6 @@ objects:
             name: jenkins-init
           - mountPath: /var/lib/jenkins/init.groovy.d/dsl
             name: job-dsl
-          - mountPath: /var/lib/jenkins/app-settings
-            name: app-settings
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         serviceAccountName: jenkins
@@ -357,10 +347,6 @@ objects:
           configMap:
             defaultMode: 420
             name: job-provisioning
-        - name: app-settings
-          configMap:
-            defaultMode: 420
-            name: jenkins-app-settings
 - apiVersion: v1
   kind: ServiceAccount
   metadata:

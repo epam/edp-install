@@ -1,7 +1,7 @@
 ---
 - name: "Get autouser email from cicd projects secret"
   shell: |
-   {{ ocadm }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: user_mail
 
 - name: "Get autouser name from cicd projects secret"
@@ -11,13 +11,13 @@
 
 - name: "Get autouser password from cicd projects secret"
   shell: |
-   {{ ocadm }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
 
 - name: "Get GitLab host"
   shell: |
     echo "{{ gitlab_group_name }}" | sed -e 's|^[^/]*//||' -e 's|/.*$||'
-  register: gitlab_host
+  register: gitlab_hostname
 
 - name: "Get GitLab group name"
   shell: |
@@ -26,40 +26,35 @@
 
 - name: "Login to GitLab and get CSRF token"
   uri:
-    url: "https://{{ gitlab_host.stdout }}/oauth/token"
+    url: "https://{{ gitlab_hostname.stdout }}/oauth/token"
     method: POST
     body: 'grant_type=password&username={{ user_mail.stdout }}&password={{ password.stdout }}'
   register: csrf_token
 
 - name: "Get group id by it's name"
   uri:
-    url: "https://{{ gitlab_host.stdout }}/api/v4/groups/{{ gitlab_group.stdout | replace('/', '%2F') }}?simple=true&access_token={{ csrf_token.json.access_token }}"
+    url: "https://{{ gitlab_hostname.stdout }}/api/v4/groups/{{ gitlab_group.stdout | replace('/', '%2F') }}?simple=true&access_token={{ csrf_token.json.access_token }}"
     method: GET
   register: group_id
 
 - name: "Check if project EDP already exist in GitLab"
   uri:
-    url: "https://{{ gitlab_host.stdout }}/api/v4/projects/{{ gitlab_group.stdout | replace('/', '%2F') + '%2F' + project_gitlab_edp }}?simple=true&access_token={{ csrf_token.json.access_token }}"
+    url: "https://{{ gitlab_hostname.stdout }}/api/v4/projects/{{ gitlab_group.stdout | replace('/', '%2F') + '%2F' + project_gitlab_edp }}?simple=true&access_token={{ csrf_token.json.access_token }}"
   ignore_errors: True
   register: edp_project_existence
 
 - block:
   - name: "Add project to the group"
     uri:
-      url: "https://{{ gitlab_host.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}&namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
+      url: "https://{{ gitlab_hostname.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}&namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
       method: POST
       status_code: 201
 
-  - name: "Get ssh key from cicd projects secret"
-    shell: |
-     {{ ocadm }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "ssh-privatekey" }}'{% endraw %} | base64 --decode
-    register: ssh_key
-
-  - local_action: copy content={{ ssh_key.stdout }} dest={{ work_dir }}/private.key mode=0400
+  - include_tasks: roles/common/tasks/get-gitlab-sshkey-from-secret.yml
 
   - name: "Clone GitLab repository"
     git:
-      repo: "git@{{ gitlab_host.stdout }}:{{ gitlab_group.stdout }}/{{ project_gitlab_edp }}.git"
+      repo: "git@{{ gitlab_hostname.stdout }}:{{ gitlab_group.stdout }}/{{ project_gitlab_edp }}.git"
       dest: "{{ work_dir }}/{{ project_gitlab_edp }}"
       key_file: "{{ work_dir }}/private.key"
       accept_hostkey: true
@@ -80,57 +75,17 @@
      ssh-agent bash -c 'ssh-add {{ work_dir }}/private.key; git add . && git commit -m "Add pipelines" && git push origin master'
   when: edp_project_existence.status == 404
 
-# Gerrit related tasks
-- name: "Get gerrit-admin ssh key from secret"
-  shell: |
-    {{ ocadm }} get secret gerrit-admin --template={% raw %}'{{ index .data "id_admin_rsa" }}'{% endraw %} | base64 --decode
-  register: gerrit_admin_ssh
+- block:
+  - include_tasks: roles/common/tasks/get-gitlab-sshkey-from-secret.yml
 
-- local_action: copy content={{ gerrit_admin_ssh.stdout }} dest={{ work_dir }}/gerrit_admin.key mode=0400
+  - name: "Clone GitLab repository"
+    git:
+      repo: "git@{{ gitlab_hostname.stdout }}:{{ gitlab_group.stdout }}/{{ project_gitlab_edp }}.git"
+      dest: "{{ work_dir }}/{{ project_gitlab_edp }}"
+      key_file: "{{ work_dir }}/private.key"
+      accept_hostkey: true
+      force: true
+    ignore_errors: true
+  when: edp_project_existence.status == 200
 
-- name: "Create .ssh directory"
-  file:
-    path: ~/.ssh
-    state: directory
-
-- name: "Config ssh"
-  copy:
-    content: |
-      Host gerrit.{{ project_cicd }}*
-        HostName gerrit.{{ project_cicd }}
-        User admin
-        StrictHostKeyChecking no
-        UserKnownHostsFile /dev/null
-        IdentityFile {{ work_dir }}/gerrit_admin.key
-        IdentitiesOnly yes
-
-      Host {{ gitlab_host.stdout }}
-        HostName {{ gitlab_host.stdout }}
-        User git
-        StrictHostKeyChecking no
-        UserKnownHostsFile /dev/null
-        IdentityFile {{ work_dir }}/private.key
-        IdentitiesOnly yes
-    dest: ~/.ssh/config
-
-- name: "Get gerrit ssh port"
-  shell: "{{ ocadm }} -n {{ project_cicd }} get configMap gerrit -o=jsonpath={.data.sshPort}"
-  register: "gerrit_ssh_port"
-
-- name: "Create project in Gerrit"
-  shell: "ssh -p {{ gerrit_ssh_port.stdout }} admin@gerrit.{{ project_cicd }} gerrit create-project {{ project_gitlab_edp }}"
-
-- name: "Pull GitLab"
-  command: "git pull origin master"
-  args:
-    chdir: "{{ work_dir }}/{{ project_gitlab_edp }}"
-
-- name: "Add remote link to gerrit"
-  shell: "git remote set-url --push origin ssh://admin@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port.stdout }}/{{ project_gitlab_edp }}"
-  args:
-    chdir: "{{ work_dir }}/{{ project_gitlab_edp }}"
-
-- name: "Push to gerrit"
-  shell: "git push --all"
-  args:
-    chdir: "{{ work_dir }}/{{ project_gitlab_edp }}"
+- include_tasks: roles/common/tasks/clone-repository-to-gerrit.yml gitlab_host={{ gitlab_hostname.stdout }}
