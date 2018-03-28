@@ -59,6 +59,7 @@ objects:
             - "-e gitlab_group_name=${GITLAB_GROUP_NAME_URL}"
             - "-e keycloak_image=${KEYCLOAK_IMAGE}"
             - "-e keycloak_volume_db_capacity=${KEYCLOAK_DB_CAPACITY}"
+            - "-e keycloak_realm_name=${KEYCLOAK_REALM_NAME}"
             - "-e keycloak_admin_user_secret=${KEYCLOAK_ADMIN_USER_SECRET}"
             - "ansible-playbooks/edp-deploy/install.yml"
 parameters:
@@ -186,3 +187,7 @@ parameters:
   name: KEYCLOAK_ADMIN_USER_SECRET
   value: keycloak
   required: true
+- displayName: Keycloak realm name
+  description: Realm name for Keycloak
+  name: KEYCLOAK_REALM_NAME
+  value: CI

@@ -22,4 +22,5 @@
       - nexus
       - sonar
 
+- include_tasks: keycloak_configuration.yml
 - include_tasks: gitlab_gerrit_configuration.yml

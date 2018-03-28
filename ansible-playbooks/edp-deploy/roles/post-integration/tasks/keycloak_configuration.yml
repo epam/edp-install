@@ -1,0 +1,27 @@
+- name: "Get username from cicd projects Keycloak secret"
+  shell: |
+   {{ ocadm }} -n {{ project_cicd }} get secret keycloak --template={% raw %}'{{ index .data "keycloak-user" }}'{% endraw %} | base64 --decode
+  register: username
+
+- name: "Get password from cicd projects Keycloak secret"
+  shell: |
+   {{ ocadm }} -n {{ project_cicd }} get secret keycloak --template={% raw %}'{{ index .data "keycloak-password" }}'{% endraw %} | base64 --decode
+  register: password
+
+- name: "Login to Keycloak and get token"
+  uri:
+    url: "http://keycloak.{{ project_cicd }}:8080/auth/realms/master/protocol/openid-connect/token"
+    method: POST
+    body: 'grant_type=password&username={{ username.stdout }}&password={{ password.stdout }}&client_id=admin-cli'
+  register: access_token
+
+- name: "Create realm for Keycloak"
+  uri:
+    url: "http://keycloak.{{ project_cicd }}:8080/auth/admin/realms"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token.json.access_token }}"
+      Content-Type: "application/json"
+    body: '{"realm":"{{ tools.keycloak.realm_name }}"}'
+    body_format: json
+    status_code: 201

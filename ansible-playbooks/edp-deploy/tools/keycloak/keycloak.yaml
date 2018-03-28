@@ -32,8 +32,11 @@ objects:
     selector:
       name: keycloak
     strategy:
-      type: Recreate
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
       resources: {}
+      type: Recreate
     triggers:
     - type: ConfigChange
     template:
