@@ -59,6 +59,7 @@ objects:
             - "-e gitlab_group_name=${GITLAB_GROUP_NAME_URL}"
             - "-e keycloak_image=${KEYCLOAK_IMAGE}"
             - "-e keycloak_volume_db_capacity=${KEYCLOAK_DB_CAPACITY}"
+            - "-e keycloak_admin_user_secret=${KEYCLOAK_ADMIN_USER_SECRET}"
             - "ansible-playbooks/edp-deploy/install.yml"
 parameters:
 - displayName: DNS wildcard
@@ -180,3 +181,8 @@ parameters:
   description: Volume space available for Keycloak Database
   name: KEYCLOAK_DB_CAPACITY
   value: 2Gi
+- displayName: Keycloak admin user secret name
+  description: Keycloak admin user secret name from prerequisites
+  name: KEYCLOAK_ADMIN_USER_SECRET
+  value: keycloak
+  required: true
