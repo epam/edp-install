@@ -213,7 +213,6 @@ objects:
     resources:
       requests:
         storage: ${SONAR_VOLUME_CAPACITY}
-    storageClassName: glusterfs-storage
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -224,7 +223,6 @@ objects:
     resources:
       requests:
         storage: ${SONAR_DB_CAPACITY}
-    storageClassName: glusterfs-storage
 parameters:
 - displayName: SonarQube version
   value: "6.7"

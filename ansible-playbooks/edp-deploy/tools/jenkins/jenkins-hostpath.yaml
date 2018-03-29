@@ -30,6 +30,7 @@ objects:
       storage: 10Gi
     hostPath:
       path: ${JENKINS_HOST_PATH_VOLUME}
+    storageClassName: manual
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -37,9 +38,10 @@ objects:
   spec:
     accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: manual
   volumeName: jenkins
 - apiVersion: v1
   kind: PersistentVolumeClaim
@@ -51,7 +53,6 @@ objects:
     resources:
       requests:
         storage: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}
-    storageClassName: glusterfs-storage
 - apiVersion: v1
   kind: Route
   metadata:
@@ -255,7 +256,7 @@ objects:
                 - key: role
                   operator: In
                   values:
-                  - jenkins
+                  - jenkins-hp
         containers:
         - capabilities: {}
           env:
@@ -316,7 +317,7 @@ objects:
         volumes:
         - name: jenkins-data
           persistentVolumeClaim:
-            claimName: jenkins
+            claimName: jenkins-hp
         - name: ${JENKINS_SERVICE_NAME}-init
           configMap:
             defaultMode: 420

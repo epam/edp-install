@@ -29,6 +29,16 @@ objects:
         - name: init-sonar
           image: busybox
           command: ["sh", "-c", "while ! nc -w 1 sonar 9000 </dev/null; do echo waiting for sonar; sleep 10; done;"]
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                  - jenkins
+              topologyKey: kubernetes.io/hostname
         containers:
         - image: python:3.6-alpine
           imagePullPolicy: IfNotPresent

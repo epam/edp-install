@@ -127,7 +127,6 @@ objects:
     resources:
       requests:
         storage: ${NEXUS_VOLUME_CAPACITY}
-    storageClassName: glusterfs-storage
 parameters:
 - displayName: Sonatype Nexus version
   name: NEXUS_VERSION

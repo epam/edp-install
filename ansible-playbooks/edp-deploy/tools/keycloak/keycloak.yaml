@@ -12,8 +12,6 @@ objects:
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-    annotations:
-      volume.beta.kubernetes.io/storage-class: glusterfs-storage
     name: keycloak-db
   spec:
     accessModes:

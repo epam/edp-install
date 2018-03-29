@@ -40,7 +40,6 @@ objects:
     resources:
       requests:
         storage: ${JENKINS_VOLUME_CAPACITY}
-    storageClassName: glusterfs-storage
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -51,7 +50,6 @@ objects:
     resources:
       requests:
         storage: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}
-    storageClassName: glusterfs-storage
 - apiVersion: v1
   kind: ConfigMap
   metadata:

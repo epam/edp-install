@@ -135,6 +135,16 @@ objects:
         - name: gerrit-data
           persistentVolumeClaim:
             claimName: gerrit-data
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: name
+                  operator: In
+                  values:
+                  - jenkins
+              topologyKey: kubernetes.io/hostname
         containers:
         - name: gerrit-integration
           image: ${GERRIT_JOB_VERSION}
