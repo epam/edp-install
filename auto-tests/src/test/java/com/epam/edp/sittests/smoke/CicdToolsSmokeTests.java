@@ -1,6 +1,7 @@
 package com.epam.edp.sittests.smoke;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -24,7 +25,7 @@ public class CicdToolsSmokeTests {
         when().
                 get(getUrl("https", "jenkins", "login")).
                 then().
-                statusCode(200);
+                statusCode(HttpStatus.SC_OK);
     }
 
     @Test
@@ -33,7 +34,7 @@ public class CicdToolsSmokeTests {
         when().
                 get(getUrl("http", "gerrit", "")).
                 then().
-                statusCode(200);
+                statusCode(HttpStatus.SC_OK);
     }
 
     @Test
@@ -42,7 +43,7 @@ public class CicdToolsSmokeTests {
         when().
                 get(getUrl("http", "nexus", "")).
                 then().
-                statusCode(200);
+                statusCode(HttpStatus.SC_OK);
     }
 
     @Test
@@ -51,7 +52,16 @@ public class CicdToolsSmokeTests {
         when().
                 get(getUrl("http", "sonar", "")).
                 then().
-                statusCode(200);
+                statusCode(HttpStatus.SC_OK);
+    }
+
+    @Test
+    public void keycloakSmokeTest() throws Exception {
+        useRelaxedHTTPSValidation();
+        when().
+                get(getUrl("http", "keycloak", "")).
+                then().
+                statusCode(HttpStatus.SC_OK);
     }
 
 
@@ -67,6 +77,4 @@ public class CicdToolsSmokeTests {
                .append(path)
                .toString();
     }
-
-
 }
