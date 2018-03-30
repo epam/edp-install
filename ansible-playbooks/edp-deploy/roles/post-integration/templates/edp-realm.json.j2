@@ -1,0 +1,75 @@
+{
+  "realm": "{{ tools.keycloak.realm_name }}",
+  "defaultRoles": [
+    "developer"
+  ],
+  "enabled":true,
+  "roles": {
+    "realm": [
+      {
+        "name": "jenkins-dev"
+      },
+      {
+        "name": "jenkins-qa"
+      },
+      {
+        "name": "jenkins-admin"
+      },
+      {
+        "name": "jenkins-user"
+      },
+      {
+        "name": "gerrit-dev"
+      },
+      {
+        "name": "gerrit-reviewer"
+      },
+      {
+        "name": "gerrit-admin"
+      },
+      {
+        "name": "gerrit-user"
+      },
+      {
+        "name": "developer",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "jenkins-dev",
+            "gerrit-dev"
+          ]
+        }
+      },
+      {
+        "name": "teamlead",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "jenkins-dev",
+            "gerrit-reviewer"
+          ]
+        }
+      },
+      {
+        "name": "qa",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "jenkins-qa",
+            "jenkins-user"
+          ]
+        }
+      },
+      {
+        "name": "devops",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "jenkins-admin",
+            "gerrit-admin"
+          ]
+        }
+      }
+    ]
+  }
+}

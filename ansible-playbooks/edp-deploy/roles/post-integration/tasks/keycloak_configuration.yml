@@ -22,6 +22,6 @@
     headers:
       Authorization: "Bearer {{ access_token.json.access_token }}"
       Content-Type: "application/json"
-    body: '{"realm":"{{ tools.keycloak.realm_name }}"}'
+    body: "{{ lookup('template','./edp-realm.json.j2') |to_json }}"
     body_format: json
     status_code: 201
