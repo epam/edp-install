@@ -22,7 +22,7 @@
 
 - name: "Update app.settings.json value"
   shell: >
-   python /tmp/update-cm-data.py --git_repo {{ git_repo_url }} --name {{ app_name }} --language {{ language }}
+   python /tmp/update-cm-data.py --git_repo {{ gitlab_url }} --name {{ app_name }} --language {{ language }}
    --tool {{ build_tool }} --framework {{ framework }} --need_route {{ route }}
   register: pythonOutput
 
