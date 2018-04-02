@@ -3,20 +3,20 @@
   shell: "{{ ocadm }} login -u system:admin"
   register: can_login
   when: ocadm != "oc"
-  
+
 - fail:
     msg: "Sorry, we can't login to the cluster. Check permissions on the cluster's side"
   when: not can_login|skipped and can_login.stdout == "false"
 
-- name: "Check if project edp projects exists"
-  shell: bash -c "test \"$(echo $({{ ocadm }} get project | awk '{print $1}' | grep {{ item }}$ | wc -l))\" == \"1\" && echo true || echo false"
+- name: "Get the list of all projects"
+  command: "{{ ocadm }} get project --output=custom-columns=NAME:.metadata.name --no-headers"
+  register: all_oc_projects
+
+- name: Fail if any EDP project already exists
+  fail:
+    msg: "EDP project ({{ item }}) already exists"
+  when: item in all_oc_projects.stdout_lines
   with_items: "{{ projects_list }}"
-  register: project_exist
-  
-- fail:
-    msg: "Some of edp projects already exist"
-  when: item.stdout == "true"
-  with_items: "{{ project_exist.results }}"
 
 - name: "Create project in Openshift, giving rights to admin user on project we've just created"
   shell: "{{ ocadm }} new-project {{ item }} && {{ ocadm }} adm policy add-role-to-user admin admin -n {{ item }}"
