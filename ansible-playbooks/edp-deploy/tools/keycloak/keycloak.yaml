@@ -89,6 +89,8 @@ objects:
             value: '5432'
           - name: OPERATING_MODE
             value: clustered
+          - name: PROXY_ADDRESS_FORWARDING
+            value: "true"
           securityContext:
             privileged: false
         serviceAccount: keycloak
