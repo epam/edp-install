@@ -106,17 +106,20 @@ if (appSettings.exists()) {
     def slurper = new JsonSlurperClassic()
     def apps = slurper.parseText(appSettings.text)
     for (app in apps) {
-        vars['gerritSshPort'] = env.GERRIT_SSH_PORT ? env.GERRIT_SSH_PORT : "29418"
+        gerritSshPort = "${GERRIT_SSH_PORT}" ? "${GERRIT_SSH_PORT}" : {{ gerrit_ssh_port.stdout }}
         def appName = app.name
-        def devopsRepo = "ssh://jenkins@gerrit:${vars.gerritSshPort}/devops"
-        def pipelinePath = 'openshift/cicd/pipelines'
+        def appGitRepo = app.git_url
+        def appLanguage = app.language
+        def appBuildTool = app.tool
+        def appRoute = app.route
+        def devopsRepo = "ssh://jenkins@gerrit.{{ project_cicd }}:${gerritSshPort}/{{ project_gitlab_edp }}"
+        def pipelinePath = 'application-pipelines/jenkins'
         def gerProject = app.name
-        def serviceType = app.type
+        def serviceType = app.framework
         def postCommitScript = "${pipelinePath}/Jenkinsfile_Gerrit_Postcommit.groovy"
         def preCommitScript = "${pipelinePath}/Jenkinsfile_Gerrit_Precommit.groovy"
 
         gerritPostCommit(appName, gerProject, postCommitScript, pipelinePath, devopsRepo, serviceType)
         gerritPreCommit(appName, gerProject, preCommitScript, pipelinePath, devopsRepo)
-
     }
 }

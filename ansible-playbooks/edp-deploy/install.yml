@@ -2,8 +2,8 @@
   roles:
     - { role: project, tags: [ 'project' ] }
     - { role: secrets, tags: [ 'secrets' ] }
-    - { role: jenkins, tags: [ 'jenkins' ] }
     - { role: gerrit, tags: [ 'gerrit' ] }
+    - { role: jenkins, tags: [ 'jenkins' ] }
     - { role: nexus, tags: [ 'nexus' ] }
     - { role: sonar, tags: [ 'sonar' ] }
     - { role: keycloak, tags: [ 'keycloak' ] }

@@ -53,6 +53,13 @@ objects:
 - apiVersion: v1
   kind: ConfigMap
   metadata:
+    name: business-apps-settings
+  data:
+    app.settings.json: |-
+      []
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
     name: jenkins-init
   data:
     init.groovy: |-
@@ -225,13 +232,17 @@ objects:
       //===========================
       // Creating a job dsl
       //===========================
-      def jobName="job-provisioning"
+      def jobName="jobsprovisioning"
       project = Jenkins.instance.createProject(FreeStyleProject, jobName)
       project.getBuildersList().clear()
+      // Copy app settings
+      def checkDir = "[[ -d ${JENKINS_HOME}/app-settings ]] || mkdir \"${JENKINS_HOME}/app-settings\"\n"
+      def copyJson = $/oc get cm business-apps-settings --template='{{ index .data "app.settings.json" }}' > ${JENKINS_HOME}/app-settings/app.settings.json/$
+      project.buildersList.add(new Shell(checkDir + copyJson))
 
       executeDslScripts = new ExecuteDslScripts()
 
-      def tTrigger = new TimerTrigger("*/5 * * * *")
+      def tTrigger = new TimerTrigger("H/5 * * * *")
 
       project.addTrigger((Trigger)tTrigger);
       executeDslScripts.setTargets("*.groovy")
@@ -241,6 +252,7 @@ objects:
       //executeDslScripts.setAdditionalClasspath("src/main/groovy")
       project.getBuildersList().add(executeDslScripts)
       project.save()
+      project.scheduleBuild()
 
       cmd = [
         'bash',
@@ -344,7 +356,7 @@ objects:
         - name: job-dsl
           configMap:
             defaultMode: 420
-            name: job-provisioning
+            name: jobsprovisioning
 - apiVersion: v1
   kind: ServiceAccount
   metadata:

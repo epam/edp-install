@@ -1,9 +1,4 @@
 ---
-- name: "Create configMap if doesn't exist"
-  command: |
-   {{ ocadm }} --namespace {{ project_cicd }} create configmap business-apps-settings --from-literal=app.settings.json=[]
-  ignore_errors: yes
-
 - name: "Get current app.settings.json value"
   command: |
     {{ ocadm }} get cm business-apps-settings -n {{ project_cicd }} -o json
@@ -38,5 +33,3 @@
     - /tmp/update-cm-data.py
     - /tmp/old_cm.json
     - /tmp/updated_cm.json
-
-

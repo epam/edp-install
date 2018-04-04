@@ -1,9 +1,18 @@
 --- # Jenkins full installation
 # The following step is a temporarary and it's going to be fixed next sprints
-- name: "Install Jenkins app - preparation"
+- name: "Get gerrit ssh port"
+  shell: "{{ ocadm }} -n {{ project_cicd }} get configMap gerrit -o=jsonpath={.data.sshPort}"
+  register: "gerrit_ssh_port"
+
+- name: "Copy jobsprovisioning.groovy"
+  template:
+    src: "jobsprovisioning.j2"
+    dest: "{{ templates_dir }}/jenkins/jobsprovisioning.groovy"
+
+- name: "Creating configmap with job provisioning script"
   command: |
-    {{ ocadm }} -n {{ project_cicd }} create configmap job-provisioning
-    --from-file {{ templates_dir }}/jenkins/job-provisioning.groovy
+    {{ ocadm }} -n {{ project_cicd }} create configmap jobsprovisioning
+    --from-file {{ templates_dir }}/jenkins/jobsprovisioning.groovy
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
