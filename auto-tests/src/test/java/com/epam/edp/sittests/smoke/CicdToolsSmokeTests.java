@@ -1,6 +1,5 @@
 package com.epam.edp.sittests.smoke;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -10,20 +9,19 @@ import static io.restassured.RestAssured.useRelaxedHTTPSValidation;
 import static io.restassured.RestAssured.when;
 
 public class CicdToolsSmokeTests {
-
-    private String ocpEdpSuffix;
+    private UrlBuilder urlBuilder;
 
     @BeforeClass
     @Parameters("ocpEdpSuffix")
-    public void setUp(String ocpEdpSuffix){
-        this.ocpEdpSuffix = ocpEdpSuffix;
+    public void setUp(String ocpEdpSuffix) {
+        this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
     }
 
     @Test
     public void jenkinsSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(getUrl("https", "jenkins", "login")).
+                get(urlBuilder.buildUrl("https", "jenkins", "login")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -32,7 +30,7 @@ public class CicdToolsSmokeTests {
     public void gerritSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(getUrl("http", "gerrit", "")).
+                get(urlBuilder.buildUrl("http", "gerrit", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -41,7 +39,7 @@ public class CicdToolsSmokeTests {
     public void nexusSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(getUrl("http", "nexus", "")).
+                get(urlBuilder.buildUrl("http", "nexus", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -50,7 +48,7 @@ public class CicdToolsSmokeTests {
     public void sonarSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(getUrl("http", "sonar", "")).
+                get(urlBuilder.buildUrl("http", "sonar", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -59,22 +57,9 @@ public class CicdToolsSmokeTests {
     public void keycloakSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(getUrl("http", "keycloak", "")).
+                get(urlBuilder.buildUrl("http", "keycloak", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
 
-
-    private String getUrl(String protocol, String service, String path) {
-       return new StringBuilder(protocol)
-               .append("://")
-               .append(service)
-               .append("-edp-cicd")
-               .append(StringUtils.isNoneEmpty(ocpEdpSuffix) ? "-" : "")
-               .append(ocpEdpSuffix)
-               .append(".main.edp.projects.epam.com")
-               .append(StringUtils.isNoneEmpty(path) ? "/" : "")
-               .append(path)
-               .toString();
-    }
 }
