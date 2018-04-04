@@ -7,10 +7,7 @@ templates_dir: "{{ work_dir }}/templates"
 projects_suffix: ""
 projects_list: [
     "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}",
-    "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}",
-    "{{ (projects_suffix != '') | ternary('edp-sit-', 'edp-sit')}}{{ projects_suffix }}",
-    "{{ (projects_suffix != '') | ternary('edp-qa-', 'edp-qa')}}{{ projects_suffix }}",
-    "{{ (projects_suffix != '') | ternary('edp-uat-', 'edp-uat')}}{{ projects_suffix }}"
+    "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}"
     ]
 project_cicd: "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}"
 project_cockpit: "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}"
