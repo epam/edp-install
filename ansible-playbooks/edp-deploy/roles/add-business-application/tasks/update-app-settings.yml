@@ -1,7 +1,7 @@
 ---
 - name: "Get current app.settings.json value"
   command: |
-    {{ ocadm }} get cm business-apps-settings -n {{ project_cicd }} -o json
+    {{ ocadm }} get cm project-settings -n {{ project_cicd }} -o json
   register: output
 
 - set_fact:

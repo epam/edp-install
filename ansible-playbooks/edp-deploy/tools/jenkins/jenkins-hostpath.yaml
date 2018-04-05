@@ -69,9 +69,11 @@ objects:
 - apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: business-apps-settings
+    name: project-settings
   data:
     app.settings.json: |-
+      []
+    env.settings.json: |-
       []
 - apiVersion: v1
   kind: ConfigMap
@@ -241,7 +243,7 @@ objects:
       project.getBuildersList().clear()
       // Copy app settings
       def checkDir = "[[ -d ${JENKINS_HOME}/app-settings ]] || mkdir \"${JENKINS_HOME}/app-settings\"\n"
-      def copyJson = $/oc get cm business-apps-settings --template='{{ index .data "app.settings.json" }}' > ${JENKINS_HOME}/app-settings/app.settings.json/$
+      def copyJson = $/oc get cm project-settings --template='{{ index .data "app.settings.json" }}' > ${JENKINS_HOME}/app-settings/app.settings.json/$
       project.buildersList.add(new Shell(checkDir + copyJson))
 
       executeDslScripts = new ExecuteDslScripts()
