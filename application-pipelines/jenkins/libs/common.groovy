@@ -46,11 +46,34 @@ void runStage(name, vars) {
     }
 }
 
+def getConstants(vars) {
+    DEFAULT_OPERATIONS_TIMEOUT = "30"
+    DEFAULT_GERRIT_AUTOUSER = "jenkins"
+    DEFAULT_GERRIT_HOST = "gerrit"
+
+    vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
+    vars['workDir'] = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
+    vars['operationsTimeout'] = env.OPERATIONS_TIMEOUT ? OPERATIONS_TIMEOUT : DEFAULT_OPERATIONS_TIMEOUT
+
+    vars['gerritAutoUser'] = env.GERRIT_AUTOUSER ? GERRIT_AUTOUSER : DEFAULT_GERRIT_AUTOUSER
+    vars['gerritHost'] = env.GERRIT_HOST ? env.GERRIT_HOST : DEFAULT_GERRIT_HOST
+
+    vars['mavenSettings'] = "${vars.pipelinesPath}/settings/maven/settings.xml"
+}
+
 void failJob(failMessage) {
     println(failMessage)
     currentBuild.displayName = "${currentBuild.displayName}-FAILED"
     currentBuild.result = 'FAILURE'
     error failMessage
+}
+
+void getDebugInfo(vars) {
+    def debugOutput = ""
+    vars.keySet().each{ key ->
+        debugOutput = debugOutput + "${key}=${vars["${key}"]}\n"
+    }
+    println("[JENKINS][DEGUG] Pipeline's variables:\n${debugOutput}")
 }
 
 return this;
