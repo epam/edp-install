@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: add-environments
+metadata:
+  name: add-environments
+  annotations:
+    description: |-
+          EDP add-environments configuration to be applied.
+          NOTE: You must have Ci tools and environments Configmap available in your cluster to use this template.
+    iconClass: icon-jenkins
+    openshift.io/display-name: Add environments
+    tags: ci-cd
+    template.openshift.io/documentation-url: https://kb.epam.com/display/EPMDEDP/EPMD-EDP+Home
+    template.openshift.io/long-description: This template add application for letting EDP know about it.
+    template.openshift.io/provider-display-name: EPAM
+    template.openshift.io/support-url: https://www.epam.com
+objects:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: add-environments
+  spec:
+    parallelism: 1
+    completions: 1
+    template:
+      metadata:
+        name: add-environments
+      spec:
+        containers:
+        - name: add-environments
+          image: ${DOCKER_IMAGE}
+          imagePullPolicy: Always
+          command:
+            - "ansible-playbook"
+            - "-v"
+            - "-i"
+            - "localhost,"
+            - "-e ocadm=oc"
+            - "-e ansible_connection=local"
+            - "ansible-playbooks/edp-deploy/add-environments.yml"
+          env:
+          - name: PROJECT_CICD
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        volumeMounts:
+        - name: user-settings
+          mountPath: /tmp/config/
+          env:
+        restartPolicy: Never
+        serviceAccountName: cockpit
+      volumes:
+        - name: user-settings
+          configMap:
+            name: user-settings
+    backoffLimit: 1
+parameters:
+- displayName: Docker image
+  description: Docker image for a job
+  name: DOCKER_IMAGE
+  value: "registry.main.edp.projects.epam.com/infra/edp-install:master"
