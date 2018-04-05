@@ -323,7 +323,7 @@ objects:
             value: "ace-editor:1.0.1,analysis-collector:1.52,analysis-core:1.92,authentication-tokens:1.1,branch-api:2.0.9,
             checkstyle:3.49,cloudbees-folder:6.0.4,conditional-buildstep:1.3.1,config-file-provider:2.16.2,credentials:2.1.13,
             dependency-check-jenkins-plugin:2.1.1,display-url-api:2.0,docker-commons:1.8,docker-workflow:1.9,durable-task:1.16,
-            favorite:2.3.0,findbugs:4.71,gerrit-trigger:2.26.2,git-client:2.4.4,github-api:1.85.1,github-branch-source:2.0.8,
+            favorite:2.3.0,findbugs:4.71,gerrit-trigger:2.27.5,git-client:2.4.4,github-api:1.85.1,github-branch-source:2.0.8,
             github:1.26.0,git:3.5.0,git-server:1.5,handlebars:1.1,jackson2-api:2.7.3,jacoco:2.2.1,javadoc:1.0,job-dsl:1.60,
             jquery:1.11.2-0,junit:1.20,mapdb-api:1.0.1.0,matrix-auth:1.5,matrix-project:1.7.1,maven-plugin:2.14,mercurial:1.54,
             metrics:3.1.2.9,momentjs:1.1,parameterized-trigger:2.35.1,pipeline-build-step:2.5.1,pipeline-graph-analysis:1.3,
