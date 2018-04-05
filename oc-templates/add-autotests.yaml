@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: add-autotests
+metadata:
+  name: add-autotests
+  annotations:
+    description: |-
+          Template for add autotests to EDP
+    openshift.io/display-name: add an autotest
+    tags: ci-cd
+    template.openshift.io/provider-display-name: EPAM
+    template.openshift.io/support-url: https://www.epam.com
+objects:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: add-autotests
+  spec:
+    parallelism: 1
+    completions: 1
+    template:
+      metadata:
+        name: add-autotests
+      spec:
+        containers:
+        - name: add-autotests
+          image: ${DOCKER_IMAGE}
+          imagePullPolicy: Always
+          command:
+            - "ansible-playbook"
+            - "-v"
+            - "-i"
+            - "localhost,"
+            - "-e ocadm=oc"
+            - "-e ansible_connection=local"
+            - "-e git_repo_url=${GIT_REPO_URL}"
+            - "-e autotest_alias=${AUTOTEST_ALIAS}"
+            - "ansible-playbooks/edp-deploy/add-autotests.yml"
+          env:
+          - name: PROJECT_CICD
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace 
+        restartPolicy: Never
+        serviceAccountName: cockpit
+    backoffLimit: 1
+parameters:
+- displayName: Git repo url
+  description: Git repo url for replication
+  name: GIT_REPO_URL
+  value: "http://url.com"
+- displayName: Autotest alias
+  description: Name for autotests
+  name: AUTOTEST_ALIAS
+  value: "autotest"
+- displayName: Docker image
+  description: Docker image for a job
+  name: DOCKER_IMAGE
+  value: "registry.main.edp.projects.epam.com/infra/edp-install:master"
