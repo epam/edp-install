@@ -1,7 +1,8 @@
 ---
 - name: "Get autouser email from cicd projects secret"
-  shell: |
-   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }}
+   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: user_mail
 
 - name: "Get autouser name from cicd projects secret"
@@ -10,8 +11,9 @@
   register: username
 
 - name: "Get autouser password from cicd projects secret"
-  shell: |
-   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }} --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }}
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
 
 - name: "Get GitLab host"
@@ -29,26 +31,42 @@
     url: "https://{{ gitlab_hostname.stdout }}/oauth/token"
     method: POST
     body: 'grant_type=password&username={{ user_mail.stdout }}&password={{ password.stdout }}'
+  retries: 3
+  delay: 3
   register: csrf_token
+  until: csrf_token.status == 200
 
 - name: "Get group id by it's name"
   uri:
-    url: "https://{{ gitlab_hostname.stdout }}/api/v4/groups/{{ gitlab_group.stdout | replace('/', '%2F') }}?simple=true&access_token={{ csrf_token.json.access_token }}"
+    url: "
+     https://{{ gitlab_hostname.stdout }}/api/v4/groups/{{ gitlab_group.stdout | replace('/', '%2F') }}\
+     ?simple=true&access_token={{ csrf_token.json.access_token }}"
     method: GET
+  retries: 3
+  delay: 3
   register: group_id
+  until: group_id.status == 200
 
 - name: "Check if project EDP already exist in GitLab"
   uri:
-    url: "https://{{ gitlab_hostname.stdout }}/api/v4/projects/{{ gitlab_group.stdout | replace('/', '%2F') + '%2F' + project_gitlab_edp }}?simple=true&access_token={{ csrf_token.json.access_token }}"
+    url: "
+     https://{{ gitlab_hostname.stdout }}/api/v4/projects/{{ gitlab_group.stdout | replace('/', '%2F') + '%2F' + project_gitlab_edp }}\
+     ?simple=true&access_token={{ csrf_token.json.access_token }}"
   ignore_errors: True
   register: edp_project_existence
 
 - block:
   - name: "Add project to the group"
     uri:
-      url: "https://{{ gitlab_hostname.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}&namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
+      url: "
+       https://{{ gitlab_hostname.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}\
+       &namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
       method: POST
       status_code: 201
+    retries: 3
+    delay: 3
+    register: output
+    until: output.status == 201
 
   - include_tasks: roles/common/tasks/get-gitlab-sshkey-from-secret.yml
 
