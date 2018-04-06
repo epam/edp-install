@@ -1,0 +1,50 @@
+{
+    "apiVersion": "v1",
+    "kind": "BuildConfig",
+    "metadata": {
+        "labels": {
+            "name": "{{ env_name | lower }}-deploy-pipeline"
+        },
+        "name": "{{ env_name | lower }}-deploy-pipeline",
+        "namespace": "{{ project_cicd }}"
+    },
+    "spec": {
+        "source": {
+            "git": {
+                "uri": "ssh://jenkins@{{ gerrit_host }}:{{ gerrit_ssh_port }}/{{ gerrit_project }}"
+            },
+            "type": "Git"
+        },
+        "strategy": {
+            "jenkinsPipelineStrategy": {
+                "env": [
+{% for application in app_map | list %}
+                    {
+                        "name": "{{ application.name }}_VERSION",
+                        "value": "latest"
+                    },
+{% endfor %}
+                    {
+                        "name": "PIPELINES_PATH",
+                        "value": "application-pipelines/jenkins"
+                    }
+                ],
+                "jenkinsfilePath": "application-pipelines/jenkins/Deploy-pipeline.groovy"
+            },
+            "type": "JenkinsPipeline"
+        },
+        "triggers": [
+{% for application in app_map | list %}
+            {
+                "imageChange": {
+                    "from": {
+                        "kind": "ImageStreamTag",
+                        "name": "{{ application.name }}:latest"
+                    }
+                },
+                "type": "ImageChange"
+            }{% if not loop.last %},{%endif%}
+{% endfor %}
+        ]
+    }
+}

@@ -1,0 +1,44 @@
+---
+- name: Creates work directory
+  file:
+    path={{ templates_dir }}
+    state=directory
+
+- set_fact:
+    project_cicd="{{ lookup('env','PROJECT_CICD') }}"
+
+- name: "Get projects suffix from user-settings config map"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.projects_suffix }'
+  register: projects_suffix
+
+- name: "Get environments settings from project-settings config map"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} get cm project-settings -o=jsonpath='{ .data.env\.settings\.json }'
+  register: env_settings_json
+
+- name: "Get applications settings from project-settings config map"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} get cm project-settings -o=jsonpath='{ .data.app\.settings\.json }'
+  register: app_settings_json
+
+- name: "Get gerrit ssh port from service"
+  command: "{{ ocadm }} -n {{ project_cicd }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].nodePort}'"
+  register: gerrit_ssh_port
+
+- name: "Get gerrit host from route"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} get routes gerrit -o jsonpath='{.spec.host}'
+  register: gerrit_host
+
+- name: "Convert json to map"
+  set_fact:
+    env_map: "{{ env_settings_json.stdout| from_json }}"
+    app_map: "{{ app_settings_json.stdout| from_json }}"
+    gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
+    gerrit_host: "{{ gerrit_host.stdout }}"
+    projects_suffix: "{{ projects_suffix.stdout }}"
+
+- debug:
+    msg: "Found environment: {{ item | lower }}"
+  with_items: " {{ env_map.keys() }} "

@@ -14,6 +14,8 @@ node("master") {
         ["PIPELINES_PATH"].each() { variable ->
             this.checkEnvVariables(variable)
         }
+        vars['appSettingsKey'] = 'app.settings.json'
+
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
         commonLib.getConstants(vars)
 
@@ -24,7 +26,6 @@ node("master") {
 
         vars['configMapName'] = 'project-settings'
         vars['envSettingsKey'] = 'env.settings.json'
-        vars['appSettingsKey'] = 'app.settings.json'
 
         vars['devopsRoot'] = "${WORKSPACE.replaceAll("@", "")}@script"
         vars['pipelinesPath'] = PIPELINES_PATH

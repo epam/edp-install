@@ -1,0 +1,14 @@
+---
+- name: "Generate templates"
+  vars:
+    gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"
+    env_name: "{{ item }}"
+  template:
+    src: build-config.j2
+    dest: "{{ templates_dir }}/{{ item }}-bc.json"
+  with_items: "{{ env_map.keys() }}"
+
+- name: "Create Pipelines in Openshift"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/{{ item }}-bc.json
+  with_items: "{{ env_map.keys() }}"
