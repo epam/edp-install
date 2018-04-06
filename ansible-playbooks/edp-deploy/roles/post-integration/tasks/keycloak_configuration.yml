@@ -1,13 +1,13 @@
 - name: "Get username from cicd projects Keycloak secret"
   shell: >
    {{ ocadm }} -n {{ project_cockpit }} get secret keycloak
-   --template={% raw %}'{{ index .data "keycloak-user" }}'{% endraw %} | base64 --decode
+   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: username
 
 - name: "Get password from cicd projects Keycloak secret"
   shell: >
    {{ ocadm }} -n {{ project_cockpit }} get secret keycloak
-   --template={% raw %}'{{ index .data "keycloak-password" }}'{% endraw %} | base64 --decode
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
 
 - name: "Login to Keycloak and get token"

@@ -65,12 +65,12 @@ objects:
             valueFrom:
               secretKeyRef:
                 name: keycloak
-                key: keycloak-user
+                key: username
           - name: KEYCLOAK_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: keycloak
-                key: keycloak-password
+                key: password
           - name: POSTGRES_DATABASE
             value: keycloak-db
           - name: POSTGRES_USER
