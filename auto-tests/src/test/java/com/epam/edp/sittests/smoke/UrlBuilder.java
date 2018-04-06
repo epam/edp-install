@@ -12,11 +12,12 @@ public class UrlBuilder {
         this.ocpEdpSuffix = ocpEdpSuffix;
     }
 
-    public String buildUrl(String protocol, String service, String path) {
+    public String buildUrl(String protocol, String service, String namespace, String path) {
         return new StringBuilder(protocol)
                 .append("://")
                 .append(service)
-                .append("-edp-cicd")
+                .append("-")
+                .append(namespace)
                 .append(StringUtils.isNoneEmpty(ocpEdpSuffix) ? "-" : "")
                 .append(ocpEdpSuffix)
                 .append(".main.edp.projects.epam.com")

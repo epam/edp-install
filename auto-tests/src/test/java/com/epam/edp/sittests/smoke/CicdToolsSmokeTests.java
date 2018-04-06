@@ -21,7 +21,7 @@ public class CicdToolsSmokeTests {
     public void jenkinsSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(urlBuilder.buildUrl("https", "jenkins", "login")).
+                get(urlBuilder.buildUrl("https", "jenkins", "edp-cicd", "login")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -30,7 +30,7 @@ public class CicdToolsSmokeTests {
     public void gerritSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(urlBuilder.buildUrl("http", "gerrit", "")).
+                get(urlBuilder.buildUrl("http", "gerrit", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -39,7 +39,7 @@ public class CicdToolsSmokeTests {
     public void nexusSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(urlBuilder.buildUrl("http", "nexus", "")).
+                get(urlBuilder.buildUrl("http", "nexus", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -48,7 +48,7 @@ public class CicdToolsSmokeTests {
     public void sonarSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(urlBuilder.buildUrl("http", "sonar", "")).
+                get(urlBuilder.buildUrl("http", "sonar", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -57,7 +57,7 @@ public class CicdToolsSmokeTests {
     public void keycloakSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
         when().
-                get(urlBuilder.buildUrl("http", "keycloak", "")).
+                get(urlBuilder.buildUrl("http", "keycloak", "edp-cockpit", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }

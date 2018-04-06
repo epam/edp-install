@@ -1,10 +1,10 @@
 --- # Keycloak full installation
 - name: "Give rights to keycloak account"
-  shell: "{{ ocadm }} -n {{ project_cicd }} adm policy add-scc-to-user anyuid -z keycloak"
+  shell: "{{ ocadm }} -n {{ project_cockpit }} adm policy add-scc-to-user anyuid -z keycloak"
 
 - name: "Install Keycloak app"
   command: |
-    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/keycloak/keycloak.yaml
+    {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/keycloak/keycloak.yaml
     -p KEYCLOAK_IMAGE={{ tools.keycloak.image }}
     -p KEYCLOAK_DB_CAPACITY={{ tools.keycloak.volume_db_capacity }}
   register: result
