@@ -26,19 +26,14 @@
   command: "{{ ocadm }} -n {{ project_cicd }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].nodePort}'"
   register: gerrit_ssh_port
 
-- name: "Get gerrit host from route"
-  command: |
-   {{ ocadm }} -n {{ project_cicd }} get routes gerrit -o jsonpath='{.spec.host}'
-  register: gerrit_host
-
 - name: "Convert json to map"
   set_fact:
     env_map: "{{ env_settings_json.stdout| from_json }}"
     app_map: "{{ app_settings_json.stdout| from_json }}"
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
-    gerrit_host: "{{ gerrit_host.stdout }}"
     projects_suffix: "{{ projects_suffix.stdout }}"
 
 - debug:
     msg: "Found environment: {{ item | lower }}"
   with_items: " {{ env_map.keys() }} "
+  when: env_map | length > 0

@@ -1,5 +1,6 @@
 ---
 - include_tasks: retrieve_data.yml
 - include_tasks: create_projects.yml
+  when: env_map | length > 0
 - include_tasks: create_pipelines.yml
-
+  when: env_map | length > 0

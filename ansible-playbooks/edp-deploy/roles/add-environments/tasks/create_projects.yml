@@ -7,6 +7,5 @@
   command: "{{ ocadm }} adm policy add-role-to-user admin admin -n {{ item | lower }}"
   with_items: " {{ env_map.keys() }} "
 
-- name: "Define access to jenkins for new projects "
-  command: "{{ ocadm }} adm policy add-role-to-user system:serviceaccount:{{ project_cicd }}:jenkins admin -n {{ item | lower }}"
-  with_items: " {{ env_map.keys() }} "
+- name: "Set cluster-admin access to jenkins user"
+  command: "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:jenkins"

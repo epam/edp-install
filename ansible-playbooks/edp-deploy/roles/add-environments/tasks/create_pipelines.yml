@@ -1,7 +1,9 @@
 ---
+- set_fact:
+    gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"
+
 - name: "Generate templates"
   vars:
-    gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"
     env_name: "{{ item }}"
   template:
     src: build-config.j2
@@ -12,3 +14,12 @@
   command: |
    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/{{ item }}-bc.json
   with_items: "{{ env_map.keys() }}"
+
+- name: "Generate deletion pipeline template"
+  template:
+    src: deletion-pipeline.j2
+    dest: "{{ templates_dir }}/deletion-pipeline.json"
+
+- name: "Create deletion pipeline in Openshift"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/deletion-pipeline.json

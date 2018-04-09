@@ -1,0 +1,32 @@
+{
+    "apiVersion": "v1",
+    "kind": "BuildConfig",
+    "metadata": {
+        "labels": {
+            "name": "deletion-pipeline"
+        },
+        "name": "deletion-pipeline",
+        "namespace": "{{ project_cicd }}"
+    },
+    "spec": {
+        "source": {
+            "git": {
+                "uri": "ssh://jenkins@gerrit:{{ gerrit_ssh_port }}/{{ gerrit_project }}"
+            },
+            "type": "Git"
+        },
+        "strategy": {
+            "jenkinsPipelineStrategy": {
+                "env": [
+                    {
+                        "name": "PIPELINES_PATH",
+                        "value": "application-pipelines/jenkins"
+                    }
+                ],
+                "jenkinsfilePath": "application-pipelines/jenkins/system/Delete-project.groovy"
+            },
+            "type": "JenkinsPipeline"
+        },
+        "triggers": []
+    }
+}

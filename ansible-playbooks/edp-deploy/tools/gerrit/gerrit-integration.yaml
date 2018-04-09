@@ -40,6 +40,18 @@ objects:
         echo "Adding Jenkins account has been failed or it's already exist"
       fi
 
+      # Create ssh config for Jenkins
+
+      cat << EOF > /opt/data/jenkins/.ssh/config
+      Host gerrit*
+       HostName gerrit
+       User jenkins
+       StrictHostKeyChecking no
+       UserKnownHostsFile /dev/null
+       IdentityFile /var/lib/jenkins/.ssh/id_rsa
+       IdentitiesOnly yes
+      EOF
+
       # initial conf og Gerrit
       CHECKOUT_DIR=/git
       #checkout project.config from All-Project.git

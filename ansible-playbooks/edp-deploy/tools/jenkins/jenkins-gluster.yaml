@@ -124,12 +124,6 @@ objects:
       // Security disabling for DSl plugin
       GlobalConfiguration.all().get(GlobalJobDslSecurityConfiguration.class).useScriptSecurity=false
       //===========================
-      //===========================
-      // Disabling Openshift sync plugin
-      //===========================
-      def desc = instance.getDescriptor("io.fabric8.jenkins.openshiftsync.GlobalPluginConfiguration")
-      desc.setEnabled(false)
-      desc.save()
 
       //===========================
       // Modifying cloud Openshift that is located in Jenkins global configuration
@@ -320,7 +314,7 @@ objects:
             workflow-api:2.18,workflow-basic-steps:2.3,workflow-cps-global-lib:2.7,workflow-cps:2.39,workflow-durable-task-step:2.11,
             workflow-job:2.10,workflow-multibranch:2.14,workflow-remote-loader:1.2,workflow-scm-step:2.4,workflow-step-api:2.11,
             workflow-support:2.14,htmlpublisher:1.14,test-results-analyzer:0.3.4,sonar:2.6.1,blueocean-git-pipeline:1.4.0,
-            blueocean-rest:1.4.0, greenballs:1.15,keycloak:2.2.0"
+            blueocean-rest:1.4.0, greenballs:1.15,keycloak:2.2.0,validating-string-parameter:2.3"
           - name: JENKINS_PASSWORD
             value: ${JENKINS_PASSWORD}
           image: openshift/jenkins-2-centos7:latest

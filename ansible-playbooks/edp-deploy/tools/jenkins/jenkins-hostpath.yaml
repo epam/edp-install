@@ -129,13 +129,6 @@ objects:
       instance.save()
 
       //===========================
-      // Disabling Openshift sync plugin
-      //===========================
-      def desc = instance.getDescriptor("io.fabric8.jenkins.openshiftsync.GlobalPluginConfiguration")
-      desc.setEnabled(false)
-      desc.save()
-
-      //===========================
       // Modifying cloud Openshift that is located in Jenkins global configuration
       //===========================
       // Example of adding a new template*/
