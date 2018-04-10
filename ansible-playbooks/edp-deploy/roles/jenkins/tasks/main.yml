@@ -19,6 +19,23 @@
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
+
+- name: "Prepare scriptApproval"
+  template:
+    src: "scriptApproval.xml.j2"
+    dest: "{{ templates_dir }}/jenkins/scriptApproval.xml"
+
+- name: "Creating configmap with job provisioning script"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create configmap jenkins-approval
+    --from-file {{ templates_dir }}/jenkins/scriptApproval.xml
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
 # End of step
 
 - name: "Install Jenkins app"

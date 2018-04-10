@@ -342,6 +342,9 @@ objects:
           - mountPath: /var/lib/jenkins/init.groovy.d/init.groovy
             subPath: init.groovy
             name: jenkins-init
+          - mountPath: /var/lib/jenkins/scriptApproval.xml
+            subPath: scriptApproval.xml
+            name: jenkins-approval
           - mountPath: /var/lib/jenkins/init.groovy.d/dsl
             name: job-dsl
         dnsPolicy: ClusterFirst
@@ -355,6 +358,10 @@ objects:
           configMap:
             defaultMode: 420
             name: jenkins-init
+        - name: jenkins-approval
+          configMap:
+            defaultMode: 420
+            name: jenkins-approval
         - name: job-dsl
           configMap:
             defaultMode: 420

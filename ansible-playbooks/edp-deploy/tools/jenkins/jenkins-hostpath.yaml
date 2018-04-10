@@ -355,6 +355,9 @@ objects:
           - mountPath: /var/lib/jenkins/init.groovy.d/init.groovy
             subPath: init.groovy
             name: ${JENKINS_SERVICE_NAME}-init
+          - mountPath: /var/lib/jenkins/scriptApproval.xml
+            subPath: scriptApproval.xml
+            name: ${JENKINS_SERVICE_NAME}-approval
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         serviceAccountName: ${JENKINS_SERVICE_NAME}
@@ -366,6 +369,10 @@ objects:
           configMap:
             defaultMode: 420
             name: ${JENKINS_SERVICE_NAME}-init
+        - name: ${JENKINS_SERVICE_NAME}-approval
+          configMap:
+            defaultMode: 420
+            name: ${JENKINS_SERVICE_NAME}-approval
         - name: job-dsl
           configMap:
             defaultMode: 420
