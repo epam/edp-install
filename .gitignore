@@ -6,7 +6,7 @@ target/*
 .project
 .idea
 *.iml
-/target
+*/target
 npm-debug.log
 /bin/
 *.retry
