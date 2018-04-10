@@ -1,7 +1,6 @@
 ---
-- name: "Get project CICD from env variable"
-  shell: echo $PROJECT_CICD
-  register: project_cicd_name
+- set_fact:
+    project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
 
 - name: "Get autouser secret name and gitlab URL from user-settings cm"
   shell: |
@@ -11,7 +10,6 @@
 - include_tasks: roles/common/tasks/get-gitlab-sshkey-from-secret.yml
   vars:
     gitlab_auto_user_secret: "{{ autouser_secret_name.stdout }}"
-    project_cicd: "{{ project_cicd_name.stdout }}"
 
 - name: "Get GitLab hostname and project path"
   set_fact:
@@ -54,7 +52,6 @@
 - include_tasks: roles/common/tasks/clone-repository-to-gerrit.yml
   vars:
     gitlab_host: "{{ gitlab_hostname }}"
-    project_cicd: "{{ project_cicd_name.stdout }}"
 
 - name: "Save current replication configmap values"
   shell: |
@@ -63,7 +60,7 @@
 
 - local_action: copy content="{{ old_replication_config.stdout }}" dest="/tmp/replication-config"
 
-- name: "Add replication part for new {{ project_cicd_name.stdout }} project"
+- name: "Add replication part for new {{ project_cicd }} project"
   blockinfile:
     dest: /tmp/replication-config
     insertbefore: '  sshPort:*'
@@ -87,24 +84,27 @@
 
 - name: "Create directory for business apps templates"
   file:
-    path: "{{ templates_dir }}/business-apps"
+    path: "{{ templates_dir }}/business-apps/{{ app_name }}"
     state: directory
 
-- name: "Set full app name"
-  set_fact:
-     full_app_name: "{{ framework | lower }}-{{ app_name }}"
-
-- name: "Copying template for {{ language }} {{ framework }} app"
+- name: "Copying templates for {{ language }} {{ framework }} app"
   template:
-    src: "../templates/business-applications/{{ language | lower }}/{{ framework | lower }}.j2"
-    dest: "{{ templates_dir }}/business-apps/{{ full_app_name }}.yml"
+    src: "business-applications/{{ language | lower }}/{{ item }}.j2"
+    dest: "{{ templates_dir }}/business-apps/{{ app_name }}/{{ item }}.yml"
+  with_items:
+    - "{{ framework | lower }}"
+    - "s2i-{{ framework | lower }}"
 
-- name: "Import template for new business-app"
+
+- name: "Import templates for new business-app"
   command: |
-    {{ ocadm }} -n {{ project_cicd }} create -f {{ templates_dir }}/business-apps/{{ full_app_name }}.yml
+    {{ ocadm }} -n {{ project_cicd }} create -f {{ templates_dir }}/business-apps/{{ app_name }}/{{ item }}.yml
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
+  with_items:
+      - "{{ framework | lower }}"
+      - "s2i-{{ framework | lower }}"

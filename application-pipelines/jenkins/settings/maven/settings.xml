@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
     <localRepository>/opt/caches/maven</localRepository>
 
     <servers>
         <server>
-            <id>storage</id>
-            <username>admin</username>
-            <password>admin123</password>
-        </server>
-        <server>
-            <id>snapshot</id>
+            <id>nexus</id>
             <username>admin</username>
             <password>admin123</password>
         </server>
     </servers>
 
+    <mirrors>
+        <mirror>
+            <!--This sends everything else to /public -->
+            <id>nexus</id>
+            <mirrorOf>*</mirrorOf>
+            <url>http://nexus:8081/repository/maven-public</url>
+        </mirror>
+    </mirrors>
 
     <profiles>
         <profile>
-            <id>artifacts-storage</id>
+            <id>nexus</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <repositories>
                 <repository>
-                    <id>storage</id>
-                    <url>http://nexus:8081/repository/maven-public</url>
+                    <id>maven-releases</id>
+                    <url>http://nexus:8081/repository/maven-releases</url>
+                    <name>Maven repository for release artefacts</name>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>
@@ -36,34 +39,35 @@
                         <updatePolicy>always</updatePolicy>
                     </snapshots>
                 </repository>
+                <!-- -->
                 <repository>
-                    <id>snapshot</id>
+                    <id>maven-snapshots</id>
                     <url>http://nexus:8081/repository/maven-snapshots</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
+                    <name>Maven repository for snapshot artefacts</name>
                     <snapshots>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>
                     </snapshots>
                 </repository>
+                <!-- -->
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
-                    <id>storage</id>
+                    <id>microservices</id>
                     <url>http://nexus:8081/repository/maven-public</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
                     <releases>
                         <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
                     </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
                 </pluginRepository>
             </pluginRepositories>
         </profile>
     </profiles>
-
     <activeProfiles>
-        <activeProfile>artifacts-storage</activeProfile>
+        <activeProfile>nexus</activeProfile>
     </activeProfiles>
 </settings>

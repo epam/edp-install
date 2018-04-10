@@ -16,6 +16,10 @@
   shell: "{{ ocadm }} -n {{ project_cicd }} set env dc gerrit AUTH_TYPE='OAUTH'"
   when: lookup('env', 'DISABLE_GERRIT_OAUTH') != 'true'
 
+- name: "Redeploy Jenkins pod"
+  shell: |
+   {{ ocadm }} rollout latest jenkins -n {{ project_cicd }}
+
 - name: "Check health of all deployment pods"
   shell: "{{ ocadm }} -n {{ project_cicd }} rollout status dc/{{ item }}"
   register: result

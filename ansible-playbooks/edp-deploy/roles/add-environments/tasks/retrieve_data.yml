@@ -5,7 +5,7 @@
     state=directory
 
 - set_fact:
-    project_cicd="{{ lookup('env','PROJECT_CICD') }}"
+    project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
 
 - name: "Get projects suffix from user-settings config map"
   command: |

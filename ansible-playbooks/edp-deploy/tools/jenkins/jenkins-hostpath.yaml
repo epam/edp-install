@@ -122,22 +122,26 @@ objects:
           - name: JNLP_SERVICE_NAME
             value: jenkins-jnlp
           - name: INSTALL_PLUGINS
-            value: "ace-editor:1.0.1,analysis-collector:1.52,analysis-core:1.92,authentication-tokens:1.1,branch-api:2.0.9,
-            checkstyle:3.49,cloudbees-folder:6.0.4,conditional-buildstep:1.3.1,config-file-provider:2.16.2,credentials:2.1.13,
-            dependency-check-jenkins-plugin:2.1.1,display-url-api:2.0,docker-commons:1.8,docker-workflow:1.9,durable-task:1.16,
-            favorite:2.3.0,findbugs:4.71,gerrit-trigger:2.27.5,git-client:2.4.4,github-api:1.85.1,github-branch-source:2.0.8,
-            github:1.26.0,git:3.5.0,git-server:1.5,handlebars:1.1,jackson2-api:2.7.3,jacoco:2.2.1,javadoc:1.0,job-dsl:1.60,
-            jquery:1.11.2-0,junit:1.20,mapdb-api:1.0.1.0,matrix-auth:1.5,matrix-project:1.7.1,maven-plugin:2.14,mercurial:1.54,
-            metrics:3.1.2.9,momentjs:1.1,parameterized-trigger:2.35.1,pipeline-build-step:2.5.1,pipeline-graph-analysis:1.3,
-            pipeline-milestone-step:1.3,pipeline-model-api:1.1.4,pipeline-model-definition:1.1.4,pipeline-model-extensions:1.1.4,
-            pipeline-stage-step:2.2,pipeline-stage-tags-metadata:1.1.4,pipeline-stage-view:2.4,plain-credentials:1.3,pmd:3.49,
-            pubsub-light:1.8,run-condition:0.10,scm-api:2.1.1,sonar-gerrit:2.1,structs:1.7,subversion:2.9,token-macro:2.1,
-            workflow-api:2.18,workflow-basic-steps:2.3,workflow-cps-global-lib:2.7,workflow-cps:2.39,workflow-durable-task-step:2.11,
-            workflow-job:2.10,workflow-multibranch:2.14,workflow-remote-loader:1.2,workflow-scm-step:2.4,workflow-step-api:2.11,
-            workflow-support:2.14,htmlpublisher:1.14,test-results-analyzer:0.3.4,sonar:2.6.1,blueocean-git-pipeline:1.4.0,
-            blueocean-rest:1.4.0, greenballs:1.15,keycloak:2.2.0"
+            value: "blueocean:1.5.0, blueocean-rest:1.5.0,blueocean-git-pipeline:1.5.0,display-url-api:2.2.0,pubsub-light:1.12,
+                               credentials:2.1.14,cloudbees-folder:6.1.2,branch-api:2.0.11,workflow-multibranch:2.16, structs:1.10,scm-api:2.2.6,
+                               workflow-step-api:2.14,workflow-api:2.25,workflow-support:2.18,token-macro:2.1,git-client:2.7.0,
+                               icon-shim:2.0.3,maven-plugin:2.17,ace-editor:1.0.1,analysis-core:1.92,analysis-collector:1.52,
+                               authentication-tokens:1.1,checkstyle:3.49,conditional-buildstep:1.3.1,config-file-provider:2.16.2,
+                               dependency-check-jenkins-plugin:2.1.1,docker-commons:1.8,docker-workflow:1.9,durable-task:1.16,
+                               favorite:2.3.1,findbugs:4.71,gerrit-trigger:2.27.5,github-api:1.86,github-branch-source:2.2.3,
+                               github:1.26.0,git:3.8.0,git-server:1.5,handlebars:1.1,jackson2-api:2.7.3,jacoco:2.2.1,javadoc:1.0,job-dsl:1.60,
+                               jquery:1.11.2-0,junit:1.23,mapdb-api:1.0.1.0,matrix-auth:1.5,matrix-project:1.7.1,mercurial:2.3,
+                               metrics:3.1.2.9,momentjs:1.1,parameterized-trigger:2.35.1,pipeline-build-step:2.7,pipeline-graph-analysis:1.6,
+                               pipeline-milestone-step:1.3.1,pipeline-model-api:1.2.7,pipeline-model-definition:1.2.7,pipeline-model-extensions:1.2.7,
+                               pipeline-stage-step:2.2,pipeline-stage-tags-metadata:1.2.7,pipeline-stage-view:2.4,plain-credentials:1.3,pmd:3.49,
+                               run-condition:0.10,sonar-gerrit:2.1,subversion:2.9,workflow-basic-steps:2.3,workflow-cps-global-lib:2.7,
+                               workflow-cps:2.42,workflow-durable-task-step:2.13,workflow-job:2.14.1, workflow-remote-loader:1.2,workflow-scm-step:2.4,
+                               htmlpublisher:1.14,test-results-analyzer:0.3.4,sonar:2.7.1,
+                               greenballs:1.15,keycloak:2.2.0,validating-string-parameter:2.3"
           - name: JENKINS_PASSWORD
             value: ${JENKINS_PASSWORD}
+          - name: JENKINS_UI_URL
+            value: ${JENKINS_UI_URL}
           image: openshift/jenkins-2-centos7:latest
           imagePullPolicy: IfNotPresent
           readinessProbe:
@@ -156,45 +160,47 @@ objects:
             name: jenkins-data
           - mountPath: /var/lib/jenkins/init.groovy.d/init.groovy
             subPath: init.groovy
-            name: ${JENKINS_SERVICE_NAME}-init
+            name: jenkins-init
           - mountPath: /var/lib/jenkins/scriptApproval.xml.ORIG
             subPath: scriptApproval.xml
-            name: ${JENKINS_SERVICE_NAME}-approval
+            name: jenkins-approval
+          - mountPath: /var/lib/jenkins/init.groovy.d/dsl
+            name: jenkins-jobsprovisioning
         dnsPolicy: ClusterFirst
         restartPolicy: Always
-        serviceAccountName: ${JENKINS_SERVICE_NAME}
+        serviceAccountName: jenkins
         volumes:
         - name: jenkins-data
           persistentVolumeClaim:
             claimName: jenkins-hp
-        - name: ${JENKINS_SERVICE_NAME}-init
+        - name: jenkins-init
           configMap:
             defaultMode: 420
-            name: ${JENKINS_SERVICE_NAME}-init
-        - name: ${JENKINS_SERVICE_NAME}-approval
+            name: jenkins-init
+        - name: jenkins-approval
           configMap:
             defaultMode: 420
-            name: ${JENKINS_SERVICE_NAME}-approval
-        - name: job-dsl
+            name: jenkins-approval
+        - name: jenkins-jobsprovisioning
           configMap:
             defaultMode: 420
-            name: jobsprovisioning
+            name: jenkins-jobsprovisioning
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
     annotations:
-      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"${JENKINS_SERVICE_NAME}"}}'
-    name: ${JENKINS_SERVICE_NAME}
+      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"jenkins"}}'
+    name: jenkins
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding
   metadata:
-    name: ${JENKINS_SERVICE_NAME}-edit
+    name: jenkins-edit
   roleRef:
     name: edit
   subjects:
   - kind: ServiceAccount
-    name: ${JENKINS_SERVICE_NAME}
+    name: jenkins
 - apiVersion: v1
   kind: Service
   metadata:
@@ -207,7 +213,7 @@ objects:
       protocol: TCP
       targetPort: 50000
     selector:
-      name: ${JENKINS_SERVICE_NAME}
+      name: jenkins
     sessionAffinity: None
     type: ClusterIP
 - apiVersion: v1
@@ -217,7 +223,7 @@ objects:
       service.alpha.openshift.io/dependencies: '[{"name": "jenkins-jnlp",
         "namespace": "", "kind": "Service"}]'
       service.openshift.io/infrastructure: "true"
-    name: ${JENKINS_SERVICE_NAME}
+    name: jenkins
   spec:
     ports:
     - name: web
@@ -226,15 +232,15 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      name: ${JENKINS_SERVICE_NAME}
+      name: jenkins
     sessionAffinity: None
     type: NodePort
 - apiVersion: v1
   kind: ConfigMap
   metadata:
     labels:
-      role: ${JENKINS_SERVICE_NAME}-slave
-    name: ${JENKINS_SERVICE_NAME}-slaves
+      role: jenkins-slave
+    name: jenkins-slaves
   data:
     frontend-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
@@ -248,7 +254,7 @@ objects:
         <idleMinutes>60</idleMinutes>
         <activeDeadlineSeconds>0</activeDeadlineSeconds>
         <label>frontend</label>
-        <serviceAccount>${JENKINS_SERVICE_NAME}</serviceAccount>
+        <serviceAccount>jenkins</serviceAccount>
         <nodeSelector></nodeSelector>
         <nodeUsageMode>NORMAL</nodeUsageMode>
         <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
@@ -278,10 +284,10 @@ objects:
         <annotations/>
         <imagePullSecrets/>
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
-    backend-template: |-
+    maven-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
         <inheritFrom></inheritFrom>
-        <name>backend</name>
+        <name>maven</name>
         <namespace></namespace>
         <privileged>false</privileged>
         <alwaysPullImage>false</alwaysPullImage>
@@ -289,8 +295,8 @@ objects:
         <slaveConnectTimeout>100</slaveConnectTimeout>
         <idleMinutes>5</idleMinutes>
         <activeDeadlineSeconds>0</activeDeadlineSeconds>
-        <label>backend</label>
-        <serviceAccount>${JENKINS_SERVICE_NAME}</serviceAccount>
+        <label>maven</label>
+        <serviceAccount>jenkins</serviceAccount>
         <nodeSelector></nodeSelector>
         <nodeUsageMode>NORMAL</nodeUsageMode>
         <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
@@ -327,14 +333,14 @@ objects:
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
 #--------------------------------------------------------------------------------------
 parameters:
+- description: Jenkins frontent external URL
+  displayName: Jenkins frontent external URL
+  name: JENKINS_UI_URL
+  value: "http://jenkins:8080"
 - description: Password for the 'admin' account when using default Jenkin authentication.
   displayName: Jenkins admin initial password
   name: JENKINS_PASSWORD
   value: password
-- description: The name of the OpenShift Service exposed for the Jenkins container.
-  displayName: Jenkins Service Name
-  name: JENKINS_SERVICE_NAME
-  value: jenkins
 - description: Whether to enable OAuth OpenShift integration. If false, the static
     account 'admin' will be initialized with the password 'password'.
   displayName: Enable OAuth in Jenkins

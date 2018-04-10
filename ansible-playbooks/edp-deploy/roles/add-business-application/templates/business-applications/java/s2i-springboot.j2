@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: s2i-java
+spec:
+  dockerImageRepository: fabric8/s2i-java
+  lookupPolicy:
+    local: false
+  tags:
+  - from:
+      kind: DockerImage
+      name: fabric8/s2i-java:2.1
+    name: "2.1"
+    referencePolicy:
+      type: Source

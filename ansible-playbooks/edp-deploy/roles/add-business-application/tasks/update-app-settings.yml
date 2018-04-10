@@ -27,7 +27,7 @@
 
 - name: "Get crumb from Jenkins"
   uri:
-    url: http://jenkins.{{ project_cicd_name.stdout }}:8080/crumbIssuer/api/json
+    url: http://jenkins.{{ project_cicd }}:8080/crumbIssuer/api/json
     method: GET
     user: admin
     password: "{{ tools.jenkins.password }}"
@@ -36,12 +36,13 @@
 
 - name: "Trigger job provisioning"
   uri:
-    url: http://jenkins.{{ project_cicd_name.stdout }}:8080/job/jobsprovisioning/build
+    url: http://jenkins.{{ project_cicd }}:8080/job/Job-provisioning/build
     method: POST
     user: admin
     password: "{{ tools.jenkins.password }}"
     force_basic_auth: yes
-    HEADER_Jenkins-Crumb: "{{ crumb.json.crumb }}"
+    headers:
+      Jenkins-Crumb: "{{ crumb.json.crumb }}"
     status_code: 201
 
 - name: "Remove temp files"

@@ -1,5 +1,3 @@
-import groovy.json.*
-
 //Define common variables
 vars = [:]
 commonLib = null
@@ -14,36 +12,14 @@ node("master") {
         ["PIPELINES_PATH"].each() { variable ->
             this.checkEnvVariables(variable)
         }
-        vars['appSettingsKey'] = 'app.settings.json'
+        vars['pipelinesPath'] = PIPELINES_PATH
 
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
         commonLib.getConstants(vars)
 
-        vars['gerritSshPort'] = sh(
-                script: "oc get svc gerrit -o jsonpath='{.spec.ports[?(@.name==\"ssh\")].targetPort}'",
-                returnStdout: true
-        ).trim()
-
-        vars['configMapName'] = 'project-settings'
-        vars['envSettingsKey'] = 'env.settings.json'
-
         vars['devopsRoot'] = "${WORKSPACE.replaceAll("@", "")}@script"
-        vars['pipelinesPath'] = PIPELINES_PATH
         vars['environment'] = JOB_NAME.split('-')[0]
         vars['deployProject'] = "${vars.environment}-${env.BUILD_NUMBER}"
-
-        [vars.envSettingsKey, vars.appSettingsKey].each() { key ->
-            try {
-                def settingsJson = sh(
-                        script: "oc get cm ${vars.configMapName} --template='{{ index .data \"${key}\" }}'",
-                        returnStdout: true
-                ).trim()
-                vars[$ { key }] = new JsonSlurperClassic().parseText(settingsJson)
-            }
-            catch (Exception ex) {
-                commonLib.failJob("[JENKINS][ERROR] Can't load project settings from config map ${vars.configMapName} key ${key}")
-            }
-        }
 
         vars.get(vars.appSettingsKey).each() { application ->
             application['version'] = env["${application.name}_VERSION"] != null ? env["${application.name}_VERSION"] : "latest"

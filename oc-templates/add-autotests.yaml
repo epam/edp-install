@@ -19,6 +19,7 @@ objects:
   spec:
     parallelism: 1
     completions: 1
+    activeDeadlineSeconds: 300
     template:
       metadata:
         name: add-autotests

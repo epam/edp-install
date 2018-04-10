@@ -39,7 +39,7 @@
                 "imageChange": {
                     "from": {
                         "kind": "ImageStreamTag",
-                        "name": "{{ application.name }}:latest"
+                        "name": "{{ env_name | lower }}/{{ application.name }}:latest"
                     }
                 },
                 "type": "ImageChange"
