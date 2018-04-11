@@ -78,6 +78,9 @@
   shell: |
    {{ ocadm }} rollout latest gerrit -n {{ project_cicd }}
 
+- name: "Check gerrit pod is finished"
+  shell: "{{ ocadm }} -n {{ project_cicd }} rollout status dc/gerrit -w"
+
 - include_tasks: update-app-settings.yml
   vars:
     gitlab_url: "{{ gitlab_http_url }}"
