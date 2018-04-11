@@ -170,15 +170,9 @@ else {
     project.buildersList.add(new Shell(checkDir + copyJson))
 
     executeDslScripts = new ExecuteDslScripts()
-
-    def tTrigger = new TimerTrigger("H/5 * * * *")
-
-    project.addTrigger((Trigger)tTrigger);
     executeDslScripts.setTargets("*.groovy")
-    //executeDslScripts.setRemovedJobAction(RemovedJobAction.DELETE)
-    //executeDslScripts.setRemovedViewAction(RemovedViewAction.DELETE)
     executeDslScripts.setLookupStrategy(LookupStrategy.JENKINS_ROOT)
-    //executeDslScripts.setAdditionalClasspath("src/main/groovy")
+
     project.getBuildersList().add(executeDslScripts)
     project.save()
     project.scheduleBuild()

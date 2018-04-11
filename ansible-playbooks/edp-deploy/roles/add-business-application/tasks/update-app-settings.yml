@@ -25,6 +25,25 @@
   command: |
    {{ ocadm }} replace --namespace {{ project_cicd }} -f /tmp/updated_cm.json
 
+- name: "Get crumb from Jenkins"
+  uri:
+    url: https://jenkins.{{ project_cicd }}:8080/crumbIssuer/api/json
+    method: GET
+    user: admin
+    password: "{{ tools.jenkins.password }}"
+    force_basic_auth: yes
+  register: crumb
+
+- name: "Trigger job provisioning"
+  uri:
+    url: https://jenkins.{{ project_cicd }}:8080/job/jobsprovisioning/build
+    method: POST
+    user: admin
+    password: "{{ tools.jenkins.password }}"
+    force_basic_auth: yes
+    HEADER_Jenkins-Crumb: "{{ crumb.json.crumb }}"
+    status_code: 201
+
 - name: "Remove temp files"
   file:
     state: absent
