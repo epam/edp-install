@@ -36,6 +36,17 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
 
+- name: "Creating configmap jenkins-init"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create configmap jenkins-init
+    --from-file {{ templates_dir }}/jenkins/init.groovy
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
 # End of step
 
 - name: "Install Jenkins app"
