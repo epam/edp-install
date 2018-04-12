@@ -1,0 +1,32 @@
+---
+#
+# Add jquery and jquery-visible as local copy of files
+# this eliminate download from external sources
+#
+- name: Create directory for gerrit static content
+  file:
+    path: "{{ files_dir }}/gerrit"
+    state: directory
+
+- name: Add hideci files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ files_dir }}/gerrit/{{ item }}"
+    mode: 0644
+  with_items:
+    - hideci.js
+    - jquery-visibility.js
+    - jquery-1.7.2.min.js
+    - GerritSiteHeader.html
+    - GerritSite.css
+
+- name: "Creating configmap for hideci elements"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create configmap gerrit-hideci
+    --from-file "{{ files_dir }}/gerrit/"
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'

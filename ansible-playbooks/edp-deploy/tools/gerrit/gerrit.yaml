@@ -289,6 +289,21 @@ objects:
               name: replication-config
             - mountPath: /var/gerrit/.ssh
               name: ssh-config
+            - mountPath: /var/gerrit/review_site/static/hideci.js
+              subPath: hideci.js
+              name: gerrit-hideci-hideci-js
+            - mountPath: /var/gerrit/review_site/static/jquery-1.7.2.min.js
+              subPath: jquery-1.7.2.min.js
+              name: gerrit-hideci-jquery-js
+            - mountPath: /var/gerrit/review_site/static/jquery-visibility.js
+              subPath: jquery-visibility.js
+              name: gerrit-hideci-jquery-visibility-js
+            - mountPath: /var/gerrit/review_site/etc/GerritSiteHeader.html
+              subPath: GerritSiteHeader.html
+              name: gerrit-hideci-html
+            - mountPath: /var/gerrit/review_site/etc/GerritSite.css
+              subPath: GerritSite.css
+              name: gerrit-hideci-css
         serviceAccount: gerrit
         volumes:
           - name: ${GITLAB_AUTOUSER_SECRET_NAME}
@@ -312,6 +327,41 @@ objects:
                   path: config
               name: gerrit
             name: ssh-config
+          - configMap:
+              defaultMode: 420
+              items:
+                - key: hideci.js
+                  path: hideci.js
+              name: gerrit-hideci
+            name: gerrit-hideci-hideci-js
+          - configMap:
+              defaultMode: 420
+              items:
+                - key: jquery-visibility.js
+                  path: jquery-visibility.js
+              name: gerrit-hideci
+            name: gerrit-hideci-jquery-visibility-js
+          - configMap:
+              defaultMode: 420
+              items:
+                - key: jquery-1.7.2.min.js
+                  path: jquery-1.7.2.min.js
+              name: gerrit-hideci
+            name: gerrit-hideci-jquery-js
+          - configMap:
+              defaultMode: 420
+              items:
+                - key: GerritSiteHeader.html
+                  path: GerritSiteHeader.html
+              name: gerrit-hideci
+            name: gerrit-hideci-html
+          - configMap:
+              defaultMode: 420
+              items:
+                - key: GerritSite.css
+                  path: GerritSite.css
+              name: gerrit-hideci
+            name: gerrit-hideci-css
           - name: python-script
             configMap:
               defaultMode: 420

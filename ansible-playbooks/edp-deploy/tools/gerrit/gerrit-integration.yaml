@@ -121,6 +121,13 @@ objects:
 
       #change default gerrit admin password
       ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p ${GERRIT_SSH_PORT} admin@${GERRIT_HOST} gerrit set-account --http-password ${GERRIT_PASSWORD} admin
+
+      # Enable hideci.js
+      cd /opt/data/gerrit_site/etc/
+      git config -f gerrit.config 'commentlink.testresult.match' \
+        '<p><a href="[^"]+job/([^/]+)/[0-9/]+" target="_blank" rel="nofollow">([^<]+)</a> : ([^ ]+)([^<]*)</p>'
+      git config -f gerrit.config 'commentlink.testresult.html' \
+        '<li class="comment_test"><span class="comment_test_name"><a href="$2" rel="nofollow">$1</a></span> <span class="comment_test_result"><span class="result_$3">$3</span>$4</span></li>'
 - apiVersion: batch/v1
   kind: Job
   metadata:

@@ -1,0 +1,67 @@
+a,a:visited {color: #264D69 !important; text-decoration: none;}
+a:hover {color: #000 !important; text-decoration: underline}
+
+.comment_test_name {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: auto !important;
+  width: 25em;
+  min-width: 20em;
+  padding-bottom: 2pt;
+}
+
+.comment_test_result {
+}
+
+.result_SUCCESS {
+    color: #007f00;
+}
+.result_FAILURE {
+    color: #cf2f19;
+}
+.result_UNSTABLE, .result_WARNING {
+    color: #e39f00;
+}
+.result_LOST {
+    color: #e39f00;
+}
+li.comment_test {list-style-type: none; }
+
+/* this is for support of 'Display Person Name In Review Category' */
+.cAPPROVAL {
+    max-width: 100px;
+    overflow: hidden;
+}
+/* fixes to make this like old gerrit */
+.changeTable td.dataCell {
+    height: 1em;
+}
+
+/* don't make the non voting stand out more than the voting */
+table.infoTable td.notVotable,
+.changeTable td.dataCell.labelNotApplicable {
+    background: inherit;
+}
+
+.test_result_table {
+  border-collapse: collapse;
+}
+
+.test_result_table tr {
+  border-left: 1px solid #eef3f5;
+  border-right: 1px solid #eef3f5;
+}
+
+.test_result_table td.header {
+  background-color: #eef3f5;
+}
+
+.test_result_table td {
+  padding: 2px 4px 2px 6px;
+  border: 1px solid #eef3f5;
+}
+
+.addMemberTextBox {
+    width: 20em;
+}

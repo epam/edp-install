@@ -4,6 +4,7 @@ ansible_connection: ssh
 work_dir: "/opt/edp"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/templates"
+files_dir: "{{ work_dir }}/files"
 projects_suffix: ""
 projects_list: [
     "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}",
