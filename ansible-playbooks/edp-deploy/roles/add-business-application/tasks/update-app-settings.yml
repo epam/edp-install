@@ -27,7 +27,7 @@
 
 - name: "Get crumb from Jenkins"
   uri:
-    url: https://jenkins.{{ project_cicd_name.stdout }}:8080/crumbIssuer/api/json
+    url: http://jenkins.{{ project_cicd_name.stdout }}:8080/crumbIssuer/api/json
     method: GET
     user: admin
     password: "{{ tools.jenkins.password }}"
@@ -36,7 +36,7 @@
 
 - name: "Trigger job provisioning"
   uri:
-    url: https://jenkins.{{ project_cicd_name.stdout }}:8080/job/jobsprovisioning/build
+    url: http://jenkins.{{ project_cicd_name.stdout }}:8080/job/jobsprovisioning/build
     method: POST
     user: admin
     password: "{{ tools.jenkins.password }}"
