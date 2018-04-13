@@ -6,13 +6,12 @@ import argparse
 
 def arguments_parser():
     parser = argparse.ArgumentParser(prog='update-cm-data')
-    parser.add_argument('--git_repo', '-g', help='Application git repository', required=True)
-    parser.add_argument('--name', '-n', help='Application name. Example: --name test-app', required=True)
+    parser.add_argument('--git_repo', '-g', help='Git repository', required=True)
+    parser.add_argument('--name', '-n', help='Application. Example: --name test-app', required=True)
     parser.add_argument('--language', '-l', help='Application language. Example: --language Java', required=True)
     parser.add_argument('--tool', '-t', help='Application build tool. Example: --type maven', required=True)
     parser.add_argument('--framework', '-f', help='Application framework. Example: --name spring-boot', required=True)
-    parser.add_argument('--need_route', '-r', help='Boolean application route. Example: --need_route true',
-                        required=True)
+    parser.add_argument('--need_route', '-r', help='Boolean application route. Example: --need_route true', required=True)
     args = parser.parse_args()
     return args
 

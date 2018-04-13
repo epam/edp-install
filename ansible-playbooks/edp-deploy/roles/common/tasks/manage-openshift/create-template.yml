@@ -1,0 +1,32 @@
+---
+- name: "Get Openshift docker registry url"
+  shell: "{{ ocadm }} -n default get route docker-registry -o jsonpath='{.spec.host}'"
+  register: docker_registry
+
+- name: "Set docker registry url variable"
+  set_fact:
+    docker_registry_url: "{{ docker_registry.stdout }}"
+
+- name: "Create directory for business apps templates"
+  file:
+    path: "{{ templates_dir }}/business-apps"
+    state: directory
+
+- name: "Set full app name"
+  set_fact:
+     full_app_name: "{{ framework | lower }}-{{ app_name }}"
+
+- name: "Copying template for {{ language }} {{ framework }} app"
+  template:
+    src: "../templates/business-applications/{{ language | lower }}/{{ framework | lower }}.j2"
+    dest: "{{ templates_dir }}/business-apps/{{ full_app_name }}.yml"
+
+- name: "Import template for new business-app"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create -f {{ templates_dir }}/business-apps/{{ full_app_name }}.yml
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'

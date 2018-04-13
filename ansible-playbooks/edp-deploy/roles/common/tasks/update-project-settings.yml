@@ -12,38 +12,18 @@
     dest: "/tmp/old_cm.json"
 
 - template:
-    src: "update-cm-data.j2"
+    src: "../../common/templates/update-cm-data.j2"
     dest: "/tmp/update-cm-data.py"
 
 - name: "Update app.settings.json value"
   shell: >
-   python /tmp/update-cm-data.py --git_repo {{ gitlab_url }} --name {{ app_name }} --language {{ language }}
+   python /tmp/update-cm-data.py --git_repo {{ gitlab_http_url }} --name {{ project_name }} --language {{ language }}
    --tool {{ build_tool }} --framework {{ framework }} --need_route {{ route }}
   register: pythonOutput
 
 - name: "Replace app.settings.json with new values"
   command: |
    {{ ocadm }} replace --namespace {{ project_cicd }} -f /tmp/updated_cm.json
-
-- name: "Get crumb from Jenkins"
-  uri:
-    url: http://jenkins.{{ project_cicd }}:8080/crumbIssuer/api/json
-    method: GET
-    user: admin
-    password: "{{ tools.jenkins.password }}"
-    force_basic_auth: yes
-  register: crumb
-
-- name: "Trigger job provisioning"
-  uri:
-    url: http://jenkins.{{ project_cicd }}:8080/job/Job-provisioning/build
-    method: POST
-    user: admin
-    password: "{{ tools.jenkins.password }}"
-    force_basic_auth: yes
-    headers:
-      Jenkins-Crumb: "{{ crumb.json.crumb }}"
-    status_code: 201
 
 - name: "Remove temp files"
   file:

@@ -37,19 +37,4 @@
   register: "gerrit_ssh_port"
 
 - name: "Create project in Gerrit"
-  shell: "ssh -p {{ gerrit_ssh_port.stdout }} admin@gerrit.{{ project_cicd }} gerrit create-project {{ project_gitlab_edp }}"
-
-- name: "Pull GitLab"
-  command: "git pull origin master"
-  args:
-    chdir: "{{ work_dir }}/{{ project_gitlab_edp }}"
-
-- name: "Add remote link to gerrit"
-  shell: "git remote set-url --push origin ssh://admin@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port.stdout }}/{{ project_gitlab_edp }}"
-  args:
-    chdir: "{{ work_dir }}/{{ project_gitlab_edp }}"
-
-- name: "Push to gerrit"
-  shell: "git push --all"
-  args:
-    chdir: "{{ work_dir }}/{{ project_gitlab_edp }}"
+  shell: "ssh -p {{ gerrit_ssh_port.stdout }} admin@gerrit.{{ project_cicd }} gerrit create-project {{ project_name }}"

@@ -1,0 +1,25 @@
+---
+- name: "Save current replication configmap values"
+  shell: |
+    {{ ocadm }} get cm gerrit -n {{ project_cicd }} -o yaml
+  register: old_replication_config
+
+- local_action: copy content="{{ old_replication_config.stdout }}" dest="/tmp/replication-config"
+
+- name: "Add replication part for new {{ project_cicd }} project"
+  blockinfile:
+    dest: /tmp/replication-config
+    insertbefore: '  sshPort:*'
+    block: "{{ lookup('template', '../common/templates/replication-conf.j2') }}"
+    marker: ""
+
+- name: "Update replication config"
+  shell: |
+   {{ ocadm }} replace cm gerrit -n {{ project_cicd }} -f /tmp/replication-config
+
+- name: "Redeploy Gerrit pod"
+  shell: |
+   {{ ocadm }} rollout latest gerrit -n {{ project_cicd }}
+
+- name: "Check gerrit pod is finished"
+  shell: "{{ ocadm }} -n {{ project_cicd }} rollout status dc/gerrit -w"

@@ -1,0 +1,10 @@
+---
+- include_tasks: roles/common/tasks/manage-gitlab/clone-repository.yml
+
+- include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
+  vars:
+    gitlab_host: "{{ gitlab_hostname }}"
+
+- include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
+
+- include_tasks: roles/common/tasks/manage-gerrit/project-replication.yml

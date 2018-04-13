@@ -1,0 +1,47 @@
+---
+- name: "Get autouser secret name and gitlab URL from user-settings cm"
+  shell: |
+   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.gitlab_autouser_secret }'
+  register: autouser_secret_name
+
+- name: "Get GitLab hostname and project path"
+  set_fact:
+     gitlab_hostname: "{{ git_repo_url | urlsplit('hostname') }}"
+     gitlab_project_path: "{{ git_repo_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
+     gitlab_http_url: "{{ git_repo_url }}"
+  when: git_repo_url is match("http?(s)://*")
+
+- block:
+  - name: "Using git hostname which was saved in configMap while EDP installation"
+    shell: |
+     {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.gitlab_group_name_url }'
+    register: git_repo_url_default
+
+  - name: "Setting fact with default parameters"
+    set_fact:
+       gitlab_hostname: "{{ git_repo_url_default.stdout | urlsplit('hostname') }}"
+       gitlab_project_path: "{{ git_repo_url_default.stdout | urlsplit('path') | regex_replace('^/{1}', '') }}"
+       gitlab_project_name: "{{ git_repo_url }}"
+
+  - name: "Setting fact with default parameters"
+    set_fact:
+       gitlab_http_url: "{{ git_repo_url_default.stdout + '/' + gitlab_project_name }}"
+  when: git_repo_url is not match("http?(s)://*")
+
+- name: "Register variable with repo URI"
+  set_fact:
+     git_repo_ssh_url: "{{ gitlab_hostname }}:{{ gitlab_project_path if git_repo_url is match('http?(s)://*')
+     else gitlab_project_path + '/' + gitlab_project_name}}.git"
+
+- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-sshkey-from-secret.yml
+  vars:
+    gitlab_auto_user_secret: "{{ autouser_secret_name.stdout }}"
+
+- name: "Clone GitLab repository"
+  git:
+    repo: "git@{{ git_repo_ssh_url }}"
+    dest: "{{ work_dir }}/{{ project_name }}"
+    key_file: "{{ work_dir }}/private.key"
+    accept_hostkey: true
+    force: true
+  ignore_errors: true

@@ -75,6 +75,8 @@ objects:
       []
     env.settings.json: |-
       []
+    auto-test.settings.json: |-
+      []
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:

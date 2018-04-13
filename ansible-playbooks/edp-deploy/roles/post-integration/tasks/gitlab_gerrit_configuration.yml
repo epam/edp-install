@@ -68,7 +68,7 @@
     register: output
     until: output.status == 201
 
-  - include_tasks: roles/common/tasks/get-gitlab-sshkey-from-secret.yml
+  - include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-sshkey-from-secret.yml
 
   - name: "Clone GitLab repository"
     git:
@@ -98,7 +98,7 @@
   when: edp_project_existence.status == 404
 
 - block:
-  - include_tasks: roles/common/tasks/get-gitlab-sshkey-from-secret.yml
+  - include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-sshkey-from-secret.yml
 
   - name: "Clone GitLab repository"
     git:
@@ -114,4 +114,11 @@
     delay: 1
   when: edp_project_existence.status == 200
 
-- include_tasks: roles/common/tasks/clone-repository-to-gerrit.yml gitlab_host={{ gitlab_hostname.stdout }}
+- include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
+  vars:
+    gitlab_host: "{{ gitlab_hostname.stdout }}"
+    project_name: "{{ project_gitlab_edp }}"
+
+- include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
+  vars:
+    project_name: "{{ project_gitlab_edp }}"
