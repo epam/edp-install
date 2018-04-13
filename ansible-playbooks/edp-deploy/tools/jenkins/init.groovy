@@ -183,6 +183,7 @@ else {
             """set -x
            |[ ! -d ${JENKINS_HOME}/jobs/${jobName}/workspace ] && mkdir -p ${JENKINS_HOME}/jobs/${jobName}/workspace
            |cp ${JENKINS_HOME}/init.groovy.d/dsl/*.groovy ${JENKINS_HOME}/jobs/${jobName}/workspace/
+           |[ ! -f ${JENKINS_HOME}/scriptApproval.xml ] && cp ${JENKINS_HOME}/scriptApproval.xml.ORIG ${JENKINS_HOME}/scriptApproval.xml
            |""".stripMargin() ]
     println cmd.execute().text
 

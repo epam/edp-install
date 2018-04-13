@@ -157,7 +157,7 @@ objects:
           - mountPath: /var/lib/jenkins/init.groovy.d/init.groovy
             subPath: init.groovy
             name: ${JENKINS_SERVICE_NAME}-init
-          - mountPath: /var/lib/jenkins/scriptApproval.xml
+          - mountPath: /var/lib/jenkins/scriptApproval.xml.ORIG
             subPath: scriptApproval.xml
             name: ${JENKINS_SERVICE_NAME}-approval
         dnsPolicy: ClusterFirst
