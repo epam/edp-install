@@ -1,4 +1,14 @@
 --- # Cockpit full installation
+
+- name: "Set docker image version in add-application template"
+  replace:
+    path: '{{ item }}'
+    regexp: '\${DOCKER_IMAGE}'
+    replace: "{{ edp_version }}"
+  with_items:
+    - '{{ templates_dir }}/add-business-application.yaml'
+    - '{{ templates_dir }}/add-environments.yaml'
+
 - name: "Install config map for storing app types. Bind role with service account. Upload template for cockpit"
   shell: "{{ item }}"
   with_items:

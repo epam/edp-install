@@ -104,7 +104,3 @@ parameters:
   description: Boolean flag for route necessity
   name: NEED_ROUTE
   value: "false"
-- displayName: Docker image
-  description: Docker image for a job
-  name: DOCKER_IMAGE
-  value: "registry.main.edp.projects.epam.com/infra/edp-install:master"

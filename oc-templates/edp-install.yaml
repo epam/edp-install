@@ -36,6 +36,7 @@ objects:
             - "-e projects_suffix=${PROJECTS_SUFFIX}"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
+            - "-e edp_version=${EDP_VERSION}"
             - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e gerrit_version=${GERRIT_VERSION}"
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"

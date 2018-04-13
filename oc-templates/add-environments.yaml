@@ -55,8 +55,3 @@ objects:
           configMap:
             name: user-settings
     backoffLimit: 1
-parameters:
-- displayName: Docker image
-  description: Docker image for a job
-  name: DOCKER_IMAGE
-  value: "registry.main.edp.projects.epam.com/infra/edp-install:master"
