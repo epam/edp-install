@@ -20,7 +20,7 @@
                 "env": [
 {% for application in app_map | list %}
                     {
-                        "name": "{{ application.name }}_VERSION",
+                        "name": "{{ application.name | upper | replace('-','_') }}_VERSION",
                         "value": "latest"
                     },
 {% endfor %}
@@ -34,16 +34,21 @@
             "type": "JenkinsPipeline"
         },
         "triggers": [
-{% for application in app_map | list %}
+{% for trigger in env_triggers %}
+    {% if  trigger.type == "ImageStreamChange" %}
+        {% for application in app_map | list %}
             {
                 "imageChange": {
                     "from": {
                         "kind": "ImageStreamTag",
-                        "name": "{{ env_name | lower }}/{{ application.name }}:latest"
+                        "name": "{{ application.name }}:latest",
+                        "namespace": "{{ env_name | lower }}"
                     }
                 },
                 "type": "ImageChange"
             }{% if not loop.last %},{%endif%}
+        {% endfor %}
+    {% endif %}
 {% endfor %}
         ]
     }

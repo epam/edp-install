@@ -33,6 +33,7 @@ node("master") {
 }
 
 node(vars.application.tool.toLowerCase()) {
+    vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
     try {
         dir("${vars.devopsRoot}") {
             unstash 'devops'

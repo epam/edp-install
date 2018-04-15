@@ -24,7 +24,7 @@ node("master") {
         commonLib.getConstants(vars)
         vars['promoteImage'] = true
         if (vars["${vars.envSettingsKey}"])
-            vars['targetProject'] = vars["${vars.envSettingsKey}"].keySets()[0]
+            vars['targetProject'] = vars["${vars.envSettingsKey}"].keySet()[0]
         else {
             println("[JENKINS][WARNING] There are no environments were added to the project, we won't promote image after build config\r\n" +
                     "[JENKINS][WARNING] If your like to promote your images please add environment via your cockpit panel")
@@ -39,6 +39,7 @@ node("master") {
 }
 
 node(vars.application.tool.toLowerCase()) {
+    vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
     try {
         dir("${vars.devopsRoot}") {
             unstash 'devops'

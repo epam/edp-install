@@ -5,6 +5,7 @@
 - name: "Generate templates"
   vars:
     env_name: "{{ item }}"
+    env_triggers: "{{ env_map[item].triggers }}"
   template:
     src: build-config.j2
     dest: "{{ templates_dir }}/{{ item }}-bc.json"

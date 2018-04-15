@@ -100,7 +100,6 @@ def getConstants(vars) {
     DEFAULT_GERRIT_HOST = "gerrit"
     DEFAULT_GERRIT_CREDENTIALS = "jenkins"
 
-    vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
     vars['workDir'] = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
     vars['operationsTimeout'] = env.OPERATIONS_TIMEOUT ? OPERATIONS_TIMEOUT : DEFAULT_OPERATIONS_TIMEOUT
 
