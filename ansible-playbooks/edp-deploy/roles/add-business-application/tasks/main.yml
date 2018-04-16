@@ -1,6 +1,11 @@
 ---
+- name: "Get Openshif docker registry url"
+  shell: "{{ ocadm }} -n default get route docker-registry -o jsonpath='{.spec.host}'"
+  register: docker_registry
+
 - set_fact:
     project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
+    docker_registry_url: "{{ docker_registry.stdout }}"
 
 - name: "Get autouser secret name and gitlab URL from user-settings cm"
   shell: |
@@ -95,10 +100,9 @@
     - "{{ framework | lower }}"
     - "s2i-{{ framework | lower }}"
 
-
 - name: "Import templates for new business-app"
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} create -f {{ templates_dir }}/business-apps/{{ app_name }}/{{ item }}.yml
+  shell: |
+    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/business-apps/{{ app_name }}/{{ item }}.yml
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

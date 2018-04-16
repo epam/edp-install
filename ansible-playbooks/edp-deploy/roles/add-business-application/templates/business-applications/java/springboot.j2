@@ -70,8 +70,8 @@ objects:
       spec:
         serviceAccountName: "{{ app_name }}"
         containers:
-        - name: "{{ project_cicd }}-{{ app_name }}"
-          image: "docker-registry.default.svc:5000/${APP_IMAGE}:${APP_VERSION}"
+        - name: "{{ app_name }}"
+          image: "{{ docker_registry_url }}/${APP_IMAGE}:${APP_VERSION}"
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
