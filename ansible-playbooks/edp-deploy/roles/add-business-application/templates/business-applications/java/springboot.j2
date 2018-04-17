@@ -17,9 +17,9 @@ objects:
   spec:
     ports:
     - name: "{{ app_name }}"
-      port: 8000
+      port: 8080
       protocol: TCP
-      targetPort: 8000
+      targetPort: 8080
     selector:
       app: "{{ app_name }}"
     type: ClusterIP
@@ -38,7 +38,7 @@ objects:
       app: "{{ app_name }}"
   spec:
     port:
-      targetPort: 8000-tcp
+      targetPort: 8080
     to:
       kind: Service
       name: "{{ app_name }}"
@@ -74,7 +74,7 @@ objects:
           image: "{{ docker_registry_url }}/${APP_IMAGE}:${APP_VERSION}"
           imagePullPolicy: Always
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
               protocol: TCP
           livenessProbe:
             failureThreshold: 5
@@ -82,7 +82,7 @@ objects:
             periodSeconds: 20
             successThreshold: 1
             tcpSocket:
-              port: 8000
+              port: 8080
             timeoutSeconds: 5
           readinessProbe:
             failureThreshold: 5
@@ -90,7 +90,7 @@ objects:
             periodSeconds: 20
             successThreshold: 1
             tcpSocket:
-              port: 8000
+              port: 8080
             timeoutSeconds: 5
           resources:
             requests:

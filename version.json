@@ -1,3 +1,57 @@
-{
-  "edp-install": "1.1.0"
-}
+[
+  {
+    "name": "sit-test",
+    "description": "123",
+    "quality-gates": [
+      {
+        "type": "manual",
+        "step_name": "QA 2"
+      },
+      {
+        "type": "autotests",
+        "autotests-project": "test",
+        "step_name": "QA 1"
+      },
+      {
+        "type": "autotests",
+        "autotests-project": "test1",
+        "step_name": "QA 3"
+      }
+    ],
+    "promotion-step": {
+      "perform-release": false,
+      "env-to-promote": "qa"
+    },
+    "delete-trigger": {
+      "type": "successful-quality-gates"
+    },
+    "triggers": [
+      {
+        "type": "ImageStreamChange"
+      }
+    ]
+  },
+  {
+    "name": "qa-test",
+    "description": "QA Environment",
+    "quality-gates": [
+      {
+        "type": "autotests",
+        "autotests-project": "test",
+        "step_name": "QA 1"
+      }
+    ],
+    "promotion-step": {
+      "perform-release": false,
+      "env-to-promote": "uat"
+    },
+    "delete-trigger": {
+      "type": "successful-quality-gates"
+    },
+    "triggers": [
+      {
+        "type": "manual"
+      }
+    ]
+  }
+]

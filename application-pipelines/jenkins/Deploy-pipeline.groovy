@@ -17,8 +17,8 @@ node("master") {
 
         openshift.withProject() {
             def matcher = (JOB_NAME =~ /.*\\/${openshift.project()}-(.*)-deploy-pipeline/)
-            vars['environment'] = matcher[0][1]
-            vars['deployProject'] = "${vars.environment}-${env.BUILD_NUMBER}"
+            vars['pipelineProject'] = matcher[0][1]
+            vars['deployProject'] = "${vars.pipelineProject}-${env.BUILD_NUMBER}"
         }
 
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
@@ -31,8 +31,13 @@ node("master") {
                 application['version'] = "latest"
         }
 
+        vars["projectMap"] = commonLib.getEnvironmentMap(vars.pipelineProject)
+        if (!vars["projectMap"])
+            commonLib.failJob("[JENKINS][ERROR] Evironment ${vars.pipelineProject} is not found in configmap" +
+                    " ${vars.configMapName} key ${vars.envSettingsKey} please check")
+
         commonLib.getDebugInfo(vars)
-        currentBuild.displayName = "${currentBuild.displayName}-${vars.environment}"
+        currentBuild.displayName = "${currentBuild.displayName}-${vars.deployProject}"
     }
 
     stage("DEPLOY") {
@@ -40,7 +45,7 @@ node("master") {
         stage.run(vars)
     }
 
-    vars["${vars.envSettingsKey}"]["${vars['environment']}"]['quality-gates'].each() { qualityGate ->
+    vars.projectMap.get('quality-gates').each() { qualityGate ->
         stage(qualityGate['step-name']) {
             try {
                 switch (qualityGate.type) {
@@ -67,16 +72,20 @@ node("master") {
         currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been passed"
     }
 
-    stage("PROMOTE") {
+    stage("PROMOTE IMAGES") {
         vars['sourceTag'] = "latest"
         vars['targetTags'] = [vars.sourceTag]
-        vars['targetProject'] = vars["${vars.envSettingsKey}"]["${vars['environment']}"]['promotion']['env-to-promote']
-        vars['sourceProject'] = vars.environment
-        stage = load "${vars.pipelinesPath}/stages/promote.groovy"
-        stage.run(vars)
+        vars['targetProject'] = vars.projectMap.promotion.get('env-to-promote')
+        vars['sourceProject'] = vars.pipelineProject
+        if (vars.targetProject) {
+            stage = load "${vars.pipelinesPath}/stages/promote-images.groovy"
+            stage.run(vars)
+        }
+        else
+            println("[JENKINS][WARNING] There are no environments specified to promote images, promotion was skipped")
     }
 
-    if (envSettingsMap.get('delete-trigger').type == "successful-quality-gates") {
+    if (vars.projectMap.get('delete-trigger') == "successful-quality-gates") {
         stage("DELETE PROJECTS") {
             stage = load "${vars.pipelinesPath}/stages/get-projects-to-delete.groovy"
             stage.run(vars)

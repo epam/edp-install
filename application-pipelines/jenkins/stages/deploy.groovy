@@ -3,7 +3,6 @@ def run(vars) {
         if (!openshift.selector("project", vars.deployProject).exists()) {
             openshift.newProject(vars.deployProject)
             sh "oc adm policy add-role-to-user admin admin -n ${vars.deployProject}"
-            sh "oc -n ${vars.deployProject} policy add-role-to-group registry-viewer system:unauthenticated"
         }
         vars.get(vars.appSettingsKey).each() { application ->
             def template = openshift.withProject() {
@@ -12,7 +11,7 @@ def run(vars) {
 
             openshift.withProject(vars.deployProject) {
                 openshift.create(openshift.process(template,
-                        "-p APP_IMAGE=${vars.environment}/${application.name}",
+                        "-p APP_IMAGE=${vars.pipelineProject}/${application.name}",
                         "-p APP_VERSION=${application.version}")
                 )
             }

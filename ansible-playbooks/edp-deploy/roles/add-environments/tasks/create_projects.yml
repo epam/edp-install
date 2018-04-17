@@ -1,11 +1,11 @@
 ---
 - name: "Create projects in Openshift"
-  command: "{{ ocadm }} new-project {{ item | lower }}"
-  with_items: " {{ env_map.keys() }} "
+  command: "{{ ocadm }} new-project {{ item.name | lower }}"
+  with_items: " {{ env_map | list }} "
 
 - name: "Define access to admin for new projects "
-  command: "{{ ocadm }} adm policy add-role-to-user admin admin -n {{ item | lower }}"
-  with_items: " {{ env_map.keys() }} "
+  command: "{{ ocadm }} adm policy add-role-to-user admin admin -n {{ item.name | lower }}"
+  with_items: " {{ env_map | list }}"
 
 - name: "Set cluster-admin access to jenkins user"
   command: "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:jenkins"

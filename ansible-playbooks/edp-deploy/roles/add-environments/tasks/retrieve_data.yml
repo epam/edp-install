@@ -34,6 +34,6 @@
     projects_suffix: "{{ projects_suffix.stdout }}"
 
 - debug:
-    msg: "Found environment: {{ item | lower }}"
-  with_items: " {{ env_map.keys() }} "
-  when: env_map | length > 0
+    msg: "Found environment: {{ item.name | lower }}"
+  with_items: " {{ env_map | list }} "
+  when: env_map | list | length > 0

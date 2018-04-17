@@ -20,7 +20,7 @@ def run(vars) {
         if (!("default" in parsedRunCommandJson.keySet()))
             error "[JENKINS][ERROR] Haven't found default command in file run.json. It's mandatory to be specified, please check"
 
-        def runCommand = vars.environment in parsedRunCommandJson.keySet() ? parsedRunCommandJson["${vars.environment}"] : parsedRunCommandJson["default"]
+        def runCommand = vars.pipelineProject in parsedRunCommandJson.keySet() ? parsedRunCommandJson["${vars.pipelineProject}"] : parsedRunCommandJson["default"]
         sh "${runCommand}"
     }
     this.result = "success"
