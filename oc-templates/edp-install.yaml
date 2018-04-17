@@ -112,7 +112,6 @@ parameters:
 - displayName: Enable OAuth in Jenkins
   description: Whether to enable OAuth OpenShift integration. If false, the static
     account 'admin' will be initialized with the password 'password'.
-  displayName: Enable OAuth in Jenkins
   name: JENKINS_ENABLE_OAUTH
   value: "false"
 - displayName: Volume Capacity
