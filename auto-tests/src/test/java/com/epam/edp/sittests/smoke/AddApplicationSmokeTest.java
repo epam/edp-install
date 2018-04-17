@@ -2,6 +2,7 @@ package com.epam.edp.sittests.smoke;
 
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -27,6 +28,11 @@ public class AddApplicationSmokeTest {
         this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
     }
 
+    @DataProvider(name = "pipeline")
+    public static Object[][] pipeline() {
+        return new Object[][] { {PRECOMMIT_PIPELINE_NAME}, {POSTCOMMIT_PIPELINE_NAME}};
+    }
+
     @Test
     public void testGerritProjectWasCreated() {
         given()
@@ -42,10 +48,10 @@ public class AddApplicationSmokeTest {
             .statusCode(HttpStatus.SC_OK);
     }
 
-    @Test
-    public void testJenkinsPreCommitPipelineWasCreated() {
+    @Test(dataProvider = "pipeline")
+    public void testJenkinsPipelineWasCreated(String pipeline) {
         given()
-            .pathParam("pipeline", PRECOMMIT_PIPELINE_NAME)
+            .pathParam("pipeline", pipeline)
             .auth()
             .preemptive()
             .basic(JENKINS_USER, JENKINS_PASSWORD)
@@ -57,21 +63,4 @@ public class AddApplicationSmokeTest {
          .then()
             .statusCode(HttpStatus.SC_OK);
     }
-
-    @Test
-    public void testJenkinsPostCommitPipelineWasCreated() {
-        given()
-            .pathParam("pipeline", POSTCOMMIT_PIPELINE_NAME)
-            .auth()
-            .preemptive()
-            .basic(JENKINS_USER, JENKINS_PASSWORD)
-        .when()
-            .get(urlBuilder.buildUrl("http",
-                    "jenkins",
-                    "edp-cicd",
-                    "job/{pipeline}/api/json"))
-        .then()
-            .statusCode(HttpStatus.SC_OK);
-    }
-
 }
