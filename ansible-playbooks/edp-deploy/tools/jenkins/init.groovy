@@ -7,6 +7,7 @@ import hudson.plugins.sonar.model.*
 import com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl
 import com.sonyericsson.hudson.plugins.gerrit.trigger.GerritServer
 import com.sonyericsson.hudson.plugins.gerrit.trigger.config.PluginConfig
+import net.sf.json.*;
 import hudson.model.FreeStyleProject
 import hudson.tasks.Shell
 import javaposse.jobdsl.plugin.*
@@ -61,8 +62,25 @@ sonarConf.save()
 
 // Modifying Gerrit Plugin for getting an ability to post-configure it via job
 PluginImpl plugin = PluginImpl.getInstance();
-server = new GerritServer("gerrit", false)
 PluginConfig pluginConfig = plugin.getPluginConfig();
+
+server = new GerritServer("gerrit", false)
+def config = server.getConfig()
+
+def triggerConfig = [
+    'gerritBuildStartedVerifiedValue':0,
+    'gerritBuildStartedCodeReviewValue':0,
+    'gerritBuildSuccessfulVerifiedValue':2,
+    'gerritBuildSuccessfulCodeReviewValue':0,
+    'gerritBuildFailedVerifiedValue':-2,
+    'gerritBuildFailedCodeReviewValue':0,
+    'gerritBuildUnstableVerifiedValue':0,
+    'gerritBuildUnstableCodeReviewValue':0,
+    'gerritBuildNotBuiltVerifiedValue':0,
+    'gerritBuildNotBuiltCodeReviewValue':0,
+  ]
+config.setValues(JSONObject.fromObject(triggerConfig))
+server.setConfig(config)
 
 server.getConfig().setNumberOfSendingWorkerThreads(pluginConfig.getNumberOfSendingWorkerThreads());
 server.getConfig().setGerritHostName("gerrit")

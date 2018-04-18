@@ -25,6 +25,8 @@ objects:
     name: gerrit-integration
   data:
     config.sh: |
+      set -ex
+      ### Common step allow to work with gerrit over ssh
       mkdir -p ~/.ssh
       cat << EOF > ~/.ssh/config
       Host gerrit*
@@ -35,92 +37,139 @@ objects:
        IdentityFile /var/gerrit/review_site/etc/admin/ssh-keys/id_admin_rsa
        IdentitiesOnly yes
       EOF
+      # Configure git for user to allow working with git
+      git config --global user.name  admin
+      git config --global user.email admin@example.com
+      ### end of common step
 
-      cd /var/gerrit/review_site/etc/admin/ssh-keys
+      ### Gerrit Configuration
       # add keys to admin user
-      curl -X POST -u admin:secret -H "Content-Type: text/plain" --data "$(cat id_admin_rsa.pub)"  http://${GERRIT_HOST}:${GERRIT_PORT}/a/accounts/admin/sshkeys
+      curl -X POST -u admin:secret -H "Content-Type: text/plain" \
+        --data @/var/gerrit/review_site/etc/admin/ssh-keys/id_admin_rsa.pub \
+        http://${GERRIT_HOST}:${GERRIT_PORT}/a/accounts/admin/sshkeys
 
-      # creating jenkins user
-      if cat /opt/data/jenkins/.ssh/id_rsa.pub | ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p ${GERRIT_SSH_PORT} admin@${GERRIT_HOST} gerrit create-account --group "'Non-Interactive Users'" --full-name "'Jenkins'" --http-password jenkins  --ssh-key - jenkins
-      then
-        echo "Jenkins account has been successfully created"
-      else
-        echo "Adding Jenkins account has been failed or it's already exist"
-      fi
+      # Create groups in gerrit
+      MANAGE_GERRIT="ssh -p ${GERRIT_SSH_PORT} admin@${GERRIT_HOST} gerrit"
+      ${MANAGE_GERRIT} create-group --description \
+        "'Grants all the permissions needed to set up a new project'" \
+        --visible-to-all "'Project Bootstrappers'"
+      ${MANAGE_GERRIT} create-group --description \
+        "'Contains Jenkins and any other CI tools that get +2/-2 access on reviews'" \
+        --visible-to-all "'Continuous Integration Tools'"
 
-      # Create ssh config for Jenkins
-      cat << EOF > /opt/data/jenkins/.ssh/config
-      Host gerrit*
-       HostName gerrit
-       User jenkins
-       StrictHostKeyChecking no
-       UserKnownHostsFile /dev/null
-       IdentityFile /var/lib/jenkins/.ssh/id_rsa
-       IdentitiesOnly yes
+      # Create users in gerrit
+      cat /opt/data/jenkins/.ssh/id_rsa.pub | ${MANAGE_GERRIT} create-account \
+        --group "'Continuous Integration Tools'" --group "'Non-Interactive Users'" \
+        --full-name "'Jenkins'" --http-password jenkins --ssh-key - jenkins
+
+      cat /opt/data/jenkins/.ssh/id_rsa.pub | ${MANAGE_GERRIT} create-account \
+        --group "'Project Bootstrappers'" --group "'Administrators'" \
+        --full-name "'Project Creator'" --http-password bootstrapper --ssh-key - project-creator
+
+      # Manage permissions
+      cat << EOF > /tmp/all-Projects
+      [project]
+          description = Access inherited by all other projects.
+      [receive]
+          requireContributorAgreement = false
+          requireSignedOffBy = false
+          requireChangeId = true
+      [submit]
+          mergeContent = true
+      [capability]
+          accessDatabase = group Administrators
+          administrateServer = group Administrators
+          createProject = group Project Bootstrappers
+          killTask = group Administrators
+          priority = batch group Non-Interactive Users
+          runAs = group Project Bootstrappers
+          streamEvents = group Registered Users
+      [access "refs/*"]
+          create = group Project Bootstrappers
+          forgeAuthor = group Registered Users
+          forgeCommitter = group Project Bootstrappers
+          push = +force group Project Bootstrappers
+          pushMerge = group Project Bootstrappers
+          pushSignedTag = group Project Bootstrappers
+          pushTag = group Continuous Integration Tools
+          pushTag = group Project Bootstrappers
+          read = group Administrators
+          read = group Anonymous Users
+          editTopicName = group Registered Users
+      [access "refs/drafts/*"]
+          push = block group Registered Users
+      [access "refs/for/refs/*"]
+          push = group Registered Users
+          pushMerge = group Administrators
+      [access "refs/heads/*"]
+          abandon = group Administrators
+          abandon = group Change Owner
+          abandon = group Project Bootstrappers
+          label-Code-Review = -2..+2 group Administrators
+          label-Code-Review = -2..+2 group Project Bootstrappers
+          label-Code-Review = -1..+1 group Registered Users
+          label-Verified = -2..+2 group Administrators
+          label-Verified = -2..+2 group Continuous Integration Tools
+          label-Verified = -2..+2 group Project Bootstrappers
+          label-Workflow = -1..+1 group Administrators
+          label-Workflow = -1..+0 group Change Owner
+          label-Workflow = -1..+1 group Project Bootstrappers
+          rebase = group Registered Users
+          submit = group Administrators
+          submit = group Continuous Integration Tools
+          submit = group Project Bootstrappers
+      [access "refs/meta/config"]
+          read = group Project Owners
+      [label "Code-Review"]
+          abbreviation = R
+          copyAllScoresOnTrivialRebase = true
+          copyAllScoresIfNoCodeChange = true
+          copyMinScore = true
+          function = MaxWithBlock
+          value = -2 This shall not be merged
+          value = -1 This patch needs further work before it can be merged
+          value = 0 No score
+          value = +1 Looks good to me, but someone else must approve
+          value = +2 Looks good to me, approved
+      [label "Verified"]
+          function = MaxWithBlock
+          value = -2 Fails
+          value = -1 Doesn't seem to work
+          value = 0 No score
+          value = +1 Works for me
+          value = +2 Verified
+      [label "Workflow"]
+          function = MaxWithBlock
+          value = -1 Work in progress
+          value = 0 Ready for reviews
+          value = +1 Approved
       EOF
+      TMP_DIR="/tmp/all-projects-tmp"
+      GIT_OPTIONS="--git-dir=${TMP_DIR}/.git --work-tree=${TMP_DIR}"
+      PROJECT_ADDRESS=ssh://admin@${GERRIT_HOST}:${GERRIT_SSH_PORT}/All-Projects
 
-      # initial conf og Gerrit
-      CHECKOUT_DIR=/git
-      #checkout project.config from All-Project.git
-      [ -d ${CHECKOUT_DIR} ] && mv ${CHECKOUT_DIR} ${CHECKOUT_DIR}.$$
-      mkdir ${CHECKOUT_DIR}
+      rm -rf ${TMP_DIR}
+      git clone ${PROJECT_ADDRESS} ${TMP_DIR}
 
-      git init ${CHECKOUT_DIR}
-      cd ${CHECKOUT_DIR}
+      git ${GIT_OPTIONS} fetch ${PROJECT_ADDRESS} \
+        +refs/meta/config:refs/remotes/gerrit-meta/config
+      git ${GIT_OPTIONS} remote update --prune
+      git ${GIT_OPTIONS} checkout -B config remotes/gerrit-meta/config
 
-      eval "$(ssh-agent -s)"
-      ssh-add /var/gerrit/review_site/etc/admin/ssh-keys/id_admin_rsa
+      cp /tmp/all-Projects ${TMP_DIR}/project.config
+      ${MANAGE_GERRIT} ls-groups -v | \
+        awk '-F\t' '$1 != "Administrators" && $1 != "Non-Interactive Users" \
+        {print $2,"\t",$1}' >> ${TMP_DIR}/groups
 
-      #git config
-      git config user.name  admin
-      git config user.email admin@example.com
-      git config core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /var/gerrit/review_site/etc/admin/ssh-keys/id_admin_rsa'
+      echo -e 'global:Change-Owner\t\t\t\tChange Owner' >> ${TMP_DIR}/groups
 
-      git remote add origin ssh://admin@${GERRIT_HOST}:${GERRIT_SSH_PORT}/All-Projects
-      #checkout project.config
-      git fetch -q origin refs/meta/config:refs/remotes/origin/meta/config
-      git checkout meta/config
+      git ${GIT_OPTIONS} commit -a -m'Update project config.'
+      git ${GIT_OPTIONS} push ${PROJECT_ADDRESS} HEAD:refs/meta/config
 
-      #add label.Jenkins-Verified
-      git config -f project.config label.Verified.function MaxWithBlock
-      git config -f project.config --add label.Verified.defaultValue  0
-      git config -f project.config --add label.Verified.value "-1 Fails"
-      git config -f project.config --add label.Verified.value "0 No score"
-      git config -f project.config --add label.Verified.value "+1 Verified"
-
-      #add label.Sonar-Verified
-      git config -f project.config label.Sonar-Verified.function MaxWithBlock
-      git config -f project.config --add label.Sonar-Verified.defaultValue  0
-      git config -f project.config --add label.Sonar-Verified.value "-1 Fails"
-      git config -f project.config --add label.Sonar-Verified.value "0 No score"
-      git config -f project.config --add label.Sonar-Verified.value "+1 Verified"
-
-      ##commit and push back
-      git add .
-      git commit -a -m "Added label - Verified and Sonar-Verified"
-
-      #Change global access right
-      ##Remove anonymous access right.
-      git config -f project.config --unset access.refs/*.read "group Anonymous Users"
-      ##add Jenkins access and verify right
-      git config -f project.config --add access.refs/heads/*.read "group Non-Interactive Users"
-      git config -f project.config --add access.refs/tags/*.read "group Non-Interactive Users"
-      git config -f project.config --add access.refs/heads/*.label-Code-Review "-1..+1 group Non-Interactive Users"
-      git config -f project.config --add access.refs/heads/*.label-Verified "-1..+1 group Non-Interactive Users"
-      git config -f project.config --add access.refs/heads/*.label-Sonar-Verified "-1..+1 group Non-Interactive Users"
-      ##add project owners' right to add verify flag
-      git config -f project.config --add access.refs/heads/*.label-Verified "-1..+1 group Project Owners"
-      git config -f project.config --add access.refs/heads/*.label-Sonar-Verified "-1..+1 group Project Owners"
-      ##commit and push back
-      git commit -a -m "Change access right." -m "Add access right for Jenkins. Remove anonymous access right"
-      git push origin meta/config:meta/config
-
-      cd -
-      rm -rf ${CHECKOUT_DIR}
-      kill ${SSH_AGENT_PID}
+      rm -rf ${TMP_DIR}
 
       #change default gerrit admin password
-      ssh -oStrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i id_admin_rsa -p ${GERRIT_SSH_PORT} admin@${GERRIT_HOST} gerrit set-account --http-password ${GERRIT_PASSWORD} admin
+      ${MANAGE_GERRIT} set-account --http-password ${GERRIT_PASSWORD} admin
 
       # Enable hideci.js
       cd /opt/data/gerrit_site/etc/
@@ -128,6 +177,21 @@ objects:
         '<p><a href="[^"]+job/([^/]+)/[0-9/]+" target="_blank" rel="nofollow">([^<]+)</a> : ([^ ]+)([^<]*)</p>'
       git config -f gerrit.config 'commentlink.testresult.html' \
         '<li class="comment_test"><span class="comment_test_name"><a href="$2" rel="nofollow">$1</a></span> <span class="comment_test_result"><span class="result_$3">$3</span>$4</span></li>'
+      ### end of gerrit configuration
+
+      ### Jenkins to Gerrit configuration
+      # Create ssh config for Jenkins
+      cat << EOF > /opt/data/jenkins/.ssh/config
+      Host gerrit*
+        HostName gerrit
+        User jenkins
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile /var/lib/jenkins/.ssh/id_rsa
+        IdentitiesOnly yes
+      EOF
+      ############ end
+
 - apiVersion: batch/v1
   kind: Job
   metadata:
