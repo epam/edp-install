@@ -119,7 +119,7 @@ objects:
             value: ${JENKINS_PASSWORD}
           - name: JENKINS_UI_URL
             value: ${JENKINS_UI_URL}
-          image: openshift/jenkins-2-centos7:latest
+          image: openshift/jenkins-2-centos7:${JENKINS_VERSION}
           imagePullPolicy: IfNotPresent
           readinessProbe:
             httpGet:
@@ -311,6 +311,10 @@ objects:
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
 #--------------------------------------------------------------------------------------
 parameters:
+- description: Jenkins version
+  displayName: Jenkins version
+  name: JENKINS_VERSION
+  value: "v3.9"
 - description: Jenkins frontent external URL
   displayName: Jenkins frontent external URL
   name: JENKINS_UI_URL

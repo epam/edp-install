@@ -1,3 +1,4 @@
+
 import groovy.json.*
 
 def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath,  devopsRepository) {
@@ -35,18 +36,15 @@ def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, 
     }
 }
 
-def appSettings = new File("${JENKINS_HOME}/app-settings/app.settings.json")
-if (appSettings.exists()) {
+def gerritSshPort = "${GERRIT_SSH_PORT}" ? "${GERRIT_SSH_PORT}" : {{ gerrit_ssh_port.stdout }}
+def devopsRepository = "ssh://jenkins@gerrit:${gerritSshPort}/{{ project_gitlab_edp }}"
+def pipelinePath = 'application-pipelines/jenkins'
 
-    def slurper = new JsonSlurperClassic()
-    def apps = slurper.parseText(appSettings.text)
-    for (app in apps) {
-        gerritSshPort = "${GERRIT_SSH_PORT}" ? "${GERRIT_SSH_PORT}" : {{ gerrit_ssh_port.stdout }}
-        def applicationName = app.name
-        def devopsRepository = "ssh://jenkins@gerrit:${gerritSshPort}/{{ project_gitlab_edp }}"
-        def pipelinePath = 'application-pipelines/jenkins'
-
+['app.settings.json', 'auto-test.settings.json'].each() { settingsFile ->
+    new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/${settingsFile}").text).each() { item ->
+        def applicationName = item.name
         createPipeline("Gerrit-precommit-${applicationName}", applicationName, "${pipelinePath}/Gerrit-precommit-pipeline.groovy", pipelinePath,  devopsRepository)
-        createPipeline("Gerrit-postcommit-${applicationName}", applicationName, "${pipelinePath}/Gerrit-postcommit-pipeline.groovy", pipelinePath,  devopsRepository)
+        if (settingsFile == 'app.settings.json')
+            createPipeline("Gerrit-postcommit-${applicationName}", applicationName, "${pipelinePath}/Gerrit-postcommit-pipeline.groovy", pipelinePath,  devopsRepository)
     }
 }

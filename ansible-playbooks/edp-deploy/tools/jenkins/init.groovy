@@ -118,12 +118,14 @@ credentials_store.addCredentials(global_domain, credentials)
 def jobName = "Job-provisioning"
 project = Jenkins.instance.createProject(FreeStyleProject, jobName)
 project.getBuildersList().clear()
+
 // Copy app settings
-def checkDir = "[[ -d ${JENKINS_HOME}/app-settings ]] || mkdir \"${JENKINS_HOME}/app-settings\"\n"
-def copyJson = $/oc get cm project-settings --template='{{ index .data "app.settings.json" }}' > ${
-    JENKINS_HOME
-}/app-settings/app.settings.json/$
-project.buildersList.add(new Shell(checkDir + copyJson))
+def checkDir = "mkdir -p \"${JENKINS_HOME}/project-settings\"\n"
+def getAppSettings = $/oc get cm project-settings --template='{{ index .data "app.settings.json" }}' > \
+${JENKINS_HOME}/project-settings/app.settings.json/$
+def getAutotestSettings = $/oc get cm project-settings --template='{{ index .data "auto-test.settings.json" }}' > \
+${JENKINS_HOME}/project-settings/auto-test.settings.json/$
+project.buildersList.add(new Shell(checkDir + getAppSettings + "\n" + getAutotestSettings + "\n"))
 
 executeDslScripts = new ExecuteDslScripts()
 executeDslScripts.setTargets("*.groovy")

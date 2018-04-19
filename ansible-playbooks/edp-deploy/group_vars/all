@@ -33,6 +33,7 @@ secrets:
     db_password: keycloak
 tools:
   jenkins:
+    version: "{{ jenkins_version | default('v3.9') }}"
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
     password: "{{ jenkins_password | default('password') }}"
     fs_type: "{{ jenkins_fs_type | default('gluster') }}"
