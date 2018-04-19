@@ -12,7 +12,8 @@ def run(vars) {
             openshift.withProject(vars.deployProject) {
                 openshift.create(openshift.process(template,
                         "-p APP_IMAGE=${vars.pipelineProject}/${application.name}",
-                        "-p APP_VERSION=${application.version}")
+                        "-p APP_VERSION=${application.version}",
+                        "-p NAMESPACE=${vars.deployProject}")
                 )
             }
         }

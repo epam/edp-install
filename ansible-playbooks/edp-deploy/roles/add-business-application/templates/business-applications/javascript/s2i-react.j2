@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: s2i-js
+spec:
+  dockerImageRepository: centos/nodejs-8-centos7
+  lookupPolicy:
+    local: false
+  tags:
+  - from:
+      kind: DockerImage
+      name: centos/nodejs-8-centos7:latest
+    name: "latest"
+    referencePolicy:
+      type: Source

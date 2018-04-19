@@ -7,6 +7,15 @@
   set_fact:
     docker_registry_url: "{{ docker_registry.stdout }}"
 
+- name: "Get wildcard from user-settings cm"
+  shell: |
+   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.dns_wildcard }'
+  register: wildcard
+
+- name: "Set variable with wildcard"
+  set_fact:
+    dns_wildcard: "{{ wildcard.stdout }}"
+
 - name: "Create directory for business apps templates"
   file:
     path: "{{ templates_dir }}/business-apps"
