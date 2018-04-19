@@ -1,52 +1,38 @@
 import groovy.json.*
 import org.apache.commons.lang.RandomStringUtils
+import hudson.FilePath
 
-void runStage(name, vars) {
-    def source = null
-    def fileList = []
-    def typesList = []
-    def stageIsSkipped = true
-    def applicationTool = vars.applicationMap.build_tool.toLowerCase()
+void runStage(vars, stageDirectory, stageName) {
+    def applicationType = vars.itemMap.type
+    def applicationBuildTool = vars.itemMap.build_tool.toLowerCase()
     try {
-        exists = fileExists "${applicationTool}.groovy"
-        if (exists) {
-            source = load "${applicationTool}.groovy"
-            println("[JENKINS] Stage is found, we will use ${applicationTool}.groovy file")
-            stageIsSkipped = false
-        } else {
-            fileList = sh(
-                    script: "ls",
-                    returnStdout: true
-            ).trim().tokenize()
-            println("[JENKINS][DEBUG] Filelist - ${fileList}")
-            fileList.each { file ->
-                typesList = file.replaceAll('.groovy', '').tokenize('_')
-                if (applicationTool in typesList) {
-                    println("[JENKINS][DEBUG] Stage is found, we will use ${file} file")
-                    source = load "${file}"
-                    stageIsSkipped = false
-                    return true
-                }
+        def stageExecutionFile = new FilePath(Jenkins.getInstance().getComputer(env['NODE_NAME']).getChannel(),
+                "${vars.stagesRoot}/${stageDirectory}/${applicationType}/${applicationBuildTool}.groovy")
+        if (stageExecutionFile.exists()) {
+            println("[JENKINS][DEBUG] Stage execution file for stage ${stageName} for type ${applicationType}" +
+                    " and build tool ${applicationBuildTool} has been found")
+            dir("${vars.stagesRoot}/${stageDirectory}/${applicationType}") {
+                def source = load "${applicationBuildTool}.groovy"
+                if (!stageName)
+                    source.run(vars)
+                else
+                    stage(stageName) { source.run(vars) }
             }
         }
-
-        if (stageIsSkipped) {
-            echo "[JENKINS][DEBUG] STAGE ${name} WAS SKIPPED"
-            return
-        }
-
-        if (!name)
-            source.run(vars)
         else
-            stage(name) { source.run(vars) }
+            println("[JENKINS][DEBUG] Stage execution file for stage ${stageName} for type ${applicationType}" +
+                    " and build tool ${applicationBuildTool} has not been found. Stage ${stageName} is skiped.")
     }
     catch (Exception ex) {
         echo "${ex.getMessage()}"
-        failJob("[JENKINS][ERROR] ${name}_STAGE: For the service ${vars.applicationMap.name} has been failed")
+        failJob("[JENKINS][ERROR] Execution stage ${stageName} for the service ${vars.itemMap.name} has been failed")
     }
 }
 
 def getConstants(vars) {
+    BUSINESS_APPLICATION_TYPE="business"
+    AUTOTEST_APPLICATION_TYPE="autotest"
+
     DEFAULT_OPERATIONS_TIMEOUT = "30"
     DEFAULT_GERRIT_AUTOUSER = "jenkins"
     DEFAULT_GERRIT_HOST = "gerrit"
@@ -58,6 +44,7 @@ def getConstants(vars) {
     vars['configMapName'] = 'project-settings'
     vars['envSettingsKey'] = 'env.settings.json'
     vars['appSettingsKey'] = 'app.settings.json'
+    vars['atSettingsKey'] = 'auto-test.settings.json'
 
     vars['gerritCredentials'] = env.GERRIT_CREDENTIALS ? GERRIT_CREDENTIALS : DEFAULT_GERRIT_CREDENTIALS
     vars['gerritAutoUser'] = env.GERRIT_AUTOUSER ? GERRIT_AUTOUSER : DEFAULT_GERRIT_AUTOUSER
@@ -74,7 +61,7 @@ def getConstants(vars) {
             returnStdout: true
     ).trim()
 
-    [vars.envSettingsKey, vars.appSettingsKey].each() { key ->
+    [vars.envSettingsKey, vars.appSettingsKey, vars.atSettingsKey].each() { key ->
         try {
             def settingsJson = sh(
                     script: "oc get cm ${vars.configMapName} --template='{{ index .data \"${key}\" }}'",
@@ -91,20 +78,12 @@ def getConstants(vars) {
     vars['nexusMavenRepositoryUrl'] = "http://nexus:8081/repository/maven"
 }
 
-def getApplicationMap(name) {
-    for (applicationItem in vars["${vars.appSettingsKey}"]) {
-        if (applicationItem.name == name)
-            return(applicationItem)
+def getItemMap(name, configMapKey) {
+    for (item in vars["${configMapKey}"]) {
+        if (item.name == name)
+            return (item)
     }
-    return(null)
-}
-
-def getEnvironmentMap(name) {
-    for (environmentItem in vars["${vars.envSettingsKey}"]) {
-        if (environmentItem.name == name)
-            return(environmentItem)
-    }
-    return(null)
+    return (null)
 }
 
 void failJob(failMessage) {
@@ -116,7 +95,7 @@ void failJob(failMessage) {
 
 void getDebugInfo(vars) {
     def debugOutput = ""
-    vars.keySet().each{ key ->
+    vars.keySet().each { key ->
         debugOutput = debugOutput + "${key}=${vars["${key}"]}\n"
     }
     println("[JENKINS][DEGUG] Pipeline's variables:\n${debugOutput}")

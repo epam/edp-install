@@ -1,11 +1,11 @@
 def run(vars) {
     openshift.withCluster() {
         openshift.withProject() {
-            if (!openshift.selector("buildconfig", "${vars.applicationMap.name}").exists())
-                openshift.newBuild("--name=${vars.applicationMap.name}", "--image-stream=s2i-${vars.applicationMap.language.toLowerCase()}", "--binary=true")
-            openshift.selector("bc", "${vars.applicationMap.name}").startBuild("--from-dir=${vars.workDir}/target", "--wait=true")
+            if (!openshift.selector("buildconfig", "${vars.itemMap.name}").exists())
+                openshift.newBuild("--name=${vars.itemMap.name}", "--image-stream=s2i-${vars.itemMap.language.toLowerCase()}", "--binary=true")
+            openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-dir=${vars.workDir}/target", "--wait=true")
             if (vars.promoteImage) {
-                openshift.tag("${openshift.project()}/${vars.applicationMap.name}:latest", "${vars.targetProject}/${vars.applicationMap.name}:latest")
+                openshift.tag("${openshift.project()}/${vars.itemMap.name}:latest", "${vars.targetProject}/${vars.itemMap.name}:latest")
                 sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:unauthenticated"
             }
             else

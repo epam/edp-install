@@ -31,7 +31,7 @@ node("master") {
                 application['version'] = "latest"
         }
 
-        vars["projectMap"] = commonLib.getEnvironmentMap(vars.pipelineProject)
+        vars["projectMap"] = commonLib.getItemMap(vars.pipelineProject, vars.envSettingsKey)
         if (!vars["projectMap"])
             commonLib.failJob("[JENKINS][ERROR] Evironment ${vars.pipelineProject} is not found in configmap" +
                     " ${vars.configMapName} key ${vars.envSettingsKey} please check")

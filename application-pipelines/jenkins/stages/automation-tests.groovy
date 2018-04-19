@@ -1,4 +1,5 @@
 import hudson.FilePath
+import groovy.json.*
 
 def run(vars) {
     new File("${vars.workDir}/${vars.atProject}").mkdirs()
@@ -8,7 +9,7 @@ def run(vars) {
                   submoduleCfg                     : [],
                   userRemoteConfigs                : [[url    : "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${vars.atProject}"]]])
 
-        if (!fileExists("${vars.workDir}/${vars.atProject}/run.json"))
+        if (!file.exists("${vars.workDir}/${vars.atProject}/run.json"))
             error "[JENKINS][ERROR] There is no run.json file in the project ${vars.atProject}. Can't define command to run autotests"
 
         def runCommandFile = new FilePath(

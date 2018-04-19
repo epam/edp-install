@@ -18,6 +18,7 @@
     <string>method java.io.File getAbsolutePath</string>
     <string>method java.io.File getName</string>
     <string>method java.io.File getParent</string>
+    <string>method java.io.File mkdirs</string>
     <string>method java.io.Writer write java.lang.String</string>
     <string>method java.lang.AutoCloseable close</string>
     <string>method java.lang.Class isInstance java.lang.Object</string>
@@ -34,6 +35,11 @@
     <string>method java.net.URLConnection setRequestProperty java.lang.String java.lang.String</string>
     <string>method java.util.LinkedHashMap$LinkedHashIterator hasNext</string>
     <string>method java.util.Map size</string>
+    <string>method hudson.FilePath readToString</string>
+    <string>method jenkins.model.Jenkins getComputer java.lang.String</string>
+    <string>method hudson.model.Computer getChannel</string>
+    <string>new hudson.FilePath hudson.remoting.VirtualChannel java.lang.String</string>
+    <string>method hudson.FilePath exists</string>
     <string>method org.jenkinsci.plugins.workflow.job.WorkflowRun doStop</string>
     <string>method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper build</string>
     <string>new groovy.json.JsonBuilder java.lang.Object</string>

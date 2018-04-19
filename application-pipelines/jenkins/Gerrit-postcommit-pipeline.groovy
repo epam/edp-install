@@ -31,15 +31,17 @@ node("master") {
             vars['promoteImage'] = false
         }
         vars['serviceBranch'] = env.GERRIT_BRANCH ? env.GERRIT_BRANCH : env.SERVICE_BRANCH
-        vars["applicationMap"] = commonLib.getApplicationMap(vars.gerritProject)
-        if (!vars["applicationMap"])
+        vars["itemMap"] = commonLib.getItemMap(vars.gerritProject, vars.appSettingsKey)
+        if (!vars["itemMap"])
             commonLib.failJob("[JENKINS][ERROR] Application ${vars.gerritProject} is not found in configmap" +
                     " ${vars.configMapName} key ${vars.appSettingsKey} please check")
+        vars['itemMap']['type'] = BUSINESS_APPLICATION_TYPE
     }
 }
 
-node(vars.applicationMap.build_tool.toLowerCase()) {
+node(vars.itemMap.build_tool.toLowerCase()) {
     vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
+    vars['stagesRoot'] = "${vars.devopsRoot}/${vars.pipelinesPath}/stages"
     try {
         dir("${vars.devopsRoot}") {
             unstash 'devops'
@@ -51,14 +53,14 @@ node(vars.applicationMap.build_tool.toLowerCase()) {
 
     commonLib.getDebugInfo(vars)
     currentBuild.displayName = "${currentBuild.number}-${vars.serviceBranch}"
-    currentBuild.description = "Name: ${vars.applicationMap.name}\r\nLanguage: ${vars.applicationMap.language}" +
-            "\r\nBuild tool: ${vars.applicationMap.build_tool}\r\nFramework: ${vars.applicationMap.framework}"
+    currentBuild.description = "Name: ${vars.itemMap.name}\r\nLanguage: ${vars.itemMap.language}" +
+            "\r\nBuild tool: ${vars.itemMap.build_tool}\r\nFramework: ${vars.itemMap.framework}"
 
-    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/checkout/") { commonLib.runStage("CHECKOUT", vars) }
-    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/compile/") { commonLib.runStage("COMPILE", vars) }
-    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/unit-tests/") { commonLib.runStage("UNIT-TESTS", vars) }
-    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/sonar/") { commonLib.runStage("SONAR", vars) }
-    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/build/") { commonLib.runStage("BUILD", vars) }
-    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/push-to-nexus/") { commonLib.runStage("PUSH-TO-NEXUS", vars) }
-    dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/run-build-config/") { commonLib.runStage("RUN-BUILD-CONFIG", vars) }
+    commonLib.runStage(vars, "checkout","CHECKOUT")
+    commonLib.runStage(vars, "compile","COMPILE")
+    commonLib.runStage(vars, "tests", "TESTS")
+    commonLib.runStage(vars, "sonar", "SONAR")
+    commonLib.runStage(vars, "build", "BUILD")
+    commonLib.runStage(vars, "push-to-nexus", "PUSH-TO-NEXUS")
+    commonLib.runStage(vars, "run-build-config", "RUN-BUILD-CONFIG")
 }
