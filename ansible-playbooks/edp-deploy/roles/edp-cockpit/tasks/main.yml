@@ -9,10 +9,13 @@
     - '{{ templates_dir }}/add-business-application.yaml'
     - '{{ templates_dir }}/add-environments.yaml'
 
-- name: "Install config map for storing app types. Bind role with service account. Upload template for cockpit"
+- name: "Install config map for storing app types. Install config map for storing autotest types.
+        Bind role with service account. Upload template for cockpit"
   shell: "{{ item }}"
   with_items:
-    - "{{ ocadm }} -n {{ project_cockpit }} create configmap app-types --from-file {{ templates_dir }}/edp-cockpit/app-types.json"
+    - "{{ ocadm }} -n {{ project_cockpit }} create configmap app-types
+     --from-file=app-types.json={{ templates_dir }}/edp-cockpit/app-types.json
+     --from-file=autotest-types.json={{ templates_dir }}/edp-cockpit/autotest-types.json"
     - "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cockpit }}:cockpit"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-business-application.yaml"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-environments.yaml"

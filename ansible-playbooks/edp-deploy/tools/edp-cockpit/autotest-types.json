@@ -1,0 +1,8 @@
+{
+  "buildTools": [
+    "Maven"
+  ],
+  "reportFrameworks": [
+    "Allure"
+  ]
+}

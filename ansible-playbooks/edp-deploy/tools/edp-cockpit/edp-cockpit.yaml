@@ -98,6 +98,11 @@ objects:
                 key: app-types.json
           - name: OPENSHIFT_TRUST_CERTIFICATES
             value: ${OPENSHIFT_TRUST_CERTIFICATES}
+          - name: EDP_AUTOTEST_TYPES
+            valueFrom:
+              configMapKeyRef:
+                name: app-types
+                key: autotest-types.json
     triggers:
     - type: ConfigChange
 
