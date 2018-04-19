@@ -91,6 +91,10 @@
      git config user.email "{{ user_mail.stdout }}"
      git config user.name "{{ username.stdout }}"
      ssh-agent bash -c 'ssh-add {{ work_dir }}/private.key; git add . && git commit -m "Add pipelines" && git push origin master'
+    register: push_output
+    until: push_output.rc == 0
+    retries: 5
+    delay: 1
   when: edp_project_existence.status == 404
 
 - block:
@@ -104,6 +108,10 @@
       accept_hostkey: true
       force: true
     ignore_errors: true
+    register: clone_output
+    until: "'Failed to checkout branch master' not in clone_output.msg"
+    retries: 5
+    delay: 1
   when: edp_project_existence.status == 200
 
 - include_tasks: roles/common/tasks/clone-repository-to-gerrit.yml gitlab_host={{ gitlab_hostname.stdout }}
