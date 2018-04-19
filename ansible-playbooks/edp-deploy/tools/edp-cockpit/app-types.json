@@ -7,5 +7,14 @@
     "frameworks": [
       "SpringBoot"
     ]
+  },
+  {
+    "language": "JavaScript",
+    "buildTools": [
+      "NPM"
+    ],
+    "frameworks": [
+      "React"
+    ]
   }
 ]
