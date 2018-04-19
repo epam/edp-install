@@ -45,6 +45,8 @@ objects:
             - "-e build_tool=${APPLICATION_BUILD_TOOL}"
             - "-e framework=${APPLICATION_FRAMEWORK}"
             - "-e route=${NEED_ROUTE}"
+            - "-e route_site=${ROUTE_SITE}"
+            - "-e route_path=${ROUTE_PATH}"
             - "ansible-playbooks/edp-deploy/add-business-application.yml"
           env:
           - name: PROJECT_CICD
@@ -105,3 +107,11 @@ parameters:
   description: Boolean flag for route necessity
   name: NEED_ROUTE
   value: "false"
+- displayName: Site that will be used to build public url for route
+  description: Site that will be used to build public url for route
+  name: ROUTE_SITE
+  value: "site"
+- displayName: Path that will be added to public host
+  description: Path that will be added to public host
+  name: ROUTE_PATH
+  value: ""
