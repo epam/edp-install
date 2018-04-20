@@ -61,6 +61,11 @@ def getConstants(vars) {
             returnStdout: true
     ).trim()
 
+    vars["wildcard"] = sh(
+            script: "oc get cm user-settings -o jsonpath='{.data.dns_wildcard}'",
+            returnStdout: true
+    ).trim()
+
     [vars.envSettingsKey, vars.appSettingsKey, vars.atSettingsKey].each() { key ->
         try {
             def settingsJson = sh(

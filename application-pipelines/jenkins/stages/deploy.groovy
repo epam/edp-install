@@ -16,6 +16,18 @@ def run(vars) {
                         "-p NAMESPACE=${vars.deployProject}")
                 )
             }
+
+            println("[JENKINS][DEBUG] Testing deployment - ${application.name} in ${vars.deployProject}")
+            try {
+                openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: "${application.name}",
+                        namespace: "${vars.deployProject}", replicaCount: '1', verbose: 'false',
+                        verifyReplicaCount: 'true', waitTime: '600', waitUnit: 'sec'
+                println("[JENKINS][DEBUG] Application ${application.name} in project ${vars.deployProject} deployed")
+            }
+            catch (Exception verifyDeploymentException) {
+                commonLib.failJob("[JENKINS][ERROR] ${application.name} deploy have been failed. Reason - ${verifyDeploymentException}")
+            }
+
         }
     }
     this.result = "success"

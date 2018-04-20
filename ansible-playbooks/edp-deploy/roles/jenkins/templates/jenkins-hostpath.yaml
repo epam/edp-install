@@ -115,22 +115,22 @@ objects:
           - name: JNLP_SERVICE_NAME
             value: jenkins-jnlp
           - name: INSTALL_PLUGINS
-            value: "blueocean:1.5.0, blueocean-rest:1.5.0,blueocean-git-pipeline:1.5.0,display-url-api:2.2.0,pubsub-light:1.12,
-                               credentials:2.1.14,cloudbees-folder:6.1.2,branch-api:2.0.11,workflow-multibranch:2.16, structs:1.10,scm-api:2.2.6,
-                               workflow-step-api:2.14,workflow-api:2.25,workflow-support:2.18,token-macro:2.1,git-client:2.7.0,
-                               icon-shim:2.0.3,maven-plugin:2.17,ace-editor:1.0.1,analysis-core:1.92,analysis-collector:1.52,
-                               authentication-tokens:1.1,checkstyle:3.49,conditional-buildstep:1.3.1,config-file-provider:2.16.2,
-                               dependency-check-jenkins-plugin:2.1.1,docker-commons:1.8,docker-workflow:1.9,durable-task:1.16,
-                               favorite:2.3.1,findbugs:4.71,gerrit-trigger:2.27.5,github-api:1.86,github-branch-source:2.2.3,
-                               github:1.26.0,git:3.8.0,git-server:1.5,handlebars:1.1,jackson2-api:2.7.3,jacoco:2.2.1,javadoc:1.0,job-dsl:1.60,
-                               jquery:1.11.2-0,junit:1.23,mapdb-api:1.0.1.0,matrix-auth:1.7,matrix-project:1.7.1,mercurial:2.3,
-                               metrics:3.1.2.9,momentjs:1.1,parameterized-trigger:2.35.1,pipeline-build-step:2.7,pipeline-graph-analysis:1.6,
-                               pipeline-milestone-step:1.3.1,pipeline-model-api:1.2.7,pipeline-model-definition:1.2.7,pipeline-model-extensions:1.2.7,
-                               pipeline-stage-step:2.2,pipeline-stage-tags-metadata:1.2.7,pipeline-stage-view:2.4,plain-credentials:1.3,pmd:3.49,
-                               run-condition:0.10,sonar-gerrit:2.3,subversion:2.9,workflow-basic-steps:2.3,workflow-cps-global-lib:2.7,
-                               workflow-cps:2.42,workflow-durable-task-step:2.13,workflow-job:2.14.1, workflow-remote-loader:1.2,workflow-scm-step:2.4,
-                               htmlpublisher:1.14,test-results-analyzer:0.3.4,sonar:2.7.1,role-strategy:2.7.0,
-                               greenballs:1.15,keycloak:2.2.0,validating-string-parameter:2.3"
+            value: "allure-jenkins-plugin:2.26.0,blueocean:1.5.0, blueocean-rest:1.5.0,blueocean-git-pipeline:1.5.0,display-url-api:2.2.0,pubsub-light:1.12,
+            credentials:2.1.14,cloudbees-folder:6.1.2,branch-api:2.0.11,workflow-multibranch:2.16, structs:1.10,scm-api:2.2.6,
+            workflow-step-api:2.14,workflow-api:2.25,workflow-support:2.18,token-macro:2.1,git-client:2.7.0,
+            icon-shim:2.0.3,maven-plugin:2.17,ace-editor:1.0.1,analysis-core:1.92,analysis-collector:1.52,
+            authentication-tokens:1.1,checkstyle:3.49,conditional-buildstep:1.3.1,config-file-provider:2.16.2,
+            dependency-check-jenkins-plugin:2.1.1,docker-commons:1.8,docker-workflow:1.9,durable-task:1.16,
+            favorite:2.3.1,findbugs:4.71,gerrit-trigger:2.27.5,github-api:1.86,github-branch-source:2.2.3,
+            github:1.26.0,git:3.8.0,git-server:1.5,handlebars:1.1,jackson2-api:2.7.3,jacoco:2.2.1,javadoc:1.0,job-dsl:1.60,
+            jquery:1.11.2-0,junit:1.23,mapdb-api:1.0.1.0,matrix-auth:1.7,matrix-project:1.11,mercurial:2.3,
+            metrics:3.1.2.9,momentjs:1.1,parameterized-trigger:2.35.1,pipeline-build-step:2.7,pipeline-graph-analysis:1.6,
+            pipeline-milestone-step:1.3.1,pipeline-model-api:1.2.7,pipeline-model-definition:1.2.7,pipeline-model-extensions:1.2.7,
+            pipeline-stage-step:2.2,pipeline-stage-tags-metadata:1.2.7,pipeline-stage-view:2.4,plain-credentials:1.3,pmd:3.49,
+            run-condition:0.10,sonar-gerrit:2.3,subversion:2.9,workflow-basic-steps:2.3,workflow-cps-global-lib:2.7,
+            workflow-cps:2.42,workflow-durable-task-step:2.13,workflow-job:2.14.1, workflow-remote-loader:1.2,workflow-scm-step:2.4,
+            htmlpublisher:1.14,test-results-analyzer:0.3.4,sonar:2.7.1,role-strategy:2.7.0,
+            greenballs:1.15,keycloak:2.2.0,validating-string-parameter:2.3"
           - name: JENKINS_PASSWORD
             value: ${JENKINS_PASSWORD}
           - name: JENKINS_UI_URL

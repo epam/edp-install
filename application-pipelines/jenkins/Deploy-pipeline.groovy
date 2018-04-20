@@ -1,3 +1,5 @@
+import hudson.FilePath
+
 //Define common variables
 vars = [:]
 commonLib = null
@@ -46,6 +48,7 @@ node("master") {
     }
 
     vars.projectMap.get('quality-gates').each() { qualityGate ->
+
         stage(qualityGate['step-name']) {
             try {
                 switch (qualityGate.type) {
@@ -92,6 +95,16 @@ node("master") {
 
             stage = load "${vars.pipelinesPath}/stages/delete-environment.groovy"
             stage.run(vars)
+
+            vars.get(vars.appSettingsKey).each() { application ->
+                if(application.route) {
+                    sh "oc export route -n ${vars.deployProject} ${application.name} | oc patch " +
+                            "--patch='{\"spec\":{\"host\":\"${application.name}-${vars.pipelineProject}.${vars.wildcard}\"}}' " +
+                            "--local=true -f - -o yaml | oc patch --patch='{\"metadata\":{\"name\":\"${application.name}-stable\"}}' " +
+                            "--local=true -f - -o yaml | oc patch --patch='{\"metadata\":{\"namespace\":\"${vars.deployProject}\"}}' " +
+                            "--local=true -f - -o yaml | oc create -f -"
+                }
+            }
         }
     }
 }

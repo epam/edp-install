@@ -91,7 +91,7 @@
      ssh-agent bash -c 'ssh-add {{ post_integration_dir }}/gerrit/gitlab_rsa; git add . && git commit -m "Add pipelines" && git push origin master'
     register: push_output
     until: push_output.rc == 0
-    retries: 5
+    retries: 20
     delay: 1
   when: edp_project_existence.status == 404
 

@@ -1,5 +1,6 @@
 import jenkins.model.*
 import hudson.model.*
+import hudson.tools.*
 import org.csanchez.jenkins.plugins.kubernetes.*
 import hudson.plugins.sonar.*
 import hudson.plugins.sonar.model.*
@@ -18,6 +19,7 @@ import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.common.*
 import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
+import ru.yandex.qatools.allure.jenkins.tools.*
 
 def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
 file = new File("${JENKINS_HOME}/done.txt")
@@ -114,6 +116,14 @@ cmd = [
            |cp ${JENKINS_HOME}/init.groovy.d/dsl/*.groovy ${JENKINS_HOME}/jobs/${jobName}/workspace/
            |""".stripMargin() ]
 println("[DEBUG] ${cmd.execute().text}")
+
+// Configure Allure
+def allureDescriptor = Jenkins.instance.getDescriptor("ru.yandex.qatools.allure.jenkins.tools.AllureCommandlineInstallation")
+def allureInstaller = new AllureCommandlineInstaller("2.6.0")
+def allureInstallerProps = new InstallSourceProperty([allureInstaller])
+def allureInstallation = new AllureCommandlineInstallation("Allure", "", [allureInstallerProps])
+allureDescriptor.setInstallations(allureInstallation)
+allureDescriptor.save()
 
 //================================
 String filename = "${JENKINS_HOME}/done.txt"

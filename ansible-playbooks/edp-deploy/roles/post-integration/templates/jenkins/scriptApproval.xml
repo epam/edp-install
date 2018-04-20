@@ -15,6 +15,7 @@
     <string>method groovy.lang.GString getBytes</string>
     <string>method groovy.lang.GroovyObject getProperty java.lang.String</string>
     <string>method hudson.model.Run getEnvironment</string>
+    <string>method hudson.FilePath readToString</string>
     <string>method java.io.File getAbsolutePath</string>
     <string>method java.io.File getName</string>
     <string>method java.io.File getParent</string>
@@ -50,6 +51,7 @@
     <string>new java.lang.InterruptedException</string>
     <string>new java.net.URI java.lang.String</string>
     <string>new java.util.Date</string>
+    <string>new hudson.FilePath java.io.File</string>
     <string>staticField groovy.io.FileType FILES</string>
     <string>staticMethod com.cloudbees.plugins.credentials.CredentialsProvider lookupCredentials java.lang.Class hudson.model.ItemGroup</string>
     <string>staticMethod java.lang.System getenv java.lang.String</string>
