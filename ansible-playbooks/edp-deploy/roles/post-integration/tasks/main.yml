@@ -1,5 +1,5 @@
 --- # Gerrit post installation
-- name: "Check integration job is finished"
+- name: "Check integration job {{ item }} is finished"
   shell: "\
     {{ ocadm }} -n {{ project_cicd }} get pods --show-all -o json |
     jq -r '.items[] | select (.metadata.name | startswith(\"{{ item }}\"))| .status.phase'"
@@ -20,14 +20,16 @@
   shell: |
    {{ ocadm }} rollout latest jenkins -n {{ project_cicd }}
 
-- name: "Check health of all deployment pods"
-  shell: "{{ ocadm }} -n {{ project_cicd }} rollout status dc/{{ item }}"
+- name: "Check health of {{ item.service }} deployment in project {{ item.project }}"
+  shell: "{{ ocadm }} -n {{ item.project }} rollout status dc/{{ item.service }}"
   register: result
   with_items:
-      - jenkins
-      - gerrit
-      - nexus
-      - sonar
+      - { project: '{{ project_cicd }}', service: 'jenkins' }
+      - { project: '{{ project_cicd }}', service: 'gerrit' }
+      - { project: '{{ project_cicd }}', service: 'nexus' }
+      - { project: '{{ project_cicd }}', service: 'sonar' }
+      - { project: '{{ project_cockpit }}', service: 'edp-cockpit' }
+      - { project: '{{ project_cockpit }}', service: 'keycloak' }
 
 - include_tasks: keycloak_configuration.yml
 - include_tasks: gitlab_gerrit_configuration.yml

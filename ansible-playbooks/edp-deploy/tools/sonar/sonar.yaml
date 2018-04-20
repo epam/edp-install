@@ -119,9 +119,6 @@ objects:
               port: 9000
               path: /
             timeoutSeconds: 5
-          resources:
-            requests:
-              memory: 1Gi
           terminationMessagePath: /dev/termination-log
           volumeMounts:
           - mountPath: /opt/sonarqube/extensions/plugins
@@ -174,6 +171,11 @@ objects:
             valueFrom: { fieldRef: { fieldPath: status.podIP } }
           image: postgres:9.6
           imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 512Mi
+            limits:
+              memory: 512Mi
           ports:
             - containerPort: 5432
               protocol: TCP

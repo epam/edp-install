@@ -16,7 +16,7 @@ objects:
   spec:
     parallelism: 1
     completions: 1
-    activeDeadlineSeconds: 1800
+    activeDeadlineSeconds: 3600
     template:
       metadata:
         name: edp-deploy

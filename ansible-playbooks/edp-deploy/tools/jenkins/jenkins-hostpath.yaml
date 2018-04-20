@@ -148,7 +148,8 @@ objects:
             httpGet:
               path: /login
               port: 8080
-            initialDelaySeconds: 180
+            initialDelaySeconds: 60
+            successThreshold: 1
             timeoutSeconds: 10
           name: ${JENKINS_SERVICE_NAME}
           securityContext:

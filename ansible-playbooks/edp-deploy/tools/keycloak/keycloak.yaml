@@ -138,6 +138,11 @@ objects:
             valueFrom: { fieldRef: { fieldPath: status.podIP } }
           image: postgres:9.6
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: 512Mi
+            limits:
+              memory: 512Mi
           ports:
             - containerPort: 5432
               protocol: TCP

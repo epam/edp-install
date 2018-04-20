@@ -144,6 +144,11 @@ objects:
             valueFrom: { fieldRef: { fieldPath: status.podIP } }
           image: postgres:9.6
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: 512Mi
+            limits:
+              memory: 512Mi
           ports:
             - containerPort: 5432
               protocol: TCP
@@ -162,7 +167,7 @@ objects:
               - sh
               - -c
               - exec pg_isready --host $POD_IP
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             timeoutSeconds: 3
             periodSeconds: 5
           volumeMounts:
@@ -270,7 +275,7 @@ objects:
           - name: ssh
             containerPort: ${GERRIT_SSH_PORT}
           readinessProbe:
-            initialDelaySeconds: 120
+            initialDelaySeconds: 30
             successThreshold: 1
             timeoutSeconds: 3
             periodSeconds: 10
