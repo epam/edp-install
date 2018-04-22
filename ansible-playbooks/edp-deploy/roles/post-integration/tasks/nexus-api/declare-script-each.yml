@@ -1,0 +1,24 @@
+---
+- name: Removing (potential) previously declared Groovy script {{ item }}
+  uri:
+    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/siesta/rest/v1/script/{{ item }}"
+    user: 'admin'
+    password: "{{ secrets.nexus_admin.password }}"
+    method: DELETE
+    force_basic_auth: yes
+    status_code: 204,404
+
+- name: Declaring Groovy script {{ item }}
+  uri:
+    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/siesta/rest/v1/script"
+    user: 'admin'
+    password: "{{ secrets.nexus_admin.password }}"
+    body_format: json
+    method: POST
+    force_basic_auth: yes
+    status_code: 204
+    body:
+      name: "{{ item }}"
+      type: 'groovy'
+      content: "{{ lookup('file', 'nexus/api/' + item + '.groovy') }}"
+

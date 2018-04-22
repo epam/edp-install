@@ -5,11 +5,11 @@
     --template={% raw %}'{{ index .data "id_project_creator_rsa" }}'{% endraw %} | base64 --decode
   register: gerrit_project_creator_ssh
 
-- name: "Get gerrit ssh port"
-  shell: "{{ ocadm }} -n {{ project_cicd }} get configMap gerrit -o=jsonpath={.data.sshPort}"
-  register: "gerrit_ssh_port"
+- local_action: copy content={{ gerrit_project_creator_ssh.stdout }} dest={{ work_dir }}/gerrit_rsa mode=0400
 
-- local_action: copy content={{ gerrit_project_creator_ssh.stdout }} dest={{ work_dir }}/gerrit.key mode=0400
+- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-sshkey-from-secret.yml
+  vars:
+    target_file: "{{ work_dir }}/gitlab_rsa"
 
 - name: "Create .ssh directory"
   file:
@@ -21,11 +21,11 @@
     content: |
       Host gerrit*
         HostName gerrit.{{ project_cicd }}
-        Port {{ gerrit_ssh_port.stdout }}
+        Port {{ gerrit_ssh_port }}
         User project-creator
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
-        IdentityFile {{ work_dir }}/gerrit.key
+        IdentityFile {{ work_dir }}/gerrit_rsa
         IdentitiesOnly yes
 
       Host {{ gitlab_host }}
@@ -33,10 +33,10 @@
         User git
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
-        IdentityFile {{ work_dir }}/private.key
+        IdentityFile {{ work_dir }}/gitlab_rsa
         IdentitiesOnly yes
     dest: ~/.ssh/config
-    force: no
+    force: yes
 
 - name: "Create project in Gerrit"
   shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ project_name }}"

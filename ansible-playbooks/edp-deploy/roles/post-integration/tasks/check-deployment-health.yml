@@ -1,0 +1,3 @@
+---
+- name: "Check health of {{ item.service }} deployment in project {{ item.project }}"
+  shell: "{{ ocadm }} -n {{ item.project }} rollout status dc/{{ item.service }}"

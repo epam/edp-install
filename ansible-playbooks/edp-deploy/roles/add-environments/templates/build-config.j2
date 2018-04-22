@@ -3,9 +3,9 @@
     "kind": "BuildConfig",
     "metadata": {
         "labels": {
-            "name": "{{ env_name | lower }}-deploy-pipeline"
+            "name": "{{ env_name }}-deploy-pipeline"
         },
-        "name": "{{ env_name | lower }}-deploy-pipeline",
+        "name": "{{ env_name }}-deploy-pipeline",
         "namespace": "{{ project_cicd }}"
     },
     "spec": {
@@ -42,7 +42,7 @@
                     "from": {
                         "kind": "ImageStreamTag",
                         "name": "{{ application.name }}:latest",
-                        "namespace": "{{ env_name | lower }}"
+                        "namespace": "{{ env_name }}"
                     }
                 },
                 "type": "ImageChange"

@@ -1,4 +1,9 @@
 --- # Keycloak full installation
+- name: "Copy Keycloack template"
+  template:
+    src: "keycloak.yaml"
+    dest: "{{ templates_dir }}/keycloak/keycloak.yaml"
+
 - name: "Give rights to keycloak account"
   shell: "{{ ocadm }} -n {{ project_cockpit }} adm policy add-scc-to-user anyuid -z keycloak"
 

@@ -1,0 +1,36 @@
+---
+- name: "Reboot Sonar"
+  uri:
+    url: "{{ sonar_api_url }}/system/restart"
+    method: POST
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200
+
+- name: Wait 300 seconds until sonar 9000 port will be available
+  wait_for:
+    host: "sonar.{{ project_cicd }}"
+    port: 9000
+    delay: 30
+    state: drained
+
+- name: "Waiting Sonar is UP"
+  uri:
+    url: "{{ sonar_api_url }}/system/status"
+    method: GET
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200
+  register: result
+  until: result.json.status == "UP"
+  retries: 30
+  delay: 10
+
+- debug:
+    msg: "Sonar is restarted"
+
+

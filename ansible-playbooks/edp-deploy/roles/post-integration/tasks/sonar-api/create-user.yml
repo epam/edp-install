@@ -1,0 +1,24 @@
+---
+- name: "Check user {{ item.login }} exist"
+  uri:
+    url: "{{ sonar_api_url }}/users/search?login={{ item.login }}"
+    method: GET
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200
+  register: result
+
+- block:
+  - name: "Create user {{ item.login }}"
+    uri:
+      url: "{{ sonar_api_url }}/users/create"
+      body: "login={{ item.login }}&name={{ item.name }}&password={{ item.password }}"
+      method: POST
+      return_content: yes
+      user: admin
+      password: "{{ secrets.sonar_admin.password }}"
+      force_basic_auth: "yes"
+      status_code: 200
+  when: item.login not in result.json.users | map(attribute='login') | list

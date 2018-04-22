@@ -1,0 +1,33 @@
+---
+- include_tasks: nexus-api/declare-script-each.yml
+  register: result
+  with_items:
+   - create-blobstore
+   - create-repo-npm-proxy
+   - create-repo-npm-hosted
+   - create-repo-npm-group
+   - setup-privilege
+   - setup-role
+   - setup-user
+
+- include_tasks: nexus-api/create-blobstore-each.yml
+  with_items: "{{ tools.nexus.repos_npm_blob }}"
+
+- include_tasks: nexus-api/create-repo-npm-proxy-each.yml
+  with_items: "{{ tools.nexus.repos_npm_proxy }}"
+
+- include_tasks: nexus-api/create-repo-npm-hosted-each.yml
+  with_items: "{{ tools.nexus.repos_npm_hosted }}"
+
+- include_tasks: nexus-api/create-repo-npm-group-each.yml
+  with_items: "{{ tools.nexus.repos_npm_group }}"
+
+- include_tasks: nexus-api/setup-privilege-each.yml
+  with_items: "{{ tools.nexus.privileges }}"
+
+- include_tasks: nexus-api/setup-role-each.yml
+  with_items: "{{ tools.nexus.roles }}"
+
+- include_tasks: nexus-api/setup-user-each.yml
+  with_items: "{{ tools.nexus.local_users }}"
+

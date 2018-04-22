@@ -1,0 +1,41 @@
+---
+- name: "Login to openshift"
+  shell: "{{ ocadm }} login -u system:admin"
+  register: can_login
+  when: ocadm != "oc"
+
+- fail:
+    msg: "Sorry, we can't login to the cluster. Check permissions on the cluster's side"
+  when: not can_login|skipped and can_login.stdout == "false"
+
+- name: "Get the list of all projects"
+  command: "{{ ocadm }} get project --output=custom-columns=NAME:.metadata.name --no-headers"
+  register: all_oc_projects
+
+- name: Fail if any EDP project already exists
+  fail:
+    msg: "EDP project ({{ item }}) already exists"
+  when: item in all_oc_projects.stdout_lines
+  with_items: "{{ projects_list }}"
+
+- name: "Create project in Openshift, giving rights to admin user on project we've just created"
+  shell: "{{ ocadm }} new-project {{ item }} && {{ ocadm }} adm policy add-role-to-user admin admin -n {{ item }}"
+  with_items: "{{ projects_list }}"
+
+- name: "Switching to CICD project"
+  shell: "{{ ocadm }} project {{ project_cicd }}"
+
+- name: Creates directory for templates
+  file:
+    path: "{{ templates_dir }}/{{ item }}"
+    state: directory
+  with_items:
+    - "{{ tools.keys() }}"
+
+- name: Create ConfigMap with secret name and gitlab group name URL
+  command: |
+    {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
+    --from-literal=gitlab_autouser_secret={{ gitlab_auto_user_secret }}
+    --from-literal=gitlab_group_name_url={{ gitlab_group_name }}
+    --from-literal=projects_suffix={{ projects_suffix }}
+    --from-literal=dns_wildcard={{ dns_wildcard }}

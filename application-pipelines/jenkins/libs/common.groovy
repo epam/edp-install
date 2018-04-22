@@ -6,7 +6,7 @@ void runStage(name, vars) {
     def fileList = []
     def typesList = []
     def stageIsSkipped = true
-    def applicationTool = vars.applicationMap.tool.toLowerCase()
+    def applicationTool = vars.applicationMap.build_tool.toLowerCase()
     try {
         exists = fileExists "${applicationTool}.groovy"
         if (exists) {

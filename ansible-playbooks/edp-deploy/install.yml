@@ -1,6 +1,6 @@
 - hosts: all
   roles:
-    - { role: project, tags: [ 'project' ] }
+    - { role: pre-integration, tags: [ 'pre-integration' ] }
     - { role: secrets, tags: [ 'secrets' ] }
     - { role: gerrit, tags: [ 'gerrit' ] }
     - { role: jenkins, tags: [ 'jenkins' ] }

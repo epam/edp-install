@@ -1,0 +1,29 @@
+---
+- name: "Check {{ item }} plugin is exist"
+  uri:
+    url: "{{ sonar_api_url }}/plugins/installed"
+    method: GET
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200
+  register: result
+
+- block:
+  - name: "Install {{ item }} plugin"
+    uri:
+      url: "{{ sonar_api_url }}/plugins/install"
+      body: "key={{ item }}"
+      method: POST
+      user: admin
+      password: "{{ secrets.sonar_admin.password }}"
+      force_basic_auth: "yes"
+      status_code: 200,204
+      timeout: 60
+
+  - set_fact:
+      sonar_reboot: true
+  when: item not in result.json.plugins | map(attribute='key') | list
+
+

@@ -1,0 +1,24 @@
+---
+- name: "Check group {{ item }} exist"
+  uri:
+    url: "{{ sonar_api_url }}/user_groups/search?q={{ item }}&f=name"
+    method: GET
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200
+  register: result
+
+- block:
+  - name: "Create group {{ item }}"
+    uri:
+      url: "{{ sonar_api_url }}/user_groups/create"
+      body: "name={{ item }}"
+      method: POST
+      return_content: yes
+      user: admin
+      password: "{{ secrets.sonar_admin.password }}"
+      force_basic_auth: "yes"
+      status_code: 200
+  when: item not in result.json.groups | map(attribute='name') | list

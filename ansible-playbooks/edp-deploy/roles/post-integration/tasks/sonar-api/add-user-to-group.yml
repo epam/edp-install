@@ -1,0 +1,11 @@
+---
+- name: "Add user {{ item.login }} to group {{ item.group }}"
+  uri:
+    url: "{{ sonar_api_url }}/user_groups/add_user"
+    body: "name={{ item.group }}&login={{ item.login }}"
+    method: POST
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200,204

@@ -4,7 +4,7 @@
 
 - name: "Generate templates"
   vars:
-    env_name: "{{ item.name }}"
+    env_name: "{{ item.name | lower }}"
     env_triggers: "{{ item.triggers }}"
   template:
     src: build-config.j2
@@ -12,7 +12,7 @@
   with_items: "{{ env_map | list }}"
 
 - name: "Create Pipelines in Openshift"
-  command: |
+  shell: |
    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/{{ item.name }}-bc.json
   with_items: "{{ env_map | list }}"
 
@@ -22,5 +22,5 @@
     dest: "{{ templates_dir }}/deletion-pipeline.json"
 
 - name: "Create deletion pipeline in Openshift"
-  command: |
+  shell : |
    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/deletion-pipeline.json

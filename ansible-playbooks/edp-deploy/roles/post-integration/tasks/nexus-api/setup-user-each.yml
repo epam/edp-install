@@ -1,0 +1,5 @@
+---
+- include_tasks: call-script.yml
+  vars:
+    script_name: setup-user
+    args: "{{ item }}"

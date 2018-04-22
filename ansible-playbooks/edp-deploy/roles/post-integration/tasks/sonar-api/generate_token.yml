@@ -1,0 +1,29 @@
+---
+- name: "Check {{ item.name }} token for user {{ item.login }} exist"
+  uri:
+    url: "{{ sonar_api_url }}/user_tokens/search?login={{ item.login }}"
+    method: GET
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200
+  register: result
+
+- block:
+  - name: "Create {{ item.name }} token for user {{ item.login }}"
+    uri:
+      url: "{{ sonar_api_url }}/user_tokens/generate"
+      body: "login={{ item.login }}&name={{ item.name }}"
+      method: POST
+      return_content: yes
+      user: admin
+      password: "{{ secrets.sonar_admin.password }}"
+      force_basic_auth: "yes"
+      status_code: 200
+    register: user_token
+
+  - set_fact:
+      sonar_token_id: "{{ user_token.json.token }}"
+  when: item.name not in result.json.userTokens | map(attribute='name') | list
+

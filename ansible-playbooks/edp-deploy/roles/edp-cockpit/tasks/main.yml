@@ -1,4 +1,12 @@
 --- # Cockpit full installation
+- name: "Copy EDP-Cockpit templates"
+  template:
+    src: "{{ item }}"
+    dest: "{{ templates_dir }}/cockpit/{{ item }}"
+  with_items:
+    - "edp-cockpit.yaml"
+    - "app-types.json"
+    - "autotest-types.json"
 
 - name: "Set docker image version in add-application template"
   replace:
@@ -15,8 +23,8 @@
   shell: "{{ item }}"
   with_items:
     - "{{ ocadm }} -n {{ project_cockpit }} create configmap app-types
-     --from-file=app-types.json={{ templates_dir }}/edp-cockpit/app-types.json
-     --from-file=autotest-types.json={{ templates_dir }}/edp-cockpit/autotest-types.json"
+     --from-file=app-types.json={{ templates_dir }}/cockpit/app-types.json
+     --from-file=autotest-types.json={{ templates_dir }}/cockpit/autotest-types.json"
     - "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cockpit }}:cockpit"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-business-application.yaml"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-autotests.yaml"
@@ -30,7 +38,7 @@
 
 - name: "Install EDP-Cockpit app"
   command: |
-    {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/edp-cockpit/edp-cockpit.yaml
+    {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/cockpit/edp-cockpit.yaml
     -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
     -p PROJECT_CICD={{ project_cicd }}
     -p OPENSHIFT_TRUST_CERTIFICATES={{ tools.cockpit.openshift_trust_certificates }}

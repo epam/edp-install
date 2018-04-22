@@ -1,11 +1,20 @@
 ---
 - name: "Create projects in Openshift"
-  command: "{{ ocadm }} new-project {{ item.name | lower }}"
-  with_items: " {{ env_map | list }} "
+  shell: >
+    [ "$(oc get projects --no-headers -o custom-columns='NAME:.metadata.name'
+    | egrep '^{{  item.name | lower }}$')" == "" ]
+    && oc new-project {{ item.name | lower }}
+    || echo "Project {{ item.name }} is already exist"
+  with_items: "{{ env_map | list }}"
+  register: result
+  changed_when: '"already" not in result.stdout'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stdout'
 
 - name: "Define access to admin for new projects "
-  command: "{{ ocadm }} adm policy add-role-to-user admin admin -n {{ item.name | lower }}"
+  shell: "{{ ocadm }} adm policy add-role-to-user admin admin -n {{ item.name | lower }}"
   with_items: " {{ env_map | list }}"
 
 - name: "Set cluster-admin access to jenkins user"
-  command: "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:jenkins"
+  shell: "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:jenkins"

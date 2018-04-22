@@ -1,4 +1,9 @@
 --- # Sonar full installation
+- name: "Copy Sonar template"
+  template:
+    src: "sonar.yaml"
+    dest: "{{ templates_dir }}/sonar/sonar.yaml"
+
 - name: "Give rights to sonar account"
   shell: "{{ ocadm }} -n {{ project_cicd }} adm policy add-scc-to-user anyuid -z sonar"
 
@@ -8,24 +13,6 @@
     -p SONAR_VERSION={{ tools.sonar.version }} 
     -p SONAR_VOLUME_CAPACITY={{ tools.sonar.volume_capacity }} 
     -p SONAR_DB_CAPACITY={{ tools.sonar.volume_db_capacity }}
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-- name: "Create Sonar integration config map"
-  command: "{{ ocadm }} -n {{ project_cicd }} create configmap sonar-integration --from-file {{ templates_dir }}/sonar/config.py --from-file={{ templates_dir }}/sonar/java-sonar-way-ext.xml"
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-- name: "Install Sonar-to-Jenkins integration"
-  command: "{{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/sonar/sonar-integration.yaml"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

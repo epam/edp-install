@@ -1,0 +1,53 @@
+---
+- name: "Generate config ssh for jenkins"
+  copy:
+    content: |
+      Host gerrit*
+        HostName gerrit
+        User jenkins
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile /var/lib/jenkins/.ssh/id_rsa
+        IdentitiesOnly yes
+    dest: ~/.ssh/jenkins_config
+    force: no
+
+- name: "Copy Jenkins files"
+  template:
+    src: "jenkins/{{ item }}"
+    dest: "{{ post_integration_dir }}/jenkins/{{ item }}"
+  with_items:
+    - "configuration.groovy"
+    - "jobsprovisioning.groovy"
+    - "scriptApproval.xml"
+    - "init.groovy"
+
+- name: "Create directories in jenkins pods"
+  shell: "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- bash -c 'mkdir -p /var/lib/jenkins/init.groovy.d/dsl'"
+
+- name: "Copy files to jenkins pod"
+  shell: "{{ ocadm }} cp {{ item.src }} {{ project_cicd }}/$({{ jenkins_pod }}):{{ item.dest }}"
+  with_items:
+      - { src: "{{ post_integration_dir }}/jenkins/init.groovy", dest: "/var/lib/jenkins/init.groovy.d/init.groovy"}
+      - { src: "{{ post_integration_dir }}/jenkins/configuration.groovy", dest: "/var/lib/jenkins/init.groovy.d/configuration.groovy"}
+      - { src: "{{ post_integration_dir }}/jenkins/jobsprovisioning.groovy", dest: "/var/lib/jenkins/init.groovy.d/dsl/jobsprovisioning.groovy"}
+      - { src: "{{ post_integration_dir }}/jenkins/scriptApproval.xml", dest: "/var/lib/jenkins/scriptApproval.xml"}
+      - { src: "~/.ssh/jenkins_config", dest: "/var/lib/jenkins/.ssh/config"}
+
+- name: "Restart jenkins"
+  shell: "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- kill 1"
+
+- name: "Pause in order to Jenkins has time to restart"
+  pause:
+    seconds: 15
+
+- name: "Check Jenkins is up"
+  shell: "oc get pod $({{ jenkins_pod }}) --no-headers | awk '{print $2}'"
+  register: result
+  until: result.stdout == "1/1"
+  retries: 30
+  delay: 10
+
+- include_tasks: jenkins-api/create-user.yml
+  with_items: "{{ tools.nexus.local_users }}"
+  when: item.jenkins_id is defined

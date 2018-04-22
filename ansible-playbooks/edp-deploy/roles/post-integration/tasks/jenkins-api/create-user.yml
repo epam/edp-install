@@ -1,0 +1,31 @@
+- name: "Get crumb from Jenkins"
+  uri:
+    url: http://jenkins.{{ project_cicd }}:8080/crumbIssuer/api/json
+    method: GET
+    user: admin
+    password: "{{ tools.jenkins.password }}"
+    force_basic_auth: yes
+  register: crumb
+
+- name: "Create {{ item.username }} user in Jenkins"
+  uri:
+    method: POST
+    url: http://jenkins.{{ project_cicd }}:8080/credentials/store/system/domain/_/createCredentials
+    user: admin
+    password: "{{ tools.jenkins.password }}"
+    force_basic_auth: yes
+    headers:
+      Jenkins-Crumb: "{{ crumb.json.crumb }}"
+    body: |
+      json={
+        "": "0",
+        "credentials": {
+          "scope": "GLOBAL",
+          "id": "{{ item.jenkins_id }}",
+          "username": "{{ item.username }}",
+          "password": "{{ item.password }}",
+          "description": "{{ item.first_name }} {{ item.last_name }}",
+         "$class": "com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl"
+         }
+      }
+    status_code: 200,302

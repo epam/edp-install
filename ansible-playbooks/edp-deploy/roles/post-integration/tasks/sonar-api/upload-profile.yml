@@ -1,0 +1,44 @@
+---
+- name: "Check profile {{ item.name }} exist"
+  uri:
+    url: "{{ sonar_api_url }}/qualityprofiles/search?qualityProfile={{ item.name.replace(' ', '+') }}"
+    method: GET
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200
+  register: result
+
+- set_fact:
+    profile_id: "{{ result.json.profiles[0].key }}"
+  when: item.name in result.json.profiles | map(attribute='name') | list
+
+- block:
+  - name: "Copy quality profile file"
+    template:
+      src: "sonar/{{ item.filename }}"
+      dest: "{{ post_integration_dir }}/sonar/{{ item.filename }}"
+
+  - name: "Upload quality profile {{ item.name }} "
+    shell: >
+      curl  -X "POST" "{{ sonar_api_url }}/qualityprofiles/restore"
+      -H "Content-Type: multipart/form-data; charset=utf-8; boundary=__X_PAW_BOUNDARY__"
+      -u admin:{{ secrets.sonar_admin.password }}
+      -k
+      --form backup=@{{ post_integration_dir }}/sonar/{{ item.filename }}
+
+  - name: "Get profile id"
+    uri:
+      url: "{{ sonar_api_url }}/qualityprofiles/search?qualityProfile={{ item.name.replace(' ', '+') }}"
+      method: GET
+      return_content: yes
+      user: admin
+      password: "{{ secrets.sonar_admin.password }}"
+      force_basic_auth: "yes"
+      status_code: 200
+    register: profiles
+
+  - set_fact:
+      profile_id: "{{ profiles.json.profiles[0].key }}"
+  when: item.name not in result.json.profiles | map(attribute='name') | list

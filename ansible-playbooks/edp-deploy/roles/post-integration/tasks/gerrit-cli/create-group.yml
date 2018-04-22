@@ -1,0 +1,10 @@
+- name: "Create {{ item.name }} groups in Gerrit"
+  shell: >
+    {{ gerrit_manage }} create-group
+    --description \"'{{ item.description }}'\"
+    --visible-to-all \"'{{ item.name }}'\"
+  register: result
+  changed_when: "'already exists' not in result.stderr"
+  failed_when:
+    - "result.rc != 0"
+    - "'already exists' not in result.stderr"

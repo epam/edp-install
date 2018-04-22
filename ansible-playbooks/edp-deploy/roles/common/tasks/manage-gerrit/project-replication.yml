@@ -4,22 +4,63 @@
     {{ ocadm }} get cm gerrit -n {{ project_cicd }} -o yaml
   register: old_replication_config
 
-- local_action: copy content="{{ old_replication_config.stdout }}" dest="/tmp/replication-config"
+- local_action: copy content="{{ old_replication_config.stdout }}" dest="/tmp/replication-configmap.yaml"
 
 - name: "Add replication part for new {{ project_cicd }} project"
   blockinfile:
-    dest: /tmp/replication-config
+    dest: /tmp/replication-configmap.yaml
     insertbefore: '  sshPort:*'
     block: "{{ lookup('template', '../common/templates/replication-conf.j2') }}"
     marker: ""
 
 - name: "Update replication config"
   shell: |
-   {{ ocadm }} replace cm gerrit -n {{ project_cicd }} -f /tmp/replication-config
+   {{ ocadm }} replace cm gerrit -n {{ project_cicd }} -f /tmp/replication-configmap.yaml
 
-- name: "Redeploy Gerrit pod"
+- name: "Save replication configmap to file"
   shell: |
-   {{ ocadm }} rollout latest gerrit -n {{ project_cicd }}
+    {{ ocadm }} get cm gerrit -n {{ project_cicd }} -o jsonpath='{.data.replication\.config}'
+  register: replication_config
 
-- name: "Check gerrit pod is finished"
-  shell: "{{ ocadm }} -n {{ project_cicd }} rollout status dc/gerrit -w"
+- local_action: copy content="{{ replication_config.stdout }}" dest="/tmp/replication.config"
+
+- name: "Get Gerrit ssh port"
+  shell: "{{ ocadm }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].port}'"
+  register: ssh_port
+
+- set_fact:
+    gerrit_pod: "{{ ocadm }} -n {{ project_cicd }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'gerrit-[0-9]+'"
+    gerrit_manage: "ssh gerrit.{{ project_cicd }} gerrit"
+
+- name: "Copy replication config to gerrit pod"
+  shell: "{{ ocadm }} cp /tmp/replication.config {{ project_cicd }}/$({{ gerrit_pod }}):/var/gerrit/review_site/etc/replication.config"
+
+- name: "Get gerrit-admin ssh key from secret"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-admin
+    --template={% raw %}'{{ index .data "id_admin_rsa" }}'{% endraw %} | base64 --decode
+  register: gerrit_admin_ssh
+
+- local_action: copy content={{ gerrit_project_creator_ssh.stdout }} dest={{ work_dir }}/gerrit_rsa mode=0400
+
+- name: "Create .ssh directory"
+  file:
+    path: ~/.ssh
+    state: directory
+
+- name: "Config ssh"
+  copy:
+    content: |
+      Host gerrit*
+        HostName gerrit.{{ project_cicd }}
+        Port {{ ssh_port.stdout }}
+        User project-creator
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ work_dir }}/gerrit_rsa
+        IdentitiesOnly yes
+    dest: ~/.ssh/config
+    force: yes
+
+- name: "Reload replication plugins"
+  shell: "{{ gerrit_manage }} plugin reload replication"

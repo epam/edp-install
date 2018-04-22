@@ -1,0 +1,10 @@
+- name: "Add user {{ item.login }} to group {{ item.group }}"
+  shell: >
+    {{ gerrit_manage }} set-members
+    --add \"'{{ item.login }}'\"
+    \"'{{ item.group }}'\"
+  changed_when: "'already exists' not in result.stderr"
+  register: result
+  failed_when:
+    - "result.rc != 0"
+    - "'already exists' not in result.stderr"

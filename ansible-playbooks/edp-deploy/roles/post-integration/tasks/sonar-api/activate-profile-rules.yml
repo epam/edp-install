@@ -1,0 +1,11 @@
+---
+- name: "Activate rules"
+  uri:
+    url: "{{ sonar_api_url }}/qualityprofiles/activate_rules"
+    body: "activation=true&languages={{ item.languages }}&targetKey={{ item.profile_id }}&statuses=READY"
+    method: POST
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200

@@ -140,7 +140,7 @@ parameters:
   value: 5Gi
 #Sonar parameters
 - displayName: SonarQube version
-  value: "6.7"
+  value: "7.1"
   name: SONAR_VERSION
 - description: Volume space available for SonarQube
   displayName: SonarQube Volume Capacity

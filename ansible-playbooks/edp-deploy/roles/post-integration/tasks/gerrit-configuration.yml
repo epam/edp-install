@@ -1,0 +1,171 @@
+---
+- name: Creates work directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "~/.ssh"
+    - "{{ post_integration_dir }}/gerrit/all-projects"
+
+- stat:
+    path: "{{ post_integration_dir }}/gerrit/gerrit_admin_rsa"
+  register: gerrit_key
+
+- name: "Generate ssh keys for gerrit users"
+  shell: cat /dev/zero | ssh-keygen -b 4096 -t rsa -f {{ post_integration_dir }}/gerrit/{{ item }} -C "edp@example.com" -q -N ""
+  when: gerrit_key.stat.islnk is not defined
+  with_items:
+    - "gerrit_admin_rsa"
+    - "gerrit_project-creator_rsa"
+
+- name: "Create secrets for gerrit users"
+  register: result
+  ignore_errors: true
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create secret generic {{ item.secret_name }}
+    --from-file={{ item.configmap_key }}={{ post_integration_dir }}/gerrit/{{ item.sskkey }}
+    --from-file={{ item.configmap_key }}.pub={{ post_integration_dir }}/gerrit/{{ item.sskkey }}.pub
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+  with_items:
+    - { secret_name: "gerrit-admin", configmap_key: "id_admin_rsa" , sskkey: "gerrit_admin_rsa" }
+    - { secret_name: "gerrit-project-creator", configmap_key: "id_project_creator_rsa" , sskkey: "gerrit_project-creator_rsa" }
+
+- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-sshkey-from-secret.yml
+  vars:
+    target_file: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
+
+- name: "Get GitLab host"
+  shell: |
+    echo "{{ gitlab_group_name }}" | sed -e 's|^[^/]*//||' -e 's|/.*$||'
+  register: gitlab_hostname
+
+- stat:
+    path: "~/.ssh/config"
+  register: ssh_config
+
+- name: "Generate config ssh for gerrit"
+  copy:
+    content: |
+      Host gerrit*
+        HostName gerrit.{{ project_cicd }}
+        User admin
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ post_integration_dir }}/gerrit/gerrit_admin_rsa
+        IdentitiesOnly yes
+
+      Host {{ gitlab_hostname.stdout }}
+        HostName {{ gitlab_hostname.stdout }}
+        User git
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ post_integration_dir }}/gerrit/gitlab_rsa
+        IdentitiesOnly yes
+    dest: ~/.ssh/config
+    force: yes
+  when: ssh_config.stat.islnk is not defined
+
+- include_tasks: gerrit-api/add-sshkey-to-user.yml
+  with_items:
+    - { login: "admin", sshkey: "{{ post_integration_dir }}/gerrit/gerrit_admin_rsa.pub" }
+
+- include_tasks: gerrit-cli/create-group.yml
+  with_items:
+    - { name: "Project Bootstrappers", description: "Grants all the permissions needed to set up a new project" }
+    - { name: "Continuous Integration Tools", description: "Contains Jenkins and any other CI tools that get +2/-2 access on reviews" }
+
+- name: "Create ssh key for Gerrit in Jenkins"
+  shell: "{{ item }}"
+  with_items:
+    - "oc exec -i $({{ jenkins_pod }}) -- bash -c '[ -f $JENKINS_HOME/.ssh/id_rsa ] || ssh-keygen -b 4096 -t rsa -f $JENKINS_HOME/.ssh/id_rsa -q -N \"\"'"
+    - "oc exec -i $({{ jenkins_pod }}) -- bash -c 'cat $JENKINS_HOME/.ssh/id_rsa.pub' > {{ post_integration_dir }}/gerrit/gerrit_jenkins_rsa.pub"
+
+- include_tasks: gerrit-cli/create-user.yml
+  with_items:
+    - { username: "jenkins", password: "jenkins", full_name: "CI Jenkins" }
+    - { username: "project-creator", password: "bootstrapper", full_name: "Project Creator" }
+
+- include_tasks: gerrit-api/add-sshkey-to-user.yml
+  with_items:
+    - { login: "jenkins", sshkey: "{{ post_integration_dir }}/gerrit/gerrit_jenkins_rsa.pub" }
+    - { login: "project-creator", sshkey: "{{ post_integration_dir }}/gerrit/gerrit_project-creator_rsa.pub" }
+
+- include_tasks: gerrit-cli/add-user-to-group.yml
+  with_items:
+    - { login: "jenkins", group: "Continuous Integration Tools" }
+    - { login: "jenkins", group: "Non-Interactive Users" }
+    - { login: "project-creator", group: "Administrators" }
+    - { login: "project-creator", group: "Project Bootstrappers" }
+
+
+- name: "Initialize Gerrit All-Projects"
+  shell: "git init {{ post_integration_dir }}/gerrit/all-projects"
+
+- name: "Checkout Gerrit config"
+  shell: "{{ item }}"
+  with_items:
+    - "git config user.name  admin"
+    - "git config user.email admin@example.com"
+    - "git remote add origin ssh://admin@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/All-Projects"
+    - "git fetch -q origin refs/meta/config:refs/remotes/origin/meta/config"
+    - "git checkout meta/config"
+  changed_when: "'already exists' not in result.stderr"
+  register: result
+  failed_when:
+    - "result.rc != 0"
+    - "'already exists' not in result.stderr"
+  args:
+    chdir: "{{ post_integration_dir }}/gerrit/all-projects"
+
+- name: "Update Gerrit config"
+  template:
+    src: "gerrit/gerrit.config"
+    dest: "{{ post_integration_dir }}/gerrit/all-projects/project.config"
+
+- include_tasks: gerrit-cli/add-to-groups-file.yml
+  with_items:
+    - "Project Bootstrappers"
+    - "Continuous Integration Tools"
+
+- name: "Add Change-Owner group in groups file"
+  lineinfile:
+    path: "{{ post_integration_dir }}/gerrit/all-projects/groups"
+    line: "global:Change-Owner\tChange Owner"
+    state: present
+
+- name: "Push new Gerrit config"
+  shell: "{{ item }}"
+  with_items:
+    - "git commit -a -m 'Uploaded EDP Gerrit config'"
+    - "git push origin meta/config:meta/config"
+  changed_when: "'nothing to commit' not in result.stdout"
+  register: result
+  failed_when:
+    - "result.rc != 0"
+    - "'nothing to commit' not in result.stdout"
+  args:
+    chdir: "{{ post_integration_dir }}/gerrit/all-projects"
+
+#- name: "Enable hideci.js"
+#  shell: "{{ item }}"
+#  with_items:
+#    - >
+#    "oc exec -i $({{ gerrit_pod }}) -- bash -c 'git config -f /opt/data/gerrit_site/etc/gerrit.config
+#     'commentlink.testresult.match' <p><a href=\"[\^\"]+job/([\^/]+)/[0-9/]+\" target=\"_blank\" rel=\"nofollow\">([\^\<]+)</a> : ([^ ]+)([^<]*)</p>'"
+#    - >
+#    "oc exec -i $({{ gerrit_pod }}) -- bash -c 'git config -f /opt/data/gerrit_site/etc/gerrit.config
+#    'commentlink.testresult.html' <li class=\"comment_test\"><span class=\"comment_test_name\">
+#    <a href=\"$2\" rel=\"nofollow\">$1</a></span> <span class=\"comment_test_result\"><span class=\"result_$3\">$3</span>$4</span></li>"
+
+- include_tasks: gerrit-gitlab-configuration.yml
+  vars:
+    project_name: "{{ project_gitlab_edp }}"
+
+- name: "Enabling OAUTH for Gerrit"
+  shell: "{{ ocadm }} -n {{ project_cicd }} set env dc gerrit AUTH_TYPE='OAUTH'"
+  when: lookup('env', 'DISABLE_GERRIT_OAUTH') != 'true'
+
+

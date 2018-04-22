@@ -1,0 +1,11 @@
+---
+- name: "Add permission {{ item.permission }} to user {{ item.login }}"
+  uri:
+    url: "{{ sonar_api_url }}/permissions/add_user"
+    body: "login={{ item.login }}&permission={{ item.permission }}"
+    method: POST
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200,204

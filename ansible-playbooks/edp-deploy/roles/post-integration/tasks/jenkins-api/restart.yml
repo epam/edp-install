@@ -1,0 +1,19 @@
+- name: "Get crumb from Jenkins"
+  uri:
+    url: http://jenkins.{{ project_cicd }}:8080/crumbIssuer/api/json
+    method: GET
+    user: admin
+    password: "{{ tools.jenkins.password }}"
+    force_basic_auth: yes
+  register: crumb
+
+- name: "Restart Jenkins server"
+  uri:
+    method: POST
+    url: http://jenkins.{{ project_cicd }}:8080/restar
+    user: admin
+    password: "{{ tools.jenkins.password }}"
+    force_basic_auth: yes
+    headers:
+      Jenkins-Crumb: "{{ crumb.json.crumb }}"
+    status_code: 200

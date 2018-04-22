@@ -38,7 +38,7 @@ node("master") {
     }
 }
 
-node(vars.applicationMap.tool.toLowerCase()) {
+node(vars.applicationMap.build_tool.toLowerCase()) {
     vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
     try {
         dir("${vars.devopsRoot}") {
@@ -52,7 +52,7 @@ node(vars.applicationMap.tool.toLowerCase()) {
     commonLib.getDebugInfo(vars)
     currentBuild.displayName = "${currentBuild.number}-${vars.serviceBranch}"
     currentBuild.description = "Name: ${vars.applicationMap.name}\r\nLanguage: ${vars.applicationMap.language}" +
-            "\r\nBuild tool: ${vars.applicationMap.tool}\r\nFramework: ${vars.applicationMap.framework}"
+            "\r\nBuild tool: ${vars.applicationMap.build_tool}\r\nFramework: ${vars.applicationMap.framework}"
 
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/checkout/") { commonLib.runStage("CHECKOUT", vars) }
     dir("${vars.devopsRoot}/${vars.pipelinesPath}/stages/compile/") { commonLib.runStage("COMPILE", vars) }

@@ -1,0 +1,50 @@
+---
+- set_fact:
+   sonar_reboot: false
+
+- include_tasks: sonar-api/install-plugins.yml
+  with_items:
+    - "pmd"
+    - "findbugs"
+    - "checkstyle"
+
+- include_tasks: sonar-api/restart.yml
+  when: sonar_reboot|bool == true
+
+- include_tasks: sonar-api/upload-profile.yml
+  with_items:
+    - { name: 'EDP way', filename: "quality-profile.xml"}
+
+- include_tasks: sonar-api/set-default-profile.yml
+  with_items:
+    - { name: 'EDP way', language: 'java' }
+
+- include_tasks: sonar-api/activate-profile-rules.yml
+  with_items:
+    - { profile_id: '{{ profile_id }}', languages: 'java' }
+
+- include_tasks: sonar-api/deactivate-profile-rules.yml
+  with_items: "{{ profile_id }}"
+
+- include_tasks: sonar-api/create-user.yml
+  with_items:
+    - { login: 'jenkins', name: 'Jenkins', password: 'jenkins' }
+
+- include_tasks: sonar-api/create-group.yml
+  with_items: 'non-interactive-users'
+
+- include_tasks: sonar-api/add-user-to-group.yml
+  with_items:
+    - { login: 'jenkins', group: 'non-interactive-users' }
+
+- include_tasks: sonar-api/add-permission-to-user.yml
+  with_items:
+    - { login: 'jenkins', permission: 'scan' }
+
+- include_tasks: sonar-api/generate_token.yml
+  with_items:
+    - { login: 'jenkins', name: 'Jenkins' }
+
+- include_tasks: sonar-api/add-webhook.yml
+  with_items:
+    - { name: 'jenkins', url: 'http://jenkins:8080/sonarqube-webhook/' }

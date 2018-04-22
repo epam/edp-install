@@ -1,0 +1,119 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: edp-cockpit
+  annotations:
+    description: |-
+          The EDP-Cockpit panel.
+    openshift.io/display-name: EDP Cockpit
+    template.openshift.io/provider-display-name: EPAM
+    template.openshift.io/support-url: https://www.epam.com
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: edp-cockpit
+    labels:
+      app: edp-cockpit
+  spec:
+    ports:
+    - name: edp-cockpit
+      port: 8080
+    selector:
+      app: edp-cockpit
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      description: Route for EDP Cockpit's http service.
+    name: edp-cockpit
+    labels:
+      app: edp-cockpit
+  spec:
+    to:
+      kind: Service
+      name: edp-cockpit
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: cockpit
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: edp-cockpit
+    name: edp-cockpit
+  spec:
+    replicas: 1
+    selector:
+      app: edp-cockpit
+    strategy:
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          app: edp-cockpit
+      spec:
+        serviceAccountName: cockpit
+        containers:
+        - image: ${EDP_COCKPIT_VERSION}
+          imagePullPolicy: Always
+          name: edp-cockpit
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 180
+            periodSeconds: 20
+            successThreshold: 1
+            tcpSocket:
+              port: 8080
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            tcpSocket:
+              port: 8080
+            timeoutSeconds: 5
+          resources:
+            requests:
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          env:
+          - name: PROJECT_CICD
+            value: ${PROJECT_CICD}
+          - name: EDP_APPLICATION_TYPES
+            valueFrom:
+              configMapKeyRef:
+                name: app-types
+                key: app-types.json
+          - name: OPENSHIFT_TRUST_CERTIFICATES
+            value: ${OPENSHIFT_TRUST_CERTIFICATES}
+          - name: EDP_AUTOTEST_TYPES
+            valueFrom:
+              configMapKeyRef:
+                name: app-types
+                key: autotest-types.json
+    triggers:
+    - type: ConfigChange
+
+parameters:
+- displayName: Version of edp-cockpit
+  name: EDP_COCKPIT_VERSION
+  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:master"
+- displayName: Project CICD name
+  name: PROJECT_CICD
+  value: "edp-cicd"
+- displayName: Enable trust certificates
+  name: OPENSHIFT_TRUST_CERTIFICATES
+  value: "true"
+

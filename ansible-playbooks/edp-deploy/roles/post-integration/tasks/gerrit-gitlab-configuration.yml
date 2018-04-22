@@ -1,0 +1,121 @@
+---
+- name: "Get autouser email from cicd projects secret"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }}
+   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: user_mail
+
+- name: "Get autouser name from cicd projects secret"
+  shell: |
+   echo "{{ user_mail.stdout }}" | cut -d@ -f1
+  register: username
+
+- name: "Get autouser password from cicd projects secret"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }}
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: password
+
+- name: "Get GitLab group name"
+  shell: |
+    echo "{{ gitlab_group_name }}" | sed -e 's|^[^/]*//[^/]*/||'
+  register: gitlab_group
+
+- name: "Login to GitLab and get CSRF token"
+  uri:
+    url: "https://{{ gitlab_hostname.stdout }}/oauth/token"
+    method: POST
+    body: 'grant_type=password&username={{ user_mail.stdout }}&password={{ password.stdout }}'
+  retries: 3
+  delay: 3
+  register: csrf_token
+  until: csrf_token.status == 200
+
+- name: "Get group id by it's name"
+  uri:
+    url: "
+     https://{{ gitlab_hostname.stdout }}/api/v4/groups/{{ gitlab_group.stdout | replace('/', '%2F') }}\
+     ?simple=true&access_token={{ csrf_token.json.access_token }}"
+    method: GET
+  retries: 3
+  delay: 3
+  register: group_id
+  until: group_id.status == 200
+
+- name: "Check if project EDP already exist in GitLab"
+  uri:
+    url: "
+     https://{{ gitlab_hostname.stdout }}/api/v4/projects/{{ gitlab_group.stdout | replace('/', '%2F') + '%2F' + project_gitlab_edp }}\
+     ?simple=true&access_token={{ csrf_token.json.access_token }}"
+  ignore_errors: True
+  register: edp_project_existence
+
+- name: "Create .ssh directory"
+  file:
+    path: ~/.ssh
+    state: directory
+
+- block:
+  - name: "Add project to the group"
+    uri:
+      url: "
+       https://{{ gitlab_hostname.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}\
+       &namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
+      method: POST
+      status_code: 201
+    retries: 3
+    delay: 3
+    register: output
+    until: output.status == 201
+
+  - name: "Clone GitLab repository"
+    git:
+      repo: "git@{{ gitlab_hostname.stdout }}:{{ gitlab_group.stdout }}/{{ project_gitlab_edp }}.git"
+      dest: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
+      key_file: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
+      accept_hostkey: true
+      force: true
+    ignore_errors: true
+
+  - name: "Copying pipelines"
+    copy:
+      src: "../../application-pipelines"
+      dest: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
+      force: yes
+
+  - name: "Push to Gitlab"
+    shell: |
+     cd {{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}
+     git config user.email "{{ user_mail.stdout }}"
+     git config user.name "{{ username.stdout }}"
+     ssh-agent bash -c 'ssh-add {{ post_integration_dir }}/gerrit/gitlab_rsa; git add . && git commit -m "Add pipelines" && git push origin master'
+    register: push_output
+    until: push_output.rc == 0
+    retries: 5
+    delay: 1
+  when: edp_project_existence.status == 404
+
+- block:
+  - name: "Clone GitLab repository"
+    git:
+      repo: "git@{{ gitlab_hostname.stdout }}:{{ gitlab_group.stdout }}/{{ project_gitlab_edp }}.git"
+      dest: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
+      key_file: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
+      accept_hostkey: true
+      force: true
+    ignore_errors: true
+    register: clone_output
+    until: "'Failed to checkout branch master' not in clone_output.msg"
+    retries: 5
+    delay: 1
+  when: edp_project_existence.status == 200
+
+- include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
+  vars:
+    gitlab_host: "{{ gitlab_hostname.stdout }}"
+    project_name: "{{ project_gitlab_edp }}"
+
+- include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
+  vars:
+    target_dir: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
+    project_name: "{{ project_gitlab_edp }}"

@@ -1,0 +1,11 @@
+---
+- name: "Set default profile"
+  uri:
+    url: "{{ sonar_api_url }}/qualityprofiles/set_default"
+    body: "qualityProfile={{ item.name }}&language={{item.language}}"
+    method: POST
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200,204

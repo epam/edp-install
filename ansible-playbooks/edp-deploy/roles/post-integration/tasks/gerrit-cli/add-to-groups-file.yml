@@ -1,0 +1,9 @@
+- name: "Get {{ item }} group UUID"
+  shell: "{{ gerrit_manage }} ls-groups -v | awk '-F\t' '$1 == \"{{ item }}\" { print $2 }'"
+  register: group_uuid
+
+- name: "Add group {{ item }} to groups file"
+  lineinfile:
+    path: "{{ post_integration_dir }}/gerrit/all-projects/groups"
+    line: "{{ group_uuid.stdout }}\t{{ item }}"
+    state: present

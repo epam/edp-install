@@ -1,0 +1,25 @@
+---
+- name: "Check {{ item.name }} webhook exist"
+  uri:
+    url: "{{ sonar_api_url }}/webhooks/list"
+    method: GET
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200
+  register: result
+
+- block:
+  - name: "Create webhook"
+    uri:
+      url: "{{ sonar_api_url }}/webhooks/create"
+      body: "name={{ item.name }}&url={{ item.url }}"
+      method: POST
+      return_content: yes
+      user: admin
+      password: "{{ secrets.sonar_admin.password }}"
+      force_basic_auth: "yes"
+      status_code: 200
+  when: item.name not in result.json.webhooks | map(attribute='name') | list
+

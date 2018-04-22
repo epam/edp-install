@@ -1,0 +1,5 @@
+---
+- include_tasks: call-script.yml
+  vars:
+    script_name: setup-privilege
+    args: "{{ tools.nexus.privilege_defaults|combine(item) }}"

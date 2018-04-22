@@ -1,53 +1,10 @@
 --- # Jenkins full installation
-# The following step is a temporarary and it's going to be fixed next sprints
-- name: "Get gerrit ssh port"
-  shell: "{{ ocadm }} -n {{ project_cicd }} get configMap gerrit -o=jsonpath={.data.sshPort}"
-  register: "gerrit_ssh_port"
-
-- name: "Copy jobsprovisioning.groovy"
+- name: "Copy Jenkins template"
   template:
-    src: "jobsprovisioning.j2"
-    dest: "{{ templates_dir }}/jenkins/jobsprovisioning.groovy"
-
-- name: "Creating configmap with job provisioning script"
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} create configmap jenkins-jobsprovisioning
-    --from-file {{ templates_dir }}/jenkins/jobsprovisioning.groovy
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-- name: "Prepare scriptApproval"
-  template:
-    src: "scriptApproval.xml.j2"
-    dest: "{{ templates_dir }}/jenkins/scriptApproval.xml"
-
-- name: "Creating configmap with job provisioning script"
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} create configmap jenkins-approval
-    --from-file {{ templates_dir }}/jenkins/scriptApproval.xml
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-- name: "Creating configmap jenkins-init"
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} create configmap jenkins-init
-    --from-file {{ templates_dir }}/jenkins/init.groovy
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-# End of step
+    src: "{{ item }}"
+    dest: "{{ templates_dir }}/jenkins/{{ item }}"
+  with_items:
+    - "jenkins-{{ tools.jenkins.fs_type }}.yaml"
 
 - name: "Install Jenkins app"
   command: |

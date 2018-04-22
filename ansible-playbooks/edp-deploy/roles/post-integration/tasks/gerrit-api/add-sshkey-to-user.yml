@@ -1,0 +1,11 @@
+- name: "Upload {{ item.sshkey }} ssh key for {{ item.login }} user in Gerrit"
+  uri:
+    url: "{{ gerrit_api_url }}/accounts/{{ item.login }}/sshkeys"
+    method: POST
+    user: admin
+    password: "{{ secrets.gerrit_admin.password }}"
+    force_basic_auth: yes
+    body: "{{ lookup('file','{{ item.sshkey }}') }}"
+    headers:
+      Content-Type: "text/plain"
+    status_code: 200,201

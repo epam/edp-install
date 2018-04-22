@@ -2,6 +2,7 @@
 # file: group_vars/all
 ansible_connection: ssh
 work_dir: "/opt/edp"
+post_integration_dir: "{{ work_dir }}/post-integration"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/templates"
 files_dir: "{{ work_dir }}/files"
@@ -14,7 +15,12 @@ project_cicd: "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{
 project_cockpit: "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}"
 project_gitlab_edp: "{{ (projects_suffix != '') | ternary('edp-', 'edp')}}{{ projects_suffix }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
+mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
 secrets:
+  sonar_admin:
+    password: admin
+  nexus_admin:
+    password: admin123
   gerrit_admin:
     password: secret
   gerrit_db:
@@ -54,10 +60,63 @@ tools:
   nexus:
     version: "{{ nexus_version | default('3.6.2') }}"
     volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"
+    repos_npm_defaults:
+      blob_store: default # Note : cannot be updated once the repo has been created
+      strict_content_validation: true
+      version_policy: mixed # release, snapshot or mixed
+      layout_policy: strict # strict or permissive
+      write_policy: allow # allow_once or allow
+    privilege_defaults:
+      type: repository-view
+      format: maven2
+      actions:
+        - read
+    repos_npm_blob:
+      - name: npm
+        path: /nexus-data/blobs/npm
+    repos_npm_proxy:
+      - name: npm-proxy
+        blob_store: "npm"
+        remote_url: https://registry.npmjs.org
+    repos_npm_hosted:
+      - name: npm-internal
+        blob_store: "npm"
+    repos_npm_group:
+      - name: npm-all
+        blob_store: "npm"
+        member_repos:
+          - npm-internal
+          - npm-proxy
+    privileges:
+      - name: all-repos-rw
+        description: 'Write access to all repos'
+        repository: '*'
+        actions:
+          - read
+          - browse
+          - add
+    roles:
+      - id: nexus-rw
+        name: nexus-rw
+        description: Jenkins-CI
+        privileges:
+          - all-repos-rw
+        roles: []
+    local_users:
+      - username: jenkins
+        jenkins_id: nexus
+        first_name: Jenkins
+        last_name: CI
+        email: jenkins@edp.com
+        password: "jenkins"
+        roles:
+          - nexus-rw
   sonar:
-    version: "{{ sonar_version | default('6.7') }}"
+    version: "{{ sonar_version | default('7.1') }}"
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
+    profiles:
+      - { name: "EDP way", filename: 'quality-profile.xml' }
   cockpit:
     version: "{{ cockpit_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"
     openshift_trust_certificates: "true"
