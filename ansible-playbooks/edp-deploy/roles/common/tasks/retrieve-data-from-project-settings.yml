@@ -1,0 +1,17 @@
+---
+- name: "Get autotests settings from project-settings config map"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} get cm project-settings -o=jsonpath='{ .data.auto-test\.settings\.json }'
+  register: auto_test_settings
+
+- name: "Convert autotests settings json"
+  set_fact:
+    auto_test_settings: "{{ auto_test_settings.stdout | from_json }}"
+
+- name: "Retrieve data from json"
+  when: "item.name ==  project_name"
+  set_fact:
+    git_repo_url: "{{ item.git_repo_url }}"
+    build_tool: "{{ item.build_tool }}"
+    report_framework: "{{ item.report_framework }}"
+  with_items: "{{ auto_test_settings | list }}"
