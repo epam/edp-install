@@ -140,9 +140,7 @@ objects:
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-              memory: 512Mi
-            limits:
-              memory: 512Mi
+              memory: 1Gi
           ports:
             - containerPort: 5432
               protocol: TCP
