@@ -62,9 +62,9 @@ objects:
         --group "'Continuous Integration Tools'" --group "'Non-Interactive Users'" \
         --full-name "'Jenkins'" --http-password jenkins --ssh-key - jenkins
 
-      cat /opt/data/jenkins/.ssh/id_rsa.pub | ${MANAGE_GERRIT} create-account \
-        --group "'Project Bootstrappers'" --group "'Administrators'" \
-        --full-name "'Project Creator'" --http-password bootstrapper --ssh-key - project-creator
+      cat /var/gerrit/review_site/etc/project-creator/ssh-keys/id_project_creator_rsa.pub | \
+        ${MANAGE_GERRIT} create-account --group "'Project Bootstrappers'" \
+        --group "'Administrators'" --full-name "'Project Creator'" --ssh-key - project-creator
 
       # Manage permissions
       cat << EOF > /tmp/all-Projects
@@ -215,6 +215,10 @@ objects:
           secret:
             secretName: gerrit-admin
             defaultMode: 256
+        - name: gerrit-project-creator-secret-volume
+          secret:
+            secretName: gerrit-project-creator
+            defaultMode: 256
         - name: python-script
           configMap:
             defaultMode: 420
@@ -266,6 +270,8 @@ objects:
           volumeMounts:
           - name: gerrit-admin-secret-volume
             mountPath: /var/gerrit/review_site/etc/admin/ssh-keys
+          - name: gerrit-project-creator-secret-volume
+            mountPath: /var/gerrit/review_site/etc/project-creator/ssh-keys
           - mountPath: /tmp
             name: python-script
           - mountPath: /opt/data/jenkins

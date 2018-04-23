@@ -1,10 +1,15 @@
 ---
-- name: "Get gerrit-admin ssh key from secret"
-  shell: |
-    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-admin --template={% raw %}'{{ index .data "id_admin_rsa" }}'{% endraw %} | base64 --decode
-  register: gerrit_admin_ssh
+- name: "Get gerrit-project-creator ssh key from secret"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-project-creator
+    --template={% raw %}'{{ index .data "id_project_creator_rsa" }}'{% endraw %} | base64 --decode
+  register: gerrit_project_creator_ssh
 
-- local_action: copy content={{ gerrit_admin_ssh.stdout }} dest={{ work_dir }}/gerrit_admin.key mode=0400
+- name: "Get gerrit ssh port"
+  shell: "{{ ocadm }} -n {{ project_cicd }} get configMap gerrit -o=jsonpath={.data.sshPort}"
+  register: "gerrit_ssh_port"
+
+- local_action: copy content={{ gerrit_project_creator_ssh.stdout }} dest={{ work_dir }}/gerrit.key mode=0400
 
 - name: "Create .ssh directory"
   file:
@@ -16,10 +21,11 @@
     content: |
       Host gerrit*
         HostName gerrit.{{ project_cicd }}
-        User admin
+        Port {{ gerrit_ssh_port.stdout }}
+        User project-creator
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
-        IdentityFile {{ work_dir }}/gerrit_admin.key
+        IdentityFile {{ work_dir }}/gerrit.key
         IdentitiesOnly yes
 
       Host {{ gitlab_host }}
@@ -32,9 +38,5 @@
     dest: ~/.ssh/config
     force: no
 
-- name: "Get gerrit ssh port"
-  shell: "{{ ocadm }} -n {{ project_cicd }} get configMap gerrit -o=jsonpath={.data.sshPort}"
-  register: "gerrit_ssh_port"
-
 - name: "Create project in Gerrit"
-  shell: "ssh -p {{ gerrit_ssh_port.stdout }} admin@gerrit.{{ project_cicd }} gerrit create-project {{ project_name }}"
+  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ project_name }}"
