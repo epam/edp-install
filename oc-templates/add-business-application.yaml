@@ -19,7 +19,7 @@ objects:
 - apiVersion: batch/v1
   kind: Job
   metadata:
-    name: add-application-${APPLICATION_NAME}
+    name: add-application-${NAME}
   spec:
     parallelism: 1
     completions: 1
@@ -40,11 +40,11 @@ objects:
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
             - "-e git_repo_url=${GIT_REPO_URL}"
-            - "-e app_name=${APPLICATION_NAME}"
-            - "-e language=${APPLICATION_LANGUAGE}"
-            - "-e build_tool=${APPLICATION_BUILD_TOOL}"
-            - "-e framework=${APPLICATION_FRAMEWORK}"
-            - "-e route=${NEED_ROUTE}"
+            - "-e app_name=${NAME}"
+            - "-e language=${LANGUAGE}"
+            - "-e build_tool=${BUILD_TOOL}"
+            - "-e framework=${FRAMEWORK}"
+            - "-e route=${ROUTE}"
             - "-e route_site=${ROUTE_SITE}"
             - "-e route_path=${ROUTE_PATH}"
             - "ansible-playbooks/edp-deploy/add-business-application.yml"
@@ -56,21 +56,6 @@ objects:
         volumeMounts:
         - name: user-settings
           mountPath: /tmp/config/
-          env:
-          - name: GIT_REPO_URL
-            value: ${GIT_REPO_URL}
-          - name: APPLICATION_NAME
-            value: ${APPLICATION_NAME}
-          - name: APPLICATION_LANGUAGE
-            value: ${APPLICATION_LANGUAGE}
-          - name: APPLICATION_BUILD_TOOL
-            value: ${APPLICATION_BUILD_TOOL}
-          - name: APPLICATION_FRAMEWORK
-            value: ${APPLICATION_FRAMEWORK}
-          - name: ENVIRONMENTS
-            value: ${ENVIRONMENTS}
-          - name: NEED_ROUTE
-            value: ${NEED_ROUTE}
         restartPolicy: Never
         serviceAccountName: cockpit
       volumes:
@@ -85,19 +70,19 @@ parameters:
   value: http://url.com
 - displayName: Name of an application
   description: Type of an application to add
-  name: APPLICATION_NAME
+  name: NAME
   value: "app-name"
 - displayName: Language of an application
   description: Language of an application to add
-  name: APPLICATION_LANGUAGE
+  name: LANGUAGE
   value: "Java"
 - displayName: Build tool of an application
   description: Build tool of an application to add
-  name: APPLICATION_BUILD_TOOL
+  name: BUILD_TOOL
   value: "Maven"
 - displayName: Framework of an application
   description: Framework of an application to add
-  name: APPLICATION_FRAMEWORK
+  name: FRAMEWORK
   value: "Spring Boot"
 - displayName: Set of environments
   description: List of environments separated by commas. Only SIT at the moment will be supported
@@ -105,7 +90,7 @@ parameters:
   value: "SIT"
 - displayName: The necessity of route to an application
   description: Boolean flag for route necessity
-  name: NEED_ROUTE
+  name: ROUTE
   value: "false"
 - displayName: Site that will be used to build public url for route
   description: Site that will be used to build public url for route

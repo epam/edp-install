@@ -6,7 +6,10 @@
     user: admin
     password: "{{ tools.jenkins.password }}"
     force_basic_auth: yes
+  retries: 5
+  delay: 1
   register: crumb
+  until: crumb.status == 200
 
 - name: "Trigger job provisioning"
   uri:
@@ -17,3 +20,7 @@
     force_basic_auth: yes
     HEADER_Jenkins-Crumb: "{{ crumb.json.crumb }}"
     status_code: 201
+  retries: 5
+  delay: 1
+  register: output
+  until: output.status == 201
