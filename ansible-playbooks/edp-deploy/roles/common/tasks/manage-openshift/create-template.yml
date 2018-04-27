@@ -25,17 +25,18 @@
   set_fact:
      full_app_name: "{{ framework | lower }}-{{ app_name }}"
 
-- name: "Copying template for {{ language }} {{ framework }} app"
+- name: "Copying templates for {{ language }} {{ framework }} app"
   template:
-    src: "../templates/business-applications/{{ language | lower }}/{{ framework | lower }}.j2"
-    dest: "{{ templates_dir }}/business-apps/{{ full_app_name }}.yml"
+    src: "business-applications/{{ language | lower }}/{{ item.src }}.j2"
+    dest: "{{ templates_dir }}/business-apps/{{ item.dst }}.yml"
+  with_items:
+    - { src: "{{ framework | lower }}", dst: "{{ full_app_name }}" }
+    - { src: "s2i-{{ framework | lower }}", dst: "s2i-{{ full_app_name }}" }
 
 - name: "Import template for new business-app"
   command: |
-    {{ ocadm }} -n {{ project_cicd }} create -f {{ templates_dir }}/business-apps/{{ full_app_name }}.yml
-  register: result
+    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/business-apps/{{ item }}.yml
+  with_items:
+    - "{{ full_app_name }}"
+    - "s2i-{{ full_app_name }}"
   ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
