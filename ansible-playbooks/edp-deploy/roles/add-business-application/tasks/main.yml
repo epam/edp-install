@@ -5,8 +5,6 @@
 
 - include_tasks: roles/common/tasks/import-from-git-to-gerrit.yml
 
-- include_tasks: roles/common/tasks/update-project-settings.yml
-
 - include_tasks: roles/common/tasks/manage-jenkins/trigger-job-provisioning.yml
 
 - include_tasks: roles/common/tasks/manage-openshift/create-template.yml
