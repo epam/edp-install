@@ -39,14 +39,7 @@ objects:
             - "localhost,"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
-            - "-e git_repo_url=${GIT_REPO_URL}"
             - "-e app_name=${NAME}"
-            - "-e language=${LANGUAGE}"
-            - "-e build_tool=${BUILD_TOOL}"
-            - "-e framework=${FRAMEWORK}"
-            - "-e route=${ROUTE}"
-            - "-e route_site=${ROUTE_SITE}"
-            - "-e route_path=${ROUTE_PATH}"
             - "ansible-playbooks/edp-deploy/add-business-application.yml"
           env:
           - name: PROJECT_CICD
@@ -64,39 +57,7 @@ objects:
             name: user-settings
     backoffLimit: 1
 parameters:
-- displayName: Git repo url
-  description: Git repo url for replication
-  name: GIT_REPO_URL
-  value: http://url.com
 - displayName: Name of an application
   description: Type of an application to add
   name: NAME
   value: "app-name"
-- displayName: Language of an application
-  description: Language of an application to add
-  name: LANGUAGE
-  value: "Java"
-- displayName: Build tool of an application
-  description: Build tool of an application to add
-  name: BUILD_TOOL
-  value: "Maven"
-- displayName: Framework of an application
-  description: Framework of an application to add
-  name: FRAMEWORK
-  value: "Spring Boot"
-- displayName: Set of environments
-  description: List of environments separated by commas. Only SIT at the moment will be supported
-  name: ENVIRONMENTS
-  value: "SIT"
-- displayName: The necessity of route to an application
-  description: Boolean flag for route necessity
-  name: ROUTE
-  value: "false"
-- displayName: Site that will be used to build public url for route
-  description: Site that will be used to build public url for route
-  name: ROUTE_SITE
-  value: "site"
-- displayName: Path that will be added to public host
-  description: Path that will be added to public host
-  name: ROUTE_PATH
-  value: ""

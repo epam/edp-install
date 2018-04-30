@@ -27,7 +27,7 @@ objects:
   kind: ServiceAccount
   metadata:
     name: "{{ app_name }}"
-{% if route == 'true' %}
+{% if route %}
 - apiVersion: v1
   kind: Route
   metadata:
@@ -45,6 +45,103 @@ objects:
       kind: Service
       name: "{{ app_name }}"
     wildcardPolicy: None
+{% endif %}
+{% if need_database and database == 'PostgreSQL' %}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: "{{ app_name }}-db"
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: "{{ database_capacity }}"
+{% if persistent_storage == 'GlusterFS' %}
+    storageClassName: glusterfs-storage
+{% endif %}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: "{{ app_name }}-db"
+    labels:
+      app: "{{ app_name }}-db"
+  spec:
+    ports:
+    - name: "{{ app_name }}-db"
+      port: 5432
+    selector:
+      app: "{{ app_name }}-db"
+    type: ClusterIP
+    sessionAffinity: None
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: "{{ app_name }}"
+    name: "{{ app_name }}-db"
+  spec:
+    replicas: 1
+    selector:
+      app: "{{ app_name }}-db"
+    strategy:
+      activeDeadlineSeconds: 21600
+      recreateParams:
+        timeoutSeconds: 600
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: "{{ app_name }}-db"
+      spec:
+        containers:
+        - name: "{{ app_name }}-db"
+          env:
+          - name: POSTGRES_DB
+            value: "{{ app_name }}-db"
+          - name: POSTGRES_USER
+            value: "admin"
+          - name: POSTGRES_PASSWORD
+            value: "admin"
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          - name: POD_IP
+            valueFrom: { fieldRef: { fieldPath: status.podIP } }
+          image: "{{ database_version }}"
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "{{ database_capacity }}"
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - exec pg_isready --host $POD_IP
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - exec pg_isready --host $POD_IP
+            initialDelaySeconds: 60
+            timeoutSeconds: 3
+            periodSeconds: 5
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: "{{ app_name }}-db"
+        serviceAccount: "{{ app_name }}"
+        volumes:
+          - name: "{{ app_name }}-db"
+            persistentVolumeClaim:
+              claimName: "{{ app_name }}-db"
 {% endif %}
 - apiVersion: v1
   kind: DeploymentConfig
@@ -71,6 +168,12 @@ objects:
         labels:
           app: "{{ app_name }}"
       spec:
+{% if need_database and database == 'PostgreSQL' %}
+        initContainers:
+        - name: "init-{{ app_name }}-db"
+          image: busybox
+          command: ["sh", "-c", "while ! nc -w 1 '{{ app_name }}'-db 5432 </dev/null; do echo waiting for '{{ app_name }}'-db; sleep 10; done;"]
+{% endif %}
         serviceAccountName: "{{ app_name }}"
         containers:
         - name: "{{ app_name }}"
@@ -98,6 +201,15 @@ objects:
           resources:
             requests:
               memory: 1Gi
+{% if need_database and database == 'PostgreSQL' %}
+          env:
+          - name: POSTGRES_DATABASE
+            value: "{{ app_name }}-db"
+          - name: POSTGRES_USER
+            value: "admin"
+          - name: POSTGRES_PASSWORD
+            value: "admin"
+{% endif %}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
         dnsPolicy: ClusterFirst

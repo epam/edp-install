@@ -9,6 +9,9 @@ def run(vars) {
                 openshift.selector('template', application.name).object()
             }
 
+            if (application.need_database)
+                sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
+
             openshift.withProject(vars.deployProject) {
                 openshift.create(openshift.process(template,
                         "-p APP_IMAGE=${vars.pipelineProject}/${application.name}",

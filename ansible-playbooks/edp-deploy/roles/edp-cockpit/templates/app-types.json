@@ -6,6 +6,17 @@
     ],
     "frameworks": [
       "SpringBoot"
+    ],
+    "database": [
+      {
+        "type": "PostgreSQL",
+        "version": [
+          "postgres:9.6"
+        ]
+      }
+    ],
+    "persistentStorages": [
+      "GlusterFS"
     ]
   },
   {

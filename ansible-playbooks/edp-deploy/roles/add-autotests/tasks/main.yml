@@ -3,7 +3,7 @@
   set_fact:
     project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
 
-- include_tasks: roles/common/tasks/retrieve-data-from-project-settings.yml
+- include_tasks: roles/common/tasks/retrieve-data-from-autotest-settings.yml
 
 - include_tasks: roles/common/tasks/import-from-git-to-gerrit.yml
 

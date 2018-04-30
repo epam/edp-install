@@ -3,6 +3,8 @@
   set_fact:
     project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
 
+- include_tasks: roles/common/tasks/retrieve-data-from-app-settings.yml
+
 - include_tasks: roles/common/tasks/import-from-git-to-gerrit.yml
 
 - include_tasks: roles/common/tasks/manage-jenkins/trigger-job-provisioning.yml
