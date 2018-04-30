@@ -21,6 +21,8 @@
     nexus_host: "nexus.{{ project_cicd }}"
     nexus_port: "8081"
     sonar_api_url: "http://sonar.{{ project_cicd }}:9000/api"
+    gitlab_hostname: "{{ gitlab_group_name | urlsplit('hostname')}}"
+    gitlab_group: "{{ gitlab_group_name | urlsplit('path')}}"
 
 - include_tasks: check-deployment-health.yml
   with_items:

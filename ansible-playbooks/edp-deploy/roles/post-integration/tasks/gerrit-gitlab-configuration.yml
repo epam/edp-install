@@ -16,14 +16,9 @@
    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
 
-- name: "Get GitLab group name"
-  shell: |
-    echo "{{ gitlab_group_name }}" | sed -e 's|^[^/]*//[^/]*/||'
-  register: gitlab_group
-
 - name: "Login to GitLab and get CSRF token"
   uri:
-    url: "https://{{ gitlab_hostname.stdout }}/oauth/token"
+    url: "https://{{ gitlab_hostname }}/oauth/token"
     method: POST
     body: 'grant_type=password&username={{ user_mail.stdout }}&password={{ password.stdout }}'
   retries: 3
@@ -34,7 +29,7 @@
 - name: "Get group id by it's name"
   uri:
     url: "
-     https://{{ gitlab_hostname.stdout }}/api/v4/groups/{{ gitlab_group.stdout | replace('/', '%2F') }}\
+     https://{{ gitlab_hostname }}/api/v4/groups/{{ gitlab_group[1:] | replace('/', '%2F') }}\
      ?simple=true&access_token={{ csrf_token.json.access_token }}"
     method: GET
   retries: 3
@@ -45,7 +40,7 @@
 - name: "Check if project EDP already exist in GitLab"
   uri:
     url: "
-     https://{{ gitlab_hostname.stdout }}/api/v4/projects/{{ gitlab_group.stdout | replace('/', '%2F') + '%2F' + project_gitlab_edp }}\
+     https://{{ gitlab_hostname }}/api/v4/projects/{{ gitlab_group[1:] | replace('/', '%2F') + '%2F' + project_gitlab_edp }}\
      ?simple=true&access_token={{ csrf_token.json.access_token }}"
   ignore_errors: True
   register: edp_project_existence
@@ -59,7 +54,7 @@
   - name: "Add project to the group"
     uri:
       url: "
-       https://{{ gitlab_hostname.stdout }}/api/v4/projects?name={{ project_gitlab_edp }}\
+       https://{{ gitlab_hostname }}/api/v4/projects?name={{ project_gitlab_edp }}\
        &namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
       method: POST
       status_code: 201
@@ -70,7 +65,7 @@
 
   - name: "Clone GitLab repository"
     git:
-      repo: "git@{{ gitlab_hostname.stdout }}:{{ gitlab_group.stdout }}/{{ project_gitlab_edp }}.git"
+      repo: "git@{{ gitlab_hostname }}:{{ gitlab_group[1:] }}/{{ project_gitlab_edp }}.git"
       dest: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
       key_file: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
       accept_hostkey: true
@@ -98,7 +93,7 @@
 - block:
   - name: "Clone GitLab repository"
     git:
-      repo: "git@{{ gitlab_hostname.stdout }}:{{ gitlab_group.stdout }}/{{ project_gitlab_edp }}.git"
+      repo: "git@{{ gitlab_hostname }}:{{ gitlab_group[1:] }}/{{ project_gitlab_edp }}.git"
       dest: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
       key_file: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
       accept_hostkey: true
@@ -112,7 +107,7 @@
 
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
   vars:
-    gitlab_host: "{{ gitlab_hostname.stdout }}"
+    gitlab_host: "{{ gitlab_hostname }}"
     project_name: "{{ project_gitlab_edp }}"
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml

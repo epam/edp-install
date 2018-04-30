@@ -37,11 +37,6 @@
   vars:
     target_file: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
 
-- name: "Get GitLab host"
-  shell: |
-    echo "{{ gitlab_group_name }}" | sed -e 's|^[^/]*//||' -e 's|/.*$||'
-  register: gitlab_hostname
-
 - stat:
     path: "~/.ssh/config"
   register: ssh_config
@@ -57,8 +52,8 @@
         IdentityFile {{ post_integration_dir }}/gerrit/gerrit_admin_rsa
         IdentitiesOnly yes
 
-      Host {{ gitlab_hostname.stdout }}
-        HostName {{ gitlab_hostname.stdout }}
+      Host {{ gitlab_hostname }}
+        HostName {{ gitlab_hostname }}
         User git
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
