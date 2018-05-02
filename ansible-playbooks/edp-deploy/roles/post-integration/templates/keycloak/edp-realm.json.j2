@@ -71,5 +71,34 @@
         }
       }
     ]
-  }
+  },
+  "clients": [
+    {
+      "clientId": "jenkins",
+      "enabled": true,
+      "publicClient": true,
+      "rootUrl": "{{ tools.jenkins.web_url }}",
+      "redirectUris": [
+        "{{ tools.jenkins.web_url }}/*"
+      ],
+      "webOrigins": [
+        "{{ tools.jenkins.web_url }}"
+      ],
+      "adminUrl": "{{ tools.jenkins.web_url }}/"
+    }
+  ],
+  "users" : [
+    {
+      "username" : "je-admin",
+      "enabled": true,
+      "email" : "sample-user@example.com",
+      "firstName": "Jenkins",
+      "lastName": "Manager",
+      "credentials" : [
+        { "type" : "password",
+          "value" : "secret" }
+      ],
+      "realmRoles": [ "jenkins-admin" ]
+    }
+  ]
 }

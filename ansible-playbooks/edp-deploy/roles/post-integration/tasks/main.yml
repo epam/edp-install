@@ -32,9 +32,9 @@
 
 - include_tasks: nexus-configuration.yml
 - include_tasks: sonar-configuration.yml
+- include_tasks: keycloak-configuration.yml
 - include_tasks: gerrit-configuration.yml
 - include_tasks: jenkins-configuration.yml
-- include_tasks: keycloak-configuration.yml
 
 - include_tasks: check-deployment-health.yml
   with_items:
