@@ -219,10 +219,10 @@ objects:
       role: jenkins-slave
     name: jenkins-slaves
   data:
-    frontend-template: |-
+    npm-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
         <inheritFrom></inheritFrom>
-        <name>frontend</name>
+        <name>npm</name>
         <namespace></namespace>
         <privileged>false</privileged>
         <alwaysPullImage>false</alwaysPullImage>
@@ -230,7 +230,7 @@ objects:
         <slaveConnectTimeout>100</slaveConnectTimeout>
         <idleMinutes>60</idleMinutes>
         <activeDeadlineSeconds>0</activeDeadlineSeconds>
-        <label>frontend</label>
+        <label>npm</label>
         <serviceAccount>jenkins</serviceAccount>
         <nodeSelector></nodeSelector>
         <nodeUsageMode>NORMAL</nodeUsageMode>

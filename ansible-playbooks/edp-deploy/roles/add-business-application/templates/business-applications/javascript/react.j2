@@ -17,9 +17,9 @@ objects:
   spec:
     ports:
     - name: "{{ app_name }}"
-      port: 3000
+      port: 8080
       protocol: TCP
-      targetPort: 3000
+      targetPort: 8080
     selector:
       app: "{{ app_name }}"
     type: ClusterIP
@@ -27,7 +27,7 @@ objects:
   kind: ServiceAccount
   metadata:
     name: "{{ app_name }}"
-{% if route == 'true' %}
+{% if route %}
 - apiVersion: v1
   kind: Route
   metadata:
@@ -37,10 +37,12 @@ objects:
     labels:
       app: "{{ app_name }}"
   spec:
+{% if route_site != '' %}
     host: {{ route_site }}-${NAMESPACE}-{{ dns_wildcard }}
+{% endif %}
     path: {{ route_path }}
     port:
-      targetPort: 3000
+      targetPort: 8080
     to:
       kind: Service
       name: "{{ app_name }}"
@@ -77,7 +79,7 @@ objects:
           image: "{{ docker_registry_url }}/${APP_IMAGE}:${APP_VERSION}"
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
               protocol: TCP
           livenessProbe:
             failureThreshold: 5
@@ -93,7 +95,7 @@ objects:
             periodSeconds: 20
             successThreshold: 1
             tcpSocket:
-              port: 3000
+              port: 8080
             timeoutSeconds: 5
           resources:
             requests:

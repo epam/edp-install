@@ -24,8 +24,8 @@ void runStage(vars, stageDirectory, stageName) {
                     " and build tool ${applicationBuildTool} has not been found. Stage ${stageName} is skiped.")
     }
     catch (Exception ex) {
-        echo "${ex.getMessage()}"
-        failJob("[JENKINS][ERROR] Execution stage ${stageName} for the service ${vars.itemMap.name} has been failed")
+        failJob("[JENKINS][ERROR] Execution stage ${stageName} for the service ${vars.itemMap.name} has been failed." +
+                " Reason - ${ex.getMessage()}")
     }
 }
 
@@ -81,6 +81,9 @@ def getConstants(vars) {
 
     vars['mavenSettings'] = "${vars.pipelinesPath}/settings/maven/settings.xml"
     vars['nexusMavenRepositoryUrl'] = "http://nexus:8081/repository/maven"
+
+    vars['npmGroupRegistry']="http://nexus:8081/repository/npm-all/"
+    vars['npmInternalRegistry']="http://nexus:8081/repository/npm-internal/"
 }
 
 def getItemMap(name, configMapKey) {

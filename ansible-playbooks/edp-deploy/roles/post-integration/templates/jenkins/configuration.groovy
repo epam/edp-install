@@ -1,9 +1,9 @@
 import jenkins.model.*
 import hudson.model.*
-import hudson.tools.*
 import org.csanchez.jenkins.plugins.kubernetes.*
 import hudson.plugins.sonar.*
 import hudson.plugins.sonar.model.*
+import hudson.tools.*
 import com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl
 import com.sonyericsson.hudson.plugins.gerrit.trigger.GerritServer
 import com.sonyericsson.hudson.plugins.gerrit.trigger.config.PluginConfig
@@ -41,6 +41,17 @@ def sonarProperties = new SonarInstallation(
 )
 sonarConf.setInstallations(sonarProperties)
 sonarConf.save()
+
+def sonarDescriptor = Jenkins.instance.getDescriptor("hudson.plugins.sonar.SonarRunnerInstallation")
+
+def sonarRunnerInstaller = new SonarRunnerInstaller("3.1.0.1141")
+def installSourceProperty = new InstallSourceProperty([sonarRunnerInstaller])
+def sonarRunnerInstance = new SonarRunnerInstallation("SonarQube Scanner", "", [installSourceProperty])
+
+def sonarRunnerInstallations = sonarDescriptor.getInstallations()
+sonarRunnerInstallations += sonarRunnerInstance
+sonarDescriptor.setInstallations((SonarRunnerInstallation[]) sonarRunnerInstallations)
+sonarDescriptor.save()
 
 // Modifying Gerrit Plugin for getting an ability to post-configure it via job
 PluginImpl plugin = PluginImpl.getInstance();
