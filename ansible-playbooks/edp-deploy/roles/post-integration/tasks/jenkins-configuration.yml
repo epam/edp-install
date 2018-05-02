@@ -18,6 +18,7 @@
     dest: "{{ post_integration_dir }}/jenkins/{{ item }}"
   with_items:
     - "configuration.groovy"
+    - "role-based-auth.groovy"
     - "jobsprovisioning.groovy"
     - "scriptApproval.xml"
     - "init.groovy"
@@ -30,6 +31,7 @@
   with_items:
       - { src: "{{ post_integration_dir }}/jenkins/init.groovy", dest: "/var/lib/jenkins/init.groovy.d/init.groovy"}
       - { src: "{{ post_integration_dir }}/jenkins/configuration.groovy", dest: "/var/lib/jenkins/init.groovy.d/configuration.groovy"}
+      - { src: "{{ post_integration_dir }}/jenkins/role-based-auth.groovy", dest: "/var/lib/jenkins/init.groovy.d/role-based-auth.groovy"}
       - { src: "{{ post_integration_dir }}/jenkins/jobsprovisioning.groovy", dest: "/var/lib/jenkins/init.groovy.d/dsl/jobsprovisioning.groovy"}
       - { src: "{{ post_integration_dir }}/jenkins/scriptApproval.xml", dest: "/var/lib/jenkins/scriptApproval.xml"}
       - { src: "~/.ssh/jenkins_config", dest: "/var/lib/jenkins/.ssh/config"}
