@@ -87,20 +87,17 @@ tools:
         member_repos:
           - npm-internal
           - npm-proxy
-    privileges:
-      - name: all-repos-rw
-        description: 'Write access to all repos'
-        repository: '*'
-        actions:
-          - read
-          - browse
-          - add
     roles:
       - id: nexus-rw
         name: nexus-rw
         description: Jenkins-CI
         privileges:
-          - all-repos-rw
+          - nx-search-read
+          - nx-repository-view-*-*-read
+          - nx-repository-view-*-*-browse
+          - nx-repository-view-*-*-add
+          - nx-repository-view-*-*-edit
+          - nx-apikey-all
         roles: []
     local_users:
       - username: jenkins

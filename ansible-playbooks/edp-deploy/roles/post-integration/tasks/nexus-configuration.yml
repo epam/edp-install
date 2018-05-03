@@ -22,9 +22,6 @@
 - include_tasks: nexus-api/create-repo-npm-group-each.yml
   with_items: "{{ tools.nexus.repos_npm_group }}"
 
-- include_tasks: nexus-api/setup-privilege-each.yml
-  with_items: "{{ tools.nexus.privileges }}"
-
 - include_tasks: nexus-api/setup-role-each.yml
   with_items: "{{ tools.nexus.roles }}"
 
