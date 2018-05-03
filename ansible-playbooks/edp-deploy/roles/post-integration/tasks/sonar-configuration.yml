@@ -48,3 +48,7 @@
 - include_tasks: sonar-api/add-webhook.yml
   with_items:
     - { name: 'jenkins', url: 'http://jenkins:8080/sonarqube-webhook/' }
+
+- include_tasks: sonar-api/set-general-setting.yml
+  with_items:
+    - { key: 'sonar.typescript.lcov.reportPaths', value: 'coverage/lcov.info' }
