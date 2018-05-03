@@ -6,19 +6,18 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static com.epam.edp.sittests.smoke.StringConstants.*;
 import static io.restassured.RestAssured.given;
 
 /**
  * @author Pavlo_Yemelianov
  */
 public class AddApplicationSmokeTest {
-    private static final String TEST_APP_NAME = "springboot-helloworld";
-    private static final String GERRIT_USER = "admin";
-    private static final String JENKINS_USER = "admin";
-    private static final String GERRIT_PASSWORD = "secret";
-    private static final String JENKINS_PASSWORD = "password";
-    private static final String PRECOMMIT_PIPELINE_NAME = "gerrit-precommit-" + TEST_APP_NAME;
-    private static final String POSTCOMMIT_PIPELINE_NAME = "gerrit-postcommit-" + TEST_APP_NAME;
+    private static final String PRECOMMIT_BE_PIPELINE = PRECOMMIT_PIPELINE_SUFFIX + BE_APP_NAME;
+    private static final String PRECOMMIT_FE_PIPELINE = PRECOMMIT_PIPELINE_SUFFIX + FE_APP_NAME;
+
+    private static final String POSTCOMMIT_BE_PIPELINE = POSTCOMMIT_PIPELINE_SUFFIX + BE_APP_NAME;
+    private static final String POSTCOMMIT_FE_PIPELINE = POSTCOMMIT_PIPELINE_SUFFIX + FE_APP_NAME;
 
     private UrlBuilder urlBuilder;
 
@@ -30,13 +29,19 @@ public class AddApplicationSmokeTest {
 
     @DataProvider(name = "pipeline")
     public static Object[][] pipeline() {
-        return new Object[][] { {PRECOMMIT_PIPELINE_NAME}, {POSTCOMMIT_PIPELINE_NAME}};
+        return new Object[][] { {PRECOMMIT_BE_PIPELINE}, {PRECOMMIT_FE_PIPELINE}, {POSTCOMMIT_BE_PIPELINE},
+                {POSTCOMMIT_FE_PIPELINE} };
     }
 
-    @Test
-    public void testGerritProjectWasCreated() {
+    @DataProvider(name = "application")
+    public static Object[][] application() {
+        return new Object[][] { {BE_APP_NAME}, {FE_APP_NAME} };
+    }
+
+    @Test(dataProvider = "application")
+    public void testGerritProjectWasCreated(String application) {
         given()
-            .pathParam("project", TEST_APP_NAME)
+            .pathParam("project", application)
             .auth()
             .basic(GERRIT_USER, GERRIT_PASSWORD)
         .when()

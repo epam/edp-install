@@ -13,14 +13,13 @@ import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.ConfigBuilder;
 import io.fabric8.openshift.client.DefaultOpenShiftClient;
 
+import static com.epam.edp.sittests.smoke.StringConstants.*;
 import static io.restassured.RestAssured.given;
 
 public class AddEnvironmentSmokeTest {
-    private static final String TEST_APP_NAME = "springboot-helloworld";
     private static final String OPENSHIFT_CICD_NAMESPACE = "edp-cicd";
     private static final String OPENSHIFT_MASTER_URL = "https://openshift.main.edp.projects.epam.com:8443";
-    private static final String JENKINS_USERNAME = "admin";
-    private static final String JENKINS_PASSWORD = "password";
+
     private static final String OPENSHIFT_USERNAME = "integration_tests";
     private static final String OPENSHIFT_PASSWORD = "tests2018";
     private static final Boolean OPENSHIFT_TRUST_CERTS = false;
@@ -49,6 +48,11 @@ public class AddEnvironmentSmokeTest {
         return new Object[][] { {sitPipelineName}, {qaPipelineName}, {DELETION_PIPELINE_NAME}};
     }
 
+    @DataProvider(name = "application")
+    public static Object[][] application() {
+        return new Object[][] { {BE_APP_NAME}, {FE_APP_NAME} };
+    }
+
     @Feature("Setup Openshift Client")
     @BeforeClass
     public void setUpOpenShiftClient() {
@@ -68,7 +72,7 @@ public class AddEnvironmentSmokeTest {
             .pathParam("folder", openshiftNamespace)
             .auth()
             .preemptive()
-            .basic(JENKINS_USERNAME, JENKINS_PASSWORD)
+            .basic(JENKINS_USER, JENKINS_PASSWORD)
         .when()
             .get(urlBuilder.buildUrl("https",
                     "jenkins",OPENSHIFT_CICD_NAMESPACE,
@@ -77,10 +81,10 @@ public class AddEnvironmentSmokeTest {
             .statusCode(HttpStatus.SC_OK);
     }
 
-    @Test
-    public void testOpenShiftTemplateHasBeenAdded() {
+    @Test(dataProvider = "application")
+    public void testOpenShiftTemplateHasBeenAdded(String application) {
         Template template = openShiftClient.templates().inNamespace(openshiftNamespace)
-                .withName(TEST_APP_NAME)
+                .withName(application)
                 .get();
         Assert.assertNotNull(template);
     }
