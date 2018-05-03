@@ -121,3 +121,4 @@ tools:
     image: "{{ keycloak_image | default('jboss/keycloak:3.4.3.Final') }}"
     volume_db_capacity: "{{ keycloak_volume_db_capacity | default('2Gi') }}"
     realm_name: "{{ keycloak_realm_name | default('CI') }}"
+    web_url: "http://keycloak-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
