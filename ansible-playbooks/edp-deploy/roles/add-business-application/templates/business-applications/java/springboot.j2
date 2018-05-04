@@ -37,7 +37,9 @@ objects:
     labels:
       app: "{{ app_name }}"
   spec:
+{% if route_site != '' %}
     host: {{ route_site }}-${NAMESPACE}.{{ dns_wildcard }}
+{% endif %}
     path: {{ route_path }}
     port:
       targetPort: 8080
