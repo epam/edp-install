@@ -11,7 +11,7 @@ def run(vars) {
                   userRemoteConfigs                : [[url    : "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:" +
                           "${vars.gerritSshPort}/${vars.atProject}"]]])
 
-        stash name: 'tests', includes: "*", useDefaultExcludes: false
+        stash name: 'tests', includes: "**", useDefaultExcludes: false
 
         if (!fileExists("${vars.workDir}/${vars.atProject}/run.json"))
             error "[JENKINS][ERROR] There is no run.json file in the project ${vars.atProject}. " +
@@ -62,34 +62,34 @@ def run(vars) {
 
         node("${slaveType}") {
             atRoot = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
-            try {
-                dir("${atRoot}") {
-                    unstash 'tests'
+            dir("${atRoot}") {
+                unstash 'tests'
+                try {
                     sh "${runCommand}"
                 }
-                switch (testFramework) {
-                    case "allure":
-                        allure([
-                                includeProperties: false,
-                                jdk: '',
-                                properties: [],
-                                reportBuildPolicy: 'ALWAYS',
-                                results: [[path: 'target/allure-results']]
-                        ])
-                        break
-                    default:
-                        println("[JENKINS][WARNING] Can't publish test results. Testing framework is undefined.")
-                        break
+                catch (Exception ex) {
+                    commonLib.failJob("[JENKINS][ERROR] Tests from ${vars.atProject} have been failed. Reason - ${ex}")
                 }
-            }
-            catch(Exception ex) {
-                commonLib.failJob("[JENKINS][ERROR] Tests from ${vars.atProject} have been failed. Reason - ${ex}")
-            }
-            finally {
-                // Deleting latest routes for every application
-                vars.get(vars.appSettingsKey).each() { application ->
-                    if(application.route) {
-                        sh "oc delete -n ${vars.deployProject} route ${application.name}-latest"
+                finally {
+                    switch (testFramework) {
+                        case "allure":
+                            allure([
+                                    includeProperties: false,
+                                    jdk              : '',
+                                    properties       : [],
+                                    reportBuildPolicy: 'ALWAYS',
+                                    results          : [[path: 'target/allure-results']]
+                            ])
+                            break
+                        default:
+                            println("[JENKINS][WARNING] Can't publish test results. Testing framework is undefined.")
+                            break
+                    }
+                    // Deleting latest routes for every application
+                    vars.get(vars.appSettingsKey).each() { application ->
+                        if (application.route) {
+                            sh "oc delete -n ${vars.deployProject} route ${application.name}-latest"
+                        }
                     }
                 }
             }
