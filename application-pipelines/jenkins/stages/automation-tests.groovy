@@ -33,17 +33,6 @@ def run(vars) {
             error "[JENKINS][ERROR] Haven't found ${vars.pipelineProject} command in file run.json. " +
                     "It's mandatory to be specified, please check"
 
-        // Create latest routes for every application
-        vars.get(vars.appSettingsKey).each() { application ->
-            if(application.route) {
-                sh "oc export route -n ${vars.deployProject} ${application.name} | oc patch " +
-                        "--patch='{\"spec\":{\"host\":\"${application.name}-${vars.pipelineProject}-latest.${vars.wildcard}\"}}' " +
-                        "--local=true -f - -o yaml | oc patch --patch='{\"metadata\":{\"name\":\"${application.name}-latest\"}}' " +
-                        "--local=true -f - -o yaml | oc patch --patch='{\"metadata\":{\"namespace\":\"${vars.deployProject}\"}}' " +
-                        "--local=true -f - -o yaml | oc create -f -"
-            }
-        }
-
         def runCommand = parsedRunCommandJson["${vars.pipelineProject}"]
 
         // Determine slave type

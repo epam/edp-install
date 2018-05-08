@@ -35,7 +35,7 @@ node("master") {
 
         vars["projectMap"] = commonLib.getItemMap(vars.pipelineProject, vars.envSettingsKey)
         if (!vars["projectMap"])
-            commonLib.failJob("[JENKINS][ERROR] Evironment ${vars.pipelineProject} is not found in configmap" +
+            commonLib.failJob("[JENKINS][ERROR] Environment ${vars.pipelineProject} is not found in configmap" +
                     " ${vars.configMapName} key ${vars.envSettingsKey} please check")
 
         commonLib.getDebugInfo(vars)
@@ -45,6 +45,11 @@ node("master") {
     stage("DEPLOY") {
         stage = load "${vars.pipelinesPath}/stages/deploy.groovy"
         stage.run(vars)
+    }
+
+    stage("ADJUST ROUTES") {
+        stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
+        stage.run(vars, "-latest")
     }
 
     vars.projectMap.get('quality-gates').each() { qualityGate ->
@@ -96,15 +101,8 @@ node("master") {
             stage = load "${vars.pipelinesPath}/stages/delete-environment.groovy"
             stage.run(vars)
 
-            vars.get(vars.appSettingsKey).each() { application ->
-                if(application.route) {
-                    sh "oc export route -n ${vars.deployProject} ${application.name} | oc patch " +
-                            "--patch='{\"spec\":{\"host\":\"${application.name}-${vars.pipelineProject}.${vars.wildcard}\"}}' " +
-                            "--local=true -f - -o yaml | oc patch --patch='{\"metadata\":{\"name\":\"${application.name}-stable\"}}' " +
-                            "--local=true -f - -o yaml | oc patch --patch='{\"metadata\":{\"namespace\":\"${vars.deployProject}\"}}' " +
-                            "--local=true -f - -o yaml | oc create -f -"
-                }
-            }
+            stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
+            stage.run(vars)
         }
     }
 }
