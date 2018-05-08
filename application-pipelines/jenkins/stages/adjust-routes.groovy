@@ -1,7 +1,7 @@
 def run(vars, postfix="-stable") {
     openshift.withCluster() {
         vars.get(vars.appSettingsKey).each() { application ->
-            if(application.route) {
+            if(application.route && application.deployed) {
                 routePrefix = (!application.route_site) ? application.name : application.route_site
                 routePostfix = (postfix == "-stable") ? "" : postfix
                 sh "oc export route -n ${vars.deployProject} ${application.name} | oc patch " +

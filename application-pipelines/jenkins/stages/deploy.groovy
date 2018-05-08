@@ -5,6 +5,9 @@ def run(vars) {
             sh "oc adm policy add-role-to-user admin admin -n ${vars.deployProject}"
         }
         vars.get(vars.appSettingsKey).each() { application ->
+            if (!checkImageExists(application))
+                return
+
             def template = openshift.withProject() {
                 openshift.selector('template', application.name).object()
             }
@@ -34,6 +37,32 @@ def run(vars) {
         }
     }
     this.result = "success"
+}
+
+def checkImageExists(application) {
+    def imageExists = sh(
+            script: "oc -n ${vars.pipelineProject} get is ${application.name} --no-headers | awk '{print \$1}'",
+            returnStdout: true
+    ).trim()
+    if (imageExists == "") {
+        println("[JENKINS][WARNING] Image stream ${application.name} doesn't exist in the project ${vars.pipelineProject}\r\n" +
+                "Deploy will be skipped")
+        application['deployed'] = false
+        return false
+    }
+
+    def tagExist = sh(
+            script: "oc -n ${vars.pipelineProject} get is ${application.name} -o jsonpath='{.spec.tags[?(@.name==\"${application.version}\")].name}'",
+            returnStdout: true
+    ).trim()
+    if (tagExist == "") {
+        println("[JENKINS][WARNING] Image stream ${application.name} with tag ${application.version} doesn't exist in the project ${vars.pipelineProject}\r\n" +
+                "Deploy will be skipped")
+        application['deployed'] = false
+        return false
+    }
+    application['deployed'] = true
+    return true
 }
 
 return this;
