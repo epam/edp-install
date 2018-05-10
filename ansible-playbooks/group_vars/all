@@ -39,7 +39,6 @@ secrets:
     db_password: keycloak
 tools:
   jenkins:
-    version: "{{ jenkins_version | default('v3.9') }}"
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
     password: "{{ jenkins_password | default('password') }}"
     fs_type: "{{ jenkins_fs_type | default('gluster') }}"
@@ -50,6 +49,7 @@ tools:
     maven_cache_volume_capacity: "{{ jenkins_maven_cache_volume_capacity | default('5Gi') }}"
     frontend_image: "{{ jenkins_frontend_image | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-ui-slave:latest') }}"
     backend_image: "{{ jenkins_backend_image | default('openshift/jenkins-slave-maven-centos7') }}"
+    jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   gerrit:
     version: "{{ gerrit_version | default('2.14.1') }}"
     gitlab_oauth: "{{ gerrit_gitlab_oauth | default('gitlab-oauth') }}"
