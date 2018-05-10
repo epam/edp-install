@@ -12,6 +12,7 @@
     {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/keycloak/keycloak.yaml
     -p KEYCLOAK_IMAGE={{ tools.keycloak.image }}
     -p KEYCLOAK_DB_CAPACITY={{ tools.keycloak.volume_db_capacity }}
+    -p STORAGE_CLASS_NAME={{ storage_class_name }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

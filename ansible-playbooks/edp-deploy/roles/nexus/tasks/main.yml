@@ -9,6 +9,7 @@
     {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/nexus/nexus.yaml 
     -p NEXUS_VERSION={{ tools.nexus.version }} 
     -p NEXUS_VOLUME_CAPACITY={{ tools.nexus.volume_capacity }}
+    -p STORAGE_CLASS_NAME={{ storage_class_name }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

@@ -53,6 +53,7 @@ objects:
     resources:
       requests:
         storage: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}
+    storageClassName: manual
 - apiVersion: v1
   kind: Route
   metadata:

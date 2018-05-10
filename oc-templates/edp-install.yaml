@@ -38,6 +38,7 @@ objects:
             - "-e ansible_connection=local"
             - "-e edp_version=${EDP_VERSION}"
             - "-e dns_wildcard=${DNS_WILDCARD}"
+            - "-e storage_class_name=${STORAGE_CLASS_NAME}"
             - "-e gerrit_version=${GERRIT_VERSION}"
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
             - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
@@ -69,6 +70,11 @@ parameters:
   description: DNS wildcard of your project that should be specified during Openshift cluster installation
   name: DNS_WILDCARD
   value: ""
+  required: true
+- displayName: Storage class name
+  description: Storage class name to consume by every EDP tool
+  name: STORAGE_CLASS_NAME
+  value: "glusterfs-storage"
   required: true
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed

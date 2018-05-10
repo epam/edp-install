@@ -39,6 +39,7 @@
     -p GITLAB_GROUP_PATH={{ gitlab_group_name | urlsplit('path') | regex_replace('^/{1}', '') }}
     -p GITLAB_PROJECT_NAME={{ project_gitlab_edp }}
     -p GERRIT_SSH_PORT={{ gerrit_ssh_port }}
+    -p STORAGE_CLASS_NAME={{ storage_class_name }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

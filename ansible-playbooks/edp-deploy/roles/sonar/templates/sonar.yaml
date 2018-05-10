@@ -20,6 +20,7 @@ objects:
   metadata:
     name: sonar-data
   spec:
+    storageClassName: ${STORAGE_CLASS_NAME}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -30,6 +31,7 @@ objects:
   metadata:
     name: sonar-db
   spec:
+    storageClassName: ${STORAGE_CLASS_NAME}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -248,3 +250,6 @@ parameters:
   displayName: SonarQube database Volume Capacity
   name: SONAR_DB_CAPACITY
   value: 2Gi
+- displayName: SonarQube storage class name
+  description: Storage class name to consume by SonarQube
+  name: STORAGE_CLASS_NAME

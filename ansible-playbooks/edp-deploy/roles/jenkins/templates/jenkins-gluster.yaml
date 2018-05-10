@@ -36,6 +36,7 @@ objects:
   metadata:
     name: jenkins-data
   spec:
+    storageClassName: ${STORAGE_CLASS_NAME}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -47,6 +48,7 @@ objects:
   metadata:
     name: maven-cache
   spec:
+    storageClassName: ${STORAGE_CLASS_NAME}
     accessModes:
     - ReadWriteOnce
     resources:
@@ -334,3 +336,6 @@ parameters:
   displayName: Backend docker image.
   name: JENKINS_BACKEND_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"
+- displayName: Jenkins storage class name
+  description: Storage class name to consume by Jenkins
+  name: STORAGE_CLASS_NAME

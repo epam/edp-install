@@ -17,6 +17,7 @@
     -p JENKINS_BACKEND_IMAGE={{ tools.jenkins.backend_image }}
     -p JENKINS_UI_URL={{ tools.jenkins.web_url }}
     {{ '-p JENKINS_HOST_PATH_VOLUME=' + tools.jenkins.host_path_volume if tools.jenkins.fs_type=='hostpath' else '-p JENKINS_VOLUME_CAPACITY=' + tools.jenkins.volume_capacity }}
+    -p STORAGE_CLASS_NAME={{ storage_class_name }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
