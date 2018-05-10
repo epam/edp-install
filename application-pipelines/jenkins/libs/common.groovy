@@ -66,6 +66,11 @@ def getConstants(vars) {
             returnStdout: true
     ).trim()
 
+    vars["projectSuffix"] = sh(
+            script: "oc get cm user-settings -o jsonpath='{.data.projects_suffix}'",
+            returnStdout: true
+    ).trim()
+
     [vars.envSettingsKey, vars.appSettingsKey, vars.atSettingsKey].each() { key ->
         try {
             def settingsJson = sh(
