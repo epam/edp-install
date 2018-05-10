@@ -74,7 +74,7 @@
 
   - name: "Copying EDP sources"
     copy:
-      src: "../../{{ item }}"
+      src: "../{{ item }}"
       dest: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
       force: yes
     with_items:

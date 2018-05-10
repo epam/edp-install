@@ -64,7 +64,7 @@ objects:
             - "-e keycloak_volume_db_capacity=${KEYCLOAK_DB_CAPACITY}"
             - "-e keycloak_realm_name=${KEYCLOAK_REALM_NAME}"
             - "-e keycloak_admin_user_secret=${KEYCLOAK_ADMIN_USER_SECRET}"
-            - "ansible-playbooks/edp-deploy/install.yml"
+            - "ansible-playbooks/install.yml"
 parameters:
 - displayName: DNS wildcard
   description: DNS wildcard of your project that should be specified during Openshift cluster installation

@@ -39,7 +39,7 @@ objects:
             - "localhost,"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
-            - "ansible-playbooks/edp-deploy/add-environments.yml"
+            - "ansible-playbooks/add-environments.yml"
           env:
           - name: PROJECT_CICD
             valueFrom:

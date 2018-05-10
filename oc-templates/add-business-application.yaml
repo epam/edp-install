@@ -40,7 +40,7 @@ objects:
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
             - "-e app_name=${NAME}"
-            - "ansible-playbooks/edp-deploy/add-business-application.yml"
+            - "ansible-playbooks/add-business-application.yml"
           env:
           - name: PROJECT_CICD
             valueFrom:

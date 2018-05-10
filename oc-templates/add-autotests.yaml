@@ -36,7 +36,7 @@ objects:
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
             - "-e autotest_alias=${NAME}"
-            - "ansible-playbooks/edp-deploy/add-autotests.yml"
+            - "ansible-playbooks/add-autotests.yml"
           env:
           - name: PROJECT_CICD
             valueFrom:
