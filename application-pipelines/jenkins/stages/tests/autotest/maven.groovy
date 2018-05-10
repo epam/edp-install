@@ -16,7 +16,7 @@ def run(vars) {
 
         sh "${parsedRunCommandJson.precommit}"
 
-        switch (vars.itemMap.report_framework) {
+        switch (vars.itemMap.report_framework.toLowerCase()) {
             case "allure":
                 allure([
                         includeProperties: false,

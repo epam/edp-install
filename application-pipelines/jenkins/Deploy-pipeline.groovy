@@ -68,11 +68,18 @@ node("master") {
                 }
             }
             catch (Exception ex) {
+                vars.get(vars.appSettingsKey).each() { application ->
+                    if (application.route && application.deployed) {
+                        sh "oc delete -n ${vars.deployProject} route ${application.name}-latest"
+                    }
+                }
+
                 if (qualityGate.type == "manual") {
                     vars['projectsToDelete'] = ["${vars.deployProject}"]
                     stage = load "${vars.pipelinesPath}/stages/delete-environment.groovy"
                     stage.run(vars)
                 }
+
                 currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been failed"
                 commonLib.failJob("[JENKINS][ERROR] Stage ${qualityGate['step-name']} has been failed. Reason - ${ex}")
             }

@@ -74,12 +74,6 @@ def run(vars) {
                             println("[JENKINS][WARNING] Can't publish test results. Testing framework is undefined.")
                             break
                     }
-                    // Deleting latest routes for every application
-                    vars.get(vars.appSettingsKey).each() { application ->
-                        if (application.route) {
-                            sh "oc delete -n ${vars.deployProject} route ${application.name}-latest"
-                        }
-                    }
                 }
             }
         }
