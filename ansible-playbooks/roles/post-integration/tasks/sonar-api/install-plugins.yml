@@ -8,7 +8,10 @@
     password: "{{ secrets.sonar_admin.password }}"
     force_basic_auth: "yes"
     status_code: 200
+  retries: 20
+  delay: 3
   register: result
+  until: result.status == 200
 
 - block:
   - name: "Install {{ item }} plugin"
@@ -20,7 +23,11 @@
       password: "{{ secrets.sonar_admin.password }}"
       force_basic_auth: "yes"
       status_code: 200,204
-      timeout: 60
+      timeout: 120
+    retries: 20
+    delay: 3
+    register: install_result
+    until: install_result.status == 200 or install_result.status == 204
 
   - set_fact:
       sonar_reboot: true

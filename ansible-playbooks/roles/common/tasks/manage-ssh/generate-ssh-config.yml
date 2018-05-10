@@ -1,0 +1,40 @@
+---
+- name: "Set facts with ssh keys path"
+  set_fact:
+     gitlab_key_path: "{{ work_dir }}/gitlab-private.key"
+     gerrit_key_path: "{{ work_dir }}/gerrit-private.key"
+
+- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-credentials-from-secret.yml
+  vars:
+    target_gitlab_keyfile: "{{ gitlab_key_path }}"
+
+- include_tasks: roles/common/tasks/manage-gerrit/get-gerrit-credentials-from-secret.yml
+  vars:
+    target_gerrit_keyfile: "{{ gerrit_key_path }}"
+
+- name: "Create .ssh directory"
+  file:
+    path: ~/.ssh
+    state: directory
+
+- name: "Config ssh"
+  copy:
+    content: |
+      Host gerrit*
+        HostName gerrit.{{ project_cicd }}
+        Port {{ gerrit_ssh_port }}
+        User project-creator
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ gerrit_key_path }}
+        IdentitiesOnly yes
+
+      Host {{ gitlab_host }}
+        HostName {{ gitlab_host }}
+        User git
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ gitlab_key_path }}
+        IdentitiesOnly yes
+    dest: ~/.ssh/config
+    force: yes

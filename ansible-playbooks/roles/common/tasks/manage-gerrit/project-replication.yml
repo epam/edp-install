@@ -31,17 +31,15 @@
 - set_fact:
     gerrit_pod: "{{ ocadm }} -n {{ project_cicd }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'gerrit-[0-9]+'"
     gerrit_manage: "ssh gerrit.{{ project_cicd }} gerrit"
+    gitlab_key_path: "{{ work_dir }}/gitlab-private.key"
+    gerrit_key_path: "{{ work_dir }}/gerrit-private.key"
 
 - name: "Copy replication config to gerrit pod"
   shell: "{{ ocadm }} cp /tmp/replication.config {{ project_cicd }}/$({{ gerrit_pod }}):/var/gerrit/review_site/etc/replication.config"
 
-- name: "Get gerrit-admin ssh key from secret"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-admin
-    --template={% raw %}'{{ index .data "id_admin_rsa" }}'{% endraw %} | base64 --decode
-  register: gerrit_admin_ssh
-
-- local_action: copy content={{ gerrit_project_creator_ssh.stdout }} dest={{ work_dir }}/gerrit_rsa mode=0400
+- include_tasks: roles/common/tasks/manage-gerrit/get-gerrit-credentials-from-secret.yml
+  vars:
+    target_gerrit_keyfile: "{{ gerrit_key_path }}"
 
 - name: "Create .ssh directory"
   file:
@@ -57,7 +55,7 @@
         User project-creator
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
-        IdentityFile {{ work_dir }}/gerrit_rsa
+        IdentityFile {{ gerrit_key_path }}
         IdentitiesOnly yes
     dest: ~/.ssh/config
     force: yes

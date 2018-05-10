@@ -1,0 +1,63 @@
+---
+- name: "Get Openshift docker registry url"
+  shell: "{{ ocadm }} -n default get route docker-registry -o jsonpath='{.spec.host}'"
+  register: docker_registry_url
+
+- name: "Get wildcard from user-settings cm"
+  shell: |
+   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.dns_wildcard }'
+  register: dns_wildcard
+
+- name: "Get projects suffix from user-settings config map"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.projects_suffix }'
+  register: projects_suffix
+
+- name: "Get gerrit ssh port from service"
+  command: "{{ ocadm }} -n {{ project_cicd }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].nodePort}'"
+  register: gerrit_ssh_port
+
+- name: "Get GitLab URL"
+  shell: |
+    {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.gitlab_group_name_url }'
+  register: git_repo_url_default
+
+- name: "Set variables"
+  set_fact:
+    dns_wildcard: "{{ dns_wildcard.stdout }}"
+    docker_registry_url: "{{ docker_registry_url.stdout }}"
+    full_app_name: "{{ framework | lower }}-{{ app_name }}"
+    edp_gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix.stdout, 'edp')}}"
+    gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
+    gitlab_host: "{{ git_repo_url_default.stdout }}"
+
+- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
+
+- name: "Pull EDP repo from gerrit"
+  shell: >
+   git clone ssh://project-creator@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ edp_gerrit_project }} &&
+   scp -p -P {{ gerrit_ssh_port }} project-creator@gerrit.{{ project_cicd }}:hooks/commit-msg {{ edp_gerrit_project }}/.git/hooks/
+  args:
+    chdir: "{{ templates_dir }}"
+
+- name: "Create apps directory"
+  file:
+    path: "{{ templates_dir }}/{{ edp_gerrit_project }}/deploy-templates"
+    state: directory
+
+- name: "Copying templates for {{ language }} {{ framework }} app"
+  template:
+    src: "business-applications/{{ language | lower }}/{{ item.src }}.j2"
+    dest: "{{ templates_dir }}/{{ edp_gerrit_project }}/deploy-templates/{{ item.dst }}.yml"
+  with_items:
+    - { src: "{{ framework | lower }}", dst: "{{ full_app_name }}" }
+    - { src: "s2i-{{ framework | lower }}", dst: "s2i-{{ full_app_name }}" }
+
+- name: "Push templates to gerrit"
+  shell: |
+   git config user.email "{{ gitlab_autouser_email }}"
+   git config user.name "{{ gitlab_autouser_name }}"
+   git add . && git commit -m "Add templates for {{ full_app_name }}"
+   git push origin master
+  args:
+    chdir: "{{ templates_dir }}/{{ edp_gerrit_project }}"

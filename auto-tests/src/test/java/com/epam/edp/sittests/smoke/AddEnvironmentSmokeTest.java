@@ -24,6 +24,8 @@ public class AddEnvironmentSmokeTest {
     private static final String OPENSHIFT_PASSWORD = "tests2018";
     private static final Boolean OPENSHIFT_TRUST_CERTS = false;
     private static final String DELETION_PIPELINE_NAME = "deletion-pipeline";
+    private static final String BE_TEMPLATE_NAME = "springboot-" + BE_APP_NAME;
+    private static final String FE_TEMPLATE_NAME = "react-" + FE_APP_NAME;
 
     private static String sitPipelineName;
     private static String qaPipelineName;
@@ -50,7 +52,7 @@ public class AddEnvironmentSmokeTest {
 
     @DataProvider(name = "application")
     public static Object[][] application() {
-        return new Object[][] { {BE_APP_NAME}, {FE_APP_NAME} };
+        return new Object[][] { {BE_TEMPLATE_NAME}, {FE_TEMPLATE_NAME} };
     }
 
     @Feature("Setup Openshift Client")
@@ -82,10 +84,16 @@ public class AddEnvironmentSmokeTest {
     }
 
     @Test(dataProvider = "application")
-    public void testOpenShiftTemplateHasBeenAdded(String application) {
-        Template template = openShiftClient.templates().inNamespace(openshiftNamespace)
-                .withName(application)
-                .get();
-        Assert.assertNotNull(template);
+    public void testApplicationTemplateHasBeenAdded(String application) {
+        given().log().all()
+                .pathParam("application", application)
+                .pathParam("project", "edp-" + ocpEdpSuffix)
+                .urlEncodingEnabled(false)
+        .when()
+                .get(urlBuilder.buildUrl("http",
+                        "gerrit",OPENSHIFT_CICD_NAMESPACE,
+                        "projects/{project}/branches/master/files/deploy-templates%2F{application}.yml/content"))
+        .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 }

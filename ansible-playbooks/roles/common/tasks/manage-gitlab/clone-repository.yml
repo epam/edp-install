@@ -23,20 +23,21 @@
        gitlab_http_url: "{{ git_repo_url_default.stdout + '/' + gitlab_project_name }}"
   when: git_repo_url is not match("http?(s)://*")
 
-- name: "Register variable with repo URI"
+- name: "Settings facts with default parameters"
   set_fact:
      git_repo_ssh_url: "{{ gitlab_hostname }}:{{ gitlab_project_path if git_repo_url is match('http?(s)://*')
      else gitlab_project_path + '/' + gitlab_project_name}}.git"
+     gitlab_key_path: "{{ work_dir }}/gitlab-private.key"
 
-- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-sshkey-from-secret.yml
+- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-credentials-from-secret.yml
   vars:
-    target_file: "{{ work_dir }}/private.key"
+    target_gitlab_keyfile: "{{ gitlab_key_path }}"
 
 - name: "Clone GitLab repository"
   git:
     repo: "git@{{ git_repo_ssh_url }}"
     dest: "{{ work_dir }}/{{ project_name }}"
-    key_file: "{{ work_dir }}/private.key"
+    key_file: "{{ gitlab_key_path }}"
     accept_hostkey: true
     force: true
   ignore_errors: true

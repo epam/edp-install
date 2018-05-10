@@ -1,26 +1,13 @@
 ---
-- name: "Get autouser email from cicd projects secret"
-  shell: >
-   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }}
-   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
-  register: user_mail
-
-- name: "Get autouser name from cicd projects secret"
-  shell: |
-   echo "{{ user_mail.stdout }}" | cut -d@ -f1
-  register: username
-
-- name: "Get autouser password from cicd projects secret"
-  shell: >
-   {{ ocadm }} -n {{ project_cicd }} get secret {{ gitlab_auto_user_secret }}
-   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
-  register: password
+- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-credentials-from-secret.yml
+  vars:
+    target_gitlab_keyfile: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
 
 - name: "Login to GitLab and get CSRF token"
   uri:
     url: "https://{{ gitlab_hostname }}/oauth/token"
     method: POST
-    body: 'grant_type=password&username={{ user_mail.stdout }}&password={{ password.stdout }}'
+    body: 'grant_type=password&username={{ gitlab_autouser_email }}&password={{ gitlab_autouser_password }}'
   retries: 3
   delay: 3
   register: csrf_token
@@ -87,9 +74,9 @@
   - name: "Push to Gitlab"
     shell: |
      cd {{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}
-     git config user.email "{{ user_mail.stdout }}"
-     git config user.name "{{ username.stdout }}"
-     ssh-agent bash -c 'ssh-add {{ post_integration_dir }}/gerrit/gitlab_rsa; git add . \
+     git config user.email "{{ gitlab_autouser_email }}"
+     git config user.name "{{ gitlab_autouser_name }}"
+     ssh-agent bash -c 'ssh-add "{{ post_integration_dir }}/gerrit/gitlab_rsa"; git add . \
      && git commit -m "Initial commit with EDP sources" \
      && git push origin master'
     register: push_output

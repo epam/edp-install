@@ -23,19 +23,24 @@
   ignore_errors: true
   command: |
     {{ ocadm }} -n {{ project_cicd }} create secret generic {{ item.secret_name }}
-    --from-file={{ item.configmap_key }}={{ post_integration_dir }}/gerrit/{{ item.sskkey }}
-    --from-file={{ item.configmap_key }}.pub={{ post_integration_dir }}/gerrit/{{ item.sskkey }}.pub
+    --from-file={{ item.configmap_key }}={{ post_integration_dir }}/gerrit/{{ item.sshkey }}
+    --from-file={{ item.configmap_key }}.pub={{ post_integration_dir }}/gerrit/{{ item.sshkey }}.pub
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
   with_items:
-    - { secret_name: "gerrit-admin", configmap_key: "id_admin_rsa" , sskkey: "gerrit_admin_rsa" }
-    - { secret_name: "gerrit-project-creator", configmap_key: "id_project_creator_rsa" , sskkey: "gerrit_project-creator_rsa" }
+    - { secret_name: "gerrit-admin", configmap_key: "id_admin_rsa" , sshkey: "gerrit_admin_rsa" }
+    - { secret_name: "gerrit-project-creator", configmap_key: "id_project_creator_rsa" , sshkey: "gerrit_project-creator_rsa" }
 
-- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-sshkey-from-secret.yml
+- name: "Set facts with ssh keys path"
+  set_fact:
+     gitlab_key_path: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
+     gerrit_key_path: "{{ post_integration_dir }}/gerrit/gerrit_admin_rsa"
+
+- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-credentials-from-secret.yml
   vars:
-    target_file: "{{ post_integration_dir }}/gerrit/gitlab_rsa"
+    target_gitlab_keyfile: "{{ gitlab_key_path }}"
 
 - stat:
     path: "~/.ssh/config"
@@ -49,7 +54,7 @@
         User admin
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
-        IdentityFile {{ post_integration_dir }}/gerrit/gerrit_admin_rsa
+        IdentityFile {{ gerrit_key_path }}
         IdentitiesOnly yes
 
       Host {{ gitlab_hostname }}
@@ -57,7 +62,7 @@
         User git
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
-        IdentityFile {{ post_integration_dir }}/gerrit/gitlab_rsa
+        IdentityFile {{ gitlab_key_path }}
         IdentitiesOnly yes
     dest: ~/.ssh/config
     force: yes
