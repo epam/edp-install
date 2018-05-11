@@ -14,9 +14,6 @@
           "postgres:9.6"
         ]
       }
-    ],
-    "persistentStorages": [
-      "GlusterFS"
     ]
   },
   {

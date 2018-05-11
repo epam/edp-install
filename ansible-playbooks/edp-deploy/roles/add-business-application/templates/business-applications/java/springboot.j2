@@ -59,9 +59,7 @@ objects:
     resources:
       requests:
         storage: "{{ database_capacity }}"
-{% if persistent_storage == 'GlusterFS' %}
-    storageClassName: glusterfs-storage
-{% endif %}
+    storageClassName: {{ persistent_storage }}
 - apiVersion: v1
   kind: Service
   metadata:
