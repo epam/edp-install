@@ -45,11 +45,9 @@ node("master") {
     stage("DEPLOY") {
         stage = load "${vars.pipelinesPath}/stages/deploy.groovy"
         stage.run(vars)
-    }
 
-    stage("ADJUST ROUTES") {
         stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
-        stage.run(vars, "-latest")
+        stage.run(vars, "-latest", "create")
     }
 
     vars.projectMap.get('quality-gates').each() { qualityGate ->
@@ -68,6 +66,9 @@ node("master") {
                 }
             }
             catch (Exception ex) {
+                stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
+                stage.run(vars, "-latest", "delete")
+
                 if (qualityGate.type == "manual") {
                     vars['projectsToDelete'] = ["${vars.deployProject}"]
                     stage = load "${vars.pipelinesPath}/stages/delete-environment.groovy"
@@ -77,16 +78,12 @@ node("master") {
                 currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been failed"
                 commonLib.failJob("[JENKINS][ERROR] Stage ${qualityGate['step-name']} has been failed. Reason - ${ex}")
             }
-            finally {
-                vars.get(vars.appSettingsKey).each() { application ->
-                    if (application.route && application.deployed) {
-                        sh "oc delete -n ${vars.deployProject} route ${application.name}-latest"
-                    }
-                }
-            }
         }
         currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been passed"
     }
+
+    stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
+    stage.run(vars, "-latest", "delete")
 
     stage("PROMOTE IMAGES") {
         vars['sourceTag'] = "latest"
@@ -108,9 +105,9 @@ node("master") {
 
             stage = load "${vars.pipelinesPath}/stages/delete-environment.groovy"
             stage.run(vars)
-
-            stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
-            stage.run(vars)
         }
     }
+
+    stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
+    stage.run(vars, "-stable", "create")
 }
