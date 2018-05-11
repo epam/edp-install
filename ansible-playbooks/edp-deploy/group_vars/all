@@ -4,7 +4,7 @@ ansible_connection: ssh
 work_dir: "/opt/edp"
 post_integration_dir: "{{ work_dir }}/post-integration"
 secrets_dir: "{{ work_dir }}/secrets"
-templates_dir: "{{ work_dir }}/templates"
+templates_dir: "{{ work_dir }}/oc-templates"
 files_dir: "{{ work_dir }}/files"
 projects_suffix: ""
 projects_list: [

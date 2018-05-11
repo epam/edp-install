@@ -72,18 +72,26 @@
       force: true
     ignore_errors: true
 
-  - name: "Copying pipelines"
+  - name: "Copying EDP sources"
     copy:
-      src: "../../application-pipelines"
+      src: "../../{{ item }}"
       dest: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
       force: yes
+    with_items:
+      - "ansible-playbooks"
+      - "application-pipelines"
+      - "edp-images"
+      - "oc-templates"
+      - "README.md"
 
   - name: "Push to Gitlab"
     shell: |
      cd {{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}
      git config user.email "{{ user_mail.stdout }}"
      git config user.name "{{ username.stdout }}"
-     ssh-agent bash -c 'ssh-add {{ post_integration_dir }}/gerrit/gitlab_rsa; git add . && git commit -m "Add pipelines" && git push origin master'
+     ssh-agent bash -c 'ssh-add {{ post_integration_dir }}/gerrit/gitlab_rsa; git add . \
+     && git commit -m "Initial commit with EDP sources" \
+     && git push origin master'
     register: push_output
     until: push_output.rc == 0
     retries: 20
