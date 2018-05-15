@@ -1,0 +1,16 @@
+---
+- name: "Get gerrit ssh port"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} get cm gerrit -o=jsonpath='{ .data.sshPort }'
+  register: gerrit_ssh_port
+
+- name: "Get GitLab group url from user-settings config map"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.gitlab_group_name_url }'
+  register: gitlab_group_name_url
+
+- name: "Set variable for Gerrit and Gitlab"
+  set_fact:
+    gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
+    gitlab_group_hostname: "{{ gitlab_group_name_url.stdout | urlsplit('hostname') }}"
+    gitlab_group_path: "{{ gitlab_group_name_url.stdout | urlsplit('path') | regex_replace('^/{1}', '') }}"

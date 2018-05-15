@@ -7,7 +7,13 @@
   with_items:
     - { key_name: 'auto-test\.settings\.json' }
 
-- include_tasks: roles/common/tasks/manage-gerrit/import-from-git-to-gerrit.yml
+- include_tasks: roles/common/tasks/manage-configmaps/retrieve-prerequisites-variable.yml
+
+- include_tasks: roles/common/tasks/manage-gitlab/clone-repository.yml
+  vars:
+    git_repo_url: "{{ item_map.git_repo_url }}"
+
+- include_tasks: roles/common/tasks/manage-gerrit/set-up-gitlab-with-gerrit.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 

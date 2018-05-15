@@ -1,0 +1,79 @@
+---
+- name: "Login to GitLab and get CSRF token"
+  uri:
+    url: "https://{{ gitlab_group_hostname }}/oauth/token"
+    method: POST
+    body: 'grant_type=password&username={{ gitlab_autouser_email }}&password={{ gitlab_autouser_password }}'
+  retries: 3
+  delay: 3
+  register: csrf_token
+  until: csrf_token.status == 200
+
+- name: "Get group id by it's name"
+  uri:
+    url: "
+      https://{{ gitlab_group_hostname }}/api/v4/groups/{{ gitlab_group_path | replace('/', '%2F') }}\
+      ?simple=true&access_token={{ csrf_token.json.access_token }}"
+    method: GET
+  retries: 3
+  delay: 3
+  register: group_id
+  until: group_id.status == 200
+
+- name: "Check if project {{ name }} already exist in GitLab group"
+  uri:
+    url: "
+     https://{{ gitlab_group_hostname }}/api/v4/projects/{{ gitlab_group_path | replace('/', '%2F') + '%2F' + name }}\
+     ?simple=true&access_token={{ csrf_token.json.access_token }}"
+  ignore_errors: true
+  register: project_existence
+
+- block:
+  - name: "Clone GitLab repository"
+    git:
+      repo: "{{ git_repo_url }}.git"
+      dest: "{{ work_dir }}/{{ name }}"
+    register: clone_output
+
+  - name: "Create project - {{ name }} in the group - {{ gitlab_group_path }}"
+    uri:
+      url: "
+        https://{{ gitlab_group_hostname }}/api/v4/projects?name={{ name }}\
+        &namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
+      method: POST
+      status_code: 201
+    retries: 3
+    delay: 3
+    register: output
+    until: output.status == 201
+
+  - name: "Change remote repository"
+    shell: |
+      cd {{ work_dir }}/{{ name }}
+      git config user.email "{{ gitlab_autouser_email }}"
+      git config user.name "{{ gitlab_autouser_name }}"
+      ssh-agent bash -c 'ssh-add "{{ work_dir }}/gitlab-private.key"; \
+      git remote set-url origin git@{{ gitlab_group_hostname }}:{{ gitlab_group_path }}/{{ name }}.git'
+    register: change_output
+    until: change_output.rc == 0
+    retries: 20
+    delay: 1
+
+  - name: "Set Gitlab hostname and project path for replication with Gerrit"
+    set_fact:
+      gitlab_hostname: "{{ gitlab_group_hostname }}"
+      gitlab_project_path: "{{ gitlab_group_path }}/{{ name }}"
+
+  - name: "Push to Gitlab project in the group"
+    shell: |
+      cd {{ work_dir }}/{{ name }}
+      git config user.email "{{ gitlab_autouser_email }}"
+      git config user.name "{{ gitlab_autouser_name }}"
+      ssh-agent bash -c 'ssh-add "{{ work_dir }}/gitlab-private.key"; \
+      git push origin master'
+    register: push_output
+    until: push_output.rc == 0
+    retries: 20
+    delay: 1
+
+  when: project_existence.status == 404
