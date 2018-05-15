@@ -91,18 +91,23 @@ objects:
           env:
           - name: PROJECT_CICD
             value: ${PROJECT_CICD}
+          - name: OPENSHIFT_TRUST_CERTIFICATES
+            value: ${OPENSHIFT_TRUST_CERTIFICATES}
           - name: EDP_APPLICATION_TYPES
             valueFrom:
               configMapKeyRef:
-                name: app-types
+                name: project-types
                 key: app-types.json
-          - name: OPENSHIFT_TRUST_CERTIFICATES
-            value: ${OPENSHIFT_TRUST_CERTIFICATES}
           - name: EDP_AUTOTEST_TYPES
             valueFrom:
               configMapKeyRef:
-                name: app-types
+                name: project-types
                 key: autotest-types.json
+          - name: EDP_SERVICE_TYPES
+            valueFrom:
+              configMapKeyRef:
+                name: project-types
+                key: service-types.json
           - name: MSRA_QUICKSTART
             valueFrom:
               configMapKeyRef:
