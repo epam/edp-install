@@ -24,8 +24,8 @@ public class AddEnvironmentSmokeTest {
     private static final String OPENSHIFT_PASSWORD = "tests2018";
     private static final Boolean OPENSHIFT_TRUST_CERTS = false;
     private static final String DELETION_PIPELINE_NAME = "deletion-pipeline";
-    private static final String BE_TEMPLATE_NAME = "springboot-" + BE_APP_NAME;
-    private static final String FE_TEMPLATE_NAME = "react-" + FE_APP_NAME;
+    private static final String BE_TEMPLATE_NAME = BE_APP_NAME;
+    private static final String FE_TEMPLATE_NAME = FE_APP_NAME;
 
     private static String sitPipelineName;
     private static String qaPipelineName;
@@ -92,7 +92,7 @@ public class AddEnvironmentSmokeTest {
         .when()
                 .get(urlBuilder.buildUrl("http",
                         "gerrit",OPENSHIFT_CICD_NAMESPACE,
-                        "projects/{project}/branches/master/files/deploy-templates%2F{application}.yml/content"))
+                        "projects/{project}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
         .then()
                 .statusCode(HttpStatus.SC_OK);
     }

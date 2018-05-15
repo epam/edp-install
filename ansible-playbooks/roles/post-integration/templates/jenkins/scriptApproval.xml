@@ -16,6 +16,7 @@
     <string>method groovy.lang.GroovyObject getProperty java.lang.String</string>
     <string>method hudson.model.Run getEnvironment</string>
     <string>method hudson.FilePath readToString</string>
+    <string>method java.io.File exists</string>
     <string>method java.io.File getAbsolutePath</string>
     <string>method java.io.File getName</string>
     <string>method java.io.File getParent</string>

@@ -25,6 +25,7 @@ node("master") {
 
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
         commonLib.getConstants(vars)
+        vars['deployTemplatesPath'] = "${vars.devopsRoot}/${vars.deployTemaplatesDirectory}"
 
         vars.get(vars.appSettingsKey).each() { application ->
             if (env["${application.name.toUpperCase().replaceAll("-", "_")}_VERSION"])

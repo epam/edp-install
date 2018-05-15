@@ -37,8 +37,10 @@ def getConstants(vars) {
     DEFAULT_GERRIT_AUTOUSER = "jenkins"
     DEFAULT_GERRIT_HOST = "gerrit"
     DEFAULT_GERRIT_CREDENTIALS = "jenkins"
+    DEFAUL_DEPLOY_TEMPLATES_DIRECTORY = "deploy-templates"
 
     vars['workDir'] = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
+    vars['deployTemaplatesDirectory'] = env.DEPLOY_TEMPLATES_DIRECTORY ? DEPLOY_TEMPLATES_DIRECTORY : DEFAUL_DEPLOY_TEMPLATES_DIRECTORY
     vars['operationsTimeout'] = env.OPERATIONS_TIMEOUT ? OPERATIONS_TIMEOUT : DEFAULT_OPERATIONS_TIMEOUT
 
     vars['configMapName'] = 'project-settings'

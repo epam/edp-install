@@ -5,25 +5,21 @@ def run(vars) {
             sh "oc adm policy add-role-to-user admin admin -n ${vars.deployProject}"
         }
         vars.get(vars.appSettingsKey).each() { application ->
-            if (!checkImageExists(application))
+            if (!checkImageExists(application) || !checkTemplateExists(application))
                 return
-
-            def template = openshift.withProject() {
-                openshift.selector('template', application.name).object()
-            }
 
             if (application.need_database)
                 sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
 
             openshift.withProject(vars.deployProject) {
-                openshift.create(openshift.process(template,
+                openshift.create(openshift.process(readFile(file:"${vars.deployTemplatesPath}/${application.name}.yaml"),
                         "-p APP_IMAGE=${vars.pipelineProject}/${application.name}",
                         "-p APP_VERSION=${application.version}",
                         "-p NAMESPACE=${vars.deployProject}")
                 )
             }
 
-            println("[JENKINS][DEBUG] Testing deployment - ${application.name} in ${vars.deployProject}")
+            println("[JENKINS][DEBUG] Validate deployment - ${application.name} in ${vars.deployProject}")
             try {
                 openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: "${application.name}",
                         namespace: "${vars.deployProject}", replicaCount: '1', verbose: 'false',
@@ -33,7 +29,6 @@ def run(vars) {
             catch (Exception verifyDeploymentException) {
                 commonLib.failJob("[JENKINS][ERROR] ${application.name} deploy have been failed. Reason - ${verifyDeploymentException}")
             }
-
         }
     }
     this.result = "success"
@@ -61,6 +56,19 @@ def checkImageExists(application) {
         application['deployed'] = false
         return false
     }
+    application['deployed'] = true
+    return true
+}
+
+def checkTemplateExists(application) {
+    def templateFile = new File("${vars.deployTemplatesPath}/${application.name}.yaml")
+    if (!templateFile.exists()) {
+        println("[JENKINS][WARNING] Template file for ${application.name} doesn't exist in ${vars.deployTemaplatesDirectory} in devops repository\r\n" +
+                "Deploy will be skipped")
+        application['deployed'] = false
+        return false
+    }
+
     application['deployed'] = true
     return true
 }
