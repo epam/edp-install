@@ -17,6 +17,7 @@
     - '{{ templates_dir }}/add-business-application.yaml'
     - '{{ templates_dir }}/add-autotests.yaml'
     - '{{ templates_dir }}/add-environments.yaml'
+    - '{{ templates_dir }}/add-service.yaml'
 
 - name: "Install config map for storing app types. Install config map for storing autotest types.
         Bind role with service account. Upload templates for cockpit"
@@ -29,6 +30,7 @@
     - "{{ ocadm }} create -f {{ templates_dir }}/add-business-application.yaml"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-autotests.yaml"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-environments.yaml"
+    - "{{ ocadm }} create -f {{ templates_dir }}/add-service.yaml"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
