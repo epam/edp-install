@@ -23,6 +23,7 @@ secrets:
     password: admin123
   gerrit_admin:
     password: secret
+    email: admin@example.com
   gerrit_db:
     db_name: gerrit
     db_user: gerrit
@@ -52,11 +53,11 @@ tools:
     jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   gerrit:
     version: "{{ gerrit_version | default('2.14.1') }}"
+    auth_type: "{{ gerrit_auth_type | default('OAUTH') }}"
     gitlab_oauth: "{{ gerrit_gitlab_oauth | default('gitlab-oauth') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
     volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
     web_url: "http://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
-    job_version: "{{ gerrit_job_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-gerrit-job:latest') }}"
   nexus:
     version: "{{ nexus_version | default('3.6.2') }}"
     volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"

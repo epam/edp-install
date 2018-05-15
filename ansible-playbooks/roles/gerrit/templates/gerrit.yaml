@@ -18,17 +18,6 @@ metadata:
 message: "Login to Gerrit with the you EPAM GitLab account"
 objects:
 - apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: gerrit-add-user-plugin
-  data:
-    config.sh: |
-      if [[ ! -f /var/gerrit/review_site/plugins/add-user-plugin-2.11.3.jar ]]
-      then
-       mkdir -p /var/gerrit/review_site/plugins
-       cp /tmp/add-user-plugin-2.11.3.jar /var/gerrit/review_site/plugins/add-user-plugin-2.11.3.jar
-      fi
-- apiVersion: v1
   kind: ServiceAccount
   metadata:
     name: gerrit
@@ -209,32 +198,15 @@ objects:
         - name: init-gerrit-db
           image: busybox
           command: ["sh", "-c", "while ! nc -w 1 gerrit-db 5432 </dev/null; do echo waiting for gerrit-db; sleep 10; done;"]
-        - name: add-user-plugin
-          volumeMounts:
-          - mountPath: /tmp/config.sh
-            subPath: config.sh
-            name: python-script
-          - mountPath: /var/gerrit/review_site
-            name: gerrit-data
-          image: ${GERRIT_JOB_VERSION}
-          command: ["sh", "/tmp/config.sh"]
         containers:
         - name: gerrit
           env:
-          - name: GERRIT_ADMIN_USER
-            value: 'admin'
-          - name: GERRIT_ADMIN_FULLNAME
-            value: 'Administrator'
-          - name: GERRIT_ADMIN_EMAIL
-            value: 'admin1@fabric8.io'
-          - name: GERRIT_ADMIN_PWD
-            value: 'admin123'
           - name: WEBURL
             value: ${GERRIT_WEB_URL}
           - name: LISTEN_ADDR
             value: '*:${GERRIT_SSH_PORT}'
           - name: AUTH_TYPE
-            value: DEVELOPMENT_BECOME_ANY_ACCOUNT
+            value: {{ tools.gerrit.auth_type }}
           - name: OAUTH_GITLAB_ROOT_URL
             value: https://git.epam.com/
           - name: OAUTH_GITLAB_CLIENT_SECRET
@@ -311,10 +283,6 @@ objects:
                   path: config
               name: gerrit
             name: ssh-config
-          - name: python-script
-            configMap:
-              defaultMode: 420
-              name: gerrit-add-user-plugin
 parameters:
 - displayName: Gerrit version
   value: "2.14.1"
@@ -334,9 +302,6 @@ parameters:
   displayName: Gerrit WEB URL
   name: GERRIT_WEB_URL
   value: "http://gerrit-test-mb.demo.edp.projects.epam.com"
-- displayName: Gerrit job version
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-gerrit-job:latest"
-  name: GERRIT_JOB_VERSION
 - displayName: GitLab host
   value: "git.epam.com"
   name: GITLAB_GROUP_HOST

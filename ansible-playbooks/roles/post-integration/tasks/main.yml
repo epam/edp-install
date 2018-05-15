@@ -16,6 +16,7 @@
     jenkins_pod: "{{ ocadm }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'jenkins-[0-9]+'"
     gerrit_ssh_port: "{{ ssh_port.stdout }}"
     gerrit_pod: "{{ ocadm }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'gerrit-[0-9]+'"
+    gerrit_db_pod: "{{ ocadm }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'gerrit-db-[0-9]+'"
     gerrit_manage: "ssh -p {{ ssh_port.stdout }} gerrit.{{ project_cicd }} gerrit"
     gerrit_api_url: "http://gerrit.{{ project_cicd }}:8080/a"
     nexus_host: "nexus.{{ project_cicd }}"

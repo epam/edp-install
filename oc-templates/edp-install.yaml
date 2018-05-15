@@ -40,9 +40,9 @@ objects:
             - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
             - "-e gerrit_version=${GERRIT_VERSION}"
+            - "-e gerrit_auth_type=${GERRIT_AUTH_TYPE}"
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
             - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
-            - "-e gerrit_job_version=${GERRIT_JOB_VERSION}"
             - "-e jenkins_enable_oauth=${JENKINS_ENABLE_OAUTH}"
             - "-e jenkins_fs_type=${JENKINS_FS_TYPE}"
             - "-e jenkins_host_path_volume=${JENKINS_HOST_PATH_VOLUME}"
@@ -103,9 +103,13 @@ parameters:
   name: GERRIT_DB_CAPACITY
   value: 5Gi
   required: true
-- displayName: Gerrit job version
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-gerrit-job:latest"
+- displayName: To be removed after merge
   name: GERRIT_JOB_VERSION
+  value: who-cares
+- displayName: Gerrit Auth Type
+  description: Can be either DEVELOPMENT_BECOME_ANY_ACCOUNT or OAUTH
+  value: "OAUTH"
+  name: GERRIT_AUTH_TYPE
 #Jenkins parameters
 - displayName: Jenkins filesystem type
   description: Allowed values only 'gluster' or 'hostpath'
