@@ -78,6 +78,8 @@ objects:
       []
     auto-test.settings.json: |-
       []
+    service.settings.json: |-
+      []
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
