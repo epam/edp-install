@@ -7,6 +7,7 @@
     - "edp-cockpit.yaml"
     - "app-types.json"
     - "autotest-types.json"
+    - "quickstart.json"
 
 - name: "Set docker image version in add-application template"
   replace:
@@ -31,6 +32,17 @@
     - "{{ ocadm }} create -f {{ templates_dir }}/add-autotests.yaml"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-environments.yaml"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-service.yaml"
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
+- name: "Install config map for storing msra quickstart information"
+  shell: >
+    {{ ocadm }} -n {{ project_cockpit }} create configmap msra
+    --from-file=quickstart.json={{ templates_dir }}/cockpit/quickstart.json
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

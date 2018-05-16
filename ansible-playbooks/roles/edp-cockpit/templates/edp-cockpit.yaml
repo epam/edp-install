@@ -103,6 +103,11 @@ objects:
               configMapKeyRef:
                 name: app-types
                 key: autotest-types.json
+          - name: MSRA_QUICKSTART
+            valueFrom:
+              configMapKeyRef:
+                name: msra
+                key: quickstart.json
     triggers:
     - type: ConfigChange
 
