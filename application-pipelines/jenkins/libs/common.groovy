@@ -47,6 +47,7 @@ def getConstants(vars) {
     vars['envSettingsKey'] = 'env.settings.json'
     vars['appSettingsKey'] = 'app.settings.json'
     vars['atSettingsKey'] = 'auto-test.settings.json'
+    vars['svcSettingsKey'] = 'service.settings.json'
 
     vars['gerritCredentials'] = env.GERRIT_CREDENTIALS ? GERRIT_CREDENTIALS : DEFAULT_GERRIT_CREDENTIALS
     vars['gerritAutoUser'] = env.GERRIT_AUTOUSER ? GERRIT_AUTOUSER : DEFAULT_GERRIT_AUTOUSER
@@ -73,7 +74,7 @@ def getConstants(vars) {
             returnStdout: true
     ).trim()
 
-    [vars.envSettingsKey, vars.appSettingsKey, vars.atSettingsKey].each() { key ->
+    [vars.envSettingsKey, vars.appSettingsKey, vars.atSettingsKey, vars.svcSettingsKey].each() { key ->
         try {
             def settingsJson = sh(
                     script: "oc get cm ${vars.configMapName} --template='{{ index .data \"${key}\" }}'",

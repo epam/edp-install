@@ -12,65 +12,81 @@ def run(vars) {
                 sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
 
             openshift.withProject(vars.deployProject) {
-                openshift.create(openshift.process(readFile(file:"${vars.deployTemplatesPath}/${application.name}.yaml"),
+                openshift.create(openshift.process(readFile(file: "${vars.deployTemplatesPath}/${application.name}.yaml"),
                         "-p APP_IMAGE=${vars.pipelineProject}/${application.name}",
                         "-p APP_VERSION=${application.version}",
                         "-p NAMESPACE=${vars.deployProject}")
                 )
             }
 
-            println("[JENKINS][DEBUG] Validate deployment - ${application.name} in ${vars.deployProject}")
-            try {
-                openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: "${application.name}",
-                        namespace: "${vars.deployProject}", replicaCount: '1', verbose: 'false',
-                        verifyReplicaCount: 'true', waitTime: '600', waitUnit: 'sec'
-                println("[JENKINS][DEBUG] Application ${application.name} in project ${vars.deployProject} deployed")
+            checkDeployment(application)
+        }
+        vars.get(vars.svcSettingsKey).each() { service ->
+            if (!checkTemplateExists(service))
+                return
+
+            openshift.withProject(vars.deployProject) {
+                openshift.create(openshift.process(readFile(file: "${vars.deployTemplatesPath}/${service.name}.yaml"),
+                        "-p APP_IMAGE=${service.image}",
+                        "-p APP_VERSION=${service.version}")
+                )
             }
-            catch (Exception verifyDeploymentException) {
-                commonLib.failJob("[JENKINS][ERROR] ${application.name} deploy have been failed. Reason - ${verifyDeploymentException}")
-            }
+            checkDeployment(service)
         }
     }
     this.result = "success"
 }
 
-def checkImageExists(application) {
+def checkImageExists(object) {
     def imageExists = sh(
-            script: "oc -n ${vars.pipelineProject} get is ${application.name} --no-headers | awk '{print \$1}'",
+            script: "oc -n ${vars.pipelineProject} get is ${object.name} --no-headers | awk '{print \$1}'",
             returnStdout: true
     ).trim()
     if (imageExists == "") {
-        println("[JENKINS][WARNING] Image stream ${application.name} doesn't exist in the project ${vars.pipelineProject}\r\n" +
+        println("[JENKINS][WARNING] Image stream ${object.name} doesn't exist in the project ${vars.pipelineProject}\r\n" +
                 "Deploy will be skipped")
-        application['deployed'] = false
+        object['deployed'] = false
         return false
     }
 
     def tagExist = sh(
-            script: "oc -n ${vars.pipelineProject} get is ${application.name} -o jsonpath='{.spec.tags[?(@.name==\"${application.version}\")].name}'",
+            script: "oc -n ${vars.pipelineProject} get is ${object.name} -o jsonpath='{.spec.tags[?(@.name==\"${object.version}\")].name}'",
             returnStdout: true
     ).trim()
     if (tagExist == "") {
-        println("[JENKINS][WARNING] Image stream ${application.name} with tag ${application.version} doesn't exist in the project ${vars.pipelineProject}\r\n" +
+        println("[JENKINS][WARNING] Image stream ${object.name} with tag ${object.version} doesn't exist in the project ${vars.pipelineProject}\r\n" +
                 "Deploy will be skipped")
-        application['deployed'] = false
+        object['deployed'] = false
         return false
     }
-    application['deployed'] = true
+    object['deployed'] = true
     return true
 }
 
-def checkTemplateExists(application) {
-    def templateFile = new File("${vars.deployTemplatesPath}/${application.name}.yaml")
+def checkTemplateExists(object) {
+    def templateFile = new File("${vars.deployTemplatesPath}/${object.name}.yaml")
     if (!templateFile.exists()) {
-        println("[JENKINS][WARNING] Template file for ${application.name} doesn't exist in ${vars.deployTemaplatesDirectory} in devops repository\r\n" +
+        println("[JENKINS][WARNING] Template file for ${object.name} doesn't exist in ${vars.deployTemaplatesDirectory} in devops repository\r\n" +
                 "Deploy will be skipped")
-        application['deployed'] = false
+        object['deployed'] = false
         return false
     }
 
-    application['deployed'] = true
+    object['deployed'] = true
     return true
 }
 
+def checkDeployment(object) {
+    println("[JENKINS][DEBUG] Validate deployment - ${object.name} in ${vars.deployProject}")
+    try {
+        openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: "${object.name}",
+                namespace: "${vars.deployProject}", replicaCount: '1', verbose: 'false',
+                verifyReplicaCount: 'true', waitTime: '600', waitUnit: 'sec'
+        println("[JENKINS][DEBUG] Service ${object.name} in project ${vars.deployProject} deployed")
+    }
+    catch (Exception verifyDeploymentException) {
+        commonLib.failJob("[JENKINS][ERROR] ${object.name} deploy have been failed. Reason - ${verifyDeploymentException}")
+    }
+
+}
 return this;
