@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: "{{ app_name }}"
+  name: "{{ name }}"
   annotations:
     iconClass: "icon-js"
     description: Openshift template for ReactJS application/service deploying
@@ -11,53 +11,53 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: "{{ app_name }}"
+    name: "{{ name }}"
     labels:
-      app: "{{ app_name }}"
+      app: "{{ name }}"
   spec:
     ports:
-    - name: "{{ app_name }}"
+    - name: "{{ name }}"
       port: 8080
       protocol: TCP
       targetPort: 8080
     selector:
-      app: "{{ app_name }}"
+      app: "{{ name }}"
     type: ClusterIP
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
-    name: "{{ app_name }}"
-{% if route %}
+    name: "{{ name }}"
+{% if item_map.route %}
 - apiVersion: v1
   kind: Route
   metadata:
-    name: "{{ app_name }}"
+    name: "{{ name }}"
     annotations:
-      description: "Route for {{ app_name }} application"
+      description: "Route for {{ name }} application"
     labels:
-      app: "{{ app_name }}"
+      app: "{{ name }}"
   spec:
-{% if route_site != '' %}
-    host: {{ route_site }}-${NAMESPACE}.{{ dns_wildcard }}
+{% if item_map.route_site is defined and item_map.route_site != '' %}
+    host: {{ item_map.route_site }}-${NAMESPACE}.{{ dns_wildcard }}
 {% endif %}
-    path: {{ route_path }}
+    path: {{ item_map.route_path | default('') }}
     port:
       targetPort: 8080
     to:
       kind: Service
-      name: "{{ app_name }}"
+      name: "{{ name }}"
     wildcardPolicy: None
 {% endif %}
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
-    name: "{{ app_name }}"
+    name: "{{ name }}"
     labels:
-      app: "{{ app_name }}"
+      app: "{{ name }}"
   spec:
     replicas: 1
     selector:
-      app: "{{ app_name }}"
+      app: "{{ name }}"
     strategy:
       activeDeadlineSeconds: 21600
       type: Rolling
@@ -71,11 +71,11 @@ objects:
     template:
       metadata:
         labels:
-          app: "{{ app_name }}"
+          app: "{{ name }}"
       spec:
-        serviceAccountName: "{{ app_name }}"
+        serviceAccountName: "{{ name }}"
         containers:
-        - name: "{{ app_name }}"
+        - name: "{{ name }}"
           image: "{{ docker_registry_url }}/${APP_IMAGE}:${APP_VERSION}"
           imagePullPolicy: Always
           ports:

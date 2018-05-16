@@ -1,6 +1,6 @@
-    [remote "{{ project_name }}"]
+    [remote "{{ name }}"]
       url = {{ gitlab_hostname }}:{{ gitlab_project_path }}.git
       fetch = +refs/*:refs/*
       push = +refs/heads/*:refs/heads/*
-      projects = {{ project_name }}
+      projects = {{ name }}
       replicatePermissions = false

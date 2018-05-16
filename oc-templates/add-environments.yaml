@@ -45,10 +45,6 @@ objects:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-        volumeMounts:
-        - name: user-settings
-          mountPath: /tmp/config/
-          env:
         restartPolicy: Never
         serviceAccountName: cockpit
       volumes:

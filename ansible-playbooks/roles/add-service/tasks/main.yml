@@ -5,12 +5,6 @@
 
 - include_tasks: roles/common/tasks/manage-configmaps/retrieve-data-from-configmap.yml
   with_items:
-    - { key_name: 'app\.settings\.json' }
-
-- include_tasks: roles/common/tasks/manage-gerrit/import-from-git-to-gerrit.yml
-  vars:
-    git_repo_url: "{{ item_map.git_repo_url }}"
-
-- include_tasks: roles/common/tasks/manage-jenkins/trigger-job-provisioning.yml
+    - { key_name: 'service\.settings\.json' }
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml

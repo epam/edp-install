@@ -203,4 +203,4 @@
 
 - include_tasks: gerrit-gitlab-configuration.yml
   vars:
-    project_name: "{{ project_gitlab_edp }}"
+    name: "{{ project_gitlab_edp }}"

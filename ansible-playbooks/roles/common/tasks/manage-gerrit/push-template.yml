@@ -45,25 +45,44 @@
     state: directory
   with_items:
     - "{{ edp_gerrit_project }}/deploy-templates"
-    - "business-apps"
 
-- name: "Copying templates for new business application"
-  template:
-    src: "business-applications/{{ language | lower }}/{{ item.src }}.j2"
-    dest: "{{ templates_dir }}/{{ item.dst }}"
-  with_items:
-    - { src: "{{ framework | lower }}", dst: "{{ edp_gerrit_project }}/deploy-templates/{{ app_name }}.yaml" }
-    - { src: "s2i-{{ framework | lower }}", dst: "business-apps/s2i-{{ app_name }}.yaml" }
+- name: "Check template for this particular application name exists"
+  stat:
+    path: "{{ role_path }}/templates/{{ item_map.name | lower }}.j2"
+  register: template_file
+  when: item_map is defined
 
-- name: "Push templates to gerrit"
-  shell: |
-   git config user.email "{{ gitlab_autouser_email }}"
-   git config user.name "{{ gitlab_autouser_name }}"
-   git add . && git commit -m "Add template for {{ app_name }}"
-   git push origin master
-  args:
-    chdir: "{{ templates_dir }}/{{ edp_gerrit_project }}"
+- set_fact:
+    source_template: "{{ item_map.name + '.j2' if template_file.stat.exists else item_map.language | lower + '/' + item_map.framework | lower + '.j2' }}"
+  when: item_map is defined and (template_file.stat.exists or ( item_map.language is defined and item_map.framework is defined))
 
-- name: "Create s2i image stream for new business-app"
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/business-apps/s2i-{{ app_name }}.yaml
+- block:
+  - name: "Copying template for application"
+    template:
+      src: "{{ source_template }}"
+      dest: "{{ templates_dir }}/{{ edp_gerrit_project }}/deploy-templates/{{ item_map.name }}.yaml"
+
+  - name: "Push templates to gerrit"
+    shell: |
+     git config user.email "{{ gitlab_autouser_email }}"
+     git config user.name "{{ gitlab_autouser_name }}"
+     git add . && git commit -m "Add template for {{ item_map.name }}"
+     git push origin master
+    args:
+      chdir: "{{ templates_dir }}/{{ edp_gerrit_project }}"
+
+  - name: "Copying S2I template for application"
+    template:
+      src: "{{ item_map.language | lower }}/s2i-{{ item_map.framework | lower }}.j2"
+      dest: "{{ templates_dir }}/s2i-{{ item_map.name }}.yaml"
+    when: item_map.language is defined and item_map.framework is defined
+
+  - name: "Create s2i image stream for new business-app"
+    command: |
+      {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/s2i-{{ item_map.name }}.yaml
+    when: item_map.language is defined and item_map.framework is defined
+  when: source_template is defined
+
+- debug:
+    msg: "Template for application {{ name }} is not found and wasn't push to repository"
+  when: source_template is not defined

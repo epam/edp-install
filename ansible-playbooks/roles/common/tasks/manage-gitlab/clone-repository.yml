@@ -36,7 +36,7 @@
 - name: "Clone GitLab repository"
   git:
     repo: "git@{{ git_repo_ssh_url }}"
-    dest: "{{ work_dir }}/{{ project_name }}"
+    dest: "{{ work_dir }}/{{ name }}"
     key_file: "{{ gitlab_key_path }}"
     accept_hostkey: true
     force: true

@@ -1,3 +1,3 @@
 - hosts: all
   roles:
-    - { role: add-business-application, project_name: "{{ app_name }}", tags: [ 'add-business-application' ] }
+    - { role: add-business-application, name: "{{ app_name }}", tags: [ 'add-business-application' ] }

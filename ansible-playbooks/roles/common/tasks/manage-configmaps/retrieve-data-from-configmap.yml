@@ -1,0 +1,17 @@
+---
+- name: "Get content from project-settings config map {{ item.key_name }} key"
+  command: |
+   {{ ocadm }} -n {{ project_cicd }} get cm project-settings -o=jsonpath='{ .data.{{ item.key_name }} }'
+  register: content
+
+- name: "Convert content settings from json to map for {{ item.key_name }} key"
+  set_fact:
+    content_map: "{{ content.stdout | from_json }}"
+
+- name: "Retrieve data from json"
+  when: "content_item.name == name"
+  set_fact:
+    item_map: "{{ content_item }}"
+  with_items: "{{ content_map | list }}"
+  loop_control:
+    loop_var: content_item

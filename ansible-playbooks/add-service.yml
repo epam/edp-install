@@ -1,0 +1,3 @@
+- hosts: all
+  roles:
+    - { role: add-service, name: "{{ service_name }}", tags: [ 'add-service' ] }

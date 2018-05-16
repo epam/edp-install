@@ -2,4 +2,4 @@
 - include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
 
 - name: "Create project in Gerrit"
-  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ project_name }}"
+  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ name }}"

@@ -103,9 +103,9 @@
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
   vars:
     gitlab_host: "{{ gitlab_hostname }}"
-    project_name: "{{ project_gitlab_edp }}"
+    name: "{{ project_gitlab_edp }}"
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
   vars:
     target_dir: "{{ post_integration_dir }}/gerrit/{{ project_gitlab_edp }}"
-    project_name: "{{ project_gitlab_edp }}"
+    name: "{{ project_gitlab_edp }}"

@@ -13,6 +13,6 @@
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
   vars:
     gerrit_ssh_port: "{{ ssh_port.stdout }}"
-    target_dir: "{{ work_dir }}/{{ project_name }}"
+    target_dir: "{{ work_dir }}/{{ name }}"
 
 - include_tasks: roles/common/tasks/manage-gerrit/project-replication.yml

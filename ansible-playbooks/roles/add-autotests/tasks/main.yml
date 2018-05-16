@@ -3,8 +3,12 @@
   set_fact:
     project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
 
-- include_tasks: roles/common/tasks/retrieve-data-from-autotest-settings.yml
+- include_tasks: roles/common/tasks/manage-configmaps/retrieve-data-from-configmap.yml
+  with_items:
+    - { key_name: 'auto-test\.settings\.json' }
 
-- include_tasks: roles/common/tasks/import-from-git-to-gerrit.yml
+- include_tasks: roles/common/tasks/manage-gerrit/import-from-git-to-gerrit.yml
+  vars:
+    git_repo_url: "{{ item_map.git_repo_url }}"
 
 - include_tasks: roles/common/tasks/manage-jenkins/trigger-job-provisioning.yml
