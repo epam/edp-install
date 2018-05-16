@@ -46,6 +46,8 @@ objects:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+        restartPolicy: Never
+        serviceAccountName: cockpit                
     backoffLimit: 1
 parameters:
 - displayName: Service alias
