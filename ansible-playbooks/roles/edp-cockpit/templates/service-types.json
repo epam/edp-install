@@ -1,9 +1,14 @@
 [
   {
     "name": "example-name",
-    "image": "example-image",
-    "version": [
-      "1.0.0-EXAMPLE"
+    "images":
+    [
+      {
+        "name": "example-image",
+        "version": [
+          "1.0.0-EXAMPLE"
+        ]
+      }
     ]
   }
 ]
