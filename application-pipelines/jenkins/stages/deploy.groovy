@@ -25,10 +25,11 @@ def run(vars) {
             if (!checkTemplateExists(service))
                 return
 
+            sh "oc adm policy add-scc-to-user anyuid -z ${service.name} -n ${vars.deployProject}"
             openshift.withProject(vars.deployProject) {
                 openshift.create(openshift.process(readFile(file: "${vars.deployTemplatesPath}/${service.name}.yaml"),
-                        "-p APP_IMAGE=${service.image}",
-                        "-p APP_VERSION=${service.version}")
+                        "-p SERVICE_IMAGE=${service.image}",
+                        "-p SERVICE_VERSION=${service.version}")
                 )
             }
             checkDeployment(service)
