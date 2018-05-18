@@ -1,21 +1,10 @@
 ---
-- name: "Save current replication configmap values"
-  shell: |
-    {{ ocadm }} get cm gerrit -n {{ project_cicd }} -o yaml
-  register: old_replication_config
+- name: "Set update status to 1"
+  set_fact:
+     update_result: 1
 
-- local_action: copy content="{{ old_replication_config.stdout }}" dest="/tmp/replication-configmap.yaml"
-
-- name: "Add replication part for new {{ project_cicd }} project"
-  blockinfile:
-    dest: /tmp/replication-configmap.yaml
-    insertbefore: '  sshPort:*'
-    block: "{{ lookup('template', '../common/templates/replication-conf.j2') }}"
-    marker: ""
-
-- name: "Update replication config"
-  shell: |
-   {{ ocadm }} replace cm gerrit -n {{ project_cicd }} -f /tmp/replication-configmap.yaml
+- include_tasks: roles/common/tasks/manage-openshift/update-replication-config.yml
+  with_sequence: count=5
 
 - name: "Save replication configmap to file"
   shell: |

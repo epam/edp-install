@@ -1,0 +1,29 @@
+---
+- block:
+  - name: "Save current replication configmap values"
+    shell: |
+      {{ ocadm }} get cm gerrit -n {{ project_cicd }} -o yaml
+    register: old_replication_config
+
+  - local_action: copy content="{{ old_replication_config.stdout }}" dest="/tmp/replication-configmap.yaml"
+
+  - name: "Add replication part for new {{ project_cicd }} project"
+    blockinfile:
+      dest: /tmp/replication-configmap.yaml
+      insertbefore: '  sshPort:*'
+      block: "{{ lookup('template', '../common/templates/replication-conf.j2') }}"
+      marker: ""
+
+  - name: "Update replication config"
+    shell: |
+     {{ ocadm }} replace cm gerrit -n {{ project_cicd }} -f /tmp/replication-configmap.yaml
+    register: result
+    ignore_errors: true
+
+  - name: "Register fact with update_output"
+    set_fact:
+       update_result: "{{ result.rc | int }}"
+
+  - pause:
+       seconds: 30
+  when: "update_result|int != 0"
