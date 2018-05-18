@@ -1,12 +1,13 @@
 [
   {
-    "name": "example-name",
+    "name": "rabbitmq",
     "images":
     [
       {
-        "name": "example-image",
+        "name": "rabbitmq",
         "version": [
-          "1.0.0-EXAMPLE"
+          "3.7.5-management",
+          "3.7.5"
         ]
       }
     ]
