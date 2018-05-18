@@ -52,7 +52,7 @@ tools:
     backend_image: "{{ jenkins_backend_image | default('openshift/jenkins-slave-maven-centos7') }}"
     jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   gerrit:
-    version: "{{ gerrit_version | default('2.14.1') }}"
+    version: "{{ gerrit_version | default('2.14.8') }}"
     auth_type: "{{ gerrit_auth_type | default('OAUTH') }}"
     gitlab_oauth: "{{ gerrit_gitlab_oauth | default('gitlab-oauth') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"

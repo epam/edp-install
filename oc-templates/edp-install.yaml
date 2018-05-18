@@ -91,7 +91,7 @@ parameters:
   value: "all"
 #Gerrit parameters
 - displayName: Gerrit version
-  value: "2.14.1"
+  value: "2.14.8"
   name: GERRIT_VERSION
 - displayName: Gerrit Volume Capacity
   description: Volume space available for Gerrit data
