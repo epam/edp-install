@@ -17,16 +17,6 @@ import static com.epam.edp.sittests.smoke.StringConstants.*;
 import static io.restassured.RestAssured.given;
 
 public class AddEnvironmentSmokeTest {
-    private static final String OPENSHIFT_CICD_NAMESPACE = "edp-cicd";
-    private static final String OPENSHIFT_MASTER_URL = "https://openshift.main.edp.projects.epam.com:8443";
-
-    private static final String OPENSHIFT_USERNAME = "integration_tests";
-    private static final String OPENSHIFT_PASSWORD = "tests2018";
-    private static final Boolean OPENSHIFT_TRUST_CERTS = false;
-    private static final String DELETION_PIPELINE_NAME = "deletion-pipeline";
-    private static final String BE_TEMPLATE_NAME = BE_APP_NAME;
-    private static final String FE_TEMPLATE_NAME = FE_APP_NAME;
-
     private static String sitPipelineName;
     private static String qaPipelineName;
     private static String openshiftNamespace;
@@ -48,11 +38,6 @@ public class AddEnvironmentSmokeTest {
     @DataProvider(name = "pipeline")
     public static Object[][] pipeline() {
         return new Object[][] { {sitPipelineName}, {qaPipelineName}, {DELETION_PIPELINE_NAME}};
-    }
-
-    @DataProvider(name = "application")
-    public static Object[][] application() {
-        return new Object[][] { {BE_TEMPLATE_NAME}, {FE_TEMPLATE_NAME} };
     }
 
     @Feature("Setup Openshift Client")
@@ -81,19 +66,5 @@ public class AddEnvironmentSmokeTest {
                     "job/{folder}/job/{folder}-{pipeline}/api/json"))
         .then()
             .statusCode(HttpStatus.SC_OK);
-    }
-
-    @Test(dataProvider = "application")
-    public void testApplicationTemplateHasBeenAdded(String application) {
-        given().log().all()
-                .pathParam("application", application)
-                .pathParam("project", "edp-" + ocpEdpSuffix)
-                .urlEncodingEnabled(false)
-        .when()
-                .get(urlBuilder.buildUrl("http",
-                        "gerrit",OPENSHIFT_CICD_NAMESPACE,
-                        "projects/{project}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
-        .then()
-                .statusCode(HttpStatus.SC_OK);
     }
 }

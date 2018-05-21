@@ -20,11 +20,13 @@ public class AddApplicationSmokeTest {
     private static final String POSTCOMMIT_FE_PIPELINE = POSTCOMMIT_PIPELINE_SUFFIX + FE_APP_NAME;
 
     private UrlBuilder urlBuilder;
+    private String ocpEdpSuffix;
 
     @BeforeClass
     @Parameters("ocpEdpSuffix")
     public void setUp(String ocpEdpSuffix) {
         this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
+        this.ocpEdpSuffix = ocpEdpSuffix;
     }
 
     @DataProvider(name = "pipeline")
@@ -67,5 +69,19 @@ public class AddApplicationSmokeTest {
                     "job/{pipeline}/api/json"))
          .then()
             .statusCode(HttpStatus.SC_OK);
+    }
+
+    @Test(dataProvider = "application")
+    public void testApplicationTemplateHasBeenAdded(String application) {
+        given().log().all()
+                .pathParam("application", application)
+                .pathParam("project", "edp-" + ocpEdpSuffix)
+                .urlEncodingEnabled(false)
+                .when()
+                .get(urlBuilder.buildUrl("http",
+                        "gerrit",OPENSHIFT_CICD_NAMESPACE,
+                        "projects/{project}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 }
