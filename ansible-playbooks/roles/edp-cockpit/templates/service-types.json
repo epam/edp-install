@@ -35,5 +35,17 @@
         ]
       }
     ]
+  },
+  {
+    "name": "turbine",
+    "images":
+    [
+      {
+        "name": "registry.main.edp.projects.epam.com/msra/turbine",
+        "version": [
+          "1.2.0"
+        ]
+      }
+    ]
   }
 ]
