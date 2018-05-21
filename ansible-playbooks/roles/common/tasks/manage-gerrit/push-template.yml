@@ -62,14 +62,8 @@
       src: "{{ source_template }}"
       dest: "{{ templates_dir }}/{{ edp_gerrit_project }}/deploy-templates/{{ item_map.name }}.yaml"
 
-  - name: "Push templates to gerrit"
-    shell: |
-     git config user.email "{{ gitlab_autouser_email }}"
-     git config user.name "{{ gitlab_autouser_name }}"
-     git add . && git commit -m "Add template for {{ item_map.name }}"
-     git push origin master
-    args:
-      chdir: "{{ templates_dir }}/{{ edp_gerrit_project }}"
+  - include_tasks: roles/common/tasks/manage-gerrit/push-templates-to-gerrit.yml
+    with_sequence: count=5
 
   - name: "Copying S2I template for application"
     template:
