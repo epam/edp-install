@@ -47,5 +47,17 @@
         ]
       }
     ]
+  },
+  {
+    "name": "hystrix-dashboard",
+    "images":
+    [
+      {
+        "name": "registry.main.edp.projects.epam.com/msra/hystrix-dashboard",
+        "version": [
+          "1.2.0"
+        ]
+      }
+    ]
   }
 ]
