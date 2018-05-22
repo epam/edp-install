@@ -4,7 +4,7 @@ metadata:
   name: "{{ name }}"
   annotations:
     iconClass: icon-jenkins
-    description: Openshift template for RabbitMQ service
+    description: Openshift template for Turbine service
     template.openshift.io/provider-display-name: EPAM
     template.openshift.io/support-url: https://www.epam.com
 objects:
@@ -34,7 +34,7 @@ objects:
       kind: Service
       name: "{{ name }}"
     port:
-      targetPort: management
+      targetPort: listener
 - apiVersion: v1
   kind: Service
   metadata:
@@ -44,9 +44,7 @@ objects:
   spec:
     ports:
     - name: listener
-      port: 5672
-    - name: management
-      port: 15672
+      port: 8989
     selector:
       app: "{{ name }}"
     type: ClusterIP
@@ -86,11 +84,9 @@ objects:
           imagePullPolicy: Always
           ports:
             - name: listener
-              containerPort: 5672
-            - name: management
-              containerPort: 15672
+              containerPort: 8989
           env:
-            - name: RABBITMQ_NODENAME
+            - name: TURBINE_NODENAME
               value: "{{ name }}"
           livenessProbe:
             failureThreshold: 5
@@ -98,7 +94,7 @@ objects:
             periodSeconds: 20
             successThreshold: 1
             tcpSocket:
-              port: 5672
+              port: 8989
             timeoutSeconds: 5
           readinessProbe:
             failureThreshold: 5
@@ -106,13 +102,13 @@ objects:
             periodSeconds: 20
             successThreshold: 1
             tcpSocket:
-              port: 5672
+              port: 8989
             timeoutSeconds: 5
           resources:
             requests:
               memory: 1Gi
           volumeMounts:
-            - mountPath: /var/lib/rabbitmq
+            - mountPath: /var/lib/turbine
               name: "{{ name }}-data"
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
