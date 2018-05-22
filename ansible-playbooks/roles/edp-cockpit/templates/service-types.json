@@ -23,5 +23,17 @@
         ]
       }
     ]
+  },
+  {
+    "name": "zipkin",
+    "images":
+    [
+      {
+        "name": "openzipkin/zipkin",
+        "version": [
+          "2.6.0"
+        ]
+      }
+    ]
   }
 ]
