@@ -11,5 +11,17 @@
         ]
       }
     ]
+  },
+  {
+    "name": "keycloak",
+    "images":
+    [
+      {
+        "name": "jboss/keycloak",
+        "version": [
+          "3.4.3.Final"
+        ]
+      }
+    ]
   }
 ]
