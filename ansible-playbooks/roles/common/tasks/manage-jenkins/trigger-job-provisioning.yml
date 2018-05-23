@@ -18,7 +18,8 @@
     user: admin
     password: "{{ tools.jenkins.password }}"
     force_basic_auth: yes
-    HEADER_Jenkins-Crumb: "{{ crumb.json.crumb }}"
+    headers:
+      Jenkins-Crumb: "{{ crumb.json.crumb }}"
     status_code: 201
   retries: 5
   delay: 1
