@@ -8,19 +8,6 @@ metadata:
     template.openshift.io/provider-display-name: EPAM
     template.openshift.io/support-url: https://www.epam.com
 objects:
-{% if item_map.storage is defined %}
-- apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: "{{ name }}-data"
-  spec:
-    accessModes:
-    - ReadWriteOnce
-    resources:
-      requests:
-        storage: "{{ item_map.storage.capacity }}"
-    storageClassName: "{{ item_map.storage.class }}"
-{% endif %}
 - apiVersion: v1
   kind: Route
   metadata:
@@ -107,19 +94,8 @@ objects:
           resources:
             requests:
               memory: 1Gi
-          volumeMounts:
-            - mountPath: /var/lib/turbine
-              name: "{{ name }}-data"
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-        volumes:
-        - name: "{{ name }}-data"
-{% if item_map.storage is defined %}
-          persistentVolumeClaim:
-            claimName: "{{ name }}-data"
-{% else %}
-          emptyDir: {}
-{% endif %}
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
