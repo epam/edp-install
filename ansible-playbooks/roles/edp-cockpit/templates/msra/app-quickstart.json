@@ -1,0 +1,13 @@
+{
+	"git_repo_url": "https://git.epam.com/epmd-edp/examples/msra/sample-springboot",
+	"add_repo_strategy": "copy",
+	"language": "Java",
+	"build_tool": "Maven",
+	"framework": "SpringBoot",
+	"route": false,
+	"need_database": true,
+	"database": "PostgreSQL",
+	"database_version": "postgres:9.6",
+	"database_capacity": "1Gi",
+	"persistent_storage": "GlusterFS"
+}

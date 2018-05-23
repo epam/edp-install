@@ -108,11 +108,26 @@ objects:
               configMapKeyRef:
                 name: project-types
                 key: service-types.json
-          - name: MSRA_QUICKSTART
+          - name: MSRA_APP_QUICKSTART
             valueFrom:
               configMapKeyRef:
                 name: msra
-                key: quickstart.json
+                key: app-quickstart.json
+          - name: MSRA_AUTOTEST_QUICKSTART
+            valueFrom:
+              configMapKeyRef:
+                name: msra
+                key: autotest-quickstart.json
+          - name: MSRA_ENV_QUICKSTART
+            valueFrom:
+              configMapKeyRef:
+                name: msra
+                key: env-quickstart.json
+          - name: MSRA_SERVICE_QUICKSTART
+            valueFrom:
+              configMapKeyRef:
+                name: msra
+                key: service-quickstart.json
     triggers:
     - type: ConfigChange
 

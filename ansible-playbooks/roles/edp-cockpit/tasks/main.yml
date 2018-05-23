@@ -8,7 +8,16 @@
     - "app-types.json"
     - "autotest-types.json"
     - "service-types.json"
-    - "quickstart.json"
+
+- name: "Copy msra quickstart configs"
+  template:
+    src: "msra/{{ item }}"
+    dest: "{{ templates_dir }}/cockpit/{{ item }}"
+  with_items:
+    - "app-quickstart.json"
+    - "autotest-quickstart.json"
+    - "env-quickstart.json"
+    - "service-quickstart.json"
 
 - name: "Set docker image version in add-application template"
   replace:
@@ -44,7 +53,10 @@
 - name: "Install config map for storing msra quickstart information"
   shell: >
     {{ ocadm }} -n {{ project_cockpit }} create configmap msra
-    --from-file=quickstart.json={{ templates_dir }}/cockpit/quickstart.json
+    --from-file=app-quickstart.json={{ templates_dir }}/cockpit/app-quickstart.json
+    --from-file=autotest-quickstart.json={{ templates_dir }}/cockpit/autotest-quickstart.json
+    --from-file=env-quickstart.json={{ templates_dir }}/cockpit/env-quickstart.json
+    --from-file=service-quickstart.json={{ templates_dir }}/cockpit/service-quickstart.json
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

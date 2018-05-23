@@ -1,0 +1,16 @@
+[
+	{
+		"name": "sit",
+		"displayName": "SIT",
+		"description": "SIT environment",
+		"promotion": {
+			"perform-release": false
+		},
+		"delete-trigger": "successful-quality-gates",
+		"triggers": [
+			{
+				"type": "ImageStreamChange"
+			}
+		]
+	}
+]

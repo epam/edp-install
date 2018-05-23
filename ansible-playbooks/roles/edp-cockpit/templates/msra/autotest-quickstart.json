@@ -1,0 +1,10 @@
+[
+	{
+		"name":"integration",
+		"displayName": "Maven Based Integration Tests",
+		"git_repo_url":"https://git.epam.com/epmd-edp/examples/msra/sample-autotest",
+		"add_repo_strategy": "copy",
+		"build_tool":"Maven",
+		"report_framework":"Allure"
+	}
+]
