@@ -22,8 +22,8 @@
 
   - name: "Register fact with update_output"
     set_fact:
-       update_result: "{{ result.rc | int }}"
+       update_result: "{{ result.rc }}"
 
   - pause:
        seconds: 30
-  when: "update_result|int != 0"
+  when: update_result is undefined or update_result|int != 0

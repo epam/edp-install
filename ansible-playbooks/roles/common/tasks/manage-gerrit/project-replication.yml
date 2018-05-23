@@ -1,8 +1,4 @@
 ---
-- name: "Set update status to 1"
-  set_fact:
-     update_result: 1
-
 - include_tasks: roles/common/tasks/manage-openshift/update-replication-config.yml
   with_sequence: count=5
 
