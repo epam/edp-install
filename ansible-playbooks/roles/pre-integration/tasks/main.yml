@@ -39,3 +39,4 @@
     --from-literal=gitlab_group_name_url={{ gitlab_group_name }}
     --from-literal=projects_suffix={{ projects_suffix }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
+    --from-literal=vcs_tool_name={{ vcs_tool_name }}

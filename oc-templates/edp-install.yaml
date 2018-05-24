@@ -39,6 +39,7 @@ objects:
             - "-e edp_version=${EDP_VERSION}"
             - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
+            - "-e vcs_tool_name=${VCS_TOOL_NAME}"
             - "-e gerrit_version=${GERRIT_VERSION}"
             - "-e gerrit_auth_type=${GERRIT_AUTH_TYPE}"
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
@@ -76,6 +77,11 @@ parameters:
   description: Storage class name to consume by every EDP tool
   name: STORAGE_CLASS_NAME
   value: "glusterfs-storage"
+  required: true
+- displayName: Preferred Version Control System
+  description: VCS tool which will be consumed during EDP installation. Currently supported Gitlab and Bitbucket
+  name: VCS_TOOL_NAME
+  value: "Gitlab"
   required: true
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed
