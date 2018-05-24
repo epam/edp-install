@@ -31,9 +31,9 @@
   command: "{{ ocadm }} -n {{ project_cicd }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].nodePort}'"
   register: gerrit_ssh_port
 
-- name: "Get GitLab URL"
+- name: "Get VCS URL"
   shell: |
-    {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.gitlab_group_name_url }'
+    {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.vcs_group_name_url }'
   register: git_repo_url_default
 
 - name: "Set variables"
@@ -42,7 +42,7 @@
     docker_registry_url: "{{ docker_registry_url.stdout }}"
     edp_gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix.stdout, 'edp')}}"
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
-    gitlab_host: "{{ git_repo_url_default.stdout }}"
+    vcs_host: "{{ git_repo_url_default.stdout }}"
 
 - include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
 

@@ -29,7 +29,6 @@ metadata:
     template.openshift.io/provider-display-name: Red Hat, Inc.
     template.openshift.io/support-url: https://access.redhat.com
   name: gerrit
-message: "Login to Gerrit with the you EPAM GitLab account"
 objects:
 - apiVersion: v1
   kind: ServiceAccount
@@ -91,7 +90,7 @@ objects:
     name: gerrit
   data:
     config: |
-      Host ${GITLAB_GROUP_HOST}
+      Host ${VCS_GROUP_HOST}
           User git
           IdentityFile /var/gerrit/review_site/etc/replication_rsa_key
           StrictHostKeyChecking no
@@ -99,11 +98,11 @@ objects:
     replication.config: |
       [gerrit]
         defaultForceUpdate = true
-      [remote "${GITLAB_PROJECT_NAME}"]
-        url = ${GITLAB_GROUP_HOST}:${GITLAB_GROUP_PATH}/${GITLAB_PROJECT_NAME}.git
+      [remote "${VCS_PROJECT_NAME}"]
+        url = ${VCS_GROUP_HOST}:${VCS_GROUP_PATH}/${VCS_PROJECT_NAME}.git
         fetch = +refs/*:refs/*
         push = +refs/heads/*:refs/heads/*
-        projects = ${GITLAB_PROJECT_NAME}
+        projects = ${VCS_PROJECT_NAME}
         replicatePermissions = false
     sshPort: ${GERRIT_SSH_PORT}
 - apiVersion: v1
@@ -221,18 +220,20 @@ objects:
             value: '*:${GERRIT_SSH_PORT}'
           - name: AUTH_TYPE
             value: {{ tools.gerrit.auth_type }}
+{% if tools.gerrit.auth_type == "OAUTH" %}
           - name: OAUTH_GITLAB_ROOT_URL
             value: https://git.epam.com/
           - name: OAUTH_GITLAB_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: gitlab-oauth
+                name: credentials-oauth
                 key: secret
           - name: OAUTH_GITLAB_CLIENT_ID
             valueFrom:
               secretKeyRef:
-                name: gitlab-oauth
+                name: credentials-oauth
                 key: id
+{% endif %}
           - name: DATABASE_TYPE
             value: postgresql
           - name: DB_PORT_5432_TCP_ADDR
@@ -316,14 +317,14 @@ parameters:
   displayName: Gerrit WEB URL
   name: GERRIT_WEB_URL
   value: "http://gerrit-test-mb.demo.edp.projects.epam.com"
-- displayName: GitLab host
+- displayName: VCS host
   value: "git.epam.com"
-  name: GITLAB_GROUP_HOST
-- displayName: GitLab group path
+  name: VCS_GROUP_HOST
+- displayName: VCS group path
   value: "epmd-edp/temp"
-  name: GITLAB_GROUP_PATH
-- displayName: GitLab project name
-  name: GITLAB_PROJECT_NAME
+  name: VCS_GROUP_PATH
+- displayName: VCS project name
+  name: VCS_PROJECT_NAME
 - displayName: Gerrit ssh port
   value: "29418"
   name: GERRIT_SSH_PORT

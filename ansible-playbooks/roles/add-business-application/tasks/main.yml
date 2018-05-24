@@ -25,19 +25,19 @@
 
 - include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
   vars:
-    gitlab_host: "{{ gitlab_group_hostname }}"
+    vcs_host: "{{ vcs_group_hostname }}"
 
-- include_tasks: roles/common/tasks/manage-gitlab/clone-repository.yml
+- include_tasks: roles/common/tasks/manage-vcs/clone-repository.yml
   when: item_map.add_repo_strategy == "import"
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 
-- include_tasks: roles/common/tasks/manage-gitlab/copy-repository.yml
+- include_tasks: roles/common/tasks/manage-vcs/copy-repository.yml
   when: item_map.add_repo_strategy == "copy"
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 
-- include_tasks: roles/common/tasks/manage-gerrit/set-up-gitlab-with-gerrit.yml
+- include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 

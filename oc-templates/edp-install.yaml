@@ -72,10 +72,10 @@ objects:
             - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
             - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
             - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
-            - "-e gitlab_oauth_app_id=${GITLAB_OAUTH_APP_ID}"
-            - "-e gitlab_oauth_app_secret=${GITLAB_OAUTH_APP_SECRET}"
-            - "-e gitlab_auto_user_secret=${GITLAB_AUTO_USER_SECRET}"
-            - "-e gitlab_group_name=${GITLAB_GROUP_NAME_URL}"
+            - "-e vcs_oauth_app_id=${VCS_OAUTH_APP_ID}"
+            - "-e vcs_oauth_app_secret=${VCS_OAUTH_APP_SECRET}"
+            - "-e vcs_auto_user_secret=${VCS_AUTO_USER_SECRET}"
+            - "-e vcs_group_name=${VCS_GROUP_NAME_URL}"
             - "-e keycloak_image=${KEYCLOAK_IMAGE}"
             - "-e keycloak_volume_db_capacity=${KEYCLOAK_DB_CAPACITY}"
             - "-e keycloak_realm_name=${KEYCLOAK_REALM_NAME}"
@@ -188,23 +188,23 @@ parameters:
 - displayName: Version of edp-cockpit
   name: EDP_COCKPIT_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:SNAPSHOT"
-#GitLab parameters
+#VCS parameters
 - displayName: Gerrit Application ID
-  description: Gerrit Application ID fot OAuth integration with Gitlab
-  name: GITLAB_OAUTH_APP_ID
+  description: Gerrit Application ID fot OAuth integration with VCS only if GERRIT_AUTH_TYPE set to OAUTH
+  name: VCS_OAUTH_APP_ID
   value: ""
 - displayName: Gerrit Application Secret
-  description: Gerrit Application Secret fot OAuth integration with Gitlab
-  name: GITLAB_OAUTH_APP_SECRET
+  description: Gerrit Application Secret fot OAuth integration with VCS only if GERRIT_AUTH_TYPE set to OAUTH
+  name: VCS_OAUTH_APP_SECRET
   value: ""
 - displayName: Git autouser secret name
   description: Git autouser secret name from prerequisites
-  name: GITLAB_AUTO_USER_SECRET
+  name: VCS_AUTO_USER_SECRET
   value: auto-epmc-java-vcs-with-ssh
   required: true
-- displayName: GitLab group name URL
-  description: GitLab URL to the project group. For example 'https://git.epam.com/epmd-edp/temp'
-  name: GITLAB_GROUP_NAME_URL
+- displayName: VCS group name URL
+  description: VCS URL to the project group. For example 'https://git.epam.com/epmd-edp/temp'
+  name: VCS_GROUP_NAME_URL
   value: "https://git.epam.com/epmd-edp/temp"
   required: true
 #Keycloak parameters

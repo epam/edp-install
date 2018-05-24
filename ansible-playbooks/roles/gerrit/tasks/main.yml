@@ -48,9 +48,9 @@
     -p GERRIT_DATA_CAPACITY={{ tools.gerrit.volume_capacity }}
     -p GERRIT_DB_CAPACITY={{ tools.gerrit.volume_db_capacity }}
     -p GERRIT_WEB_URL={{ tools.gerrit.web_url }}
-    -p GITLAB_GROUP_HOST={{ gitlab_group_name | urlsplit('hostname') }}
-    -p GITLAB_GROUP_PATH={{ gitlab_group_name | urlsplit('path') | regex_replace('^/{1}', '') }}
-    -p GITLAB_PROJECT_NAME={{ project_gitlab_edp }}
+    -p VCS_GROUP_HOST={{ vcs_group_name | urlsplit('hostname') }}
+    -p VCS_GROUP_PATH={{ vcs_group_name | urlsplit('path') | regex_replace('^/{1}', '') }}
+    -p VCS_PROJECT_NAME={{ project_vcs_edp }}
     -p GERRIT_SSH_PORT={{ gerrit_ssh_port }}
     -p STORAGE_CLASS_NAME={{ storage_class_name }}
   register: result

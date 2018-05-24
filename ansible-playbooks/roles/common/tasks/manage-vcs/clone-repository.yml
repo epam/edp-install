@@ -13,45 +13,45 @@
 # limitations under the License.
 
 ---
-- name: "Get GitLab hostname and project path"
+- name: "Get VCS hostname and project path"
   set_fact:
-     gitlab_hostname: "{{ git_repo_url | urlsplit('hostname') }}"
-     gitlab_project_path: "{{ git_repo_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
-     gitlab_http_url: "{{ git_repo_url }}"
+     vcs_hostname: "{{ git_repo_url | urlsplit('hostname') }}"
+     vcs_project_path: "{{ git_repo_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
+     vcs_http_url: "{{ git_repo_url }}"
   when: git_repo_url is match("http?(s)://*")
 
 - block:
   - name: "Using git hostname which was saved in configMap while EDP installation"
     shell: |
-     {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.gitlab_group_name_url }'
+     {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.vcs_group_name_url }'
     register: git_repo_url_default
 
   - name: "Setting fact with default parameters"
     set_fact:
-       gitlab_hostname: "{{ git_repo_url_default.stdout | urlsplit('hostname') }}"
-       gitlab_project_path: "{{ git_repo_url_default.stdout | urlsplit('path') | regex_replace('^/{1}', '') }}"
-       gitlab_project_name: "{{ git_repo_url }}"
+       vcs_hostname: "{{ git_repo_url_default.stdout | urlsplit('hostname') }}"
+       vcs_project_path: "{{ git_repo_url_default.stdout | urlsplit('path') | regex_replace('^/{1}', '') }}"
+       vcs_project_name: "{{ git_repo_url }}"
 
   - name: "Setting fact with default parameters"
     set_fact:
-       gitlab_http_url: "{{ git_repo_url_default.stdout + '/' + gitlab_project_name }}"
+       vcs_http_url: "{{ git_repo_url_default.stdout + '/' + vcs_project_name }}"
   when: git_repo_url is not match("http?(s)://*")
 
 - name: "Settings facts with default parameters"
   set_fact:
-     git_repo_ssh_url: "{{ gitlab_hostname }}:{{ gitlab_project_path if git_repo_url is match('http?(s)://*')
-     else gitlab_project_path + '/' + gitlab_project_name}}.git"
-     gitlab_key_path: "{{ work_dir }}/gitlab-private.key"
+     git_repo_ssh_url: "{{ vcs_hostname }}:{{ vcs_project_path if git_repo_url is match('http?(s)://*')
+     else vcs_project_path + '/' + vcs_project_name}}.git"
+     vcs_key_path: "{{ work_dir }}/vcs-private.key"
 
-- include_tasks: roles/common/tasks/manage-gitlab/get-gitlab-credentials-from-secret.yml
+- include_tasks: roles/common/tasks/manage-vcs/get-vcs-credentials-from-secret.yml
   vars:
-    target_gitlab_keyfile: "{{ gitlab_key_path }}"
+    target_vcs_keyfile: "{{ vcs_key_path }}"
 
-- name: "Clone GitLab repository"
+- name: "Clone VCS repository"
   git:
     repo: "git@{{ git_repo_ssh_url }}"
     dest: "{{ work_dir }}/{{ name }}"
-    key_file: "{{ gitlab_key_path }}"
+    key_file: "{{ vcs_key_path }}"
     accept_hostkey: true
     force: true
   ignore_errors: true

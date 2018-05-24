@@ -13,7 +13,7 @@
 # limitations under the License.
 
     [remote "{{ name }}"]
-      url = {{ gitlab_hostname }}:{{ gitlab_project_path }}.git
+      url = {{ vcs_hostname }}:{{ vcs_project_path }}.git
       fetch = +refs/*:refs/*
       push = +refs/heads/*:refs/heads/*
       projects = {{ name }}

@@ -27,7 +27,7 @@ projects_list: [
     ]
 project_cicd: "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}"
 project_cockpit: "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}"
-project_gitlab_edp: "{{ (projects_suffix != '') | ternary('edp-', 'edp')}}{{ projects_suffix }}"
+project_vcs_edp: "{{ (projects_suffix != '') | ternary('edp-', 'edp')}}{{ projects_suffix }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
 secrets:
@@ -46,9 +46,9 @@ secrets:
     db_name: sonar
     db_user: sonar
     db_password: sonar
-  gitlab_oauth:
-    id: "{{ gitlab_oauth_app_id | default('1793958fcbf67ba9498781e84b8beee375420796e5ee4510c5baf7b7265566d0') }}"
-    secret: "{{ gitlab_oauth_app_secret | default('d9921be13a9980798997b28bd9b6a2fa68a33fa9fa19f466d569e48293b1b584') }}"
+  vcs_oauth:
+    id: "{{ vcs_oauth_app_id }}"
+    secret: "{{ vcs_oauth_app_secret }}"
   keycloak_db:
     db_user: keycloak
     db_password: keycloak
@@ -68,7 +68,6 @@ tools:
   gerrit:
     version: "{{ gerrit_version | default('2.14.8') }}"
     auth_type: "{{ gerrit_auth_type | default('OAUTH') }}"
-    gitlab_oauth: "{{ gerrit_gitlab_oauth | default('gitlab-oauth') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
     volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
     web_url: "http://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"

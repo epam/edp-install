@@ -23,11 +23,11 @@
 
 - include_tasks: roles/common/tasks/manage-configmaps/retrieve-prerequisites-variable.yml
 
-- include_tasks: roles/common/tasks/manage-gitlab/clone-repository.yml
+- include_tasks: roles/common/tasks/manage-vcs/clone-repository.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 
-- include_tasks: roles/common/tasks/manage-gerrit/set-up-gitlab-with-gerrit.yml
+- include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 
