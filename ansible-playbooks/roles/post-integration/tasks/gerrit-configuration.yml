@@ -286,6 +286,7 @@
       - "edp-images"
       - "oc-templates"
       - "README.md"
+      - "LICENSE-2.0"
 
   - name: "Push to VCS"
     shell: |

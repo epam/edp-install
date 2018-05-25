@@ -20,3 +20,4 @@ COPY application-pipelines /opt/edp/application-pipelines
 COPY oc-templates /opt/edp/oc-templates
 COPY edp-images /opt/edp/edp-images
 COPY README.md /opt/edp/
+COPY LICENSE-2.0 /opt/edp/
