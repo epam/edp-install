@@ -173,12 +173,10 @@ parameters:
   description: Gerrit Application ID fot OAuth integration with Gitlab
   name: GITLAB_OAUTH_APP_ID
   value: ""
-  required: true
 - displayName: Gerrit Application Secret
   description: Gerrit Application Secret fot OAuth integration with Gitlab
   name: GITLAB_OAUTH_APP_SECRET
   value: ""
-  required: true
 - displayName: Git autouser secret name
   description: Git autouser secret name from prerequisites
   name: GITLAB_AUTO_USER_SECRET
