@@ -37,7 +37,8 @@
     nexus_port: "8081"
     sonar_api_url: "http://sonar.{{ project_cicd }}:9000/api"
     vcs_hostname: "{{ vcs_group_name | urlsplit('hostname')}}"
-    vcs_group: "{{ vcs_group_name | urlsplit('path')}}"
+    vcs_group_path: "{{ vcs_group_name | urlsplit('path') | regex_replace('^/{1}', '')}}"
+    vcs_tool: "{{ vcs_tool_name | lower }}"
 
 - include_tasks: check-deployment-health.yml
   with_items:

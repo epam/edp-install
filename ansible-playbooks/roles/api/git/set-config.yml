@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-- name: "Create project in Gerrit"
-  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ name }}"
+- name: "Set git config in the directory {{ item.git_directory }}"
+  shell: |
+    git config user.email "{{ item.user_email }}"
+    git config user.name "{{ item.user_name }}"
+  args:
+    chdir: "{{ item.git_directory }}"

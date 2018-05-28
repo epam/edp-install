@@ -12,6 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-- name: "Create project in Gerrit"
-  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ name }}"
+- name: "Create commit in the directory {{ item.git_directory }}"
+  shell: |
+    git add .
+    git commit -m "{{ item.commit_message }}"
+  args:
+    chdir: "{{ item.git_directory }}"
+  register: result
+  until: result.rc == 0
+  retries: 10
+  delay: 5

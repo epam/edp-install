@@ -17,23 +17,17 @@
   set_fact:
     project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
 
-- include_tasks: roles/common/tasks/manage-configmaps/retrieve-data-from-configmap.yml
+- include_tasks: roles/common/tasks/manage-openshift/retrieve-project-settings-from-configmap.yml
   with_items:
     - { key_name: 'app\.settings\.json' }
 
-- include_tasks: roles/common/tasks/manage-configmaps/retrieve-prerequisites-variable.yml
-
-- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
-  vars:
-    vcs_host: "{{ vcs_group_hostname }}"
-
-- include_tasks: roles/common/tasks/manage-vcs/clone-repository.yml
-  when: item_map.add_repo_strategy == "import"
+- include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 
-- include_tasks: roles/common/tasks/manage-vcs/copy-repository.yml
-  when: item_map.add_repo_strategy == "copy"
+- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
+
+- include_tasks: roles/common/tasks/manage-vcs/{{ item_map.add_repo_strategy }}-repository.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 

@@ -13,81 +13,38 @@
 # limitations under the License.
 
 ---
-- name: "Login to VCS and get CSRF token"
-  uri:
-    url: "https://{{ vcs_group_hostname }}/oauth/token"
-    method: POST
-    body: 'grant_type=password&username={{ vcs_autouser_email }}&password={{ vcs_autouser_password }}'
-  retries: 3
-  delay: 3
-  register: csrf_token
-  until: csrf_token.status == 200
+- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/get-token.yml
+  with_items:
+    - { hostname: '{{ vcs_hostname }}', username: '{{ vcs_autouser_email }}', password: '{{ vcs_autouser_password }}' }
 
-- name: "Get group id by it's name"
-  uri:
-    url: "
-      https://{{ vcs_group_hostname }}/api/v4/groups/{{ vcs_group_path | replace('/', '%2F') }}\
-      ?simple=true&access_token={{ csrf_token.json.access_token }}"
-    method: GET
-  retries: 3
-  delay: 3
-  register: group_id
-  until: group_id.status == 200
-
-- name: "Check if project {{ name }} already exist in VCS group"
-  uri:
-    url: "
-     https://{{ vcs_group_hostname }}/api/v4/projects/{{ vcs_group_path | replace('/', '%2F') + '%2F' + name }}\
-     ?simple=true&access_token={{ csrf_token.json.access_token }}"
-  ignore_errors: true
-  register: project_existence
+- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/check-project-exists.yml
+  with_items:
+    - { hostname: '{{ vcs_hostname }}', project_name: "{{ vcs_project_path | replace('/', '%2F') }}", , csrf_token: '{{ csrf_token }}' }
 
 - block:
-  - name: "Clone VCS repository"
-    git:
-      repo: "{{ git_repo_url }}.git"
-      dest: "{{ work_dir }}/{{ name }}"
-    register: clone_output
+  - include_tasks: roles/api/git/clone.yml
+    with_items:
+      - { repo: "{{ git_repo_url }}.git", 'dest': "{{ work_dir }}/{{ name }}" }
 
-  - name: "Create project - {{ name }} in the group - {{ vcs_group_path }}"
-    uri:
-      url: "
-        https://{{ vcs_group_hostname }}/api/v4/projects?name={{ name }}\
-        &namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
-      method: POST
-      status_code: 201
-    retries: 3
-    delay: 3
-    register: output
-    until: output.status == 201
+  - include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/get-group-id-by-name.yml
+    with_items:
+      - { hostname: '{{ vcs_hostname }}', group_name: "{{ vcs_group_path | replace('/', '%2F') }}", csrf_token: '{{ csrf_token }}' }
+
+  - include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/create-project.yml
+    with_items:
+      - { hostname: '{{ vcs_hostname }}', project_name: "{{ name }}", group_name: "{{ vcs_group_path }}", group_id: "{{ vcs_group_id }}", csrf_token: '{{ csrf_token }}' }
 
   - name: "Change remote repository"
     shell: |
-      cd {{ work_dir }}/{{ name }}
-      git config user.email "{{ vcs_autouser_email }}"
-      git config user.name "{{ vcs_autouser_name }}"
-      ssh-agent bash -c 'ssh-add "{{ work_dir }}/vcs-private.key"; \
-      git remote set-url origin git@{{ vcs_group_hostname }}:{{ vcs_group_path }}/{{ name }}.git'
-    register: change_output
-    until: change_output.rc == 0
-    retries: 20
-    delay: 1
+      git remote set-url origin git@{{ vcs_hostname }}:{{ vcs_project_path }}.git'
+    args:
+      chdir: {{ work_dir }}/{{ name }}
 
-  - name: "Set VCS hostname and project path for replication with Gerrit"
-    set_fact:
-      vcs_hostname: "{{ vcs_group_hostname }}"
-      vcs_project_path: "{{ vcs_group_path }}/{{ name }}"
+  - include_tasks: roles/api/git/set-config.yml
+    with_items:
+      - { git_directory: '{{ work_dir }}/{{ name }}', user_email: "{{ vcs_autouser_email }}", user_name: "{{ vcs_autouser_name }}" }
 
-  - name: "Push to VCS project in the group"
-    shell: |
-      cd {{ work_dir }}/{{ name }}
-      git config user.email "{{ vcs_autouser_email }}"
-      git config user.name "{{ vcs_autouser_name }}"
-      ssh-agent bash -c 'ssh-add "{{ work_dir }}/vcs-private.key"; \
-      git push origin master'
-    register: push_output
-    until: push_output.rc == 0
-    retries: 20
-    delay: 1
-
-  when: project_existence.status == 404
+  - include_tasks: roles/api/git/push.yml
+    with_items:
+      - { git_directory: '{{ work_dir }}/{{ name }}' }
+  when: project_exists | bool == false

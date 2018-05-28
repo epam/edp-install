@@ -18,11 +18,11 @@
      vcs_key_path: "{{ work_dir }}/vcs-private.key"
      gerrit_key_path: "{{ work_dir }}/gerrit-private.key"
 
-- include_tasks: roles/common/tasks/manage-vcs/get-vcs-credentials-from-secret.yml
+- include_tasks: roles/common/tasks/manage-openshift/get-vcs-credentials-from-secret.yml
   vars:
     target_vcs_keyfile: "{{ vcs_key_path }}"
 
-- include_tasks: roles/common/tasks/manage-gerrit/get-gerrit-credentials-from-secret.yml
+- include_tasks: roles/common/tasks/manage-openshift/get-gerrit-credentials-from-secret.yml
   vars:
     target_gerrit_keyfile: "{{ gerrit_key_path }}"
 
@@ -37,14 +37,14 @@
       Host gerrit*
         HostName gerrit.{{ project_cicd }}
         Port {{ gerrit_ssh_port }}
-        User project-creator
+        User {{ gerrit_username | default('project-creator') }}
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null
         IdentityFile {{ gerrit_key_path }}
         IdentitiesOnly yes
 
-      Host {{ vcs_host }}
-        HostName {{ vcs_host }}
+      Host {{ vcs_hostname }}
+        HostName {{ vcs_hostname }}
         User git
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null

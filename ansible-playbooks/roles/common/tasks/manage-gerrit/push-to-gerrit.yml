@@ -19,7 +19,7 @@
     chdir: "{{ target_dir }}"
 
 - name: "Add remote link to gerrit"
-  shell: "git remote set-url --push origin ssh://project-creator@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ name }}"
+  shell: "git remote set-url --push origin ssh://{{ gerrit_username | default('project-creator') }}@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ name }}"
   args:
     chdir: "{{ target_dir }}"
 

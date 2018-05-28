@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-- name: "Create project in Gerrit"
-  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ name }}"
+- name: "Push repository in the directory {{ item.git_directory }}"
+  shell: |
+    git push origin master
+  args:
+    chdir: "{{ item.git_directory }}"
+  register: result
+  until: result.rc == 0
+  retries: 10
+  delay: 5

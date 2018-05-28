@@ -14,8 +14,6 @@
 
 ---
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
-  vars:
-    vcs_host: "{{ vcs_hostname }}"
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
   vars:

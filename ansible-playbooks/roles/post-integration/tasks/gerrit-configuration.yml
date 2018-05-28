@@ -57,43 +57,12 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
   with_items:
-    - { secret_name: "gerrit-admin", configmap_key: "id_admin_rsa" , sshkey: "gerrit_admin_rsa" }
-    - { secret_name: "gerrit-project-creator", configmap_key: "id_project_creator_rsa" , sshkey: "gerrit_project-creator_rsa" }
+    - { secret_name: "gerrit-admin", configmap_key: "id_rsa" , sshkey: "gerrit_admin_rsa" }
+    - { secret_name: "gerrit-project-creator", configmap_key: "id_rsa" , sshkey: "gerrit_project-creator_rsa" }
 
-- name: "Set facts with ssh keys path"
-  set_fact:
-     vcs_key_path: "{{ post_integration_dir }}/gerrit/vcs_rsa"
-     gerrit_key_path: "{{ post_integration_dir }}/gerrit/gerrit_admin_rsa"
-
-- include_tasks: roles/common/tasks/manage-vcs/get-vcs-credentials-from-secret.yml
+- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
   vars:
-    target_vcs_keyfile: "{{ vcs_key_path }}"
-
-- stat:
-    path: "~/.ssh/config"
-  register: ssh_config
-
-- name: "Generate ssh config for Ansible"
-  copy:
-    content: |
-      Host gerrit*
-        HostName gerrit.{{ project_cicd }}
-        User admin
-        StrictHostKeyChecking no
-        UserKnownHostsFile /dev/null
-        IdentityFile {{ gerrit_key_path }}
-        IdentitiesOnly yes
-
-      Host {{ vcs_hostname }}
-        HostName {{ vcs_hostname }}
-        User git
-        StrictHostKeyChecking no
-        UserKnownHostsFile /dev/null
-        IdentityFile {{ vcs_key_path }}
-        IdentitiesOnly yes
-    dest: ~/.ssh/config
-    force: yes
-  when: ssh_config.stat.islnk is not defined
+    gerrit_username: "admin"
 
 - name: "Copy hideci files"
   copy:
@@ -114,7 +83,7 @@
       - { src: "{{ post_integration_dir }}/gerrit/jquery-1.7.2.min.js", dest: "/var/gerrit/review_site/static/jquery-1.7.2.min.js"}
       - { src: "{{ post_integration_dir }}/gerrit/GerritSiteHeader.html", dest: "/var/gerrit/review_site/etc/GerritSiteHeader.html"}
       - { src: "{{ post_integration_dir }}/gerrit/GerritSite.css", dest: "/var/gerrit/review_site/etc/GerritSite.css"}
-      - { src: "{{ post_integration_dir }}/gerrit/vcs_rsa", dest: "/var/gerrit/review_site/etc/replication_rsa_key"}
+      - { src: "{{ vcs_key_path }}", dest: "/var/gerrit/review_site/etc/replication_rsa_key"}
 
 - name: "Chown gerrit directory with gerrit2 user in gerrit pod"
   shell: "{{ ocadm }} exec -i $({{ gerrit_pod }}) -- chown -R gerrit2:gerrit2 /var/gerrit/review_site"
@@ -215,71 +184,32 @@
 #    'commentlink.testresult.html' <li class=\"comment_test\"><span class=\"comment_test_name\">
 #    <a href=\"$2\" rel=\"nofollow\">$1</a></span> <span class=\"comment_test_result\"><span class=\"result_$3\">$3</span>$4</span></li>"
 
-- include_tasks: roles/common/tasks/manage-vcs/get-vcs-credentials-from-secret.yml
-  vars:
-    target_vcs_keyfile: "{{ post_integration_dir }}/gerrit/vcs_rsa"
+- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/get-token.yml
+  with_items:
+    - { hostname: '{{ vcs_hostname }}', username: '{{ vcs_autouser_email }}', password: '{{ vcs_autouser_password }}' }
 
-- name: "Login to VCS and get CSRF token"
-  uri:
-    url: "https://{{ vcs_hostname }}/oauth/token"
-    method: POST
-    body: 'grant_type=password&username={{ vcs_autouser_email }}&password={{ vcs_autouser_password }}'
-  retries: 3
-  delay: 3
-  register: csrf_token
-  until: csrf_token.status == 200
+- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/get-group-id-by-name.yml
+  with_items:
+    - { hostname: '{{ vcs_hostname }}', group_name: "{{ vcs_group_path | replace('/', '%2F') }}", csrf_token: '{{ csrf_token }}' }
 
-- name: "Get group id by it's name"
-  uri:
-    url: "
-     https://{{ vcs_hostname }}/api/v4/groups/{{ vcs_group[1:] | replace('/', '%2F') }}\
-     ?simple=true&access_token={{ csrf_token.json.access_token }}"
-    method: GET
-  retries: 3
-  delay: 3
-  register: group_id
-  until: group_id.status == 200
+- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/check-project-exists.yml
+  with_items:
+    - { hostname: '{{ vcs_hostname }}', project_name: "{{ vcs_group_path | replace('/', '%2F') + '%2F' + project_vcs_edp }}", csrf_token: '{{ csrf_token }}' }
 
-- name: "Check if project EDP already exist in VCS"
-  uri:
-    url: "
-     https://{{ vcs_hostname }}/api/v4/projects/{{ vcs_group[1:] | replace('/', '%2F') + '%2F' + project_vcs_edp }}\
-     ?simple=true&access_token={{ csrf_token.json.access_token }}"
-  ignore_errors: True
-  register: edp_project_existence
-
-- name: "Create .ssh directory"
-  file:
-    path: ~/.ssh
-    state: directory
 
 - block:
-  - name: "Add project to the group"
-    uri:
-      url: "
-       https://{{ vcs_hostname }}/api/v4/projects?name={{ project_vcs_edp }}\
-       &namespace_id={{ group_id.json.id }}&access_token={{ csrf_token.json.access_token }}"
-      method: POST
-      status_code: 201
-    retries: 3
-    delay: 3
-    register: output
-    until: output.status == 201
+  - include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/create-project.yml
+    with_items:
+      - { hostname: '{{ vcs_hostname }}', project_name: "{{ project_vcs_edp }}", group_name: "{{ vcs_group_path }}", group_id: "{{ vcs_group_id }}", csrf_token: '{{ csrf_token }}' }
 
-  - name: "Clone VCS repository"
-    git:
-      repo: "git@{{ vcs_hostname }}:{{ vcs_group[1:] }}/{{ project_vcs_edp }}.git"
-      dest: "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}"
-      key_file: "{{ post_integration_dir }}/gerrit/vcs_rsa"
-      accept_hostkey: true
-      force: true
-    ignore_errors: true
+  - include_tasks: roles/api/git/clone.yml
+    with_items:
+      - { repo: "git@{{ vcs_hostname }}:{{ vcs_group_path }}/{{ project_vcs_edp }}.git", 'dest': "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}", key: "{{ vcs_key_path }}" }
 
   - name: "Copying EDP sources"
-    copy:
+    synchronize:
       src: "../{{ item }}"
       dest: "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}"
-      force: yes
     with_items:
       - "ansible-playbooks"
       - "application-pipelines"
@@ -288,41 +218,30 @@
       - "README.md"
       - "LICENSE-2.0"
 
-  - name: "Push to VCS"
-    shell: |
-     cd {{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}
-     git config user.email "{{ vcs_autouser_email }}"
-     git config user.name "{{ vcs_autouser_name }}"
-     ssh-agent bash -c 'ssh-add "{{ post_integration_dir }}/gerrit/vcs_rsa"; git add . \
-     && git commit -m "Initial commit with EDP sources" \
-     && git push origin master'
-    register: push_output
-    until: push_output.rc == 0
-    retries: 20
-    delay: 1
-  when: edp_project_existence.status == 404
+  - include_tasks: roles/api/git/set-config.yml
+    with_items:
+      - { git_directory: '{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}', user_email: "{{ vcs_autouser_email }}", user_name: "{{ vcs_autouser_name }}" }
 
-- block:
-  - name: "Clone VCS repository"
-    git:
-      repo: "git@{{ vcs_hostname }}:{{ vcs_group[1:] }}/{{ project_vcs_edp }}.git"
-      dest: "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}"
-      key_file: "{{ post_integration_dir }}/gerrit/vcs_rsa"
-      accept_hostkey: true
-      force: true
-    ignore_errors: true
-    register: clone_output
-    until: "'Failed to checkout branch master' not in clone_output.msg"
-    retries: 5
-    delay: 1
-  when: edp_project_existence.status == 200
+  - include_tasks: roles/api/git/commit.yml
+    with_items:
+      - { git_directory: '{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}', commit_message: "Initial commit with EDP sources" }
+
+  - include_tasks: roles/api/git/push.yml
+    with_items:
+      - { git_directory: '{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}' }
+  when: project_exists | bool == false
+
+- include_tasks: roles/api/git/clone.yml
+  with_items:
+    - { repo: "git@{{ vcs_hostname }}:{{ vcs_group_path }}/{{ project_vcs_edp }}.git", 'dest': "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}", key: "{{ vcs_key_path }}" }
+  when: project_exists | bool == true
 
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
   vars:
-    vcs_host: "{{ vcs_hostname }}"
     name: "{{ project_vcs_edp }}"
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
   vars:
     target_dir: "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}"
     name: "{{ project_vcs_edp }}"
+    gerrit_username: "admin"

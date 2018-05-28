@@ -17,13 +17,17 @@
   set_fact:
     project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
 
-- include_tasks: roles/common/tasks/manage-configmaps/retrieve-data-from-configmap.yml
+- include_tasks: roles/common/tasks/manage-openshift/retrieve-project-settings-from-configmap.yml
   with_items:
     - { key_name: 'auto-test\.settings\.json' }
 
-- include_tasks: roles/common/tasks/manage-configmaps/retrieve-prerequisites-variable.yml
+- include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
+  vars:
+    git_repo_url: "{{ item_map.git_repo_url }}"
 
-- include_tasks: roles/common/tasks/manage-vcs/clone-repository.yml
+- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
+
+- include_tasks: roles/common/tasks/manage-vcs/import-repository.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
 

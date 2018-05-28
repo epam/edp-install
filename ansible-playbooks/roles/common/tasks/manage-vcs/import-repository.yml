@@ -13,5 +13,6 @@
 # limitations under the License.
 
 ---
-- name: "Create project in Gerrit"
-  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ name }}"
+- include_tasks: roles/api/git/clone.yml
+  with_items:
+    - { repo: "git@{{ git_repo_ssh_url }}", 'dest': "{{ work_dir }}/{{ name }}", key: "{{ vcs_key_path }}" }

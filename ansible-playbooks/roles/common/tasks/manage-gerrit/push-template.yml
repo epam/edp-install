@@ -17,34 +17,10 @@
   shell: "{{ ocadm }} -n default get route docker-registry -o jsonpath='{.spec.host}'"
   register: docker_registry_url
 
-- name: "Get wildcard from user-settings cm"
-  shell: |
-   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.dns_wildcard }'
-  register: dns_wildcard
-
-- name: "Get projects suffix from user-settings config map"
-  command: |
-   {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.projects_suffix }'
-  register: projects_suffix
-
-- name: "Get gerrit ssh port from service"
-  command: "{{ ocadm }} -n {{ project_cicd }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].nodePort}'"
-  register: gerrit_ssh_port
-
-- name: "Get VCS URL"
-  shell: |
-    {{ ocadm }} -n {{ project_cicd }} get cm user-settings -o=jsonpath='{ .data.vcs_group_name_url }'
-  register: git_repo_url_default
-
 - name: "Set variables"
   set_fact:
-    dns_wildcard: "{{ dns_wildcard.stdout }}"
     docker_registry_url: "{{ docker_registry_url.stdout }}"
-    edp_gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix.stdout, 'edp')}}"
-    gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
-    vcs_host: "{{ git_repo_url_default.stdout }}"
-
-- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
+    edp_gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"
 
 - name: "Pull EDP repo from gerrit"
   shell: >
