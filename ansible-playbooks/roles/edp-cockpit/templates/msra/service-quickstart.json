@@ -1,26 +1,13 @@
 [
-	{
-		"name": "zipkin",
-		"displayName": "Zipkin (Monitoring)",
-		"type": "service",
-		"image": "openzipkin/zipkin",
-		"version": "2.6.0",
-		"storage": {
-			"class": "GlusterFS",
-			"capacity": "1Gi"
-		}
-	},
-	{
-		"name": "zuul",
-		"displayName": "Zuul (API Gateway)",
-		"type": "application",
-		"git_repo_url": "https://git.epam.com/epmd-edp/examples/msra/zuul",
-		"add_repo_strategy": "copy",
-		"language": "Java",
-		"build_tool": "Maven",
-		"framework": "SpringBoot",
-		"route": true,
-		"route_path": "/api",
-		"need_database": false
-	}
+  {
+    "name": "zipkin",
+    "displayName": "Zipkin (Monitoring)",
+    "type": "service",
+    "image": "openzipkin/zipkin",
+    "version": "2.6.0",
+    "storage": {
+      "class": "GlusterFS",
+      "capacity": "1Gi"
+    }
+  }
 ]

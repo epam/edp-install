@@ -142,6 +142,11 @@ objects:
               configMapKeyRef:
                 name: msra
                 key: service-quickstart.json
+          - name: MSRA_MODIFIABLE_SERVICE_QUICKSTART
+            valueFrom:
+              configMapKeyRef:
+                name: msra
+                key: modifiable-service-quickstart.json
     triggers:
     - type: ConfigChange
 

@@ -32,6 +32,7 @@
     - "autotest-quickstart.json"
     - "env-quickstart.json"
     - "service-quickstart.json"
+    - "modifiable-service-quickstart.json"
 
 - name: "Set docker image version in add-application template"
   replace:
@@ -71,6 +72,7 @@
     --from-file=autotest-quickstart.json={{ templates_dir }}/cockpit/autotest-quickstart.json
     --from-file=env-quickstart.json={{ templates_dir }}/cockpit/env-quickstart.json
     --from-file=service-quickstart.json={{ templates_dir }}/cockpit/service-quickstart.json
+    --from-file=modifiable-service-quickstart.json={{ templates_dir }}/cockpit/modifiable-service-quickstart.json
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
