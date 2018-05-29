@@ -26,34 +26,21 @@
 - set_fact:
     user_settings: "{{ result.stdout | from_json }}"
 
-- name: "Setting facts"
-  set_fact:
+- set_fact:
     dns_wildcard: "{{ user_settings.data.dns_wildcard }}"
     projects_suffix: "{{ user_settings.data.projects_suffix }}"
-    vcs_group_name_url: "{{ user_settings.data.vcs_group_name_url }}"
+    project_vcs_group_name_url: "{{ user_settings.data.vcs_group_name_url }}"
     vcs_tool: "{{ user_settings.data.vcs_tool_name | lower }}"
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
+    project_vcs_hostname: "{{ user_settings.data.vcs_group_name_url | urlsplit('hostname') }}"
+    project_vcs_group_path: "{{ user_settings.data.vcs_group_name_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
+- set_fact:
+    vcs_project_path: "{{ project_vcs_group_path }}/{{ vcs_project_name }}"
 
-- block:
-  - set_fact:
-      vcs_hostname: "{{ git_repo_url | urlsplit('hostname') }}"
-      vcs_group_path: "{{ git_repo_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
-  - set_fact:
-      vcs_project_path: "{{ vcs_group_path }}/{{ name }}"
-      git_repo_ssh_url: "{{ vcs_hostname }}:{{ vcs_group_path }}.git"
+- set_fact:
+    git_repo_ssh_url: "{{ git_repo_url | urlsplit('hostname') }}:{{ git_repo_url | urlsplit('path') | regex_replace('^/{1}', '') }}.git"
   when: git_repo_url is defined and git_repo_url is match("http?(s)://*")
 
-- block:
-  - set_fact:
-      vcs_hostname: "{{ vcs_group_name_url | urlsplit('hostname') }}"
-      vcs_group_path: "{{ vcs_group_name_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
-  - set_fact:
-      vcs_project_path: "{{ vcs_group_path }}/{{ name }}"
-      git_repo_ssh_url: "{{ vcs_hostname }}:{{ vcs_group_path }}/{{ git_repo_url }}.git"
+- set_fact:
+    git_repo_ssh_url: "{{ project_vcs_hostname }}:{{ project_vcs_group_path }}/{{ git_repo_url }}.git"
   when: git_repo_url is defined and git_repo_url is not match("http?(s)://*")
-
-- block:
-  - set_fact:
-      vcs_hostname: "{{ vcs_group_name_url | urlsplit('hostname') }}"
-      vcs_group_path: "{{ vcs_group_name_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
-  when: git_repo_url is undefined

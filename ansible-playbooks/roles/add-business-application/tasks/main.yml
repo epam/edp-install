@@ -24,27 +24,32 @@
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
+    vcs_project_name: "{{ name }}"
+
 
 - include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
+
+- debug:
+    msg: "{{ item_map | to_json}}"
 
 - block:
   - include_tasks: roles/api/git/copy-repository.yml
     vars:
       git_repo_url: "{{ item_map.git_repo_url }}"
-      project_name: "{{ name }}"
+      vcs_project_name: "{{ name }}"
 
-  - include_tasks: roles/api/git/push-to-vcs-group.yml
-    when: project_exists | bool == false
-  when: item_map.add_repo_strategy == 'copy'
+  - include_tasks: roles/api/git/push-to-project-vcs-group.yml
+    vars:
+      vcs_project_name: "{{ name }}"
+    when: repository_exists | bool == false
+  when: item_map.add_repo_strategy is defined and item_map.add_repo_strategy == 'copy'
 
 - include_tasks: roles/api/git/clone.yml
   with_items:
     - { repo: "{{ git_repo_ssh_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
-  when: item_map.add_repo_strategy == 'import'
+  when: item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
 
 - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
-  vars:
-    git_repo_url: "{{ item_map.git_repo_url }}"
 
 - include_tasks: roles/common/tasks/manage-jenkins/trigger-job-provisioning.yml
 

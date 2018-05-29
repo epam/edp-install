@@ -210,12 +210,12 @@
   - include_tasks: roles/api/git/push.yml
     with_items:
       - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}' }
-  when: project_exists | bool == false
+  when: repository_exists | bool == false
 
 - include_tasks: roles/api/git/clone.yml
   with_items:
-    - { repo: "git@{{ vcs_hostname }}:{{ vcs_group_path }}/{{ project_vcs_edp }}.git", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
-  when: project_exists | bool == true
+    - { repo: "git@{{ project_vcs_hostname }}:{{ project_vcs_group_path }}/{{ project_vcs_edp }}.git", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
+  when: repository_exists | bool == true
 
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
   vars:

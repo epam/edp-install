@@ -22,6 +22,8 @@
     - { key_name: 'service\.settings\.json' }
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
+  vars:
+    vcs_project_name: "{{ name }}"
 
 - include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
 

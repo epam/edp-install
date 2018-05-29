@@ -21,4 +21,4 @@
   register: result
 
 - set_fact:
-    project_exists: "{{ true if result.status != 404 else false }}"
+    repository_exists: "{{ true if result.status != 404 else false }}"

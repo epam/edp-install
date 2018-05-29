@@ -43,8 +43,8 @@
         IdentityFile {{ gerrit_key_path }}
         IdentitiesOnly yes
 
-      Host {{ vcs_hostname }}
-        HostName {{ vcs_hostname }}
+      Host {{ project_vcs_hostname }}
+        HostName {{ project_vcs_hostname }}
         User git
         StrictHostKeyChecking no
         UserKnownHostsFile /dev/null

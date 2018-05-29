@@ -15,9 +15,9 @@
 ---
 - name: "Change remote repository"
   shell: |
-    git remote set-url origin git@{{ vcs_hostname }}:{{ vcs_project_path }}.git'
+    git remote set-url origin {{ project_vcs_hostname }}:{{ vcs_project_path }}.git
   args:
-    chdir: {{ work_dir }}/{{ vcs_project_name }}
+    chdir: "{{ work_dir }}/{{ vcs_project_name }}"
 
 - include_tasks: roles/api/git/set-config.yml
   with_items:
@@ -25,4 +25,4 @@
 
 - include_tasks: roles/api/git/push.yml
   with_items:
-    - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}' }
+    - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', get_repository: '{{ project_vcs_hostname }}:{{ vcs_project_path }}.git' }

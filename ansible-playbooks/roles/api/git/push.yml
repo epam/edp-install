@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: "Push repository in the directory {{ item.git_directory }}"
+- name: "Push repository in the directory {{ item.get_repository }}"
   shell: |
     git push origin master
   args:
