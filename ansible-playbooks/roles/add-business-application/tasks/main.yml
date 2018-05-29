@@ -27,9 +27,20 @@
 
 - include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
 
-- include_tasks: roles/common/tasks/manage-vcs/{{ item_map.add_repo_strategy }}-repository.yml
-  vars:
-    git_repo_url: "{{ item_map.git_repo_url }}"
+- block:
+  - include_tasks: roles/api/git/copy-repository.yml
+    vars:
+      git_repo_url: "{{ item_map.git_repo_url }}"
+      project_name: "{{ name }}"
+
+  - include_tasks: roles/api/git/push-to-vcs-group.yml
+    when: project_exists | bool == false
+  when: item_map.add_repo_strategy == 'copy'
+
+- include_tasks: roles/api/git/clone.yml
+  with_items:
+    - { repo: "{{ git_repo_ssh_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
+  when: item_map.add_repo_strategy == 'import'
 
 - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
   vars:

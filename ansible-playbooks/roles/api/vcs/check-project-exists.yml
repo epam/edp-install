@@ -12,15 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: "Login to {{ item.hostname }} and get CSRF token"
-  uri:
-    url: "https://{{ item.hostname }}/oauth/token"
-    method: POST
-    body: 'grant_type=password&username={{ item.username }}&password={{ item.password }}'
-  retries: 3
-  delay: 3
-  register: result
-  until: result.status == 200
-
-- set_fact:
-    csrf_token: "{{ result.json.access_token }}"
+---
+- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/check-project-exists.yml

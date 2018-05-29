@@ -184,32 +184,13 @@
 #    'commentlink.testresult.html' <li class=\"comment_test\"><span class=\"comment_test_name\">
 #    <a href=\"$2\" rel=\"nofollow\">$1</a></span> <span class=\"comment_test_result\"><span class=\"result_$3\">$3</span>$4</span></li>"
 
-- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/get-token.yml
-  with_items:
-    - { hostname: '{{ vcs_hostname }}', username: '{{ vcs_autouser_email }}', password: '{{ vcs_autouser_password }}' }
-
-- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/get-group-id-by-name.yml
-  with_items:
-    - { hostname: '{{ vcs_hostname }}', group_name: "{{ vcs_group_path | replace('/', '%2F') }}", csrf_token: '{{ csrf_token }}' }
-
-- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/check-project-exists.yml
-  with_items:
-    - { hostname: '{{ vcs_hostname }}', project_name: "{{ vcs_group_path | replace('/', '%2F') + '%2F' + project_vcs_edp }}", csrf_token: '{{ csrf_token }}' }
-
+- include_tasks: roles/api/git/copy-repository.yml
 
 - block:
-  - include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/create-project.yml
-    with_items:
-      - { hostname: '{{ vcs_hostname }}', project_name: "{{ project_vcs_edp }}", group_name: "{{ vcs_group_path }}", group_id: "{{ vcs_group_id }}", csrf_token: '{{ csrf_token }}' }
-
-  - include_tasks: roles/api/git/clone.yml
-    with_items:
-      - { repo: "git@{{ vcs_hostname }}:{{ vcs_group_path }}/{{ project_vcs_edp }}.git", 'dest': "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}", key: "{{ vcs_key_path }}" }
-
   - name: "Copying EDP sources"
     synchronize:
       src: "../{{ item }}"
-      dest: "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}"
+      dest: "{{ work_dir }}/{{ vcs_project_name }}"
     with_items:
       - "ansible-playbooks"
       - "application-pipelines"
@@ -220,20 +201,20 @@
 
   - include_tasks: roles/api/git/set-config.yml
     with_items:
-      - { git_directory: '{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}', user_email: "{{ vcs_autouser_email }}", user_name: "{{ vcs_autouser_name }}" }
+      - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', user_email: "{{ vcs_autouser_email }}", user_name: "{{ vcs_autouser_name }}" }
 
   - include_tasks: roles/api/git/commit.yml
     with_items:
-      - { git_directory: '{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}', commit_message: "Initial commit with EDP sources" }
+      - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', commit_message: "Initial commit with EDP sources" }
 
   - include_tasks: roles/api/git/push.yml
     with_items:
-      - { git_directory: '{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}' }
+      - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}' }
   when: project_exists | bool == false
 
 - include_tasks: roles/api/git/clone.yml
   with_items:
-    - { repo: "git@{{ vcs_hostname }}:{{ vcs_group_path }}/{{ project_vcs_edp }}.git", 'dest': "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}", key: "{{ vcs_key_path }}" }
+    - { repo: "git@{{ vcs_hostname }}:{{ vcs_group_path }}/{{ project_vcs_edp }}.git", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
   when: project_exists | bool == true
 
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
@@ -242,6 +223,6 @@
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
   vars:
-    target_dir: "{{ post_integration_dir }}/gerrit/{{ project_vcs_edp }}"
+    target_dir: "{{ work_dir }}/{{ vcs_project_name }}"
     name: "{{ project_vcs_edp }}"
     gerrit_username: "admin"
