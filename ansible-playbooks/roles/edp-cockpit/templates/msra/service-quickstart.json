@@ -6,7 +6,7 @@
       "image": "openzipkin/zipkin",
       "version": "2.6.0",
       "storage": {
-        "class": "GlusterFS",
+        "class": "glusterfs-storage",
         "capacity": "1Gi"
       }
     }
