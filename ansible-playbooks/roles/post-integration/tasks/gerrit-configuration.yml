@@ -60,7 +60,7 @@
     - { secret_name: "gerrit-admin", configmap_key: "id_rsa" , sshkey: "gerrit_admin_rsa" }
     - { secret_name: "gerrit-project-creator", configmap_key: "id_rsa" , sshkey: "gerrit_project-creator_rsa" }
 
-- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
+- include_tasks: roles/api/vcs/generate-ssh-config.yml
   vars:
     gerrit_username: "admin"
 
@@ -184,12 +184,16 @@
 #    'commentlink.testresult.html' <li class=\"comment_test\"><span class=\"comment_test_name\">
 #    <a href=\"$2\" rel=\"nofollow\">$1</a></span> <span class=\"comment_test_result\"><span class=\"result_$3\">$3</span>$4</span></li>"
 
-- include_tasks: roles/api/git/copy-repository.yml
+- include_tasks: roles/api/vcs/copy-project.yml
+
+- include_tasks: roles/api/vcs/ssh-url-generator.yml
+  vars:
+    vcs_group_url: "{{ vcs_group_name }}"
 
 - block:
   - include_tasks: roles/api/git/clone.yml
     with_items:
-      - { repo: "{{ git_repo_url }}.git", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
+      - { repo: "{{ clone_repo_url }}", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
 
   - name: "Copying EDP sources"
     synchronize:
@@ -218,7 +222,7 @@
 
 - include_tasks: roles/api/git/clone.yml
   with_items:
-    - { repo: "{{ project_vcs_hostname }}:{{ project_vcs_group_path }}/{{ project_vcs_edp }}.git", dest: "{{ work_dir }}/{{ vcs_project_name }}" }
+    - { repo: "{{ clone_repo_url }}", dest: "{{ work_dir }}/{{ vcs_project_name }}" }
   when: repository_exists | bool == true
 
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml

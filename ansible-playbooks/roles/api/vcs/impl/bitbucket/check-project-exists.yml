@@ -15,8 +15,12 @@
 - name: "Check project {{ item.project_name }} is already exist in VCS group"
   uri:
     url: "
-     https://{{ item.hostname }}/api/v4/projects/{{ item.group_name }}\
-     ?simple=true&access_token={{ item.csrf_token }}"
+     http://{{ item.hostname }}/rest/api/1.0/projects/{{ item.group_name }}/repos/{{ item.project_name }}"
+    method: GET
+    user: "{{ item.username }}"
+    password: "{{ item.password }}"
+    force_basic_auth: yes
+    return_content: yes
   ignore_errors: true
   register: result
 

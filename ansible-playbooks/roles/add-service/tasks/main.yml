@@ -25,6 +25,6 @@
   vars:
     vcs_project_name: "{{ name }}"
 
-- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
+- include_tasks: roles/api/vcs/generate-ssh-config.yml
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml

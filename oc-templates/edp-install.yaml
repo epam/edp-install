@@ -77,6 +77,7 @@ objects:
             - "-e vcs_oauth_app_secret=${VCS_OAUTH_APP_SECRET}"
             - "-e vcs_auto_user_secret=${VCS_AUTO_USER_SECRET}"
             - "-e vcs_group_name=${VCS_GROUP_NAME_URL}"
+            - "-e vcs_ssh_port=${VCS_SSH_PORT}"
             - "-e keycloak_image=${KEYCLOAK_IMAGE}"
             - "-e keycloak_volume_db_capacity=${KEYCLOAK_DB_CAPACITY}"
             - "-e keycloak_realm_name=${KEYCLOAK_REALM_NAME}"
@@ -92,11 +93,6 @@ parameters:
   description: Storage class name to consume by every EDP tool
   name: STORAGE_CLASS_NAME
   value: "glusterfs-storage"
-  required: true
-- displayName: Preferred Version Control System
-  description: VCS tool which will be consumed during EDP installation. Currently supported Gitlab and Bitbucket
-  name: VCS_TOOL_NAME
-  value: "Gitlab"
   required: true
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed
@@ -193,6 +189,11 @@ parameters:
   name: COCKPIT_ENABLE_MSRA_QUICKSTART
   value: "true"
 #VCS parameters
+- displayName: Preferred Version Control System
+  description: VCS tool which will be consumed during EDP installation. Currently supported Gitlab and Bitbucket
+  name: VCS_TOOL_NAME
+  value: "gitlab"
+  required: true
 - displayName: Gerrit Application ID
   description: Gerrit Application ID fot OAuth integration with VCS only if GERRIT_AUTH_TYPE set to OAUTH
   name: VCS_OAUTH_APP_ID
@@ -211,6 +212,9 @@ parameters:
   name: VCS_GROUP_NAME_URL
   value: "https://git.epam.com/epmd-edp/temp"
   required: true
+- displayName: VCS ssh port
+  name: VCS_SSH_PORT
+  value: "7999"
 #Keycloak parameters
 - displayName: Keycloak version
   name: KEYCLOAK_IMAGE

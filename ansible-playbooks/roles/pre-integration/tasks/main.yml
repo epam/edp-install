@@ -54,3 +54,4 @@
     --from-literal=projects_suffix={{ projects_suffix }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=vcs_tool_name={{ vcs_tool_name | lower }}
+    --from-literal=vcs_ssh_port={{ vcs_ssh_port }}

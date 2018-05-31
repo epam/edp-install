@@ -29,6 +29,7 @@ project_cicd: "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{
 project_cockpit: "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}"
 project_vcs_edp: "{{ (projects_suffix != '') | ternary('edp-', 'edp')}}{{ projects_suffix }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
+vcs_ssh_port: "{{ vcs_ssh_port | default('7999') }}"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
 secrets:
   sonar_admin:

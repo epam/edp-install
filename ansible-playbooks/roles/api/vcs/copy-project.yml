@@ -12,13 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: "Check project {{ item.project_name }} is already exist in VCS group"
-  uri:
-    url: "
-     https://{{ item.hostname }}/api/v4/projects/{{ item.group_name }}\
-     ?simple=true&access_token={{ item.csrf_token }}"
-  ignore_errors: true
-  register: result
-
-- set_fact:
-    repository_exists: "{{ true if result.status != 404 else false }}"
+---
+- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/copy-project.yml

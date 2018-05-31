@@ -34,13 +34,6 @@
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
     project_vcs_hostname: "{{ user_settings.data.vcs_group_name_url | urlsplit('hostname') }}"
     project_vcs_group_path: "{{ user_settings.data.vcs_group_name_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
+    vcs_ssh_port: "{{ user_settings.data.vcs_ssh_port }}"
 - set_fact:
     vcs_project_path: "{{ project_vcs_group_path }}/{{ vcs_project_name }}"
-
-- set_fact:
-    git_repo_clone_url: "{{ git_repo_url | urlsplit('hostname') }}:{{ git_repo_url | urlsplit('path') | regex_replace('^/{1}', '') }}.git"
-  when: git_repo_url is defined and git_repo_url is match("http?(s)://*")
-
-- set_fact:
-    git_repo_clone_url: "{{ project_vcs_hostname }}:{{ project_vcs_group_path }}/{{ git_repo_url }}.git"
-  when: git_repo_url is defined and git_repo_url is not match("http?(s)://*")

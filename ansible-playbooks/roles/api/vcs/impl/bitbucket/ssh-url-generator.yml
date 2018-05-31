@@ -12,13 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: "Check project {{ item.project_name }} is already exist in VCS group"
-  uri:
-    url: "
-     https://{{ item.hostname }}/api/v4/projects/{{ item.group_name }}\
-     ?simple=true&access_token={{ item.csrf_token }}"
-  ignore_errors: true
-  register: result
+---
+- set_fact:
+    clone_repo_url: "{{ project_vcs_hostname }}:{{ project_vcs_group_path.split('/')[1] + '/' + vcs_project_name }}.git"
+  when: vcs_group_url is defined
 
 - set_fact:
-    repository_exists: "{{ true if result.status != 404 else false }}"
+    clone_repo_url: "{{ git_repo_url }}"
+  when: vcs_group_url is not defined

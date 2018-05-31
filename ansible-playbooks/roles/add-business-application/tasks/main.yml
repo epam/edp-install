@@ -26,42 +26,44 @@
     git_repo_url: "{{ item_map.git_repo_url }}"
     vcs_project_name: "{{ name }}"
 
-
-- include_tasks: roles/common/tasks/manage-ssh/generate-ssh-config.yml
+- include_tasks: roles/api/vcs/generate-ssh-config.yml
+  vars:
+    vcs_project_name: "{{ name }}"
 
 - debug:
     msg: "{{ item_map | to_json}}"
 
 - block:
-  - include_tasks: roles/api/git/copy-repository.yml
+  - include_tasks: roles/api/vcs/http-url-generator.yml
     vars:
       git_repo_url: "{{ item_map.git_repo_url }}"
+      vcs_project_name: "{{ name }}"
+
+  - include_tasks: roles/api/vcs/copy-project.yml
+    vars:
       vcs_project_name: "{{ name }}"
 
   - fail:
       msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
     when: repository_exists | bool == true
 
-  - set_fact:
-      clone_repo_url: "{{ item_map.git_repo_url }}.git"
-
-  - set_fact:
-      clone_repo_url: "{{ clone_repo_url | urlsplit('scheme')}}://{{ vcs_autouser_email.split('@')[0] }}:{{ vcs_autouser_password }}@{{ clone_repo_url | urlsplit('hostname')}}{{ clone_repo_url | urlsplit('path')}}"
-    no_log: True
-    when: project_vcs_hostname == 'git.epam.com'
-
   - include_tasks: roles/api/git/clone.yml
     with_items:
       - { repo: "{{ clone_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
 
-  - include_tasks: roles/api/git/push-to-project-vcs-group.yml
+  - include_tasks: roles/api/vcs/push-to-project-vcs-group.yml
     vars:
       vcs_project_name: "{{ name }}"
   when: item_map.add_repo_strategy is defined and item_map.add_repo_strategy == 'copy'
 
-- include_tasks: roles/api/git/clone.yml
-  with_items:
-    - { repo: "{{ git_repo_clone_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
+- block:
+  - include_tasks: roles/api/vcs/ssh-url-generator.yml
+    vars:
+      git_repo_url: "{{ item_map.git_repo_url }}"
+
+  - include_tasks: roles/api/git/clone.yml
+    with_items:
+      - { repo: "{{ clone_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
   when: item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
 
 - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml

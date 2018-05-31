@@ -1,0 +1,27 @@
+# Copyright 2018 EPAM Systems.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+- name: "Change remote repository"
+  shell: |
+    git remote set-url origin {{ project_vcs_hostname + ':' + project_vcs_group_path.split('/')[1] + '/' + vcs_project_name }}.git
+  args:
+    chdir: "{{ work_dir }}/{{ vcs_project_name }}"
+
+- include_tasks: roles/api/git/set-config.yml
+  with_items:
+    - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', user_email: "{{ vcs_autouser_email }}", user_name: "{{ vcs_autouser_name }}" }
+
+- include_tasks: roles/api/git/push.yml
+  with_items:
+    - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', get_repository: '{{ project_vcs_hostname }}:{{ vcs_project_path }}.git' }
