@@ -214,7 +214,7 @@
 
 - include_tasks: roles/api/git/clone.yml
   with_items:
-    - { repo: "git@{{ project_vcs_hostname }}:{{ project_vcs_group_path }}/{{ project_vcs_edp }}.git", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
+    - { repo: "{{ project_vcs_hostname }}:{{ project_vcs_group_path }}/{{ project_vcs_edp }}.git", dest: "{{ work_dir }}/{{ vcs_project_name }}" }
   when: repository_exists | bool == true
 
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml

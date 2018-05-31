@@ -34,3 +34,4 @@
     with_items:
       - { repo: "{{ git_repo_url }}.git", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
   when: repository_exists | bool == false
+

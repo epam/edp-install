@@ -38,15 +38,18 @@
       git_repo_url: "{{ item_map.git_repo_url }}"
       vcs_project_name: "{{ name }}"
 
+  - fail:
+      msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
+    when: repository_exists | bool == true
+
   - include_tasks: roles/api/git/push-to-project-vcs-group.yml
     vars:
       vcs_project_name: "{{ name }}"
-    when: repository_exists | bool == false
   when: item_map.add_repo_strategy is defined and item_map.add_repo_strategy == 'copy'
 
 - include_tasks: roles/api/git/clone.yml
   with_items:
-    - { repo: "{{ git_repo_ssh_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
+    - { repo: "{{ git_repo_clone_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
   when: item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
 
 - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml

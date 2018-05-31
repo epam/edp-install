@@ -13,5 +13,13 @@
 # limitations under the License.
 
 ---
+- name: "Check project {{ name }} already exists"
+  shell: "ssh gerrit.{{ project_cicd }} gerrit ls-projects --format json"
+  register: gerrit_projects
+
+- set_fact:
+    gerrit_projects_map: "{{ gerrit_projects.stdout | from_json }}"
+
 - name: "Create project in Gerrit"
   shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ name }}"
+  when: name not in gerrit_projects_map.keys()

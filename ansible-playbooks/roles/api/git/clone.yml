@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: "Clean repository path"
+  file:
+    state: absent
+    path: "{{ item.dest }}/"
+
 - name: "Clone {{ item.repo }} VCS repository"
   git:
     repo: "{{ item.repo }}"
