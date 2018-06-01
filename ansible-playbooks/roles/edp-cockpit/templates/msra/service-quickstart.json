@@ -30,5 +30,13 @@
       "image": "registry.main.edp.projects.epam.com/msra/turbine",
       "version": "1.2.0"
     }
+  },
+  {
+    "displayName": "Monitoring dashboard (Hystrix)",
+    "command": {
+      "name": "hystrix-dashboard",
+      "image": "registry.main.edp.projects.epam.com/msra/hystrix-dashboard",
+      "version": "1.2.0"
+    }
   }
 ]
