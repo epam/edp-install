@@ -8,5 +8,15 @@
       "build_tool": "Maven",
       "report_framework": "Allure"
     }
+  },
+  {
+    "displayName": "Maven Based E2E Tests",
+    "command": {
+      "name": "e2e",
+      "git_repo_url": "https://git.epam.com/epmd-edp/examples/msra/sample-autotest",
+      "add_repo_strategy": "copy",
+      "build_tool": "Maven",
+      "report_framework": "Allure"
+    }
   }
 ]
