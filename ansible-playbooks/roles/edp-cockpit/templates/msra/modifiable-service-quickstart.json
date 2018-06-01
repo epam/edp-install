@@ -1,6 +1,6 @@
 [
   {
-    "displayName": "Zuul (API Gateway)",
+    "displayName": "API Gateway (Zuul)",
     "command": {
       "name": "zuul",
       "git_repo_url": "https://git.epam.com/epmd-edp/examples/msra/zuul",
