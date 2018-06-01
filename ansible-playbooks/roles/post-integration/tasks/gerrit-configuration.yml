@@ -187,6 +187,10 @@
 - include_tasks: roles/api/git/copy-repository.yml
 
 - block:
+  - include_tasks: roles/api/git/clone.yml
+    with_items:
+      - { repo: "{{ git_repo_url }}.git", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
+
   - name: "Copying EDP sources"
     synchronize:
       src: "../{{ item }}"

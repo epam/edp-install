@@ -17,11 +17,12 @@
     state: absent
     path: "{{ item.dest }}/"
 
-- name: "Clone {{ item.repo }} VCS repository"
+- name: "Clone repository"
   git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     key_file: "{{ item.key | default('') }}"
     accept_hostkey: true
     force: true
+  no_log: True
   ignore_errors: true

@@ -42,6 +42,18 @@
       msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
     when: repository_exists | bool == true
 
+  - set_fact:
+      clone_repo_url: "{{ item_map.git_repo_url }}.git"
+
+  - set_fact:
+      clone_repo_url: "{{ clone_repo_url | urlsplit('scheme')}}://{{ vcs_autouser_email.split('@')[0] }}:{{ vcs_autouser_password }}@{{ clone_repo_url | urlsplit('hostname')}}{{ clone_repo_url | urlsplit('path')}}"
+    no_log: True
+    when: project_vcs_hostname == 'git.epam.com'
+
+  - include_tasks: roles/api/git/clone.yml
+    with_items:
+      - { repo: "{{ clone_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
+
   - include_tasks: roles/api/git/push-to-project-vcs-group.yml
     vars:
       vcs_project_name: "{{ name }}"
