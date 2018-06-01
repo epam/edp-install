@@ -14,5 +14,21 @@
         }
       ]
     }
+  },
+  {
+    "displayName": "QA",
+    "command": {
+      "name": "qa",
+      "description": "QA environment",
+      "promotion": {
+        "perform-release": false
+      },
+      "delete-trigger": "successful-quality-gates",
+      "triggers": [
+        {
+          "type": "manual"
+        }
+      ]
+    }
   }
 ]
