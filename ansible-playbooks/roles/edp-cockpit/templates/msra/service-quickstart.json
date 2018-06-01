@@ -1,10 +1,22 @@
 [
   {
-    "displayName": "Zipkin (Monitoring)",
+    "displayName": "Tracing system (Zipkin)",
     "command": {
       "name": "zipkin",
       "image": "openzipkin/zipkin",
       "version": "2.6.0",
+      "storage": {
+        "class": "glusterfs-storage",
+        "capacity": "1Gi"
+      }
+    }
+  },
+  {
+    "displayName": "Message broker (RabbitMQ)",
+    "command": {
+      "name": "rabbitmq",
+      "image": "rabbitmq",
+      "version": "3.7.5-management",
       "storage": {
         "class": "glusterfs-storage",
         "capacity": "1Gi"
