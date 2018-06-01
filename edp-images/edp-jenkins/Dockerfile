@@ -12,6 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM infra/edp-jenkins:base
+FROM infra/jenkins:2.107.3
 COPY plugins.txt /opt/openshift/configuration/plugins.txt
 RUN /usr/local/bin/install-plugins.sh /opt/openshift/configuration/plugins.txt
