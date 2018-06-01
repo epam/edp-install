@@ -38,5 +38,17 @@
       "image": "registry.main.edp.projects.epam.com/msra/hystrix-dashboard",
       "version": "1.2.0"
     }
+  },
+  {
+    "displayName": "Identity service (Keycloak)",
+    "command": {
+      "name": "keycloak",
+      "image": "jboss/keycloak",
+      "version": "3.4.3.Final",
+      "storage": {
+        "class": "glusterfs-storage",
+        "capacity": "1Gi"
+      }
+    }
   }
 ]
