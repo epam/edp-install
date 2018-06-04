@@ -130,6 +130,7 @@ tools:
       - { name: "EDP way", filename: 'quality-profile.xml' }
   cockpit:
     version: "{{ cockpit_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"
+    enable_msra_quickstart: "{{ cockpit_enable_msra_quickstart | default('true') }}"
     openshift_trust_certificates: "true"
   keycloak:
     image: "{{ keycloak_image | default('jboss/keycloak:3.4.3.Final') }}"

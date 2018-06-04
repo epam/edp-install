@@ -71,6 +71,7 @@ objects:
             - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
             - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
             - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
+            - "-e cockpit_enable_msra_quickstart=${COCKPIT_ENABLE_MSRA_QUICKSTART}"
             - "-e vcs_tool_name=${VCS_TOOL_NAME}"
             - "-e vcs_oauth_app_id=${VCS_OAUTH_APP_ID}"
             - "-e vcs_oauth_app_secret=${VCS_OAUTH_APP_SECRET}"
@@ -188,6 +189,9 @@ parameters:
 - displayName: Version of edp-cockpit
   name: EDP_COCKPIT_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:SNAPSHOT"
+- displayName: Flag for enable msra quickstart tab in cockpit
+  name: COCKPIT_ENABLE_MSRA_QUICKSTART
+  value: "true"
 #VCS parameters
 - displayName: Gerrit Application ID
   description: Gerrit Application ID fot OAuth integration with VCS only if GERRIT_AUTH_TYPE set to OAUTH
