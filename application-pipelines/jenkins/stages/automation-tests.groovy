@@ -72,8 +72,9 @@ def run(vars) {
             atRoot = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
             dir("${atRoot}") {
                 unstash 'tests'
+                unstash 'mavenSettings'
                 try {
-                    sh "${runCommand}"
+                    sh "${runCommand}  -B --settings settings/maven/settings.xml"
                 }
                 catch (Exception ex) {
                     commonLib.failJob("[JENKINS][ERROR] Tests from ${vars.atProject} have been failed. Reason - ${ex}")

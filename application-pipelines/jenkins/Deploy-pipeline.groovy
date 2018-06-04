@@ -30,6 +30,9 @@ node("master") {
         }
         vars['devopsRoot'] = "${WORKSPACE.replaceAll("@", "")}@script"
         vars['pipelinesPath'] = "${vars.devopsRoot}/${PIPELINES_PATH}"
+        dir("${vars.pipelinesPath}") {
+            stash name: 'mavenSettings', includes: "**/settings/**", useDefaultExcludes: false
+        }
 
         openshift.withProject() {
             def matcher = (JOB_NAME =~ /.*\\/${openshift.project()}-(.*)-deploy-pipeline/)

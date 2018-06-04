@@ -28,7 +28,7 @@ def run(vars) {
         if (!("precommit" in parsedRunCommandJson.keySet()))
             error "[JENKINS][ERROR] Haven't found precommit command in file run.json. It's mandatory to be specified, please check"
 
-        sh "${parsedRunCommandJson.precommit}"
+        sh "${parsedRunCommandJson.precommit} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
 
         switch (vars.itemMap.report_framework.toLowerCase()) {
             case "allure":
