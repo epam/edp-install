@@ -27,7 +27,7 @@
     "displayName": "Metrics aggregator (Turbine)",
     "command": {
       "name": "turbine",
-      "image": "registry.main.edp.projects.epam.com/msra/turbine",
+      "image": "epamedp/turbine",
       "version": "1.2.0"
     }
   },
@@ -35,7 +35,7 @@
     "displayName": "Monitoring dashboard (Hystrix)",
     "command": {
       "name": "hystrix-dashboard",
-      "image": "registry.main.edp.projects.epam.com/msra/hystrix-dashboard",
+      "image": "epamedp/hystrix-dashboard",
       "version": "1.2.0"
     }
   },

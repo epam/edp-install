@@ -41,7 +41,7 @@
     "images":
     [
       {
-        "name": "registry.main.edp.projects.epam.com/msra/turbine",
+        "name": "epamedp/turbine",
         "version": [
           "1.2.0"
         ]
@@ -53,7 +53,7 @@
     "images":
     [
       {
-        "name": "registry.main.edp.projects.epam.com/msra/hystrix-dashboard",
+        "name": "epamedp/hystrix-dashboard",
         "version": [
           "1.2.0"
         ]
