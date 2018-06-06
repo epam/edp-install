@@ -39,11 +39,15 @@ objects:
   kind: Route
   metadata:
     annotations:
-      description: Route for EDP Cockpit's http service.
+      description: Route for EDP Cockpit's https service.
+      template.openshift.io/expose-uri: http://{.spec.host}{.spec.path}
     name: edp-cockpit
     labels:
       app: edp-cockpit
   spec:
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
     to:
       kind: Service
       name: edp-cockpit

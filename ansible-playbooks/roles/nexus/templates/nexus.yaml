@@ -138,12 +138,18 @@ objects:
 - apiVersion: v1
   kind: Route
   metadata:
+    annotations:
+      description: Route for Nexus's https service.
+      template.openshift.io/expose-uri: http://{.spec.host}{.spec.path}
     labels:
       app: nexus
     name: nexus
   spec:
     port:
       targetPort: 8081-tcp
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
     to:
       kind: Service
       name: nexus

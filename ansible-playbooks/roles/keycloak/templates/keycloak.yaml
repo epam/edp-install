@@ -229,8 +229,12 @@ objects:
   metadata:
     annotations:
       description: Route for Keycloak's service.
+      template.openshift.io/expose-uri: http://{.spec.host}{.spec.path}
     name: keycloak
   spec:
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
     to:
       kind: Service
       name: keycloak
