@@ -20,7 +20,7 @@ metadata:
           Gerrit service, with persistent storage.
           NOTE: You must have persistent volumes available in your cluster to use this template.
     iconClass: icon-jenkins
-    openshift.io/display-name: EDP Gerrit (Persistent - gluster)
+    openshift.io/display-name: EDP Gerrit (Persistent)
     tags: ci-cd
     #template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
     template.openshift.io/long-description: This template deploys a Gerrit server

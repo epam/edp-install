@@ -15,15 +15,14 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: edp-jenkins-persistent-gluster-template
-message: From jenkins-persistent-template. Adopted for glusterfs
+  template: edp-jenkins-persistent-template
 metadata:
   annotations:
     description: |-
       Jenkins service, with persistent storage.
       NOTE: You must have persistent volumes available in your cluster to use this template.
     iconClass: icon-jenkins
-    openshift.io/display-name: EDP Jenkins (Persistent - gluster)
+    openshift.io/display-name: EDP Jenkins (Persistent)
     tags: instant-app,jenkins
     template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
     template.openshift.io/long-description: This template deploys a Jenkins server

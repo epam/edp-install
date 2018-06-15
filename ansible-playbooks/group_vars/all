@@ -57,7 +57,7 @@ tools:
   jenkins:
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
     password: "{{ jenkins_password | default('password') }}"
-    fs_type: "{{ jenkins_fs_type | default('gluster') }}"
+    fs_type: "{{ jenkins_fs_type | default('pvc') }}"
     host_path_volume: "{{ jenkins_host_path_volume | default('/opt/data/jenkins') }}"
     service_name: "{{ jenkins_service_name | default('jenkins') }}"
     enable_oauth: "{{ jenkins_enable_oauth | default('false') }}"

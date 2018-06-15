@@ -129,9 +129,9 @@ parameters:
   name: GERRIT_AUTH_TYPE
 #Jenkins parameters
 - displayName: Jenkins filesystem type
-  description: Allowed values only 'gluster' or 'hostpath'
+  description: Allowed values only 'pvc'(Persistant volume claim) or 'hostpath'
   name: JENKINS_FS_TYPE
-  value: "gluster"
+  value: "pvc"
   required: true
 - displayName: Jenkins HostPath volume path
   description: Define it in case you chose 'hostpath' on the previous field. Otherwise, it should be ignored.
