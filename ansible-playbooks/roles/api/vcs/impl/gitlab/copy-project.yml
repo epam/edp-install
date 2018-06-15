@@ -19,7 +19,7 @@
 
 - include_tasks: roles/api/vcs/check-project-exists.yml
   with_items:
-    - { hostname: '{{ project_vcs_hostname }}', project_name: "{{ vcs_project_path | replace('/', '%2F') }}", group_name: "{{ project_vcs_group_path }}", csrf_token: '{{ csrf_token }}' }
+    - { hostname: '{{ project_vcs_hostname }}', project_path: "{{ vcs_project_path }}", csrf_token: '{{ csrf_token }}' }
 
 - block:
   - include_tasks: roles/api/vcs/get-group-id-by-name.yml

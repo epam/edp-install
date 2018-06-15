@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: "Check project {{ item.project_name }} is already exist in VCS group"
+- name: "Check project {{ item.project_path }} is already exist in VCS group"
   uri:
     url: "
-     https://{{ item.hostname }}/api/v4/projects/{{ item.group_name }}\
+     https://{{ item.hostname }}/api/v4/projects/{{ item.project_path | replace('/', '%2F') }}\
      ?simple=true&access_token={{ item.csrf_token }}"
   ignore_errors: true
   register: result
