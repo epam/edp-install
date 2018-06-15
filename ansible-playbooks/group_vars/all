@@ -129,6 +129,7 @@ tools:
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
     profiles:
       - { name: "EDP way", filename: 'quality-profile.xml' }
+    web_url: "https://sonar-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
   cockpit:
     version: "{{ cockpit_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"
     enable_msra_quickstart: "{{ cockpit_enable_msra_quickstart | default('true') }}"

@@ -31,6 +31,16 @@
         "name": "gerrit-user"
       },
       {
+        "name": "sonar-dev",
+        "description": "Realm Sonar Developer role",
+        "clientRole": false
+      },
+      {
+        "name": "sonar-admin",
+        "description": "Realm Sonar Admin role",
+        "clientRole": false
+      },
+      {
         "name": "developer",
         "composite": true,
         "composites": {
@@ -85,6 +95,19 @@
         "{{ tools.jenkins.web_url }}"
       ],
       "adminUrl": "{{ tools.jenkins.web_url }}/"
+    },
+    {
+      "clientId": "sonar",
+      "enabled": true,
+      "publicClient": true,
+      "rootUrl": "{{ tools.sonar.web_url }}",
+      "redirectUris": [
+        "{{ tools.sonar.web_url }}/*"
+      ],
+      "webOrigins": [
+        "{{ tools.sonar.web_url }}"
+      ],
+      "adminUrl": "{{ tools.sonar.web_url }}/"
     }
   ],
   "users" : [
@@ -99,6 +122,30 @@
           "value" : "secret" }
       ],
       "realmRoles": [ "jenkins-admin" ]
+    },
+    {
+      "username" : "sonar-admin",
+      "enabled": true,
+      "email" : "sample-sonar-admin@example.com",
+      "firstName": "Sonar",
+      "lastName": "Admin",
+      "credentials" : [
+        { "type" : "password",
+          "value" : "secret" }
+      ],
+      "realmRoles": [ "sonar-admin" ]
+    },
+    {
+      "username" : "sonar-dev",
+      "enabled": true,
+      "email" : "sample-sonar-dev@example.com",
+      "firstName": "Sonar",
+      "lastName": "Developer",
+      "credentials" : [
+        { "type" : "password",
+          "value" : "secret" }
+      ],
+      "realmRoles": [ "sonar-dev" ]
     }
   ]
 }
