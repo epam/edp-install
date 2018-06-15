@@ -6,7 +6,7 @@
       "image": "openzipkin/zipkin",
       "version": "2.6.0",
       "storage": {
-        "class": "glusterfs-storage",
+        "class": "{{ storage_class_name }}",
         "capacity": "1Gi"
       }
     }
@@ -18,7 +18,7 @@
       "image": "rabbitmq",
       "version": "3.7.5-management",
       "storage": {
-        "class": "glusterfs-storage",
+        "class": "{{ storage_class_name }}",
         "capacity": "1Gi"
       }
     }
@@ -46,7 +46,7 @@
       "image": "jboss/keycloak",
       "version": "3.4.3.Final",
       "storage": {
-        "class": "glusterfs-storage",
+        "class": "{{ storage_class_name }}",
         "capacity": "1Gi"
       }
     }

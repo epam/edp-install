@@ -9,5 +9,5 @@
   "database": "PostgreSQL",
   "database_version": "postgres:9.6",
   "database_capacity": "1Gi",
-  "persistent_storage": "glusterfs-storage"
+  "persistent_storage": "{{ storage_class_name }}"
 }

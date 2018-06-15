@@ -92,7 +92,7 @@ parameters:
 - displayName: Storage class name
   description: Storage class name to consume by every EDP tool
   name: STORAGE_CLASS_NAME
-  value: "glusterfs-storage"
+  value: "glusterfs-storage-delivery"
   required: true
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed
