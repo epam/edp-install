@@ -107,7 +107,23 @@
       "webOrigins": [
         "{{ tools.sonar.web_url }}"
       ],
-      "adminUrl": "{{ tools.sonar.web_url }}/"
+      "adminUrl": "{{ tools.sonar.web_url }}/",
+      "protocolMappers": [
+        {
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "multivalued": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "false",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
     }
   ],
   "users" : [
