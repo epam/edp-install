@@ -33,7 +33,6 @@ limitations under the License. -->
         <io.qameta.allure.allure-rest-assured>2.0-BETA14</io.qameta.allure.allure-rest-assured>
         <org.hamcrest.hamcrest-all>1.3</org.hamcrest.hamcrest-all>
         <org.slf4j.slf4j-simple>1.7.21</org.slf4j.slf4j-simple>
-        <org.json.json>20180130</org.json.json>
     </properties>
 
 
@@ -65,13 +64,6 @@ limitations under the License. -->
             <groupId>io.fabric8</groupId>
             <artifactId>openshift-client</artifactId>
             <version>${fabric8.openshift.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>${org.json.json}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
