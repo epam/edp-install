@@ -20,6 +20,7 @@
    - create-repo-npm-proxy
    - create-repo-npm-hosted
    - create-repo-npm-group
+   - disable-outreach-capability
    - setup-privilege
    - setup-role
    - setup-user
@@ -42,3 +43,4 @@
 - include_tasks: nexus-api/setup-user-each.yml
   with_items: "{{ tools.nexus.local_users }}"
 
+- include_tasks: nexus-api/disable-outreach-capability.yml

@@ -13,14 +13,6 @@
 # limitations under the License.
 
 ---
-- name: Calling Groovy script {{ script_name }}
-  uri:
-    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/siesta/rest/v1/script/{{ script_name }}/run"
-    user: 'admin'
-    password: "{{ secrets.nexus_admin.password }}"
-    headers:
-      Content-Type: "text/plain"
-    method: POST
-    status_code: 200,204
-    force_basic_auth: yes
-    body: "{{ args | default({}) | to_json }}"
+- include_tasks: call-script.yml
+  vars:
+    script_name: disable-outreach-capability
