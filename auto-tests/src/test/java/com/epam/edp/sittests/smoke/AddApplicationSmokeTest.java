@@ -89,12 +89,11 @@ public class AddApplicationSmokeTest {
     public void testApplicationTemplateHasBeenAdded(String application) {
         given().log().all()
                 .pathParam("application", application)
-                .pathParam("project", "edp-" + ocpEdpSuffix)
                 .urlEncodingEnabled(false)
                 .when()
                 .get(urlBuilder.buildUrl("http",
                         "gerrit",OPENSHIFT_CICD_NAMESPACE,
-                        "projects/{project}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
+                        "projects/{application}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }

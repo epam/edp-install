@@ -22,7 +22,7 @@
        git add . && git commit -m "Add template for {{ item_map.name }}"
        git push origin master
       args:
-        chdir: "{{ templates_dir }}/{{ edp_gerrit_project }}"
+        chdir: "{{ templates_dir }}/{{ gerrit_project }}"
       register: result
       ignore_errors: true
 
@@ -33,3 +33,4 @@
     - pause:
          seconds: 10
   when: push_result is undefined or push_result|int != 0
+

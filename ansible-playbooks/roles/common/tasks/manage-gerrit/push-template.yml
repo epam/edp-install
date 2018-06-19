@@ -20,12 +20,11 @@
 - name: "Set variables"
   set_fact:
     docker_registry_url: "{{ docker_registry_url.stdout }}"
-    edp_gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"
-
-- name: "Pull EDP repo from gerrit"
+    
+- name: "Pull project repo from gerrit"
   shell: >
-   git clone ssh://project-creator@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ edp_gerrit_project }} &&
-   scp -p -P {{ gerrit_ssh_port }} project-creator@gerrit.{{ project_cicd }}:hooks/commit-msg {{ edp_gerrit_project }}/.git/hooks/
+   git clone ssh://project-creator@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ gerrit_project }} &&
+   scp -p -P {{ gerrit_ssh_port }} project-creator@gerrit.{{ project_cicd }}:hooks/commit-msg {{ gerrit_project }}/.git/hooks/
   args:
     chdir: "{{ templates_dir }}"
 
@@ -34,7 +33,7 @@
     path: "{{ templates_dir }}/{{ item }}"
     state: directory
   with_items:
-    - "{{ edp_gerrit_project }}/deploy-templates"
+    - "{{ gerrit_project }}/deploy-templates"
 
 - name: "Check template for this particular application name exists"
   stat:
@@ -50,7 +49,7 @@
   - name: "Copying template for application"
     template:
       src: "{{ source_template }}"
-      dest: "{{ templates_dir }}/{{ edp_gerrit_project }}/deploy-templates/{{ item_map.name }}.yaml"
+      dest: "{{ templates_dir }}/{{ gerrit_project }}/deploy-templates/{{ item_map.name }}.yaml"
 
   - include_tasks: roles/common/tasks/manage-gerrit/push-templates-to-gerrit.yml
     with_sequence: count=5
