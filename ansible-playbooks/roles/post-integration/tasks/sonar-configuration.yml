@@ -21,6 +21,7 @@
     - "pmd"
     - "findbugs"
     - "checkstyle"
+    - "authoidc"
 
 - include_tasks: sonar-api/restart.yml
   when: sonar_reboot|bool == true
