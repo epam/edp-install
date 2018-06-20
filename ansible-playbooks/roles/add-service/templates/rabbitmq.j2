@@ -44,6 +44,9 @@ objects:
     labels:
       app: "{{ name }}"
   spec:
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
     to:
       kind: Service
       name: "{{ name }}"
