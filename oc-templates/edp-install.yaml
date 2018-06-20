@@ -70,6 +70,7 @@ objects:
             - "-e sonar_version=${SONAR_VERSION}"
             - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
             - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
+            - "-e sonar_enable_oidc=${SONAR_ENABLE_OIDC}"
             - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
             - "-e cockpit_enable_msra_quickstart=${COCKPIT_ENABLE_MSRA_QUICKSTART}"
             - "-e vcs_tool_name=${VCS_TOOL_NAME}"
@@ -181,6 +182,10 @@ parameters:
   displayName: SonarQube database Volume Capacity
   name: SONAR_DB_CAPACITY
   value: 5Gi
+- displayName: Enable OIDC in SonarQube
+  description: Whether to enable OpenID Connect identity provider (Keycloak) integration. The static account 'admin' will be initialized anyway.
+  name: SONAR_ENABLE_OIDC
+  value: "true"
 #EDP Cockpit parameters
 - displayName: Version of edp-cockpit
   name: EDP_COCKPIT_VERSION

@@ -1,0 +1,63 @@
+# Copyright 2018 EPAM Systems.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+- name: "Get username from cicd projects Keycloak secret"
+  shell: >
+   {{ ocadm }} -n {{ project_cockpit }} get secret keycloak
+   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: username
+
+- name: "Get password from cicd projects Keycloak secret"
+  shell: >
+   {{ ocadm }} -n {{ project_cockpit }} get secret keycloak
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: password
+
+- name: "Get OIDC provider configuration"
+  uri:
+    url: "{{ tools.keycloak.web_url }}/auth/realms/{{ tools.keycloak.realm_name }}/.well-known/openid-configuration"
+    method: GET
+    return_content: yes
+    user: "{{ username.stdout }}"
+    password: "{{ password.stdout }}"
+    force_basic_auth: "yes"
+    status_code: 200
+  register: result
+
+- name: "Copy OIDC provider configuration to file"
+  copy: content="{{ result.content }}" dest=/tmp/openid-configuration.json
+
+- name: "Set key sonar.auth.oidc.providerConfiguration to value {{ lookup('file','/tmp/openid-configuration.json') }}"
+  uri:
+    url: "{{ sonar_api_url }}/settings/set"
+    body: "key=sonar.auth.oidc.providerConfiguration&value={{ lookup('file','/tmp/openid-configuration.json') }}"
+    method: POST
+    return_content: yes
+    user: admin
+    password: "{{ secrets.sonar_admin.password }}"
+    force_basic_auth: "yes"
+    status_code: 200,204
+
+- name: "Set OIDC plugin settings and enable Keycloak integration"
+  include_tasks: ./set-general-setting.yml
+  vars:
+    value_type: value
+  with_items:
+    - { key: 'sonar.core.serverBaseURL', value: "{{ tools.sonar.web_url }}" }
+    - { key: 'sonar.auth.oidc.clientId.secured', value: "{{ sonar_client_id }}" }
+    - { key: 'sonar.auth.oidc.groupsSync.claimName', value: "{{ sonar_claim_name }}" }
+    - { key: 'sonar.auth.oidc.groupsSyn', value: 'true' }
+    - { key: 'sonar.auth.oidc.enabled', value: "{{ tools.sonar.enable_oidc }}" }
+    - { key: 'sonar.auth.oidc.groupsSync', value: 'true' }

@@ -97,7 +97,8 @@
       "adminUrl": "{{ tools.jenkins.web_url }}/"
     },
     {
-      "clientId": "sonar",
+      "clientId": "{{ sonar_client_id }}",
+      "name": "SonarQube",
       "enabled": true,
       "publicClient": true,
       "rootUrl": "{{ tools.sonar.web_url }}",
@@ -110,7 +111,21 @@
       "adminUrl": "{{ tools.sonar.web_url }}/",
       "protocolMappers": [
         {
-          "name": "roles",
+          "name": "username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "username",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "realm roles",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-usermodel-realm-role-mapper",
           "consentRequired": false,
@@ -119,7 +134,7 @@
             "multivalued": "true",
             "id.token.claim": "true",
             "access.token.claim": "false",
-            "claim.name": "roles",
+            "claim.name": "{{ sonar_claim_name }}",
             "jsonType.label": "String"
           }
         }

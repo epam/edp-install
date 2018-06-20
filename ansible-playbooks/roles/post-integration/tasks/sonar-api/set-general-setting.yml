@@ -16,7 +16,7 @@
 - name: "Set key {{ item.key }} to value {{ item.value }}"
   uri:
     url: "{{ sonar_api_url }}/settings/set"
-    body: "key={{ item.key }}&values={{ item.value }}"
+    body: "key={{ item.key }}&{{ value_type }}={{ item.value }}"
     method: POST
     return_content: yes
     user: admin

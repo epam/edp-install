@@ -36,6 +36,8 @@
     nexus_host: "nexus.{{ project_cicd }}"
     nexus_port: "8081"
     sonar_api_url: "http://sonar.{{ project_cicd }}:9000/api"
+    sonar_claim_name: "roles"
+    sonar_client_id: "sonar"
     project_vcs_hostname: "{{ vcs_group_name | urlsplit('hostname') }}"
     project_vcs_group_path: "{{ vcs_group_name | urlsplit('path') | regex_replace('^/{1}', '') }}"
     vcs_tool: "{{ vcs_tool_name | lower }}"
@@ -52,8 +54,8 @@
     - { project: '{{ project_cicd }}', service: 'jenkins' }
 
 - include_tasks: nexus-configuration.yml
-- include_tasks: sonar-configuration.yml
 - include_tasks: keycloak-configuration.yml
+- include_tasks: sonar-configuration.yml
 - include_tasks: gerrit-configuration.yml
 - include_tasks: jenkins-configuration.yml
 

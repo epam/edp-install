@@ -15,13 +15,14 @@
 ---
 - set_fact:
    sonar_reboot: false
+   enable_oidc: "{{ tools.sonar.enable_oidc }}"
 
 - include_tasks: sonar-api/install-plugins.yml
   with_items:
-    - "pmd"
-    - "findbugs"
-    - "checkstyle"
-    - "authoidc"
+    - authoidc
+    - checkstyle
+    - findbugs
+    - pmd
 
 - include_tasks: sonar-api/restart.yml
   when: sonar_reboot|bool == true
@@ -46,7 +47,10 @@
     - { login: 'jenkins', name: 'Jenkins', password: 'jenkins' }
 
 - include_tasks: sonar-api/create-group.yml
-  with_items: 'non-interactive-users'
+  with_items:
+    - non-interactive-users
+    - sonar-admin
+    - sonar-dev
 
 - include_tasks: sonar-api/add-user-to-group.yml
   with_items:
@@ -65,5 +69,10 @@
     - { name: 'jenkins', url: 'http://jenkins:8080/sonarqube-webhook/' }
 
 - include_tasks: sonar-api/set-general-setting.yml
+  vars:
+    value_type: values
   with_items:
     - { key: 'sonar.typescript.lcov.reportPaths', value: 'coverage/lcov.info' }
+
+- include_tasks: sonar-api/set-keycloak-integration.yml
+  when: enable_oidc | bool == true
