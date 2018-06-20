@@ -162,14 +162,6 @@ objects:
               memory: 1Gi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-        volumes:
-        - name: "{{ name }}-data"
-{% if item_map.storage is defined %}
-          persistentVolumeClaim:
-            claimName: "{{ name }}-data"
-{% else %}
-          emptyDir: {}
-{% endif %}
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
