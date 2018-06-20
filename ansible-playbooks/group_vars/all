@@ -71,7 +71,7 @@ tools:
     auth_type: "{{ gerrit_auth_type | default('OAUTH') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
     volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
-    web_url: "http://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    web_url: "https://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
   nexus:
     version: "{{ nexus_version | default('3.6.2') }}"
     volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"

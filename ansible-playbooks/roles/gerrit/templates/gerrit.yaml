@@ -220,6 +220,8 @@ objects:
           env:
           - name: WEBURL
             value: ${GERRIT_WEB_URL}
+          - name: HTTPD_LISTENURL
+            value: "proxy-https://*:8080"
           - name: LISTEN_ADDR
             value: '*:${GERRIT_SSH_PORT}'
           - name: AUTH_TYPE
