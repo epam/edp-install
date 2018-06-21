@@ -13,13 +13,21 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 def run(vars) {
+    vars['targetTags'] = [vars.businissAppVersion, "latest"]
+
+    commonLib.getDebugInfo(vars)
     openshift.withCluster() {
         openshift.withProject() {
             if (!openshift.selector("buildconfig", "${vars.itemMap.name}").exists())
                 openshift.newBuild("--name=${vars.itemMap.name}", "--image-stream=s2i-${vars.itemMap.language.toLowerCase()}", "--binary=true")
-            openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-dir=${vars.workDir}/target", "--wait=true")
+            buildResult = openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-dir=${vars.workDir}/target", "--wait=true")
+            resultTag = buildResult.object().status.output.to.imageDigest
+            println("[JENKINS][DEBUG] Build config ${vars.itemMap.name} with result ${resultTag} has been completed")
+
             if (vars.promoteImage) {
-                openshift.tag("${openshift.project()}/${vars.itemMap.name}:latest", "${vars.targetProject}/${vars.itemMap.name}:latest")
+                vars.targetTags.each() { tagName ->
+                    openshift.tag("${openshift.project()}/${vars.itemMap.name}@${resultTag}", "${vars.targetProject}/${vars.itemMap.name}:${tagName}")
+                    }
                 sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:unauthenticated"
             }
             else

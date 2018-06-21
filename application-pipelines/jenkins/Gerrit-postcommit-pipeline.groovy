@@ -66,15 +66,18 @@ node(vars.itemMap.build_tool.toLowerCase()) {
     vars['workDir'] = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
 
     commonLib.getDebugInfo(vars)
-    currentBuild.displayName = "${currentBuild.number}-${vars.serviceBranch}"
+
+    commonLib.runStage(vars, "checkout","CHECKOUT")
+    commonLib.runStage(vars, "get-app-version","GET-APP-VERSION")
+    currentBuild.displayName = "${vars.businissAppVersion}-${vars.serviceBranch}"
     currentBuild.description = "Name: ${vars.itemMap.name}\r\nLanguage: ${vars.itemMap.language}" +
             "\r\nBuild tool: ${vars.itemMap.build_tool}\r\nFramework: ${vars.itemMap.framework}"
 
-    commonLib.runStage(vars, "checkout","CHECKOUT")
     commonLib.runStage(vars, "compile","COMPILE")
     commonLib.runStage(vars, "tests", "TESTS")
     commonLib.runStage(vars, "sonar", "SONAR")
     commonLib.runStage(vars, "build", "BUILD")
     commonLib.runStage(vars, "push-to-nexus", "PUSH-TO-NEXUS")
     commonLib.runStage(vars, "run-build-config", "RUN-BUILD-CONFIG")
+    commonLib.runStage(vars, "git-tag", "GIT-TAG")
 }
