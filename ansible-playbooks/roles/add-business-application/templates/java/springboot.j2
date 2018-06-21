@@ -51,6 +51,9 @@ objects:
     labels:
       app: "{{ name }}"
   spec:
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
 {% if item_map.route_site is defined and item_map.route_site != '' %}
     host: {{ item_map.route_site }}-${NAMESPACE}.{{ dns_wildcard }}
 {% endif %}
