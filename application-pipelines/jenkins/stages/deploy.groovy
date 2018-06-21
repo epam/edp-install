@@ -40,11 +40,13 @@ def run(vars) {
 
             openshift.withProject(vars.deployProject) {
                 openshift.create(openshift.process(readFile(file: "${vars.deployTemplatesPath}/${application.name}.yaml"),
-                        "-p APP_IMAGE=${vars.metaProject}/${application.name}",
                         "-p APP_VERSION=${application.version}",
-                        "-p NAMESPACE=${vars.deployProject}")
+                        "-p NAMESPACE=${vars.deployProject}",
+                        "-p IS_NAMESPACE=${vars.metaProject}")
                 )
             }
+            openshiftDeploy apiURL: '', authToken: '', depCfg: "${application.name}",
+                    namespace: "${vars.deployProject}", verbose: 'false', waitTime: '', waitUnit: 'sec'
             checkDeployment(application)
         }
     }
