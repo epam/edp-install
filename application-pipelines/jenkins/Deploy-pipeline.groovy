@@ -37,6 +37,7 @@ node("master") {
         openshift.withProject() {
             def matcher = (JOB_NAME =~ /.*\\/${openshift.project()}-(.*)-deploy-pipeline/)
             vars['pipelineProject'] = matcher[0][1]
+            vars['metaProject'] = "${vars.pipelineProject}-meta"
             vars['deployProject'] = "${vars.pipelineProject}-${env.BUILD_NUMBER}"
         }
 
@@ -106,8 +107,8 @@ node("master") {
     stage("PROMOTE IMAGES") {
         vars['sourceTag'] = "latest"
         vars['targetTags'] = [vars.sourceTag]
-        vars['targetProject'] = vars.projectMap.promotion.get('env-to-promote')
-        vars['sourceProject'] = vars.pipelineProject
+        vars['targetProject'] = "${vars.projectMap.promotion.get('env-to-promote')}-meta"
+        vars['sourceProject'] = vars.metaProject
         if (vars.targetProject) {
             stage = load "${vars.pipelinesPath}/stages/promote-images.groovy"
             stage.run(vars)

@@ -43,6 +43,8 @@ def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, 
                 parameters {
                     stringParam("PIPELINES_PATH", "${pipelinePath}")
                     stringParam("GERRIT_PROJECT_NAME", "${applicationName}")
+                    if (pipelineName.contains("postcommit"))
+                        stringParam("SERVICE_BRANCH", "master")
                 }
             }
         }

@@ -27,7 +27,7 @@ def run(vars) {
 
             openshift.withProject(vars.deployProject) {
                 openshift.create(openshift.process(readFile(file: "${vars.deployTemplatesPath}/${application.name}.yaml"),
-                        "-p APP_IMAGE=${vars.pipelineProject}/${application.name}",
+                        "-p APP_IMAGE=${vars.metaProject}/${application.name}",
                         "-p APP_VERSION=${application.version}",
                         "-p NAMESPACE=${vars.deployProject}")
                 )
@@ -54,22 +54,22 @@ def run(vars) {
 
 def checkImageExists(object) {
     def imageExists = sh(
-            script: "oc -n ${vars.pipelineProject} get is ${object.name} --no-headers | awk '{print \$1}'",
+            script: "oc -n ${vars.metaProject} get is ${object.name} --no-headers | awk '{print \$1}'",
             returnStdout: true
     ).trim()
     if (imageExists == "") {
-        println("[JENKINS][WARNING] Image stream ${object.name} doesn't exist in the project ${vars.pipelineProject}\r\n" +
+        println("[JENKINS][WARNING] Image stream ${object.name} doesn't exist in the project ${vars.metaProject}\r\n" +
                 "Deploy will be skipped")
         object['deployed'] = false
         return false
     }
 
     def tagExist = sh(
-            script: "oc -n ${vars.pipelineProject} get is ${object.name} -o jsonpath='{.spec.tags[?(@.name==\"${object.version}\")].name}'",
+            script: "oc -n ${vars.metaProject} get is ${object.name} -o jsonpath='{.spec.tags[?(@.name==\"${object.version}\")].name}'",
             returnStdout: true
     ).trim()
     if (tagExist == "") {
-        println("[JENKINS][WARNING] Image stream ${object.name} with tag ${object.version} doesn't exist in the project ${vars.pipelineProject}\r\n" +
+        println("[JENKINS][WARNING] Image stream ${object.name} with tag ${object.version} doesn't exist in the project ${vars.metaProject}\r\n" +
                 "Deploy will be skipped")
         object['deployed'] = false
         return false

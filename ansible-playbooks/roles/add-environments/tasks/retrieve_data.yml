@@ -46,8 +46,9 @@
     app_map: "{{ app_settings_json.stdout| from_json }}"
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
     projects_suffix: "{{ projects_suffix.stdout }}"
+    env_names_list: "{{ env_settings_json.stdout| from_json | map(attribute='name') | list | map('regex_replace', '(.*)', '\\1-meta') | list }}"
 
 - debug:
     msg: "Found environment: {{ item.name | lower }}"
-  with_items: " {{ env_map | list }} "
+  with_items: "{{ env_map | list }}"
   when: env_map | list | length > 0
