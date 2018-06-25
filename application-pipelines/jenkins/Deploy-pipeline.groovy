@@ -16,6 +16,7 @@ import hudson.FilePath
 
 //Define common variables
 vars = [:]
+vars['updatedApplicaions'] = []
 commonLib = null
 
 def checkEnvVariables(envVariable) {
@@ -38,7 +39,7 @@ node("master") {
             def matcher = (JOB_NAME =~ /.*\\/${openshift.project()}-(.*)-deploy-pipeline/)
             vars['pipelineProject'] = matcher[0][1]
             vars['metaProject'] = "${vars.pipelineProject}-meta"
-            vars['deployProject'] = "${vars.pipelineProject}-${env.BUILD_NUMBER}"
+            vars['deployProject'] = "${vars.pipelineProject}"
         }
 
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
@@ -64,13 +65,14 @@ node("master") {
     stage("DEPLOY") {
         stage = load "${vars.pipelinesPath}/stages/deploy.groovy"
         stage.run(vars)
+    }
 
-        stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
-        stage.run(vars, "-latest", "create")
+    if(vars.updatedApplicaions.isEmpty()) {
+        println("[JENKINS][DEBUG] There are no application that have been updated, pipeline has stopped")
+        return
     }
 
     vars.projectMap.get('quality-gates').each() { qualityGate ->
-
         stage(qualityGate['step-name']) {
             try {
                 switch (qualityGate.type) {
@@ -85,15 +87,6 @@ node("master") {
                 }
             }
             catch (Exception ex) {
-                stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
-                stage.run(vars, "-latest", "delete")
-
-                if (qualityGate.type == "manual") {
-                    vars['projectsToDelete'] = ["${vars.deployProject}"]
-                    stage = load "${vars.pipelinesPath}/stages/delete-environment.groovy"
-                    stage.run(vars)
-                }
-
                 currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been failed"
                 commonLib.failJob("[JENKINS][ERROR] Stage ${qualityGate['step-name']} has been failed. Reason - ${ex}")
             }
@@ -101,12 +94,7 @@ node("master") {
         currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been passed"
     }
 
-    stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
-    stage.run(vars, "-latest", "delete")
-
     stage("PROMOTE IMAGES") {
-        vars['sourceTag'] = "latest"
-        vars['targetTags'] = [vars.sourceTag]
         vars['targetProject'] = "${vars.projectMap.promotion.get('env-to-promote')}-meta"
         vars['sourceProject'] = vars.metaProject
         if (vars.targetProject) {
@@ -116,7 +104,4 @@ node("master") {
         else
             println("[JENKINS][WARNING] There are no environments specified to promote images, promotion was skipped")
     }
-
-    stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
-    stage.run(vars, "-stable", "create")
 }

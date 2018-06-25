@@ -16,6 +16,7 @@ limitations under the License -->
   <approvedScriptHashes>
   </approvedScriptHashes>
   <approvedSignatures>
+    <string>method java.util.Collection remove java.lang.Object</string>
     <string>field java.lang.String value</string>
     <string>field java.util.ArrayList size</string>
     <string>method com.cloudbees.jenkins.plugins.sshcredentials.SSHUserPrivateKey getPrivateKey</string>
