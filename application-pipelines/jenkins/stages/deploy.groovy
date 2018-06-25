@@ -18,6 +18,19 @@ def run(vars) {
             openshift.newProject(vars.deployProject)
             sh "oc adm policy add-role-to-user admin admin -n ${vars.deployProject}"
         }
+        vars.get(vars.svcSettingsKey).each() { service ->
+            if (!checkTemplateExists(service))
+                return
+
+            sh "oc adm policy add-scc-to-user anyuid -z ${service.name} -n ${vars.deployProject}"
+            openshift.withProject(vars.deployProject) {
+                openshift.create(openshift.process(readFile(file: "${vars.deployTemplatesPath}/${service.name}.yaml"),
+                        "-p SERVICE_IMAGE=${service.image}",
+                        "-p SERVICE_VERSION=${service.version}")
+                )
+            }
+            checkDeployment(service)
+        }
         vars.get(vars.appSettingsKey).each() { application ->
             if (!checkImageExists(application) || !checkTemplateExists(application))
                 return
@@ -32,21 +45,7 @@ def run(vars) {
                         "-p NAMESPACE=${vars.deployProject}")
                 )
             }
-
             checkDeployment(application)
-        }
-        vars.get(vars.svcSettingsKey).each() { service ->
-            if (!checkTemplateExists(service))
-                return
-
-            sh "oc adm policy add-scc-to-user anyuid -z ${service.name} -n ${vars.deployProject}"
-            openshift.withProject(vars.deployProject) {
-                openshift.create(openshift.process(readFile(file: "${vars.deployTemplatesPath}/${service.name}.yaml"),
-                        "-p SERVICE_IMAGE=${service.image}",
-                        "-p SERVICE_VERSION=${service.version}")
-                )
-            }
-            checkDeployment(service)
         }
     }
     this.result = "success"
