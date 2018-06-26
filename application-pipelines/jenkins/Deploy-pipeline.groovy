@@ -117,16 +117,6 @@ node("master") {
             println("[JENKINS][WARNING] There are no environments specified to promote images, promotion was skipped")
     }
 
-    if (vars.projectMap.get('delete-trigger') == "successful-quality-gates") {
-        stage("DELETE PROJECTS") {
-            stage = load "${vars.pipelinesPath}/stages/get-projects-to-delete.groovy"
-            stage.run(vars)
-
-            stage = load "${vars.pipelinesPath}/stages/delete-environment.groovy"
-            stage.run(vars)
-        }
-    }
-
     stage = load "${vars.pipelinesPath}/stages/adjust-routes.groovy"
     stage.run(vars, "-stable", "create")
 }
