@@ -20,18 +20,20 @@ def run(vars) {
             openshift.newProject(vars.deployProject)
             sh "oc adm policy add-role-to-user admin admin -n ${vars.deployProject}"
         }
-            vars.get(vars.svcSettingsKey).each() { service ->
-                deployTemplatesPath = "${vars.devopsRoot}/${vars.deployTemplatesDirectory}"
-                if (!checkTemplateExists(service, deployTemplatesPath))
-                    return
 
-                sh "oc adm policy add-scc-to-user anyuid -z ${service.name} -n ${vars.deployProject}"
-                sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${service.name}.yaml " +
+        vars.get(vars.svcSettingsKey).each() { service ->
+            deployTemplatesPath = "${vars.devopsRoot}/${vars.deployTemplatesDirectory}"
+            if (!checkTemplateExists(service.name, deployTemplatesPath))
+                return
+
+            sh "oc adm policy add-scc-to-user anyuid -z ${service.name} -n ${vars.deployProject}"
+            sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${service.name}.yaml " +
                     "-p SERVICE_IMAGE=${service.image} " +
                     "-p SERVICE_VERSION=${service.version} " +
                     "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
-                checkDeployment(service, 'service')
-             }
+            checkDeployment(service, 'service')
+        }
+
         vars.get(vars.appSettingsKey).each() { application ->
             application['currentDeploymentVersion'] = getDeploymentVersion(application)
             if (!checkImageExists(application))
@@ -46,7 +48,9 @@ def run(vars) {
             deployTemplatesPath = "${appDir}/${vars.deployTemplatesDirectory}"
             sh "rm -rf ${appDir}*"
             dir("${appDir}") {
-                deployTemplates(application)
+                cloneProject(application)
+                deployConfigMapTemplate(application)
+                deployApplicationTemplate(application)
             }
         }
         println("[JENKINS][DEBUG] Applications that have been updated - ${vars.updatedApplicaions}")
@@ -54,17 +58,22 @@ def run(vars) {
     this.result = "success"
 }
 
-def deployTemplates(application) {
+def cloneProject(application) {
     // Checkout app
     gitApplicationUrl = "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${application.name}"
 
-        checkout([$class                           : 'GitSCM', branches: [[name: "**"]],
-                  doGenerateSubmoduleConfigurations: false, extensions: [],
-                  submoduleCfg                     : [],
-                  userRemoteConfigs                : [[credentialsId: "${vars.gerritCredentials}",
-                                                       refspec      : "refs/tags/${application.version}",
-                                                       url          : "${gitApplicationUrl}"]]])
-    if(!checkTemplateExists(application, deployTemplatesPath))
+    checkout([$class                           : 'GitSCM', branches: [[name: "**"]],
+              doGenerateSubmoduleConfigurations: false, extensions: [],
+              submoduleCfg                     : [],
+              userRemoteConfigs                : [[credentialsId: "${vars.gerritCredentials}",
+                                                   refspec      : "refs/tags/${application.version}",
+                                                   url          : "${gitApplicationUrl}"]]])
+    println("[JENKINS][DEBUG] Clone the project ${application.name} is successfully")
+}
+
+def deployApplicationTemplate(application) {
+
+    if(!checkTemplateExists(application.name, deployTemplatesPath))
         return
     if (application.need_database)
             sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
@@ -93,6 +102,17 @@ def deployTemplates(application) {
         sh("oc -n ${vars.deployProject} rollout latest dc/${application.name}")
         checkDeployment(application, 'application')
 }
+
+def deployConfigMapTemplate(application) {
+    templateName = application.name + '-deploy-config-' + vars.deployProject.tokenize('-').getAt(0)
+    if (!checkTemplateExists(templateName, deployTemplatesPath))
+        return
+
+    sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${templateName}.json " +
+            "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
+    println("[JENKINS][DEBUG] Deploy template of config map with name - ${templateName}.json")
+}
+
 def getDeploymentVersion(application) {
     def deploymentExists = sh(
             script: "oc -n ${vars.deployProject} get dc ${application.name} --no-headers | awk '{print \$1}'",
@@ -162,10 +182,11 @@ def checkImageExists(object) {
     return true
 }
 
-def checkTemplateExists(object, deployTemplatesPath) {
-    def templateFile = new File("${deployTemplatesPath}/${object.name}.yaml")
-    if (!templateFile.exists()) {
-        println("[JENKINS][WARNING] Template file for ${object.name} doesn't exist in ${deployTemplatesPath} in devops repository\r\n" +
+def checkTemplateExists(templateName, deployTemplatesPath) {
+    def templateYamlFile = new File("${deployTemplatesPath}/${templateName}.yaml")
+    def templateJsonFile = new File("${deployTemplatesPath}/${templateName}.json")
+    if (!templateYamlFile.exists() && !templateJsonFile.exists()) {
+        println("[JENKINS][WARNING] Template file which called ${templateName} doesn't exist in ${deployTemplatesPath} in devops repository\r\n" +
                 "[JENKINS][WARNING] Deploy will be skipped")
         return false
     }

@@ -12,10 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-- include_tasks: retrieve_data.yml
-- include_tasks: create_projects.yml
-  when: env_map | length > 0
-- include_tasks: create_pipelines.yml
-  when: env_map | length > 0
-- include_tasks: add-config-map-to-app.yml
+- include_tasks: roles/common/tasks/manage-gerrit/push-templates-to-gerrit.yml
+  vars:
+    gerrit_project: "{{ item.name }}"
+    push_result: 1

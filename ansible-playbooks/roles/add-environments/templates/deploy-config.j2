@@ -12,10 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-- include_tasks: retrieve_data.yml
-- include_tasks: create_projects.yml
-  when: env_map | length > 0
-- include_tasks: create_pipelines.yml
-  when: env_map | length > 0
-- include_tasks: add-config-map-to-app.yml
+{
+  "apiVersion": "v1",
+  "kind": "Template",
+  "metadata": {
+    "name": "deploy-config"
+  },
+  "objects": [
+    {
+      "apiVersion": "v1",
+      "kind": "ConfigMap",
+      "metadata": {
+        "name": "{{ app_name }}"
+      },
+      "data": {
+        "key": "value"
+      }
+    }
+  ]
+}

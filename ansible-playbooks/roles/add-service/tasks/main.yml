@@ -22,11 +22,12 @@
     - { key_name: 'service\.settings\.json' }
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
-  vars:
-    vcs_project_name: "{{ name }}"
+
+- set_fact:
+    vcs_project_path: "{{ project_vcs_group_path }}/{{ name }}"
 
 - include_tasks: roles/api/vcs/generate-ssh-config.yml
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
   vars:
-       gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"
+    gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"

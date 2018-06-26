@@ -24,7 +24,9 @@
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
   vars:
     git_repo_url: "{{ item_map.git_repo_url }}"
-    vcs_project_name: "{{ name }}"
+
+- set_fact:
+    vcs_project_path: "{{ project_vcs_group_path }}/{{ name }}"
 
 - include_tasks: roles/api/vcs/generate-ssh-config.yml
   vars:
@@ -72,4 +74,4 @@
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
   vars:
-       gerrit_project: "{{ name }}"
+    gerrit_project: "{{ name }}"
