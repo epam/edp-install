@@ -44,9 +44,6 @@ node("master") {
 
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
         commonLib.getConstants(vars)
-        vars['deployTemplatesPath'] = "${vars.devopsRoot}/${vars.deployTemaplatesDirectory}"
-
-
 
         if (commonLib.getBuildCause() != "Image change") {
             def parameters = [string(

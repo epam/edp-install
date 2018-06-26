@@ -12,70 +12,87 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
+import org.apache.commons.lang.RandomStringUtils
+
 def run(vars) {
     openshift.withCluster() {
         if (!openshift.selector("project", vars.deployProject).exists()) {
             openshift.newProject(vars.deployProject)
             sh "oc adm policy add-role-to-user admin admin -n ${vars.deployProject}"
         }
-        vars.get(vars.svcSettingsKey).each() { service ->
-            if (!checkTemplateExists(service))
-                return
+            vars.get(vars.svcSettingsKey).each() { service ->
+                deployTemplatesPath = "${vars.devopsRoot}/${vars.deployTemplatesDirectory}"
+                if (!checkTemplateExists(service, deployTemplatesPath))
+                    return
 
-            sh "oc adm policy add-scc-to-user anyuid -z ${service.name} -n ${vars.deployProject}"
-            sh("oc -n ${vars.deployProject} process -f ${vars.deployTemplatesPath}/${service.name}.yaml " +
+                sh "oc adm policy add-scc-to-user anyuid -z ${service.name} -n ${vars.deployProject}"
+                sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${service.name}.yaml " +
                     "-p SERVICE_IMAGE=${service.image} " +
                     "-p SERVICE_VERSION=${service.version} " +
                     "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
-            checkDeployment(service, 'service')
-        }
-
+                checkDeployment(service, 'service')
+             }
         vars.get(vars.appSettingsKey).each() { application ->
             application['currentDeploymentVersion'] = getDeploymentVersion(application)
-
-            if (!checkImageExists(application) || !checkTemplateExists(application))
+            if (!checkImageExists(application))
                 return
 
             if (application.version =~ "stable|latest") {
                 application['version'] = getNumericVersion(application)
                 if (!application.version)
                     return
-            }
-
-            if (application.need_database)
-                sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
-
-            if (!application.currentDeploymentVersion) {
-                sh("oc -n ${vars.deployProject} process -f ${vars.deployTemplatesPath}/${application.name}.yaml " +
-                        "-p APP_VERSION=${application.version} " +
-                        "-p NAMESPACE=${vars.deployProject} " +
-                        "-p IS_NAMESPACE=${vars.metaProject} " +
-                        "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
-            }
-            else {
-                def currentTag = sh(
-                        script: "oc -n ${vars.deployProject} get dc ${application.name} -o jsonpath='{.spec.triggers[?(@.type==\"ImageChange\")].imageChangeParams.from.name}' | awk -F: '{print \$2}'",
-                        returnStdout: true
-                ).trim()
-                if (currentTag == application.version && vars.currentDeploymentVersion != 0) {
-                    println("[JENKINS][DEBUG] Deployment config ${application.name} has been already deployed with version ${application.version}")
-                    return
                 }
-                sh("oc -n ${vars.deployProject} process -f ${vars.deployTemplatesPath}/${application.name}.yaml " +
-                        "-p APP_VERSION=${application.version} " +
-                        "-p NAMESPACE=${vars.deployProject} " +
-                        "-p IS_NAMESPACE=${vars.metaProject} " +
-                        "--local=true -o json | oc -n ${vars.deployProject} apply set-last-applied -f -")
-
+            appDir = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
+            deployTemplatesPath = "${appDir}/${vars.deployTemplatesDirectory}"
+            sh "rm -rf ${appDir}*"
+            dir("${appDir}") {
+                deployTemplates(application)
             }
-            sh("oc -n ${vars.deployProject} rollout latest dc/${application.name}")
-            checkDeployment(application, 'application')
         }
         println("[JENKINS][DEBUG] Applications that have been updated - ${vars.updatedApplicaions}")
     }
     this.result = "success"
 }
 
+def deployTemplates(application) {
+    // Checkout app
+    gitApplicationUrl = "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${application.name}"
+
+        checkout([$class                           : 'GitSCM', branches: [[name: "**"]],
+                  doGenerateSubmoduleConfigurations: false, extensions: [],
+                  submoduleCfg                     : [],
+                  userRemoteConfigs                : [[credentialsId: "${vars.gerritCredentials}",
+                                                       refspec      : "refs/tags/${application.version}",
+                                                       url          : "${gitApplicationUrl}"]]])
+    if(!checkTemplateExists(application, deployTemplatesPath))
+        return
+    if (application.need_database)
+            sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
+
+        if (!application.currentDeploymentVersion) {
+            sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${application.name}.yaml " +
+                    "-p APP_VERSION=${application.version} " +
+                    "-p NAMESPACE=${vars.deployProject} " +
+                    "-p IS_NAMESPACE=${vars.metaProject} " +
+                    "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
+        } else {
+            def currentTag = sh(
+                    script: "oc -n ${vars.deployProject} get dc ${application.name} -o jsonpath='{.spec.triggers[?(@.type==\"ImageChange\")].imageChangeParams.from.name}' | awk -F: '{print \$2}'",
+                    returnStdout: true
+            ).trim()
+            if (currentTag == application.version && vars.currentDeploymentVersion != 0) {
+                println("[JENKINS][DEBUG] Deployment config ${application.name} has been already deployed with version ${application.version}")
+                return
+            }
+            sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${application.name}.yaml " +
+                    "-p APP_VERSION=${application.version} " +
+                    "-p NAMESPACE=${vars.deployProject} " +
+                    "-p IS_NAMESPACE=${vars.metaProject} " +
+                    "--local=true -o json | oc -n ${vars.deployProject} apply set-last-applied -f -")
+        }
+        sh("oc -n ${vars.deployProject} rollout latest dc/${application.name}")
+        checkDeployment(application, 'application')
+}
 def getDeploymentVersion(application) {
     def deploymentExists = sh(
             script: "oc -n ${vars.deployProject} get dc ${application.name} --no-headers | awk '{print \$1}'",
@@ -145,10 +162,10 @@ def checkImageExists(object) {
     return true
 }
 
-def checkTemplateExists(object) {
-    def templateFile = new File("${vars.deployTemplatesPath}/${object.name}.yaml")
+def checkTemplateExists(object, deployTemplatesPath) {
+    def templateFile = new File("${deployTemplatesPath}/${object.name}.yaml")
     if (!templateFile.exists()) {
-        println("[JENKINS][WARNING] Template file for ${object.name} doesn't exist in ${vars.deployTemaplatesDirectory} in devops repository\r\n" +
+        println("[JENKINS][WARNING] Template file for ${object.name} doesn't exist in ${deployTemplatesPath} in devops repository\r\n" +
                 "[JENKINS][WARNING] Deploy will be skipped")
         return false
     }

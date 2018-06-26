@@ -54,7 +54,7 @@ def getConstants(vars) {
     DEFAUL_DEPLOY_TEMPLATES_DIRECTORY = "deploy-templates"
 
     vars['workDir'] = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
-    vars['deployTemaplatesDirectory'] = env.DEPLOY_TEMPLATES_DIRECTORY ? DEPLOY_TEMPLATES_DIRECTORY : DEFAUL_DEPLOY_TEMPLATES_DIRECTORY
+    vars['deployTemplatesDirectory'] = env.DEPLOY_TEMPLATES_DIRECTORY ? DEPLOY_TEMPLATES_DIRECTORY : DEFAUL_DEPLOY_TEMPLATES_DIRECTORY
     vars['operationsTimeout'] = env.OPERATIONS_TIMEOUT ? OPERATIONS_TIMEOUT : DEFAULT_OPERATIONS_TIMEOUT
 
     vars['configMapName'] = 'project-settings'
