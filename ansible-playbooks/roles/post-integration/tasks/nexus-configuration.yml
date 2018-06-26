@@ -24,6 +24,8 @@
    - setup-privilege
    - setup-role
    - setup-user
+   - create-task
+
 
 - include_tasks: nexus-api/create-blobstore-each.yml
   with_items: "{{ tools.nexus.repos_npm_blob }}"
@@ -44,3 +46,7 @@
   with_items: "{{ tools.nexus.local_users }}"
 
 - include_tasks: nexus-api/disable-outreach-capability.yml
+
+- include_tasks: nexus-api/create-task-each.yml
+  with_items: "{{ tools.nexus.nexus_scheduled_tasks }}"
+

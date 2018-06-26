@@ -102,6 +102,28 @@ tools:
         member_repos:
           - npm-internal
           - npm-proxy
+    nexus_scheduled_tasks:
+      - name: compact-blobstore-default
+        cron: '0 0 9 * * ?'
+        typeId: blobstore.compact
+        taskProperties:
+          blobstoreName: 'default'
+      - name: compact-blobstore-npm
+        cron: '0 20 9 * * ?'
+        typeId: blobstore.compact
+        taskProperties:
+          blobstoreName: 'npm'
+      - name: purge-unused-components-and-assets
+        cron: '0 40 9 * * ?'
+        typeId: "repository.purge-unused"
+        taskProperties:
+          repositoryName: "*"
+          lastUsed: "14"
+      - name: rebuild-repository-index
+        cron: '0 0 10 * * ?'
+        typeId: "repository.rebuild-index"
+        taskProperties:
+          repositoryName: "*"
     roles:
       - id: nexus-rw
         name: nexus-rw
