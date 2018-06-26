@@ -127,6 +127,7 @@ objects:
     triggers:
       - type: ConfigChange
       - imageChangeParams:
+          automatic: false
           containerNames:
             - "{{ name }}"
           from:
