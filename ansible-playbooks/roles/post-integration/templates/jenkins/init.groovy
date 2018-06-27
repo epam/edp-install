@@ -20,12 +20,14 @@ import jenkins.model.GlobalConfiguration
 import javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration
 import org.csanchez.jenkins.plugins.kubernetes.*
 
+// Check "done" file to avoid multiple runs
 def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
-file = new File("${JENKINS_HOME}/init-done.txt")
+file = new File("${JENKINS_HOME}/done-init")
 if (file.exists()) {
     println("[DEBUG] Initialization of Jenkins has been already done")
     return
 }
+
 
 def JENKINS_URL = System.getenv().get('JENKINS_UI_URL')
 def cloudPluginName = 'openshift'
@@ -53,6 +55,6 @@ if (!instance.getCloud(cloudPluginName)) {
 }
 instance.save()
 
-//================================
-String filename = "${JENKINS_HOME}/init-done.txt"
+// Create "done" file to avoid multiple runs
+String filename = "${JENKINS_HOME}/done-init"
 new File(filename).createNewFile()

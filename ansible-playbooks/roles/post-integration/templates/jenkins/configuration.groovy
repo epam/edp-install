@@ -35,8 +35,9 @@ import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
 import ru.yandex.qatools.allure.jenkins.tools.*
 
+// Check "done" file to avoid multiple runs
 def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
-file = new File("${JENKINS_HOME}/done.txt")
+file = new File("${JENKINS_HOME}/done-config")
 if (file.exists()) {
     println("[DEBUG] Configuration of Jenkins has been already done")
     return
@@ -117,6 +118,11 @@ def jobName = "Job-provisioning"
 project = Jenkins.instance.createProject(FreeStyleProject, jobName)
 project.getBuildersList().clear()
 
+// Remove OpenShift Sample job
+def sampleJob = Jenkins.instance.getItemByFullName('OpenShift Sample')
+println("[DEBUG] Deleting ${sampleJob.name}")
+sampleJob.delete()
+
 // Copy app settings
 def checkDir = "mkdir -p \"${JENKINS_HOME}/project-settings\"\n"
 def getAppSettings = $/oc get cm project-settings -o jsonpath='{ .data.app\.settings\.json }' > \
@@ -150,6 +156,6 @@ def allureInstallation = new AllureCommandlineInstallation("Allure", "", [allure
 allureDescriptor.setInstallations(allureInstallation)
 allureDescriptor.save()
 
-//================================
-String filename = "${JENKINS_HOME}/done.txt"
+// Create "done" file to avoid multiple runs
+String filename = "${JENKINS_HOME}/done-config"
 new File(filename).createNewFile()
