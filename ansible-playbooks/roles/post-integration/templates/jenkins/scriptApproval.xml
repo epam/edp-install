@@ -18,6 +18,9 @@ limitations under the License -->
   <approvedSignatures>
     <string>method java.util.Collection remove java.lang.Object</string>
     <string>field java.lang.String value</string>
+    <string>method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper getRawBuild</string>
+    <string>staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getProperties java.lang.Object</string>
+    <string>method hudson.model.Run getCause java.lang.Class</string>
     <string>field java.util.ArrayList size</string>
     <string>method com.cloudbees.jenkins.plugins.sshcredentials.SSHUserPrivateKey getPrivateKey</string>
     <string>method com.cloudbees.plugins.credentials.common.IdCredentials getId</string>

@@ -32,12 +32,6 @@
         "strategy": {
             "jenkinsPipelineStrategy": {
                 "env": [
-{% for application in app_map | list %}
-                    {
-                        "name": "{{ application.name | upper | replace('-','_') }}_VERSION",
-                        "value": "latest"
-                    },
-{% endfor %}
                     {
                         "name": "PIPELINES_PATH",
                         "value": "application-pipelines/jenkins"

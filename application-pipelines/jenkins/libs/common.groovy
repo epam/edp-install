@@ -131,4 +131,12 @@ void getDebugInfo(vars) {
     println("[JENKINS][DEGUG] Pipeline's variables:\n${debugOutput}")
 }
 
+def getBuildCause() {
+    def buildCause = sh(
+            script: "oc get build ${vars.deployProject}-deploy-pipeline-${BUILD_NUMBER} -o jsonpath='{.spec.triggeredBy[0].message}'",
+            returnStdout: true
+    ).trim()
+    return(buildCause)
+}
+
 return this;

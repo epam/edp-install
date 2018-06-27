@@ -14,11 +14,15 @@
 
 - name: "Check project {{ item.project_path }} is already exist in VCS group"
   uri:
+    timeout: 60
     url: "
      https://{{ item.hostname }}/api/v4/projects/{{ item.project_path | replace('/', '%2F') }}\
      ?simple=true&access_token={{ item.csrf_token }}"
-  ignore_errors: true
+    status_code: 200,404
   register: result
+  retries: 10
+  delay: 10
+  until: result.status == 200 or result.status == 404
 
 - set_fact:
     repository_exists: "{{ true if result.status != 404 else false }}"

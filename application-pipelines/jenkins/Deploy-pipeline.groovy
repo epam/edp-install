@@ -46,9 +46,37 @@ node("master") {
         commonLib.getConstants(vars)
         vars['deployTemplatesPath'] = "${vars.devopsRoot}/${vars.deployTemaplatesDirectory}"
 
+
+
+        if (commonLib.getBuildCause() != "Image change") {
+            def parameters = [string(
+                    defaultValue: '',
+                    description: "Project suffix for ${vars.pipelineProject} project where services will be deployed, leave blank to deploy to ${vars.pipelineProject}(default) project",
+                    name: "PROJECT_SUFFIX",
+                    trim: true)]
+            vars.get(vars.appSettingsKey).each() { application ->
+                application['tags'] = ['noImageExists']
+                def imageStreamExists = sh(
+                        script: "oc -n ${vars.metaProject} get is ${application.name} --no-headers | awk '{print \$1}'",
+                        returnStdout: true
+                ).trim()
+                if (imageStreamExists != "")
+                    application['tags'] = sh(
+                            script: "oc -n ${vars.metaProject} get is ${application.name} -o jsonpath='{range .spec.tags[*]}{.name}{\"\\n\"}{end}'",
+                            returnStdout: true
+                    ).trim().tokenize()
+
+                parameters.add(choice(choices: "${application.tags.join('\n')}", description: '', name: "${application.name.toUpperCase().replaceAll("-", "_")}_VERSION"))
+            }
+            vars['userInput'] = input id: 'userInput', message: 'Provide the following information', parameters: parameters
+
+            if (vars.userInput["PROJECT_SUFFIX"] && vars.userInput["PROJECT_SUFFIX"] != "")
+                vars['deployProject'] = "${vars.deployProject}-${vars.userInput["PROJECT_SUFFIX"]}"
+        }
+
         vars.get(vars.appSettingsKey).each() { application ->
-            if (env["${application.name.toUpperCase().replaceAll("-", "_")}_VERSION"])
-                application['version'] = env["${application.name.toUpperCase().replaceAll("-", "_")}_VERSION"]
+            if (vars.userInput && vars.userInput["${application.name.toUpperCase().replaceAll("-", "_")}_VERSION"])
+                application['version'] = vars.userInput["${application.name.toUpperCase().replaceAll("-", "_")}_VERSION"]
             else
                 application['version'] = "latest"
         }
@@ -67,7 +95,7 @@ node("master") {
         stage.run(vars)
     }
 
-    if(vars.updatedApplicaions.isEmpty()) {
+    if (vars.updatedApplicaions.isEmpty()) {
         println("[JENKINS][DEBUG] There are no application that have been updated, pipeline has stopped")
         return
     }
@@ -94,14 +122,18 @@ node("master") {
         currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been passed"
     }
 
+    if (vars.userInput && vars.userInput["PROJECT_SUFFIX"] && vars.userInput["PROJECT_SUFFIX"] != "") {
+        println("[JENKINS][WARNING] Promote images from custom projects is prohibited and will be skipped")
+        return
+    }
+
     stage("PROMOTE IMAGES") {
         vars['targetProject'] = "${vars.projectMap.promotion.get('env-to-promote')}-meta"
         vars['sourceProject'] = vars.metaProject
         if (vars.targetProject) {
             stage = load "${vars.pipelinesPath}/stages/promote-images.groovy"
             stage.run(vars)
-        }
-        else
+        } else
             println("[JENKINS][WARNING] There are no environments specified to promote images, promotion was skipped")
     }
 }
