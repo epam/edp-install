@@ -61,13 +61,12 @@ def run(vars) {
                     println("[JENKINS][DEBUG] Deployment config ${application.name} has been already deployed with version ${application.version}")
                     return
                 }
-                sh("oc -n ${vars.deployProject} patch dc ${application.name} " +
-                        "-p '{\"spec\":{\"triggers\":[" +
-                        "{\"type\":\"ConfigChange\"}," +
-                        "{\"type\": \"ImageChange\",\"imageChangeParams\":{" +
-                        "\"containerNames\":[\"${application.name}\"]," +
-                        "\"from\":{\"name\":\"${application.name}:${application.version}\",\"namespace\":\"${vars.metaProject}\"}}}" +
-                        "]}}'")
+                sh("oc -n ${vars.deployProject} process -f ${vars.deployTemplatesPath}/${application.name}.yaml " +
+                        "-p APP_VERSION=${application.version} " +
+                        "-p NAMESPACE=${vars.deployProject} " +
+                        "-p IS_NAMESPACE=${vars.metaProject} " +
+                        "--local=true -o json | oc -n ${vars.deployProject} apply set-last-applied -f -")
+
             }
             sh("oc -n ${vars.deployProject} rollout latest dc/${application.name}")
             checkDeployment(application, 'application')
