@@ -124,13 +124,16 @@ node("master") {
         return
     }
 
-    stage("PROMOTE IMAGES") {
-        vars['targetProject'] = "${vars.projectMap.promotion.get('env-to-promote')}-meta"
-        vars['sourceProject'] = vars.metaProject
-        if (vars.targetProject) {
+    if (!vars.projectMap.promotion.get('env-to-promote')){
+        println("[JENKINS][WARNING] There are no environments specified to promote images, promotion was skipped")
+        this.result = "success"
+    }
+    else {
+        stage("PROMOTE IMAGES") {
+            vars['targetProject'] = "${vars.projectMap.promotion.get('env-to-promote')}-meta"
+            vars['sourceProject'] = vars.metaProject
             stage = load "${vars.pipelinesPath}/stages/promote-images.groovy"
             stage.run(vars)
-        } else
-            println("[JENKINS][WARNING] There are no environments specified to promote images, promotion was skipped")
+        }
     }
 }
