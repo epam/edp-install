@@ -35,7 +35,6 @@ def run(vars) {
         }
 
         vars.get(vars.appSettingsKey).each() { application ->
-            application['currentDeploymentVersion'] = getDeploymentVersion(application)
             if (!checkImageExists(application))
                 return
 
@@ -43,10 +42,9 @@ def run(vars) {
                 application['version'] = getNumericVersion(application)
                 if (!application.version)
                     return
-                }
-            appDir = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
+            }
+            appDir = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}/${application.name}"
             deployTemplatesPath = "${appDir}/${vars.deployTemplatesDirectory}"
-            sh "rm -rf ${appDir}*"
             dir("${appDir}") {
                 cloneProject(application)
                 deployConfigMapTemplate(application)
@@ -59,7 +57,6 @@ def run(vars) {
 }
 
 def cloneProject(application) {
-    // Checkout app
     gitApplicationUrl = "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${application.name}"
 
     checkout([$class                           : 'GitSCM', branches: [[name: "**"]],
@@ -68,39 +65,25 @@ def cloneProject(application) {
               userRemoteConfigs                : [[credentialsId: "${vars.gerritCredentials}",
                                                    refspec      : "refs/tags/${application.version}",
                                                    url          : "${gitApplicationUrl}"]]])
-    println("[JENKINS][DEBUG] Clone the project ${application.name} is successfully")
+    println("[JENKINS][DEBUG] Project ${application.name} has been successfully cloned")
 }
 
 def deployApplicationTemplate(application) {
+    application['currentDeploymentVersion'] = getDeploymentVersion(application)
 
-    if(!checkTemplateExists(application.name, deployTemplatesPath))
+    if (!checkTemplateExists(application.name, deployTemplatesPath))
         return
-    if (application.need_database)
-            sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
 
-        if (!application.currentDeploymentVersion) {
-            sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${application.name}.yaml " +
-                    "-p APP_VERSION=${application.version} " +
-                    "-p NAMESPACE=${vars.deployProject} " +
-                    "-p IS_NAMESPACE=${vars.metaProject} " +
-                    "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
-        } else {
-            def currentTag = sh(
-                    script: "oc -n ${vars.deployProject} get dc ${application.name} -o jsonpath='{.spec.triggers[?(@.type==\"ImageChange\")].imageChangeParams.from.name}' | awk -F: '{print \$2}'",
-                    returnStdout: true
-            ).trim()
-            if (currentTag == application.version && vars.currentDeploymentVersion != 0) {
-                println("[JENKINS][DEBUG] Deployment config ${application.name} has been already deployed with version ${application.version}")
-                return
-            }
-            sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${application.name}.yaml " +
-                    "-p APP_VERSION=${application.version} " +
-                    "-p NAMESPACE=${vars.deployProject} " +
-                    "-p IS_NAMESPACE=${vars.metaProject} " +
-                    "--local=true -o json | oc -n ${vars.deployProject} apply set-last-applied -f -")
-        }
-        sh("oc -n ${vars.deployProject} rollout latest dc/${application.name}")
-        checkDeployment(application, 'application')
+    if (application.need_database)
+        sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
+
+    sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${application.name}.yaml " +
+            "-p IMAGE_NAME=${vars.metaProject}/${application.name} " +
+            "-p APP_VERSION=${application.version} " +
+            "-p NAMESPACE=${vars.deployProject} " +
+            "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
+
+    checkDeployment(application, 'application')
 }
 
 def deployConfigMapTemplate(application) {
@@ -110,7 +93,7 @@ def deployConfigMapTemplate(application) {
 
     sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${templateName}.yaml " +
             "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
-    println("[JENKINS][DEBUG] Deploy template of config map with name - ${templateName}.yaml")
+    println("[JENKINS][DEBUG] Config map with name ${templateName}.yaml for application ${application.name} has been deployed")
 }
 
 def getDeploymentVersion(application) {
@@ -186,7 +169,7 @@ def checkTemplateExists(templateName, deployTemplatesPath) {
     def templateYamlFile = new File("${deployTemplatesPath}/${templateName}.yaml")
     def templateJsonFile = new File("${deployTemplatesPath}/${templateName}.json")
     if (!templateYamlFile.exists() && !templateJsonFile.exists()) {
-        println("[JENKINS][WARNING] Template file which called ${templateName} doesn't exist in ${deployTemplatesPath} in devops repository\r\n" +
+        println("[JENKINS][WARNING] Template file which called ${templateName} doesn't exist in ${deployTemplatesPath} in the repository\r\n" +
                 "[JENKINS][WARNING] Deploy will be skipped")
         return false
     }
@@ -199,18 +182,22 @@ def checkDeployment(object, type) {
         openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: "${object.name}",
                 namespace: "${vars.deployProject}", replicaCount: '1', verbose: 'false',
                 verifyReplicaCount: 'true', waitTime: '600', waitUnit: 'sec'
-        println("[JENKINS][DEBUG] Deployment ${object.name} in project ${vars.deployProject} has been rolled out")
-        if (type == 'application' && getDeploymentVersion(object) != object.currentDeploymentVersion)
+        if (type == 'application' && getDeploymentVersion(object) != object.currentDeploymentVersion) {
+            println("[JENKINS][DEBUG] Deployment ${object.name} in project ${vars.deployProject} has been rolled out")
             vars.updatedApplicaions.push(object)
+        }
+        else
+            println("[JENKINS][DEBUG] New version of application ${object.name} hasn't been deployed, because the save version")
     }
     catch (Exception verifyDeploymentException) {
         if (type == "application" && object.currentDeploymentVersion != 0) {
             println("[JENKINS][WARNING] Rolling out of ${object.name} with version ${object.version} has been failed.\r\n" +
-                    "Rollback to the previous version")
+                    "[JENKINS][WARNING] Rolling back to the previous version")
             sh("oc -n ${vars.deployProject} rollout undo dc ${object.name}")
             openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: "${object.name}",
                     namespace: "${vars.deployProject}", replicaCount: '1', verbose: 'false',
                     verifyReplicaCount: 'true', waitTime: '600', waitUnit: 'sec'
+            println("[JENKINS][WARNING] Rolling out of ${object.name} with version ${object.version} has been failed.")
         } else
             commonLib.failJob("[JENKINS][ERROR] ${object.name} deploy has been failed. Reason - ${verifyDeploymentException}")
     }

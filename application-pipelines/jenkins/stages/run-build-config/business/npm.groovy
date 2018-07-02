@@ -27,6 +27,7 @@ def run(vars) {
                     openshift.tag("${openshift.project()}/${vars.itemMap.name}@${resultTag}", "${vars.targetProject}/${vars.itemMap.name}:${tagName}")
                 }
                 sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:unauthenticated"
+                sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:serviceaccounts"
             }
             else
                 println("[JENKINS][WARNING] Image wasn't promoted since there are no environments were added\r\n" +

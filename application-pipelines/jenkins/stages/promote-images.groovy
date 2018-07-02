@@ -16,11 +16,12 @@ def run(vars) {
     openshift.withCluster() {
         openshift.withProject() {
             sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:unauthenticated"
+            sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:serviceaccounts"
             vars.updatedApplicaions.each() { application ->
                 openshift.tag("${vars.sourceProject}/${application.name}:${application.version}", "${vars.sourceProject}/${application.name}:stable")
                 openshift.tag("${vars.sourceProject}/${application.name}:${application.version}", "${vars.targetProject}/${application.name}:latest")
                 openshift.tag("${vars.sourceProject}/${application.name}:${application.version}", "${vars.targetProject}/${application.name}:${application.version}")
-                println("[JENKINS][INFO] Image ${application.name} has been promoted to ${vars.targetProject} project")
+                println("[JENKINS][INFO] Image ${application.name}:${application.version} has been promoted to ${vars.targetProject} project")
             }
         }
     }

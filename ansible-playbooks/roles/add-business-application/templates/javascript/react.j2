@@ -93,7 +93,7 @@ objects:
         serviceAccountName: "{{ name }}"
         containers:
         - name: "{{ name }}"
-          image: "{{ name }}"
+          image: "docker-registry.default.svc:5000/${IMAGE_NAME}:${APP_VERSION}"
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -126,23 +126,15 @@ objects:
         terminationGracePeriodSeconds: 30
     triggers:
       - type: ConfigChange
-      - imageChangeParams:
-          automatic: false
-          containerNames:
-            - "{{ name }}"
-          from:
-            kind: ImageStreamTag
-            name: "{{ name }}:${APP_VERSION}"
-            namespace: "${IS_NAMESPACE}"
-        type: ImageChange
 parameters:
+- displayName: Application image name
+  name: IMAGE_NAME
+  required: true
+  value: "{{ name }}"
 - displayName: Application version
   name: APP_VERSION
   required: true
   value: "latest"
 - displayName: Current namespace
   name: NAMESPACE
-  required: true
-- displayName: ImageStream namespace
-  name: IS_NAMESPACE
   required: true
