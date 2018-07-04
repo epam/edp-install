@@ -12,22 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{
-  "apiVersion": "v1",
-  "kind": "Template",
-  "metadata": {
-    "name": "deploy-config"
-  },
-  "objects": [
-    {
-      "apiVersion": "v1",
-      "kind": "ConfigMap",
-      "metadata": {
-        "name": "{{ app_name }}"
-      },
-      "data": {
-        "key": "value"
-      }
-    }
-  ]
-}
+apiVersion: v1
+kind: Template
+metadata:
+  name: "deploy-config"
+objects:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: "{{ app_name }}"
+  data:
+    key: "value"

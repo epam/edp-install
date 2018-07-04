@@ -36,7 +36,7 @@
     app_name: "{{ item[0].name }}"
   template:
     src: deploy-config.j2
-    dest: "{{ templates_dir }}/{{ item[0].name }}/deploy-templates/{{ item[0].name }}-deploy-config-{{ item[1].name.split('-')[0] }}.json"
+    dest: "{{ templates_dir }}/{{ item[0].name }}/deploy-templates/{{ item[0].name }}-deploy-config-{{ item[1].name.split('-')[0] }}.yaml"
   with_nested:
     - "{{ app_map | list }}"
     - "{{ env_map | list }}"

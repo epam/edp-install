@@ -108,9 +108,9 @@ def deployConfigMapTemplate(application) {
     if (!checkTemplateExists(templateName, deployTemplatesPath))
         return
 
-    sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${templateName}.json " +
+    sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${templateName}.yaml " +
             "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
-    println("[JENKINS][DEBUG] Deploy template of config map with name - ${templateName}.json")
+    println("[JENKINS][DEBUG] Deploy template of config map with name - ${templateName}.yaml")
 }
 
 def getDeploymentVersion(application) {
