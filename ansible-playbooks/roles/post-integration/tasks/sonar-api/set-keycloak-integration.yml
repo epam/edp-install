@@ -27,7 +27,7 @@
 
 - name: "Get OIDC provider configuration"
   uri:
-    url: "{{ tools.keycloak.web_url }}/auth/realms/{{ tools.keycloak.realm_name }}/.well-known/openid-configuration"
+    url: "http://keycloak.{{ project_cockpit }}:8080/auth/realms/{{ tools.keycloak.realm_name }}/.well-known/openid-configuration"
     method: GET
     return_content: yes
     user: "{{ username.stdout }}"
@@ -38,6 +38,12 @@
 
 - name: "Copy OIDC provider configuration to file"
   copy: content="{{ result.content }}" dest=/tmp/openid-configuration.json
+
+- name: "Replace internal Keycloak links with external"
+  replace:
+    path: /tmp/openid-configuration.json
+    regexp: "http://keycloak.{{ project_cockpit }}:8080"
+    replace: "{{ tools.keycloak.web_url }}"
 
 - name: "Set key sonar.auth.oidc.providerConfiguration to value {{ lookup('file','/tmp/openid-configuration.json') }}"
   uri:
