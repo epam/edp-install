@@ -13,10 +13,13 @@
 # limitations under the License.
 
 ---
-- include_tasks: retrieve_data.yml
-- include_tasks: create_projects.yml
-  when: env_map | length > 0
-- include_tasks: create_pipelines.yml
-  when: env_map | length > 0
-- include_tasks: add-config-map-to-app.yml
-- include_tasks: add-env-specific-app-template.yml
+- name: "Create additional template for business-applications"
+  template:
+    src: "{{ templates_dir }}/{{ item[0].name }}/deploy-templates/{{ item[0].name }}.yaml"
+    dest: "{{ templates_dir }}/{{ item[0].name }}/deploy-templates/{{ item[0].name }}-install-{{ item[1].name.split('-')[0] }}.yaml"
+  with_nested:
+    - "{{ app_map | list }}"
+    - "{{ env_map | list }}"
+
+- include_tasks: push-template-each.yml
+  with_items: "{{ app_map | list }}"
