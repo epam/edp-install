@@ -19,7 +19,7 @@
        git config user.email "{{ vcs_autouser_email }}"
        git config user.name "{{ vcs_autouser_name }}"
        git pull origin master
-       git add . && git commit -m "Add template for {{ gerrit_project }}"
+       git add . && git commit -m "{{ commit_message }}"
        git push origin master
       args:
         chdir: "{{ templates_dir }}/{{ gerrit_project }}"

@@ -52,6 +52,8 @@
       dest: "{{ templates_dir }}/{{ gerrit_project }}/deploy-templates/{{ item_map.name }}.yaml"
 
   - include_tasks: roles/common/tasks/manage-gerrit/push-templates-to-gerrit.yml
+    vars:
+      commit_message: "Add template for {{ gerrit_project }}"
     with_sequence: count=5
 
   - name: "Copying S2I template for application"
