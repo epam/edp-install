@@ -1,0 +1,11 @@
+- name: "Get crumb from Jenkins"
+  uri:
+    url: http://jenkins.{{ project_cicd }}:8080/crumbIssuer/api/json
+    method: GET
+    user: admin
+    password: "{{ tools.jenkins.password }}"
+    force_basic_auth: yes
+  register: result
+
+- set_fact:
+    jenkins_crumb: "{{ result.json.crumb }}"

@@ -12,14 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: "Get crumb from Jenkins"
-  uri:
-    url: http://jenkins.{{ project_cicd }}:8080/crumbIssuer/api/json
-    method: GET
-    user: admin
-    password: "{{ tools.jenkins.password }}"
-    force_basic_auth: yes
-  register: crumb
+- include_tasks: get-crumb.yml
 
 - name: "Create {{ item.username }} user in Jenkins"
   uri:
@@ -29,7 +22,7 @@
     password: "{{ tools.jenkins.password }}"
     force_basic_auth: yes
     headers:
-      Jenkins-Crumb: "{{ crumb.json.crumb }}"
+      Jenkins-Crumb: "{{ jenkins_crumb }}"
     body: |
       json={
         "": "0",
