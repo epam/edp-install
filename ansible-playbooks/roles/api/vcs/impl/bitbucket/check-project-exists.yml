@@ -15,7 +15,7 @@
 - name: "Check project {{ item.project_name }} is already exist in VCS group"
   uri:
     url: "
-     http://{{ item.hostname }}/rest/api/1.0/projects/{{ item.group_name }}/repos/{{ item.project_name }}"
+     https://{{ item.hostname }}/rest/api/1.0/projects/{{ item.group_name }}/repos/{{ item.project_name }}"
     method: GET
     user: "{{ item.username }}"
     password: "{{ item.password }}"
