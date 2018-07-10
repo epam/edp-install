@@ -145,6 +145,8 @@ tools:
         password: "jenkins"
         roles:
           - nexus-rw
+    client_id: "nexus3"
+    web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
   sonar:
     version: "{{ sonar_version | default('7.1') }}"
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"

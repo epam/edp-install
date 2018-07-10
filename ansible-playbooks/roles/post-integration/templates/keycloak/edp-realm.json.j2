@@ -139,6 +139,19 @@
           }
         }
       ]
+    },
+    {
+      "clientId": "{{ tools.nexus.client_id }}",
+      "enabled": true,
+      "publicClient": true,
+      "rootUrl": "{{ tools.nexus.web_url }}",
+      "redirectUris": [
+        "{{ tools.nexus.web_url }}/*"
+      ],
+      "webOrigins": [
+        "{{ tools.nexus.web_url }}"
+      ],
+      "adminUrl": "{{ tools.nexus.web_url }}/"
     }
   ],
   "users" : [
@@ -177,6 +190,28 @@
           "value" : "secret" }
       ],
       "realmRoles": [ "sonar-dev" ]
+    },
+    {
+      "username" : "nexus-admin",
+      "enabled": true,
+      "email" : "sample-nexus-admin@example.com",
+      "firstName": "Nexus",
+      "lastName": "Admin",
+      "credentials" : [
+        { "type" : "password",
+          "value" : "secret" }
+      ]
+    },
+    {
+      "username" : "nexus-developer",
+      "enabled": true,
+      "email" : "sample-nexus-developer@example.com",
+      "firstName": "Nexus",
+      "lastName": "Developer",
+      "credentials" : [
+        { "type" : "password",
+          "value" : "secret" }
+      ]
     }
   ]
 }
