@@ -27,7 +27,6 @@
    - setup-user
    - create-task
 
-
 - include_tasks: nexus-api/create-blobstore-each.yml
   with_items: "{{ tools.nexus.repos_npm_blob }}"
 

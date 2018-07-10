@@ -41,3 +41,11 @@
     body: "{{ lookup('template','./keycloak/edp-realm.json.j2') |to_json }}"
     body_format: json
     status_code: 201
+
+- name: "Install Keycloak proxy to Nexus pod"
+  include_tasks: keycloak-api/install-proxy.yml
+  vars:
+    upstream_resource: "nexus"
+    client_id: "{{ tools.nexus.client_id }}"
+    redirection_url: "{{ tools.nexus.web_url }}"
+    upstream_port: 8081

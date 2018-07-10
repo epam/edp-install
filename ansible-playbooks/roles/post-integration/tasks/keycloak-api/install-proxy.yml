@@ -1,0 +1,14 @@
+- name: "Copy Keycloak proxy file"
+  template:
+    src: "keycloak/proxy.yml"
+    dest: "{{ post_integration_dir }}/keycloak/proxy.yml"
+
+- name: "Install Keycloak proxy"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} process -f {{ post_integration_dir }}/keycloak/proxy.yml
+    -p UPSTREAM_RESOURCE={{ upstream_resource }}
+    -p KEYCLOAK_WEB_URL={{ tools.keycloak.web_url }}
+    -p REALM={{ tools.keycloak.realm_name }}
+    -p CLIENT_ID={{ client_id }}
+    -p REDIRECTION_URL={{ redirection_url }}
+    -p UPSTREAM_PORT={{ upstream_port }} --local=true -o json | oc -n {{ project_cicd }} apply -f -
