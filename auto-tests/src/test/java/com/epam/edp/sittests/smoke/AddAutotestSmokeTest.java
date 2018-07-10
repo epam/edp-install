@@ -31,13 +31,12 @@ import java.util.Map;
 
 import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_PASSWORD;
 import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_USER;
-import static com.epam.edp.sittests.smoke.StringConstants.JENKINS_PASSWORD;
-import static com.epam.edp.sittests.smoke.StringConstants.JENKINS_USER;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_TRUST_CERTS;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
 import static com.epam.edp.sittests.smoke.StringConstants.PRECOMMIT_PIPELINE_SUFFIX;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
 import static io.restassured.RestAssured.given;
 
 /**
@@ -51,6 +50,7 @@ public class AddAutotestSmokeTest {
 
     private UrlBuilder urlBuilder;
     private OpenShiftClient openShiftClient;
+    private String openshiftNamespace;
 
     @Feature("Setup Openshift Client")
     @BeforeClass
@@ -69,6 +69,7 @@ public class AddAutotestSmokeTest {
     public void setUp(String ocpEdpSuffix) {
         this.copyAutotestName = COPY_AUTOTEST_PREFIX + "-" + ocpEdpSuffix;
         this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
+        this.openshiftNamespace = OPENSHIFT_CICD_NAMESPACE + "-" + ocpEdpSuffix;
     }
 
     @DataProvider(name = "autotest")
@@ -93,12 +94,21 @@ public class AddAutotestSmokeTest {
 
     @Test(dataProvider = "autotest")
     public void testJenkinsPipelineWasCreated(String autotest) {
+        Map<String, String> credentials = openShiftClient.secrets()
+                .inNamespace(openshiftNamespace)
+                .withName("jenkins-token")
+                .get()
+                .getData();
+
+        String username = new String(Base64.decodeBase64(credentials.get("username"))).trim();
+        String token = new String(Base64.decodeBase64(credentials.get("token"))).trim();
+
         String pipeline = PRECOMMIT_PIPELINE_SUFFIX + autotest;
         given().log().all()
                 .pathParam("pipeline", pipeline)
                 .auth()
                 .preemptive()
-                .basic(JENKINS_USER, JENKINS_PASSWORD)
+                .basic(username, token)
                 .when()
                 .get(urlBuilder.buildUrl("http",
                         "jenkins",

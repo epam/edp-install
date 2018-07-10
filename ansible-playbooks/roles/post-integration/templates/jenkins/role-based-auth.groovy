@@ -20,6 +20,27 @@ import com.michelin.cio.hudson.plugins.rolestrategy.*
 import java.lang.reflect.*
 import java.util.logging.*
 import groovy.json.*
+import org.jenkinsci.plugins.*
+import net.sf.json.*
+import org.kohsuke.stapler.*
+
+/**
+ * ===================================
+ *
+ *        Keycloak config json
+ *
+ * ===================================
+ */
+
+def keycloak_json ='''\
+{
+  "realm": "{{ tools.keycloak.realm_name }}",
+  "auth-server-url": "{{ tools.keycloak.web_url }}/auth",
+  "ssl-required": "external",
+  "resource": "jenkins",
+  "public-client": true,
+  "confidential-port": 0
+}'''.stripIndent()
 
 /**
  * ===================================
@@ -76,6 +97,10 @@ def buildPermissions = [
 def roleBasedAuthenticationStrategy = new RoleBasedAuthorizationStrategy()
 Jenkins.instance.setAuthorizationStrategy(roleBasedAuthenticationStrategy)
 
+
+SecurityRealm realm = new KeycloakSecurityRealm()
+realm.getDescriptor().setKeycloakJson(keycloak_json)
+Jenkins.instance.setSecurityRealm(realm)
 
 /**
  * ===================================

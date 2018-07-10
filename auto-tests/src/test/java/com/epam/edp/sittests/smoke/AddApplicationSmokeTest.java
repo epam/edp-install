@@ -14,14 +14,27 @@ limitations under the License. */
 
 package com.epam.edp.sittests.smoke;
 
+import io.qameta.allure.Feature;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import io.fabric8.kubernetes.client.Config;
+import io.fabric8.kubernetes.client.ConfigBuilder;
+import io.fabric8.openshift.client.DefaultOpenShiftClient;
+import io.fabric8.openshift.client.OpenShiftClient;
+import org.apache.commons.codec.binary.Base64;
 
 import static com.epam.edp.sittests.smoke.StringConstants.*;
 import static io.restassured.RestAssured.given;
+
+import java.util.Map;
+
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_TRUST_CERTS;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
 
 /**
  * @author Pavlo_Yemelianov
@@ -35,12 +48,27 @@ public class AddApplicationSmokeTest {
 
     private UrlBuilder urlBuilder;
     private String ocpEdpSuffix;
+    private OpenShiftClient openShiftClient;
+    private String openshiftNamespace;
+
+    @Feature("Setup Openshift Client")
+    @BeforeClass
+    public void setUpOpenShiftClient() {
+        Config config = new ConfigBuilder().withMasterUrl(OPENSHIFT_MASTER_URL)
+                .withUsername(OPENSHIFT_USERNAME)
+                .withPassword(OPENSHIFT_PASSWORD)
+                .withTrustCerts(OPENSHIFT_TRUST_CERTS)
+                .build();
+
+        this.openShiftClient = new DefaultOpenShiftClient(config);
+    }
 
     @BeforeClass
     @Parameters("ocpEdpSuffix")
     public void setUp(String ocpEdpSuffix) {
         this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
         this.ocpEdpSuffix = ocpEdpSuffix;
+        this.openshiftNamespace = OPENSHIFT_CICD_NAMESPACE + "-" + ocpEdpSuffix;
     }
 
     @DataProvider(name = "pipeline")
@@ -71,11 +99,20 @@ public class AddApplicationSmokeTest {
 
     @Test(dataProvider = "pipeline")
     public void testJenkinsPipelineWasCreated(String pipeline) {
+        Map<String, String> credentials = openShiftClient.secrets()
+                .inNamespace(openshiftNamespace)
+                .withName("jenkins-token")
+                .get()
+                .getData();
+
+        String username = new String(Base64.decodeBase64(credentials.get("username"))).trim();
+        String token = new String(Base64.decodeBase64(credentials.get("token"))).trim();
+
         given()
             .pathParam("pipeline", pipeline)
             .auth()
             .preemptive()
-            .basic(JENKINS_USER, JENKINS_PASSWORD)
+            .basic(username, token)
         .when()
             .get(urlBuilder.buildUrl("http",
                     "jenkins",

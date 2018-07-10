@@ -27,9 +27,6 @@ public class StringConstants {
     public static final String POSTCOMMIT_PIPELINE_SUFFIX = "gerrit-postcommit-";
     public static final String DELETION_PIPELINE_NAME = "deletion-pipeline";
 
-    public static final String JENKINS_USER = "admin";
-    public static final String JENKINS_PASSWORD = "password";
-
     public static final String GERRIT_USER = "admin";
     public static final String GERRIT_PASSWORD = "secret";
 
