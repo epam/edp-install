@@ -5,7 +5,7 @@
       User user = User.get('{{ item.username }}')
       ApiTokenProperty t = user.getProperty(ApiTokenProperty.class)
       def token = t.getApiTokenInsecure()
-      println(token)
+      print(token)
   jenkins_script:
     script: "{{ retrieve_token_script}}"
     user: admin
@@ -14,7 +14,7 @@
   register: result
 
 - set_fact:
-    jenkins_token: "{{ result.output }}"
+    tools: "{{ tools | combine({ 'jenkins': { 'password': result.output }}, recursive=True) }}"
 
 - name: "Create secret for {{ item.username }} user with API token"
   register: result
@@ -22,7 +22,7 @@
   shell: >
     {{ ocadm }} -n {{ project_cicd }} create secret generic jenkins-token
     --from-literal=username={{ item.username }}
-    --from-literal=token={{ jenkins_token }}
+    --from-literal=token={{ tools.jenkins.password }}
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'

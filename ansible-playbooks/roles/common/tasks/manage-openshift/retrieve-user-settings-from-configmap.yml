@@ -13,6 +13,13 @@
 # limitations under the License.
 
 ---
+- name: "Get Jenkins admin user token from secret"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret jenkins-token
+   --template={% raw %}'{{ index .data "token" }}'{% endraw %} | base64 --decode
+  register: jenkins_token
+  no_log: True
+
 - name: "Get gerrit ssh port"
   shell: |
     {{ ocadm }} -n {{ project_cicd }} get cm gerrit -o=jsonpath='{ .data.sshPort }'
@@ -25,6 +32,7 @@
 
 - set_fact:
     user_settings: "{{ result.stdout | from_json }}"
+    tools: "{{ tools | combine({ 'tools': { 'jenkins': { 'password': jenkins_token.stdout }}}, recursive=True) }}"
 
 - set_fact:
     dns_wildcard: "{{ user_settings.data.dns_wildcard }}"

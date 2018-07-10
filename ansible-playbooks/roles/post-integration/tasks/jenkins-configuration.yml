@@ -56,19 +56,7 @@
       - { src: "{{ post_integration_dir }}/jenkins/scriptApproval.xml", dest: "/var/lib/jenkins/scriptApproval.xml"}
       - { src: "~/.ssh/jenkins_config", dest: "/var/lib/jenkins/.ssh/config"}
 
-- name: "Restart jenkins"
-  shell: "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- kill 1"
-
-- name: "Pause in order to Jenkins has time to restart"
-  pause:
-    seconds: 15
-
-- name: "Check Jenkins is up"
-  shell: "oc get pod $({{ jenkins_pod }}) --no-headers | awk '{print $2}'"
-  register: result
-  until: result.stdout == "1/1"
-  retries: 30
-  delay: 10
+- include_tasks: jenkins-api/restart.yml
 
 - include_tasks: jenkins-api/create-user.yml
   with_items: "{{ tools.nexus.local_users }}"
