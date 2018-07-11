@@ -21,11 +21,12 @@
 - name: "Create project - {{ item.project_name }} in the group - {{ item.group_name }}"
   uri:
     url: "
-      http://{{ item.hostname }}/rest/api/1.0/projects/{{ item.group_name.split('/') | last }}/repos"
+      https://{{ item.hostname }}/rest/api/1.0/projects/{{ item.group_name.split('/') | last }}/repos"
     method: POST
     user: "{{ item.username }}"
     password: "{{ item.password }}"
     force_basic_auth: yes
+    validate_certs: no
     return_content: yes
     headers:
       Content-Type: "application/json"
