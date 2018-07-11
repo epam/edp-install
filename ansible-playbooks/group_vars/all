@@ -136,6 +136,14 @@ tools:
           - nx-repository-view-*-*-edit
           - nx-apikey-all
         roles: []
+      - id: keycloak-developer
+        name: keycloak-developer
+        description: Keycloak developer
+        privileges:
+          - nx-search-read
+          - nx-repository-view-*-*-read
+          - nx-repository-view-*-*-browse
+        roles: []
     local_users:
       - username: jenkins
         jenkins_id: nexus
@@ -145,6 +153,20 @@ tools:
         password: "jenkins"
         roles:
           - nexus-rw
+      - username: nexus-admin
+        first_name: Nexus
+        last_name: Admin
+        email: nexus-admin@edp.com
+        password: "secret"
+        roles:
+          - nx-admin
+      - username: nexus-developer
+        first_name: Nexus
+        last_name: Developer
+        email: nexus-developer@edp.com
+        password: "secret"
+        roles:
+          - keycloak-developer
     client_id: "nexus3"
     web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
   sonar:
