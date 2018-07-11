@@ -21,6 +21,7 @@
    - create-repo-npm-hosted
    - create-repo-npm-group
    - disable-outreach-capability
+   - setup-capability
    - setup-privilege
    - setup-role
    - setup-user
@@ -50,3 +51,4 @@
 - include_tasks: nexus-api/create-task-each.yml
   with_items: "{{ tools.nexus.nexus_scheduled_tasks }}"
 
+- include_tasks: nexus-api/setup-capability.yml
