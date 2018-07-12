@@ -61,9 +61,9 @@ def globalRoleAdmin = "admin"
  * ===================================
  */
 def access = [
-  admins: ["jenkins-admin", "admin"],
-  builders: ["jenkins-dev"],
-  readers: ["jenkins-user", "jenkins-qa"]
+  admins: ["jenkins-administrators", "admin"],
+  builders: ["jenkins-builders"],
+  readers: ["jenkins-users"]
 ]
 
 /**

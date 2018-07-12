@@ -49,8 +49,6 @@
 - include_tasks: sonar-api/create-group.yml
   with_items:
     - non-interactive-users
-    - sonar-admin
-    - sonar-dev
 
 - include_tasks: sonar-api/add-user-to-group.yml
   with_items:

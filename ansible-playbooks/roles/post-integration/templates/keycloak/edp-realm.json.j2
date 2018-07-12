@@ -7,76 +7,42 @@
   "roles": {
     "realm": [
       {
-        "name": "jenkins-dev"
+        "name": "sonar-administrators"
       },
       {
-        "name": "jenkins-qa"
+        "name": "jenkins-administrators"
       },
       {
-        "name": "jenkins-admin"
+        "name": "gerrit-administrators"
       },
       {
-        "name": "jenkins-user"
+        "name": "sonar-users"
       },
       {
-        "name": "gerrit-dev"
+        "name": "jenkins-users"
       },
       {
-        "name": "gerrit-reviewer"
+        "name": "gerrit-users"
       },
       {
-        "name": "gerrit-admin"
-      },
-      {
-        "name": "gerrit-user"
-      },
-      {
-        "name": "sonar-dev",
-        "description": "Realm Sonar Developer role",
-        "clientRole": false
-      },
-      {
-        "name": "sonar-admin",
-        "description": "Realm Sonar Admin role",
-        "clientRole": false
+        "name": "administrator",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "sonar-administrators",
+            "jenkins-administrators",
+            "gerrit-administrators"
+          ]
+        }
       },
       {
         "name": "developer",
         "composite": true,
         "composites": {
           "realm": [
-            "jenkins-dev",
-            "gerrit-dev"
-          ]
-        }
-      },
-      {
-        "name": "teamlead",
-        "composite": true,
-        "composites": {
-          "realm": [
-            "jenkins-dev",
-            "gerrit-reviewer"
-          ]
-        }
-      },
-      {
-        "name": "qa",
-        "composite": true,
-        "composites": {
-          "realm": [
-            "jenkins-qa",
-            "jenkins-user"
-          ]
-        }
-      },
-      {
-        "name": "devops",
-        "composite": true,
-        "composites": {
-          "realm": [
-            "jenkins-admin",
-            "gerrit-admin"
+            "sonar-users",
+            "jenkins-users",
+            "gerrit-users"
           ]
         }
       }
@@ -156,62 +122,28 @@
   ],
   "users" : [
     {
-      "username" : "je-admin",
+      "username" : "edp-admin",
       "enabled": true,
-      "email" : "sample-user@example.com",
-      "firstName": "Jenkins",
-      "lastName": "Manager",
+      "email" : "admin@example.com",
+      "firstName": "Administrator",
+      "lastName": "EDP",
       "credentials" : [
         { "type" : "password",
           "value" : "secret" }
       ],
-      "realmRoles": [ "jenkins-admin" ]
+      "realmRoles": [ "administrator" ]
     },
     {
-      "username" : "sonar-admin",
-      "enabled": true,
-      "email" : "sample-sonar-admin@example.com",
-      "firstName": "Sonar",
-      "lastName": "Admin",
-      "credentials" : [
-        { "type" : "password",
-          "value" : "secret" }
-      ],
-      "realmRoles": [ "sonar-admin" ]
-    },
-    {
-      "username" : "sonar-dev",
-      "enabled": true,
-      "email" : "sample-sonar-dev@example.com",
-      "firstName": "Sonar",
-      "lastName": "Developer",
-      "credentials" : [
-        { "type" : "password",
-          "value" : "secret" }
-      ],
-      "realmRoles": [ "sonar-dev" ]
-    },
-    {
-      "username" : "nexus-admin",
-      "enabled": true,
-      "email" : "sample-nexus-admin@example.com",
-      "firstName": "Nexus",
-      "lastName": "Admin",
-      "credentials" : [
-        { "type" : "password",
-          "value" : "secret" }
-      ]
-    },
-    {
-      "username" : "nexus-developer",
-      "enabled": true,
-      "email" : "sample-nexus-developer@example.com",
-      "firstName": "Nexus",
-      "lastName": "Developer",
-      "credentials" : [
-        { "type" : "password",
-          "value" : "secret" }
-      ]
-    }
+          "username" : "edp-developer",
+          "enabled": true,
+          "email" : "developer@example.com",
+          "firstName": "Developer",
+          "lastName": "EDP",
+          "credentials" : [
+            { "type" : "password",
+              "value" : "secret" }
+          ],
+          "realmRoles": [ "developer" ]
+        }
   ]
 }
