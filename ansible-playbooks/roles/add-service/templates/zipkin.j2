@@ -172,6 +172,8 @@ objects:
         labels:
           app: "{{ name }}-db"
       spec:
+        securityContext:
+          fsGroup: 0
         containers:
         - name: "{{ name }}-db"
           image: "openzipkin/zipkin-cassandra:${SERVICE_VERSION}"
