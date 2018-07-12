@@ -73,6 +73,7 @@ role-strategy:2.7.0
 run-condition:0.10
 scm-api:2.2.6
 sonar-gerrit:2.3
+ssh-slaves:1.26
 structs:1.10
 subversion:2.10.5
 test-results-analyzer:0.3.4
