@@ -44,6 +44,7 @@
     vcs_project_name: "{{ project_vcs_edp }}"
 - set_fact:
     vcs_project_path: "{{ project_vcs_group_path }}/{{ project_vcs_edp }}"
+    project_vcs_hostname_url: "{{ vcs_group_name | urlsplit('scheme') }}://{{ project_vcs_hostname }}"
 
 - include_tasks: check-deployment-health.yml
   with_items:

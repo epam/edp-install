@@ -16,7 +16,7 @@
   uri:
     timeout: 60
     url: "
-     https://{{ item.hostname }}/api/v4/projects/{{ item.project_path | replace('/', '%2F') }}\
+     {{ item.hostname }}/api/v4/projects/{{ item.project_path | replace('/', '%2F') }}\
      ?simple=true&access_token={{ item.csrf_token }}"
     status_code: 200,404
   register: result

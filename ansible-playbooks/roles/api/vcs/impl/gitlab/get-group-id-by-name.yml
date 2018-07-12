@@ -15,7 +15,7 @@
 - name: "Get {{ item.group_name }} group id"
   uri:
     url: "
-      https://{{ item.hostname }}/api/v4/groups/{{ item.group_name }}\
+      {{ item.hostname }}/api/v4/groups/{{ item.group_name }}\
       ?simple=true&access_token={{ item.csrf_token }}"
     method: GET
   retries: 3

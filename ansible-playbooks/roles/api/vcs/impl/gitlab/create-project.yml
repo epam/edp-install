@@ -15,7 +15,7 @@
 - name: "Create project - {{ item.project_name }} in the group - {{ item.group_name }}"
   uri:
     url: "
-      https://{{ item.hostname }}/api/v4/projects?name={{ item.project_name }}\
+      {{ item.hostname }}/api/v4/projects?name={{ item.project_name }}\
       &namespace_id={{ item.group_id }}&access_token={{ item.csrf_token }}"
     method: POST
     status_code: 201

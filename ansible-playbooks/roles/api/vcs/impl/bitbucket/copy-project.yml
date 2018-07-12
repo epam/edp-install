@@ -15,10 +15,10 @@
 ---
 - include_tasks: roles/api/vcs/check-project-exists.yml
   with_items:
-    - { hostname: '{{ project_vcs_hostname }}', project_name: "{{ vcs_project_name }}", group_name: "{{ project_vcs_group_path.split('/') | last }}", username: '{{ vcs_autouser_email }}', password: '{{ vcs_autouser_password }}' }
+    - { hostname: '{{ project_vcs_hostname_url }}', project_name: "{{ vcs_project_name }}", group_name: "{{ project_vcs_group_path.split('/') | last }}", username: '{{ vcs_autouser_email }}', password: '{{ vcs_autouser_password }}' }
 
 - block:
   - include_tasks: roles/api/vcs/create-project.yml
     with_items:
-      - { hostname: '{{ project_vcs_hostname }}', project_name: "{{ vcs_project_name }}", group_name: "{{ project_vcs_group_path.split('/') | last }}", username: '{{ vcs_autouser_email }}', password: '{{ vcs_autouser_password }}'}
+      - { hostname: '{{ project_vcs_hostname_url }}', project_name: "{{ vcs_project_name }}", group_name: "{{ project_vcs_group_path.split('/') | last }}", username: '{{ vcs_autouser_email }}', password: '{{ vcs_autouser_password }}'}
   when: repository_exists | bool == false

@@ -14,7 +14,7 @@
 
 - name: "Login to {{ item.hostname }} and get CSRF token"
   uri:
-    url: "https://{{ item.hostname }}/oauth/token"
+    url: "{{ item.hostname }}/oauth/token"
     method: POST
     body: 'grant_type=password&username={{ item.username }}&password={{ item.password }}'
   retries: 3
