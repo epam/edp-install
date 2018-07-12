@@ -30,6 +30,25 @@
     dest: ~/.ssh/jenkins_config
     force: no
 
+- name: "Generate ssh key for jenkins-slave user"
+  shell: cat /dev/zero | ssh-keygen -b 4096 -t rsa -f {{ post_integration_dir }}/jenkins/{{ item }} -C "jenkins-slave-edp@example.com" -q -N ""
+  with_items:
+    - "jenkins-slave-id_rsa"
+
+- name: "Create secrets for jenkins-slave user"
+  register: result
+  ignore_errors: true
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create secret generic {{ item.secret_name }}
+    --from-file={{ item.configmap_key }}={{ post_integration_dir }}/jenkins/{{ item.sshkey }}
+    --from-file={{ item.configmap_key }}.pub={{ post_integration_dir }}/jenkins/{{ item.sshkey }}.pub
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+  with_items:
+    - { secret_name: "jenkins-slave", configmap_key: "id_rsa" , sshkey: "jenkins-slave-id_rsa" }
+
 - name: "Copy Jenkins files"
   template:
     src: "jenkins/{{ item }}"
@@ -53,6 +72,7 @@
       - { src: "{{ post_integration_dir }}/jenkins/jobsprovisioning.groovy", dest: "/var/lib/jenkins/init.groovy.d/dsl/jobsprovisioning.groovy"}
       - { src: "{{ post_integration_dir }}/jenkins/scriptApproval.xml", dest: "/var/lib/jenkins/scriptApproval.xml"}
       - { src: "~/.ssh/jenkins_config", dest: "/var/lib/jenkins/.ssh/config"}
+      - { src: "{{ post_integration_dir }}/jenkins/jenkins-slave-id_rsa", dest: "/var/lib/jenkins/.ssh/jenkins-slave-id_rsa"}
 
 - include_tasks: jenkins-api/restart.yml
 

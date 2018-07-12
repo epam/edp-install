@@ -111,7 +111,12 @@ global_domain = Domain.global()
 credentials_store = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
 credentials = new BasicSSHUserPrivateKey(CredentialsScope.GLOBAL, "jenkins", "jenkins",
         new BasicSSHUserPrivateKey.UsersPrivateKeySource(), "", "Jenkins private ssh key for Gerrit")
+
+credentials_slave = new BasicSSHUserPrivateKey(CredentialsScope.GLOBAL, "jenkins-slave", "jenkins-slave",
+        new BasicSSHUserPrivateKey.FileOnMasterPrivateKeySource("/var/lib/jenkins/.ssh/jenkins-slave-id_rsa"),
+        "", "SSH key to add jenkins slaves")
 credentials_store.addCredentials(global_domain, credentials)
+credentials_store.addCredentials(global_domain, credentials_slave)
 
 // Creating a job dsl
 def jobName = "Job-provisioning"
