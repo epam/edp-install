@@ -14,6 +14,14 @@
 
 ---
 #This should be fixed by running Gerrit from non-privileged user
+- set_fact:
+    vcs_tool: "{{ vcs_tool_name | lower }}"
+    vcs_project_name: "{{ project_vcs_edp }}"
+
+- include_tasks: roles/api/vcs/ssh-url-generator.yml
+  vars:
+    vcs_group_url: "{{ vcs_group_name }}"
+
 - name: "Give rights to gerrit account"
   shell: "{{ ocadm }} -n {{ project_cicd }} adm policy add-scc-to-user anyuid -z gerrit"
 
