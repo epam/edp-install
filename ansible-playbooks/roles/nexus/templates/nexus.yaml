@@ -60,7 +60,7 @@ objects:
       deploymentconfig: nexus
     strategy:
       recreateParams:
-        timeoutSeconds: 600
+        timeoutSeconds: 1200
       type: Recreate
     template:
       metadata:

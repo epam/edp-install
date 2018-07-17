@@ -111,7 +111,7 @@ objects:
         intervalSeconds: 1
         maxSurge: 25%
         maxUnavailable: 25%
-        timeoutSeconds: 600
+        timeoutSeconds: 1200
         updatePeriodSeconds: 1
       type: Rolling
     template:
@@ -191,7 +191,7 @@ objects:
       app: sonar-db
     strategy:
       recreateParams:
-        timeoutSeconds: 600
+        timeoutSeconds: 1200
       resources: {}
       type: Recreate
     template:
