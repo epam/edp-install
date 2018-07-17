@@ -48,7 +48,13 @@ def run(vars) {
             dir("${appDir}") {
                 cloneProject(application)
                 deployConfigMapTemplate(application)
-                deployApplicationTemplate(application)
+                try {
+                    deployApplicationTemplate(application)
+                }
+                catch (Exception ex){
+                    println("[JENKINS][WARNING] Deployment of application ${application.name} has been failed. Reason - ${ex}.")
+                    currentBuild.result = 'UNSTABLE'
+                }
             }
         }
         println("[JENKINS][DEBUG] Applications that have been updated - ${vars.updatedApplicaions}")
