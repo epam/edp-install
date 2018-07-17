@@ -96,6 +96,7 @@ objects:
     config: |
       Host ${VCS_GROUP_HOST}
           User git
+          Port {{ vcs_ssh_port }}
           IdentityFile /var/gerrit/review_site/etc/replication_rsa_key
           StrictHostKeyChecking no
           UserKnownHostsFile /dev/null
@@ -103,7 +104,7 @@ objects:
       [gerrit]
         defaultForceUpdate = true
       [remote "${VCS_PROJECT_NAME}"]
-        url = ${VCS_GROUP_HOST}:${VCS_GROUP_PATH}/${VCS_PROJECT_NAME}.git
+        url = {{ clone_repo_url }}
         fetch = +refs/*:refs/*
         push = +refs/heads/*:refs/heads/*
         projects = ${VCS_PROJECT_NAME}
