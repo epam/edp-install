@@ -63,6 +63,21 @@
       "adminUrl": "{{ tools.jenkins.web_url }}/"
     },
     {
+      "clientId": "gerrit",
+      "enabled": true,
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "{{ keycloak_gerrit_realm_secret }}",
+      "rootUrl": "{{ tools.gerrit.web_url }}",
+      "redirectUris": [
+        "{{ tools.gerrit.web_url }}/*"
+      ],
+      "webOrigins": [
+        "{{ tools.gerrit.web_url }}"
+      ],
+      "adminUrl": "{{ tools.gerrit.web_url }}/"
+    },
+    {
       "clientId": "{{ sonar_client_id }}",
       "name": "SonarQube",
       "enabled": true,

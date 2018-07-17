@@ -12,6 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: "Get secret for gerrit realm from keycloak"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret keycloak-gerrit
+   --template={% raw %}'{{ index .data "secret" }}'{% endraw %} | base64 --decode
+  register: keycloak_gerrit
+
+- set_fact:
+    keycloak_gerrit_realm_secret: "{{ keycloak_gerrit.stdout }}"
+
 - name: "Get username from cicd projects Keycloak secret"
   shell: >
    {{ ocadm }} -n {{ project_cockpit }} get secret keycloak

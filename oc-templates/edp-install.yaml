@@ -74,8 +74,6 @@ objects:
             - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
             - "-e cockpit_enable_msra_quickstart=${COCKPIT_ENABLE_MSRA_QUICKSTART}"
             - "-e vcs_tool_name=${VCS_TOOL_NAME}"
-            - "-e vcs_oauth_app_id=${VCS_OAUTH_APP_ID}"
-            - "-e vcs_oauth_app_secret=${VCS_OAUTH_APP_SECRET}"
             - "-e vcs_auto_user_secret=${VCS_AUTO_USER_SECRET}"
             - "-e vcs_group_name=${VCS_GROUP_NAME_URL}"
             - "-e vcs_ssh_port=${VCS_SSH_PORT}"
@@ -199,14 +197,6 @@ parameters:
   name: VCS_TOOL_NAME
   value: "gitlab"
   required: true
-- displayName: Gerrit Application ID
-  description: Gerrit Application ID fot OAuth integration with VCS only if GERRIT_AUTH_TYPE set to OAUTH
-  name: VCS_OAUTH_APP_ID
-  value: ""
-- displayName: Gerrit Application Secret
-  description: Gerrit Application Secret fot OAuth integration with VCS only if GERRIT_AUTH_TYPE set to OAUTH
-  name: VCS_OAUTH_APP_SECRET
-  value: ""
 - displayName: Git autouser secret name
   description: Git autouser secret name from prerequisites
   name: VCS_AUTO_USER_SECRET

@@ -222,18 +222,17 @@ objects:
           - name: AUTH_TYPE
             value: {{ tools.gerrit.auth_type }}
 {% if tools.gerrit.auth_type == "OAUTH" %}
-          - name: OAUTH_GITLAB_ROOT_URL
-            value: https://git.epam.com/
-          - name: OAUTH_GITLAB_CLIENT_SECRET
+          - name: OAUTH_KEYCLOAK_CLIENT_ID
+            value: gerrit
+          - name: OAUTH_KEYCLOAK_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: credentials-oauth
+                name: keycloak-gerrit
                 key: secret
-          - name: OAUTH_GITLAB_CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: credentials-oauth
-                key: id
+          - name: OAUTH_KEYCLOAK_REALM
+            value: CI
+          - name: OAUTH_KEYCLOAK_ROOT_URL
+            value: {{ tools.keycloak.web_url }}
 {% endif %}
           - name: DATABASE_TYPE
             value: postgresql

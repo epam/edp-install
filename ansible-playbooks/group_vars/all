@@ -47,9 +47,6 @@ secrets:
     db_name: sonar
     db_user: sonar
     db_password: sonar
-  vcs_oauth:
-    id: "{{ vcs_oauth_app_id }}"
-    secret: "{{ vcs_oauth_app_secret }}"
   keycloak_db:
     db_user: keycloak
     db_password: keycloak

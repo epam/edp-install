@@ -173,6 +173,10 @@
   args:
     chdir: "{{ post_integration_dir }}/gerrit/all-projects"
 
+- name: "Add keycloak as trustedOpenID"
+  shell: |
+    {{ ocadm }} exec -i $({{ gerrit_pod }}) -- bash -c 'git config -f /var/gerrit/review_site/etc/gerrit.config auth.trustedOpenID ^.*$'
+
 #- name: "Enable hideci.js"
 #  shell: "{{ item }}"
 #  with_items:
