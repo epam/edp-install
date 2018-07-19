@@ -220,6 +220,7 @@ parameters:
 - displayName: VCS ssh port
   name: VCS_SSH_PORT
   value: "22"
+  required: true
 #Keycloak parameters
 - displayName: Keycloak version
   name: KEYCLOAK_IMAGE
