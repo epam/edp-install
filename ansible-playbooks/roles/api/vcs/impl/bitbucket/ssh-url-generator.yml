@@ -15,13 +15,8 @@
 ---
 - set_fact:
     project_vcs_hostname: "{{ vcs_group_url | urlsplit('hostname') }}"
-    project_vcs_group_path: "{{ vcs_group_url | urlsplit('path') }}"
+    project_vcs_group_path: "{{ vcs_group_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
   when: vcs_group_url is defined
 
 - set_fact:
-    clone_repo_url: "{{ project_vcs_hostname }}:{{ project_vcs_group_path.split('/')[2] + '/' + vcs_project_name }}.git"
-  when: vcs_group_url is defined
-
-- set_fact:
-    clone_repo_url: "{{ git_repo_url }}"
-  when: vcs_group_url is not defined
+    clone_repo_url: "{{ project_vcs_hostname + ':' + project_vcs_group_path | regex_replace('^projects\\/(?P<project_path>.+)$', '\\g<project_path>') + '/' + vcs_project_name }}.git"
