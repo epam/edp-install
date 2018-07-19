@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
+- set_fact:
+    project_vcs_group_path: "{{ project_vcs_group_path | regex_replace('^projects\\/(?P<project_path>.+)$', '\\g<project_path>') }}"
+
 - name: "Change remote repository"
   shell: |
-    git remote set-url origin {{ project_vcs_hostname + ':' + project_vcs_group_path.split('/')[1] + '/' + vcs_project_name }}.git
+    git remote set-url origin {{ project_vcs_hostname + ':' + project_vcs_group_path + '/' + vcs_project_name }}.git
   args:
     chdir: "{{ work_dir }}/{{ vcs_project_name }}"
 

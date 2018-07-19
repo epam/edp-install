@@ -234,3 +234,7 @@
     target_dir: "{{ work_dir }}/{{ vcs_project_name }}"
     name: "{{ project_vcs_edp }}"
     gerrit_username: "admin"
+
+- include_tasks: roles/common/tasks/manage-gerrit/project-replication.yml
+  vars:
+    name: "{{ project_vcs_edp }}"

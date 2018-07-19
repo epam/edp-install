@@ -103,12 +103,6 @@ objects:
     replication.config: |
       [gerrit]
         defaultForceUpdate = true
-      [remote "${VCS_PROJECT_NAME}"]
-        url = {{ clone_repo_url }}
-        fetch = +refs/*:refs/*
-        push = +refs/heads/*:refs/heads/*
-        projects = ${VCS_PROJECT_NAME}
-        replicatePermissions = false
     sshPort: ${GERRIT_SSH_PORT}
 - apiVersion: v1
   kind: DeploymentConfig
