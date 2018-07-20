@@ -43,6 +43,9 @@ def run(vars) {
                 if (!application.version)
                     return
             }
+
+
+            sh "oc adm policy add-role-to-user view system:serviceaccount:${vars.deployProject}:${application.name} -n ${vars.deployProject}"
             appDir = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}/${application.name}"
             deployTemplatesPath = "${appDir}/${vars.deployTemplatesDirectory}"
             dir("${appDir}") {
