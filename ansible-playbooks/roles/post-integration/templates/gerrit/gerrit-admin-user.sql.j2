@@ -20,28 +20,6 @@ begin;
 \set gerrit_admin_account_id 1
 \set gerrit_admin_group_id 1
 
-{% if tools.gerrit.auth_type == "DEVELOPMENT_BECOME_ANY_ACCOUNT" %}
-/*
-*
-* For DEVELOPMENT mode we will have already user created in DB
-* We need only update its password and email
-*
-*/
-
--- password is secret
-UPDATE account_external_ids
-SET email_address = NULL,
-    password = 'bcrypt:4:LQxyNT+l97/F/Mt4gpOcSQ==:b2MP1Ycrm7mv+Deg4ndJIEI0suhLQUFA'
-WHERE
-    external_id = 'username:admin';
-
-UPDATE account_external_ids
-SET email_address = '{{ secrets.gerrit_admin.email }}',
-    password = NULL
-WHERE
-    external_id = 'mailto:admin@example.com';
-
-{% else %}
 /*
 *
 * For OAUTH mode we need to create internal admin account to manage
@@ -89,7 +67,5 @@ VALUES (now(),
         'N',
         NULL,
         :gerrit_admin_account_id);
-
-{% endif %}
 
 end;

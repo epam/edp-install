@@ -65,7 +65,6 @@ tools:
     jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   gerrit:
     version: "{{ gerrit_version | default('2.14.8') }}"
-    auth_type: "{{ gerrit_auth_type | default('OAUTH') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
     volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
     web_url: "https://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"

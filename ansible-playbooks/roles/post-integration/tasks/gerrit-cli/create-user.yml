@@ -16,7 +16,12 @@
   shell: >
     {{ gerrit_manage }} create-account
     --full-name \"'{{ item.full_name }}'\"
-    --http-password {{ item.password }}
+    {% if item.password is defined %}
+    --http-password \"'{{ item.password }}'\"
+    {% endif %}
+    {% if item.group is defined %}
+    --group \"'{{ item.group }}'\"
+    {% endif %}
     {{ item.username }}
   changed_when: "'already exists' not in result.stderr"
   register: result
