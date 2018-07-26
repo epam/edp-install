@@ -14,8 +14,8 @@
 
 ---
 - name: "Check health of {{ item.service }} deployment in project {{ item.project }}"
-  shell: "{{ ocadm }} -n {{ item.project }} get dc {{ item.service }} -o jsonpath='{.status.availableReplicas}'"
+  shell: "{{ ocadm }} -n {{ item.project }} rollout status dc {{ item.service }}"
   retries: 240
   delay: 15
   register: result
-  until: result.stdout | int > 0
+  until: '"successfully rolled out" in result.stdout'
