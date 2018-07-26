@@ -27,8 +27,15 @@ objects:
   metadata:
     name: "{{ name }}"
   stringData:
+    username: ${KEYCLOAK_USER}
+    password: ${KEYCLOAK_PASSWORD}
+- kind: Secret
+  apiVersion: v1
+  metadata:
+    name: "{{ name }}-db"
+  stringData:
     {{ name }}-db-user: ${DB_USER}
-    {{ name }}-db-password: ${PASSWORD}
+    {{ name }}-db-password: ${DB_PASSWORD}
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
@@ -117,9 +124,9 @@ objects:
       spec:
         serviceAccountName: "{{ name }}"
         initContainers:
-        - name: "init-{{ name}}-db"
+        - name: "init-{{ name }}-db"
           image: busybox
-          command: ["sh", "-c", "while ! nc -w 1 {{ name}}-db 5432 </dev/null; do echo waiting for {{ name}}-db; sleep 10; done;"]
+          command: ["sh", "-c", "while ! nc -w 1 {{ name }}-db 5432 </dev/null; do echo waiting for {{ name }}-db; sleep 10; done;"]
         containers:
         - name: "{{ name }}"
           image: "${SERVICE_IMAGE}:${SERVICE_VERSION}"
@@ -128,22 +135,34 @@ objects:
             - name: gui
               containerPort: 8080
           env:
+          - name: KEYCLOAK_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ name }}
+                key: username
+          - name: KEYCLOAK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ name }}
+                key: password
           - name: POSTGRES_DATABASE
             value: {{ name }}-db
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: {{ name }}
+                name: {{ name }}-db
                 key: {{ name }}-db-user
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ name }}
+                name: {{ name }}-db
                 key: {{ name }}-db-password
           - name: POSTGRES_PORT_5432_TCP_ADDR
             value: {{ name }}-db
           - name: POSTGRES_PORT_5432_TCP_PORT
             value: '5432'
+          - name: PROXY_ADDRESS_FORWARDING
+            value: "true"
           livenessProbe:
             failureThreshold: 5
             initialDelaySeconds: 180
@@ -201,12 +220,12 @@ objects:
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: {{ name }}
-                key: {{ name}}-db-user
+                name: {{ name }}-db
+                key: {{ name }}-db-user
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ name }}
+                name: {{ name }}-db
                 key: {{ name }}-db-password
           - name: PGDATA
             value: /var/lib/postgresql/data/pgdata
@@ -259,10 +278,16 @@ parameters:
   name: SERVICE_IMAGE
   value: "jboss/keycloak"
   required: true
-- displayName: "{{ name}}-db password"
+- displayName: "{{ name }}-db password"
   name: DB_PASSWORD
   generate: expression
   from: "[a-zA-Z0-9]{10}"
-- displayName: "{{ name}}-db user"
+- displayName: "{{ name }}-db user"
   name: DB_USER
   value: {{ name }}
+- displayName: "{{ name }} password"
+  name: KEYCLOAK_PASSWORD
+  value: admin
+- displayName: "{{ name }} user"
+  name: KEYCLOAK_USER
+  value: admin
