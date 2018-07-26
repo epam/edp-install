@@ -47,8 +47,8 @@ node("master") {
 
         if (commonLib.getBuildCause() != "Image change") {
             def parameters = [string(
-                    defaultValue: '',
-                    description: "Project suffix for ${vars.pipelineProject} project where services will be deployed, leave blank to deploy to ${vars.pipelineProject}(default) project",
+                    defaultValue: "${vars.projectSuffix}",
+                    description: "Project suffix for ${vars.pipelineProject} environment where services will be deployed. Default is ${vars.projectSuffix}",
                     name: "PROJECT_SUFFIX",
                     trim: true)]
             vars.get(vars.appSettingsKey).each() { application ->
@@ -66,8 +66,8 @@ node("master") {
                 parameters.add(choice(choices: "${application.tags.join('\n')}", description: '', name: "${application.name.toUpperCase().replaceAll("-", "_")}_VERSION"))
             }
             vars['userInput'] = input id: 'userInput', message: 'Provide the following information', parameters: parameters
-
-            if (vars.userInput["PROJECT_SUFFIX"] && vars.userInput["PROJECT_SUFFIX"] != "")
+            
+            if (vars.userInput["PROJECT_SUFFIX"] && vars.userInput["PROJECT_SUFFIX"] != vars.projectSuffix && vars.userInput["PROJECT_SUFFIX"] != "")
                 vars['deployProject'] = "${vars.deployProject}-${vars.userInput["PROJECT_SUFFIX"]}"
         }
 
@@ -119,7 +119,7 @@ node("master") {
         currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been passed"
     }
 
-    if (vars.userInput && vars.userInput["PROJECT_SUFFIX"] && vars.userInput["PROJECT_SUFFIX"] != "") {
+    if (vars.userInput && vars.userInput["PROJECT_SUFFIX"] && vars.userInput["PROJECT_SUFFIX"] != vars.projectSuffix && vars.userInput["PROJECT_SUFFIX"] != "") {
         println("[JENKINS][WARNING] Promote images from custom projects is prohibited and will be skipped")
         return
     }
