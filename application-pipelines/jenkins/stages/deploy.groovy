@@ -88,7 +88,7 @@ def deployApplicationTemplate(application) {
     if (!checkTemplateExists(templateName, deployTemplatesPath)) {
         templateName = application.name
         if (!checkTemplateExists(templateName, deployTemplatesPath))
-            commonLib.failJob("[JENKINS][ERROR] Deploy stage has been failed. Application template was not found")
+            return
     }
     sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${templateName}.yaml " +
             "-p IMAGE_NAME=${vars.metaProject}/${application.name} " +
@@ -211,7 +211,7 @@ def checkDeployment(object, type) {
                     verifyReplicaCount: 'true', waitTime: '600', waitUnit: 'sec'
             println("[JENKINS][WARNING] Rolling out of ${object.name} with version ${object.version} has been failed.")
         } else
-            commonLib.failJob("[JENKINS][ERROR] ${object.name} deploy has been failed. Reason - ${verifyDeploymentException}")
+            println("[JENKINS][WARNING] ${object.name} deploy has been failed. Reason - ${verifyDeploymentException}")
     }
 
 }
