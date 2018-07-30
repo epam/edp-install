@@ -44,19 +44,14 @@ objects:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          env:
-            - name: PROXY_DISCOVERY_URL
-              value: ${KEYCLOAK_WEB_URL}/auth/realms/${REALM}
-            - name: PROXY_CLIENT_ID
-              value: ${CLIENT_ID}
-            - name: PROXY_CLIENT_SECRET
-              value: secret
-            - name: PROXY_LISTEN
-              value: 0.0.0.0:3000
-            - name: PROXY_REDIRECTION_URL
-              value: ${REDIRECTION_URL}
-            - name: PROXY_UPSTREAM_URL
-              value: http://127.0.0.1:${UPSTREAM_PORT}
+          args:
+            - '--skip-openid-provider-tls-verify=true'
+            - '--discovery-url=${KEYCLOAK_WEB_URL}/auth/realms/${REALM}'
+            - '--client-id=${CLIENT_ID}'
+            - '--client-secret=secret'
+            - '--listen=0.0.0.0:3000'
+            - '--redirection-url=${REDIRECTION_URL}'
+            - '--upstream-url=http://127.0.0.1:${UPSTREAM_PORT}'
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}
