@@ -23,7 +23,7 @@
     force_basic_auth: "yes"
     status_code: 200
 
-- name: Wait 300 seconds until sonar 9000 port will be available
+- name: Wait 3600 seconds until sonar 9000 port will be available
   wait_for:
     host: "sonar.{{ project_cicd }}"
     port: 9000
@@ -41,8 +41,8 @@
     status_code: 200
   register: result
   until: result.json.status == "UP"
-  retries: 30
-  delay: 10
+  retries: 240
+  delay: 15
 
 - debug:
     msg: "Sonar is restarted"

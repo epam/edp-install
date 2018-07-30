@@ -30,5 +30,5 @@
     status_code: 200
   register: result
   until: result.status == 200
-  retries: 30
-  delay: 10
+  retries: 240
+  delay: 15
