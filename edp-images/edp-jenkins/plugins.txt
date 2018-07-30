@@ -23,7 +23,7 @@ cloudbees-folder:6.1.2
 command-launcher:1.2
 conditional-buildstep:1.3.1
 config-file-provider:2.16.2
-credentials:2.1.16
+credentials:2.1.17
 dependency-check-jenkins-plugin:2.1.1
 display-url-api:2.2.0
 docker-commons:1.8
@@ -34,10 +34,10 @@ findbugs:4.72
 gerrit-trigger:2.27.5
 git-client:2.7.0
 git-server:1.5
-git:3.8.0
+git:3.9.1
 github-api:1.86
-github-branch-source:2.2.3
-github:1.26.0
+github-branch-source:2.3.6
+github:1.29.2
 greenballs:1.15
 handlebars:1.1
 htmlpublisher:1.16
@@ -81,7 +81,7 @@ token-macro:2.1
 validating-string-parameter:2.3
 workflow-api:2.25
 workflow-basic-steps:2.3
-workflow-cps-global-lib:2.7
+workflow-cps-global-lib:2.9
 workflow-cps:2.42
 workflow-durable-task-step:2.19
 workflow-job:2.14.1
