@@ -40,7 +40,7 @@
     force_basic_auth: "yes"
     status_code: 200
   register: result
-  until: result.json.status == "UP"
+  until: result.json is defined and result.json.status == "UP"
   retries: 240
   delay: 15
 
