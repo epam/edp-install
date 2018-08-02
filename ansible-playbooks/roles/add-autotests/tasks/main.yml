@@ -22,8 +22,6 @@
     - { key_name: 'auto-test\.settings\.json' }
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
-  vars:
-    git_repo_url: "{{ item_map.git_repo_url }}"
 
 - set_fact:
     vcs_project_path: "{{ project_vcs_group_path }}/{{ name }}"

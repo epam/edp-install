@@ -13,19 +13,19 @@
 # limitations under the License.
 
 ---
-- name: Creates work directory
-  file:
-    path={{ templates_dir }}
-    state=directory
-
 - set_fact:
-    project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
+    gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"
 
-- include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
-- include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
-- include_tasks: create_projects.yml
-  when: env_map | length > 0
-- include_tasks: create_pipelines.yml
-  when: env_map | length > 0
-- include_tasks: add-config-map-to-app.yml
-- include_tasks: add-env-specific-app-template.yml
+- name: "Generate templates"
+  vars:
+    env_name: "{{ item.name | lower }}"
+    env_triggers: "{{ item.triggers }}"
+  template:
+    src: build-config.j2
+    dest: "{{ templates_dir }}/{{ item.name }}-bc.json"
+  with_items: "{{ env_map | list }}"
+
+- name: "Update Pipelines in Openshift"
+  shell: |
+   {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/{{ item.name }}-bc.json
+  with_items: "{{ env_map | list }}"

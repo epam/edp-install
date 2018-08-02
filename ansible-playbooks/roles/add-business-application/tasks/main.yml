@@ -22,8 +22,6 @@
     - { key_name: 'app\.settings\.json' }
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
-  vars:
-    git_repo_url: "{{ item_map.git_repo_url }}"
 
 - set_fact:
     vcs_project_path: "{{ project_vcs_group_path }}/{{ name }}"
@@ -73,3 +71,8 @@
 - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
   vars:
     gerrit_project: "{{ name }}"
+
+- include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
+
+- include_tasks: update_pipelines.yml
+  when: env_map | length > 0
