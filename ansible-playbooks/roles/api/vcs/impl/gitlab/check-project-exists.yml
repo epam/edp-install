@@ -23,6 +23,7 @@
   retries: 10
   delay: 10
   until: result.status == 200 or result.status == 404
+  no_log: true
 
 - set_fact:
     repository_exists: "{{ true if result.status != 404 else false }}"

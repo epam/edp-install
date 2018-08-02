@@ -24,6 +24,7 @@
    {{ ocadm }} -n {{ project_cockpit }} get secret keycloak
    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
+  no_log: true
 
 - name: "Get OIDC provider configuration"
   uri:

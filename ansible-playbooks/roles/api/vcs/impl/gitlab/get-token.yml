@@ -21,6 +21,8 @@
   delay: 3
   register: result
   until: result.status == 200
+  no_log: true
 
 - set_fact:
     csrf_token: "{{ result.json.access_token }}"
+  no_log: true

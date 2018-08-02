@@ -17,9 +17,11 @@
    {{ ocadm }} -n {{ project_cicd }} get secret keycloak-gerrit
    --template={% raw %}'{{ index .data "secret" }}'{% endraw %} | base64 --decode
   register: keycloak_gerrit
+  no_log: true
 
 - set_fact:
     keycloak_gerrit_realm_secret: "{{ keycloak_gerrit.stdout }}"
+  no_log: true
 
 - name: "Get username from cicd projects Keycloak secret"
   shell: >
@@ -32,6 +34,7 @@
    {{ ocadm }} -n {{ project_cockpit }} get secret keycloak
    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
+  no_log: true
 
 - name: "Login to Keycloak and get token"
   uri:
@@ -39,6 +42,7 @@
     method: POST
     body: 'grant_type=password&username={{ username.stdout }}&password={{ password.stdout }}&client_id=admin-cli'
   register: access_token
+  no_log: true
 
 - name: "Create realm for Keycloak"
   uri:

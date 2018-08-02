@@ -24,6 +24,7 @@
     return_content: yes
   ignore_errors: true
   register: result
+  no_log: true
 
 - set_fact:
     repository_exists: "{{ true if result.status != 404 else false }}"

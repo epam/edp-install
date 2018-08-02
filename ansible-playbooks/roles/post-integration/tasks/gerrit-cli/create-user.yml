@@ -28,3 +28,4 @@
   failed_when:
     - "result.rc != 0"
     - "'already exists' not in result.stderr"
+  no_log: true

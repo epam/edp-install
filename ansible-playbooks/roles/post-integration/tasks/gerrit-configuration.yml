@@ -59,6 +59,7 @@
   with_items:
     - { secret_name: "gerrit-admin", configmap_key: "id_rsa" , sshkey: "gerrit_admin_rsa" }
     - { secret_name: "gerrit-project-creator", configmap_key: "id_rsa" , sshkey: "gerrit_project-creator_rsa" }
+  no_log: true
 
 - include_tasks: roles/api/vcs/generate-ssh-config.yml
   vars:

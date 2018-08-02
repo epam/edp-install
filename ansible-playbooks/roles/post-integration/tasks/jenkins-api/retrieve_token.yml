@@ -12,9 +12,11 @@
     password: "{{ tools.jenkins.password }}"
     url: http://jenkins.{{ project_cicd }}:8080
   register: result
+  no_log: true
 
 - set_fact:
     tools: "{{ tools | combine({ 'jenkins': { 'password': result.output }}, recursive=True) }}"
+  no_log: true
 
 - name: "Create secret for {{ item.username }} user with API token"
   register: result
@@ -27,3 +29,4 @@
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
+  no_log: true

@@ -36,8 +36,10 @@
       force_basic_auth: "yes"
       status_code: 200
     register: user_token
+    no_log: true
 
   - set_fact:
       sonar_token_id: "{{ user_token.json.token }}"
   when: item.name not in result.json.userTokens | map(attribute='name') | list
+  no_log: true
 
