@@ -44,7 +44,7 @@
 
   - include_tasks: roles/api/git/clone.yml
     with_items:
-      - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
+      - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
 
   - include_tasks: roles/api/vcs/push-to-project-vcs-group.yml
     vars:
@@ -58,7 +58,7 @@
 - block:
   - include_tasks: roles/api/git/clone.yml
     with_items:
-      - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}" }
+      - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
 
   - set_fact:
       clone_repo_url: "{{ item_map.git_repo_url }}"

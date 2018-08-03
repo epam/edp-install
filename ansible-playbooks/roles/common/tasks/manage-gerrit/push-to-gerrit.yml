@@ -13,17 +13,14 @@
 # limitations under the License.
 
 ---
-- name: "Pull repository"
-  command: "git pull origin master"
-  args:
-    chdir: "{{ target_dir }}"
-
 - name: "Add remote link to gerrit"
   shell: "git remote set-url --push origin ssh://{{ gerrit_username | default('project-creator') }}@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ name }}"
   args:
     chdir: "{{ target_dir }}"
 
 - name: "Push to gerrit"
-  shell: "git push --all"
+  shell: git push origin refs/heads/*:refs/heads/* refs/tags/*:refs/tags/*
   args:
     chdir: "{{ target_dir }}"
+
+  

@@ -40,3 +40,4 @@ adding environments, adding autotest and etc.
 
 In order to have a more flexible solution, all these files which are copied to some particular project
 to local DevOps repository can be changed at any time by project's DevOps team in order to add or change some logic of behavior of EDP.
+

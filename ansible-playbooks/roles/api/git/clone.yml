@@ -24,4 +24,5 @@
     key_file: "{{ item.key | default('') }}"
     accept_hostkey: true
     force: true
+    bare: "{{ item.bare | default('no') }}"
   ignore_errors: true

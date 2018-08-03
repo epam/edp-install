@@ -13,8 +13,7 @@
 # limitations under the License.
 
 - name: "Push repository in the directory {{ item.get_repository }}"
-  shell: |
-    git push origin master
+  shell: git push origin refs/heads/*:refs/heads/* refs/tags/*:refs/tags/*
   args:
     chdir: "{{ item.git_directory }}"
   register: result
