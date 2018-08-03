@@ -108,7 +108,7 @@ objects:
                 name: gerrit
                 key: sshPort
           - name: OPENSHIFT_ENABLE_OAUTH
-            value: ${JENKINS_ENABLE_OAUTH}
+            value: "false"
           - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
             value: "true"
           - name: KUBERNETES_MASTER
@@ -310,11 +310,6 @@ parameters:
   displayName: Jenkins admin initial password
   name: JENKINS_PASSWORD
   value: password
-- description: Whether to enable OAuth OpenShift integration. If false, the static
-    account 'admin' will be initialized with the password 'password'.
-  displayName: Enable OAuth in Jenkins
-  name: JENKINS_ENABLE_OAUTH
-  value: "false"
 - description: Volume space available for data
   displayName: Volume Capacity
   name: JENKINS_VOLUME_CAPACITY

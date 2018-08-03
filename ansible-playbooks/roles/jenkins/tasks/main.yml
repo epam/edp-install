@@ -24,7 +24,6 @@
   command: |
     {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/jenkins/jenkins-{{ tools.jenkins.fs_type }}.yaml
     -p JENKINS_PASSWORD={{ tools.jenkins.password }}
-    -p JENKINS_ENABLE_OAUTH={{ tools.jenkins.enable_oauth }}
     -p JENKINS_MAVEN_CACHE_VOLUME_CAPACITY={{ tools.jenkins.maven_cache_volume_capacity }}
     -p JENKINS_FRONTEND_IMAGE={{ tools.jenkins.frontend_image }}
     -p JENKINS_IMAGE_VERSION={{ tools.jenkins.jenkins_image }}

@@ -56,7 +56,6 @@ objects:
             - "-e gerrit_version=${GERRIT_VERSION}"
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
             - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
-            - "-e jenkins_enable_oauth=${JENKINS_ENABLE_OAUTH}"
             - "-e jenkins_fs_type=${JENKINS_FS_TYPE}"
             - "-e jenkins_host_path_volume=${JENKINS_HOST_PATH_VOLUME}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
@@ -131,11 +130,6 @@ parameters:
   description: Define it in case you chose 'hostpath' on the previous field. Otherwise, it should be ignored.
   name: JENKINS_HOST_PATH_VOLUME
   value: "/opt/data/jenkins"
-- displayName: Enable OAuth in Jenkins
-  description: Whether to enable OAuth OpenShift integration. If false, the static
-    account 'admin' will be initialized with the password 'password'.
-  name: JENKINS_ENABLE_OAUTH
-  value: "false"
 - displayName: Volume Capacity
   description: Volume space available for Jenkins data
   name: JENKINS_VOLUME_CAPACITY
