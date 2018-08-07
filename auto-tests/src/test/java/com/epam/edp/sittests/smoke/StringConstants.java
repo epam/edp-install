@@ -35,4 +35,6 @@ public class StringConstants {
     public static final String OPENSHIFT_USERNAME = "integration_tests";
     public static final String OPENSHIFT_PASSWORD = "tests2018";
     public static final Boolean OPENSHIFT_TRUST_CERTS = false;
+
+    public static final String KEYCLOAK_URL = "https://keycloak-security.main.edp.projects.epam.com";
 }

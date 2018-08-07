@@ -229,7 +229,7 @@ objects:
                 name: keycloak-gerrit
                 key: secret
           - name: OAUTH_KEYCLOAK_REALM
-            value: CI
+            value: {{ tools.keycloak.realm_name }}
           - name: OAUTH_KEYCLOAK_ROOT_URL
             value: {{ tools.keycloak.web_url }}
           - name: DATABASE_TYPE

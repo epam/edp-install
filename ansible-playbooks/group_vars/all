@@ -27,7 +27,8 @@ projects_list: [
     ]
 project_cicd: "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}"
 project_cockpit: "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}"
-project_vcs_edp: "{{ (projects_suffix != '') | ternary('edp-', 'edp')}}{{ projects_suffix }}"
+full_edp_name: "{{ (projects_suffix != '') | ternary('edp-', 'edp')}}{{ projects_suffix }}"
+project_vcs_edp: "{{ full_edp_name }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 vcs_ssh_port: "{{ vcs_ssh_port | default('7999') }}"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
@@ -179,5 +180,5 @@ tools:
   keycloak:
     image: "{{ keycloak_image | default('jboss/keycloak:3.4.3.Final') }}"
     volume_db_capacity: "{{ keycloak_volume_db_capacity | default('2Gi') }}"
-    realm_name: "{{ keycloak_realm_name | default('CI') }}"
-    web_url: "https://keycloak-{{ project_cockpit }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    realm_name: "{{ full_edp_name }}"
+    web_url: "https://keycloak-security.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"

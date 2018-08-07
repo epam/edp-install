@@ -23,22 +23,22 @@
     keycloak_gerrit_realm_secret: "{{ keycloak_gerrit.stdout }}"
   no_log: true
 
-- name: "Get username from cicd projects Keycloak secret"
+- name: "Get username from security project Keycloak secret"
   shell: >
-   {{ ocadm }} -n {{ project_cockpit }} get secret keycloak
+   {{ ocadm }} -n security get secret keycloak
    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: username
 
-- name: "Get password from cicd projects Keycloak secret"
+- name: "Get password from security project Keycloak secret"
   shell: >
-   {{ ocadm }} -n {{ project_cockpit }} get secret keycloak
+   {{ ocadm }} -n security get secret keycloak
    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
   no_log: true
 
 - name: "Login to Keycloak and get token"
   uri:
-    url: "http://keycloak.{{ project_cockpit }}:8080/auth/realms/master/protocol/openid-connect/token"
+    url: "http://keycloak.security:8080/auth/realms/master/protocol/openid-connect/token"
     method: POST
     body: 'grant_type=password&username={{ username.stdout }}&password={{ password.stdout }}&client_id=admin-cli'
   register: access_token
@@ -46,7 +46,7 @@
 
 - name: "Create realm for Keycloak"
   uri:
-    url: "http://keycloak.{{ project_cockpit }}:8080/auth/admin/realms"
+    url: "http://keycloak.security:8080/auth/admin/realms"
     method: POST
     headers:
       Authorization: "Bearer {{ access_token.json.access_token }}"
