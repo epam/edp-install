@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: "Get secret for gerrit realm from keycloak"
+- name: "Get secret for gerrit client from keycloak"
   shell: >
    {{ ocadm }} -n {{ project_cicd }} get secret keycloak-gerrit
    --template={% raw %}'{{ index .data "secret" }}'{% endraw %} | base64 --decode

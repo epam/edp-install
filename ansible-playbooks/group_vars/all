@@ -178,7 +178,5 @@ tools:
     enable_msra_quickstart: "{{ cockpit_enable_msra_quickstart | default('true') }}"
     openshift_trust_certificates: "true"
   keycloak:
-    image: "{{ keycloak_image | default('jboss/keycloak:3.4.3.Final') }}"
-    volume_db_capacity: "{{ keycloak_volume_db_capacity | default('2Gi') }}"
     realm_name: "{{ full_edp_name }}"
     web_url: "https://keycloak-security.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"

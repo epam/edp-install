@@ -67,13 +67,4 @@ public class CicdToolsSmokeTests {
                 statusCode(HttpStatus.SC_OK);
     }
 
-    @Test
-    public void keycloakSmokeTest() throws Exception {
-        useRelaxedHTTPSValidation();
-        when().
-                get(urlBuilder.buildUrl("http", "keycloak", "edp-cockpit", "")).
-                then().
-                statusCode(HttpStatus.SC_OK);
-    }
-
 }

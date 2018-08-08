@@ -75,10 +75,6 @@ objects:
             - "-e vcs_auto_user_secret=${VCS_AUTO_USER_SECRET}"
             - "-e vcs_group_name=${VCS_GROUP_NAME_URL}"
             - "-e vcs_ssh_port=${VCS_SSH_PORT}"
-            - "-e keycloak_image=${KEYCLOAK_IMAGE}"
-            - "-e keycloak_volume_db_capacity=${KEYCLOAK_DB_CAPACITY}"
-            - "-e keycloak_realm_name=${KEYCLOAK_REALM_NAME}"
-            - "-e keycloak_admin_user_secret=${KEYCLOAK_ADMIN_USER_SECRET}"
             - "ansible-playbooks/install.yml"
 parameters:
 - displayName: DNS wildcard
@@ -200,20 +196,3 @@ parameters:
   name: VCS_SSH_PORT
   value: "22"
   required: true
-#Keycloak parameters
-- displayName: Keycloak version
-  name: KEYCLOAK_IMAGE
-  value: "jboss/keycloak:3.4.3.Final"
-- displayName: Keycloak database Volume Capacity
-  description: Volume space available for Keycloak Database
-  name: KEYCLOAK_DB_CAPACITY
-  value: 2Gi
-- displayName: Keycloak admin user secret name
-  description: Keycloak admin user secret name from prerequisites
-  name: KEYCLOAK_ADMIN_USER_SECRET
-  value: keycloak
-  required: true
-- displayName: Keycloak realm name
-  description: Realm name for Keycloak
-  name: KEYCLOAK_REALM_NAME
-  value: CI

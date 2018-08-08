@@ -48,7 +48,6 @@
 
 - include_tasks: check-deployment-health.yml
   with_items:
-    - { project: '{{ project_cockpit }}', service: 'keycloak' }
     - { project: '{{ project_cicd }}', service: 'gerrit' }
     - { project: '{{ project_cicd }}', service: 'nexus' }
     - { project: '{{ project_cicd }}', service: 'sonar' }
@@ -67,7 +66,6 @@
 
 - include_tasks: check-deployment-health.yml
   with_items:
-    - { project: '{{ project_cockpit }}', service: 'keycloak' }
     - { project: '{{ project_cockpit }}', service: 'edp-cockpit' }
     - { project: '{{ project_cicd }}', service: 'gerrit' }
     - { project: '{{ project_cicd }}', service: 'nexus' }
