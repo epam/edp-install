@@ -36,24 +36,97 @@
   register: password
   no_log: true
 
+- set_fact:
+    keycloak_base_url: "http://keycloak.security:8080/auth"
+
 - name: "Login to Keycloak and get token"
   uri:
-    url: "http://keycloak.security:8080/auth/realms/master/protocol/openid-connect/token"
+    url: "{{ keycloak_base_url }}/realms/master/protocol/openid-connect/token"
     method: POST
     body: 'grant_type=password&username={{ username.stdout }}&password={{ password.stdout }}&client_id=admin-cli'
   register: access_token
   no_log: true
 
+- set_fact:
+    access_token: "{{ access_token.json.access_token }}"
+
 - name: "Create realm for Keycloak"
   uri:
-    url: "http://keycloak.security:8080/auth/admin/realms"
+    url: "{{ keycloak_base_url }}/admin/realms"
     method: POST
     headers:
-      Authorization: "Bearer {{ access_token.json.access_token }}"
+      Authorization: "Bearer {{ access_token }}"
       Content-Type: "application/json"
     body: "{{ lookup('template','./keycloak/edp-realm.json.j2') |to_json }}"
     body_format: json
     status_code: 201
+
+- name: "Create admin user for EDP in Keycloak"
+  uri:
+    url: "{{ keycloak_base_url }}/admin/realms/master/users"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: "application/json"
+    body: "{{ lookup('template','./keycloak/edp-admin.json.j2') |to_json }}"
+    body_format: json
+    status_code: 201
+  register: user
+
+- name: "Get realm role"
+  uri:
+    url: "{{ keycloak_base_url }}/admin/realms/master/roles/create-realm"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    status_code: 200
+  register: create_realm_role
+
+- set_fact:
+    list_roles: "[ {{ create_realm_role.json | to_json }} ]"
+
+- name: "Assign realm role"
+  uri:
+    url: "{{ user.location }}/role-mappings/realm"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: "application/json"
+    status_code: 204
+    body: "{{ list_roles }}"
+    body_format: json
+
+- name: "Get EDP clients"
+  uri:
+    url: "{{ keycloak_base_url }}/admin/realms/master/clients?clientId={{ full_edp_name }}-realm"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    status_code: 200
+  register: edp_clients
+
+- set_fact:
+    id_client: "{{ edp_clients.json[0].id }}"
+
+- name: "Get client roles"
+  uri:
+    url: "{{ keycloak_base_url }}/admin/realms/master/clients/{{ id_client }}/roles"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    status_code: 200
+  register: client_roles
+
+- name: "Assign client role"
+  uri:
+    url: "{{ user.location }}/role-mappings/clients/{{ id_client }}"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: "application/json"
+    status_code: 204
+    body: "{{ client_roles.json }}"
+    body_format: json
 
 - name: "Install Keycloak proxy to Nexus pod"
   include_tasks: keycloak-api/install-proxy.yml
