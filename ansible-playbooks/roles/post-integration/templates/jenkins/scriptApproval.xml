@@ -70,6 +70,7 @@ limitations under the License -->
     <string>new java.net.URI java.lang.String</string>
     <string>new java.util.Date</string>
     <string>new hudson.FilePath java.io.File</string>
+    <string>new java.lang.String byte[]</string>
     <string>staticField groovy.io.FileType FILES</string>
     <string>staticMethod com.cloudbees.plugins.credentials.CredentialsProvider lookupCredentials java.lang.Class hudson.model.ItemGroup</string>
     <string>staticMethod java.lang.System getenv java.lang.String</string>
@@ -91,6 +92,7 @@ limitations under the License -->
     <string>staticMethod org.codehaus.groovy.runtime.EncodingGroovyMethods encodeBase64 byte[]</string>
     <string>staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.Object java.lang.String</string>
     <string>staticMethod org.apache.commons.lang.RandomStringUtils random int boolean boolean</string>
+    <string>staticMethod org.codehaus.groovy.runtime.EncodingGroovyMethods decodeBase64 java.lang.String</string>
   </approvedSignatures>
   <aclApprovedSignatures/>
   <approvedClasspathEntries/>

@@ -13,10 +13,12 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 def run(vars) {
+
     vars.projectsToDelete.each() { projectName ->
         openshiftDeleteResourceByKey apiURL: '', authToken: '', keys: "${projectName}", namespace: '', types: 'project', verbose: 'false'
         sleep(10)
         sh("oc -n ${projectName} delete pod --all --force --grace-period=0")
+        keycloakLib.deleteKeycloakRealm(projectName, vars.keycloakAccessToken)
     }
     this.result = "success"
 }

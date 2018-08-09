@@ -16,6 +16,9 @@ import org.apache.commons.lang.RandomStringUtils
 
 def run(vars) {
     openshift.withCluster() {
+
+        keycloakLib.createKeycloakRealm(vars.deployProject, vars.keycloakAccessToken)
+
         if (!openshift.selector("project", vars.deployProject).exists()) {
             openshift.newProject(vars.deployProject)
             sh "oc adm policy add-role-to-user admin admin -n ${vars.deployProject}"

@@ -13,6 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 vars = [:]
+commonLib = null
 
 node("master") {
     if (!env.PIPELINES_PATH)
@@ -39,6 +40,13 @@ node("master") {
 
     stage('Delete projects') {
         dir("${vars.devopsRoot}") {
+
+            commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
+            commonLib.getConstants(vars)
+
+            keycloakLib = load "${vars.pipelinesPath}/libs/keycloak.groovy"
+            keycloakLib.getKeycloakAccessToken()
+
             vars.projectsToDelete = vars.projectNames.tokenize(',')
             source = load "${vars.pipelinesPath}/stages/delete-environment.groovy"
             source.run(vars)

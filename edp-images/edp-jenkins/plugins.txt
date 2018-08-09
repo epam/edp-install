@@ -41,6 +41,7 @@ github:1.29.2
 greenballs:1.15
 handlebars:1.1.1
 htmlpublisher:1.16
+http_request:1.8.22
 icon-shim:2.0.3
 jackson2-api:2.8.11.3
 jacoco:3.0.1

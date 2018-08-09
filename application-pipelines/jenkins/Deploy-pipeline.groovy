@@ -18,6 +18,7 @@ import hudson.FilePath
 vars = [:]
 vars['updatedApplicaions'] = []
 commonLib = null
+keycloakLib = null
 
 def checkEnvVariables(envVariable) {
     if (!env["${envVariable}"])
@@ -44,6 +45,8 @@ node("master") {
 
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
         commonLib.getConstants(vars)
+        keycloakLib = load "${vars.pipelinesPath}/libs/keycloak.groovy"
+        keycloakLib.getKeycloakAccessToken()
 
         if (commonLib.getBuildCause() != "Image change") {
             def parameters = [string(
