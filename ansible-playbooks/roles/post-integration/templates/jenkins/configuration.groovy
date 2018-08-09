@@ -90,9 +90,9 @@ def triggerConfig = [
 config.setValues(JSONObject.fromObject(triggerConfig))
 server.setConfig(config)
 
-server.getConfig().setNumberOfSendingWorkerThreads(pluginConfig.getNumberOfSendingWorkerThreads());
+server.getConfig().setNumberOfSendingWorkerThreads(pluginConfig.getNumberOfSendingWorkerThreads())
 server.getConfig().setGerritHostName("gerrit")
-server.getConfig().setGerritFrontEndURL("http://gerrit:8080/")
+server.getConfig().setGerritFrontEndURL("{{ tools.gerrit.web_url }}")
 server.getConfig().setGerritAuthKeyFile(new File("${JENKINS_HOME}/.ssh/id_rsa"))
 server.getConfig().setGerritSshPort("{{ gerrit_ssh_port }}".toInteger())
 server.getConfig().setGerritUserName("jenkins")
