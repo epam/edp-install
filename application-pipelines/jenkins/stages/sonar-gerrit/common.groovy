@@ -18,7 +18,7 @@ def run(vars) {
             sh "mvn sonar:sonar -Dsonar.analysis.mode=preview -Dsonar.report.export.path=sonar-report.json" +
                     " -Dsonar.branch=precommit -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
         }
-        sonarToGerrit inspectionConfig: [baseConfig: [projectPath: "${vars.workDir}"], serverURL: "${vars.sonarRoute}"],
+        sonarToGerrit inspectionConfig: [baseConfig: [projectPath: ""], serverURL: "${vars.sonarRoute}"],
                 notificationConfig: [commentedIssuesNotificationRecipient: 'NONE', negativeScoreNotificationRecipient: 'NONE'],
                 reviewConfig: [issueFilterConfig: [newIssuesOnly: false, changedLinesOnly: false, severity: 'CRITICAL']],
                 scoreConfig: [category: 'Sonar-Verified', issueFilterConfig: [severity: 'CRITICAL']]

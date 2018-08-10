@@ -19,5 +19,4 @@ def run(vars) {
     }
     this.result = "success"
 }
-
 return this;
