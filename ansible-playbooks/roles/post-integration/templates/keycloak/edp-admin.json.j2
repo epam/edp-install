@@ -1,13 +1,13 @@
 {
-  "username": "admin-{{ full_edp_name }}",
+  "username": "{{ keycloak_edp_admin }}",
   "enabled": true,
-  "email": "admin-{{ full_edp_name }}@example.com",
+  "email": "{{ keycloak_edp_admin }}@example.com",
   "firstName": "Administrator",
   "lastName": "EDP",
   "credentials": [
     {
       "type": "password",
-      "value": "secret"
+      "value": "{{ keycloak_edp_admin_password }}"
     }
   ]
 }

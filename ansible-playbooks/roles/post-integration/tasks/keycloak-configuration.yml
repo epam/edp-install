@@ -61,6 +61,19 @@
     body_format: json
     status_code: 201
 
+- name: "Create credential for Keycloak EDP admin"
+  set_fact:
+    keycloak_edp_admin: "admin-{{ full_edp_name }}"
+    keycloak_edp_admin_password: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+  no_log: true
+
+- name: "Create secret for Keycloak EDP admin"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create secret generic keycloak-admin
+    --from-literal=username={{ keycloak_edp_admin }}
+    --from-literal=password={{ keycloak_edp_admin_password }}
+  no_log: true
+
 - name: "Create admin user for EDP in Keycloak"
   uri:
     url: "{{ keycloak_base_url }}/admin/realms/master/users"
