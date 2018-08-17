@@ -28,19 +28,26 @@ def run(vars) {
         if (!("precommit" in parsedRunCommandJson.keySet()))
             error "[JENKINS][ERROR] Haven't found precommit command in file run.json. It's mandatory to be specified, please check"
 
-        sh "${parsedRunCommandJson.precommit} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        try {
+            sh "${parsedRunCommandJson.precommit} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        }
 
-        switch (vars.itemMap.report_framework.toLowerCase()) {
-            case "allure":
-                allure([
-                        includeProperties: false,
-                        reportBuildPolicy: 'ALWAYS',
-                        results: [[path: 'target/allure-results']]
-                ])
-                break
-            default:
-                println("[JENKINS][WARNING] Can't publish test results. Testing framework is unknown.")
-                break
+        catch (Exception ex) {
+            error "[JENKINS][ERROR] Tests have been failed with error - ${ex}"
+        }
+        finally {
+            switch (vars.itemMap.report_framework.toLowerCase()) {
+                case "allure":
+                    allure([
+                            includeProperties: false,
+                            reportBuildPolicy: 'ALWAYS',
+                            results          : [[path: 'target/allure-results']]
+                    ])
+                    break
+                default:
+                    println("[JENKINS][WARNING] Can't publish test results. Testing framework is unknown.")
+                    break
+            }
         }
     }
     this.result = "success"
