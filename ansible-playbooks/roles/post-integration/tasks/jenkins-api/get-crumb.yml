@@ -6,6 +6,8 @@
     password: "{{ tools.jenkins.password }}"
     force_basic_auth: yes
   register: result
+  retries: 5
+  delay: 1
 
 - set_fact:
     jenkins_crumb: "{{ result.json.crumb }}"

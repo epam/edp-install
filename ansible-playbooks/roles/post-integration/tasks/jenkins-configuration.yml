@@ -79,4 +79,3 @@
 - include_tasks: jenkins-api/create-user.yml
   with_items: "{{ tools.nexus.local_users }}"
   when: item.jenkins_id is defined
-  no_log: true

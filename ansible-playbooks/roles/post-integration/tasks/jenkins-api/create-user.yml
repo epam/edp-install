@@ -36,4 +36,5 @@
          }
       }
     status_code: 200,302
-  no_log: true
+  retries: 5
+  delay: 1

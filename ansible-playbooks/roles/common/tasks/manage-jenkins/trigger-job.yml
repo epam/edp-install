@@ -25,9 +25,22 @@
   register: crumb
   until: crumb.status == 200
 
-- name: "Trigger job provisioning"
+- name: "Check if {{ job_name }} exists"
   uri:
-    url: http://jenkins.{{ project_cicd }}:8080/job/Job-provisioning/build
+    url: http://jenkins.{{ project_cicd }}:8080/job/{{ job_name }}/api/json
+    method: GET
+    user: admin
+    password: "{{ tools.jenkins.password }}"
+    force_basic_auth: yes
+  retries: 5
+  delay: 6
+  register: output
+  until: output.status == 200
+
+- name: "Trigger job {{ job_name }}"
+  uri:
+    url: "http://jenkins.{{ project_cicd }}:8080/job/{{ job_name }}/build\
+    {% if parameterized is defined %}WithParameters{% endif %}"
     method: POST
     user: admin
     password: "{{ tools.jenkins.password }}"
