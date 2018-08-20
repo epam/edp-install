@@ -109,6 +109,16 @@ objects:
           env:
             - name: RABBITMQ_NODENAME
               value: "{{ name }}"
+            - name: RABBITMQ_DEFAULT_USER
+              valueFrom:
+                secretKeyRef:
+                    name: "rabbitmq-secret"
+                    key: rabbitmq.username
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                secretKeyRef:
+                    name: "rabbitmq-secret"
+                    key: rabbitmq.password
           livenessProbe:
             failureThreshold: 5
             initialDelaySeconds: 180
@@ -148,6 +158,13 @@ objects:
         terminationGracePeriodSeconds: 30
     triggers:
       - type: ConfigChange
+- kind: Secret
+  apiVersion: v1
+  metadata:
+    name: "rabbitmq-secret"
+  stringData:
+    rabbitmq.username: ${USERNAME}
+    rabbitmq.password: ${PASSWORD}
 parameters:
 - displayName: Service version
   name: SERVICE_VERSION
@@ -157,3 +174,11 @@ parameters:
   name: SERVICE_IMAGE
   required: true
   value: "{{ item_map.image }}"
+- displayName: Rabbitmq user
+  name: USERNAME
+  required: true
+  value: "admin"
+- displayName: Rabbitmq password
+  name: PASSWORD
+  required: true
+  value: "secret-rabbit"
