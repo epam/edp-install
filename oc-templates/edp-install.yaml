@@ -26,7 +26,7 @@ objects:
 - apiVersion: batch/v1
   kind: Job
   metadata:
-    name: edp-deploy${PROJECTS_SUFFIX}
+    name: ${PROJECTS_PREFIX}edp-deploy
   spec:
     parallelism: 1
     completions: 1
@@ -47,7 +47,7 @@ objects:
             - "-v"
             - "-i"
             - "localhost,"
-            - "-e projects_suffix=${PROJECTS_SUFFIX}"
+            - "-e projects_prefix=${PROJECTS_PREFIX}"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
             - "-e edp_version=${EDP_VERSION}"
@@ -91,9 +91,9 @@ parameters:
   description: Image and tag that defines version of EDP that will be deployed
   name: EDP_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-test:test"
-- displayName: Suffix for projects
-  description: Suffix that will be added to projects created by EDP Platform
-  name: PROJECTS_SUFFIX
+- displayName: Prefix for projects
+  description: Prefix that will be added to projects created by EDP Platform
+  name: PROJECTS_PREFIX
   value: "test"
 - displayName: Applications to install
   description: For separate installation, defines what tools will be deployed during installation. For now it can be jenkins,nexus,gerrit,sonar,edp-cockpit.

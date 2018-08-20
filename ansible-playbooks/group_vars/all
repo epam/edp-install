@@ -20,14 +20,14 @@ post_integration_dir: "{{ work_dir }}/post-integration"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/oc-templates"
 files_dir: "{{ work_dir }}/files"
-projects_suffix: ""
+projects_prefix: ""
 projects_list: [
-    "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}",
-    "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}"
+    "{{ projects_prefix }}{{ (projects_prefix != '') | ternary('-edp-cockpit', 'edp-cockpit')}}",
+    "{{ projects_prefix }}{{ (projects_prefix != '') | ternary('-edp-cicd', 'edp-cicd')}}"
     ]
-project_cicd: "{{ (projects_suffix != '') | ternary('edp-cicd-', 'edp-cicd')}}{{ projects_suffix }}"
-project_cockpit: "{{ (projects_suffix != '') | ternary('edp-cockpit-', 'edp-cockpit')}}{{ projects_suffix }}"
-full_edp_name: "{{ (projects_suffix != '') | ternary('edp-', 'edp')}}{{ projects_suffix }}"
+project_cicd: "{{ projects_prefix }}{{ (projects_prefix != '') | ternary('-edp-cicd', 'edp-cicd')}}"
+project_cockpit: "{{ projects_prefix }}{{ (projects_prefix != '') | ternary('-edp-cockpit', 'edp-cockpit')}}"
+full_edp_name: "{{ projects_prefix }}{{ (projects_prefix != '') | ternary('-edp', 'edp')}}"
 project_vcs_edp: "{{ full_edp_name }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 vcs_ssh_port: "{{ vcs_ssh_port | default('7999') }}"

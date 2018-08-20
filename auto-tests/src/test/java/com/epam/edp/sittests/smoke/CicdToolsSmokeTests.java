@@ -26,16 +26,15 @@ public class CicdToolsSmokeTests {
     private UrlBuilder urlBuilder;
 
     @BeforeClass
-    @Parameters("ocpEdpSuffix")
-    public void setUp(String ocpEdpSuffix) {
-        this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
+    @Parameters("ocpEdpPrefix")
+    public void setUp(String ocpEdpPrefix) {
+        this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
     }
 
     @Test
     public void jenkinsSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
-        when().
-                get(urlBuilder.buildUrl("https", "jenkins", "edp-cicd", "login")).
+        when().get(urlBuilder.buildUrl("https", "jenkins", "edp-cicd", "login")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -43,8 +42,7 @@ public class CicdToolsSmokeTests {
     @Test
     public void gerritSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
-        when().
-                get(urlBuilder.buildUrl("http", "gerrit", "edp-cicd", "")).
+        when().get(urlBuilder.buildUrl("http", "gerrit", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -52,8 +50,7 @@ public class CicdToolsSmokeTests {
     @Test
     public void nexusSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
-        when().
-                get(urlBuilder.buildUrl("http", "nexus", "edp-cicd", "")).
+        when().get(urlBuilder.buildUrl("http", "nexus", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -61,8 +58,7 @@ public class CicdToolsSmokeTests {
     @Test
     public void sonarSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
-        when().
-                get(urlBuilder.buildUrl("http", "sonar", "edp-cicd", "")).
+        when().get(urlBuilder.buildUrl("http", "sonar", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }

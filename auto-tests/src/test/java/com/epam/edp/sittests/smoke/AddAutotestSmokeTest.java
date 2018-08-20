@@ -31,12 +31,12 @@ import java.util.Map;
 
 import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_PASSWORD;
 import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_USER;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_TRUST_CERTS;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
 import static com.epam.edp.sittests.smoke.StringConstants.PRECOMMIT_PIPELINE_SUFFIX;
-import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
 import static io.restassured.RestAssured.given;
 
 /**
@@ -65,11 +65,11 @@ public class AddAutotestSmokeTest {
     }
 
     @BeforeClass
-    @Parameters("ocpEdpSuffix")
-    public void setUp(String ocpEdpSuffix) {
-        this.copyAutotestName = COPY_AUTOTEST_PREFIX + "-" + ocpEdpSuffix;
-        this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
-        this.openshiftNamespace = OPENSHIFT_CICD_NAMESPACE + "-" + ocpEdpSuffix;
+    @Parameters("ocpEdpPrefix")
+    public void setUp(String ocpEdpPrefix) {
+        this.copyAutotestName = ocpEdpPrefix + "-" + COPY_AUTOTEST_PREFIX;
+        this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
+        this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
     }
 
     @DataProvider(name = "autotest")

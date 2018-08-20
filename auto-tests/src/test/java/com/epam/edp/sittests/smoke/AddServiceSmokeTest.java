@@ -16,11 +16,11 @@ package com.epam.edp.sittests.smoke;
 
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static com.epam.edp.sittests.smoke.StringConstants.*;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
+import static com.epam.edp.sittests.smoke.StringConstants.RABBITMQ_SERVICE_NAME;
 import static io.restassured.RestAssured.given;
 
 /**
@@ -28,23 +28,24 @@ import static io.restassured.RestAssured.given;
  */
 public class AddServiceSmokeTest {
     private UrlBuilder urlBuilder;
-    private String ocpEdpSuffix;
+    private String ocpEdpPrefix;
 
     @BeforeClass
-    @Parameters("ocpEdpSuffix")
-    public void setUp(String ocpEdpSuffix) {
-        this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
-        this.ocpEdpSuffix = ocpEdpSuffix;
+    @Parameters("ocpEdpPrefix")
+    public void setUp(String ocpEdpPrefix) {
+        this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
+        this.ocpEdpPrefix = ocpEdpPrefix;
     }
 
+    @Test
     public void testServiceTemplateHasBeenAdded() {
         given().log().all()
                 .pathParam("service", RABBITMQ_SERVICE_NAME)
-                .pathParam("project", "edp-" + ocpEdpSuffix)
+                .pathParam("project", ocpEdpPrefix + "-edp")
                 .urlEncodingEnabled(false)
                 .when()
                 .get(urlBuilder.buildUrl("http",
-                        "gerrit",OPENSHIFT_CICD_NAMESPACE,
+                        "gerrit", OPENSHIFT_CICD_NAMESPACE,
                         "projects/{project}/branches/master/files/deploy-templates%2F{service}.yaml/content"))
                 .then()
                 .statusCode(HttpStatus.SC_OK);

@@ -50,9 +50,9 @@ node("master") {
 
         if (commonLib.getBuildCause() != "Image change") {
             def parameters = [string(
-                    defaultValue: "${vars.projectSuffix}",
-                    description: "Project suffix for ${vars.pipelineProject} environment where services will be deployed. Default is ${vars.projectSuffix}",
-                    name: "PROJECT_SUFFIX",
+                    defaultValue: "${vars.projectPrefix}",
+                    description: "Project prefix for ${vars.pipelineProject} environment where services will be deployed. Default is ${vars.projectPrefix}",
+                    name: "PROJECT_PREFIX",
                     trim: true)]
             vars.get(vars.appSettingsKey).each() { application ->
                 application['tags'] = ['noImageExists']
@@ -69,10 +69,10 @@ node("master") {
                 parameters.add(choice(choices: "${application.tags.join('\n')}", description: '', name: "${application.name.toUpperCase().replaceAll("-", "_")}_VERSION"))
             }
             vars['userInput'] = input id: 'userInput', message: 'Provide the following information', parameters: parameters
-            vars['inputProjectSuffix'] = (vars.userInput instanceof String) ? vars.userInput : vars.userInput["PROJECT_SUFFIX"]
+            vars['inputProjectPrefix'] = (vars.userInput instanceof String) ? vars.userInput : vars.userInput["PROJECT_PREFIX"]
             
-            if (vars.inputProjectSuffix && vars.inputProjectSuffix != vars.projectSuffix && vars.inputProjectSuffix != "")
-                vars['deployProject'] = "${vars.deployProject}-${vars.inputProjectSuffix}"
+            if (vars.inputProjectPrefix && vars.inputProjectPrefix != vars.projectPrefix && vars.inputProjectPrefix != "")
+                vars['deployProject'] = "${vars.inputProjectPrefix}-${vars.deployProject}"
         }
 
         vars.get(vars.appSettingsKey).each() { application ->
@@ -123,7 +123,7 @@ node("master") {
         currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been passed"
     }
 
-    if (vars.userInput && vars.inputProjectSuffix && vars.inputProjectSuffix != vars.projectSuffix && vars.inputProjectSuffix != "") {
+    if (vars.userInput && vars.inputProjectPrefix && vars.inputProjectPrefix != vars.projectPrefix && vars.inputProjectPrefix != "") {
         println("[JENKINS][WARNING] Promote images from custom projects is prohibited and will be skipped")
         return
     }

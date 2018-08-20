@@ -43,10 +43,10 @@ def run(vars) {
 
         def parsedRunCommandJson = new JsonSlurperClassic().parseText(runCommandFile)
 
-        if (vars.projectSuffix.isEmpty())
+        if (vars.projectPrefix.isEmpty())
             vars['environmentName'] = vars.pipelineProject
         else
-            vars['environmentName'] = vars.pipelineProject.take(vars.pipelineProject.length() - vars.projectSuffix.length() - 1)
+            vars['environmentName'] = vars.pipelineProject.drop(vars.projectPrefix.length() + 1)
 
         if (!(vars.environmentName in parsedRunCommandJson.keySet()))
             error "[JENKINS][ERROR] Haven't found ${vars.environmentName} command in file run.json. " +

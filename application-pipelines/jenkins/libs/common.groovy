@@ -83,8 +83,8 @@ def getConstants(vars) {
             returnStdout: true
     ).trim()
 
-    vars["projectSuffix"] = sh(
-            script: "oc get cm user-settings -o jsonpath='{.data.projects_suffix}'",
+    vars["projectPrefix"] = sh(
+            script: "oc get cm user-settings -o jsonpath='{.data.projects_prefix}'",
             returnStdout: true
     ).trim()
 

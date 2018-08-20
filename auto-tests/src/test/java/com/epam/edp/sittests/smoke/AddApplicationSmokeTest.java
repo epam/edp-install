@@ -14,27 +14,32 @@ limitations under the License. */
 
 package com.epam.edp.sittests.smoke;
 
+import io.fabric8.kubernetes.client.Config;
+import io.fabric8.kubernetes.client.ConfigBuilder;
+import io.fabric8.openshift.client.DefaultOpenShiftClient;
+import io.fabric8.openshift.client.OpenShiftClient;
 import io.qameta.allure.Feature;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import io.fabric8.kubernetes.client.Config;
-import io.fabric8.kubernetes.client.ConfigBuilder;
-import io.fabric8.openshift.client.DefaultOpenShiftClient;
-import io.fabric8.openshift.client.OpenShiftClient;
-import org.apache.commons.codec.binary.Base64;
-
-import static com.epam.edp.sittests.smoke.StringConstants.*;
-import static io.restassured.RestAssured.given;
 
 import java.util.Map;
 
+import static com.epam.edp.sittests.smoke.StringConstants.BE_APP_NAME;
+import static com.epam.edp.sittests.smoke.StringConstants.FE_APP_NAME;
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_PASSWORD;
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_USER;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_TRUST_CERTS;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
+import static com.epam.edp.sittests.smoke.StringConstants.POSTCOMMIT_PIPELINE_SUFFIX;
+import static com.epam.edp.sittests.smoke.StringConstants.PRECOMMIT_PIPELINE_SUFFIX;
+import static io.restassured.RestAssured.given;
 
 /**
  * @author Pavlo_Yemelianov
@@ -47,7 +52,6 @@ public class AddApplicationSmokeTest {
     private static final String POSTCOMMIT_FE_PIPELINE = POSTCOMMIT_PIPELINE_SUFFIX + FE_APP_NAME;
 
     private UrlBuilder urlBuilder;
-    private String ocpEdpSuffix;
     private OpenShiftClient openShiftClient;
     private String openshiftNamespace;
 
@@ -64,37 +68,36 @@ public class AddApplicationSmokeTest {
     }
 
     @BeforeClass
-    @Parameters("ocpEdpSuffix")
-    public void setUp(String ocpEdpSuffix) {
-        this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
-        this.ocpEdpSuffix = ocpEdpSuffix;
-        this.openshiftNamespace = OPENSHIFT_CICD_NAMESPACE + "-" + ocpEdpSuffix;
+    @Parameters("ocpEdpPrefix")
+    public void setUp(String ocpEdpPrefix) {
+        this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
+        this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
     }
 
     @DataProvider(name = "pipeline")
     public static Object[][] pipeline() {
-        return new Object[][] { {PRECOMMIT_BE_PIPELINE}, {PRECOMMIT_FE_PIPELINE}, {POSTCOMMIT_BE_PIPELINE},
-                {POSTCOMMIT_FE_PIPELINE} };
+        return new Object[][]{{PRECOMMIT_BE_PIPELINE}, {PRECOMMIT_FE_PIPELINE}, {POSTCOMMIT_BE_PIPELINE},
+                {POSTCOMMIT_FE_PIPELINE}};
     }
 
     @DataProvider(name = "application")
     public static Object[][] application() {
-        return new Object[][] { {BE_APP_NAME}, {FE_APP_NAME} };
+        return new Object[][]{{BE_APP_NAME}, {FE_APP_NAME}};
     }
 
     @Test(dataProvider = "application")
     public void testGerritProjectWasCreated(String application) {
-        given()
-            .pathParam("project", application)
-            .auth()
-            .basic(GERRIT_USER, GERRIT_PASSWORD)
-        .when()
-            .get(urlBuilder.buildUrl("http",
-                    "gerrit",
-                    "edp-cicd",
-                    "a/projects/{project}"))
-        .then()
-            .statusCode(HttpStatus.SC_OK);
+        given().log().all()
+                .pathParam("project", application)
+                .auth()
+                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .when()
+                .get(urlBuilder.buildUrl("http",
+                        "gerrit",
+                        "edp-cicd",
+                        "a/projects/{project}"))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 
     @Test(dataProvider = "pipeline")
@@ -108,18 +111,18 @@ public class AddApplicationSmokeTest {
         String username = new String(Base64.decodeBase64(credentials.get("username"))).trim();
         String token = new String(Base64.decodeBase64(credentials.get("token"))).trim();
 
-        given()
-            .pathParam("pipeline", pipeline)
-            .auth()
-            .preemptive()
-            .basic(username, token)
-        .when()
-            .get(urlBuilder.buildUrl("http",
-                    "jenkins",
-                    "edp-cicd",
-                    "job/{pipeline}/api/json"))
-         .then()
-            .statusCode(HttpStatus.SC_OK);
+        given().log().all()
+                .pathParam("pipeline", pipeline)
+                .auth()
+                .preemptive()
+                .basic(username, token)
+                .when()
+                .get(urlBuilder.buildUrl("http",
+                        "jenkins",
+                        "edp-cicd",
+                        "job/{pipeline}/api/json"))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 
     @Test(dataProvider = "application")
@@ -129,7 +132,7 @@ public class AddApplicationSmokeTest {
                 .urlEncodingEnabled(false)
                 .when()
                 .get(urlBuilder.buildUrl("http",
-                        "gerrit",OPENSHIFT_CICD_NAMESPACE,
+                        "gerrit", OPENSHIFT_CICD_NAMESPACE,
                         "projects/{application}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
                 .then()
                 .statusCode(HttpStatus.SC_OK);

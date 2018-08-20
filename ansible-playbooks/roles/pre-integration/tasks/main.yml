@@ -51,7 +51,7 @@
     {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
     --from-literal=vcs_autouser_secret={{ vcs_auto_user_secret }}
     --from-literal=vcs_group_name_url={{ vcs_group_name }}
-    --from-literal=projects_suffix={{ projects_suffix }}
+    --from-literal=projects_prefix={{ projects_prefix }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=vcs_tool_name={{ vcs_tool_name | lower }}
     --from-literal=vcs_ssh_port={{ vcs_ssh_port }}

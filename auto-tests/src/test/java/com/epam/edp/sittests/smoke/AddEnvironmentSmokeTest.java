@@ -14,28 +14,27 @@ limitations under the License. */
 
 package com.epam.edp.sittests.smoke;
 
+import io.fabric8.kubernetes.client.Config;
+import io.fabric8.kubernetes.client.ConfigBuilder;
+import io.fabric8.openshift.client.DefaultOpenShiftClient;
+import io.fabric8.openshift.client.OpenShiftClient;
 import io.qameta.allure.Feature;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import io.fabric8.kubernetes.client.Config;
-import io.fabric8.kubernetes.client.ConfigBuilder;
-import io.fabric8.openshift.client.DefaultOpenShiftClient;
-import io.fabric8.openshift.client.OpenShiftClient;
-import org.apache.commons.codec.binary.Base64;
 
 import java.util.Map;
 
 import static com.epam.edp.sittests.smoke.StringConstants.DELETION_PIPELINE_NAME;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
-import static io.restassured.RestAssured.given;
-
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_TRUST_CERTS;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
+import static io.restassured.RestAssured.given;
 
 public class AddEnvironmentSmokeTest {
     private String sitPipelineName;
@@ -58,12 +57,12 @@ public class AddEnvironmentSmokeTest {
 
     @Feature("Setup URL Builder")
     @BeforeClass
-    @Parameters("ocpEdpSuffix")
-    public void setUp(String ocpEdpSuffix) {
-        this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
-        this.sitPipelineName = "sit-" + ocpEdpSuffix + "-deploy-pipeline";
-        this.qaPipelineName = "qa-" + ocpEdpSuffix + "-deploy-pipeline";
-        this.openshiftNamespace = OPENSHIFT_CICD_NAMESPACE + "-" + ocpEdpSuffix;
+    @Parameters("ocpEdpPrefix")
+    public void setUp(String ocpEdpPrefix) {
+        this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
+        this.sitPipelineName = ocpEdpPrefix + "-sit-deploy-pipeline";
+        this.qaPipelineName = ocpEdpPrefix + "-qa-deploy-pipeline";
+        this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
     }
 
     @DataProvider(name = "pipeline")

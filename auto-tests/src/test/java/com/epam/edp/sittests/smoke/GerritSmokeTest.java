@@ -37,49 +37,49 @@ public class GerritSmokeTest {
     private UrlBuilder urlBuilder;
 
     @BeforeClass
-    @Parameters("ocpEdpSuffix")
-    public void setUp(String ocpEdpSuffix) {
-        this.urlBuilder = new UrlBuilder(ocpEdpSuffix);
+    @Parameters("ocpEdpPrefix")
+    public void setUp(String ocpEdpPrefix) {
+        this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
     }
 
     @DataProvider(name = "userlist")
     public static Object[][] userlist() {
-        return new Object[][] { {GERRIT_ADMIN}, {GERRIT_PROJECT_CREATOR}, {GERRIT_JENKINS} };
+        return new Object[][]{{GERRIT_ADMIN}, {GERRIT_PROJECT_CREATOR}, {GERRIT_JENKINS}};
     }
 
     @Test(dataProvider = "userlist")
-    public void testGerritUserExists(String userlist){
+    public void testGerritUserExists(String userlist) {
         given().log().all()
-            .pathParam("user", userlist)
-            .auth()
-            .basic(GERRIT_USER, GERRIT_PASSWORD)
-        .when()
-            .get(urlBuilder.buildUrl("http",
-                    "gerrit",
-                    "edp-cicd",
-                    "a/accounts/{user}/name"))
-        .then()
-            .statusCode(HttpStatus.SC_OK);
+                .pathParam("user", userlist)
+                .auth()
+                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .when()
+                .get(urlBuilder.buildUrl("http",
+                        "gerrit",
+                        "edp-cicd",
+                        "a/accounts/{user}/name"))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 
     @DataProvider(name = "grouplist")
     public static Object[][] grouplist() {
-        return new Object[][] { {GERRIT_GROUP_CI}, {GERRIT_GROUP_BOOTSTRAP} };
+        return new Object[][]{{GERRIT_GROUP_CI}, {GERRIT_GROUP_BOOTSTRAP}};
     }
 
     @Test(dataProvider = "grouplist")
-    public void testGerritGroupsExists(String grouplist){
+    public void testGerritGroupsExists(String grouplist) {
         given().log().all()
-            .pathParam("group", grouplist)
-            .auth()
-            .basic(GERRIT_USER, GERRIT_PASSWORD)
-        .when()
-            .get(urlBuilder.buildUrl("http",
-                    "gerrit",
-                    "edp-cicd",
-                    "a/groups/{group}"))
-        .then()
-            .statusCode(HttpStatus.SC_OK);
+                .pathParam("group", grouplist)
+                .auth()
+                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .when()
+                .get(urlBuilder.buildUrl("http",
+                        "gerrit",
+                        "edp-cicd",
+                        "a/groups/{group}"))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 
 }

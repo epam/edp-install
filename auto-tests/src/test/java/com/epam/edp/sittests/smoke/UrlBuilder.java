@@ -20,20 +20,20 @@ import org.apache.commons.lang3.StringUtils;
  * @author Pavlo_Yemelianov
  */
 public class UrlBuilder {
-    private String ocpEdpSuffix;
+    private String ocpEdpPrefix;
 
-    public UrlBuilder(String ocpEdpSuffix) {
-        this.ocpEdpSuffix = ocpEdpSuffix;
+    public UrlBuilder(String ocpEdpPrefix) {
+        this.ocpEdpPrefix = ocpEdpPrefix;
     }
 
     public String buildUrl(String protocol, String service, String namespace, String path) {
         return new StringBuilder(protocol)
                 .append("://")
                 .append(service)
+                .append(StringUtils.isNoneEmpty(ocpEdpPrefix) ? "-" : "")
+                .append(ocpEdpPrefix)
                 .append("-")
                 .append(namespace)
-                .append(StringUtils.isNoneEmpty(ocpEdpSuffix) ? "-" : "")
-                .append(ocpEdpSuffix)
                 .append(".main.edp.projects.epam.com")
                 .append(StringUtils.isNoneEmpty(path) ? "/" : "")
                 .append(path)

@@ -30,4 +30,4 @@
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
   vars:
-    gerrit_project: "{{ (projects_suffix != '') | ternary('edp-' + projects_suffix, 'edp')}}"
+    gerrit_project: "{{ projects_prefix }}{{ (projects_prefix != '') | ternary('-edp', 'edp')}}"
