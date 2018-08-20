@@ -77,7 +77,7 @@ def run(vars) {
                     sh "${runCommand}  -B --settings settings/maven/settings.xml"
                 }
                 catch (Exception ex) {
-                    commonLib.failJob("[JENKINS][ERROR] Tests from ${vars.atProject} have been failed. Reason - ${ex}")
+                    error "[JENKINS][ERROR] Tests from ${vars.atProject} have been failed. Reason - ${ex}"
                 }
                 finally {
                     switch (testFramework) {
