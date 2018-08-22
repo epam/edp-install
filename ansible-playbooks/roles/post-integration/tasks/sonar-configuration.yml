@@ -15,7 +15,6 @@
 ---
 - set_fact:
    sonar_reboot: false
-   enable_oidc: "{{ tools.sonar.enable_oidc }}"
 
 - include_tasks: sonar-api/install-plugins.yml
   with_items:
@@ -73,4 +72,3 @@
     - { key: 'sonar.typescript.lcov.reportPaths', value: 'coverage/lcov.info' }
 
 - include_tasks: sonar-api/set-keycloak-integration.yml
-  when: enable_oidc | bool == true

@@ -66,4 +66,4 @@
     - { key: 'sonar.auth.oidc.clientId.secured', value: "{{ sonar_client_id }}" }
     - { key: 'sonar.auth.oidc.groupsSync.claimName', value: "{{ sonar_claim_name }}" }
     - { key: 'sonar.auth.oidc.groupsSync', value: 'true' }
-    - { key: 'sonar.auth.oidc.enabled', value: "{{ tools.sonar.enable_oidc }}" }
+    - { key: 'sonar.auth.oidc.enabled', value: 'true' }

@@ -86,7 +86,6 @@
     -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
     -p PROJECT_CICD={{ project_cicd }}
     -p OPENSHIFT_TRUST_CERTIFICATES={{ tools.cockpit.openshift_trust_certificates }}
-    -p ENABLE_MSRA_QUICKSTART={{ tools.cockpit.enable_msra_quickstart }}
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'

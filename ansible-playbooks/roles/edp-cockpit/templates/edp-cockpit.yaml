@@ -126,8 +126,6 @@ objects:
               configMapKeyRef:
                 name: project-types
                 key: service-types.json
-          - name: ENABLE_MSRA_QUICKSTART
-            value: ${ENABLE_MSRA_QUICKSTART}
           - name: MSRA_APP_QUICKSTART
             valueFrom:
               configMapKeyRef:
@@ -166,7 +164,3 @@ parameters:
 - displayName: Enable trust certificates
   name: OPENSHIFT_TRUST_CERTIFICATES
   value: "true"
-- displayName: Enable msra quickstart
-  name: ENABLE_MSRA_QUICKSTART
-  value: "true"
-
