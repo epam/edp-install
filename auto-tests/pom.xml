@@ -28,7 +28,7 @@ limitations under the License. -->
     <properties>
         <java.version>1.8</java.version>
         <aspectj.version>1.8.10</aspectj.version>
-        <fabric8.openshift.version>3.1.8</fabric8.openshift.version>
+        <fabric8.openshift.version>4.0.4</fabric8.openshift.version>
         <io.qameta.allure.allure-testng>2.0-BETA14</io.qameta.allure.allure-testng>
         <io.qameta.allure.allure-rest-assured>2.0-BETA14</io.qameta.allure.allure-rest-assured>
         <org.hamcrest.hamcrest-all>1.3</org.hamcrest.hamcrest-all>
@@ -64,6 +64,11 @@ limitations under the License. -->
             <groupId>io.fabric8</groupId>
             <artifactId>openshift-client</artifactId>
             <version>${fabric8.openshift.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-client</artifactId>
+            <version>4.0.4</version>
         </dependency>
     </dependencies>
 

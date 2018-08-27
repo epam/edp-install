@@ -12,6 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM docker-registry.default.svc:5000/infra/jenkins:2.107.3
+FROM docker-registry.default.svc:5000/edp-cicd-delivery/jenkins:2.107.3
 COPY plugins.txt /opt/openshift/configuration/plugins.txt
 RUN /usr/local/bin/install-plugins.sh /opt/openshift/configuration/plugins.txt

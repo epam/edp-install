@@ -84,7 +84,7 @@ public class AddAutotestSmokeTest {
                 .auth()
                 .basic(GERRIT_USER, GERRIT_PASSWORD)
                 .when()
-                .get(urlBuilder.buildUrl("http",
+                .get(urlBuilder.buildUrl("https",
                         "gerrit",
                         "edp-cicd",
                         "a/projects/{project}"))
@@ -110,7 +110,7 @@ public class AddAutotestSmokeTest {
                 .preemptive()
                 .basic(username, token)
                 .when()
-                .get(urlBuilder.buildUrl("http",
+                .get(urlBuilder.buildUrl("https",
                         "jenkins",
                         "edp-cicd",
                         "job/{pipeline}/api/json"))
@@ -122,7 +122,7 @@ public class AddAutotestSmokeTest {
     public void testCopyAutotestProjectWasCreatedInGitGroupRepo() {
         Map<String, String> credentials = openShiftClient.secrets()
                 .inNamespace("edp-deploy")
-                .withName("auto-epmc-java-vcs-with-ssh")
+                .withName("vcs-autouser")
                 .get()
                 .getData();
         String username = new String(Base64.decodeBase64(credentials.get("username"))).trim();

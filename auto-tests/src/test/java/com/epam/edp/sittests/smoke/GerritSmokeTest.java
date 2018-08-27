@@ -54,7 +54,7 @@ public class GerritSmokeTest {
                 .auth()
                 .basic(GERRIT_USER, GERRIT_PASSWORD)
                 .when()
-                .get(urlBuilder.buildUrl("http",
+                .get(urlBuilder.buildUrl("https",
                         "gerrit",
                         "edp-cicd",
                         "a/accounts/{user}/name"))
@@ -74,7 +74,7 @@ public class GerritSmokeTest {
                 .auth()
                 .basic(GERRIT_USER, GERRIT_PASSWORD)
                 .when()
-                .get(urlBuilder.buildUrl("http",
+                .get(urlBuilder.buildUrl("https",
                         "gerrit",
                         "edp-cicd",
                         "a/groups/{group}"))

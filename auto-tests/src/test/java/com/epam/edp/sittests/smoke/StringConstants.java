@@ -31,10 +31,10 @@ public class StringConstants {
     public static final String GERRIT_PASSWORD = "secret";
 
     public static final String OPENSHIFT_CICD_NAMESPACE = "edp-cicd";
-    public static final String OPENSHIFT_MASTER_URL = "https://openshift.main.edp.projects.epam.com:8443";
+    public static final String OPENSHIFT_MASTER_URL = "https://master.delivery.aws.main.edp.projects.epam.com";
     public static final String OPENSHIFT_USERNAME = "integration_tests";
     public static final String OPENSHIFT_PASSWORD = "tests2018";
     public static final Boolean OPENSHIFT_TRUST_CERTS = false;
 
-    public static final String KEYCLOAK_URL = "https://keycloak-security.main.edp.projects.epam.com";
+    public static final String KEYCLOAK_URL = "https://keycloak-security.delivery.aws.main.edp.projects.epam.com";
 }

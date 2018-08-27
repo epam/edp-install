@@ -85,7 +85,7 @@ parameters:
 - displayName: Storage class name
   description: Storage class name to consume by every EDP tool
   name: STORAGE_CLASS_NAME
-  value: "glusterfs-storage-delivery"
+  value: "efs"
   required: true
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed
@@ -185,7 +185,7 @@ parameters:
 - displayName: Git autouser secret name
   description: Git autouser secret name from prerequisites
   name: VCS_AUTO_USER_SECRET
-  value: auto-epmc-java-vcs-with-ssh
+  value: "vcs-autouser"
   required: true
 - displayName: VCS group name URL
   description: VCS URL to the project group. For example 'https://git.epam.com/epmd-edp/temp'

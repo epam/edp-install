@@ -94,10 +94,11 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
 
+
 - name: "Copy cockpit SA and assign SCC"
   shell: "{{ item }}"
   with_items:
-    - "{{ ocadm }} -n {{ project_cockpit }} get sa cockpit -o json | jq '.metadata.namespace = \"{{ project_cicd }}\"' | {{ ocadm }} create -f -"
+    - "{{ ocadm }} -n {{ project_cicd }} create sa cockpit"
     - "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:cockpit"
     - "{{ ocadm }} adm policy add-scc-to-user edp-deploy system:serviceaccount:{{ project_cicd }}:cockpit"
   register: result

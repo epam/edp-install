@@ -92,7 +92,7 @@ public class AddApplicationSmokeTest {
                 .auth()
                 .basic(GERRIT_USER, GERRIT_PASSWORD)
                 .when()
-                .get(urlBuilder.buildUrl("http",
+                .get(urlBuilder.buildUrl("https",
                         "gerrit",
                         "edp-cicd",
                         "a/projects/{project}"))
@@ -117,7 +117,7 @@ public class AddApplicationSmokeTest {
                 .preemptive()
                 .basic(username, token)
                 .when()
-                .get(urlBuilder.buildUrl("http",
+                .get(urlBuilder.buildUrl("https",
                         "jenkins",
                         "edp-cicd",
                         "job/{pipeline}/api/json"))
@@ -131,7 +131,7 @@ public class AddApplicationSmokeTest {
                 .pathParam("application", application)
                 .urlEncodingEnabled(false)
                 .when()
-                .get(urlBuilder.buildUrl("http",
+                .get(urlBuilder.buildUrl("https",
                         "gerrit", OPENSHIFT_CICD_NAMESPACE,
                         "projects/{application}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
                 .then()

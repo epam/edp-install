@@ -44,7 +44,7 @@ public class AddServiceSmokeTest {
                 .pathParam("project", ocpEdpPrefix + "-edp")
                 .urlEncodingEnabled(false)
                 .when()
-                .get(urlBuilder.buildUrl("http",
+                .get(urlBuilder.buildUrl("https",
                         "gerrit", OPENSHIFT_CICD_NAMESPACE,
                         "projects/{project}/branches/master/files/deploy-templates%2F{service}.yaml/content"))
                 .then()

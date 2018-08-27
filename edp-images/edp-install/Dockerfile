@@ -13,7 +13,7 @@
 # limitations under the License.
 
 FROM openshift/origin
-RUN yum install -y git ansible jq
+RUN yum install -y git ansible
 WORKDIR /opt/edp/
 COPY ansible-playbooks /opt/edp/ansible-playbooks
 COPY application-pipelines /opt/edp/application-pipelines

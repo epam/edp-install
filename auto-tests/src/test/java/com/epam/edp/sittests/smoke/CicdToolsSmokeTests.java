@@ -42,7 +42,7 @@ public class CicdToolsSmokeTests {
     @Test
     public void gerritSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
-        when().get(urlBuilder.buildUrl("http", "gerrit", "edp-cicd", "")).
+        when().get(urlBuilder.buildUrl("https", "gerrit", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -50,7 +50,7 @@ public class CicdToolsSmokeTests {
     @Test
     public void nexusSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
-        when().get(urlBuilder.buildUrl("http", "nexus", "edp-cicd", "")).
+        when().get(urlBuilder.buildUrl("https", "nexus", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }
@@ -58,7 +58,7 @@ public class CicdToolsSmokeTests {
     @Test
     public void sonarSmokeTest() throws Exception {
         useRelaxedHTTPSValidation();
-        when().get(urlBuilder.buildUrl("http", "sonar", "edp-cicd", "")).
+        when().get(urlBuilder.buildUrl("https", "sonar", "edp-cicd", "")).
                 then().
                 statusCode(HttpStatus.SC_OK);
     }

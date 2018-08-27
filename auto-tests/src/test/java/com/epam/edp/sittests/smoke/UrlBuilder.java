@@ -34,7 +34,7 @@ public class UrlBuilder {
                 .append(ocpEdpPrefix)
                 .append("-")
                 .append(namespace)
-                .append(".main.edp.projects.epam.com")
+                .append(".delivery.aws.main.edp.projects.epam.com")
                 .append(StringUtils.isNoneEmpty(path) ? "/" : "")
                 .append(path)
                 .toString();
