@@ -33,6 +33,10 @@
 - debug:
     msg: "{{ item_map | to_json}}"
 
+- include_tasks: roles/api/git/check-permissions.yml
+  vars:
+    repo: "{{ item_map.git_repo_url }}"
+
 - block:
   - include_tasks: roles/api/vcs/copy-project.yml
     vars:
