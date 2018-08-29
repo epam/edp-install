@@ -50,6 +50,7 @@
     template:
       src: "{{ source_template }}"
       dest: "{{ templates_dir }}/{{ gerrit_project }}/deploy-templates/{{ item_map.name }}.yaml"
+      force: no
 
   - include_tasks: roles/common/tasks/manage-gerrit/push-templates-to-gerrit.yml
     vars:
