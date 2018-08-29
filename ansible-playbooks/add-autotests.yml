@@ -14,4 +14,4 @@
 
 - hosts: all
   roles:
-    - { role: add-autotests, name: "{{ autotest_alias }}", tags: [ 'add-autotests' ] }
+  - { role: add-autotests, vars: { name: "{{ autotest_alias }}" }, tags: [ 'add-autotests' ] }

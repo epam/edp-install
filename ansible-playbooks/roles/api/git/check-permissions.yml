@@ -13,15 +13,22 @@
 # limitations under the License.
 
 ---
+- set_fact:
+    permission_check_result: true
+
 - name: 'Check git permissions'
   shell: "git ls-remote {{ repo }}"
   register: clone_result
   ignore_errors: true
 
-- fail:
-    msg: "Import git repo failed with error \'{{ clone_result.stderr }}\'"
+- debug:
+    msg: "Import {{ repo }} failed, please make sure user {{ user }} have the correct access rights and the repository exists"
   when: "'fatal: Could not read from remote repository' in  clone_result.stderr "
 
-- fail:
+- debug:
     msg: "Copy git repo failed because it is not public or doesn't exist"
   when: "'https' in repo and clone_result is failed"
+
+- set_fact:
+    permission_check_result: false
+  when: "('fatal: Could not read from remote repository' in  clone_result.stderr) or ('https' in repo and clone_result is failed)"

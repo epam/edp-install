@@ -13,6 +13,7 @@
 # limitations under the License.
 
 FROM openshift/origin
+RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y git ansible
 WORKDIR /opt/edp/
 COPY ansible-playbooks /opt/edp/ansible-playbooks

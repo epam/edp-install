@@ -36,55 +36,66 @@
 - include_tasks: roles/api/git/check-permissions.yml
   vars:
     repo: "{{ item_map.git_repo_url }}"
+    user: "{{ vcs_autouser_name }}"
+
+- include_tasks: roles/common/tasks/manage-openshift/delete-app-settings.yml
+  vars:
+    vcs_project_name: "{{ name }}"
+    job_name: "add-application-{{ name }}"
+  when: permission_check_result | bool == false
 
 - block:
-  - include_tasks: roles/api/vcs/copy-project.yml
+
+  - block:
+    - include_tasks: roles/api/vcs/copy-project.yml
+      vars:
+        vcs_project_name: "{{ name }}"
+
+    - fail:
+        msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
+      when: repository_exists | bool == true
+
+    - include_tasks: roles/api/git/clone.yml
+      with_items:
+        - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
+
+    - include_tasks: roles/api/vcs/push-to-project-vcs-group.yml
+      vars:
+        vcs_project_name: "{{ name }}"
+
+    - include_tasks: roles/api/vcs/ssh-url-generator.yml
+      vars:
+        vcs_project_name: "{{ name }}"
+    when: item_map.add_repo_strategy is defined and item_map.add_repo_strategy == 'copy'
+
+  - block:
+    - include_tasks: roles/api/git/clone.yml
+      with_items:
+        - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
+
+    - set_fact:
+        clone_repo_url: "{{ item_map.git_repo_url }}"
+    when: item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
+
+  - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
+
+  - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
     vars:
-      vcs_project_name: "{{ name }}"
+      job_name: "Job-provisioning"
 
-  - fail:
-      msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
-    when: repository_exists | bool == true
-
-  - include_tasks: roles/api/git/clone.yml
-    with_items:
-      - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
-
-  - include_tasks: roles/api/vcs/push-to-project-vcs-group.yml
+  - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
     vars:
-      vcs_project_name: "{{ name }}"
+      gerrit_project: "{{ name }}"
 
-  - include_tasks: roles/api/vcs/ssh-url-generator.yml
+  - include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
+
+  - include_tasks: update_pipelines.yml
+    when: env_map | length > 0
+
+  - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
     vars:
-      vcs_project_name: "{{ name }}"
-  when: item_map.add_repo_strategy is defined and item_map.add_repo_strategy == 'copy'
+      job_name: "Gerrit-postcommit-{{ name }}"
+      parameterized: true
+    when: env_map | length > 0
 
-- block:
-  - include_tasks: roles/api/git/clone.yml
-    with_items:
-      - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
-
-  - set_fact:
-      clone_repo_url: "{{ item_map.git_repo_url }}"
-  when: item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
-
-- include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
-
-- include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
-  vars:
-    job_name: "Job-provisioning"
-
-- include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
-  vars:
-    gerrit_project: "{{ name }}"
-
-- include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
-
-- include_tasks: update_pipelines.yml
-  when: env_map | length > 0
-
-- include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
-  vars:
-    job_name: "Gerrit-postcommit-{{ name }}"
-    parameterized: true
-  when: env_map | length > 0
+  when: permission_check_result | bool == true
