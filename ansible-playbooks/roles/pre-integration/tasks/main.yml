@@ -33,7 +33,7 @@
   with_items: "{{ projects_list }}"
 
 - name: "Get security group"
-  shell: "{{ ocadm }} get group {{ oc_group_name }}"
+  shell: "{{ ocadm }} get group {{ oc_group_name }} -o jsonpath={.metadata.name}"
   register: result
   ignore_errors: true
 
