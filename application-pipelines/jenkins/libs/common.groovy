@@ -88,6 +88,11 @@ def getConstants(vars) {
             returnStdout: true
     ).trim()
 
+    vars["ocGroupName"] = sh(
+            script: "oc get cm user-settings -o jsonpath='{.data.oc_group_name}'",
+            returnStdout: true
+    ).trim()
+
     [vars.envSettingsKey, vars.appSettingsKey, vars.atSettingsKey, vars.svcSettingsKey].each() { key ->
         try {
             def settingsJson = sh(

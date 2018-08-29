@@ -32,8 +32,17 @@
   when: item in all_oc_projects.stdout_lines
   with_items: "{{ projects_list }}"
 
+- name: "Get security group"
+  shell: "{{ ocadm }} get group {{ oc_group_name }}"
+  register: result
+  ignore_errors: true
+
+- name: "Create security group to EDP instance"
+  shell: "{{ ocadm }} adm groups new {{ oc_group_name }}"
+  when: result.stdout != oc_group_name
+
 - name: "Create project in Openshift, giving rights to admin user on project we've just created"
-  shell: "{{ ocadm }} new-project {{ item }} && {{ ocadm }} adm policy add-role-to-user admin admin -n {{ item }}"
+  shell: "{{ ocadm }} new-project {{ item }} && {{ ocadm }} adm policy add-role-to-group admin {{ oc_group_name }} -n {{ item }}"
   with_items: "{{ projects_list }}"
 
 - name: "Switching to CICD project"
@@ -55,3 +64,4 @@
     --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=vcs_tool_name={{ vcs_tool_name | lower }}
     --from-literal=vcs_ssh_port={{ vcs_ssh_port }}
+    --from-literal=oc_group_name={{ oc_group_name }}

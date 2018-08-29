@@ -27,7 +27,7 @@
     - '"already" not in result.stdout'
 
 - name: "Define access to admin for new projects "
-  shell: "{{ ocadm }} adm policy add-role-to-user admin admin -n {{ item }}"
+  shell: "{{ ocadm }} adm policy add-role-to-group admin {{ oc_group_name }} -n {{ item }}"
   with_items: " {{ env_names_list }}"
 
 - name: "Set cluster-admin access to jenkins user"
