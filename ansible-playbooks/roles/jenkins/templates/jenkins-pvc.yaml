@@ -139,7 +139,7 @@ objects:
           terminationMessagePath: /dev/termination-log
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           volumeMounts:
           - mountPath: /var/lib/jenkins
             name: jenkins-data

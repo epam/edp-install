@@ -99,7 +99,7 @@ objects:
             timeoutSeconds: 1
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           terminationMessagePath: /dev/termination-log
           volumeMounts:
           - mountPath: /nexus-data
@@ -161,7 +161,7 @@ parameters:
 - description: Volume space available for Sonatype Nexus e.g. 512Mi, 2Gi
   displayName: Volume Space for Nexus
   name: NEXUS_VOLUME_CAPACITY
-  value: 1Gi
+  value: 500Mi
 - displayName: Nexus storage class name
   description: Storage class name to consume by Nexus
   name: STORAGE_CLASS_NAME

@@ -137,7 +137,7 @@ objects:
             timeoutSeconds: 5
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           volumeMounts:
             - mountPath: /var/lib/rabbitmq
               name: "{{ name }}-data"

@@ -151,7 +151,7 @@ objects:
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           ports:
             - containerPort: 5432
               protocol: TCP
@@ -274,7 +274,7 @@ objects:
               port: 8080
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           volumeMounts:
             - mountPath: /var/gerrit/review_site
               name: gerrit-data

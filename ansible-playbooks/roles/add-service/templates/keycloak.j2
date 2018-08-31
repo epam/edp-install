@@ -181,7 +181,7 @@ objects:
             timeoutSeconds: 5
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
         dnsPolicy: ClusterFirst
@@ -235,7 +235,7 @@ objects:
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           ports:
             - containerPort: 5432
               protocol: TCP

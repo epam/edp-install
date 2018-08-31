@@ -164,7 +164,7 @@ objects:
           terminationMessagePath: /dev/termination-log
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           volumeMounts:
           - mountPath: /opt/sonarqube/extensions/plugins
             name: sonar-data
@@ -222,7 +222,7 @@ objects:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: 1Gi
+              memory: 500Mi
           ports:
             - containerPort: 5432
               protocol: TCP
@@ -263,7 +263,7 @@ parameters:
 - description: Volume space available for SonarQube
   displayName: SonarQube Volume Capacity
   name: SONAR_VOLUME_CAPACITY
-  value: 1Gi
+  value: 500Mi
 - description: Volume space available for SonarQube Database
   displayName: SonarQube database Volume Capacity
   name: SONAR_DB_CAPACITY

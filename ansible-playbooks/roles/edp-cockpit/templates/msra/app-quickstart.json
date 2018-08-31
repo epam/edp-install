@@ -8,6 +8,6 @@
   "need_database": true,
   "database": "PostgreSQL",
   "database_version": "postgres:9.6",
-  "database_capacity": "1Gi",
+  "database_capacity": "500Mi",
   "persistent_storage": "{{ storage_class_name }}"
 }
