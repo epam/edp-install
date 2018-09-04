@@ -116,8 +116,35 @@ tools:
         taskProperties:
           repositoryName: "*"
           lastUsed: "14"
-      - name: rebuild-repository-index
+      - name: purge-orphaned-api-keys
         cron: '0 0 10 * * ?'
+        typeId: security.purge-api-keys
+      - name: purge-unused-maven-snapshot-versions
+        cron: '0 20 10 * * ?'
+        typeId: repository.maven.purge-unused-snapshots
+        taskProperties:
+          repositoryName: "*"
+          lastUsed: "14"
+      - name: remove-maven-indexes
+        cron: '0 40 10 * * ?'
+        typeId: repository.maven.unpublish-dotindex
+        taskProperties:
+          repositoryName: "*"
+      - name: remove-snapshots-from-maven-repository
+        cron: '0 0 11 * * ?'
+        typeId: repository.maven.remove-snapshots
+        taskProperties:
+          repositoryName: "*"
+          minimumRetained: "1"
+          snapshotRetentionDays: "30"
+          gracePeriodInDays: "10"
+      - name: rebuild-maven-repository-metadata
+        cron: '0 20 11 * * ?'
+        typeId: repository.maven.rebuild-metadata
+        taskProperties:
+          repositoryName: "*"
+      - name: rebuild-repository-index
+        cron: '0 40 11 * * ?'
         typeId: "repository.rebuild-index"
         taskProperties:
           repositoryName: "*"
