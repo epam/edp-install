@@ -89,13 +89,20 @@
 
   - include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
 
-  - include_tasks: update_pipelines.yml
-    when: env_map | length > 0
+  - block:
+    - include_tasks: roles/add-environments/tasks/add-config-map-to-app.yml
+      vars:
+        app_map: [ name: "{{ name }}" ]
+    - include_tasks: roles/add-environments/tasks/add-env-specific-app-template.yml
+      vars:
+        app_map: [ name: "{{ name }}" ]
 
-  - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
-    vars:
-      job_name: "Gerrit-postcommit-{{ name }}"
-      parameterized: true
+    - include_tasks: update_pipelines.yml
+
+    - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
+      vars:
+        job_name: "Gerrit-postcommit-{{ name }}"
+        parameterized: true
     when: env_map | length > 0
 
   when: permission_check_result | bool == true

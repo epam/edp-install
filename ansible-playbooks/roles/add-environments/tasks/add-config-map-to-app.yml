@@ -13,18 +13,6 @@
 # limitations under the License.
 
 ---
-- include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
-
-- include_tasks: roles/api/vcs/generate-ssh-config.yml
-
-- name: "Clone projects repositories from gerrit"
-  shell: >
-   git clone ssh://project-creator@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ item.name }} &&
-   scp -p -P {{ gerrit_ssh_port }} project-creator@gerrit.{{ project_cicd }}:hooks/commit-msg {{ item.name }}/.git/hooks/
-  args:
-    chdir: "{{ templates_dir }}"
-  with_items: "{{ app_map | list }}"
-
 - name: "Create directory for deploy templates"
   file:
     path: "{{ templates_dir }}/{{ item.name }}/deploy-templates"
@@ -35,12 +23,14 @@
   vars:
     app_name: "{{ item[0].name }}"
   template:
-    src: deploy-config.j2
+    src: roles/add-environments/templates/deploy-config.j2
     dest: "{{ templates_dir }}/{{ item[0].name }}/deploy-templates/{{ item[0].name }}-deploy-config-{{ item[1].name | regex_search('[^-]+$') }}.yaml"
     force: no
   with_nested:
     - "{{ app_map | list }}"
     - "{{ env_map | list }}"
 
-- include_tasks: push-template-each.yml
+- include_tasks: roles/add-environments/tasks/push-template-each.yml
+  vars:
+    commit_message: "Add deploy configs"
   with_items: "{{ app_map | list }}"

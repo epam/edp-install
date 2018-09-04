@@ -14,6 +14,5 @@
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-templates-to-gerrit.yml
   vars:
-    commit_message: "Add deploy configs"
     gerrit_project: "{{ item.name }}"
     push_result: 1
