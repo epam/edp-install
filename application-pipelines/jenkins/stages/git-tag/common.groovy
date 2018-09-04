@@ -18,6 +18,7 @@ def run(vars) {
             sh """
                 eval `ssh-agent`
                 ssh-add ${key}
+                mkdir -p ~/.ssh
                 ssh-keyscan -p ${vars.gerritSshPort} ${vars.gerritHost} >> ~/.ssh/known_hosts
                 git config --global user.email ${vars.gerritAutoUser}@epam.com
                 git config --global user.name ${vars.gerritAutoUser}
