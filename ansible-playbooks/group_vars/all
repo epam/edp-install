@@ -206,3 +206,4 @@ tools:
   keycloak:
     realm_name: "{{ full_edp_name }}"
     web_url: "https://keycloak-security.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    admin_username: "{{ admin_username | default('admin-edp') }}"

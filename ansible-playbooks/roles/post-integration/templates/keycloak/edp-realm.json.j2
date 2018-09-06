@@ -149,6 +149,19 @@
       "realmRoles": [ "administrator" ]
     },
     {
+          "username" : "{{ tools.keycloak.admin_username }}",
+          "enabled": true,
+          "email" : "{{ tools.keycloak.admin_username }}@example.com",
+          "firstName": "Administrator",
+          "lastName": "EDP",
+          "credentials" : [
+            { "type" : "password",
+              "value" : "secret" }
+          ],
+          "requiredActions" : [ "UPDATE_PASSWORD" ],
+          "realmRoles": [ "administrator" ]
+    },
+    {
           "username" : "edp-developer",
           "enabled": true,
           "email" : "developer@example.com",
