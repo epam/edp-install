@@ -41,6 +41,18 @@
   shell: "{{ ocadm }} adm groups new {{ oc_group_name }}"
   when: result.stdout != oc_group_name
 
+- name: "Check if user {{ tools.keycloak.admin_username }} already exists"
+  shell: "{{ ocadm }} get user {{ tools.keycloak.admin_username }} -o jsonpath={.metadata.name}"
+  register: result
+  ignore_errors: true
+
+- name: "Create user {{ tools.keycloak.admin_username }} in Openshift"
+  shell: "{{ ocadm }} create user {{ tools.keycloak.admin_username }}"
+  when: result.stdout != tools.keycloak.admin_username
+
+- name: "Join user {{ tools.keycloak.admin_username }} to {{ oc_group_name }}"
+  shell: "{{ ocadm }} adm groups add-users {{ oc_group_name }} {{ tools.keycloak.admin_username }}"
+
 - name: "Create project in Openshift, giving rights to admin user on project we've just created"
   shell: "{{ ocadm }} new-project {{ item }} && {{ ocadm }} adm policy add-role-to-group admin {{ oc_group_name }} -n {{ item }}"
   with_items: "{{ projects_list }}"
