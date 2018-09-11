@@ -141,6 +141,11 @@
     body: "{{ client_roles.json }}"
     body_format: json
 
+- include_tasks: keycloak-api/configure-idp.yml
+  with_items:
+    - { client: "openshift-realm", realm: "openshift", redirect_uri: "*" }
+    - { client: "master-realm", realm: "master", redirect_uri: "/auth/realms/master/broker/{{ full_edp_name }}/endpoint" }
+
 - name: "Install Keycloak proxy to Nexus pod"
   include_tasks: keycloak-api/install-proxy.yml
   vars:
