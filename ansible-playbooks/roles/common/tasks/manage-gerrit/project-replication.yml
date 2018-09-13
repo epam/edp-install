@@ -24,7 +24,10 @@
 - local_action: copy content="{{ replication_config.stdout }}" dest="/tmp/replication.config"
 
 - set_fact:
-    gerrit_pod: "{{ ocadm }} -n {{ project_cicd }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'gerrit-[0-9]+'"
+    gerrit_pod: |
+                  for i in `{{ ocadm }} -n {{ project_cicd }} get pods --no-headers -o custom-columns=NAME:.metadata.name | \
+                  egrep 'gerrit-[0-9]+'`; do pod_status=`{{ ocadm }} -n {{ project_cicd }} get pods $i -o jsonpath='{.status.phase}'`;\
+                  if [[ $pod_status = 'Running' ]]; then echo $i; fi; done
     gerrit_manage: "ssh gerrit.{{ project_cicd }} gerrit"
 
 - name: "Copy replication config to gerrit pod"
