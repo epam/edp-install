@@ -36,7 +36,7 @@
     - { src: "{{ post_integration_dir }}/gerrit/gerrit-admin-user.sql", dest: "/tmp/gerrit-admin-user.sql"}
 
 - name: "Run sql script in gerrit-db pod"
-  shell: "{{ ocadm }} exec -i $({{ gerrit_db_pod }}) -- psql --dbname={{ secrets.gerrit_db.db_name }} --file=/tmp/gerrit-admin-user.sql -U postgres"
+  shell: "{{ ocadm }} exec -i $({{ gerrit_db_pod }}) -- psql --dbname={{ secrets.gerrit_db.db_name }} --file=/tmp/gerrit-admin-user.sql -U gerrit"
 
 - name: "Generate ssh keys for gerrit users"
   shell: cat /dev/zero | ssh-keygen -b 4096 -t rsa -f {{ post_integration_dir }}/gerrit/{{ item }} -C "edp@example.com" -q -N ""
