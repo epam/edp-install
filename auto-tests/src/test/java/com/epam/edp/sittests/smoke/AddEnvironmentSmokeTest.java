@@ -14,25 +14,21 @@ limitations under the License. */
 
 package com.epam.edp.sittests.smoke;
 
-import io.fabric8.kubernetes.client.Config;
-import io.fabric8.kubernetes.client.ConfigBuilder;
-import io.fabric8.openshift.client.DefaultOpenShiftClient;
-import io.fabric8.openshift.client.OpenShiftClient;
+import com.openshift.internal.restclient.model.Secret;
+import com.openshift.restclient.ClientBuilder;
+import com.openshift.restclient.IClient;
+import com.openshift.restclient.ResourceKind;
 import io.qameta.allure.Feature;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.util.Map;
-
 import static com.epam.edp.sittests.smoke.StringConstants.DELETION_PIPELINE_NAME;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
-import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_TRUST_CERTS;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
 import static io.restassured.RestAssured.given;
 
@@ -41,18 +37,17 @@ public class AddEnvironmentSmokeTest {
     private String qaPipelineName;
     private String openshiftNamespace;
     private UrlBuilder urlBuilder;
-    private OpenShiftClient openShiftClient;
+    private IClient openShiftClient;
 
     @Feature("Setup Openshift Client")
     @BeforeClass
     public void setUpOpenShiftClient() {
-        Config config = new ConfigBuilder().withMasterUrl(OPENSHIFT_MASTER_URL)
-                .withUsername(OPENSHIFT_USERNAME)
+        this.openShiftClient = new ClientBuilder()
+                .toCluster(OPENSHIFT_MASTER_URL)
+                .withUserName(OPENSHIFT_USERNAME)
                 .withPassword(OPENSHIFT_PASSWORD)
-                .withTrustCerts(OPENSHIFT_TRUST_CERTS)
+                .sslCertCallbackWithDefaultHostnameVerifier(true)
                 .build();
-
-        this.openShiftClient = new DefaultOpenShiftClient(config);
     }
 
     @Feature("Setup URL Builder")
@@ -72,14 +67,10 @@ public class AddEnvironmentSmokeTest {
 
     @Test(dataProvider = "pipeline")
     public void testJenkinsTestPipelinesHasBeenCreated(String pipeline) {
-        Map<String, String> credentials = openShiftClient.secrets()
-                .inNamespace(openshiftNamespace)
-                .withName("jenkins-token")
-                .get()
-                .getData();
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, "jenkins-token", openshiftNamespace);
 
-        String username = new String(Base64.decodeBase64(credentials.get("username"))).trim();
-        String token = new String(Base64.decodeBase64(credentials.get("token"))).trim();
+        String username = new String(secret.getData("username")).trim();
+        String token = new String(secret.getData("token")).trim();
 
         given().log().all()
                 .pathParam("pipeline", pipeline)

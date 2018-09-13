@@ -17,9 +17,7 @@ limitations under the License. -->
 <suite name="EDP SIT Tests">
     <test name="Smoke Tests">
         <packages>
-            <!-- Should be changed after Openshift client will be fixed -->
-            <package name="com.epam.edp.sittests.business" />
-            <!-- Should be changed after Openshift client will be fixed -->
+            <package name="com.epam.edp.sittests.smoke" />
         </packages>
     </test>
 </suite>
