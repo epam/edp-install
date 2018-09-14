@@ -47,7 +47,6 @@ def run(vars) {
                     return
             }
 
-
             sh "oc adm policy add-role-to-user view system:serviceaccount:${vars.deployProject}:${application.name} -n ${vars.deployProject}"
             appDir = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}/${application.name}"
             deployTemplatesPath = "${appDir}/${vars.deployTemplatesDirectory}"
@@ -82,7 +81,7 @@ def cloneProject(application) {
 
 def deployApplicationTemplate(application) {
     application['currentDeploymentVersion'] = getDeploymentVersion(application)
-    environmentSuffix = vars.deployProject.tokenize('-').getAt(0)
+    environmentSuffix = vars.deployProject
     templateName = "${application.name}-install-${environmentSuffix}"
 
     if (application.need_database)
@@ -103,7 +102,7 @@ def deployApplicationTemplate(application) {
 }
 
 def deployConfigMapTemplate(application) {
-    templateName = application.name + '-deploy-config-' + vars.deployProject.tokenize('-').getAt(0)
+    templateName = application.name + '-deploy-config-' + vars.deployProject
     if (!checkTemplateExists(templateName, deployTemplatesPath))
         return
 
