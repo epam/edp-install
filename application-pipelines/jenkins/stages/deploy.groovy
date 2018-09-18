@@ -21,7 +21,10 @@ def run(vars) {
 
         if (!openshift.selector("project", vars.deployProject).exists()) {
             openshift.newProject(vars.deployProject)
-            sh "oc adm policy add-role-to-group admin ${vars.ocGroupName} -n ${vars.deployProject}"
+            groupList = [ "${vars.ocGroupName}", "${vars.projectPrefix}-edp-super-admin"]
+            groupList.each() { group ->
+                sh "oc adm policy add-role-to-group admin ${group} -n ${vars.deployProject}"
+            }
         }
 
         vars.get(vars.svcSettingsKey).each() { service ->

@@ -32,14 +32,10 @@
   when: item in all_oc_projects.stdout_lines
   with_items: "{{ projects_list }}"
 
-- name: "Get security group"
-  shell: "{{ ocadm }} get group {{ oc_group_name }} -o jsonpath={.metadata.name}"
-  register: result
-  ignore_errors: true
-
-- name: "Create security group to EDP instance"
-  shell: "{{ ocadm }} adm groups new {{ oc_group_name }}"
-  when: result.stdout != oc_group_name
+- include_tasks: roles/common/tasks/manage-openshift/create-groups.yml
+  with_items:
+    - "{{ oc_group_name }}"
+    - "{{ projects_prefix }}-edp-super-admin"
 
 - name: "Check if user {{ tools.keycloak.admin_username }} already exists"
   shell: "{{ ocadm }} get user {{ tools.keycloak.admin_username }} -o jsonpath={.metadata.name}"
@@ -51,11 +47,17 @@
   when: result.stdout != tools.keycloak.admin_username
 
 - name: "Join user {{ tools.keycloak.admin_username }} to {{ oc_group_name }}"
-  shell: "{{ ocadm }} adm groups add-users {{ oc_group_name }} {{ tools.keycloak.admin_username }}"
+  shell: "{{ ocadm }} adm groups add-users {{ projects_prefix }}-edp-super-admin {{ tools.keycloak.admin_username }}"
 
-- name: "Create project in Openshift, giving rights to admin user on project we've just created"
-  shell: "{{ ocadm }} new-project {{ item }} && {{ ocadm }} adm policy add-role-to-group admin {{ oc_group_name }} -n {{ item }}"
+- name: "Create project in Openshift"
+  shell: "{{ ocadm }} new-project {{ item }}"
   with_items: "{{ projects_list }}"
+
+- name: "Giving roles to groups"
+  shell: "{{ ocadm }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
+  with_nested:
+    - [ "{{ oc_group_name }}", "{{ projects_prefix }}-edp-super-admin" ]
+    - "{{ projects_list }}"
 
 - name: "Switching to CICD project"
   shell: "{{ ocadm }} project {{ project_cicd }}"
