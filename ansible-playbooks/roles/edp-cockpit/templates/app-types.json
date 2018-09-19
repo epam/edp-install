@@ -24,5 +24,14 @@
     "frameworks": [
       "React"
     ]
+  },
+  {
+    "language": ".NET",
+    "buildTools": [
+      "dotnet"
+    ],
+    "frameworks": [
+      ".NETcore"
+    ]
   }
 ]
