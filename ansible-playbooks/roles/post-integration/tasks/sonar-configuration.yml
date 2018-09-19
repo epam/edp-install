@@ -55,7 +55,11 @@
 
 - include_tasks: sonar-api/add-permission-to-user.yml
   with_items:
-    - { login: 'jenkins', permission: 'scan' }
+    - { login: 'jenkins', permission: 'admin' }
+
+- include_tasks: sonar-api/add-permission-to-group.yml
+  with_items:
+    - { group: 'non-interactive-users', permission: 'scan' }
 
 - include_tasks: sonar-api/generate_token.yml
   with_items:

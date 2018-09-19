@@ -45,6 +45,8 @@ node("master") {
             vars['promoteImage'] = false
         }
         vars['serviceBranch'] = env.GERRIT_BRANCH ? env.GERRIT_BRANCH : env.SERVICE_BRANCH
+        vars['gerritPatchsetNumber'] = env.GERRIT_PATCHSET_NUMBER ? env.GERRIT_PATCHSET_NUMBER : 0
+        vars['gerritChangeNumber'] = env.GERRIT_CHANGE_NUMBER ? env.GERRIT_CHANGE_NUMBER : 0
         vars["itemMap"] = commonLib.getItemMap(vars.gerritProject, vars.appSettingsKey)
         if (!vars["itemMap"])
             commonLib.failJob("[JENKINS][ERROR] Application ${vars.gerritProject} is not found in configmap" +
@@ -76,6 +78,7 @@ node(vars.itemMap.build_tool.toLowerCase()) {
     commonLib.runStage(vars, "compile","COMPILE")
     commonLib.runStage(vars, "tests", "TESTS")
     commonLib.runStage(vars, "sonar", "SONAR")
+    commonLib.runStage(vars, "sonar-cleanup", "SONAR-CLEANUP")
     commonLib.runStage(vars, "build", "BUILD")
     commonLib.runStage(vars, "push-to-nexus", "PUSH-TO-NEXUS")
     commonLib.runStage(vars, "run-build-config", "RUN-BUILD-CONFIG")

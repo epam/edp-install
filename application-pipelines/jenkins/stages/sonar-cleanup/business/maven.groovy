@@ -13,17 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 def run(vars) {
-    dir("${vars.workDir}") {
-        vars['npmVersion'] = sh(
-                script: """
-                        node -p "require('./package.json').version"
-                    """,
-                returnStdout: true
-        ).trim().toLowerCase()
-    }
-    vars['sonarProjectKey']="${vars.gerritProject}:change-${vars.gerritChangeNumber}"
-    println("[JENKINS][DEBUG] Npm version - ${vars.npmVersion}")
-    vars['businissAppVersion'] = "${vars.npmVersion}-${BUILD_NUMBER}"
+    def source = load "../common.groovy"
+    source.run(vars)
 }
 
 return this;

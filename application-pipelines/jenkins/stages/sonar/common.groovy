@@ -13,7 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 def run(vars) {
-    dir("${vars.workDir}") {
+    def runDir = vars.containsKey('sonarAnalysisRunTempDir') ? vars['sonarAnalysisRunTempDir'] : vars['workDir']
+    dir("${runDir}") {
         withSonarQubeEnv('Sonar') {
             sh "mvn sonar:sonar -Dsonar.branch=${vars.serviceBranch} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
         }
@@ -25,5 +26,4 @@ def run(vars) {
     }
     this.result = "success"
 }
-
 return this;

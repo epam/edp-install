@@ -12,8 +12,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
+import org.apache.commons.lang.RandomStringUtils
+
 def run(vars) {
-    dir("${vars.workDir}") {
+    vars['sonarAnalysisRunTempDir'] = new File("${vars.workDir}/../${RandomStringUtils.random(10, true, true)}")
+
+    dir("${vars.sonarAnalysisRunTempDir}") {
+        sh(script: """
+            cd ${vars.workDir}
+            for i in \$(git diff --diff-filter=AMR --name-status origin/master | awk \'{print \$2}\'); do cp --parents \$i ${vars.sonarAnalysisRunTempDir}/; done
+            cp -f pom.xml ${vars.sonarAnalysisRunTempDir}/
+            cp --parents -r src/test/ ${vars.sonarAnalysisRunTempDir}
+            cp --parents -r target/ ${vars.sonarAnalysisRunTempDir}""")
+
         withSonarQubeEnv('Sonar') {
             sh "mvn sonar:sonar -Dsonar.analysis.mode=preview -Dsonar.report.export.path=sonar-report.json" +
                     " -Dsonar.branch=precommit -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"

@@ -20,6 +20,17 @@ def run(vars) {
                     """,
                 returnStdout: true
         ).trim().toLowerCase()
+        vars['groupID'] = sh(
+                script: "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.groupId " +
+                        "--settings ${vars.devopsRoot}/${vars.mavenSettings} | grep -Ev '(^\\[|Download\\w+:)'",
+                returnStdout: true
+        ).trim()
+        vars['artifactID'] = sh(
+                script: "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.artifactId " +
+                        "--settings ${vars.devopsRoot}/${vars.mavenSettings} | grep -Ev '(^\\[|Download\\w+:)'",
+                returnStdout: true
+        ).trim()
+        vars['sonarProjectKey'] = "${vars.groupID}:${vars.artifactID}:change-${vars.gerritChangeNumber}"
     }
     println("[JENKINS][DEBUG] Pom version - ${vars.pomVersion}")
     vars['businissAppVersion'] = "${vars.pomVersion}-${BUILD_NUMBER}"
