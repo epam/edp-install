@@ -25,6 +25,7 @@ def run(vars) {
             groupList.each() { group ->
                 sh "oc adm policy add-role-to-group admin ${group} -n ${vars.deployProject}"
             }
+            sh "oc adm policy add-role-to-group view ${vars.projectPrefix}-edp-view -n ${vars.deployProject}"
         }
 
         vars.get(vars.svcSettingsKey).each() { service ->
