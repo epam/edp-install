@@ -21,7 +21,7 @@ def run(vars) {
 
         if (!openshift.selector("project", vars.deployProject).exists()) {
             openshift.newProject(vars.deployProject)
-            groupList = [ "${vars.ocGroupName}", "${vars.projectPrefix}-edp-super-admin", "${vars.projectPrefix}-edp-admin"]
+            groupList = [ "${vars.projectPrefix}-edp-super-admin", "${vars.projectPrefix}-edp-admin"]
             groupList.each() { group ->
                 sh "oc adm policy add-role-to-group admin ${group} -n ${vars.deployProject}"
             }

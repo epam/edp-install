@@ -34,7 +34,6 @@
 
 - include_tasks: roles/common/tasks/manage-openshift/create-groups.yml
   with_items:
-    - "{{ oc_group_name }}"
     - "{{ projects_prefix }}-edp-super-admin"
     - "{{ projects_prefix }}-edp-admin"
     - "{{ projects_prefix }}-edp-view"
@@ -48,7 +47,7 @@
   shell: "{{ ocadm }} create user {{ tools.keycloak.admin_username }}"
   when: result.stdout != tools.keycloak.admin_username
 
-- name: "Join user {{ tools.keycloak.admin_username }} to {{ oc_group_name }}"
+- name: "Join user {{ tools.keycloak.admin_username }} to {{ projects_prefix }}-edp-super-admin"
   shell: "{{ ocadm }} adm groups add-users {{ projects_prefix }}-edp-super-admin {{ tools.keycloak.admin_username }}"
 
 - name: "Create project in Openshift"
@@ -58,13 +57,12 @@
 - name: "Giving admin roles to groups"
   shell: "{{ ocadm }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
   with_nested:
-    - [ "{{ oc_group_name }}", "{{ projects_prefix }}-edp-super-admin", "{{ projects_prefix }}-edp-admin" ]
+    - [ "{{ projects_prefix }}-edp-super-admin", "{{ projects_prefix }}-edp-admin" ]
     - "{{ projects_list }}"
 
 - name: "Giving view roles to groups"
-  shell: "{{ ocadm }} adm policy add-role-to-group view {{ item[0] }} -n {{ item[1] }}"
-  with_nested:
-    - [ "{{ projects_prefix }}-edp-view" ]
+  shell: "{{ ocadm }} adm policy add-role-to-group view {{ projects_prefix }}-edp-view -n {{ item }}"
+  with_items:
     - "{{ projects_list }}"
 
 - name: "Switching to CICD project"
@@ -86,4 +84,3 @@
     --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=vcs_tool_name={{ vcs_tool_name | lower }}
     --from-literal=vcs_ssh_port={{ vcs_ssh_port }}
-    --from-literal=oc_group_name={{ oc_group_name }}

@@ -27,9 +27,8 @@
     - '"already" not in result.stdout'
 
 - name: "Define access to admin for new projects"
-  shell: "{{ ocadm }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
-  with_nested:
-    - [ "{{ oc_group_name }}", "{{ projects_prefix }}-edp-super-admin" ]
+  shell: "{{ ocadm }} adm policy add-role-to-group admin {{ projects_prefix }}-edp-super-admin -n {{ item }}"
+  with_items:
     - "{{ env_names_list }}"
 
 - name: "Set cluster-admin access to jenkins user"

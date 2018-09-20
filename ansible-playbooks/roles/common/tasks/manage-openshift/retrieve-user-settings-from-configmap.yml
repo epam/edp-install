@@ -43,7 +43,6 @@
     project_vcs_hostname: "{{ user_settings.data.vcs_group_name_url | urlsplit('hostname') }}"
     project_vcs_group_path: "{{ user_settings.data.vcs_group_name_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
     vcs_ssh_port: "{{ user_settings.data.vcs_ssh_port }}"
-    oc_group_name: "{{ user_settings.data.oc_group_name }}"
 
 - set_fact:
     project_vcs_hostname_url: "{{ user_settings.data.vcs_group_name_url | urlsplit('scheme') }}://{{ project_vcs_hostname }}"
