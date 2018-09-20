@@ -36,6 +36,7 @@
   with_items:
     - "{{ oc_group_name }}"
     - "{{ projects_prefix }}-edp-super-admin"
+    - "{{ projects_prefix }}-edp-admin"
 
 - name: "Check if user {{ tools.keycloak.admin_username }} already exists"
   shell: "{{ ocadm }} get user {{ tools.keycloak.admin_username }} -o jsonpath={.metadata.name}"
@@ -56,7 +57,7 @@
 - name: "Giving roles to groups"
   shell: "{{ ocadm }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
   with_nested:
-    - [ "{{ oc_group_name }}", "{{ projects_prefix }}-edp-super-admin" ]
+    - [ "{{ oc_group_name }}", "{{ projects_prefix }}-edp-super-admin", "{{ projects_prefix }}-edp-admin" ]
     - "{{ projects_list }}"
 
 - name: "Switching to CICD project"
