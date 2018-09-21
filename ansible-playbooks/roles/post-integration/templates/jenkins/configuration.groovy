@@ -68,6 +68,17 @@ sonarRunnerInstallations += sonarRunnerInstance
 sonarDescriptor.setInstallations((SonarRunnerInstallation[]) sonarRunnerInstallations)
 sonarDescriptor.save()
 
+def sonarDescriptorMsBuild = Jenkins.instance.getDescriptor("hudson.plugins.sonar.MsBuildSQRunnerInstallation")
+
+def sonarRunnerInstallerMsBuild = new MsBuildSonarQubeRunnerInstaller("4.3.1.1372-netcore")
+def installSourcePropertyMsBuild = new InstallSourceProperty([sonarRunnerInstallerMsBuild])
+def sonarRunnerInstanceMsBuild = new MsBuildSQRunnerInstallation("SonarScannerMSBuild", "", [installSourcePropertyMsBuild])
+
+def sonarRunnerInstallationsMsBuild = sonarDescriptorMsBuild.getInstallations()
+sonarRunnerInstallationsMsBuild += sonarRunnerInstanceMsBuild
+sonarDescriptorMsBuild.setInstallations((MsBuildSQRunnerInstallation[]) sonarRunnerInstallationsMsBuild)
+sonarDescriptorMsBuild.save()
+
 // Modifying Gerrit Plugin for getting an ability to post-configure it via job
 PluginImpl plugin = PluginImpl.getInstance();
 PluginConfig pluginConfig = plugin.getPluginConfig();
