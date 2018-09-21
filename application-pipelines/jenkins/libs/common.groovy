@@ -88,6 +88,12 @@ def getConstants(vars) {
             returnStdout: true
     ).trim()
 
+    vars['jenkinsToken'] = sh(
+            script: "oc -n ${vars.projectPrefix}-edp-cicd get secret jenkins-token " +
+                    "--template='{{ index .data \"token\" }}' | base64 --decode",
+            returnStdout: true
+    ).trim()
+
     [vars.envSettingsKey, vars.appSettingsKey, vars.atSettingsKey, vars.svcSettingsKey].each() { key ->
         try {
             def settingsJson = sh(

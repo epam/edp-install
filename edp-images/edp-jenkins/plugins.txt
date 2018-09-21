@@ -18,6 +18,7 @@ blueocean-web:1.6.2
 blueocean:1.6.2
 bouncycastle-api:2.16.3
 branch-api:2.0.20
+build-user-vars-plugin:1.5
 checkstyle:3.50
 cloudbees-folder:6.5.1
 command-launcher:1.2

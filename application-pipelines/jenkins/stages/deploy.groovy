@@ -28,6 +28,27 @@ def run(vars) {
             sh "oc adm policy add-role-to-group view ${vars.projectPrefix}-edp-view -n ${vars.deployProject}"
         }
 
+        wrap([$class: 'BuildUser']) {
+            userId = env.BUILD_USER_ID
+        }
+        if (userId == null || userId == ""){
+            jenkinsCred = sh(
+                    script: "echo -n admin:${vars.jenkinsToken} | base64",
+                    returnStdout: true
+            ).trim()
+            jobUrl = "${env.BUILD_URL}".replaceFirst("${env.JENKINS_URL}", '')
+            response = httpRequest url: "http://jenkins.${vars.projectPrefix}-edp-cicd:8080/${jobUrl}consoleText",
+                    httpMode: 'GET',
+                    customHeaders: [[name: 'Authorization', value: "Basic ${jenkinsCred}"]]
+            userId = sh(
+                    script: "#!/bin/sh -e\necho \"${response.content}\" | grep \"Approved by\" -m 1 | awk {'print \$3'}",
+                    returnStdout: true
+            ).trim()
+        }
+        if (userId != null && userId != "") {
+            sh "oc adm policy add-role-to-user admin ${userId} -n ${vars.deployProject}"
+        }
+
         vars.get(vars.svcSettingsKey).each() { service ->
             deployTemplatesPath = "${vars.devopsRoot}/${vars.deployTemplatesDirectory}"
             if (!checkTemplateExists(service.name, deployTemplatesPath))
