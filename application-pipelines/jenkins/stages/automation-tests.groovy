@@ -43,16 +43,11 @@ def run(vars) {
 
         def parsedRunCommandJson = new JsonSlurperClassic().parseText(runCommandFile)
 
-        if (vars.projectPrefix.isEmpty())
-            vars['environmentName'] = vars.pipelineProject
-        else
-            vars['environmentName'] = vars.pipelineProject.drop(vars.projectPrefix.length() + 1)
-
-        if (!(vars.environmentName in parsedRunCommandJson.keySet()))
-            error "[JENKINS][ERROR] Haven't found ${vars.environmentName} command in file run.json. " +
+        if (!(vars.stageWithoutPrefixName in parsedRunCommandJson.keySet()))
+            error "[JENKINS][ERROR] Haven't found ${vars.stageWithoutPrefixName} command in file run.json. " +
                     "It's mandatory to be specified, please check"
 
-        def runCommand = parsedRunCommandJson["${vars.environmentName}"]
+        def runCommand = parsedRunCommandJson["${vars.stageWithoutPrefixName}"]
 
         // Determine slave type
         def slaveType=""

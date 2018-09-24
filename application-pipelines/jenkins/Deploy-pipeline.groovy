@@ -36,22 +36,23 @@ node("master") {
             stash name: 'mavenSettings', includes: "**/settings/**", useDefaultExcludes: false
         }
 
-        openshift.withProject() {
-            def matcher = (JOB_NAME =~ /.*\\/${openshift.project()}-(.*)-deploy-pipeline/)
-            vars['pipelineProject'] = matcher[0][1]
-            vars['metaProject'] = "${vars.pipelineProject}-meta"
-            vars['deployProject'] = "${vars.pipelineProject}"
-        }
-
         commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
         commonLib.getConstants(vars)
         keycloakLib = load "${vars.pipelinesPath}/libs/keycloak.groovy"
         keycloakLib.getKeycloakAccessToken()
 
+        openshift.withProject() {
+            def matcher = (JOB_NAME =~ /.*\\/${openshift.project()}-(${vars.projectPrefix}-)*(.*)-deploy-pipeline/)
+            vars['stageName'] = matcher[0][1] ? "${matcher[0][1]}${matcher[0][2]}" : matcher[0][2]
+            vars['metaProject'] = "${vars.stageName}-meta"
+            vars['deployProject'] = "${vars.stageName}"
+            vars['stageWithoutPrefixName'] = matcher[0][2]
+        }
+
         if (commonLib.getBuildCause() != "Image change") {
             def parameters = [string(
                     defaultValue: "${vars.projectPrefix}",
-                    description: "Project prefix for ${vars.pipelineProject} environment where services will be deployed. Default is ${vars.projectPrefix}",
+                    description: "Project prefix for stage ${vars.deployProject} where services will be deployed.",
                     name: "PROJECT_PREFIX",
                     trim: true)]
             vars.get(vars.appSettingsKey).each() { application ->
@@ -82,9 +83,9 @@ node("master") {
                 application['version'] = "latest"
         }
 
-        vars["projectMap"] = commonLib.getItemMap(vars.pipelineProject, vars.envSettingsKey)
+        vars["projectMap"] = commonLib.getItemMap(vars.stageName, vars.envSettingsKey)
         if (!vars["projectMap"])
-            commonLib.failJob("[JENKINS][ERROR] Environment ${vars.pipelineProject} is not found in configmap" +
+            commonLib.failJob("[JENKINS][ERROR] Environment ${vars.stageName} is not found in configmap" +
                     " ${vars.configMapName} key ${vars.envSettingsKey} please check")
 
         commonLib.getDebugInfo(vars)

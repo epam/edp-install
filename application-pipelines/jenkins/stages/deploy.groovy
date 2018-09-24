@@ -106,13 +106,13 @@ def cloneProject(application) {
 
 def deployApplicationTemplate(application) {
     application['currentDeploymentVersion'] = getDeploymentVersion(application)
-    environmentSuffix = vars.deployProject
-    templateName = "${application.name}-install-${environmentSuffix}"
+    templateName = "${application.name}-install-${vars.stageWithoutPrefixName}"
 
     if (application.need_database)
         sh "oc adm policy add-scc-to-user anyuid -z ${application.name} -n ${vars.deployProject}"
 
     if (!checkTemplateExists(templateName, deployTemplatesPath)) {
+        println("[JENKSIN][INFO] Trying to find out default template ${application.name}.yaml")
         templateName = application.name
         if (!checkTemplateExists(templateName, deployTemplatesPath))
             return
@@ -127,7 +127,7 @@ def deployApplicationTemplate(application) {
 }
 
 def deployConfigMapTemplate(application) {
-    templateName = application.name + '-deploy-config-' + vars.deployProject
+    templateName = application.name + '-deploy-config-' + vars.stageWithoutPrefixName
     if (!checkTemplateExists(templateName, deployTemplatesPath))
         return
 
@@ -208,8 +208,7 @@ def checkImageExists(object) {
 def checkTemplateExists(templateName, deployTemplatesPath) {
     def templateYamlFile = new File("${deployTemplatesPath}/${templateName}.yaml")
     if (!templateYamlFile.exists()) {
-        println("[JENKINS][WARNING] Template file which called ${templateName} doesn't exist in ${deployTemplatesPath} in the repository\r\n" +
-                "[JENKINS][WARNING] Deploy will be skipped")
+        println("[JENKINS][WARNING] Template file which called ${templateName}.yaml doesn't exist in ${deployTemplatesPath} in the repository")
         return false
     }
     return true
