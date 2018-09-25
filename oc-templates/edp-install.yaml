@@ -50,7 +50,9 @@ objects:
             - "-e projects_prefix=${PROJECTS_PREFIX}"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
-            - "-e admin_username=${ADMIN_USERNAME}"
+            - "-e edp_super_admins=${EDP_SUPER_ADMINS}"
+            - "-e edp_admins=${EDP_ADMINS}"
+            - "-e edp_viewers=${EDP_VIEWERS}"
             - "-e edp_version=${EDP_VERSION}"
             - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
@@ -94,10 +96,18 @@ parameters:
   description: Prefix that will be added to projects created by EDP Platform
   name: PROJECTS_PREFIX
   value: "test"
-- displayName: Admin username
-  description: Admin username to access projects created by EDP Platform
-  name: ADMIN_USERNAME
-  value: "admin-edp"
+- displayName: EDP Super Admins
+  description: Users that will have full admin permissions in this EDP tenant (separate users by space)
+  name: EDP_SUPER_ADMINS
+  value: ""
+- displayName: EDP Admins
+  description: Users that will have full admin permissions in this EDP tenant except META-projects (separate users by space)
+  name: EDP_ADMINS
+  value: ""
+- displayName: EDP Viewers
+  description: Users that will have view permissions in this EDP tenant except META-projects (separate users by space)
+  name: EDP_VIEWERS
+  value: ""
 - displayName: Applications to install
   description: For separate installation, defines what tools will be deployed during installation. For now it can be jenkins,nexus,gerrit,sonar,edp-cockpit.
   name: APPS_TO_INSTALL
@@ -116,9 +126,6 @@ parameters:
   name: GERRIT_DB_CAPACITY
   value: 5Gi
   required: true
-- displayName: To be removed after merge
-  name: GERRIT_JOB_VERSION
-  value: who-cares
 #Jenkins parameters
 - displayName: Jenkins filesystem type
   description: Allowed values only 'pvc'(Persistant volume claim) or 'hostpath'
