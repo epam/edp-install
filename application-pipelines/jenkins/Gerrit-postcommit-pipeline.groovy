@@ -17,6 +17,7 @@ import org.apache.commons.lang.RandomStringUtils
 //Define common variables
 vars = [:]
 commonLib = null
+nexusLib = null
 
 def checkEnvVariables(envVariable) {
     if (!env["${envVariable}"])
@@ -29,13 +30,15 @@ node("master") {
             this.checkEnvVariables(variable)
         }
         vars['pipelinesPath'] = PIPELINES_PATH
-
         def workspace = "${WORKSPACE.replaceAll("@", "")}@script"
+
         dir("${workspace}") {
             stash name: 'devops', includes: "${vars.pipelinesPath}/**", useDefaultExcludes: false
             commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
+            commonLib.getConstants(vars)
+            nexusLib = load "${vars.pipelinesPath}/libs/nexus.groovy"
         }
-        commonLib.getConstants(vars)
+
         vars['promoteImage'] = true
         if (vars["${vars.envSettingsKey}"])
             vars['targetProject'] = "${vars["${vars.envSettingsKey}"][0].name}-meta"

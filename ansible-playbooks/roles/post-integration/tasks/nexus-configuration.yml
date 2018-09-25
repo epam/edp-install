@@ -26,6 +26,7 @@
    - setup-role
    - setup-user
    - create-task
+   - enable-realm
 
 - include_tasks: nexus-api/create-blobstore-each.yml
   with_items: "{{ tools.nexus.repos_npm_blob }}"
@@ -51,3 +52,6 @@
   with_items: "{{ tools.nexus.nexus_scheduled_tasks }}"
 
 - include_tasks: nexus-api/setup-capability.yml
+
+- include_tasks: nexus-api/enable-realm.yml
+  with_items: "{{ tools.nexus.realms_enabled }}"

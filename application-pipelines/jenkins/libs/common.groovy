@@ -12,9 +12,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import groovy.json.*
 import org.apache.commons.lang.RandomStringUtils
 import hudson.FilePath
+import groovy.json.*
 
 void runStage(vars, stageDirectory, stageName) {
     def applicationType = vars.itemMap.type
@@ -52,6 +52,7 @@ def getConstants(vars) {
     DEFAULT_GERRIT_HOST = "gerrit"
     DEFAULT_GERRIT_CREDENTIALS = "jenkins"
     DEFAULT_DEPLOY_TEMPLATES_DIRECTORY = "deploy-templates"
+    DEFAULT_NEXUS_AUTOUSER = "jenkins"
 
     vars['workDir'] = "${WORKSPACE}/${RandomStringUtils.random(10, true, true)}"
     vars['deployTemplatesDirectory'] = env.DEPLOY_TEMPLATES_DIRECTORY ? DEPLOY_TEMPLATES_DIRECTORY : DEFAULT_DEPLOY_TEMPLATES_DIRECTORY
@@ -71,6 +72,7 @@ def getConstants(vars) {
             script: "oc get svc gerrit -o jsonpath='{.spec.ports[?(@.name==\"ssh\")].targetPort}'",
             returnStdout: true
     ).trim()
+    vars['nexusAutoUser'] = env.NEXUS_AUTOUSER ? NEXUS_AUTOUSER : DEFAULT_NEXUS_AUTOUSER
     vars['gitApplicationUrl'] = "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${vars.gerritProject}"
 
     vars['sonarRoute'] = sh(
@@ -112,6 +114,12 @@ def getConstants(vars) {
 
     vars['npmGroupRegistry']="http://nexus:8081/repository/npm-all/"
     vars['npmInternalRegistry']="http://nexus:8081/repository/npm-internal/"
+
+    vars['nugetInternalRegistry'] = "http://nexus:8081/repository/nuget-hosted/"
+    vars['nexusScripts'] = [:]
+    vars['nexusScripts']['getNugetToken'] = "get-nuget-token"
+    vars['nexusScriptsPath'] = "${vars.pipelinesPath}/files/nexus"
+
 }
 
 def getItemMap(name, configMapKey) {

@@ -97,6 +97,8 @@ tools:
         member_repos:
           - npm-internal
           - npm-proxy
+    realms_enabled:
+       - name: NuGetApiKey
     nexus_scheduled_tasks:
       - name: compact-blobstore-default
         cron: '0 0 9 * * ?'
@@ -157,6 +159,9 @@ tools:
           - nx-repository-view-*-*-add
           - nx-repository-view-*-*-edit
           - nx-apikey-all
+          - nx-script-*-add
+          - nx-script-*-delete
+          - nx-script-*-run
         roles: []
       - id: keycloak-developer
         name: keycloak-developer
