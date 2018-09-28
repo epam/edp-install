@@ -30,6 +30,10 @@ project_vcs_edp: "{{ full_edp_name }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 vcs_ssh_port: "{{ vcs_ssh_port | default('7999') }}"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
+default_super_admin: "admin-{{ projects_prefix }}-edp"
+edp_super_admins: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users.split(',')) }}"
+edp_admins: "{{ admin_users.split(',') }}"
+edp_viewers: "{{ view_users.split(',') }}"
 basic_pattern_url: "https://github.com/yemelanooov"
 secrets:
   sonar_admin:
@@ -180,20 +184,6 @@ tools:
         password: "jenkins"
         roles:
           - nexus-rw
-      - username: edp-admin
-        first_name: Nexus
-        last_name: Admin
-        email: nexus-admin@edp.com
-        password: "secret"
-        roles:
-          - nx-admin
-      - username: edp-developer
-        first_name: Nexus
-        last_name: Developer
-        email: nexus-developer@edp.com
-        password: "secret"
-        roles:
-          - keycloak-developer
     client_id: "nexus3"
     web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
   sonar:
@@ -209,4 +199,3 @@ tools:
   keycloak:
     realm_name: "{{ full_edp_name }}"
     web_url: "https://keycloak-security.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
-    admin_username: "admin-{{ projects_prefix }}-edp"

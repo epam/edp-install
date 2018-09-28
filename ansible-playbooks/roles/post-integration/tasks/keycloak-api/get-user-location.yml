@@ -13,11 +13,16 @@
 # limitations under the License.
 
 ---
-- name: "Check if Openshift group {{ item }} already exists"
-  shell: "{{ ocadm }} get group {{ item }} -o jsonpath={.metadata.name}"
-  register: result
-  ignore_errors: true
+- name: "Check user {{ username }} exists in realm {{ realm }} in Keycloak"
+  uri:
+    url: "{{ keycloak_base_url }}/admin/realms/{{ realm }}/users?username={{ username }}"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    status_code: 200
+  register: response
 
-- name: "Create group {{ item }} in Openshift"
-  shell: "{{ ocadm }} adm groups new {{ item }}"
-  when: result.stdout != item
+- set_fact:
+    user_location: "{{ keycloak_base_url }}/admin/realms/{{ realm }}/users/{{ item.id }}"
+  when: item.username == username
+  with_items: "{{ response.json | list }}"

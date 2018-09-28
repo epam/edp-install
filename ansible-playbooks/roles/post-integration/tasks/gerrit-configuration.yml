@@ -104,12 +104,18 @@
     - "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- bash -c '[ -f $JENKINS_HOME/.ssh/id_rsa ] || ssh-keygen -b 4096 -t rsa -f $JENKINS_HOME/.ssh/id_rsa -q -N \"\"'"
     - "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- bash -c 'cat $JENKINS_HOME/.ssh/id_rsa.pub' > {{ post_integration_dir }}/gerrit/gerrit_jenkins_rsa.pub"
 
+- set_fact:
+    gerrit_admins: "{{ gerrit_admins | default([]) + [ { 'username': item, 'group': 'Administrators', 'full_name': item } ] }}"
+  when: item != ""
+  with_items:
+    - "{{ edp_super_admins }}"
+    - "{{ edp_admins }}"
+
 - include_tasks: gerrit-cli/create-user.yml
   with_items:
     - { username: "jenkins", password: "jenkins", full_name: "CI Jenkins" }
     - { username: "project-creator", password: "bootstrapper", full_name: "Project Creator" }
-    - { username: "edp-admin", group: "Administrators", full_name: "Administrator EDP" }
-    - { username: "{{ tools.keycloak.admin_username }}", group: "Administrators", full_name: "Administrator EDP" }
+    - "{{ gerrit_admins }}"
 
 - include_tasks: gerrit-api/add-sshkey-to-user.yml
   with_items:

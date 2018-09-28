@@ -1,0 +1,16 @@
+{
+  "username": "{{ username }}",
+  "enabled": true,
+  {% if username == default_super_admin %}
+  "email": "{{ username }}@example.com",
+  "firstName": "Administrator",
+  "lastName": "EDP",
+  {% endif %}
+  "credentials": [
+    {
+      "type": "password",
+      "value": "secret"
+    }
+  ],
+  "requiredActions" : [ "UPDATE_PASSWORD", "UPDATE_PROFILE" ]
+}

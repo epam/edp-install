@@ -17,3 +17,4 @@
   vars:
     script_name: setup-user
     args: "{{ item }}"
+  when: item.username is defined and item.username != ''

@@ -13,11 +13,16 @@
 # limitations under the License.
 
 ---
-- name: "Check if Openshift group {{ item }} already exists"
-  shell: "{{ ocadm }} get group {{ item }} -o jsonpath={.metadata.name}"
-  register: result
-  ignore_errors: true
+- set_fact:
+    user_location: "undefined"
 
-- name: "Create group {{ item }} in Openshift"
-  shell: "{{ ocadm }} adm groups new {{ item }}"
-  when: result.stdout != item
+- include_tasks: get-user-location.yml
+  vars:
+    - username: "{{ item }}"
+    - realm: "{{ tools.keycloak.realm_name }}"
+
+- include_tasks: create-user-in-realm.yml
+  vars:
+    - username: "{{ item }}"
+    - realm: "{{ tools.keycloak.realm_name }}"
+  when: user_location == "undefined"

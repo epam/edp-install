@@ -50,9 +50,9 @@ objects:
             - "-e projects_prefix=${PROJECTS_PREFIX}"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
-            - "-e edp_super_admins=${EDP_SUPER_ADMINS}"
-            - "-e edp_admins=${EDP_ADMINS}"
-            - "-e edp_viewers=${EDP_VIEWERS}"
+            - "-e super_admin_users=${EDP_SUPER_ADMINS}"
+            - "-e admin_users=${EDP_ADMINS}"
+            - "-e view_users=${EDP_VIEWERS}"
             - "-e edp_version=${EDP_VERSION}"
             - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
@@ -97,15 +97,15 @@ parameters:
   name: PROJECTS_PREFIX
   value: "test"
 - displayName: EDP Super Admins
-  description: Users that will have full admin permissions in this EDP tenant (separate users by space)
+  description: Users that will have full admin permissions in this EDP tenant (comma-separated, NO spaces)
   name: EDP_SUPER_ADMINS
   value: ""
 - displayName: EDP Admins
-  description: Users that will have full admin permissions in this EDP tenant except META-projects (separate users by space)
+  description: Users that will have full admin permissions in this EDP tenant except META-projects (comma-separated, NO spaces)
   name: EDP_ADMINS
   value: ""
 - displayName: EDP Viewers
-  description: Users that will have view permissions in this EDP tenant except META-projects (separate users by space)
+  description: Users that will have view permissions in this EDP tenant except META-projects (comma-separated, NO spaces)
   name: EDP_VIEWERS
   value: ""
 - displayName: Applications to install

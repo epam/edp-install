@@ -13,11 +13,6 @@
 # limitations under the License.
 
 ---
-- name: "Check if Openshift group {{ item }} already exists"
-  shell: "{{ ocadm }} get group {{ item }} -o jsonpath={.metadata.name}"
-  register: result
-  ignore_errors: true
-
-- name: "Create group {{ item }} in Openshift"
-  shell: "{{ ocadm }} adm groups new {{ item }}"
-  when: result.stdout != item
+- name: "Join users to group {{ item.group }}"
+  shell: "{{ ocadm }} adm groups add-users {{ item.group }} {{ item.users }}"
+  when: item.users != ""

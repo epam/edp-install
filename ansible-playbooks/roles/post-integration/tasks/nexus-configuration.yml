@@ -43,8 +43,26 @@
 - include_tasks: nexus-api/setup-role-each.yml
   with_items: "{{ tools.nexus.roles }}"
 
+- set_fact:
+    nexus_admins: "{{ nexus_admins | default([]) + [ { 'username': item, 'password': 'secret', 'roles': [ 'nx-admin' ],\
+    'first_name': 'Nexus', 'last_name': 'Admin', 'email': 'nexus-admin@edp.com' } ] }}"
+  when: item != ""
+  with_items:
+    - "{{ edp_super_admins }}"
+    - "{{ edp_admins }}"
+
+- set_fact:
+    nexus_developers : "{{ nexus_developers | default([]) + [ { 'username': item, 'password': 'secret', 'roles': [ 'keycloak-developer' ],\
+     'first_name': 'Nexus', 'last_name': 'Developer', 'email': 'nexus-developer@edp.com' } ] }}"
+  with_items:
+    - "{{ edp_viewers }}"
+
 - include_tasks: nexus-api/setup-user-each.yml
-  with_items: "{{ tools.nexus.local_users }}"
+  when: item != ""
+  with_items:
+    - "{{ tools.nexus.local_users }}"
+    - "{{ nexus_admins }}"
+    - "{{ nexus_developers }}"
 
 - include_tasks: nexus-api/disable-outreach-capability.yml
 

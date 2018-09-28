@@ -38,17 +38,18 @@
     - "{{ projects_prefix }}-edp-admin"
     - "{{ projects_prefix }}-edp-view"
 
-- name: "Check if user {{ tools.keycloak.admin_username }} already exists"
-  shell: "{{ ocadm }} get user {{ tools.keycloak.admin_username }} -o jsonpath={.metadata.name}"
-  register: result
-  ignore_errors: true
+- include_tasks: roles/common/tasks/manage-openshift/create-users.yml
+  when: item != ""
+  with_items:
+    - "{{ edp_super_admins }}"
+    - "{{ edp_admins }}"
+    - "{{ edp_viewers }}"
 
-- name: "Create user {{ tools.keycloak.admin_username }} in Openshift"
-  shell: "{{ ocadm }} create user {{ tools.keycloak.admin_username }}"
-  when: result.stdout != tools.keycloak.admin_username
-
-- name: "Join user {{ tools.keycloak.admin_username }} to {{ projects_prefix }}-edp-super-admin"
-  shell: "{{ ocadm }} adm groups add-users {{ projects_prefix }}-edp-super-admin {{ tools.keycloak.admin_username }}"
+- include_tasks: roles/common/tasks/manage-openshift/join-users-to-group.yml
+  with_items:
+    - { group: "{{ projects_prefix }}-edp-super-admin", users: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users | replace(',', ' ') ) }}" }
+    - { group: "{{ projects_prefix }}-edp-admin", users: "{{ admin_users | replace(',', ' ') }}" }
+    - { group: "{{ projects_prefix }}-edp-view", users: "{{ view_users | replace(',', ' ') }}" }
 
 - name: "Create project in Openshift"
   shell: "{{ ocadm }} new-project {{ item }}"
