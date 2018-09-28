@@ -95,7 +95,7 @@ def run(vars) {
 def cloneProject(application) {
     gitApplicationUrl = "ssh://${vars.gerritAutoUser}@${vars.gerritHost}:${vars.gerritSshPort}/${application.name}"
 
-    checkout([$class                           : 'GitSCM', branches: [[name: "**"]],
+    checkout([$class                           : 'GitSCM', branches: [[name: "refs/tags/${application.version}"]],
               doGenerateSubmoduleConfigurations: false, extensions: [],
               submoduleCfg                     : [],
               userRemoteConfigs                : [[credentialsId: "${vars.gerritCredentials}",
