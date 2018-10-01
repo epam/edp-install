@@ -26,7 +26,7 @@
     ]
   },
   {
-    "language": ".NET",
+    "language": "DotNet",
     "buildTools": [
       "dotnet"
     ],
