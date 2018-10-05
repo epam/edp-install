@@ -32,6 +32,7 @@ project_vcs_edp: "{{ full_edp_name }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 vcs_ssh_port: "{{ vcs_ssh_port | default('7999') }}"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
+basic_pattern_url: "https://github.com/yemelanooov"
 secrets:
   sonar_admin:
     password: admin
