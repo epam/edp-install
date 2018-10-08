@@ -85,7 +85,6 @@
   command: |
     {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/cockpit/edp-cockpit.yaml
     -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
-    -p PROJECT_CICD={{ project_cicd }}
     -p OPENSHIFT_TRUST_CERTIFICATES={{ tools.cockpit.openshift_trust_certificates }}
   register: result
   ignore_errors: true
