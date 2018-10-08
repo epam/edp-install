@@ -49,11 +49,12 @@
         Bind role with service account. Upload templates for cockpit"
   shell: "{{ item }}"
   with_items:
-    - "{{ ocadm }} -n {{ project_cockpit }} create configmap project-types
+    - "{{ ocadm }} -n {{ project_cicd }} create configmap project-types
      --from-file=app-types.json={{ templates_dir }}/cockpit/app-types.json
      --from-file=autotest-types.json={{ templates_dir }}/cockpit/autotest-types.json
      --from-file=service-types.json={{ templates_dir }}/cockpit/service-types.json"
-    - "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cockpit }}:cockpit"
+    - "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:cockpit"
+    - "{{ ocadm }} adm policy add-scc-to-user edp-deploy system:serviceaccount:{{ project_cicd }}:cockpit"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-business-application.yaml"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-autotests.yaml"
     - "{{ ocadm }} create -f {{ templates_dir }}/add-environments.yaml"
@@ -67,7 +68,7 @@
 
 - name: "Install config map for storing msra quickstart information"
   shell: >
-    {{ ocadm }} -n {{ project_cockpit }} create configmap msra
+    {{ ocadm }} -n {{ project_cicd }} create configmap msra
     --from-file=app-quickstart.json={{ templates_dir }}/cockpit/app-quickstart.json
     --from-file=autotest-quickstart.json={{ templates_dir }}/cockpit/autotest-quickstart.json
     --from-file=env-quickstart.json={{ templates_dir }}/cockpit/env-quickstart.json
@@ -82,24 +83,10 @@
 
 - name: "Install EDP-Cockpit app"
   command: |
-    {{ ocadm }} -n {{ project_cockpit }} new-app -f {{ templates_dir }}/cockpit/edp-cockpit.yaml
+    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/cockpit/edp-cockpit.yaml
     -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
     -p PROJECT_CICD={{ project_cicd }}
     -p OPENSHIFT_TRUST_CERTIFICATES={{ tools.cockpit.openshift_trust_certificates }}
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-
-- name: "Copy cockpit SA and assign SCC"
-  shell: "{{ item }}"
-  with_items:
-    - "{{ ocadm }} -n {{ project_cicd }} create sa cockpit"
-    - "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:cockpit"
-    - "{{ ocadm }} adm policy add-scc-to-user edp-deploy system:serviceaccount:{{ project_cicd }}:cockpit"
   register: result
   ignore_errors: true
   changed_when: '"already" not in result.stderr'
