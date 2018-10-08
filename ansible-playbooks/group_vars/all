@@ -15,7 +15,7 @@
 ---
 # file: group_vars/all
 ansible_connection: ssh
-work_dir: "/opt/edp"
+work_dir: "/home/edp"
 post_integration_dir: "{{ work_dir }}/post-integration"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/oc-templates"
@@ -29,6 +29,7 @@ full_edp_name: "{{ edp_name }}-edp"
 project_vcs_edp: "{{ full_edp_name }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 vcs_ssh_port: "{{ vcs_ssh_port | default('7999') }}"
+vcs_auto_user_secret_name: "vcs-autouser"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
 default_super_admin: "admin-{{ edp_name }}-edp"
 edp_super_admins: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users.split(',')) }}"
@@ -51,9 +52,6 @@ secrets:
     db_name: sonar
     db_user: sonar
     db_password: sonar
-  keycloak_db:
-    db_user: keycloak
-    db_password: keycloak
 tools:
   jenkins:
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"

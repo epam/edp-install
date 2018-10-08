@@ -79,9 +79,17 @@
 - name: Create ConfigMap with secret name and VCS group name URL
   command: |
     {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
-    --from-literal=vcs_autouser_secret={{ vcs_auto_user_secret }}
+    --from-literal=vcs_autouser_secret={{ vcs_auto_user_secret_name }}
     --from-literal=vcs_group_name_url={{ vcs_group_name }}
     --from-literal=edp_name={{ edp_name }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=vcs_tool_name={{ vcs_tool_name | lower }}
     --from-literal=vcs_ssh_port={{ vcs_ssh_port }}
+
+- name: Create necessery role in default projects
+  shell: "{{ ocadm }} -n default create role edp-cockpit --verb=list,get --resource=routes -o yaml --dry-run | {{ ocadm }} -n default apply -f -"
+  register: result
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'

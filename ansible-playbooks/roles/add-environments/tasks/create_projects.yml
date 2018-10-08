@@ -30,6 +30,3 @@
   shell: "{{ ocadm }} adm policy add-role-to-group admin {{ edp_name }}-edp-super-admin -n {{ item }}"
   with_items:
     - "{{ env_names_list }}"
-
-- name: "Set cluster-admin access to jenkins user"
-  shell: "{{ ocadm }} adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:{{ project_cicd }}:jenkins"

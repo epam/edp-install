@@ -24,6 +24,96 @@ metadata:
     template.openshift.io/support-url: https://www.epam.com
 objects:
 - apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: cockpit
+- apiVersion: authorization.openshift.io/v1
+  kind: ClusterRole
+  metadata:
+    name: edp-cockpit
+  rules:
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resources:
+    - projectrequests
+    - projects
+    - rolebindings
+    verbs:
+    - get
+    - list
+    - create
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    name: edp-cockpit
+  rules:
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resourceNames:
+    - vcs-autouser
+    - gerrit-admin
+    - jenkins-token
+    - keycloak-admin
+    - keycloak-gerrit
+    - gerrit-project-creator
+    - keycloak
+    - keycloak-parameters
+    resources:
+    - secrets
+    verbs:
+    - get
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames: []
+    resources:
+    - jobs
+    verbs:
+    - list
+    - get
+    - create
+    - patch
+    - update
+    - delete
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames: []
+    resources:
+    - pods
+    - pods/exec
+    verbs:
+    - list
+    - get
+    - create
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames: []
+    resources:
+    - configmaps
+    - routes
+    - imagestreams
+    - buildconfigs
+    verbs:
+    - list
+    - get
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames: []
+    resources:
+    - templates
+    - processedtemplates
+    verbs:
+    - get
+    - create
+- apiVersion: v1
   kind: Service
   metadata:
     name: edp-cockpit
@@ -51,10 +141,6 @@ objects:
     to:
       kind: Service
       name: edp-cockpit
-- apiVersion: v1
-  kind: ServiceAccount
-  metadata:
-    name: cockpit
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:

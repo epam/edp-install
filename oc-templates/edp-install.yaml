@@ -35,6 +35,8 @@ objects:
       metadata:
         name: edp-deploy
       spec:
+        securityContext:
+          runAsUser: 1000
         restartPolicy: Never
         serviceAccount: edp
         containers:
@@ -186,8 +188,8 @@ parameters:
   name: VCS_TOOL_NAME
   value: "gitlab"
   required: true
-- displayName: Git autouser secret name
-  description: Git autouser secret name from prerequisites
+- displayName: VCS autouser secret name
+  description: VCS autouser secret name from prerequisites
   name: VCS_AUTO_USER_SECRET
   value: "vcs-autouser"
   required: true
