@@ -31,7 +31,7 @@
       "dotnet"
     ],
     "frameworks": [
-      ".NETcore"
+      "netcore"
     ]
   }
 ]
