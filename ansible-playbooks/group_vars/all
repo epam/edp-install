@@ -34,7 +34,7 @@ default_super_admin: "admin-{{ projects_prefix }}-edp"
 edp_super_admins: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users.split(',')) }}"
 edp_admins: "{{ admin_users.split(',') }}"
 edp_viewers: "{{ view_users.split(',') }}"
-basic_pattern_url: "https://github.com/yemelanooov"
+basic_pattern_url: "https://github.com/epmd-edp"
 secrets:
   sonar_admin:
     password: admin
