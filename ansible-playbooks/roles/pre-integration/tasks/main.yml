@@ -34,9 +34,9 @@
 
 - include_tasks: roles/common/tasks/manage-openshift/create-groups.yml
   with_items:
-    - "{{ projects_prefix }}-edp-super-admin"
-    - "{{ projects_prefix }}-edp-admin"
-    - "{{ projects_prefix }}-edp-view"
+    - "{{ edp_name }}-edp-super-admin"
+    - "{{ edp_name }}-edp-admin"
+    - "{{ edp_name }}-edp-view"
 
 - include_tasks: roles/common/tasks/manage-openshift/create-users.yml
   when: item != ""
@@ -47,9 +47,9 @@
 
 - include_tasks: roles/common/tasks/manage-openshift/join-users-to-group.yml
   with_items:
-    - { group: "{{ projects_prefix }}-edp-super-admin", users: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users | replace(',', ' ') ) }}" }
-    - { group: "{{ projects_prefix }}-edp-admin", users: "{{ admin_users | replace(',', ' ') }}" }
-    - { group: "{{ projects_prefix }}-edp-view", users: "{{ view_users | replace(',', ' ') }}" }
+    - { group: "{{ edp_name }}-edp-super-admin", users: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users | replace(',', ' ') ) }}" }
+    - { group: "{{ edp_name }}-edp-admin", users: "{{ admin_users | replace(',', ' ') }}" }
+    - { group: "{{ edp_name }}-edp-view", users: "{{ view_users | replace(',', ' ') }}" }
 
 - name: "Create project in Openshift"
   shell: "{{ ocadm }} new-project {{ item }}"
@@ -58,11 +58,11 @@
 - name: "Giving admin roles to groups"
   shell: "{{ ocadm }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
   with_nested:
-    - [ "{{ projects_prefix }}-edp-super-admin", "{{ projects_prefix }}-edp-admin" ]
+    - [ "{{ edp_name }}-edp-super-admin", "{{ edp_name }}-edp-admin" ]
     - "{{ projects_list }}"
 
 - name: "Giving view roles to groups"
-  shell: "{{ ocadm }} adm policy add-role-to-group view {{ projects_prefix }}-edp-view -n {{ item }}"
+  shell: "{{ ocadm }} adm policy add-role-to-group view {{ edp_name }}-edp-view -n {{ item }}"
   with_items:
     - "{{ projects_list }}"
 
@@ -81,7 +81,7 @@
     {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
     --from-literal=vcs_autouser_secret={{ vcs_auto_user_secret }}
     --from-literal=vcs_group_name_url={{ vcs_group_name }}
-    --from-literal=projects_prefix={{ projects_prefix }}
+    --from-literal=edp_name={{ edp_name }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=vcs_tool_name={{ vcs_tool_name | lower }}
     --from-literal=vcs_ssh_port={{ vcs_ssh_port }}

@@ -36,7 +36,7 @@
 
 - set_fact:
     dns_wildcard: "{{ user_settings.data.dns_wildcard }}"
-    projects_prefix: "{{ user_settings.data.projects_prefix }}"
+    edp_name: "{{ user_settings.data.edp_name }}"
     project_vcs_group_name_url: "{{ user_settings.data.vcs_group_name_url }}"
     vcs_tool: "{{ user_settings.data.vcs_tool_name | lower }}"
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"

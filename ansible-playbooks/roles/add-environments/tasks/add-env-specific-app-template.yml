@@ -16,7 +16,7 @@
 - name: "Create additional template for business-applications"
   template:
     src: "{{ templates_dir }}/{{ item[0].name }}/deploy-templates/{{ item[0].name }}.yaml"
-    dest: "{{ templates_dir }}/{{ item[0].name }}/deploy-templates/{{ item[0].name }}-install-{{ item[1].name | regex_replace('^' + projects_prefix + '-(.*)$' if projects_prefix != '' else '(.*)', '\\1') }}.yaml"
+    dest: "{{ templates_dir }}/{{ item[0].name }}/deploy-templates/{{ item[0].name }}-install-{{ item[1].name | regex_replace('^' + edp_name + '-(.*)$' if edp_name != '' else '(.*)', '\\1') }}.yaml"
     force: no
   with_nested:
     - "{{ app_map | list }}"

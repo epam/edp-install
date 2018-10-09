@@ -26,7 +26,7 @@ objects:
 - apiVersion: batch/v1
   kind: Job
   metadata:
-    name: ${PROJECTS_PREFIX}edp-deploy
+    name: ${EDP_NAME}-edp-deploy
   spec:
     parallelism: 1
     completions: 1
@@ -47,7 +47,7 @@ objects:
             - "-v"
             - "-i"
             - "localhost,"
-            - "-e projects_prefix=${PROJECTS_PREFIX}"
+            - "-e edp_name=${EDP_NAME}"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
             - "-e super_admin_users=${EDP_SUPER_ADMINS}"
@@ -78,6 +78,11 @@ objects:
             - "-e vcs_ssh_port=${VCS_SSH_PORT}"
             - "ansible-playbooks/install.yml"
 parameters:
+- displayName: Name for EDP tenant
+  description: Uniq name for EDP tenant which will be used during installation
+  name: EDP_NAME
+  value: "test"
+  required: true
 - displayName: DNS wildcard
   description: DNS wildcard of your project that should be specified during Openshift cluster installation
   name: DNS_WILDCARD
@@ -92,10 +97,6 @@ parameters:
   description: Image and tag that defines version of EDP that will be deployed
   name: EDP_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-test:test"
-- displayName: Prefix for projects
-  description: Prefix that will be added to projects created by EDP Platform
-  name: PROJECTS_PREFIX
-  value: "test"
 - displayName: EDP Super Admins
   description: Users that will have full admin permissions in this EDP tenant (comma-separated, NO spaces)
   name: EDP_SUPER_ADMINS

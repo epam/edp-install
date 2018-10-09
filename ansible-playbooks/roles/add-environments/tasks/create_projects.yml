@@ -27,7 +27,7 @@
     - '"already" not in result.stdout'
 
 - name: "Define access to admin for new projects"
-  shell: "{{ ocadm }} adm policy add-role-to-group admin {{ projects_prefix }}-edp-super-admin -n {{ item }}"
+  shell: "{{ ocadm }} adm policy add-role-to-group admin {{ edp_name }}-edp-super-admin -n {{ item }}"
   with_items:
     - "{{ env_names_list }}"
 

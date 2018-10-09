@@ -14,7 +14,7 @@
 
 ---
 - set_fact:
-    gerrit_project: "{{ projects_prefix }}{{ (projects_prefix != '') | ternary('-edp', 'edp')}}"
+    gerrit_project: "{{ edp_name }}-edp"
 
 - name: "Generate templates"
   vars:
