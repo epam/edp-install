@@ -42,11 +42,11 @@ node("master") {
         keycloakLib.getKeycloakAccessToken()
 
         openshift.withProject() {
-            def matcher = (JOB_NAME =~ /.*\\/${openshift.project()}-(${vars.projectPrefix}-)*(.*)-deploy-pipeline/)
-            vars['stageName'] = matcher[0][1] ? "${matcher[0][1]}${matcher[0][2]}" : matcher[0][2]
+            def matcher = (JOB_NAME =~ /.*\\/${openshift.project()}-${vars.projectPrefix}-(.*)-deploy-pipeline/)
+            vars['stageName'] = "${vars.projectPrefix}-${matcher[0][1]}"
             vars['metaProject'] = "${vars.stageName}-meta"
             vars['deployProject'] = "${vars.stageName}"
-            vars['stageWithoutPrefixName'] = matcher[0][2]
+            vars['stageWithoutPrefixName'] = matcher[0][1]
         }
 
         if (commonLib.getBuildCause() != "Image change") {
@@ -72,7 +72,7 @@ node("master") {
             vars['userInput'] = input id: 'userInput', message: 'Provide the following information', parameters: parameters
             vars['inputProjectPrefix'] = (vars.userInput instanceof String) ? vars.userInput : vars.userInput["PROJECT_PREFIX"]
             
-            if (vars.inputProjectPrefix && vars.inputProjectPrefix != vars.projectPrefix && vars.inputProjectPrefix != "")
+            if (vars.inputProjectPrefix && vars.inputProjectPrefix != vars.projectPrefix)
                 vars['deployProject'] = "${vars.inputProjectPrefix}-${vars.deployProject}"
         }
 
@@ -124,7 +124,7 @@ node("master") {
         currentBuild.description = "${currentBuild.description}\r\nStage ${qualityGate['step-name']} has been passed"
     }
 
-    if (vars.userInput && vars.inputProjectPrefix && vars.inputProjectPrefix != vars.projectPrefix && vars.inputProjectPrefix != "") {
+    if (vars.userInput && vars.inputProjectPrefix && vars.inputProjectPrefix != vars.projectPrefix) {
         println("[JENKINS][WARNING] Promote images from custom projects is prohibited and will be skipped")
         return
     }
