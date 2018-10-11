@@ -79,7 +79,7 @@ objects:
             - "ansible-playbooks/install.yml"
 parameters:
 - displayName: Name for EDP tenant
-  description: Uniq name for EDP tenant which will be used during installation
+  description: Unique name for EDP tenant which will be used during installation
   name: EDP_NAME
   value: "test"
   required: true
