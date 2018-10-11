@@ -18,12 +18,26 @@ def run(vars) {
     vars['sonarAnalysisRunTempDir'] = new File("${vars.workDir}/../${RandomStringUtils.random(10, true, true)}")
 
     dir("${vars.sonarAnalysisRunTempDir}") {
-        sh(script: """
-            cd ${vars.workDir}
-            for i in \$(git diff --diff-filter=AMR --name-status origin/master | awk \'{print \$2}\'); do cp --parents \$i ${vars.sonarAnalysisRunTempDir}/; done
-            cp -f pom.xml ${vars.sonarAnalysisRunTempDir}/
-            cp --parents -r src/test/ ${vars.sonarAnalysisRunTempDir}
-            cp --parents -r target/ ${vars.sonarAnalysisRunTempDir}""")
+        if (fileExists("${vars.workDir}/target")) {
+            println("[JENKINS][DEBUG] Project with usual structure")
+            sh """
+              cd ${vars.workDir}
+              for i in \$(git diff --diff-filter=ACMR --name-status origin/master | awk \'{print \$2}\'); do cp --parents \$i ${vars.sonarAnalysisRunTempDir}/; done
+              cp -f pom.xml ${vars.sonarAnalysisRunTempDir}/
+              cp --parents -r src/test/ ${vars.sonarAnalysisRunTempDir}
+              cp --parents -r target/ ${vars.sonarAnalysisRunTempDir}
+              """
+        } else {
+            println("[JENKINS][DEBUG] Multi-module project")
+            sh """
+              mkdir -p ${vars.sonarAnalysisRunTempDir}/tests
+              cd ${vars.workDir}
+              for i in \$(git diff --diff-filter=ACMR --name-status origin/master | awk \'{print \$2}\'); do cp --parents \$i ${vars.sonarAnalysisRunTempDir}/; done
+              for directory in `find . -type d -name \'test\'`; do cp --parents -r \${directory} ${vars.sonarAnalysisRunTempDir}/tests; done
+              for poms in `find . -type f -name \'pom.xml\'`; do cp --parents -r \${poms} ${vars.sonarAnalysisRunTempDir}; done
+              for targets in `find . -type d -name \'target\'`; do cp --parents -r \${targets} ${vars.sonarAnalysisRunTempDir}; done
+              """
+        }
 
         withSonarQubeEnv('Sonar') {
             sh "mvn sonar:sonar -Dsonar.analysis.mode=preview -Dsonar.report.export.path=sonar-report.json" +

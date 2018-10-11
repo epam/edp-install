@@ -31,6 +31,11 @@ def run(vars) {
                 returnStdout: true
         ).trim()
         vars['sonarProjectKey'] = "${vars.groupID}:${vars.artifactID}:change-${vars.gerritChangeNumber}"
+        vars['deployableModule'] = sh(
+                script: "cat pom.xml | grep -Poh '<deployable.module>\\K[^<]*' || echo \"\"",
+                returnStdout: true
+        ).trim()
+        println("[JENKINS][DEBUG] Deployable module: ${vars.deployableModule}")
     }
     println("[JENKINS][DEBUG] Pom version - ${vars.pomVersion}")
     vars['businissAppVersion'] = "${vars.pomVersion}-${BUILD_NUMBER}"

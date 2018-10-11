@@ -20,18 +20,19 @@ def run(vars) {
         openshift.withProject() {
             if (!openshift.selector("buildconfig", "${vars.itemMap.name}").exists())
                 openshift.newBuild("--name=${vars.itemMap.name}", "--image-stream=s2i-${vars.itemMap.language.toLowerCase()}", "--binary=true")
-            buildResult = openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-dir=${vars.workDir}/target", "--wait=true")
+
+            fromDir = vars.deployableModule.isEmpty() ? "${vars.workDir}/target" : "${vars.workDir}/${vars.deployableModule}/target"
+            buildResult = openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-dir=${fromDir}", "--wait=true")
             resultTag = buildResult.object().status.output.to.imageDigest
             println("[JENKINS][DEBUG] Build config ${vars.itemMap.name} with result ${resultTag} has been completed")
 
             if (vars.promoteImage) {
                 vars.targetTags.each() { tagName ->
                     openshift.tag("${openshift.project()}/${vars.itemMap.name}@${resultTag}", "${vars.targetProject}/${vars.itemMap.name}:${tagName}")
-                    }
+                }
                 sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:unauthenticated"
                 sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:serviceaccounts"
-            }
-            else
+            } else
                 println("[JENKINS][WARNING] Image wasn't promoted since there are no environments were added\r\n" +
                         "[JENKINS][WARNING] If your like to promote your images please add environment via your cockpit panel")
         }
