@@ -24,6 +24,14 @@ import org.jenkinsci.plugins.*
 import net.sf.json.*
 import org.kohsuke.stapler.*
 
+/// Check "done" file to avoid multiple runs
+def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
+file = new File("${JENKINS_HOME}/done-rbac")
+if (file.exists()) {
+  println("[DEBUG] RBAC configuration has been already done")
+  return
+}
+
 /**
  * ===================================
  *
@@ -95,6 +103,7 @@ def buildPermissions = [
 ]
 
 def roleBasedAuthenticationStrategy = new RoleBasedAuthorizationStrategy()
+
 Jenkins.instance.setAuthorizationStrategy(roleBasedAuthenticationStrategy)
 
 
@@ -203,4 +212,12 @@ access.readers.each { l ->
   roleBasedAuthenticationStrategy.assignRole(RoleBasedAuthorizationStrategy.GLOBAL, readRole, l);
 }
 
+def GlobalKeycloakSettings = Jenkins.instance.getDescriptor("org.jenkinsci.plugins.KeycloakSecurityRealm")
+GlobalKeycloakSettings.setKeycloakJson(keycloak_json)
+GlobalKeycloakSettings.save()
+
 Jenkins.instance.save()
+
+// Create "done" file to avoid multiple runs
+String filename = "${JENKINS_HOME}/done-rbac"
+new File(filename).createNewFile()
