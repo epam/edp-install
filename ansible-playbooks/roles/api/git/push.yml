@@ -16,6 +16,7 @@
   shell: git push origin refs/heads/*:refs/heads/* refs/tags/*:refs/tags/*
   args:
     chdir: "{{ item.git_directory }}"
+  async: 1200
   register: result
   until: result.rc == 0
   retries: 10
