@@ -19,8 +19,11 @@ def run(vars) {
         openshift.withProject() {
             if (!openshift.selector("buildconfig", "${vars.itemMap.name}").exists())
                 openshift.newBuild("--name=${vars.itemMap.name}", "--image-stream=s2i-${vars.itemMap.language.toLowerCase()}", "--binary=true", "-e NGINX_STATIC_DIR=public")
-            buildResult = openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-dir=${vars.workDir}", "--wait=true")
-            resultTag = buildResult.object().status.output.to.imageDigest
+            dir("${vars.workDir}") {
+                sh "tar -cf ${vars.itemMap.name}.tar *"
+                buildResult = openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-archive=${vars.itemMap.name}.tar", "--wait=true")
+                resultTag = buildResult.object().status.output.to.imageDigest
+            }
             println("[JENKINS][DEBUG] Build config ${vars.itemMap.name} with result ${resultTag} has been completed")
             if (vars.promoteImage) {
                 vars.targetTags.each() { tagName ->

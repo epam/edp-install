@@ -21,8 +21,10 @@ def run(vars) {
         if (fileExists("${vars.workDir}/target")) {
             println("[JENKINS][DEBUG] Project with usual structure")
             sh """
+              export LANG=en_US.utf-8
               cd ${vars.workDir}
-              for i in \$(git diff --diff-filter=ACMR --name-status origin/master | awk \'{print \$2}\'); do cp --parents \$i ${vars.sonarAnalysisRunTempDir}/; done
+              git config --local core.quotepath false
+              IFS=\$'\\n';for i in \$(git diff --diff-filter=ACMR --name-only origin/master|sed 's/ /\\ /g'); do cp --parents \$i ${vars.sonarAnalysisRunTempDir}/; done
               cp -f pom.xml ${vars.sonarAnalysisRunTempDir}/
               cp --parents -r src/test/ ${vars.sonarAnalysisRunTempDir}
               cp --parents -r target/ ${vars.sonarAnalysisRunTempDir}
@@ -32,7 +34,7 @@ def run(vars) {
             sh """
               mkdir -p ${vars.sonarAnalysisRunTempDir}/tests
               cd ${vars.workDir}
-              for i in \$(git diff --diff-filter=ACMR --name-status origin/master | awk \'{print \$2}\'); do cp --parents \$i ${vars.sonarAnalysisRunTempDir}/; done
+              IFS=\$'\\n';for i in \$(git diff --diff-filter=ACMR --name-only origin/master|sed 's/ /\\ /g'); do cp --parents \$i ${vars.sonarAnalysisRunTempDir}/; done
               for directory in `find . -type d -name \'test\'`; do cp --parents -r \${directory} ${vars.sonarAnalysisRunTempDir}/tests; done
               for poms in `find . -type f -name \'pom.xml\'`; do cp --parents -r \${poms} ${vars.sonarAnalysisRunTempDir}; done
               for targets in `find . -type d -name \'target\'`; do cp --parents -r \${targets} ${vars.sonarAnalysisRunTempDir}; done
