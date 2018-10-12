@@ -248,6 +248,37 @@
     name: "{{ project_vcs_edp }}"
     gerrit_username: "admin"
 
+- name: "Checkout EDP project config"
+  shell: "{{ item }}"
+  with_items:
+    - "git fetch -q origin refs/meta/config:refs/remotes/origin/meta/config"
+    - "git checkout meta/config"
+  changed_when: "'already exists' not in result.stderr"
+  register: result
+  failed_when:
+    - "result.rc != 0"
+    - "'already exists' not in result.stderr"
+  args:
+    chdir: "{{ work_dir }}/{{ vcs_project_name }}"
+
+- name: "Update EDP project config"
+  template:
+    src: "gerrit/edp_project.config"
+    dest: "{{ work_dir }}/{{ vcs_project_name }}/project.config"
+
+- name: "Push new EDP project config"
+  shell: "{{ item }}"
+  with_items:
+    - "git commit -a -m 'Uploaded EDP project config'"
+    - "git push origin meta/config:meta/config"
+  changed_when: "'nothing to commit' not in result.stdout"
+  register: result
+  failed_when:
+    - "result.rc != 0"
+    - "'nothing to commit' not in result.stdout"
+  args:
+    chdir: "{{ work_dir }}/{{ vcs_project_name }}"
+
 - include_tasks: roles/common/tasks/manage-gerrit/project-replication.yml
   vars:
     name: "{{ project_vcs_edp }}"
