@@ -15,8 +15,6 @@ limitations under the License. */
 def run(vars) {
     openshift.withCluster() {
         openshift.withProject() {
-            sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:unauthenticated"
-            sh "oc -n ${vars.targetProject} policy add-role-to-group registry-viewer system:serviceaccounts"
             vars.updatedApplicaions.each() { application ->
                 openshift.tag("${vars.sourceProject}/${application.name}:${application.version}", "${vars.sourceProject}/${application.name}:stable")
                 openshift.tag("${vars.sourceProject}/${application.name}:${application.version}", "${vars.targetProject}/${application.name}:latest")

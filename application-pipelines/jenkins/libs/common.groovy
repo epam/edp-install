@@ -142,7 +142,7 @@ void getDebugInfo(vars) {
     vars.keySet().each { key ->
         debugOutput = debugOutput + "${key}=${vars["${key}"]}\n"
     }
-    println("[JENKINS][DEGUG] Pipeline's variables:\n${debugOutput}")
+    println("[JENKINS][DEBUG] Pipeline's variables:\n${debugOutput}")
 }
 
 def getBuildCause() {

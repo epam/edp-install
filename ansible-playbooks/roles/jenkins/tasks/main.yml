@@ -21,7 +21,7 @@
     - "jenkins-{{ tools.jenkins.fs_type }}.yaml"
 
 - name: "Install Jenkins app"
-  command: |
+  shell: >
     {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/jenkins/jenkins-{{ tools.jenkins.fs_type }}.yaml
     -p JENKINS_PASSWORD={{ tools.jenkins.password }}
     -p JENKINS_MAVEN_CACHE_VOLUME_CAPACITY={{ tools.jenkins.maven_cache_volume_capacity }}
@@ -31,10 +31,22 @@
     -p JENKINS_UI_URL={{ tools.jenkins.web_url }}
     {{ '-p JENKINS_HOST_PATH_VOLUME=' + tools.jenkins.host_path_volume if tools.jenkins.fs_type=='hostpath' else '-p JENKINS_VOLUME_CAPACITY=' + tools.jenkins.volume_capacity }}
     -p STORAGE_CLASS_NAME={{ storage_class_name }}
+    --dry-run -o yaml | {{ ocadm }} -n {{ project_cicd }} apply -f -
   register: result
-  ignore_errors: true
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
   no_log: true
+
+- name: "Assign necessary permissions for EDP Jenkins"
+  shell: >
+    {{ ocadm }} {{ item }}
+  with_items:
+  - "-n {{ project_cicd }} create rolebinding edp-jenkins --role edp-jenkins --serviceaccount={{ project_cicd }}:jenkins"
+  - "create clusterrolebinding {{ edp_name }}-edp-jenkins --clusterrole edp-jenkins --serviceaccount={{ project_cicd }}:jenkins --dry-run -o yaml | {{ ocadm }} apply -f -"
+  register: result
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+  - 'result.rc != 0'
+  - '"already" not in result.stderr'

@@ -43,6 +43,27 @@ objects:
     verbs:
     - get
   - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames:
+    - docker-registry
+    - registry-console
+    resources:
+    - routes
+    verbs:
+    - get
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames:
+    - edp-jenkins
+    resources:
+    - roles
+    - rolebindings
+    verbs:
+    - get
+    - patch
+  - apiGroups:
     - '*'
     attributeRestrictions: null
     resources:
@@ -68,8 +89,6 @@ objects:
     - keycloak-admin
     - keycloak-gerrit
     - gerrit-project-creator
-    - keycloak
-    - keycloak-parameters
     resources:
     - secrets
     verbs:

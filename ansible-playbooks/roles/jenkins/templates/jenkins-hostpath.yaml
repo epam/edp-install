@@ -32,6 +32,86 @@ metadata:
   name: jenkins
 objects:
 - apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: jenkins
+- apiVersion: authorization.openshift.io/v1
+  kind: ClusterRole
+  metadata:
+    name: edp-jenkins
+  rules:
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resourceNames:
+    - keycloak
+    resources:
+    - secrets
+    verbs:
+    - get
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resources:
+    - projectrequests
+    - projects
+    - rolebindings
+    - securitycontextconstraints
+    verbs:
+    - get
+    - list
+    - create
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resources:
+    - securitycontextconstraints
+    verbs:
+    - get
+    - list
+    - create
+    - update
+- apiVersion: authorization.openshift.io/v1
+  kind: Role
+  metadata:
+    name: edp-jenkins
+  rules:
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resourceNames:
+    - vcs-autouser
+    - gerrit-admin
+    - jenkins-token
+    - keycloak-admin
+    - keycloak-gerrit
+    - gerrit-project-creator
+    resources:
+    - secrets
+    verbs:
+    - get
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames: []
+    resources:
+    - configmaps
+    - imagestreams
+    - buildconfigs
+    verbs:
+    - list
+    - get
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames: []
+    resources:
+    - templates
+    - processedtemplates
+    verbs:
+    - get
+    - create
+- apiVersion: v1
   kind: PersistentVolume
   metadata:
     labels:
@@ -164,12 +244,6 @@ objects:
         - name: jenkins-data
           persistentVolumeClaim:
             claimName: jenkins-data
-- apiVersion: v1
-  kind: ServiceAccount
-  metadata:
-    annotations:
-      serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"jenkins"}}'
-    name: jenkins
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding

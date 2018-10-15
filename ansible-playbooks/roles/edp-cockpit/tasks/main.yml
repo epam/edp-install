@@ -89,7 +89,7 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
 
-- name: "Assign necessary permissions for EDP tools"
+- name: "Assign necessary permissions for cockpit service account"
   shell: >
     {{ ocadm }} {{ item }}
   with_items:

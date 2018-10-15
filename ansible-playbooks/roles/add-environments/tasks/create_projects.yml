@@ -26,7 +26,14 @@
     - 'result.rc != 0'
     - '"already" not in result.stdout'
 
-- name: "Define access to admin for new projects"
-  shell: "{{ ocadm }} adm policy add-role-to-group admin {{ edp_name }}-edp-super-admin -n {{ item }}"
-  with_items:
+- set_fact:
+    permission_commands:
+    - "adm policy add-role-to-group admin {{ edp_name }}-edp-super-admin"
+    - "create role edp-jenkins --verb=get,create,update --resource=imagestreams"
+    - "create rolebinding edp-jenkins --role=edp-jenkins --serviceaccount={{ project_cicd }}:jenkins"
+
+- name: "Set correct permissions for super-admins"
+  shell: "{{ ocadm }} -n {{ item[0] }} {{ item[1] }} --dry-run -o yaml | {{ ocadm }} -n {{ item[0] }} apply -f -"
+  with_nested:
     - "{{ env_names_list }}"
+    - "{{ permission_commands}}"
