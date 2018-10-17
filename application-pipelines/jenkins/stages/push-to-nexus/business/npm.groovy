@@ -23,7 +23,7 @@ def run(vars) {
             sh (script: """
             set +x
             npm set registry ${vars.npmInternalRegistry}
-            auth=\$(echo -n '${USERNAME}:${PASSWORD}' | openssl base64); npm set _auth=\$auth
+            auth=\$(echo -n '${USERNAME}:${PASSWORD}' | base64); npm set _auth=\$auth
             npm set //${vars.npmInternalRegistry}:_authToken ${token}
             npm set email=${vars.gerritAutoUser}@epam.com
             """, returnStdout: false)

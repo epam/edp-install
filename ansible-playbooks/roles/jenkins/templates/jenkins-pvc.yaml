@@ -407,7 +407,7 @@ parameters:
 - description: Frontend docker image.
   displayName: Frontend docker image.
   name: JENKINS_FRONTEND_IMAGE
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/nodejs-slave:6.12.2"
+  value: "openshift/jenkins-agent-nodejs-8-centos7:v3.10"
 - description: Backend docker image.
   displayName: Backend docker image.
   name: JENKINS_BACKEND_IMAGE

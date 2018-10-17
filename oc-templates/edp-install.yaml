@@ -151,7 +151,7 @@ parameters:
   value: 10Gi
 - displayName: Frontend docker image.
   name: JENKINS_FRONTEND_IMAGE
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-ui-slave:latest"
+  value: "openshift/jenkins-agent-nodejs-8-centos7:v3.10"
 - displayName: Jenkins EDP docker image.
   name: JENKINS_IMAGE_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest"
