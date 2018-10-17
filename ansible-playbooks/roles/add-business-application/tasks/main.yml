@@ -38,6 +38,10 @@
   when: item_map.add_repo_strategy == 'create'
 
 - set_fact:
+    git_repo_url: "{{ basic_pattern_url }}/{{ item_map.language }}-{{ item_map.build_tool }}-{{ item_map.framework }}-{{ item_map.database }}.git"
+  when: item_map.add_repo_strategy == 'create' and item_map.need_database
+
+- set_fact:
     git_repo_url: "{{ item_map.git_repo_url }}"
   when: item_map.add_repo_strategy != 'create'
 
