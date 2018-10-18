@@ -50,5 +50,17 @@
         "capacity": "500Mi"
       }
     }
+  },
+  {
+    "displayName": "Message broker (ActiveMQ)",
+    "command": {
+      "name": "activemq",
+      "image": "rmohr/activemq",
+      "version": "5.15.6",
+      "storage": {
+        "class": "{{ storage_class_name }}",
+        "capacity": "500Mi"
+      }
+    }
   }
 ]
