@@ -59,5 +59,17 @@
         ]
       }
     ]
+  },
+  {
+    "name": "activemq",
+    "images":
+    [
+      {
+        "name": "rmohr/activemq",
+        "version": [
+          "5.15.6"
+        ]
+      }
+    ]
   }
 ]
