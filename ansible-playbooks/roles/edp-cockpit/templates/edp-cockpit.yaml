@@ -33,6 +33,16 @@ objects:
     name: edp-cockpit
   rules:
   - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames:
+    - docker-registry
+    - registry-console
+    resources:
+    - routes
+    verbs:
+    - get
+  - apiGroups:
     - '*'
     attributeRestrictions: null
     resources:
