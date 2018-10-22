@@ -21,6 +21,7 @@ secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/oc-templates"
 files_dir: "{{ work_dir }}/files"
 edp_name: ""
+edp_deploy_project: "{{ lookup('env', 'DEPLOY-PROJECT') }}"
 projects_list: [
     "{{ edp_name }}-edp-cicd"
     ]

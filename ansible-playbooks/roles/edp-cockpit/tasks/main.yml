@@ -95,7 +95,7 @@
   with_items:
   - "-n {{ project_cicd }} create rolebinding {{ edp_name }}-edp-cockpit --role edp-cockpit --serviceaccount={{ project_cicd }}:cockpit"
   - "create clusterrolebinding {{ edp_name }}-edp-cockpit --clusterrole edp-cockpit --serviceaccount={{ project_cicd }}:cockpit --dry-run -o yaml | {{ ocadm }} apply -f -"
-  - "adm policy add-scc-to-user edp-deploy system:serviceaccount:{{ project_cicd }}:cockpit"
+  - "adm policy add-scc-to-user anyuid system:serviceaccount:{{ project_cicd }}:cockpit"
   register: result
   changed_when: '"already" not in result.stderr'
   failed_when:

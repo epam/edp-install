@@ -43,6 +43,11 @@ objects:
         - image: ${EDP_VERSION}
           imagePullPolicy: Always
           name: edp-deploy
+          env:
+          - name: DEPLOY-PROJECT
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
           command:
             - "ansible-playbook"
             - "--tags=${APPS_TO_INSTALL}"
