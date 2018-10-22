@@ -18,7 +18,7 @@ def run(vars) {
     openshift.withCluster() {
         openshift.withProject() {
             if (!openshift.selector("buildconfig", "${vars.itemMap.name}").exists())
-                openshift.newBuild("--name=${vars.itemMap.name}", "--image-stream=s2i-${vars.itemMap.language.toLowerCase()}", "--binary=true", "-e NGINX_STATIC_DIR=public")
+                openshift.newBuild("--name=${vars.itemMap.name}", "--image-stream=s2i-${vars.itemMap.language.toLowerCase()}", "--binary=true", "-e NGINX_STATIC_DIR=build")
             dir("${vars.workDir}") {
                 sh "tar -cf ${vars.itemMap.name}.tar *"
                 buildResult = openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-archive=${vars.itemMap.name}.tar", "--wait=true")
