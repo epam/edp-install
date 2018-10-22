@@ -5,7 +5,8 @@
       "Maven"
     ],
     "frameworks": [
-      "SpringBoot"
+      "SpringBoot",
+      "SpringBoot(multi-module)"
     ],
     "database": [
       {
