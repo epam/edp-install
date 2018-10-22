@@ -43,7 +43,6 @@
   shell: >
     {{ ocadm }} {{ item }}
   with_items:
-  - "-n {{ project_cicd }} create rolebinding edp-jenkins --role edp-jenkins --serviceaccount={{ project_cicd }}:jenkins"
   - "create clusterrolebinding {{ edp_name }}-edp-jenkins --clusterrole edp-jenkins --serviceaccount={{ project_cicd }}:jenkins --dry-run -o yaml | {{ ocadm }} apply -f -"
   register: result
   changed_when: '"already" not in result.stderr'

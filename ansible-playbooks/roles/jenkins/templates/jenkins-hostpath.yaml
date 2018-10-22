@@ -67,50 +67,17 @@ objects:
     resources:
     - securitycontextconstraints
     verbs:
-    - get
-    - list
-    - create
     - update
-- apiVersion: authorization.openshift.io/v1
-  kind: Role
+- apiVersion: v1
+  groupNames: null
+  kind: RoleBinding
   metadata:
     name: edp-jenkins
-  rules:
-  - apiGroups:
-    - '*'
-    attributeRestrictions: null
-    resourceNames:
-    - vcs-autouser
-    - gerrit-admin
-    - jenkins-token
-    - keycloak-admin
-    - keycloak-gerrit
-    - gerrit-project-creator
-    resources:
-    - secrets
-    verbs:
-    - get
-  - apiGroups:
-    - "*"
-    attributeRestrictions: null
-    resourceNames: []
-    resources:
-    - configmaps
-    - imagestreams
-    - buildconfigs
-    verbs:
-    - list
-    - get
-  - apiGroups:
-    - "*"
-    attributeRestrictions: null
-    resourceNames: []
-    resources:
-    - templates
-    - processedtemplates
-    verbs:
-    - get
-    - create
+  roleRef:
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: jenkins
 - apiVersion: v1
   kind: PersistentVolume
   metadata:
@@ -244,16 +211,6 @@ objects:
         - name: jenkins-data
           persistentVolumeClaim:
             claimName: jenkins-data
-- apiVersion: v1
-  groupNames: null
-  kind: RoleBinding
-  metadata:
-    name: jenkins-edit
-  roleRef:
-    name: edit
-  subjects:
-  - kind: ServiceAccount
-    name: jenkins
 - apiVersion: v1
   kind: Service
   metadata:

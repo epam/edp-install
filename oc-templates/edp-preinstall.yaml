@@ -24,90 +24,169 @@ metadata:
     template.openshift.io/support-url: https://www.epam.com
 objects:
 - apiVersion: v1
-  kind: Project
-  metadata:
-    name: ${NAMESPACE}
-  spec:
-    finalizers:
-    - openshift.io/origin
-    - kubernetes
-- apiVersion: v1
-  kind: RoleBinding
-  metadata:
-    name: admin
-    namespace: ${NAMESPACE}
-  roleRef:
-    name: admin
-  subjects:
-  - kind: User
-    name: admin
-  userNames:
-  - admin
-- apiVersion: v1
   kind: ServiceAccount
   metadata:
     name: edp
-    namespace: ${NAMESPACE}
-- apiVersion: v1
-  groupNames:
-  - system:masters
-  kind: ClusterRoleBinding
+    namespace: ${PROJECT}
+- apiVersion: authorization.openshift.io/v1
+  kind: ClusterRole
   metadata:
     annotations:
+      openshift.io/description: Role for EDP service account that allows to deploy EPAM Delivery Platform (EDP) aka "The Rocket" tools
       openshift.io/reconcile-protect: "false"
-    labels:
-      kubernetes.io/bootstrapping: rbac-defaults
-    name: edp-deploy-cluster-admin
-  roleRef:
-    name: cluster-admin
-  subjects:
-  - kind: ServiceAccount
-    name: edp
-    namespace: ${NAMESPACE}
-  - kind: SystemGroup
-    name: system:masters
-  userNames:
-  - system:serviceaccount:${NAMESPACE}:edp
-- apiVersion: v1
+    name: edp-deploy-role
+  rules:
+  - apiGroups:
+    - image.openshift.io
+    attributeRestrictions: null
+    resources:
+    - imagestreamimages
+    - imagestreammappings
+    - imagestreams
+    - imagestreamtags
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - image.openshift.io
+    attributeRestrictions: null
+    resources:
+    - imagestreams/layers
+    verbs:
+    - get
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - namespaces
+    verbs:
+    - get
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resources:
+    - templates
+    - processedtemplates
+    - rolebindings
+    - roles
+    - clusterroles
+    - clusterrolebindings
+    - projectrequests
+    - projects
+    - pods
+    - pods/exec
+    - groups
+    - users
+    - securitycontextconstraints
+    - jobs
+    - configmaps
+    - routes
+    - imagestreams
+    - buildconfigs
+    verbs:
+    - get
+    - list
+    - create
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    - routes
+    - imagestreams
+    - buildconfigs
+    - jobs
+    - groups
+    - users
+    - securitycontextconstraints
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resources:
+    - jobs
+    verbs:
+    - delete
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resources:
+    - secrets
+    verbs:
+    - create
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resourceNames:
+    - vcs-autouser
+    - gerrit-admin
+    - jenkins-token
+    - keycloak-admin
+    - keycloak-gerrit
+    - gerrit-project-creator
+    - keycloak
+    - keycloak-parameters
+    resources:
+    - secrets
+    verbs:
+    - get
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resourceNames:
+    - edp-jenkins
+    - edp-cockpit
+    resources:
+    - roles
+    - rolebindings
+    - clusterroles
+    verbs:
+    - patch
+    - update
+- apiVersion: security.openshift.io/v1
   kind: SecurityContextConstraints
-  allowHostDirVolumePlugin: true
+  allowHostDirVolumePlugin: false
   allowHostIPC: false
   allowHostNetwork: false
   allowHostPID: false
-  allowHostPorts: true
+  allowHostPorts: false
   allowPrivilegedContainer: false
-  allowedCapabilities: []
-  allowedFlexVolumes: []
-  defaultAddCapabilities: []
+  allowedCapabilities: null
+  allowedFlexVolumes: null
+  defaultAddCapabilities: null
   fsGroup:
-    type: RunAsAny
-  groups:
-  - system:cluster-admins
+    type: MustRunAs
+  groups: []
   metadata:
-    name: edp-deploy
-    namespace: ${NAMESPACE}
-  priority: 10
+    name: edp
+  priority: null
   readOnlyRootFilesystem: false
   requiredDropCapabilities:
+  - KILL
   - MKNOD
+  - SETUID
+  - SETGID
   runAsUser:
-    type: RunAsAny
+    type: MustRunAs
+    uid: 1000
   seLinuxContext:
     type: MustRunAs
   supplementalGroups:
     type: RunAsAny
   users:
-  - system:serviceaccount:${NAMESPACE}:edp
+  - system:serviceaccount:${PROJECT}:edp
   volumes:
   - configMap
   - downwardAPI
   - emptyDir
-  - hostPath
   - persistentVolumeClaim
   - projected
   - secret
 parameters:
-- displayName: Namespace to run edp-deploy
-  description: Namespace EDP platform will be deployed from
-  name: NAMESPACE
+- displayName: PROJECT to run edp-deploy
+  description: PROJECT EDP platform will be deployed from
+  name: PROJECT
   value: "edp-deploy"
