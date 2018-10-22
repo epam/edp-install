@@ -140,7 +140,7 @@ public class AddApplicationSmokeTest {
 
     @Test
     public void testProjectWasCreatedInGitGroupRepoForCreateStrategy() {
-        Secret secret = openShiftClient.get(ResourceKind.SECRET, "vcs-autouser", "edp-deploy");
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, "vcs-autouser", "edp-cicd-delivery");
 
         String username = new String(secret.getData("username")).trim();
         String password = new String(secret.getData("password")).trim();
