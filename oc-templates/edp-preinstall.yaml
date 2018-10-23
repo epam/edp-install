@@ -24,6 +24,28 @@ metadata:
     template.openshift.io/support-url: https://www.epam.com
 objects:
 - apiVersion: v1
+  kind: Project
+  metadata:
+    annotations:
+      openshift.io/display-name: System project for EDP deployment
+    name: ${PROJECT}
+  spec:
+    finalizers:
+    - openshift.io/origin
+    - kubernetes
+- apiVersion: authorization.openshift.io/v1
+  kind: RoleBinding
+  metadata:
+    name: edp-${PROJECT}-admin
+    namespace: ${PROJECT}
+  roleRef:
+    name: admin
+  subjects:
+  - kind: User
+    name: ${USERNAME}
+  userNames:
+  - ${USERNAME}
+- apiVersion: v1
   kind: ServiceAccount
   metadata:
     name: edp
@@ -162,7 +184,7 @@ objects:
   groups: []
   metadata:
     name: edp
-  priority: null
+  priority: 10
   readOnlyRootFilesystem: false
   requiredDropCapabilities:
   - KILL
@@ -176,8 +198,7 @@ objects:
     type: MustRunAs
   supplementalGroups:
     type: RunAsAny
-  users:
-  - system:serviceaccount:${PROJECT}:edp
+  users: []
   volumes:
   - configMap
   - downwardAPI
@@ -186,7 +207,13 @@ objects:
   - projected
   - secret
 parameters:
-- displayName: PROJECT to run edp-deploy
-  description: PROJECT EDP platform will be deployed from
+- displayName: Project to run edp-deploy
+  description: Project EDP platform will be deployed from, default is edp-deploy
   name: PROJECT
   value: "edp-deploy"
+  required: true
+- displayName: Username that will run EDP deployment
+  description: Username that EDP platform will be deployed from, default is admin
+  name: USERNAME
+  value: "admin"
+  required: true
