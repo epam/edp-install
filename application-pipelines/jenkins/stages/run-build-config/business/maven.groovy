@@ -20,7 +20,8 @@ def run(vars) {
             if (!openshift.selector("buildconfig", "${vars.itemMap.name}").exists())
                 openshift.newBuild("--name=${vars.itemMap.name}", "--image-stream=s2i-${vars.itemMap.language.toLowerCase()}", "--binary=true")
 
-            dir("${vars.workDir}/target") {
+            targetDir = vars.deployableModule.isEmpty() ? "${vars.workDir}/target" : "${vars.workDir}/${vars.deployableModule}/target"
+            dir(targetDir) {
                 sh "tar -cf ${vars.itemMap.name}.tar *"
                 buildResult = openshift.selector("bc", "${vars.itemMap.name}").startBuild("--from-archive=${vars.itemMap.name}.tar", "--wait=true")
                 resultTag = buildResult.object().status.output.to.imageDigest
