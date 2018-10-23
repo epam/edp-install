@@ -42,7 +42,7 @@
   when: item_map is defined
 
 - set_fact:
-    source_template: "{{ item_map.name + '.j2' if template_file.stat.exists else item_map.language | lower + '/' + item_map.framework | lower + '.j2' }}"
+    source_template: "{{ item_map.name + '.j2' if template_file.stat.exists else item_map.language | lower + '/' + item_map.framework | regex_replace('\\(.*', '') | lower + '.j2' }}"
   when: item_map is defined and (template_file.stat.exists or ( item_map.language is defined and item_map.framework is defined))
 
 - block:
@@ -59,7 +59,7 @@
 
   - name: "Copying S2I template for application"
     template:
-      src: "{{ item_map.language | lower }}/s2i-{{ item_map.framework | lower }}.j2"
+      src: "{{ item_map.language | lower }}/s2i-{{ item_map.framework | regex_replace('\\(.*', '') | lower }}.j2"
       dest: "{{ templates_dir }}/s2i-{{ item_map.name }}.yaml"
     when: item_map.language is defined and item_map.framework is defined
 

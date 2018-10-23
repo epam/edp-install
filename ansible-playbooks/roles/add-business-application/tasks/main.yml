@@ -42,6 +42,11 @@
   when: item_map.add_repo_strategy == 'create' and item_map.need_database
 
 - set_fact:
+    git_repo_url: "{{ basic_pattern_url }}/{{ item_map.language }}-{{ item_map.build_tool }}-{{ item_map.framework | regex_replace('\\(.*', '-multimodule') }}\
+    {{ '-'+item_map.database if item_map.need_database else '' }}.git"
+  when: "{{ item_map.add_repo_strategy == 'create' and item_map.framework | regex_replace('.*(?=\\()', '') == '(multi-module)' }}"
+
+- set_fact:
     git_repo_url: "{{ item_map.git_repo_url }}"
   when: item_map.add_repo_strategy != 'create'
 
