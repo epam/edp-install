@@ -18,6 +18,7 @@
       {{ item.hostname }}/api/v4/groups/{{ item.group_name }}\
       ?simple=true&access_token={{ item.csrf_token }}"
     method: GET
+    timeout: 180
   retries: 3
   delay: 3
   register: result

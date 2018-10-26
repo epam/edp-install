@@ -165,8 +165,6 @@ objects:
           resources:
             requests:
               memory: 500Mi
-          securityContext:
-            runAsUser: 0
           volumeMounts:
             - mountPath: /opt/activemq/conf
               name: "{{ name }}-conf"
@@ -202,7 +200,7 @@ objects:
               chown activemq:activemq /mnt/conf && chown activemq:activemq
               /mnt/data && cp -a /opt/activemq/conf/* /mnt/conf/ && cp -a
               /opt/activemq/data/* /mnt/data/
-            image: 'rmohr/activemq:5.15.6-alpine'
+            image: 'rmohr/activemq:5.15.6'
             imagePullPolicy: IfNotPresent
             name: init-activemq
             resources: {}
