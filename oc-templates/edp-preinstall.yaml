@@ -59,6 +59,7 @@ objects:
     name: edp-deploy-role
   rules:
   - apiGroups:
+    - ""
     - image.openshift.io
     attributeRestrictions: null
     resources:
@@ -71,6 +72,7 @@ objects:
     - list
     - watch
   - apiGroups:
+    - ""
     - image.openshift.io
     attributeRestrictions: null
     resources:
