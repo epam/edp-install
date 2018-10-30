@@ -2,7 +2,8 @@
   {
     "language": "Java",
     "buildTools": [
-      "Maven"
+      "Maven",
+      "Gradle"
     ],
     "frameworks": [
       "SpringBoot",
