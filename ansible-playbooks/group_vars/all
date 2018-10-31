@@ -63,7 +63,8 @@ tools:
     volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
     maven_cache_volume_capacity: "{{ jenkins_maven_cache_volume_capacity | default('5Gi') }}"
     frontend_image: "{{ jenkins_frontend_image | default('openshift/jenkins-agent-nodejs-8-centos7:v3.10') }}"
-    backend_image: "{{ jenkins_backend_image | default('openshift/jenkins-slave-maven-centos7') }}"
+    backend_maven_image: "{{ jenkins_backend_maven_image | default('openshift/jenkins-slave-maven-centos7') }}"
+    backend_gradle_image: "{{ jenkins_backend_gradle_image | default('epamedp/jenkins-slave-gradle-openshift') }}"
     jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   gerrit:
     version: "{{ gerrit_version | default('2.14.8') }}"

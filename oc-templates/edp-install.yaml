@@ -71,7 +71,8 @@ objects:
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
             - "-e jenkins_maven_cache_volume_capacity=${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}"
             - "-e jenkins_frontend_image=${JENKINS_FRONTEND_IMAGE}"
-            - "-e jenkins_backend_image=${JENKINS_BACKEND_IMAGE}"
+            - "-e jenkins_backend_maven_image=${JENKINS_BACKEND_MAVEN_IMAGE}"
+            - "-e jenkins_backend_gradle_image=${JENKINS_BACKEND_GRADLE_IMAGE}"
             - "-e jenkins_image_version=${JENKINS_IMAGE_VERSION}"
             - "-e nexus_version=${NEXUS_VERSION}"
             - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
@@ -161,8 +162,11 @@ parameters:
   name: JENKINS_IMAGE_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest"
 - displayName: Backend docker image.
-  name: JENKINS_BACKEND_IMAGE
+  name: JENKINS_BACKEND_MAVEN_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"
+- displayName: Backend gradle docker image.
+  name: JENKINS_BACKEND_GRADLE_IMAGE
+  value: "epamedp/jenkins-slave-gradle-openshift"
 #Nexus parameters
 - displayName: Sonatype Nexus version
   name: NEXUS_VERSION

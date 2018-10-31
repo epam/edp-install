@@ -313,7 +313,7 @@ objects:
         <containers>
           <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
             <name>jnlp</name>
-            <image>${JENKINS_BACKEND_IMAGE}</image>
+            <image>${JENKINS_BACKEND_MAVEN_IMAGE}</image>
             <privileged>false</privileged>
             <alwaysPullImage>false</alwaysPullImage>
             <workingDir>/tmp</workingDir>
@@ -331,10 +331,10 @@ objects:
         <annotations/>
         <imagePullSecrets/>
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
-    dotnet-template: |-
+    gradle-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
         <inheritFrom></inheritFrom>
-        <name>dotnet</name>
+        <name>gradle</name>
         <namespace></namespace>
         <privileged>false</privileged>
         <alwaysPullImage>false</alwaysPullImage>
@@ -342,7 +342,7 @@ objects:
         <slaveConnectTimeout>100</slaveConnectTimeout>
         <idleMinutes>5</idleMinutes>
         <activeDeadlineSeconds>0</activeDeadlineSeconds>
-        <label>dotnet</label>
+        <label>gradle</label>
         <serviceAccount>jenkins</serviceAccount>
         <nodeSelector></nodeSelector>
         <nodeUsageMode>NORMAL</nodeUsageMode>
@@ -354,7 +354,7 @@ objects:
         <containers>
           <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
             <name>jnlp</name>
-            <image>registry.centos.org/dotnet/dotnet-20-jenkins-slave-centos7:latest</image>
+            <image>${JENKINS_BACKEND_GRADLE_IMAGE}</image>
             <privileged>false</privileged>
             <alwaysPullImage>false</alwaysPullImage>
             <workingDir>/tmp</workingDir>
@@ -441,8 +441,12 @@ parameters:
   value: "openshift/jenkins-agent-nodejs-8-centos7:v3.10"
 - description: Backend docker image.
   displayName: Backend docker image.
-  name: JENKINS_BACKEND_IMAGE
+  name: JENKINS_BACKEND_MAVEN_IMAGE
   value: "openshift/jenkins-slave-maven-centos7"
+- description: Backend gradle docker image.
+  displayName: Backend gradle docker image.
+  name: JENKINS_BACKEND_GRADLE_IMAGE
+  value: "epamedp/jenkins-slave-gradle-openshift"
 - description: Jenkins EDP docker image.
   displayName: Jenkins EDP docker image.
   name: JENKINS_IMAGE_VERSION
