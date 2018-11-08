@@ -186,7 +186,7 @@ objects:
   groups: []
   metadata:
     name: edp
-  priority: 10
+  priority: null
   readOnlyRootFilesystem: false
   requiredDropCapabilities:
   - KILL
