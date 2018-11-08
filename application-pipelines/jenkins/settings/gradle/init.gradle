@@ -1,0 +1,25 @@
+allprojects {
+    buildscript {
+        repositories {
+            maven {
+                credentials {
+                    username 'admin'
+                    password 'admin123'
+                }
+                url "http://nexus:8081/repository/maven-public"
+            }
+        }
+        dependencies {
+            classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'jacoco'
+    apply plugin: 'maven-publish'
+
+    afterEvaluate { project ->
+        project.apply plugin: 'org.sonarqube'
+    }
+}

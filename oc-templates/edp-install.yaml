@@ -166,7 +166,7 @@ parameters:
   value: "openshift/jenkins-slave-maven-centos7"
 - displayName: Backend gradle docker image.
   name: JENKINS_BACKEND_GRADLE_IMAGE
-  value: "epamedp/jenkins-slave-gradle-openshift"
+  value: "epamedp/jenkins-slave-gradle-openshift:1.10.0"
 #Nexus parameters
 - displayName: Sonatype Nexus version
   name: NEXUS_VERSION

@@ -110,6 +110,7 @@ def getConstants(vars) {
     }
 
     vars['mavenSettings'] = "${vars.pipelinesPath}/settings/maven/settings.xml"
+    vars['gradleInitScript'] = "${vars.pipelinesPath}/settings/gradle/init.gradle"
     vars['nexusMavenRepositoryUrl'] = "http://nexus:8081/repository/maven"
 
     vars['npmGroupRegistry']="http://nexus:8081/repository/npm-all/"

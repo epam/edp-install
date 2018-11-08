@@ -347,7 +347,7 @@ objects:
         <name>gradle</name>
         <namespace></namespace>
         <privileged>false</privileged>
-        <alwaysPullImage>false</alwaysPullImage>
+        <alwaysPullImage>true</alwaysPullImage>
         <instanceCap>2147483647</instanceCap>
         <slaveConnectTimeout>100</slaveConnectTimeout>
         <idleMinutes>5</idleMinutes>
@@ -366,7 +366,7 @@ objects:
             <name>jnlp</name>
             <image>${JENKINS_BACKEND_GRADLE_IMAGE}</image>
             <privileged>false</privileged>
-            <alwaysPullImage>false</alwaysPullImage>
+            <alwaysPullImage>true</alwaysPullImage>
             <workingDir>/tmp</workingDir>
             <command></command>
             <args>${computer.jnlpmac} ${computer.name}</args>
@@ -451,7 +451,7 @@ parameters:
 - description: Backend gradle docker image.
   displayName: Backend gradle docker image.
   name: JENKINS_BACKEND_GRADLE_IMAGE
-  value: "epamedp/jenkins-slave-gradle-openshift"
+  value: "epamedp/jenkins-slave-gradle-openshift:1.10.0"
 - description: Jenkins EDP docker image.
   displayName: Jenkins EDP docker image.
   name: JENKINS_IMAGE_VERSION
