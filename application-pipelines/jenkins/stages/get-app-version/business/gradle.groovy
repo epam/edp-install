@@ -14,29 +14,13 @@ limitations under the License. */
 
 def run(vars) {
     dir("${vars.workDir}") {
-        vars['groupID'] = sh(
-                script: """
-                    gradle properties|egrep \"group: \"|awk '{print \$2}'
-                """,
-                returnStdout: true
-        ).trim()
-        vars['artifactVersion'] = sh(
-                script: """
-                        gradle properties|egrep "version: "|awk '{print \$2}'    
-                    """,
-                returnStdout: true
-        ).trim().toLowerCase()
-        vars['artifactID'] = sh(
-                script: """
-                        gradle properties|egrep "rootProject: root project "|awk -F "'" '{print \$2}' 
-                    """,
-                returnStdout: true
-        ).trim()
-        vars['sonarProjectKey'] = "${vars.groupID}:${vars.artifactID}:change-${vars.gerritChangeNumber}"
-        vars['deployableModule'] = "${vars.artifactId}".trim()
+        vars['artifactID'] = buildToolLib.getGradleArtifactID()
+        vars['artifactVersion'] = buildToolLib.getGradleArtifactVersion()
+        vars['groupID'] = buildToolLib.getGradleGroupID()
+        vars['deployableModule'] = "${vars.artifactID}".trim()
+        vars['businissAppVersion'] = "${vars.artifactVersion}-${BUILD_NUMBER}"
         println("[JENKINS][DEBUG] Deployable module: ${vars.deployableModule}")
     }
-    println("[JENKINS][DEBUG] Version - ${vars.version}")
-    vars['businissAppVersion'] = "${vars.version}-${BUILD_NUMBER}"
+    println("[JENKINS][DEBUG] Artifact version - ${vars.artifactVersion}")
 }
 return this;

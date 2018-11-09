@@ -14,6 +14,7 @@ limitations under the License. */
 
 vars = [:]
 commonLib = null
+libPath = null
 
 node("master") {
     if (!env.PIPELINES_PATH)
@@ -40,8 +41,8 @@ node("master") {
 
     stage('Delete projects') {
         dir("${vars.devopsRoot}") {
-
-            commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
+            libPath = "${vars.pipelinesPath}/libs"
+            commonLib = load "${libPath}/common.groovy"
             commonLib.getConstants(vars)
 
             vars.projectsToDelete = vars.projectNames.tokenize(',')

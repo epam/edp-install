@@ -15,6 +15,7 @@ limitations under the License. */
 def run(vars) {
     def source = load "../common.groovy"
     source.run(vars)
+    buildToolLib.copyGradlePropertiesFile()
 }
 
 return this;

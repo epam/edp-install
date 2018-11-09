@@ -23,9 +23,9 @@ def run(vars) {
                 script: "find ${vars.deployableModule} -name *.csproj | xargs grep -Po '<Version>\\K[^<]*'",
                 returnStdout: true
         ).trim().toLowerCase()
+        vars['businissAppVersion'] = "${vars.dotnetVersion}-${BUILD_NUMBER}"
     }
     println("[JENKINS][DEBUG] .NET version - ${vars.dotnetVersion}")
-    vars['businissAppVersion'] = "${vars.dotnetVersion}-${BUILD_NUMBER}"
 }
 return this;
 

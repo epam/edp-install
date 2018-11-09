@@ -21,7 +21,6 @@ def run(vars) {
                 returnStdout: true
         ).trim().toLowerCase()
     }
-    vars['sonarProjectKey']="${vars.gerritProject}:change-${vars.gerritChangeNumber}"
     println("[JENKINS][DEBUG] Npm version - ${vars.npmVersion}")
     vars['businissAppVersion'] = "${vars.npmVersion}-${BUILD_NUMBER}"
 }

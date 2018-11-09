@@ -14,7 +14,7 @@ limitations under the License. */
 
 def run(vars) {
     dir("${vars.workDir}") {
-        sh "gradle clean build -x test -I ${vars.devopsRoot}/${vars.gradleInitScript}"
+        sh "${vars.gradleCommand} clean build -x test"
     }
     this.result = "success"
 }

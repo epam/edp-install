@@ -17,6 +17,7 @@ import hudson.FilePath
 //Define common variables
 vars = [:]
 vars['updatedApplicaions'] = []
+libPath = null
 commonLib = null
 
 def checkEnvVariables(envVariable) {
@@ -35,7 +36,8 @@ node("master") {
             stash name: 'mavenSettings', includes: "**/settings/**", useDefaultExcludes: false
         }
 
-        commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
+        libPath = "${vars.pipelinesPath}/libs"
+        commonLib = load "${libPath}/common.groovy"
         commonLib.getConstants(vars)
 
         openshift.withProject() {

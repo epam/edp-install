@@ -13,6 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 def run(vars) {
+    vars['sonarProjectKey'] = "${vars.groupID}:${vars.artifactID}:change-${vars.gerritChangeNumber}"
     def source = load "../common.groovy"
     source.run(vars)
 }

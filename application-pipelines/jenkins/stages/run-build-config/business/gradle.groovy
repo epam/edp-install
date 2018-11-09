@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 def run(vars) {
-    vars['sonarProjectKey']="${vars.gerritProject}:change-${vars.gerritChangeNumber}"
+    vars['deployableModuleDir'] = "${vars.workDir}/build/libs"
     def source = load "../common.groovy"
     source.run(vars)
 }

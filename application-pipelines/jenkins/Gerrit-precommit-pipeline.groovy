@@ -17,6 +17,7 @@ import org.apache.commons.lang.RandomStringUtils
 //Define common variables
 vars = [:]
 commonLib = null
+buildToolLib = null
 
 def checkEnvVariables(envVariable) {
     if (!env["${envVariable}"])
@@ -32,8 +33,9 @@ node("master") {
 
         def workspace = "${WORKSPACE.replaceAll("@", "")}@script"
         dir("${workspace}") {
+            libPath = "${vars.pipelinesPath}/libs"
             stash name: 'devops', includes: "${vars.pipelinesPath}/**", useDefaultExcludes: false
-            commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
+            commonLib = load "${libPath}/common.groovy"
         }
         commonLib.getConstants(vars)
 
@@ -52,12 +54,19 @@ node("master") {
         }
         else
             vars['itemMap']['type'] = BUSINESS_APPLICATION_TYPE
+
+        def buildToolLibFile = new File("${workspace}/${libPath}/${vars.itemMap.build_tool.toLowerCase()}.groovy")
+        if (buildToolLibFile.exists()) {
+            buildToolLib = load "${buildToolLibFile}"
+        }
     }
 }
 
 node(vars.itemMap.build_tool.toLowerCase()) {
     vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
     vars['stagesRoot'] = "${vars.devopsRoot}/${vars.pipelinesPath}/stages"
+    if (buildToolLib)
+        buildToolLib.getConstants()
     try {
         dir("${vars.devopsRoot}") {
             unstash 'devops'

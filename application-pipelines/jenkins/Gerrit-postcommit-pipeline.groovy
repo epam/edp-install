@@ -18,6 +18,7 @@ import org.apache.commons.lang.RandomStringUtils
 vars = [:]
 commonLib = null
 nexusLib = null
+buildToolLib = null
 
 def checkEnvVariables(envVariable) {
     if (!env["${envVariable}"])
@@ -33,10 +34,11 @@ node("master") {
         def workspace = "${WORKSPACE.replaceAll("@", "")}@script"
 
         dir("${workspace}") {
+            libPath = "${vars.pipelinesPath}/libs"
             stash name: 'devops', includes: "${vars.pipelinesPath}/**", useDefaultExcludes: false
-            commonLib = load "${vars.pipelinesPath}/libs/common.groovy"
+            commonLib = load "${libPath}/common.groovy"
             commonLib.getConstants(vars)
-            nexusLib = load "${vars.pipelinesPath}/libs/nexus.groovy"
+            nexusLib = load "${libPath}/nexus.groovy"
         }
 
         vars['promoteImage'] = true
@@ -55,12 +57,19 @@ node("master") {
             commonLib.failJob("[JENKINS][ERROR] Application ${vars.gerritProject} is not found in configmap" +
                     " ${vars.configMapName} key ${vars.appSettingsKey} please check")
         vars['itemMap']['type'] = BUSINESS_APPLICATION_TYPE
+
+        def buildToolLibFile = new File("${workspace}/${libPath}/${vars.itemMap.build_tool.toLowerCase()}.groovy")
+        if (buildToolLibFile.exists()) {
+            buildToolLib = load "${buildToolLibFile}"
+        }
     }
 }
 
 node(vars.itemMap.build_tool.toLowerCase()) {
     vars['devopsRoot'] = new File("/tmp/${RandomStringUtils.random(10, true, true)}")
     vars['stagesRoot'] = "${vars.devopsRoot}/${vars.pipelinesPath}/stages"
+    if (buildToolLib)
+        buildToolLib.getConstants()
     try {
         dir("${vars.devopsRoot}") {
             unstash 'devops'

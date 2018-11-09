@@ -13,9 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 def run(vars) {
-    vars['sonarProjectKey']="${vars.gerritProject}:change-${vars.gerritChangeNumber}"
-    def source = load "../common.groovy"
-    source.run(vars)
+    dir("${vars.workDir}") {
+        def nexusRepositoryUrl = vars.artifactVersion.contains("snapshot") ? "${vars.nexusMavenRepositoryUrl}-snapshots" : "${vars.nexusMavenRepositoryUrl}-releases"
+        sh "gradle publish -I ${vars.gradleInitScriptPath} -PnexusMavenRepositoryUrl=${nexusRepositoryUrl}"
+    }
+    this.result = "success"
 }
-
 return this;
