@@ -14,13 +14,15 @@ limitations under the License. */
 
 package com.epam.edp.sittests.smoke;
 
+import io.restassured.config.RedirectConfig;
+import io.restassured.config.RestAssuredConfig;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.useRelaxedHTTPSValidation;
-import static io.restassured.RestAssured.when;
 
 public class CicdToolsSmokeTests {
     private UrlBuilder urlBuilder;
@@ -32,35 +34,39 @@ public class CicdToolsSmokeTests {
     }
 
     @Test
-    public void jenkinsSmokeTest() throws Exception {
+    public void jenkinsSmokeTest() {
         useRelaxedHTTPSValidation();
-        when().get(urlBuilder.buildUrl("https", "jenkins", "edp-cicd", "login")).
-                then().
-                statusCode(HttpStatus.SC_OK);
+        given().log().all()
+                .when().get(urlBuilder.buildUrl("https", "jenkins", "edp-cicd", "login"))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 
     @Test
-    public void gerritSmokeTest() throws Exception {
+    public void gerritSmokeTest() {
         useRelaxedHTTPSValidation();
-        when().get(urlBuilder.buildUrl("https", "gerrit", "edp-cicd", "")).
-                then().
-                statusCode(HttpStatus.SC_OK);
+        given().log().all()
+                .when().get(urlBuilder.buildUrl("https", "gerrit", "edp-cicd", ""))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 
     @Test
-    public void nexusSmokeTest() throws Exception {
+    public void nexusSmokeTest() {
         useRelaxedHTTPSValidation();
-        when().get(urlBuilder.buildUrl("https", "nexus", "edp-cicd", "")).
-                then().
-                statusCode(HttpStatus.SC_OK);
+        given().config(RestAssuredConfig.config().redirect(RedirectConfig.redirectConfig().followRedirects(false)))
+                .when().get(urlBuilder.buildUrl("https", "nexus", "edp-cicd", ""))
+                .then()
+                .statusCode(HttpStatus.SC_TEMPORARY_REDIRECT);
     }
 
     @Test
-    public void sonarSmokeTest() throws Exception {
+    public void sonarSmokeTest() {
         useRelaxedHTTPSValidation();
-        when().get(urlBuilder.buildUrl("https", "sonar", "edp-cicd", "")).
-                then().
-                statusCode(HttpStatus.SC_OK);
+        given().log().all()
+                .when().get(urlBuilder.buildUrl("https", "sonar", "edp-cicd", ""))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
     }
 
 }
