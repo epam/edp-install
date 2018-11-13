@@ -25,9 +25,6 @@
         "name": "gerrit-users"
       },
       {
-        "name": "master-create-realm"
-      },
-      {
         "name": "administrator",
         "composite": true,
         "composites": {
@@ -136,6 +133,59 @@
         "{{ tools.nexus.web_url }}"
       ],
       "adminUrl": "{{ tools.nexus.web_url }}/"
+    }
+  ],
+  "identityProviders": [
+    {
+      "alias": "openshift",
+      "displayName": "EDP SSO",
+      "providerId": "keycloak-oidc",
+      "enabled": true,
+      "config":
+        {
+          "validateSignature": "true",
+          "userInfoUrl": "{{ tools.keycloak.web_url }}/auth/realms/openshift/protocol/openid-connect/userinfo",
+          "tokenUrl": "{{ tools.keycloak.web_url }}/auth/realms/openshift/protocol/openid-connect/token",
+          "jwksUrl": "{{ tools.keycloak.web_url }}/auth/realms/openshift/protocol/openid-connect/certs",
+          "issuer": "{{ tools.keycloak.web_url }}/auth/realms/openshift",
+          "useJwksUrl": "true",
+          "authorizationUrl": "{{ tools.keycloak.web_url }}/auth/realms/openshift/protocol/openid-connect/auth",
+          "logoutUrl": "{{ tools.keycloak.web_url }}/auth/realms/openshift/protocol/openid-connect/logout",
+          "clientId": "{{ full_edp_name }}",
+          "clientSecret": "{{ edp_client_secret }}"
+      }
+    }
+  ],
+  "identityProviderMappers": [
+    {
+      "name": "Administrator",
+      "identityProviderAlias": "openshift",
+      "identityProviderMapper": "keycloak-oidc-role-to-role-idp-mapper",
+      "config":
+        {
+          "external.role": "{{ full_edp_name }}.administrator",
+          "role": "administrator"
+        }
+    },
+    {
+      "name": "Developer",
+      "identityProviderAlias": "openshift",
+      "identityProviderMapper": "keycloak-oidc-role-to-role-idp-mapper",
+      "config":
+        {
+          "external.role": "{{ full_edp_name }}.developer",
+          "role": "developer"
+        }
+    },
+    {
+      "name": "Realm Administrator",
+      "identityProviderAlias": "openshift",
+      "identityProviderMapper": "keycloak-oidc-role-to-role-idp-mapper",
+      "config":
+        {
+          "external.role": "{{ full_edp_name }}.administrator",
+          "role": "realm-management.realm-admin"
+        }
     }
   ]
 }

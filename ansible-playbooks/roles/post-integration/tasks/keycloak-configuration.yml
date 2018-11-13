@@ -51,6 +51,9 @@
     access_token: "{{ access_token.json.access_token }}"
   no_log: true
 
+- set_fact:
+    edp_client_secret: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+
 - name: "Create realm for Keycloak"
   uri:
     url: "{{ keycloak_base_url }}/admin/realms"
@@ -62,56 +65,71 @@
     body_format: json
     status_code: 201
 
-- name: "Get {{ tools.keycloak.realm_name }} realm role master-create-realm"
+- name: "Create edp client in openshift realm"
   uri:
-    url: "{{ keycloak_base_url }}/admin/realms/{{ tools.keycloak.realm_name }}/roles/master-create-realm"
-    method: GET
+    url: "{{ keycloak_base_url }}/admin/realms/openshift/clients"
+    method: POST
     headers:
       Authorization: "Bearer {{ access_token }}"
-    status_code: 200
-  register: master_create_realm_role
-
-- name: "Get {{ tools.keycloak.realm_name }} realm role administrator"
-  uri:
-    url: "{{ keycloak_base_url }}/admin/realms/{{ tools.keycloak.realm_name }}/roles/administrator"
-    method: GET
-    headers:
-      Authorization: "Bearer {{ access_token }}"
-    status_code: 200
-  register: administrator_role
-
-- name: "Get realm-management client representation"
-  uri:
-    url: "{{ keycloak_base_url }}/admin/realms/{{ tools.keycloak.realm_name }}/clients?clientId=realm-management"
-    method: GET
-    headers:
-      Authorization: "Bearer {{ access_token }}"
-    status_code: 200
-  register: realm_management_client
+      Content-Type: "application/json"
+    body: "{{ lookup('template','roles/post-integration/templates/keycloak/edp-client.json.j2') |to_json }}"
+    body_format: json
+    status_code: 201
+  register: result
 
 - set_fact:
-    id_client: "{{ realm_management_client.json[0].id }}"
+    edp_client_location: "{{ result.location }}"
+    edp_client_id: "{{ result.location.split('/')[-1] }}"
 
-- name: "Get realm-management client roles"
+- name: "Create role administrator for edp client in openshift realm"
   uri:
-    url: "{{ keycloak_base_url }}/admin/realms/{{ tools.keycloak.realm_name }}/clients/{{ id_client }}/roles/{{ item }}"
+    url: "{{ edp_client_location }}/roles"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: "application/json"
+    body:
+      name: "administrator"
+    body_format: json
+    status_code: 201
+  register: result
+
+- set_fact:
+    edp_admin_role_location: "{{ result.location }}"
+
+- name: "Get role administrator for edp client in openshift realm"
+  uri:
+    url: "{{ edp_admin_role_location }}"
     method: GET
     headers:
       Authorization: "Bearer {{ access_token }}"
-  register: client_roles
-  with_items:
-    - "impersonation"
-    - "manage-clients"
-    - "view-authorization"
-    - "view-events"
-    - "view-identity-providers"
-    - "view-realm"
-    - "view-users"
+    status_code: 200
+  register: admin_role
+
+- name: "Create role developer for edp client in openshift realm"
+  uri:
+    url: "{{ edp_client_location }}/roles"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: "application/json"
+    body:
+      name: "developer"
+    body_format: json
+    status_code: 201
+  register: result
 
 - set_fact:
-    client_roles_list: "{{ client_roles_list | default([]) + [ item.json | to_json ] }}"
-  with_items: "{{ client_roles.results }}"
-  no_log: true
+    edp_dev_role_location: "{{ result.location }}"
+
+- name: "Get role developer for edp client in openshift realm"
+  uri:
+    url: "{{ edp_dev_role_location }}"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    status_code: 200
+  register: dev_role
 
 - include_tasks: keycloak-api/manage-edp-super-admins.yml
   with_items: "{{ edp_super_admins }}"
@@ -123,13 +141,6 @@
 - include_tasks: keycloak-api/manage-edp-viewers.yml
   when: item != ""
   with_items: "{{ edp_viewers }}"
-
-- include_tasks: keycloak-api/configure-idp.yml
-  with_items:
-    - { client: "openshift-realm", realm: "openshift", redirect_uri: "*" }
-    - { client: "master-realm", realm: "master", redirect_uri: "/auth/realms/master/broker/{{ full_edp_name }}/endpoint" }
-
-- include_tasks: keycloak-api/add-mapper-to-idp.yml
 
 - name: "Install Keycloak proxy to Nexus pod"
   include_tasks: keycloak-api/install-proxy.yml

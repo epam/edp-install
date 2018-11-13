@@ -19,10 +19,21 @@
 - include_tasks: get-user-location.yml
   vars:
     - username: "{{ item }}"
-    - realm: "{{ tools.keycloak.realm_name }}"
+    - realm: "openshift"
 
 - include_tasks: create-user-in-realm.yml
   vars:
     - username: "{{ item }}"
-    - realm: "{{ tools.keycloak.realm_name }}"
+    - realm: "openshift"
   when: user_location == "undefined"
+
+- name: "Assign dev role in edp client"
+  uri:
+    url: "{{ user_location }}/role-mappings/clients/{{ edp_client_id }}"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: "application/json"
+    status_code: 204
+    body: "[ {{ dev_role.json | to_json }} ]"
+    body_format: json
