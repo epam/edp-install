@@ -131,6 +131,27 @@
     status_code: 200
   register: dev_role
 
+- name: "Get master client from openshift realm"
+  uri:
+    url: "{{ keycloak_base_url }}/admin/realms/openshift/clients?clientId=master"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    status_code: 200
+  register: master_clients_response
+
+- set_fact:
+    master_client_id: "{{ master_clients_response.json[0].id }}"
+
+- name: "Get role developer for edp client in openshift realm"
+  uri:
+    url: "{{ keycloak_base_url }}/admin/realms/openshift/clients/{{ master_client_id }}/roles/create-realm"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    status_code: 200
+  register: create_realm_role
+
 - include_tasks: keycloak-api/manage-edp-super-admins.yml
   with_items: "{{ edp_super_admins }}"
 

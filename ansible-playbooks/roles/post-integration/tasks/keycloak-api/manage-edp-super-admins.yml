@@ -37,3 +37,14 @@
     status_code: 204
     body: "[ {{ admin_role.json | to_json }} ]"
     body_format: json
+
+- name: "Assign create-realm role in master client"
+  uri:
+    url: "{{ user_location }}/role-mappings/clients/{{ master_client_id }}"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: "application/json"
+    status_code: 204
+    body: "[ {{ create_realm_role.json | to_json }} ]"
+    body_format: json
