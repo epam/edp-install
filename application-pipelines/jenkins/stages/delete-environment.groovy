@@ -18,7 +18,6 @@ def run(vars) {
         openshiftDeleteResourceByKey apiURL: '', authToken: '', keys: "${projectName}", namespace: '', types: 'project', verbose: 'false'
         sleep(10)
         sh("oc -n ${projectName} delete pod --all --force --grace-period=0")
-        keycloakLib.deleteKeycloakRealm(projectName, vars.keycloakAccessToken)
     }
     this.result = "success"
 }

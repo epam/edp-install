@@ -17,9 +17,6 @@ import org.apache.commons.lang.RandomStringUtils
 def run(vars) {
     openshift.withCluster() {
 
-        keycloakLib.createKeycloakRealm(vars.deployProject, vars.keycloakAccessToken)
-        keycloakLib.mapKeycloakRoles(vars.deployProject, vars.keycloakAccessToken)
-
         if (!openshift.selector("project", vars.deployProject).exists()) {
             openshift.newProject(vars.deployProject)
             groupList = [ "${vars.projectPrefix}-edp-super-admin", "${vars.projectPrefix}-edp-admin"]
