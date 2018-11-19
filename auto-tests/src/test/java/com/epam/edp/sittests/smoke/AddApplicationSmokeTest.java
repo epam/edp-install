@@ -48,7 +48,7 @@ public class AddApplicationSmokeTest {
     private static final String POSTCOMMIT_BE_PIPELINE = POSTCOMMIT_PIPELINE_SUFFIX + BE_APP_NAME;
     private static final String POSTCOMMIT_FE_PIPELINE = POSTCOMMIT_PIPELINE_SUFFIX + FE_APP_NAME;
 
-    private static final String CREATED_APP_SUFFIX = "created-java-project";
+    private static final String CREATED_APP_SUFFIX = "created-java-gradle-project";
 
     private UrlBuilder urlBuilder;
     private IClient openShiftClient;
