@@ -93,7 +93,7 @@
   shell: >
     {{ ocadm }} {{ item }}
   with_items:
-  - "-n {{ project_cicd }} create rolebinding {{ edp_name }}-edp-cockpit --role edp-cockpit --serviceaccount={{ project_cicd }}:cockpit"
+  - "adm policy add-role-to-user admin system:serviceaccount:{{ project_cicd }}:cockpit -n {{ project_cicd }}"
   - "create clusterrolebinding {{ edp_name }}-edp-cockpit --clusterrole edp-cockpit --serviceaccount={{ project_cicd }}:cockpit --dry-run -o yaml | {{ ocadm }} apply -f -"
   - "adm policy add-scc-to-user anyuid system:serviceaccount:{{ project_cicd }}:cockpit"
   register: result

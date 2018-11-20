@@ -15,7 +15,7 @@
 ---
 - include_tasks: roles/api/vcs/get-token.yml
   with_items:
-    - { hostname: '{{ project_vcs_hostname_url }}', username: '{{ vcs_autouser_email }}', password: '{{ vcs_autouser_password }}' }
+    - { hostname: '{{ project_vcs_hostname_url }}', username: '{{ vcs_auto_user_login }}', password: '{{ vcs_auto_user_password }}' }
 
 - include_tasks: roles/api/vcs/check-project-exists.yml
   with_items:

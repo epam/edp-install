@@ -64,6 +64,10 @@
 - block:
 
   - block:
+    - include_tasks: roles/common/tasks/manage-openshift/get-vcs-basic-auth-config-from-secret.yml
+      vars:
+        vcs_auto_user_basic_auth_secret_name: "vcs-autouser-application-{{ name }}-temp"
+
     - include_tasks: roles/api/vcs/copy-project.yml
       vars:
         vcs_project_name: "{{ name }}"

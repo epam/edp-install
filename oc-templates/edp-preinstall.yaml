@@ -43,8 +43,11 @@ objects:
   subjects:
   - kind: User
     name: ${USERNAME}
+  - kind: User
+    name: system:serviceaccount:${PROJECT}:edp
   userNames:
   - ${USERNAME}
+  - system:serviceaccount:${PROJECT}:edp
 - apiVersion: v1
   kind: ServiceAccount
   metadata:

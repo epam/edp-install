@@ -18,7 +18,7 @@
      vcs_key_path: "{{ work_dir }}/vcs-private.key"
      gerrit_key_path: "{{ work_dir }}/gerrit-private.key"
 
-- include_tasks: roles/common/tasks/manage-openshift/get-vcs-credentials-from-secret.yml
+- include_tasks: roles/common/tasks/manage-openshift/get-vcs-ssh-config-from-secret.yml
   vars:
     target_vcs_keyfile: "{{ vcs_key_path }}"
 
