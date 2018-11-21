@@ -107,8 +107,6 @@ objects:
             - name: management
               containerPort: 15672
           env:
-            - name: RABBITMQ_NODENAME
-              value: "{{ name }}"
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:
                 secretKeyRef:
