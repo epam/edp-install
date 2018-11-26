@@ -21,8 +21,13 @@
       Authorization: "Bearer {{ access_token }}"
     status_code: 200
   register: response
+  until: response.status == 200
+  delay: 5
+  retries: 10
 
 - set_fact:
-    user_location: "{{ keycloak_base_url }}/admin/realms/{{ realm }}/users/{{ item.id }}"
-  when: item.username == username
+    user_location: "{{ keycloak_base_url }}/admin/realms/{{ realm }}/users/{{ response_user.id }}"
+  when: response_user.username == username
   with_items: "{{ response.json | list }}"
+  loop_control:
+    loop_var: response_user
