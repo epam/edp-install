@@ -197,8 +197,9 @@ objects:
   - SETUID
   - SETGID
   runAsUser:
-    type: MustRunAs
-    uid: 1000
+    type: MustRunAsRange
+    uidRangeMin: 999
+    uidRangeMax: 1000
   seLinuxContext:
     type: MustRunAs
   supplementalGroups:
