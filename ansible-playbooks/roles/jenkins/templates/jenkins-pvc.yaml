@@ -283,6 +283,7 @@ objects:
         <envVars/>
         <annotations/>
         <imagePullSecrets/>
+        <podRetention class="org.csanchez.jenkins.plugins.kubernetes.pod.retention.Default"/>
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
     maven-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
@@ -330,6 +331,7 @@ objects:
         <envVars/>
         <annotations/>
         <imagePullSecrets/>
+        <podRetention class="org.csanchez.jenkins.plugins.kubernetes.pod.retention.Default"/>
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
     gradle-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
@@ -372,6 +374,7 @@ objects:
         <envVars/>
         <annotations/>
         <imagePullSecrets/>
+        <podRetention class="org.csanchez.jenkins.plugins.kubernetes.pod.retention.Default"/>
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
     dotnet-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
@@ -414,6 +417,7 @@ objects:
         <envVars/>
         <annotations/>
         <imagePullSecrets/>
+        <podRetention class="org.csanchez.jenkins.plugins.kubernetes.pod.retention.Default"/>
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
 #--------------------------------------------------------------------------------------
 parameters:
