@@ -13,11 +13,11 @@
 # limitations under the License.
 
 ---
-- name: "Check if Openshift user {{ item }} already exists"
-  shell: "{{ ocadm }} get user {{ item }} -o jsonpath={.metadata.name}"
+- name: "Check if Openshift user {{ item|lower }} already exists"
+  shell: "{{ ocadm }} get user {{ item|lower }} -o jsonpath={.metadata.name}"
   register: result
   ignore_errors: true
 
-- name: "Create user {{ item }} in Openshift"
-  shell: "{{ ocadm }} create user {{ item }}"
+- name: "Create user {{ item|lower }} in Openshift"
+  shell: "{{ ocadm }} create user {{ item|lower }}"
   when: result.stdout != item
