@@ -30,7 +30,7 @@ node("master") {
         ["PIPELINES_PATH"].each() { variable ->
             this.checkEnvVariables(variable)
         }
-        vars['devopsRoot'] = "${WORKSPACE.replaceAll("@", "")}@script"
+        vars['devopsRoot'] = "${WORKSPACE.replaceAll("@.*", "")}@script"
         vars['pipelinesPath'] = "${vars.devopsRoot}/${PIPELINES_PATH}"
         dir("${vars.pipelinesPath}") {
             stash name: 'mavenSettings', includes: "**/settings/**", useDefaultExcludes: false

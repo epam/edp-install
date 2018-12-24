@@ -31,7 +31,7 @@ node("master") {
             this.checkEnvVariables(variable)
         }
         vars['pipelinesPath'] = PIPELINES_PATH
-        def workspace = "${WORKSPACE.replaceAll("@", "")}@script"
+        def workspace = "${WORKSPACE.replaceAll("@.*", "")}@script"
 
         dir("${workspace}") {
             libPath = "${vars.pipelinesPath}/libs"
