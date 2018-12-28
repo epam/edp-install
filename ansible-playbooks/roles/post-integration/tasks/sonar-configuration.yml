@@ -34,10 +34,6 @@
   with_items:
     - { name: 'EDP way', language: 'java' }
 
-- include_tasks: sonar-api/activate-profile-rules.yml
-  with_items:
-    - { profile_id: '{{ profile_id }}', languages: 'java' }
-
 - include_tasks: sonar-api/deactivate-profile-rules.yml
   with_items: "{{ profile_id }}"
 

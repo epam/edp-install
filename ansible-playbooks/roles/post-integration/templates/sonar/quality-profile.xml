@@ -17,402 +17,6 @@ limitations under the License -->
     <language>java</language>
     <rules>
         <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>ANDROID_BROADCAST</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>ANDROID_EXTERNAL_FILE_ACCESS</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>ANDROID_GEOLOCATION</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>ANDROID_WEB_VIEW_JAVASCRIPT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>ANDROID_WEB_VIEW_JAVASCRIPT_INTERFACE</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>ANDROID_WORLD_WRITABLE</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>BAD_HEXA_CONVERSION</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>BLOWFISH_KEY_SIZE</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>CIPHER_INTEGRITY</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>COMMAND_INJECTION</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>COOKIE_USAGE</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>CUSTOM_MESSAGE_DIGEST</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>DES_USAGE</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>ECB_MODE</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>ESAPI_ENCRYPTOR</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>FILE_UPLOAD_FILENAME</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>HARD_CODE_KEY</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>HARD_CODE_PASSWORD</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>HAZELCAST_SYMMETRIC_ENCRYPTION</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>JAXRS_ENDPOINT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>JAXWS_ENDPOINT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>LDAP_INJECTION</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>NULL_CIPHER</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>PADDING_ORACLE</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>PATH_TRAVERSAL_IN</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>PATH_TRAVERSAL_OUT</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>PREDICTABLE_RANDOM</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>REDOS</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>RSA_KEY_SIZE</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>RSA_NO_PADDING</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SCRIPT_ENGINE_INJECTION</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SERVLET_CONTENT_TYPE</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SERVLET_HEADER</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SERVLET_HEADER_REFERER</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SERVLET_HEADER_USER_AGENT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SERVLET_PARAMETER</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SERVLET_QUERY_STRING</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SERVLET_SERVER_NAME</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SERVLET_SESSION_ID</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SPEL_INJECTION</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SPRING_ENDPOINT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SQL_INJECTION_HIBERNATE</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SQL_INJECTION_JDO</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>SQL_INJECTION_JPA</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>STATIC_IV</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>STRUTS1_ENDPOINT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>STRUTS2_ENDPOINT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>STRUTS_FORM_VALIDATION</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>TAPESTRY_ENDPOINT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>UNENCRYPTED_SOCKET</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>UNVALIDATED_REDIRECT</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>WEAK_FILENAMEUTILS</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>WEAK_MESSAGE_DIGEST</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>WEAK_TRUST_MANAGER</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>WICKET_ENDPOINT</key>
-            <priority>INFO</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>XML_DECODER</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>XPATH_INJECTION</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>XSS_JSP_PRINT</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>XSS_REQUEST_WRAPPER</key>
-            <priority>MAJOR</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>XSS_SERVLET</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>XXE_DOCUMENT</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>XXE_SAXPARSER</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>findsecbugs</repositoryKey>
-            <key>XXE_XMLREADER</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>squid</repositoryKey>
-            <key>S3318</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>squid</repositoryKey>
-            <key>S3355</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>squid</repositoryKey>
-            <key>S3369</key>
-            <priority>CRITICAL</priority>
-            <parameters/>
-        </rule>
-        <rule>
             <repositoryKey>checkstyle</repositoryKey>
             <key>com.puppycrawl.tools.checkstyle.checks.OuterTypeFilenameCheck</key>
             <priority>MAJOR</priority>
@@ -1480,17 +1084,6 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
-            <key>ClassCyclomaticComplexity</key>
-            <priority>MAJOR</priority>
-            <parameters>
-                <parameter>
-                    <key>max</key>
-                    <value>200</value>
-                </parameter>
-            </parameters>
-        </rule>
-        <rule>
-            <repositoryKey>squid</repositoryKey>
             <key>ClassVariableVisibilityCheck</key>
             <priority>MAJOR</priority>
             <parameters/>
@@ -1872,12 +1465,6 @@ limitations under the License -->
             <repositoryKey>squid</repositoryKey>
             <key>S1143</key>
             <priority>BLOCKER</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>squid</repositoryKey>
-            <key>S1145</key>
-            <priority>MAJOR</priority>
             <parameters/>
         </rule>
         <rule>
@@ -2392,12 +1979,6 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
-            <key>S1697</key>
-            <priority>BLOCKER</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>squid</repositoryKey>
             <key>S1698</key>
             <priority>CRITICAL</priority>
             <parameters/>
@@ -2448,12 +2029,6 @@ limitations under the License -->
             <repositoryKey>squid</repositoryKey>
             <key>S1849</key>
             <priority>BLOCKER</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>squid</repositoryKey>
-            <key>S1850</key>
-            <priority>MAJOR</priority>
             <parameters/>
         </rule>
         <rule>
@@ -2710,12 +2285,6 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
-            <key>S2151</key>
-            <priority>BLOCKER</priority>
-            <parameters/>
-        </rule>
-        <rule>
-            <repositoryKey>squid</repositoryKey>
             <key>S2153</key>
             <priority>MAJOR</priority>
             <parameters/>
@@ -2782,6 +2351,12 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
+            <key>S2168</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
             <key>S2175</key>
             <priority>CRITICAL</priority>
             <parameters/>
@@ -2826,6 +2401,12 @@ limitations under the License -->
             <repositoryKey>squid</repositoryKey>
             <key>S2187</key>
             <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2189</key>
+            <priority>BLOCKER</priority>
             <parameters/>
         </rule>
         <rule>
@@ -3076,6 +2657,12 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
+            <key>S2589</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
             <key>S2637</key>
             <priority>CRITICAL</priority>
             <parameters/>
@@ -3172,6 +2759,12 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
+            <key>S2757</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
             <key>S2786</key>
             <priority>MAJOR</priority>
             <parameters/>
@@ -3238,8 +2831,20 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
+            <key>S3020</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
             <key>S3034</key>
             <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3046</key>
+            <priority>BLOCKER</priority>
             <parameters/>
         </rule>
         <rule>
@@ -3280,6 +2885,24 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
+            <key>S3422</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3436</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3437</key>
+            <priority>MINOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
             <key>S3438</key>
             <priority>CRITICAL</priority>
             <parameters/>
@@ -3298,6 +2921,12 @@ limitations under the License -->
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
+            <key>S3599</key>
+            <priority>MINOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
             <key>S3631</key>
             <priority>MINOR</priority>
             <parameters/>
@@ -3305,6 +2934,12 @@ limitations under the License -->
         <rule>
             <repositoryKey>squid</repositoryKey>
             <key>S3655</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3750</key>
             <priority>MAJOR</priority>
             <parameters/>
         </rule>
@@ -3318,6 +2953,36 @@ limitations under the License -->
                     <value>15</value>
                 </parameter>
             </parameters>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3923</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3958</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3959</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3984</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3986</key>
+            <priority>MAJOR</priority>
+            <parameters/>
         </rule>
         <rule>
             <repositoryKey>squid</repositoryKey>
@@ -3370,6 +3035,493 @@ limitations under the License -->
             <repositoryKey>squid</repositoryKey>
             <key>UselessParenthesesCheck</key>
             <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>ANDROID_BROADCAST</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>ANDROID_EXTERNAL_FILE_ACCESS</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>ANDROID_GEOLOCATION</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>ANDROID_WEB_VIEW_JAVASCRIPT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>ANDROID_WEB_VIEW_JAVASCRIPT_INTERFACE</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>ANDROID_WORLD_WRITABLE</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>BAD_HEXA_CONVERSION</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>BLOWFISH_KEY_SIZE</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>CIPHER_INTEGRITY</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>COMMAND_INJECTION</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>COOKIE_USAGE</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>CUSTOM_MESSAGE_DIGEST</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>DES_USAGE</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>ECB_MODE</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>ESAPI_ENCRYPTOR</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>FILE_UPLOAD_FILENAME</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>HARD_CODE_KEY</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>HARD_CODE_PASSWORD</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>HAZELCAST_SYMMETRIC_ENCRYPTION</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>JAXRS_ENDPOINT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>JAXWS_ENDPOINT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>LDAP_INJECTION</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>NULL_CIPHER</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>PADDING_ORACLE</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>PATH_TRAVERSAL_IN</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>PATH_TRAVERSAL_OUT</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>PREDICTABLE_RANDOM</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>REDOS</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>RSA_KEY_SIZE</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>RSA_NO_PADDING</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SCRIPT_ENGINE_INJECTION</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SERVLET_CONTENT_TYPE</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SERVLET_HEADER</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SERVLET_HEADER_REFERER</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SERVLET_HEADER_USER_AGENT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SERVLET_PARAMETER</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SERVLET_QUERY_STRING</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SERVLET_SERVER_NAME</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SERVLET_SESSION_ID</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SPEL_INJECTION</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SPRING_ENDPOINT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SQL_INJECTION_HIBERNATE</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SQL_INJECTION_JDO</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>SQL_INJECTION_JPA</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>STATIC_IV</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>STRUTS1_ENDPOINT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>STRUTS2_ENDPOINT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>STRUTS_FORM_VALIDATION</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>TAPESTRY_ENDPOINT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>UNENCRYPTED_SOCKET</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>UNVALIDATED_REDIRECT</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>WEAK_FILENAMEUTILS</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>WEAK_MESSAGE_DIGEST</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>WEAK_TRUST_MANAGER</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>WICKET_ENDPOINT</key>
+            <priority>INFO</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>XML_DECODER</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>XPATH_INJECTION</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>XSS_JSP_PRINT</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>XSS_REQUEST_WRAPPER</key>
+            <priority>MAJOR</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>XSS_SERVLET</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>XXE_DOCUMENT</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>XXE_SAXPARSER</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>findsecbugs</repositoryKey>
+            <key>XXE_XMLREADER</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S1873</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S1989</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2070</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2076</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2078</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2089</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2096</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2151</key>
+            <priority>BLOCKER</priority>
+            <parameters/>
+        </rule>
+
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2245</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2257</key>
+            <priority>BLOCKER</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2258</key>
+            <priority>BLOCKER</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2278</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2384</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2653</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S2658</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3318</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3355</key>
+            <priority>CRITICAL</priority>
+            <parameters/>
+        </rule>
+        <rule>
+            <repositoryKey>squid</repositoryKey>
+            <key>S3369</key>
+            <priority>CRITICAL</priority>
             <parameters/>
         </rule>
     </rules>
