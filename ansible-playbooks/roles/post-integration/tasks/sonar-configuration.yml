@@ -37,6 +37,23 @@
 - include_tasks: sonar-api/deactivate-profile-rules.yml
   with_items: "{{ profile_id }}"
 
+- include_tasks: sonar-api/create-quality-gate.yml
+  with_items:
+    - { name: "EDP way" }
+
+- include_tasks: sonar-api/create-condition.yml
+  with_items:
+    - { gate_id: "{{ quality_gate_id }}", error: "80", metric: "new_coverage", op: "LT", period: "1" }
+    - { gate_id: "{{ quality_gate_id }}", error: "0", metric: "test_errors", op: "GT" }
+    - { gate_id: "{{ quality_gate_id }}", error: "3", metric: "new_duplicated_lines_density", op: "GT", period: "1" }
+    - { gate_id: "{{ quality_gate_id }}", error: "0", metric: "test_failures", op: "GT" }
+    - { gate_id: "{{ quality_gate_id }}", error: "0", metric: "blocker_violations", op: "GT" }
+    - { gate_id: "{{ quality_gate_id }}", error: "0", metric: "critical_violations", op: "GT" }
+
+- include_tasks: sonar-api/set-default-quality-gate.yml
+  with_items:
+    - { id: "{{ quality_gate_id }}" }
+
 - include_tasks: sonar-api/create-user.yml
   with_items:
     - { login: 'jenkins', name: 'Jenkins', password: 'jenkins' }
