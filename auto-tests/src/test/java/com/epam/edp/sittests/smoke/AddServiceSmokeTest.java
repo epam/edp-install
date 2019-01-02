@@ -19,6 +19,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_PASSWORD;
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_USER;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
 import static com.epam.edp.sittests.smoke.StringConstants.RABBITMQ_SERVICE_NAME;
 import static io.restassured.RestAssured.given;
@@ -43,10 +45,12 @@ public class AddServiceSmokeTest {
                 .pathParam("service", RABBITMQ_SERVICE_NAME)
                 .pathParam("project", ocpEdpPrefix + "-edp")
                 .urlEncodingEnabled(false)
+                .auth()
+                .basic(GERRIT_USER, GERRIT_PASSWORD)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "gerrit", OPENSHIFT_CICD_NAMESPACE,
-                        "projects/{project}/branches/master/files/deploy-templates%2F{service}.yaml/content"))
+                        "a/projects/{project}/branches/master/files/deploy-templates%2F{service}.yaml/content"))
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }

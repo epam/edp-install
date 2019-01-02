@@ -130,10 +130,12 @@ public class AddApplicationSmokeTest {
         given().log().all()
                 .pathParam("application", application)
                 .urlEncodingEnabled(false)
+                .auth()
+                .basic(GERRIT_USER, GERRIT_PASSWORD)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "gerrit", OPENSHIFT_CICD_NAMESPACE,
-                        "projects/{application}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
+                        "a/projects/{application}/branches/master/files/deploy-templates%2F{application}.yaml/content"))
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }
