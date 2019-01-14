@@ -52,7 +52,7 @@ def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, 
 }
 
 def gerritSshPort = "{{ gerrit_ssh_port }}"
-def devopsRepository = "ssh://jenkins@gerrit:${gerritSshPort}/{{ project_vcs_edp }}"
+def devopsRepository = "ssh://jenkins@gerrit:${gerritSshPort}/{{ full_edp_name }}"
 def pipelinePath = 'application-pipelines/jenkins'
 
 ['app.settings.json', 'auto-test.settings.json'].each() { settingsFile ->

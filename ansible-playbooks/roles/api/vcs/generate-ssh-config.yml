@@ -13,4 +13,62 @@
 # limitations under the License.
 
 ---
-- include_tasks: roles/api/vcs/impl/{{ vcs_tool }}/generate-ssh-config.yml
+- set_fact:
+    gerrit_key_path: "{{ work_dir }}/gerrit-private.key"
+
+- set_fact:
+    vcs_key_path: "{{ work_dir }}/vcs-private.key"
+  when: vcs_integration_enabled|bool == true
+
+- include_tasks: roles/common/tasks/manage-openshift/get-vcs-ssh-config-from-secret.yml
+  vars:
+    target_vcs_keyfile: "{{ vcs_key_path }}"
+  when: vcs_integration_enabled|bool == true
+
+- include_tasks: roles/common/tasks/manage-openshift/get-gerrit-credentials-from-secret.yml
+  vars:
+    target_gerrit_keyfile: "{{ gerrit_key_path }}"
+
+- name: "Create .ssh directory"
+  file:
+    path: ~/.ssh
+    state: directory
+
+- name: "Config ssh"
+  copy:
+    content: |
+      Host gerrit*
+        HostName gerrit.{{ project_cicd }}
+        Port {{ gerrit_ssh_port }}
+        User {{ gerrit_username | default('project-creator') }}
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ gerrit_key_path }}
+        IdentitiesOnly yes
+
+      Host {{ project_vcs_hostname }}
+        HostName {{ project_vcs_hostname }}
+        Port {{ vcs_ssh_port }}
+        User git
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ vcs_key_path }}
+        IdentitiesOnly yes
+    dest: ~/.ssh/config
+    force: yes
+  when: vcs_integration_enabled|bool == true
+
+- name: "Config ssh"
+  copy:
+    content: |
+      Host gerrit*
+        HostName gerrit.{{ project_cicd }}
+        Port {{ gerrit_ssh_port }}
+        User {{ gerrit_username | default('project-creator') }}
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        IdentityFile {{ gerrit_key_path }}
+        IdentitiesOnly yes
+    dest: ~/.ssh/config
+    force: yes
+  when: vcs_integration_enabled|bool == false

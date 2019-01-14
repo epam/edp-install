@@ -24,3 +24,4 @@
     target_dir: "{{ work_dir }}/{{ name }}"
 
 - include_tasks: roles/common/tasks/manage-gerrit/project-replication.yml
+  when: vcs_integration_enabled|bool == true

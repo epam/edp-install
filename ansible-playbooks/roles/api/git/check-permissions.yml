@@ -22,7 +22,7 @@
   ignore_errors: true
 
 - debug:
-    msg: "Import {{ repo }} failed, please make sure user {{ user }} have the correct access rights and the repository exists"
+    msg: "Import {{ repo }} failed, please make sure you have the correct access rights and the repository exists"
   when: "'fatal: Could not read from remote repository' in  clone_result.stderr "
 
 - debug:

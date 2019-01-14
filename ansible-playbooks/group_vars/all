@@ -27,10 +27,10 @@ projects_list: [
     ]
 project_cicd: "{{ edp_name }}-edp-cicd"
 full_edp_name: "{{ edp_name }}-edp"
-project_vcs_edp: "{{ full_edp_name }}"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
-vcs_ssh_port: "{{ vcs_ssh_port | default('7999') }}"
-vcs_auto_user_secret_name: "vcs-autouser-edp-{{ edp_name }}-temp"
+vcs_integration_enabled: "{{ vcs_integration_enabled | lower | default 'false'}}"
+vcs_ssh_port: "{{ vcs_ssh_port | default('7999') if vcs_integration_enabled|bool == true else undefined }}"
+vcs_auto_user_secret_name: "{{ 'vcs-autouser-edp-' + edp_name + '-temp' if vcs_integration_enabled|bool == true else undefined }}"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
 default_super_admin: "admin-{{ edp_name }}-edp"
 edp_super_admins: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users.split(',')) }}"

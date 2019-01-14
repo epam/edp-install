@@ -16,8 +16,8 @@
 - block:
     - name: "Push templates to gerrit"
       shell: |
-       git config user.email "{{ vcs_autouser_email }}"
-       git config user.name "{{ vcs_autouser_name }}"
+       git config user.email "admin@epam-edp.com"
+       git config user.name "admin"
        git pull origin master
        git add . && git commit -m "{{ commit_message }}"
        git push origin master

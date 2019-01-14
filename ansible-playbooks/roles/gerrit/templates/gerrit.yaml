@@ -93,16 +93,18 @@ objects:
   metadata:
     name: gerrit
   data:
+{% if vcs_integration_enabled|bool == true %}
     config: |
       Host ${VCS_GROUP_HOST}
-          User git
-          Port {{ vcs_ssh_port }}
-          IdentityFile /var/gerrit/review_site/etc/replication_rsa_key
-          StrictHostKeyChecking no
-          UserKnownHostsFile /dev/null
+        User git
+        Port {{ vcs_ssh_port }}
+        IdentityFile /var/gerrit/review_site/etc/replication_rsa_key
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
     replication.config: |
       [gerrit]
         defaultForceUpdate = true
+{% endif %}
     sshPort: ${GERRIT_SSH_PORT}
 - apiVersion: v1
   kind: DeploymentConfig
@@ -278,8 +280,10 @@ objects:
           volumeMounts:
             - mountPath: /var/gerrit/review_site
               name: gerrit-data
+{% if vcs_integration_enabled|bool == true %}
             - mountPath: /var/gerrit/.ssh
               name: ssh-config
+{% endif %}
         serviceAccount: gerrit
         volumes:
           - name: gerrit-data
@@ -289,6 +293,7 @@ objects:
 {% else %}
             emptyDir: {}
 {% endif %}
+{% if vcs_integration_enabled|bool == true %}
           - configMap:
               defaultMode: 420
               items:
@@ -296,6 +301,7 @@ objects:
                   path: config
               name: gerrit
             name: ssh-config
+{% endif %}
 parameters:
 - displayName: Gerrit version
   value: "2.14.1"
@@ -315,14 +321,11 @@ parameters:
   displayName: Gerrit WEB URL
   name: GERRIT_WEB_URL
   value: "http://gerrit-test-mb.demo.edp.projects.epam.com"
+{% if vcs_integration_enabled|bool == true %}
 - displayName: VCS host
   value: "git.epam.com"
   name: VCS_GROUP_HOST
-- displayName: VCS group path
-  value: "epmd-edp/temp"
-  name: VCS_GROUP_PATH
-- displayName: VCS project name
-  name: VCS_PROJECT_NAME
+{% endif %}
 - displayName: Gerrit ssh port
   value: "29418"
   name: GERRIT_SSH_PORT

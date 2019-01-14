@@ -13,15 +13,17 @@
 # limitations under the License.
 
 ---
+- block:
+  - set_fact:
+      vcs_tool: "{{ vcs_tool_name | lower }}"
+      vcs_project_name: "{{ full_edp_name }}"
+
+  - include_tasks: roles/api/vcs/ssh-url-generator.yml
+    vars:
+      vcs_group_url: "{{ vcs_group_name }}"
+  when: vcs_integration_enabled|bool == true
+
 #This should be fixed by running Gerrit from non-privileged user
-- set_fact:
-    vcs_tool: "{{ vcs_tool_name | lower }}"
-    vcs_project_name: "{{ project_vcs_edp }}"
-
-- include_tasks: roles/api/vcs/ssh-url-generator.yml
-  vars:
-    vcs_group_url: "{{ vcs_group_name }}"
-
 - name: "Give rights to gerrit account"
   shell: "{{ ocadm }} -n {{ project_cicd }} adm policy add-scc-to-user anyuid -z gerrit"
 
@@ -56,9 +58,7 @@
     -p GERRIT_DATA_CAPACITY={{ tools.gerrit.volume_capacity }}
     -p GERRIT_DB_CAPACITY={{ tools.gerrit.volume_db_capacity }}
     -p GERRIT_WEB_URL={{ tools.gerrit.web_url }}
-    -p VCS_GROUP_HOST={{ vcs_group_name | urlsplit('hostname') }}
-    -p VCS_GROUP_PATH={{ vcs_group_name | urlsplit('path') | regex_replace('^/{1}', '') }}
-    -p VCS_PROJECT_NAME={{ project_vcs_edp }}
+    {{ '-p VCS_GROUP_HOST=' + vcs_group_name | urlsplit('hostname') if tools.jenkins.fs_type=='hostpath' else '' }}
     -p GERRIT_SSH_PORT={{ gerrit_ssh_port }}
     -p STORAGE_CLASS_NAME={{ storage_class_name }}
   register: result
@@ -67,4 +67,4 @@
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
-  no_log: true
+#  no_log: true

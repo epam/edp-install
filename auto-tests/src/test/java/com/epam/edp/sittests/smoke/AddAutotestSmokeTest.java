@@ -67,9 +67,14 @@ public class AddAutotestSmokeTest {
         this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
     }
 
+//    @DataProvider(name = "autotest")
+//    public Object[][] autotest() {
+//        return new Object[][]{{AUTOTESTS_NAME}, {copyAutotestName}};
+//    }
+
     @DataProvider(name = "autotest")
     public Object[][] autotest() {
-        return new Object[][]{{AUTOTESTS_NAME}, {copyAutotestName}};
+        return new Object[][]{{copyAutotestName}};
     }
 
     @Test(dataProvider = "autotest")
@@ -109,31 +114,31 @@ public class AddAutotestSmokeTest {
                 .statusCode(HttpStatus.SC_OK);
     }
 
-    @Test
-    public void testCopyAutotestProjectWasCreatedInGitGroupRepo() {
-        Secret secret = openShiftClient.get(ResourceKind.SECRET, "vcs-autouser-for-tests", "edp-cicd-delivery");
-
-        String username = new String(secret.getData("username")).trim();
-        String password = new String(secret.getData("password")).trim();
-
-        String token = given()
-                .contentType(ContentType.URLENC)
-                .param("grant_type", "password")
-                .param("username", username)
-                .param("password", password)
-                .post("https://git.epam.com/oauth/token")
-                .then()
-                .extract()
-                .path("access_token");
-
-        given().log().all()
-                .auth()
-                .preemptive()
-                .oauth2(token)
-                .urlEncodingEnabled(false)
-                .when()
-                .get("https://git.epam.com/api/v4/projects/epmd-edp%2Ftemp%2F" + copyAutotestName)
-                .then()
-                .statusCode(HttpStatus.SC_OK);
-    }
+//    @Test
+//    public void testCopyAutotestProjectWasCreatedInGitGroupRepo() {
+//        Secret secret = openShiftClient.get(ResourceKind.SECRET, "vcs-autouser-for-tests", "edp-cicd-delivery");
+//
+//        String username = new String(secret.getData("username")).trim();
+//        String password = new String(secret.getData("password")).trim();
+//
+//        String token = given()
+//                .contentType(ContentType.URLENC)
+//                .param("grant_type", "password")
+//                .param("username", username)
+//                .param("password", password)
+//                .post("https://git.epam.com/oauth/token")
+//                .then()
+//                .extract()
+//                .path("access_token");
+//
+//        given().log().all()
+//                .auth()
+//                .preemptive()
+//                .oauth2(token)
+//                .urlEncodingEnabled(false)
+//                .when()
+//                .get("https://git.epam.com/api/v4/projects/epmd-edp%2Ftemp%2F" + copyAutotestName)
+//                .then()
+//                .statusCode(HttpStatus.SC_OK);
+//    }
 }

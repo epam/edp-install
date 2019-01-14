@@ -37,12 +37,17 @@
 - set_fact:
     dns_wildcard: "{{ user_settings.data.dns_wildcard }}"
     edp_name: "{{ user_settings.data.edp_name }}"
-    project_vcs_group_name_url: "{{ user_settings.data.vcs_group_name_url }}"
-    vcs_tool: "{{ user_settings.data.vcs_tool_name | lower }}"
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
+    vcs_integration_enabled: "{{ user_settings.data.vcs_integration_enabled }}"
+
+- set_fact:
+    vcs_tool: "{{ user_settings.data.vcs_tool_name | lower }}"
+    vcs_ssh_port: "{{ user_settings.data.vcs_ssh_port }}"
+    project_vcs_group_name_url: "{{ user_settings.data.vcs_group_name_url }}"
     project_vcs_hostname: "{{ user_settings.data.vcs_group_name_url | urlsplit('hostname') }}"
     project_vcs_group_path: "{{ user_settings.data.vcs_group_name_url | urlsplit('path') | regex_replace('^/{1}', '') }}"
-    vcs_ssh_port: "{{ user_settings.data.vcs_ssh_port }}"
+  when: vcs_integration_enabled|bool == true
 
 - set_fact:
     project_vcs_hostname_url: "{{ user_settings.data.vcs_group_name_url | urlsplit('scheme') }}://{{ project_vcs_hostname }}"
+  when: vcs_integration_enabled|bool == true

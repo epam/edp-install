@@ -84,7 +84,12 @@
       - { src: "{{ post_integration_dir }}/gerrit/jquery-1.7.2.min.js", dest: "/var/gerrit/review_site/static/jquery-1.7.2.min.js"}
       - { src: "{{ post_integration_dir }}/gerrit/GerritSiteHeader.html", dest: "/var/gerrit/review_site/etc/GerritSiteHeader.html"}
       - { src: "{{ post_integration_dir }}/gerrit/GerritSite.css", dest: "/var/gerrit/review_site/etc/GerritSite.css"}
-      - { src: "{{ vcs_key_path }}", dest: "/var/gerrit/review_site/etc/replication_rsa_key"}
+
+- name: "Copy files to gerrit pod"
+  shell: "{{ ocadm }} cp {{ item.src }} {{ project_cicd }}/$({{ gerrit_pod }}):{{ item.dest }}"
+  with_items:
+    - { src: "{{ vcs_key_path }}", dest: "/var/gerrit/review_site/etc/replication_rsa_key"}
+  when: vcs_integration_enabled|bool == true
 
 - name: "Chown gerrit directory with gerrit2 user in gerrit pod"
   shell: "{{ ocadm }} exec -i $({{ gerrit_pod }}) -- chown -R gerrit2:gerrit2 /var/gerrit/review_site"
@@ -199,20 +204,20 @@
 
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
   vars:
-    name: "{{ project_vcs_edp }}"
+    name: "{{ full_edp_name }}"
 
 - include_tasks: roles/api/git/clone.yml
   with_items:
-  - { repo: "ssh://admin@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ vcs_project_name }}", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
+  - { repo: "ssh://admin@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ full_edp_name }}", 'dest': "{{ work_dir }}/{{ full_edp_name }}" }
 
 - include_tasks: roles/api/git/set-config.yml
   with_items:
-  - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', user_email: "admin@epam-edp.com", user_name: "admin" }
+  - { git_directory: '{{ work_dir }}/{{ full_edp_name }}', user_email: "admin@epam-edp.com", user_name: "admin" }
 
 - name: "Copying EDP sources"
   synchronize:
     src: "../{{ item }}"
-    dest: "{{ work_dir }}/{{ vcs_project_name }}"
+    dest: "{{ work_dir }}/{{ full_edp_name }}"
   with_items:
   - "ansible-playbooks"
   - "application-pipelines"
@@ -223,12 +228,12 @@
 
 - include_tasks: roles/api/git/commit.yml
   with_items:
-  - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', commit_message: "Initial commit with EDP sources" }
+  - { git_directory: '{{ work_dir }}/{{ full_edp_name }}', commit_message: "Initial commit with EDP sources" }
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
   vars:
-    target_dir: "{{ work_dir }}/{{ vcs_project_name }}"
-    name: "{{ project_vcs_edp }}"
+    target_dir: "{{ work_dir }}/{{ full_edp_name }}"
+    name: "{{ full_edp_name }}"
     gerrit_username: "admin"
 
 - name: "Checkout EDP project config"
@@ -242,12 +247,12 @@
     - "result.rc != 0"
     - "'already exists' not in result.stderr"
   args:
-    chdir: "{{ work_dir }}/{{ vcs_project_name }}"
+    chdir: "{{ work_dir }}/{{ full_edp_name }}"
 
 - name: "Update EDP project config"
   template:
     src: "gerrit/edp_project.config"
-    dest: "{{ work_dir }}/{{ vcs_project_name }}/project.config"
+    dest: "{{ work_dir }}/{{ full_edp_name }}/project.config"
 
 - name: "Push new EDP project config"
   shell: "{{ item }}"
@@ -260,4 +265,4 @@
     - "result.rc != 0"
     - "'nothing to commit' not in result.stdout"
   args:
-    chdir: "{{ work_dir }}/{{ vcs_project_name }}"
+    chdir: "{{ work_dir }}/{{ full_edp_name }}"

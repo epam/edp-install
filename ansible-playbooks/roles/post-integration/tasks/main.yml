@@ -38,13 +38,18 @@
     sonar_api_url: "http://sonar.{{ project_cicd }}:9000/api"
     sonar_claim_name: "roles"
     sonar_client_id: "sonar"
+
+- set_fact:
     project_vcs_hostname: "{{ vcs_group_name | urlsplit('hostname') }}"
     project_vcs_group_path: "{{ vcs_group_name | urlsplit('path') | regex_replace('^/{1}', '') }}"
     vcs_tool: "{{ vcs_tool_name | lower }}"
-    vcs_project_name: "{{ project_vcs_edp }}"
+    vcs_project_name: "{{ full_edp_name }}"
+  when: vcs_integration_enabled|bool == true
+
 - set_fact:
-    vcs_project_path: "{{ project_vcs_group_path }}/{{ project_vcs_edp }}"
+    vcs_project_path: "{{ project_vcs_group_path }}/{{ full_edp_name }}"
     project_vcs_hostname_url: "{{ vcs_group_name | urlsplit('scheme') }}://{{ project_vcs_hostname }}"
+  when: vcs_integration_enabled|bool == true
 
 - include_tasks: check-deployment-health.yml
   with_items:

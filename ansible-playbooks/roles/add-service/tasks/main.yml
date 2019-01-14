@@ -25,6 +25,7 @@
 
 - set_fact:
     vcs_project_path: "{{ project_vcs_group_path }}/{{ name }}"
+  when: vcs_integration_enabled|bool == true
 
 - include_tasks: roles/api/vcs/generate-ssh-config.yml
 

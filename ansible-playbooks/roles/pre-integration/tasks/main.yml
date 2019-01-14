@@ -79,11 +79,12 @@
 - name: Create ConfigMap with secret name and VCS group name URL
   shell: >
     {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
-    --from-literal=vcs_group_name_url={{ vcs_group_name }}
     --from-literal=edp_name={{ edp_name }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
-    --from-literal=vcs_tool_name={{ vcs_tool_name | lower }}
-    --from-literal=vcs_ssh_port={{ vcs_ssh_port }}
+    --from-literal=vcs_integration_enabled={{ vcs_integration_enabled }}
+    {{ '--from-literal=vcs_group_name_url=' + vcs_group_name if vcs_integration_enabled|bool == true else '' }}
+    {{ '--from-literal=vcs_tool_name=' + vcs_tool_name | lower if vcs_integration_enabled|bool == true else '' }}
+    {{ '--from-literal=vcs_ssh_port=' + vcs_ssh_port if vcs_integration_enabled|bool == true else '' }}
 
 - name: Create necessery role in default projects
   shell: >

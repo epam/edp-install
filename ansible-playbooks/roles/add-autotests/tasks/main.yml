@@ -25,10 +25,9 @@
 
 - set_fact:
     vcs_project_path: "{{ project_vcs_group_path }}/{{ name }}"
+  when: vcs_integration_enabled|bool == true
 
 - include_tasks: roles/api/vcs/generate-ssh-config.yml
-  vars:
-    vcs_project_name: "{{ name }}"
 
 - debug:
     msg: "{{ item_map | to_json}}"
@@ -36,7 +35,6 @@
 - include_tasks: roles/api/git/check-permissions.yml
   vars:
     repo: "{{ item_map.git_repo_url }}"
-    user: "{{ vcs_autouser_name }}"
 
 - include_tasks: roles/common/tasks/manage-openshift/delete-app-settings.yml
   vars:
@@ -70,7 +68,7 @@
     - include_tasks: roles/api/vcs/ssh-url-generator.yml
       vars:
         vcs_project_name: "{{ name }}"
-    when: item_map.add_repo_strategy is defined and item_map.add_repo_strategy == 'copy'
+    when: vcs_integration_enabled|bool == true and item_map.add_repo_strategy is defined and item_map.add_repo_strategy == 'copy'
 
   - block:
     - include_tasks: roles/api/git/clone.yml
@@ -79,7 +77,7 @@
 
     - set_fact:
         clone_repo_url: "{{ item_map.git_repo_url }}"
-    when: item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
+    when: vcs_integration_enabled|bool == true or item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
 
   - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
 
