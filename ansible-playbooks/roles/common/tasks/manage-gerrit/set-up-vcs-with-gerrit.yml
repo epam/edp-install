@@ -15,6 +15,10 @@
 ---
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
 
+- include_tasks: roles/api/git/clone.yml
+  with_items:
+    - { repo: "ssh://{{ gerrit_username | default('project-creator') }}@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ name }}", 'dest': "{{ work_dir }}/{{ name }}" }
+
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
   vars:
     target_dir: "{{ work_dir }}/{{ name }}"

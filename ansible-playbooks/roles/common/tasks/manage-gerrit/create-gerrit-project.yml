@@ -21,5 +21,5 @@
     gerrit_projects_map: "{{ gerrit_projects.stdout | from_json }}"
 
 - name: "Create project in Gerrit"
-  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project {{ name }}"
+  shell: "ssh gerrit.{{ project_cicd }} gerrit create-project --empty-commit {{ name }}"
   when: name not in gerrit_projects_map.keys()

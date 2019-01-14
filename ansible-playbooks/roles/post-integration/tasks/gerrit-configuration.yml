@@ -197,50 +197,33 @@
 #    'commentlink.testresult.html' <li class=\"comment_test\"><span class=\"comment_test_name\">
 #    <a href=\"$2\" rel=\"nofollow\">$1</a></span> <span class=\"comment_test_result\"><span class=\"result_$3\">$3</span>$4</span></li>"
 
-- include_tasks: roles/api/vcs/copy-project.yml
-
-- include_tasks: roles/api/vcs/ssh-url-generator.yml
-  vars:
-    vcs_group_url: "{{ vcs_group_name }}"
-
-- block:
-  - include_tasks: roles/api/git/clone.yml
-    with_items:
-      - { repo: "{{ clone_repo_url }}", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
-
-  - name: "Copying EDP sources"
-    synchronize:
-      src: "../{{ item }}"
-      dest: "{{ work_dir }}/{{ vcs_project_name }}"
-    with_items:
-      - "ansible-playbooks"
-      - "application-pipelines"
-      - "edp-images"
-      - "oc-templates"
-      - "README.md"
-      - "LICENSE-2.0"
-
-  - include_tasks: roles/api/git/set-config.yml
-    with_items:
-      - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', user_email: "{{ vcs_autouser_email }}", user_name: "{{ vcs_autouser_name }}" }
-
-  - include_tasks: roles/api/git/commit.yml
-    with_items:
-      - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', commit_message: "Initial commit with EDP sources" }
-
-  - include_tasks: roles/api/git/push.yml
-    with_items:
-      - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}' }
-  when: repository_exists | bool == false
-
-- include_tasks: roles/api/git/clone.yml
-  with_items:
-    - { repo: "{{ clone_repo_url }}", dest: "{{ work_dir }}/{{ vcs_project_name }}" }
-  when: repository_exists | bool == true
-
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
   vars:
     name: "{{ project_vcs_edp }}"
+
+- include_tasks: roles/api/git/clone.yml
+  with_items:
+  - { repo: "ssh://admin@gerrit.{{ project_cicd }}:{{ gerrit_ssh_port }}/{{ vcs_project_name }}", 'dest': "{{ work_dir }}/{{ vcs_project_name }}" }
+
+- include_tasks: roles/api/git/set-config.yml
+  with_items:
+  - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', user_email: "admin@epam-edp.com", user_name: "admin" }
+
+- name: "Copying EDP sources"
+  synchronize:
+    src: "../{{ item }}"
+    dest: "{{ work_dir }}/{{ vcs_project_name }}"
+  with_items:
+  - "ansible-playbooks"
+  - "application-pipelines"
+  - "edp-images"
+  - "oc-templates"
+  - "README.md"
+  - "LICENSE-2.0"
+
+- include_tasks: roles/api/git/commit.yml
+  with_items:
+  - { git_directory: '{{ work_dir }}/{{ vcs_project_name }}', commit_message: "Initial commit with EDP sources" }
 
 - include_tasks: roles/common/tasks/manage-gerrit/push-to-gerrit.yml
   vars:
@@ -278,7 +261,3 @@
     - "'nothing to commit' not in result.stdout"
   args:
     chdir: "{{ work_dir }}/{{ vcs_project_name }}"
-
-- include_tasks: roles/common/tasks/manage-gerrit/project-replication.yml
-  vars:
-    name: "{{ project_vcs_edp }}"
