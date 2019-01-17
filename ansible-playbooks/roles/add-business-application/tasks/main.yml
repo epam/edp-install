@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----  
+---
 - name: "Set project_cicd variable"
   set_fact:
     project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
@@ -34,25 +34,29 @@
     msg: "{{ item_map | to_json}}"
 
 - set_fact:
-    git_repo_url: "{{ basic_pattern_url }}/{{ item_map.language }}-{{ item_map.build_tool }}-{{ item_map.framework }}.git"
+    repository_url: "{{ basic_pattern_url }}/{{ item_map.language }}-{{ item_map.build_tool }}-{{ item_map.framework }}.git"
   when: item_map.add_repo_strategy == 'create'
 
 - set_fact:
-    git_repo_url: "{{ basic_pattern_url }}/{{ item_map.language }}-{{ item_map.build_tool }}-{{ item_map.framework }}-{{ item_map.database }}.git"
+    repository_url: "{{ basic_pattern_url }}/{{ item_map.language }}-{{ item_map.build_tool }}-{{ item_map.framework }}-{{ item_map.database }}.git"
   when: item_map.add_repo_strategy == 'create' and item_map.need_database
 
 - set_fact:
-    git_repo_url: "{{ basic_pattern_url }}/{{ item_map.language }}-{{ item_map.build_tool }}-{{ item_map.framework | regex_replace('\\(.*', '-multimodule') }}\
+    repository_url: "{{ basic_pattern_url }}/{{ item_map.language }}-{{ item_map.build_tool }}-{{ item_map.framework | regex_replace('\\(.*', '-multimodule') }}\
     {{ '-'+item_map.database if item_map.need_database else '' }}.git"
   when: "{{ item_map.add_repo_strategy == 'create' and item_map.framework | regex_replace('.*(?=\\()', '') == '(multi-module)' }}"
 
 - set_fact:
-    git_repo_url: "{{ item_map.git_repo_url }}"
+    repository_url: "{{ item_map.git_repo_url }}"
   when: item_map.add_repo_strategy != 'create'
 
-- include_tasks: roles/api/git/check-permissions.yml
+- include_tasks: roles/common/tasks/manage-openshift/get-vcs-basic-auth-config-from-secret.yml
   vars:
-    repo: "{{ git_repo_url }}"
+    type_of_credentials: "repository"
+    credentials_secret_name: "{{ name }}-repository-credentials-temp"
+  when: item_map.is_private is defined and item_map.is_private|bool == true
+
+- include_tasks: roles/api/git/check-permissions.yml
 
 - include_tasks: roles/common/tasks/manage-openshift/delete-app-settings.yml
   vars:
@@ -62,67 +66,57 @@
 
 - block:
 
-  - block:
-    - include_tasks: roles/common/tasks/manage-openshift/get-vcs-basic-auth-config-from-secret.yml
-      vars:
-        vcs_auto_user_basic_auth_secret_name: "vcs-autouser-application-{{ name }}-temp"
+    - block:
+        - include_tasks: roles/common/tasks/manage-openshift/get-vcs-basic-auth-config-from-secret.yml
+          vars:
+            type_of_credentials: "vcs"
+            credentials_secret_name: "vcs-autouser-application-{{ name }}-temp"
 
-    - include_tasks: roles/api/vcs/copy-project.yml
-      vars:
-        vcs_project_name: "{{ name }}"
+        - include_tasks: roles/api/vcs/copy-project.yml
+          vars:
+            vcs_project_name: "{{ name }}"
 
-    - fail:
-        msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
-      when: repository_exists | bool == true
-
-    - include_tasks: roles/api/git/clone.yml
-      with_items:
-        - { repo: "{{ git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
-
-    - include_tasks: roles/api/vcs/push-to-project-vcs-group.yml
-      vars:
-        vcs_project_name: "{{ name }}"
+        - fail:
+            msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
+          when: repository_exists | bool == true
+      when: vcs_integration_enabled|bool == true and item_map.add_repo_strategy is defined and (item_map.add_repo_strategy == 'copy' or item_map.add_repo_strategy == 'create' or item_map.add_repo_strategy == 'clone')
 
     - include_tasks: roles/api/vcs/ssh-url-generator.yml
       vars:
         vcs_project_name: "{{ name }}"
-    when: vcs_integration_enabled|bool == true and item_map.add_repo_strategy is defined and (item_map.add_repo_strategy == 'copy' or item_map.add_repo_strategy == 'create')
+      when: vcs_integration_enabled|bool == true
 
-  - block:
     - include_tasks: roles/api/git/clone.yml
       with_items:
-        - { repo: "{{ git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
+        - { repo: "{{ repository_clone_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
+      no_log: true
 
-    - set_fact:
-        clone_repo_url: "{{ git_repo_url }}"
-    when: vcs_integration_enabled|bool == true or item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
-
-  - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
-
-  - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
-    vars:
-      job_name: "Job-provisioning"
-
-  - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
-    vars:
-      gerrit_project: "{{ name }}"
-
-  - include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
-
-  - block:
-    - include_tasks: roles/add-environments/tasks/add-config-map-to-app.yml
-      vars:
-        app_map: [ name: "{{ name }}" ]
-    - include_tasks: roles/add-environments/tasks/add-env-specific-app-template.yml
-      vars:
-        app_map: [ name: "{{ name }}" ]
-
-    - include_tasks: update_pipelines.yml
+    - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
 
     - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
       vars:
-        job_name: "Gerrit-postcommit-{{ name }}"
-        parameterized: true
-    when: env_map | length > 0
+        job_name: "Job-provisioning"
+
+    - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
+      vars:
+        gerrit_project: "{{ name }}"
+
+    - include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
+
+    - block:
+        - include_tasks: roles/add-environments/tasks/add-config-map-to-app.yml
+          vars:
+            app_map: [ name: "{{ name }}" ]
+        - include_tasks: roles/add-environments/tasks/add-env-specific-app-template.yml
+          vars:
+            app_map: [ name: "{{ name }}" ]
+
+        - include_tasks: update_pipelines.yml
+
+        - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
+          vars:
+            job_name: "Gerrit-postcommit-{{ name }}"
+            parameterized: true
+      when: env_map | length > 0
 
   when: permission_check_result | bool == true

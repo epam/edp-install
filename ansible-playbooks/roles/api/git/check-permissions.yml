@@ -16,19 +16,30 @@
 - set_fact:
     permission_check_result: true
 
-- name: 'Check git permissions'
-  shell: "git ls-remote {{ repo }}"
-  register: clone_result
-  ignore_errors: true
-
-- debug:
-    msg: "Import {{ repo }} failed, please make sure you have the correct access rights and the repository exists"
-  when: "'fatal: Could not read from remote repository' in  clone_result.stderr "
-
-- debug:
-    msg: "Copy git repo failed because it is not public or doesn't exist"
-  when: "'https' in repo and clone_result is failed"
+- set_fact:
+    repository_clone_url: "{{ repository_url }}"
+  when: item_map.is_private is undefined
 
 - set_fact:
-    permission_check_result: false
-  when: "('fatal: Could not read from remote repository' in  clone_result.stderr) or ('https' in repo and clone_result is failed)"
+    repository_clone_url: "{{ repository_url if item_map.is_private|bool == false else repository_url | urlsplit('scheme') + '://' + repository_username | urlencode  + ':' + repository_password | urlencode + '@' + repository_url | urlsplit('hostname') + '/' + repository_url | urlsplit('path') }}"
+  when: item_map.is_private is defined
+  no_log: true
+
+- name: 'Check git permissions'
+  shell: "git ls-remote {{ repository_clone_url }}"
+  register: clone_result
+  ignore_errors: true
+  no_log: true
+
+- block:
+  - debug:
+      msg: "Repository {{ repository_url }} could not be found"
+    when: "'The project you were looking for could not be found' in clone_result.stderr"
+
+  - debug:
+      msg: "Repository {{ repository_url }} could not be cloned due to wrong credentials"
+    when: "'Access denied' in clone_result.stderr"
+
+  - set_fact:
+      permission_check_result: false
+  when: clone_result is failed

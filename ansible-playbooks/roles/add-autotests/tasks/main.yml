@@ -32,9 +32,15 @@
 - debug:
     msg: "{{ item_map | to_json}}"
 
+- include_tasks: roles/common/tasks/manage-openshift/get-vcs-basic-auth-config-from-secret.yml
+  vars:
+    type_of_credentials: "repository"
+    credentials_secret_name: "{{ name }}-repository-credentials-temp"
+  when: item_map.is_private is defined and item_map.is_private|bool == true
+
 - include_tasks: roles/api/git/check-permissions.yml
   vars:
-    repo: "{{ item_map.git_repo_url }}"
+    repository_url: "{{ item_map.git_repo_url }}"
 
 - include_tasks: roles/common/tasks/manage-openshift/delete-app-settings.yml
   vars:
@@ -44,44 +50,34 @@
 
 - block:
 
-  - block:
-    - include_tasks: roles/common/tasks/manage-openshift/get-vcs-basic-auth-config-from-secret.yml
-      vars:
-        vcs_auto_user_basic_auth_secret_name: "vcs-autouser-autotest-{{ name }}-temp"
+    - block:
+        - include_tasks: roles/common/tasks/manage-openshift/get-vcs-basic-auth-config-from-secret.yml
+          vars:
+            type_of_credentials: "vcs"
+            credentials_secret_name: "vcs-autouser-autotest-{{ name }}-temp"
 
-    - include_tasks: roles/api/vcs/copy-project.yml
-      vars:
-        vcs_project_name: "{{ name }}"
+        - include_tasks: roles/api/vcs/copy-project.yml
+          vars:
+            vcs_project_name: "{{ name }}"
 
-    - fail:
-        msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
-      when: repository_exists | bool == true
-
-    - include_tasks: roles/api/git/clone.yml
-      with_items:
-        - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
-
-    - include_tasks: roles/api/vcs/push-to-project-vcs-group.yml
-      vars:
-        vcs_project_name: "{{ name }}"
+        - fail:
+            msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
+          when: repository_exists | bool == true
+      when: vcs_integration_enabled|bool == true and item_map.add_repo_strategy is defined and (item_map.add_repo_strategy == 'copy' or item_map.add_repo_strategy == 'clone')
 
     - include_tasks: roles/api/vcs/ssh-url-generator.yml
       vars:
         vcs_project_name: "{{ name }}"
-    when: vcs_integration_enabled|bool == true and item_map.add_repo_strategy is defined and item_map.add_repo_strategy == 'copy'
+      when: vcs_integration_enabled|bool == true
 
-  - block:
     - include_tasks: roles/api/git/clone.yml
       with_items:
-        - { repo: "{{ item_map.git_repo_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
+        - { repo: "{{ repository_clone_url }}", 'dest': "{{ work_dir }}/{{ name }}", bare: "yes" }
+      no_log: true
 
-    - set_fact:
-        clone_repo_url: "{{ item_map.git_repo_url }}"
-    when: vcs_integration_enabled|bool == true or item_map.add_repo_strategy is undefined or item_map.add_repo_strategy == 'import'
+    - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
 
-  - include_tasks: roles/common/tasks/manage-gerrit/set-up-vcs-with-gerrit.yml
-
-  - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
-    vars:
-      job_name: "Job-provisioning"
+    - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
+      vars:
+        job_name: "Job-provisioning"
   when: permission_check_result | bool == true

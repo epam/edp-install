@@ -205,6 +205,7 @@
 - include_tasks: roles/common/tasks/manage-gerrit/create-gerrit-project.yml
   vars:
     name: "{{ full_edp_name }}"
+    initial_commit: true
 
 - include_tasks: roles/api/git/clone.yml
   with_items:
