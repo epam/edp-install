@@ -3,8 +3,8 @@
     "displayName": "Maven Based Integration Tests",
     "command": {
       "name": "integration",
-      "git_repo_url": "https://git.epam.com/epmd-edp/examples/msra/sample-autotest",
-      "add_repo_strategy": "copy",
+      "git_repo_url": "https://github.com/epmd-edp/sample-autotest.git",
+      "add_repo_strategy": "clone",
       "build_tool": "Maven",
       "report_framework": "Allure"
     }
@@ -13,8 +13,8 @@
     "displayName": "Maven Based E2E Tests",
     "command": {
       "name": "e2e",
-      "git_repo_url": "https://git.epam.com/epmd-edp/examples/msra/sample-autotest",
-      "add_repo_strategy": "copy",
+      "git_repo_url": "https://github.com/epmd-edp/sample-autotest.git",
+      "add_repo_strategy": "clone",
       "build_tool": "Maven",
       "report_framework": "Allure"
     }

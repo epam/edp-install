@@ -1,6 +1,5 @@
 {
-  "git_repo_url": "https://git.epam.com/epmd-edp/examples/msra/sample-springboot",
-  "add_repo_strategy": "copy",
+  "add_repo_strategy": "create",
   "language": "Java",
   "build_tool": "Maven",
   "framework": "SpringBoot",

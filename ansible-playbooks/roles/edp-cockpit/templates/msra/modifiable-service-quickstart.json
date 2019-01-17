@@ -3,8 +3,8 @@
     "displayName": "API Gateway (Zuul)",
     "command": {
       "name": "zuul",
-      "git_repo_url": "https://git.epam.com/epmd-edp/examples/msra/zuul",
-      "add_repo_strategy": "copy",
+      "git_repo_url": "https://github.com/epmd-edp/sample-zuul.git",
+      "add_repo_strategy": "clone",
       "language": "Java",
       "build_tool": "Maven",
       "framework": "SpringBoot",
