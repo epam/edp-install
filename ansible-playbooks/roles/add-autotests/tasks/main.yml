@@ -35,7 +35,7 @@
 - include_tasks: roles/common/tasks/manage-openshift/get-vcs-basic-auth-config-from-secret.yml
   vars:
     type_of_credentials: "repository"
-    credentials_secret_name: "{{ name }}-repository-credentials-temp"
+    credentials_secret_name: "repository-autotest-{{ name }}-temp"
   when: item_map.is_private is defined and item_map.is_private|bool == true
 
 - include_tasks: roles/api/git/check-permissions.yml
