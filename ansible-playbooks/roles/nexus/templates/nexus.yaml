@@ -69,7 +69,7 @@ objects:
       spec:
         containers:
         - env:
-          - name: NEXUS_CONTEXT
+          - name: CONTEXT_PATH
             value: /
           image: sonatype/nexus3:${NEXUS_VERSION}
           imagePullPolicy: IfNotPresent
