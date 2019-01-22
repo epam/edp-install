@@ -23,12 +23,13 @@
 - set_fact:
     repository_clone_url: "{{ repository_url if item_map.is_private|bool == false else repository_url | urlsplit('scheme') + '://' + repository_username | urlencode  + ':' + repository_password | urlencode + '@' + repository_url | urlsplit('hostname') + '/' + repository_url | urlsplit('path') }}"
   when: item_map.is_private is defined
+  no_log: true
 
 - name: 'Check git permissions'
   shell: "git ls-remote {{ repository_clone_url }}"
   register: clone_result
   ignore_errors: true
-#  no_log: true
+  no_log: true
 
 - block:
   - debug:
