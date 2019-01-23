@@ -55,6 +55,12 @@
   shell: "{{ ocadm }} new-project {{ item }}"
   with_items: "{{ projects_list }}"
 
+- name: "Add Description and Display name to CI/CD project"
+  shell: >
+    {{ ocadm }} annotate project {{ project_cicd }} --overwrite
+    openshift.io/display-name={{ edp_name }}-edp
+    openshift.io/description='Version: {{ edp_version.split(':') | last }}'
+
 - name: "Giving admin roles to groups"
   shell: "{{ ocadm }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
   with_nested:
@@ -80,6 +86,7 @@
   shell: >
     {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
     --from-literal=edp_name={{ edp_name }}
+    --from-literal=edp_version={{ edp_version.split(':') | last }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=vcs_integration_enabled={{ vcs_integration_enabled }}
     {{ '--from-literal=vcs_group_name_url=' + vcs_group_name if vcs_integration_enabled|bool == true else '' }}
