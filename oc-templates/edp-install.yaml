@@ -196,17 +196,15 @@ parameters:
   description: Defines whether integration with VCS is enabled or not
   name: VCS_INTEGRATION_ENABLED
   value: "false"
+  required: true
 - displayName: Preferred Version Control System
   description: VCS tool which will be consumed during EDP installation. Currently supported Gitlab and Bitbucket
   name: VCS_TOOL_NAME
-  value: "gitlab"
-  required: true
+  value: ""
 - displayName: VCS group name URL
   description: VCS URL to the project group. For example 'https://git.epam.com/epmd-edp/temp'
   name: VCS_GROUP_NAME_URL
-  value: "https://git.epam.com/epmd-edp/temp"
-  required: true
+  value: ""
 - displayName: VCS ssh port
   name: VCS_SSH_PORT
-  value: "22"
-  required: true
+  value: ""
