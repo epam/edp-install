@@ -63,7 +63,7 @@
         - fail:
             msg: "Couldn't copy project to you VCS group, repository {{ name }} is already exists in {{ project_vcs_group_path }}"
           when: repository_exists | bool == true
-      when: vcs_integration_enabled|bool == true and item_map.add_repo_strategy is defined and (item_map.add_repo_strategy == 'copy' or item_map.add_repo_strategy == 'clone')
+      when: vcs_integration_enabled|bool == true
 
     - include_tasks: roles/api/vcs/ssh-url-generator.yml
       vars:
