@@ -78,25 +78,15 @@ public class AddApplicationSmokeTest {
         this.postCommitCreatedAppName = POSTCOMMIT_PIPELINE_SUFFIX + createdAppName;
     }
 
-//    @DataProvider(name = "pipeline")
-//    public Object[][] pipeline() {
-//        return new Object[][]{{PRECOMMIT_BE_PIPELINE}, {PRECOMMIT_FE_PIPELINE}, {POSTCOMMIT_BE_PIPELINE},
-//                {POSTCOMMIT_FE_PIPELINE}, {preCommitCreatedAppName}, {postCommitCreatedAppName}};
-//    }
-
     @DataProvider(name = "pipeline")
     public Object[][] pipeline() {
-        return new Object[][]{{preCommitCreatedAppName}, {postCommitCreatedAppName}};
+        return new Object[][]{{PRECOMMIT_BE_PIPELINE}, {PRECOMMIT_FE_PIPELINE}, {POSTCOMMIT_BE_PIPELINE},
+                {POSTCOMMIT_FE_PIPELINE}, {preCommitCreatedAppName}, {postCommitCreatedAppName}};
     }
-
-//    @DataProvider(name = "application")
-//    public Object[][] application() {
-//        return new Object[][]{{BE_APP_NAME}, {FE_APP_NAME}, {createdAppName}};
-//    }
 
     @DataProvider(name = "application")
     public Object[][] application() {
-        return new Object[][]{{createdAppName}};
+        return new Object[][]{{BE_APP_NAME}, {FE_APP_NAME}, {createdAppName}};
     }
 
     @Test(dataProvider = "application")
@@ -149,32 +139,4 @@ public class AddApplicationSmokeTest {
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }
-
-//    @Test
-//    public void testProjectWasCreatedInGitGroupRepoForCreateStrategy() {
-//        Secret secret = openShiftClient.get(ResourceKind.SECRET, "vcs-autouser-for-tests", "edp-cicd-delivery");
-//
-//        String username = new String(secret.getData("username")).trim();
-//        String password = new String(secret.getData("password")).trim();
-//
-//        String token = given()
-//                .contentType(ContentType.URLENC)
-//                .param("grant_type", "password")
-//                .param("username", username)
-//                .param("password", password)
-//                .post("https://git.epam.com/oauth/token")
-//                .then()
-//                .extract()
-//                .path("access_token");
-//
-//        given().log().all()
-//                .auth()
-//                .preemptive()
-//                .oauth2(token)
-//                .urlEncodingEnabled(false)
-//                .when()
-//                .get("https://git.epam.com/api/v4/projects/epmd-edp%2Ftemp%2F" + createdAppName)
-//                .then()
-//                .statusCode(HttpStatus.SC_OK);
-//    }
 }
