@@ -16,11 +16,10 @@ def run(vars) {
     def runDir = vars.containsKey('sonarAnalysisRunTempDir') ? vars['sonarAnalysisRunTempDir'] : vars['workDir']
     dir("${runDir}") {
         withSonarQubeEnv('Sonar') {
-            vars['artifactID'] = buildToolLib.getGradleArtifactID()
-            vars['groupID'] = buildToolLib.getGradleGroupID()
-            vars['sonarProjectKey'] = "${vars.groupID}:${vars.artifactID}:${vars.serviceBranch}"
-            sh "${vars.gradleCommand} sonarqube -Dsonar.projectKey=${vars.sonarProjectKey}" +
-                    " -Dsonar.projectName='${vars.artifactID} ${vars.serviceBranch}'"
+            sh "${vars.gradleCommand} sonarqube " +
+                    "-Dsonar.projectKey=${vars.gerritProject} " +
+                    "-Dsonar.projectName=${vars.gerritProject} " +
+                    "-Dsonar.branch=${vars.serviceBranch}"
         }
         timeout(time: 10, unit: 'MINUTES') {
             def qualityGateResult = waitForQualityGate()
