@@ -7,7 +7,7 @@
       def token = t.getApiTokenInsecure()
       print(token)
   jenkins_script:
-    script: "{{ retrieve_token_script}}"
+    script: "{{ retrieve_token_script }}"
     user: admin
     password: "{{ tools.jenkins.password }}"
     url: http://jenkins.{{ project_cicd }}:8080
@@ -15,16 +15,16 @@
   no_log: true
 
 - set_fact:
-    tools: "{{ tools | combine({ 'jenkins': { 'password': result.output }}, recursive=True) }}"
+    token: "{{ result.output }}"
   no_log: true
 
 - name: "Create secret for {{ item.username }} user with API token"
   register: result
   ignore_errors: true
   shell: >
-    {{ ocadm }} -n {{ project_cicd }} create secret generic jenkins-token
+    {{ ocadm }} -n {{ project_cicd }} create secret generic {{ item.secret_name }}
     --from-literal=username={{ item.username }}
-    --from-literal=token={{ tools.jenkins.password }}
+    --from-literal=token={{ token }}
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'

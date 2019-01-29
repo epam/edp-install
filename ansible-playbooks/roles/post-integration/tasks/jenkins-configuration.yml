@@ -13,9 +13,12 @@
 # limitations under the License.
 
 ---
-- include_tasks: jenkins-api/retrieve_token.yml
+- include_tasks: jenkins-api/retrieve-token.yml
   with_items:
-    - { username: 'admin' }
+    - { username: 'admin', secret_name: 'jenkins-token' }
+
+- set_fact:
+    tools: "{{ tools | combine({ 'jenkins': { 'password': token }}, recursive=True) }}"
 
 - name: "Generate config ssh for jenkins"
   copy:
@@ -77,5 +80,20 @@
 - include_tasks: jenkins-api/restart.yml
 
 - include_tasks: jenkins-api/create-user.yml
-  with_items: "{{ tools.nexus.local_users }}"
+  with_items:
+    - "{{ tools.nexus.local_users }}"
   when: item.jenkins_id is defined
+
+- block:
+  - include_tasks: jenkins-api/create-user.yml
+    with_items:
+      - { username: "perf",
+          password: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}",
+          last_name: "Perf",
+          first_name: "User",
+          jenkins_id: "perf"}
+
+  - include_tasks: jenkins-api/retrieve-token.yml
+    with_items:
+      - { username: 'perf', secret_name: 'jenkins-perf' }
+  when: perf_integration_enabled|bool == true
