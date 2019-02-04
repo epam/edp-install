@@ -51,6 +51,8 @@ secrets:
   gerrit_admin:
     password: secret
     email: admin@example.com
+  gerrit_perf:
+    password: ""
   gerrit_db:
     db_name: gerrit
     db_user: gerrit

@@ -134,7 +134,7 @@
     - { login: "project-creator", group: "Administrators" }
     - { login: "project-creator", group: "Project Bootstrappers" }
 
-- name: Reset gerrit admin http_password
+- name: "Reset gerrit admin http_password"
   include_tasks: gerrit-cli/set-password.yml
   with_items:
     - { username: "admin", password: "{{ secrets.gerrit_admin.password }}" }
@@ -167,6 +167,15 @@
   with_items:
     - "Project Bootstrappers"
     - "Continuous Integration Tools"
+
+- name: "Create perf user with http_password"
+  include_tasks: gerrit-cli/create-user.yml
+  with_items:
+    - { username: "perf",
+        password: "{{ secrets.gerrit_perf.password }}",
+        full_name: "Perf Integration",
+        group: "Non-Interactive Users" }
+  when: perf_integration_enabled|bool == true
 
 - name: "Add Change-Owner group in groups file"
   lineinfile:
