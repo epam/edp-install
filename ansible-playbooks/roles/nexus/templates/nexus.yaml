@@ -57,7 +57,7 @@ objects:
   spec:
     replicas: 1
     selector:
-      deploymentconfig: nexus
+      app: nexus
     strategy:
       recreateParams:
         timeoutSeconds: 1200
@@ -65,7 +65,7 @@ objects:
     template:
       metadata:
         labels:
-          deploymentconfig: nexus
+          app: nexus
       spec:
         containers:
         - env:
@@ -104,6 +104,9 @@ objects:
           volumeMounts:
           - mountPath: /nexus-data
             name: nexus-data
+          - mountPath: /opt/sonatype/nexus/etc/nexus-default.properties
+            name: nexus-props
+            subPath: nexus-default.properties
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}
@@ -116,6 +119,9 @@ objects:
 {% else %}
           emptyDir: {}
 {% endif %}
+        - name: nexus-props
+          configMap:
+            name: nexus-props
     test: false
     triggers:
     - type: ConfigChange
@@ -132,7 +138,7 @@ objects:
       protocol: TCP
       targetPort: 8081
     selector:
-      deploymentconfig: nexus
+      app: nexus
     sessionAffinity: None
     type: ClusterIP
 - apiVersion: v1

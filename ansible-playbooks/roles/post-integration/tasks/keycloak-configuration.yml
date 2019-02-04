@@ -163,10 +163,15 @@
   when: item != ""
   with_items: "{{ edp_viewers }}"
 
-- name: "Install Keycloak proxy to Nexus pod"
+- name: "Copy Keycloak proxy file"
+  template:
+    src: "keycloak/proxy.yml"
+    dest: "{{ post_integration_dir }}/keycloak/proxy.yml"
+
+- name: "Install Keycloak proxy to the pod"
   include_tasks: keycloak-api/install-proxy.yml
-  vars:
-    upstream_resource: "nexus"
-    client_id: "{{ tools.nexus.client_id }}"
-    redirection_url: "{{ tools.nexus.web_url }}"
-    upstream_port: 8081
+  with_items:
+    - { upstream_resource: "nexus", client_id: "{{ tools.nexus.client_id }}",
+     redirection_url: "{{ tools.nexus.web_url }}", upstream_port: 8081, roles: "administrator,developer" }
+    - { upstream_resource: "edp-cockpit", client_id: "{{ tools.cockpit.client_id }}",
+     redirection_url: "{{ tools.cockpit.web_url }}", upstream_port: 8080, roles: "cockpit-administrators" }

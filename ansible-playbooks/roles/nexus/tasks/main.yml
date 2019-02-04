@@ -13,10 +13,23 @@
 # limitations under the License.
 
 --- # Nexus full installation
-- name: "Copy Nexus template"
+- name: "Copy Nexus templates"
   template:
-    src: "nexus.yaml"
-    dest: "{{ templates_dir }}/nexus/nexus.yaml"
+    src: "{{ item }}"
+    dest: "{{ templates_dir }}/nexus/{{ item }}"
+  with_items:
+    - "nexus.yaml"
+    - "nexus-default.properties"
+
+- name: "Install config map for storing nexus properties"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} create configmap nexus-props
+    --from-file=nexus-default.properties={{ templates_dir }}/nexus/nexus-default.properties
+  register: result
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
 
 - name: "Install Nexus app"
   command: |

@@ -31,8 +31,15 @@ objects:
   kind: DeploymentConfig
   metadata:
     name: ${UPSTREAM_RESOURCE}
+    labels:
+      app: ${UPSTREAM_RESOURCE}
   spec:
+    selector:
+      app: ${UPSTREAM_RESOURCE}
     template:
+      metadata:
+        labels:
+          app: ${UPSTREAM_RESOURCE}
       spec:
         containers:
         - image: quay.io/gambol99/keycloak-proxy:v2.2.2
@@ -52,6 +59,7 @@ objects:
             - '--listen=0.0.0.0:3000'
             - '--redirection-url=${REDIRECTION_URL}'
             - '--upstream-url=http://127.0.0.1:${UPSTREAM_PORT}'
+            - '--resources=uri=/*|roles=${ROLES}'
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}
@@ -67,7 +75,7 @@ objects:
       protocol: TCP
       targetPort: 3000
     selector:
-      deploymentconfig: ${UPSTREAM_RESOURCE}
+      app: ${UPSTREAM_RESOURCE}
     sessionAffinity: None
     type: ClusterIP
 - apiVersion: v1
@@ -77,6 +85,10 @@ objects:
   spec:
     port:
       targetPort: 3000-proxy
+    to:
+      kind: Service
+      name: ${UPSTREAM_RESOURCE}
+      weight: 100
 parameters:
 - displayName: Upstream resource
   name: UPSTREAM_RESOURCE
@@ -87,12 +99,15 @@ parameters:
 - displayName: Realm
   name: REALM
   required: true
-- displayName: Nexus client id
+- displayName: Client id
   name: CLIENT_ID
   required: true
-- displayName: Nexus web URL
+- displayName: Redirection URL
   name: REDIRECTION_URL
   required: true
-- displayName: Nexus web URL
+- displayName: Upstream port
   name: UPSTREAM_PORT
+  required: true
+- displayName: Roles
+  name: ROLES
   required: true

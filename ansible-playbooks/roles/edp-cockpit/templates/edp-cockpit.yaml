@@ -77,31 +77,38 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: edp-cockpit
     labels:
       app: edp-cockpit
+    name: edp-cockpit
   spec:
     ports:
     - name: edp-cockpit
       port: 8080
+      protocol: TCP
+      targetPort: 8080
     selector:
       app: edp-cockpit
+    sessionAffinity: None
+    type: ClusterIP
 - apiVersion: v1
   kind: Route
   metadata:
     annotations:
       description: Route for EDP Cockpit's https service.
       template.openshift.io/expose-uri: http://{.spec.host}{.spec.path}
-    name: edp-cockpit
     labels:
       app: edp-cockpit
+    name: edp-cockpit
   spec:
+    port:
+      targetPort: edp-cockpit
     tls:
       insecureEdgeTerminationPolicy: Redirect
       termination: edge
     to:
       kind: Service
       name: edp-cockpit
+      weight: 100
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -154,6 +161,8 @@ objects:
               memory: 500Mi
           terminationMessagePath: /dev/termination-log
           env:
+          - name: JAVA_OPTIONS
+            value: -Dserver.max-http-header-size=10000
           - name: PROJECT_CICD
             valueFrom:
               fieldRef:

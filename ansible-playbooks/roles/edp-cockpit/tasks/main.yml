@@ -82,7 +82,6 @@
     {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/cockpit/edp-cockpit.yaml
     -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
     -p OPENSHIFT_TRUST_CERTIFICATES={{ tools.cockpit.openshift_trust_certificates }}
-    --dry-run -o yaml | {{ ocadm }} -n {{ project_cicd }} apply -f -
   register: result
   changed_when: '"already" not in result.stderr'
   failed_when:

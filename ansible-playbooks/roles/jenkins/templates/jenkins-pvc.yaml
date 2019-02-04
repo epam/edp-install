@@ -133,10 +133,12 @@ objects:
     annotations:
       template.alpha.openshift.io/wait-for-ready: "true"
     name: jenkins
+    labels:
+      app: jenkins
   spec:
     replicas: 1
     selector:
-      name: jenkins
+      app: jenkins
     strategy:
       type: Recreate
       recreateParams:
@@ -144,7 +146,7 @@ objects:
     template:
       metadata:
         labels:
-          name: jenkins
+          app: jenkins
       spec:
         containers:
         - capabilities: {}
@@ -205,6 +207,8 @@ objects:
   kind: Service
   metadata:
     name: jenkins-jnlp
+    labels:
+      app: jenkins-jnlp
   spec:
     ports:
     - name: agent
@@ -213,7 +217,7 @@ objects:
       protocol: TCP
       targetPort: 50000
     selector:
-      name: jenkins
+      app: jenkins-jnlp
     sessionAffinity: None
     type: ClusterIP
 - apiVersion: v1
@@ -224,6 +228,8 @@ objects:
         "namespace": "", "kind": "Service"}]'
       service.openshift.io/infrastructure: "true"
     name: jenkins
+    labels:
+      app: jenkins
   spec:
     ports:
     - name: web
@@ -232,7 +238,7 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      name: jenkins
+      app: jenkins
     sessionAffinity: None
     type: NodePort
 - apiVersion: v1
