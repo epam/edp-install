@@ -69,6 +69,22 @@
     when: item_map.language is defined and item_map.framework is defined
   when: source_template is defined
 
+- block:
+    - name: "Check for existing sonar.properties"
+      stat:
+        path: "{{ templates_dir }}/{{ gerrit_project }}/sonar-project.properties"
+      register: stat_result
+
+    - name: "Create the file, if it doesn't exist already"
+      copy:
+        dest: "{{ templates_dir }}/{{ gerrit_project }}/sonar-project.properties"
+        content: |
+          sonar.projectKey={{ name }}
+          sonar.projectName={{ name }}
+          sonar.sources=src
+      when: stat_result.stat.exists == False
+  when: item_map.language is defined and item_map.language|lower == "javascript"
+
 - debug:
     msg: "Template for application {{ name }} is not found and wasn't push to repository"
   when: source_template is not defined
