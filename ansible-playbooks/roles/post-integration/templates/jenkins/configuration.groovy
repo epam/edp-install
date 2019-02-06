@@ -117,7 +117,7 @@ server.getConfig().setGerritSshPort("{{ gerrit_ssh_port }}".toInteger())
 server.getConfig().setGerritUserName("jenkins")
 server.getConfig().setUseRestApi(true)
 server.getConfig().setGerritHttpUserName("jenkins")
-server.getConfig().setGerritHttpPassword("jenkins")
+server.getConfig().setGerritHttpPassword("{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}")
 server.getConfig().setRestCodeReview(true)
 server.getConfig().setRestVerified(true)
 

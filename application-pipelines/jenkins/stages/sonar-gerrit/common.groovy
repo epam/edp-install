@@ -42,8 +42,10 @@ def run(vars) {
         }
 
         withSonarQubeEnv('Sonar') {
-            sh "mvn sonar:sonar -Dsonar.analysis.mode=preview -Dsonar.report.export.path=sonar-report.json" +
-                    " -Dsonar.branch=precommit -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+            withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                sh "mvn sonar:sonar -Dsonar.analysis.mode=preview -Dsonar.report.export.path=sonar-report.json" +
+                        " -Dsonar.branch=precommit -Dnexus.username=${USERNAME} -Dnexus.password=${PASSWORD} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+            }
         }
         sonarToGerrit inspectionConfig: [baseConfig: [projectPath: ""], serverURL: "${vars.sonarRoute}"],
                 notificationConfig: [commentedIssuesNotificationRecipient: 'NONE', negativeScoreNotificationRecipient: 'NONE'],

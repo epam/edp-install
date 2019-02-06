@@ -14,9 +14,11 @@ limitations under the License. */
 
 def run(vars) {
     dir("${vars.workDir}") {
-        sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent -Dmaven.test.failure.ignore=true verify" +
-                " org.jacoco:jacoco-maven-plugin:report -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
-        junit "target/*-reports/*.xml, */target/*-reports/*.xml"
+        withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent -Dmaven.test.failure.ignore=true verify" +
+                    " org.jacoco:jacoco-maven-plugin:report -Dnexus.username=${USERNAME} -Dnexus.password=${PASSWORD} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+            junit "target/*-reports/*.xml, */target/*-reports/*.xml"
+        }
     }
     this.result = "success"
 }

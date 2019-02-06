@@ -32,7 +32,7 @@
 
 - set_fact:
     user_settings: "{{ result.stdout | from_json }}"
-    tools: "{{ tools | combine({ 'jenkins': { 'password': jenkins_token.stdout }}, recursive=True) }}"
+    tools: "{{ tools | combine({ 'jenkins': { 'admin_token': jenkins_token.stdout }}, recursive=True) }}"
 
 - set_fact:
     dns_wildcard: "{{ user_settings.data.dns_wildcard }}"

@@ -18,7 +18,7 @@
     url: http://jenkins.{{ project_cicd }}:8080/crumbIssuer/api/json
     method: GET
     user: admin
-    password: "{{ tools.jenkins.password }}"
+    password: "{{ tools.jenkins.admin_token }}"
     force_basic_auth: yes
   retries: 5
   delay: 1
@@ -30,7 +30,7 @@
     url: http://jenkins.{{ project_cicd }}:8080/job/{{ job_name }}/api/json
     method: GET
     user: admin
-    password: "{{ tools.jenkins.password }}"
+    password: "{{ tools.jenkins.admin_token }}"
     force_basic_auth: yes
   retries: 5
   delay: 6
@@ -43,7 +43,7 @@
     {% if parameterized is defined %}WithParameters{% endif %}"
     method: POST
     user: admin
-    password: "{{ tools.jenkins.password }}"
+    password: "{{ tools.jenkins.admin_token }}"
     force_basic_auth: yes
     headers:
       Jenkins-Crumb: "{{ crumb.json.crumb }}"

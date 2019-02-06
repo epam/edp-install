@@ -28,7 +28,7 @@ public class StringConstants {
     public static final String DELETION_PIPELINE_NAME = "deletion-pipeline";
 
     public static final String GERRIT_USER = "admin";
-    public static final String GERRIT_PASSWORD = "secret";
+    public static final String GERRIT_SECRET = "gerrit-passwords";
 
     public static final String OPENSHIFT_CICD_NAMESPACE = "edp-cicd";
     public static final String OPENSHIFT_MASTER_URL = "https://master.delivery.aws.main.edp.projects.epam.com";

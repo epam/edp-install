@@ -19,7 +19,7 @@
     method: GET
     return_content: yes
     user: admin
-    password: "{{ secrets.sonar_admin.password }}"
+    password: "{{ sonar_admin_password.stdout }}"
     force_basic_auth: "yes"
     status_code: 200
   register: result
@@ -32,7 +32,7 @@
       method: POST
       return_content: yes
       user: admin
-      password: "{{ secrets.sonar_admin.password }}"
+      password: "{{ sonar_admin_password.stdout }}"
       force_basic_auth: "yes"
       status_code: 200
   when: item.login not in result.json.users | map(attribute='login') | list

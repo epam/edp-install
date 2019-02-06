@@ -14,8 +14,10 @@ limitations under the License. */
 
 def run(vars) {
     dir("${vars.workDir}") {
-        def nexusRepositoryUrl = vars.artifactVersion.contains("snapshot") ? "${vars.nexusMavenRepositoryUrl}-snapshots" : "${vars.nexusMavenRepositoryUrl}-releases"
-        sh "gradle publish -I ${vars.gradleInitScriptPath} -PnexusMavenRepositoryUrl=${nexusRepositoryUrl}"
+        withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            def nexusRepositoryUrl = vars.artifactVersion.contains("snapshot") ? "${vars.nexusMavenRepositoryUrl}-snapshots" : "${vars.nexusMavenRepositoryUrl}-releases"
+            sh "gradle publish -I ${vars.gradleInitScriptPath} -PnexusMavenRepositoryUrl=${nexusRepositoryUrl} -PnexusLogin=${USERNAME} -PnexusPassword=${PASSWORD}"
+        }
     }
     this.result = "success"
 }

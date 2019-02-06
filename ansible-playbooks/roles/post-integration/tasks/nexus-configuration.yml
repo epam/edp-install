@@ -13,6 +13,13 @@
 # limitations under the License.
 
 ---
+- name: "Retrieve password from Secrets"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ tools.nexus.secret }}
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: nexus_admin_password
+  no_log: true
+
 - include_tasks: nexus-api/declare-script-each.yml
   register: result
   with_items:
@@ -34,6 +41,9 @@
    - setup-user
    - create-task
    - enable-realm
+   - update-admin-password
+
+- include_tasks: nexus-api/update-admin-password.yml
 
 - include_tasks: nexus-api/delete-repo-each.yml
   with_items: "{{ tools.nexus.repos_to_delete }}"
@@ -84,6 +94,9 @@
      'first_name': 'Nexus', 'last_name': 'Developer', 'email': 'nexus-developer@edp.com' } ] }}"
   with_items:
     - "{{ edp_viewers }}"
+
+- set_fact:
+    jenkins_nexus_password: "{{ random_password }}"
 
 - include_tasks: nexus-api/setup-user-each.yml
   when: item != ""

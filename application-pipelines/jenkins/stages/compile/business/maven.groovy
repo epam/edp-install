@@ -14,7 +14,9 @@ limitations under the License. */
 
 def run(vars) {
     dir("${vars.workDir}") {
-        sh "mvn compile -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            sh "mvn compile -B -Dnexus.username=${USERNAME} -Dnexus.password=${PASSWORD} --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        }
     }
     this.result = "success"
 }

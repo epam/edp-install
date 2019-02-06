@@ -181,7 +181,10 @@ objects:
           - name: JNLP_SERVICE_NAME
             value: jenkins-jnlp
           - name: JENKINS_PASSWORD
-            value: ${JENKINS_PASSWORD}
+            valueFrom:
+              secretKeyRef:
+                name: ${JENKINS_SECRET}
+                key: password
           - name: JENKINS_UI_URL
             value: ${JENKINS_UI_URL}
           - name: INSTALL_PLUGINS
@@ -443,8 +446,8 @@ parameters:
   value: "http://jenkins:8080"
 - description: Password for the 'admin' account when using default Jenkin authentication.
   displayName: Jenkins admin initial password
-  name: JENKINS_PASSWORD
-  value: password
+  name: JENKINS_SECRET
+  value: jenkins-passwords
 - displayName: Maven Cache Volume Capacity
   description: Volume space available for maven cache data
   name: JENKINS_MAVEN_CACHE_VOLUME_CAPACITY

@@ -9,7 +9,7 @@
   jenkins_script:
     script: "{{ retrieve_token_script }}"
     user: admin
-    password: "{{ tools.jenkins.password }}"
+    password: "{{ jenkins_admin_token is defined | ternary(tools.jenkins.admin_token, jenkins_admin_password.stdout) }}"
     url: http://jenkins.{{ project_cicd }}:8080
   register: result
   no_log: true

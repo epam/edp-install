@@ -28,7 +28,7 @@ import org.testng.annotations.Test;
 
 import static com.epam.edp.sittests.smoke.StringConstants.BE_APP_NAME;
 import static com.epam.edp.sittests.smoke.StringConstants.FE_APP_NAME;
-import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_PASSWORD;
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_SECRET;
 import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_USER;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
@@ -99,10 +99,13 @@ public class AddApplicationSmokeTest {
 
     @Test(dataProvider = "application")
     public void testGerritProjectWasCreated(String application) {
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, GERRIT_SECRET, openshiftNamespace);
+        String gerrit_password = new String(secret.getData("password")).trim();
+
         given().log().all()
                 .pathParam("project", application)
                 .auth()
-                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .basic(GERRIT_USER, gerrit_password)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "gerrit",
@@ -135,11 +138,14 @@ public class AddApplicationSmokeTest {
 
     @Test(dataProvider = "application")
     public void testApplicationTemplateHasBeenAdded(String application) {
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, GERRIT_SECRET, openshiftNamespace);
+        String gerrit_password = new String(secret.getData("password")).trim();
+
         given().log().all()
                 .pathParam("application", application)
                 .urlEncodingEnabled(false)
                 .auth()
-                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .basic(GERRIT_USER, gerrit_password)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "gerrit", OPENSHIFT_CICD_NAMESPACE,

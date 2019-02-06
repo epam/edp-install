@@ -20,16 +20,18 @@ def run(vars) {
                     """,
                 returnStdout: true
         ).trim().toLowerCase()
-        vars['groupID'] = sh(
-                script: "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.groupId " +
-                        "--settings ${vars.devopsRoot}/${vars.mavenSettings} | grep -Ev '(^\\[|Download\\w+:)'",
-                returnStdout: true
-        ).trim()
-        vars['artifactID'] = sh(
-                script: "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.artifactId " +
-                        "--settings ${vars.devopsRoot}/${vars.mavenSettings} | grep -Ev '(^\\[|Download\\w+:)'",
-                returnStdout: true
-        ).trim()
+        withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            vars['groupID'] = sh(
+                    script: "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.groupId -Dnexus.username=${USERNAME} -Dnexus.password=${PASSWORD} " +
+                            "--settings ${vars.devopsRoot}/${vars.mavenSettings} | grep -Ev '(^\\[|Download\\w+:)'",
+                    returnStdout: true
+            ).trim()
+            vars['artifactID'] = sh(
+                    script: "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.artifactId -Dnexus.username=${USERNAME} -Dnexus.password=${PASSWORD} " +
+                            "--settings ${vars.devopsRoot}/${vars.mavenSettings} | grep -Ev '(^\\[|Download\\w+:)'",
+                    returnStdout: true
+            ).trim()
+        }
         vars['deployableModule'] = sh(
                 script: "cat pom.xml | grep -Poh '<deployable.module>\\K[^<]*' || echo \"\"",
                 returnStdout: true

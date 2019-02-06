@@ -14,8 +14,10 @@ limitations under the License. */
 
 def run(vars) {
     dir("${vars.workDir}") {
-        def nexusRepositoryUrl = vars.pomVersion.contains("snapshot") ? "${vars.nexusMavenRepositoryUrl}-snapshots" : "${vars.nexusMavenRepositoryUrl}-releases"
-        sh "mvn deploy -DskipTests=true -DaltDeploymentRepository=nexus::default::${nexusRepositoryUrl}  --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            def nexusRepositoryUrl = vars.pomVersion.contains("snapshot") ? "${vars.nexusMavenRepositoryUrl}-snapshots" : "${vars.nexusMavenRepositoryUrl}-releases"
+            sh "mvn deploy -DskipTests=true -DaltDeploymentRepository=nexus::default::${nexusRepositoryUrl} -Dnexus.username=${USERNAME} -Dnexus.password=${PASSWORD} --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        }
     }
     this.result = "success"
 }
