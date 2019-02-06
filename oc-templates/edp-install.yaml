@@ -86,6 +86,7 @@ objects:
             - "-e vcs_ssh_port=${VCS_SSH_PORT}"
             - "-e perf_integration_enabled=${PERF_INTEGRATION_ENABLED}"
             - "-e perf_node_id=${PERF_NODE_ID}"
+            - "-e perf_url=${PERF_URL}"
             - "ansible-playbooks/install.yml"
 parameters:
 - displayName: Name for EDP tenant
@@ -219,4 +220,8 @@ parameters:
 - displayName: Perf node ID
   description: Perf node ID given after project registration
   name: PERF_NODE_ID
+  value: ""
+- displayName: Perf URL
+  description: Perf URL location
+  name: PERF_URL
   value: ""
