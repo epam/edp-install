@@ -19,9 +19,18 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_PASSWORD;
+import com.openshift.internal.restclient.model.Secret;
+import com.openshift.restclient.ClientBuilder;
+import com.openshift.restclient.IClient;
+import com.openshift.restclient.ResourceKind;
+import io.qameta.allure.Feature;
+
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_SECRET;
 import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_USER;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
 import static com.epam.edp.sittests.smoke.StringConstants.RABBITMQ_SERVICE_NAME;
 import static io.restassured.RestAssured.given;
 
@@ -32,21 +41,39 @@ public class AddServiceSmokeTest {
     private UrlBuilder urlBuilder;
     private String ocpEdpPrefix;
 
+    private IClient openShiftClient;
+    private String openshiftNamespace;
+
+    @Feature("Setup Openshift Client")
+    @BeforeClass
+    public void setUpOpenShiftClient() {
+        this.openShiftClient = new ClientBuilder()
+                .toCluster(OPENSHIFT_MASTER_URL)
+                .withUserName(OPENSHIFT_USERNAME)
+                .withPassword(OPENSHIFT_PASSWORD)
+                .sslCertCallbackWithDefaultHostnameVerifier(true)
+                .build();
+    }
+
     @BeforeClass
     @Parameters("ocpEdpPrefix")
     public void setUp(String ocpEdpPrefix) {
         this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
         this.ocpEdpPrefix = ocpEdpPrefix;
+        this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
     }
 
     @Test
     public void testServiceTemplateHasBeenAdded() {
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, GERRIT_SECRET, openshiftNamespace);
+        String gerrit_password = new String(secret.getData("password")).trim();
+
         given().log().all()
                 .pathParam("service", RABBITMQ_SERVICE_NAME)
                 .pathParam("project", ocpEdpPrefix + "-edp")
                 .urlEncodingEnabled(false)
                 .auth()
-                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .basic(GERRIT_USER, gerrit_password)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "gerrit", OPENSHIFT_CICD_NAMESPACE,

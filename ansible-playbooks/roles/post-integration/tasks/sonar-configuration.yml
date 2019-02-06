@@ -13,6 +13,22 @@
 # limitations under the License.
 
 ---
+- name: "Retrieve password from Secrets"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ tools.sonar.secret }}
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: sonar_admin_password
+  no_log: true
+
+- name: "Retrieve perf password from Secrets"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret sonar-perf
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: sonar_perf_password
+  no_log: true
+
+- include_tasks: sonar-api/change-admin-password.yml
+
 - set_fact:
    sonar_reboot: false
 
@@ -56,11 +72,11 @@
 
 - include_tasks: sonar-api/create-user.yml
   with_items:
-    - { login: 'jenkins', name: 'Jenkins', password: 'jenkins' }
+    - { login: "jenkins", name: "Jenkins", password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}" }
 
 - include_tasks: sonar-api/create-user.yml
   with_items:
-    - { login: "perf", name: "Perf", password: "{{ secrets.sonar_perf.password }}" }
+    - { login: "perf", name: "Perf", password: "{{ sonar_perf_password.stdout }}" }
   when: perf_integration_enabled|bool == true
 
 - include_tasks: sonar-api/create-group.yml

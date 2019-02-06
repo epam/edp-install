@@ -18,8 +18,8 @@ limitations under the License. -->
     <servers>
         <server>
             <id>nexus</id>
-            <username>admin</username>
-            <password>admin123</password>
+            <username>${nexus.username}</username>
+            <password>${nexus.password}</password>
         </server>
     </servers>
 

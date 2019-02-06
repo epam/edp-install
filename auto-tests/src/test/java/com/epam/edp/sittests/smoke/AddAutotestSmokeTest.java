@@ -26,7 +26,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_PASSWORD;
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_SECRET;
 import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_USER;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
@@ -73,10 +73,13 @@ public class AddAutotestSmokeTest {
 
     @Test(dataProvider = "autotest")
     public void testGerritProjectWasCreated(String autotest) {
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, GERRIT_SECRET, openshiftNamespace);
+        String gerrit_password = new String(secret.getData("password")).trim();
+
         given().log().all()
                 .pathParam("project", autotest)
                 .auth()
-                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .basic(GERRIT_USER, gerrit_password)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "gerrit",

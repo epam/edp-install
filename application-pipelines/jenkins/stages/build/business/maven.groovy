@@ -14,7 +14,9 @@ limitations under the License. */
 
 def run(vars) {
     dir("${vars.workDir}") {
-        sh "mvn clean package -B -DskipTests=true --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            sh "mvn clean package -B -DskipTests=true -Dnexus.username=${USERNAME} -Dnexus.password=${PASSWORD} --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+        }
     }
     this.result = "success"
 }

@@ -17,7 +17,7 @@
     method: POST
     url: http://jenkins.{{ project_cicd }}:8080/restart
     user: admin
-    password: "{{ tools.jenkins.password }}"
+    password: "{{ tools.jenkins.admin_token }}"
     force_basic_auth: yes
     status_code: 200,302
 
@@ -25,7 +25,7 @@
   uri:
     url: "http://jenkins.{{ project_cicd }}:8080"
     user: admin
-    password: "{{ tools.jenkins.password }}"
+    password: "{{ tools.jenkins.admin_token }}"
     force_basic_auth: yes
     status_code: 200
   register: result

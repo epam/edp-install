@@ -14,7 +14,9 @@ limitations under the License. */
 
 def run(vars) {
     dir("${vars.workDir}") {
-        sh "${vars.gradleCommand} clean build -x test"
+        withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            sh "${vars.gradleCommand} -PnexusLogin=${USERNAME} -PnexusPassword=${PASSWORD} clean build -x test"
+        }
     }
     this.result = "success"
 }

@@ -19,7 +19,7 @@
     method: GET
     return_content: yes
     user: admin
-    password: "{{ secrets.sonar_admin.password }}"
+    password: "{{ sonar_admin_password.stdout }}"
     force_basic_auth: "yes"
     status_code: 200
   retries: 20
@@ -34,7 +34,7 @@
       body: "key={{ item }}"
       method: POST
       user: admin
-      password: "{{ secrets.sonar_admin.password }}"
+      password: "{{ sonar_admin_password.stdout }}"
       force_basic_auth: "yes"
       status_code: 200,204
       timeout: 120

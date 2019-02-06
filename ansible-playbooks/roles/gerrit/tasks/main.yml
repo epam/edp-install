@@ -54,7 +54,7 @@
   command: |
     {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/gerrit/gerrit.yaml
     -p GERRIT_VERSION={{ tools.gerrit.version }}
-    -p GERRIT_DB_SECRET=gerrit-db
+    -p GERRIT_DB_SECRET={{ tools.gerrit.db_secret }}
     -p GERRIT_DATA_CAPACITY={{ tools.gerrit.volume_capacity }}
     -p GERRIT_DB_CAPACITY={{ tools.gerrit.volume_db_capacity }}
     -p GERRIT_WEB_URL={{ tools.gerrit.web_url }}

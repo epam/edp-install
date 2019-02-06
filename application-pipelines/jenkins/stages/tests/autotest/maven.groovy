@@ -29,7 +29,9 @@ def run(vars) {
             error "[JENKINS][ERROR] Haven't found precommit command in file run.json. It's mandatory to be specified, please check"
 
         try {
-            sh "${parsedRunCommandJson.precommit} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+            withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                sh "${parsedRunCommandJson.precommit} -Dnexus.username=${USERNAME} -Dnexus.password=${PASSWORD} -B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+            }
         }
 
         catch (Exception ex) {

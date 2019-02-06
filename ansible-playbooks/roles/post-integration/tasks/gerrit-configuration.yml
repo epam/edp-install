@@ -13,6 +13,20 @@
 # limitations under the License.
 
 ---
+- name: "Retrieve password from Secrets"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ tools.gerrit.secret }}
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: gerrit_admin_password
+  no_log: true
+
+- name: "Retrieve perf password from Secrets"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret gerrit-perf
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: gerrit_perf_password
+  no_log: true
+
 - name: Creates work directory
   file:
     path: "{{ item }}"
@@ -118,8 +132,8 @@
 
 - include_tasks: gerrit-cli/create-user.yml
   with_items:
-    - { username: "jenkins", password: "jenkins", full_name: "CI Jenkins" }
-    - { username: "project-creator", password: "bootstrapper", full_name: "Project Creator" }
+    - { username: "jenkins", password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}", full_name: "CI Jenkins" }
+    - { username: "project-creator", password: "{{ lookup('password', '/dev/null length=11 chars=ascii_letters') }}", full_name: "Project Creator" }
     - "{{ gerrit_admins }}"
 
 - include_tasks: gerrit-api/add-sshkey-to-user.yml
@@ -137,7 +151,7 @@
 - name: "Reset gerrit admin http_password"
   include_tasks: gerrit-cli/set-password.yml
   with_items:
-    - { username: "admin", password: "{{ secrets.gerrit_admin.password }}" }
+    - { username: "admin", password: "{{ gerrit_admin_password.stdout }}" }
 
 - name: "Initialize Gerrit All-Projects"
   shell: "git init {{ post_integration_dir }}/gerrit/all-projects"
@@ -172,7 +186,7 @@
   include_tasks: gerrit-cli/create-user.yml
   with_items:
     - { username: "perf",
-        password: "{{ secrets.gerrit_perf.password }}",
+        password: "{{ gerrit_perf_password.stdout }}",
         full_name: "Perf Integration",
         group: "Non-Interactive Users" }
   when: perf_integration_enabled|bool == true

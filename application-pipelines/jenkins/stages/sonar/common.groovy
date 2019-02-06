@@ -16,11 +16,15 @@ def run(vars) {
     def runDir = vars.containsKey('sonarAnalysisRunTempDir') ? vars['sonarAnalysisRunTempDir'] : vars['workDir']
     dir("${runDir}") {
         withSonarQubeEnv('Sonar') {
-            sh "mvn sonar:sonar " +
-                    "-Dsonar.projectKey=${vars.gerritProject} " +
-                    "-Dsonar.projectName=${vars.gerritProject} " +
-                    "-Dsonar.branch=${vars.serviceBranch} " +
-                    "-B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+            withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                sh "mvn sonar:sonar " +
+                        "-Dsonar.projectKey=${vars.gerritProject} " +
+                        "-Dsonar.projectName=${vars.gerritProject} " +
+                        "-Dsonar.branch=${vars.serviceBranch} " +
+                        "-Dnexus.username=${USERNAME} " +
+                        "-Dnexus.password=${PASSWORD} " +
+                        "-B --settings ${vars.devopsRoot}/${vars.mavenSettings}"
+            }
         }
         timeout(time: 10, unit: 'MINUTES') {
             def qualityGateResult = waitForQualityGate()

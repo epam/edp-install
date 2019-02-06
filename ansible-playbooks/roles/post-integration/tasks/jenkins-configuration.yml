@@ -13,12 +13,20 @@
 # limitations under the License.
 
 ---
+- name: "Retrieve password from Secrets"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret {{ tools.jenkins.secret }}
+   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: jenkins_admin_password
+  no_log: true
+
 - include_tasks: jenkins-api/retrieve-token.yml
   with_items:
     - { username: 'admin', secret_name: 'jenkins-token' }
 
 - set_fact:
-    tools: "{{ tools | combine({ 'jenkins': { 'password': token }}, recursive=True) }}"
+    tools: "{{ tools | combine({ 'jenkins': { 'admin_token': token }}, recursive=True) }}"
+    jenkins_admin_token: true
 
 - name: "Generate config ssh for jenkins"
   copy:

@@ -119,6 +119,7 @@ def getConstants(vars) {
     vars['nexusScripts'] = [:]
     vars['nexusScripts']['getNugetToken'] = "get-nuget-token"
     vars['nexusScriptsPath'] = "${vars.pipelinesPath}/files/nexus"
+    vars['nexusCredentialsId'] = "nexus"
 
 }
 

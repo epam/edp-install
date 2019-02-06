@@ -17,7 +17,7 @@
   uri:
     url: "http://{{ nexus_host }}:{{ nexus_port }}/service/siesta/rest/v1/script/{{ item }}"
     user: 'admin'
-    password: "{{ secrets.nexus_admin.password }}"
+    password: "{{ secrets.nexus_admin.default_password }}"
     method: DELETE
     force_basic_auth: yes
     status_code: 204,404
@@ -26,7 +26,7 @@
   uri:
     url: "http://{{ nexus_host }}:{{ nexus_port }}/service/siesta/rest/v1/script"
     user: 'admin'
-    password: "{{ secrets.nexus_admin.password }}"
+    password: "{{ secrets.nexus_admin.default_password }}"
     body_format: json
     method: POST
     force_basic_auth: yes

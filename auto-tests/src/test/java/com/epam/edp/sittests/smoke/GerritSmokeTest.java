@@ -20,6 +20,19 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.openshift.internal.restclient.model.Secret;
+import com.openshift.restclient.ClientBuilder;
+import com.openshift.restclient.IClient;
+import com.openshift.restclient.ResourceKind;
+import io.qameta.allure.Feature;
+
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_SECRET;
+import static com.epam.edp.sittests.smoke.StringConstants.GERRIT_USER;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPACE;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
+import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
+
 import static io.restassured.RestAssured.given;
 
 /**
@@ -27,7 +40,7 @@ import static io.restassured.RestAssured.given;
  */
 public class GerritSmokeTest {
     private static final String GERRIT_USER = "admin";
-    private static final String GERRIT_PASSWORD = "secret";
+    private static final String GERRIT_SECRET = "gerrit-passwords";
     private static final String GERRIT_ADMIN = "admin";
     private static final String GERRIT_PROJECT_CREATOR = "project-creator";
     private static final String GERRIT_JENKINS = "jenkins";
@@ -35,11 +48,25 @@ public class GerritSmokeTest {
     private static final String GERRIT_GROUP_BOOTSTRAP = "Project Bootstrappers";
 
     private UrlBuilder urlBuilder;
+    private IClient openShiftClient;
+    private String openshiftNamespace;
+
+    @Feature("Setup Openshift Client")
+    @BeforeClass
+    public void setUpOpenShiftClient() {
+        this.openShiftClient = new ClientBuilder()
+                .toCluster(OPENSHIFT_MASTER_URL)
+                .withUserName(OPENSHIFT_USERNAME)
+                .withPassword(OPENSHIFT_PASSWORD)
+                .sslCertCallbackWithDefaultHostnameVerifier(true)
+                .build();
+    }
 
     @BeforeClass
     @Parameters("ocpEdpPrefix")
     public void setUp(String ocpEdpPrefix) {
         this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
+        this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
     }
 
     @DataProvider(name = "userlist")
@@ -49,10 +76,13 @@ public class GerritSmokeTest {
 
     @Test(dataProvider = "userlist")
     public void testGerritUserExists(String userlist) {
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, GERRIT_SECRET, openshiftNamespace);
+        String gerrit_password = new String(secret.getData("password")).trim();
+
         given().log().all()
                 .pathParam("user", userlist)
                 .auth()
-                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .basic(GERRIT_USER, gerrit_password)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "gerrit",
@@ -69,10 +99,13 @@ public class GerritSmokeTest {
 
     @Test(dataProvider = "grouplist")
     public void testGerritGroupsExists(String grouplist) {
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, GERRIT_SECRET, openshiftNamespace);
+        String gerrit_password = new String(secret.getData("password")).trim();
+
         given().log().all()
                 .pathParam("group", grouplist)
                 .auth()
-                .basic(GERRIT_USER, GERRIT_PASSWORD)
+                .basic(GERRIT_USER, gerrit_password)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "gerrit",

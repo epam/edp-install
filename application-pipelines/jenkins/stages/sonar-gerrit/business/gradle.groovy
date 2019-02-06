@@ -19,10 +19,13 @@ def run(vars) {
             vars['artifactID'] = buildToolLib.getGradleArtifactID()
             vars['groupID'] = buildToolLib.getGradleGroupID()
             vars['sonarProjectKey'] = "${vars.groupID}:${vars.artifactID}:${vars.serviceBranch}"
-            sh "${vars.gradleCommand} sonarqube -Dsonar.analysis.mode=preview -Dsonar.report.export.path=sonar-report.json" +
-                    " -Dsonar.branch=precommit -Dsonar.projectKey=${vars.sonarProjectKey}" +
-                    " -Dsonar.projectName='${vars.artifactID} ${vars.serviceBranch}'" +
-                    " -Dsonar.sources=${vars.workDir}/build"
+            withCredentials([usernamePassword(credentialsId: "${vars.nexusCredentialsId}", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                sh "${vars.gradleCommand} -PnexusLogin=${USERNAME} -PnexusPassword=${PASSWORD} sonarqube -Dsonar.analysis.mode=preview" + 
+                        " -Dsonar.report.export.path=sonar-report.json" +
+                        " -Dsonar.branch=precommit -Dsonar.projectKey=${vars.sonarProjectKey}" +
+                        " -Dsonar.projectName='${vars.artifactID} ${vars.serviceBranch}'" +
+                        " -Dsonar.sources=${vars.workDir}/build"
+            }
         }
         sonarToGerrit inspectionConfig: [baseConfig: [projectPath: "${vars.workDir}", sonarReportPath: 'build/sonar/sonar-report.json'], serverURL: "${vars.sonarRoute}"],
                 notificationConfig: [commentedIssuesNotificationRecipient: 'NONE', negativeScoreNotificationRecipient: 'NONE'],
