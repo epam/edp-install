@@ -39,6 +39,7 @@
     edp_name: "{{ user_settings.data.edp_name }}"
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
     vcs_integration_enabled: "{{ user_settings.data.vcs_integration_enabled }}"
+    perf_integration_enabled: "{{ user_settings.data.perf_integration_enabled }}"
 
 - set_fact:
     vcs_tool: "{{ user_settings.data.vcs_tool_name | lower }}"
