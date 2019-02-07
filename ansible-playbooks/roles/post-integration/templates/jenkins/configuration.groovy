@@ -34,6 +34,14 @@ import com.cloudbees.plugins.credentials.common.*
 import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
 import ru.yandex.qatools.allure.jenkins.tools.*
+import hudson.scm.SCM
+import jenkins.plugins.git.GitSCMSource
+import org.jenkinsci.plugins.workflow.libs.*
+import org.jenkinsci.plugins.workflow.libs.LibraryConfiguration
+import org.jenkinsci.plugins.workflow.libs.SCMSourceRetriever
+import jenkins.plugins.git.traits.*
+import jenkins.scm.api.trait.SCMSourceTrait
+import jenkins.plugins.git.traits.RefSpecsSCMSourceTrait.RefSpecTemplate
 
 // Check "done" file to avoid multiple runs
 def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
@@ -171,6 +179,58 @@ def allureInstallerProps = new InstallSourceProperty([allureInstaller])
 def allureInstallation = new AllureCommandlineInstallation("Allure", "", [allureInstallerProps])
 allureDescriptor.setInstallations(allureInstallation)
 allureDescriptor.save()
+
+// Configure shared libraries
+def globalLibraries = Jenkins.instance.getDescriptor("org.jenkinsci.plugins.workflow.libs.GlobalLibraries")
+
+GitSCMSource gitSCMSourceStages = new GitSCMSource(
+        "EDP-library-stages",
+        "{{ stages_repo }}",
+        "",
+        "*",
+        "",
+        false
+)
+
+GitSCMSource gitSCMSourcePipelines = new GitSCMSource(
+        "EDP-library-pipelines",
+        "{{ pipelines_repo }}",
+        "",
+        "*",
+        "",
+        false
+)
+
+{% if mr_deploy == 'true' %}
+List<SCMSourceTrait> traits = new ArrayList<>()
+traits.add(new BranchDiscoveryTrait())
+List<RefSpecsSCMSourceTrait.RefSpecTemplate> templates = new ArrayList<>()
+templates.add(new RefSpecTemplate('+refs/heads/*:refs/remotes/@{remote}/*'))
+templates.add(new RefSpecTemplate("+refs/changes/*:refs/remotes/@{remote}/*"))
+traits.add(new RefSpecsSCMSourceTrait(templates))
+
+gitSCMSourceStages.setTraits(traits)
+gitSCMSourcePipelines.setTraits(traits)
+{% endif %}
+
+SCMSourceRetriever sCMSourceRetrieverStages = new SCMSourceRetriever(gitSCMSourceStages)
+
+SCMSourceRetriever sCMSourceRetrieverPipelines = new SCMSourceRetriever(gitSCMSourcePipelines)
+
+LibraryConfiguration libraryConfigurationStages = new LibraryConfiguration("EDP library stages",
+        sCMSourceRetrieverStages)
+LibraryConfiguration libraryConfigurationPipelines = new LibraryConfiguration("EDP library pipelines",
+        sCMSourceRetrieverPipelines)
+
+libraryConfigurationStages.setDefaultVersion("{{ stages_version }}")
+libraryConfigurationPipelines.setDefaultVersion("{{ pipelines_version }}")
+
+libraryConfigurationStages.setImplicit(false)
+libraryConfigurationPipelines.setImplicit(false)
+
+globalLibraries.get().setLibraries([libraryConfigurationStages,libraryConfigurationPipelines])
+
+Jenkins.instance.save()
 
 // Create "done" file to avoid multiple runs
 String filename = "${JENKINS_HOME}/done-config"
