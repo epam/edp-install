@@ -210,7 +210,7 @@ parameters:
   value: ""
 - displayName: VCS ssh port
   name: VCS_SSH_PORT
-  value: ""
+  value: "22"
 #Perf integration parameters
 - displayName: Does intergration with Perf is enabled(true/false)
   description: Defines whether integration with Perf is enabled or not
