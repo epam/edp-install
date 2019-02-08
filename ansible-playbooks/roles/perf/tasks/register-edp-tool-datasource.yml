@@ -12,16 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-- name: "Get perf settings from config map"
-  shell: |
-   {{ ocadm }} -n {{ project_cicd }} get cm perf -o=json
-  register: result
+- set_fact:
+    tool: "{{ item.tool }}"
+
+- include_tasks: roles/common/tasks/manage-openshift/get-perf-tool-credentials.yml
 
 - set_fact:
-    perf_settings: "{{ result.stdout | from_json }}"
+    url: "{{ item.url }}"
+    user: "{{ tool_user_login }}"
+    password: "{{ tool_user_password }}"
+  no_log: true
 
 - set_fact:
-    perf_node_id: "{{ perf_settings.data.node_id }}"
-    perf_web_url: "{{ perf_settings.data.url }}"
-    perf_jenkins_ds_id: "{{ perf_settings.data.jenkins_ds_id }}"
+    body: "{{ lookup('template', item.template_file) }}"
+  no_log: true
+
+- include_tasks: roles/api/perf/register-datasource.yml

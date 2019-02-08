@@ -23,6 +23,12 @@
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
 
+- block:
+    - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
+    - include_tasks: roles/common/tasks/manage-openshift/get-perf-credentials-from-secret.yml
+    - include_tasks: roles/api/perf/get-token.yml
+  when: perf_integration_enabled|bool == true
+
 - set_fact:
     vcs_project_path: "{{ project_vcs_group_path }}/{{ name }}"
   when: vcs_integration_enabled|bool == true
@@ -121,6 +127,5 @@
   when: permission_check_result | bool == true
 
 - block:
-    - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
-    - include_tasks: roles/common/tasks/manage-openshift/get-perf-credentials-from-secret.yml
+    - include_tasks: roles/perf/tasks/main.yml
   when: perf_integration_enabled|bool == true

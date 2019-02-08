@@ -24,7 +24,7 @@
   shell: >
     {{ ocadm }} -n {{ project_cicd }} create secret generic {{ item.secret_name }}
     --from-literal=username={{ item.username }}
-    --from-literal=token={{ token }}
+    --from-literal={{ item.field_name | default('token') }}={{ token }}
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'

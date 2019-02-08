@@ -59,7 +59,7 @@ secrets:
     db_password: sonar
 tools:
   jenkins:
-    web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
     password: "{{ jenkins_password | default('password') }}"
     fs_type: "{{ jenkins_fs_type | default('pvc') }}"
     host_path_volume: "{{ jenkins_host_path_volume | default('/opt/data/jenkins') }}"
@@ -69,12 +69,12 @@ tools:
     frontend_image: "{{ jenkins_frontend_image | default('openshift/jenkins-agent-nodejs-8-centos7:v3.10') }}"
     backend_maven_image: "{{ jenkins_backend_maven_image | default('openshift/jenkins-slave-maven-centos7') }}"
     backend_gradle_image: "{{ jenkins_backend_gradle_image | default('epamedp/jenkins-slave-gradle-openshift') }}"
-    jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
+    jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   gerrit:
     version: "{{ gerrit_version | default('2.14.8') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
     volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
-    web_url: "https://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    web_url: "https://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   nexus:
     version: "{{ nexus_version | default('3.6.2') }}"
     volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"
@@ -189,19 +189,19 @@ tools:
         roles:
           - nexus-rw
     client_id: "nexus3"
-    web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   sonar:
     version: "{{ sonar_version | default('7.1') }}"
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
     profiles:
       - { name: "EDP way", filename: 'quality-profile.xml' }
-    web_url: "https://sonar-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    web_url: "https://sonar-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   cockpit:
-    version: "{{ cockpit_version | default('docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"
+    version: "{{ cockpit_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"
     openshift_trust_certificates: "true"
     client_id: "cockpit"
-    web_url: "https://edp-cockpit-{{ project_cicd }}.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    web_url: "https://edp-cockpit-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   keycloak:
     realm_name: "{{ full_edp_name }}"
-    web_url: "https://keycloak-security.{{ dns_wildcard | default('main.edp.projects.epam.com') }}"
+    web_url: "https://keycloak-security.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"

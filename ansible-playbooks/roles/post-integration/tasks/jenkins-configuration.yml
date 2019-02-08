@@ -95,7 +95,7 @@
 
   - include_tasks: jenkins-api/retrieve-token.yml
     with_items:
-      - { username: "perf", secret_name: "jenkins-perf" }
+      - { username: "perf", secret_name: "jenkins-perf", field_name: "password" }
 
   - include_tasks: jenkins-api/assign-role-to-user.yml
     with_items:

@@ -12,16 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-- name: "Get perf settings from config map"
-  shell: |
-   {{ ocadm }} -n {{ project_cicd }} get cm perf -o=json
-  register: result
-
-- set_fact:
-    perf_settings: "{{ result.stdout | from_json }}"
-
-- set_fact:
-    perf_node_id: "{{ perf_settings.data.node_id }}"
-    perf_web_url: "{{ perf_settings.data.url }}"
-    perf_jenkins_ds_id: "{{ perf_settings.data.jenkins_ds_id }}"
+- include_tasks: roles/perf/tasks/register-edp-tool-datasource.yml
+  when: "item.when"
+  with_items:
+    - { tool: "jenkins", url: "{{ tools.jenkins.web_url }}",
+        template_file: "roles/perf/templates/register-edp-tool-ds.json.j2", when: "{{ perf_jenkins_ds_id == '' }}" }
