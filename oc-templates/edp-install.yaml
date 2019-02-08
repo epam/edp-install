@@ -207,4 +207,4 @@ parameters:
   value: ""
 - displayName: VCS ssh port
   name: VCS_SSH_PORT
-  value: ""
+  value: "22"
