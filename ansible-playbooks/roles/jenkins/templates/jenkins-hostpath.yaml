@@ -218,7 +218,7 @@ objects:
   metadata:
     name: jenkins-jnlp
     labels:
-      app: jenkins-jnlp
+      app: jenkins
   spec:
     ports:
     - name: agent
@@ -227,7 +227,7 @@ objects:
       protocol: TCP
       targetPort: 50000
     selector:
-      app: jenkins-jnlp
+      app: jenkins
     sessionAffinity: None
     type: ClusterIP
 - apiVersion: v1
