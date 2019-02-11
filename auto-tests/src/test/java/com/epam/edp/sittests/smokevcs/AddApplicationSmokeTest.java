@@ -14,6 +14,7 @@ limitations under the License. */
 
 package com.epam.edp.sittests.smokevcs;
 
+import com.epam.edp.sittests.smoke.UrlBuilder;
 import com.openshift.internal.restclient.model.Secret;
 import com.openshift.restclient.ClientBuilder;
 import com.openshift.restclient.IClient;
@@ -22,24 +23,28 @@ import io.qameta.allure.Feature;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static com.epam.edp.sittests.smoke.StringConstants.*;
 import static io.restassured.RestAssured.given;
-import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
-import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
-import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
 
 /**
  * @author Pavlo_Yemelianov
  */
 public class AddApplicationSmokeTest {
 
-    private static final String CREATED_APP_SUFFIX = "created-java-gradle-project";
+    private static final String CREATED_JAVA_GRADLE_APP_SUFFIX = "created-java-gradle-project";
+    private static final String CLONED_JAVA_MAVEN_APP_SUFFIX = "cloned-java-maven-project";
+    private static final String CLONED_JAVASCRIPT_NPM_APP_SUFFIX = "cloned-javascript-npm-project";
 
-
-    private String createdAppName;
     private IClient openShiftClient;
+    private UrlBuilder urlBuilder;
+    private String openshiftNamespace;
+    private String clonedJavaMavenAppName;
+    private String clonedJavascriptNpmAppName;
+    private String createdJavaGradleAppName;
 
     @Feature("Setup Openshift Client")
     @BeforeClass
@@ -55,11 +60,20 @@ public class AddApplicationSmokeTest {
     @BeforeClass
     @Parameters("ocpEdpPrefix")
     public void setUp(String ocpEdpPrefix) {
-        this.createdAppName = ocpEdpPrefix + "-" + CREATED_APP_SUFFIX;
+        this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
+        this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
+        this.createdJavaGradleAppName = ocpEdpPrefix + "-" + CREATED_JAVA_GRADLE_APP_SUFFIX;
+        this.clonedJavaMavenAppName = ocpEdpPrefix + "-" + CLONED_JAVA_MAVEN_APP_SUFFIX;
+        this.clonedJavascriptNpmAppName = ocpEdpPrefix + "-" + CLONED_JAVASCRIPT_NPM_APP_SUFFIX;
     }
 
-    @Test
-    public void testProjectWasCreatedInGitGroupRepoForCreateStrategy() {
+    @DataProvider(name = "application")
+    public Object[][] application() {
+        return new Object[][]{{createdJavaGradleAppName}, {clonedJavaMavenAppName}, {clonedJavascriptNpmAppName}};
+    }
+
+    @Test(dataProvider = "application")
+    public void testProjectWasCreatedInGitGroupRepoForCreateStrategy(String application) {
         Secret secret = openShiftClient.get(ResourceKind.SECRET, "vcs-autouser-for-tests", "edp-cicd-delivery");
 
         String username = new String(secret.getData("username")).trim();
@@ -76,12 +90,13 @@ public class AddApplicationSmokeTest {
                 .path("access_token");
 
         given().log().all()
+                .pathParam("project", application)
                 .auth()
                 .preemptive()
                 .oauth2(token)
                 .urlEncodingEnabled(false)
                 .when()
-                .get("https://git.epam.com/api/v4/projects/epmd-edp%2Ftemp%2F" + createdAppName)
+                .get("https://git.epam.com/api/v4/projects/epmd-edp%2Ftemp%2F{project}")
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }
