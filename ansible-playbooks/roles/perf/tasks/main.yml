@@ -15,5 +15,16 @@
 - include_tasks: roles/perf/tasks/register-edp-tool-datasource.yml
   when: "item.when"
   with_items:
-    - { tool: "jenkins", url: "{{ tools.jenkins.web_url }}",
-        template_file: "roles/perf/templates/register-edp-tool-ds.json.j2", when: "{{ perf_jenkins_ds_id == '' }}" }
+    - { tool: "jenkins",
+        url: "{{ tools.jenkins.web_url }}",
+        tool_specific_parameter: "pipelineNames",
+        template_file: "roles/perf/templates/register-edp-tool-ds.json.j2",
+        when: "{{ perf_jenkins_ds_id == '' }}" }
+
+- include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
+
+- include_tasks: roles/perf/tasks/update-edp-tool-datasource.yml
+  with_items:
+    - { tool: "jenkins",
+        datasource_id: "{{ perf_jenkins_ds_id }}",
+        new_values: "[ '/Gerrit-precommit-{{ name }}', '/Gerrit-postcommit-{{ name }}' ]" }

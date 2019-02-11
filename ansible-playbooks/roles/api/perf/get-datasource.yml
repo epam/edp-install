@@ -12,20 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: "Get Perf datasource {{ tool }}"
+  uri:
+    url: "{{ perf_web_url }}/api/v2/datasources/{{ datasource_id }}"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ perf_token }}"
+      Content-Type: "application/json"
+    status_code: 200
+    validate_certs: false
+  register: result
+
 - set_fact:
-    tool: "{{ item.tool }}"
-    tool_specific_parameter: "{{ item.tool_specific_parameter }}"
-
-- include_tasks: roles/common/tasks/manage-openshift/get-perf-tool-credentials.yml
-
-- set_fact:
-    url: "{{ item.url }}"
-    user: "{{ tool_user_login }}"
-    password: "{{ tool_user_password }}"
-  no_log: true
-
-- set_fact:
-    body: "{{ lookup('template', item.template_file) }}"
-  no_log: true
-
-- include_tasks: roles/api/perf/register-datasource.yml
+    datasource_config: "{{ result.json }}"
