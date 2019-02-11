@@ -35,9 +35,9 @@ import static io.restassured.RestAssured.given;
  * @author Pavlo_Yemelianov
  */
 public class AddAutotestSmokeTest {
-    private static final String COPY_AUTOTEST_PREFIX = "copy-autotest";
+    private static final String COPY_AUTOTEST_PREFIX = "cloned-autotest-project";
 
-    private String copyAutotestName;
+    private String autotestName;
     private IClient openShiftClient;
 
     @Feature("Setup Openshift Client")
@@ -55,7 +55,7 @@ public class AddAutotestSmokeTest {
     @BeforeClass
     @Parameters("ocpEdpPrefix")
     public void setUp(String ocpEdpPrefix) {
-        this.copyAutotestName = ocpEdpPrefix + "-" + COPY_AUTOTEST_PREFIX;
+        this.autotestName = ocpEdpPrefix + "-" + COPY_AUTOTEST_PREFIX;
     }
 
     @Test
@@ -81,7 +81,7 @@ public class AddAutotestSmokeTest {
                 .oauth2(token)
                 .urlEncodingEnabled(false)
                 .when()
-                .get("https://git.epam.com/api/v4/projects/epmd-edp%2Ftemp%2F" + copyAutotestName)
+                .get("https://git.epam.com/api/v4/projects/epmd-edp%2Ftemp%2F" + autotestName)
                 .then()
                 .statusCode(HttpStatus.SC_OK);
     }

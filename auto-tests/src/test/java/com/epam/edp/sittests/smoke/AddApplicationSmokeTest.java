@@ -42,20 +42,22 @@ import static io.restassured.RestAssured.given;
  * @author Pavlo_Yemelianov
  */
 public class AddApplicationSmokeTest {
-    private static final String PRECOMMIT_BE_PIPELINE = PRECOMMIT_PIPELINE_SUFFIX + BE_APP_NAME;
-    private static final String PRECOMMIT_FE_PIPELINE = PRECOMMIT_PIPELINE_SUFFIX + FE_APP_NAME;
-
-    private static final String POSTCOMMIT_BE_PIPELINE = POSTCOMMIT_PIPELINE_SUFFIX + BE_APP_NAME;
-    private static final String POSTCOMMIT_FE_PIPELINE = POSTCOMMIT_PIPELINE_SUFFIX + FE_APP_NAME;
-
-    private static final String CREATED_APP_SUFFIX = "created-java-gradle-project";
+    private static final String CREATED_JAVA_GRADLE_APP_SUFFIX = "created-java-gradle-project";
+    private static final String CLONED_JAVA_MAVEN_APP_SUFFIX = "cloned-java-maven-project";
+    private static final String CLONED_JAVASCRIPT_NPM_APP_SUFFIX = "cloned-javascript-npm-project";
 
     private UrlBuilder urlBuilder;
     private IClient openShiftClient;
     private String openshiftNamespace;
-    private String createdAppName;
-    private String preCommitCreatedAppName;
-    private String postCommitCreatedAppName;
+    private String clonedJavaMavenAppName;
+    private String clonedJavascriptNpmAppName;
+    private String createdJavaGradleAppName;
+    private String preCommitCreatedJavaGradleAppName;
+    private String postCommitCreatedJavaGradleAppName;
+    private String preCommitClonedJavaMavenAppName;
+    private String postCommitClonedJavaMavenAppName;
+    private String preCommitClonedJavascriptNpmAppAppName;
+    private String postCommitClonedJavascriptNpmAppAppName;
 
     @Feature("Setup Openshift Client")
     @BeforeClass
@@ -73,20 +75,26 @@ public class AddApplicationSmokeTest {
     public void setUp(String ocpEdpPrefix) {
         this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
         this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
-        this.createdAppName = ocpEdpPrefix + "-" + CREATED_APP_SUFFIX;
-        this.preCommitCreatedAppName = PRECOMMIT_PIPELINE_SUFFIX + createdAppName;
-        this.postCommitCreatedAppName = POSTCOMMIT_PIPELINE_SUFFIX + createdAppName;
+        this.createdJavaGradleAppName = ocpEdpPrefix + "-" + CREATED_JAVA_GRADLE_APP_SUFFIX;
+        this.preCommitCreatedJavaGradleAppName = PRECOMMIT_PIPELINE_SUFFIX + createdJavaGradleAppName;
+        this.postCommitCreatedJavaGradleAppName = POSTCOMMIT_PIPELINE_SUFFIX + createdJavaGradleAppName;
+        this.clonedJavaMavenAppName = ocpEdpPrefix + "-" + CLONED_JAVA_MAVEN_APP_SUFFIX;
+        this.preCommitClonedJavaMavenAppName = PRECOMMIT_PIPELINE_SUFFIX + clonedJavaMavenAppName;
+        this.postCommitClonedJavaMavenAppName = POSTCOMMIT_PIPELINE_SUFFIX + clonedJavaMavenAppName;
+        this.clonedJavascriptNpmAppName = ocpEdpPrefix + "-" + CLONED_JAVASCRIPT_NPM_APP_SUFFIX;
+        this.preCommitClonedJavascriptNpmAppAppName = PRECOMMIT_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
+        this.postCommitClonedJavascriptNpmAppAppName = POSTCOMMIT_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
     }
 
     @DataProvider(name = "pipeline")
     public Object[][] pipeline() {
-        return new Object[][]{{PRECOMMIT_BE_PIPELINE}, {PRECOMMIT_FE_PIPELINE}, {POSTCOMMIT_BE_PIPELINE},
-                {POSTCOMMIT_FE_PIPELINE}, {preCommitCreatedAppName}, {postCommitCreatedAppName}};
+        return new Object[][]{{preCommitCreatedJavaGradleAppName}, {postCommitCreatedJavaGradleAppName}, {preCommitClonedJavaMavenAppName},
+                {postCommitClonedJavaMavenAppName}, {preCommitClonedJavascriptNpmAppAppName}, {postCommitClonedJavascriptNpmAppAppName}};
     }
 
     @DataProvider(name = "application")
     public Object[][] application() {
-        return new Object[][]{{BE_APP_NAME}, {FE_APP_NAME}, {createdAppName}};
+        return new Object[][]{{createdJavaGradleAppName}, {clonedJavaMavenAppName}, {clonedJavascriptNpmAppName}};
     }
 
     @Test(dataProvider = "application")

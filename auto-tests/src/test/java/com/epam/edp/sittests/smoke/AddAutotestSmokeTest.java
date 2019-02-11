@@ -39,10 +39,9 @@ import static io.restassured.RestAssured.given;
  * @author Pavlo_Yemelianov
  */
 public class AddAutotestSmokeTest {
-    private static final String AUTOTESTS_NAME = "helloworld-autotests";
-    private static final String COPY_AUTOTEST_PREFIX = "copy-autotest";
+    private static final String AUTOTESTS_NAME = "cloned-autotest-project";
 
-    private String copyAutotestName;
+    private String autotestName;
 
     private UrlBuilder urlBuilder;
     private IClient openShiftClient;
@@ -62,14 +61,14 @@ public class AddAutotestSmokeTest {
     @BeforeClass
     @Parameters("ocpEdpPrefix")
     public void setUp(String ocpEdpPrefix) {
-        this.copyAutotestName = ocpEdpPrefix + "-" + COPY_AUTOTEST_PREFIX;
+        this.autotestName = ocpEdpPrefix + "-" + AUTOTESTS_NAME;
         this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
         this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
     }
 
     @DataProvider(name = "autotest")
     public Object[][] autotest() {
-        return new Object[][]{{AUTOTESTS_NAME}, {copyAutotestName}};
+        return new Object[][]{{autotestName}};
     }
 
     @Test(dataProvider = "autotest")
