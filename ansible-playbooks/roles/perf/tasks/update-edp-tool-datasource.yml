@@ -27,4 +27,13 @@
                   recursive=True ) | to_nice_json  }}"
   when: tool == "jenkins"
 
+- block:
+    - set_fact:
+        new_parameter_value: "{{ datasource_config.config.projectKeys + item.new_values }}"
+
+    - set_fact:
+        body: "{{ datasource_config | combine( { 'config': { 'projectKeys': new_parameter_value } },
+                  recursive=True ) | to_nice_json  }}"
+  when: tool == "sonar"
+
 - include_tasks: roles/api/perf/update-datasource.yml

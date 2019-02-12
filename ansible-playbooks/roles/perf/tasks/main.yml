@@ -33,3 +33,6 @@
     - { tool: "jenkins",
         datasource_id: "{{ perf_jenkins_ds_id }}",
         new_values: "[ '/Gerrit-precommit-{{ name }}', '/Gerrit-postcommit-{{ name }}' ]" }
+    - { tool: "sonar",
+        datasource_id: "{{ perf_sonar_ds_id }}",
+        new_values: "[ '{{ name }}:master' ]" }
