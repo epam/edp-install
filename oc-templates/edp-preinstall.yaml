@@ -72,7 +72,6 @@ objects:
     - imagestreamtags
     verbs:
     - get
-    - get
     - list
     - watch
   - apiGroups:

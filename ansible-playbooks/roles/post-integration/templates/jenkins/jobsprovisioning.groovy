@@ -45,6 +45,9 @@ def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, 
                     stringParam("GERRIT_PROJECT_NAME", "${applicationName}")
                     if (pipelineName.contains("postcommit"))
                         stringParam("SERVICE_BRANCH", "master")
+                    else
+                        stringParam("STAGES", "[{\"name\": \"gerrit-checkout\"}," +
+                                "{\"name\": \"compile\"},{\"name\": \"tests\"},{\"name\": \"sonar\"}]")
                 }
             }
         }
@@ -53,12 +56,14 @@ def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, 
 
 def gerritSshPort = "{{ gerrit_ssh_port }}"
 def devopsRepository = "ssh://jenkins@gerrit:${gerritSshPort}/{{ full_edp_name }}"
+def appRepositoryBase = "ssh://jenkins@gerrit:${gerritSshPort}"
 def pipelinePath = 'application-pipelines/jenkins'
 
 ['app.settings.json', 'auto-test.settings.json'].each() { settingsFile ->
     new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/${settingsFile}").text).each() { item ->
         def applicationName = item.name
-        createPipeline("Gerrit-precommit-${applicationName}", applicationName, "${pipelinePath}/Gerrit-precommit-pipeline.groovy", pipelinePath,  devopsRepository)
+        createPipeline("Code-review-${applicationName}", applicationName, "code-review.groovy", "",
+                "${appRepositoryBase}/${item.name}")
         if (settingsFile == 'app.settings.json')
             createPipeline("Gerrit-postcommit-${applicationName}", applicationName, "${pipelinePath}/Gerrit-postcommit-pipeline.groovy", pipelinePath,  devopsRepository)
     }

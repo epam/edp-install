@@ -217,9 +217,9 @@ SCMSourceRetriever sCMSourceRetrieverStages = new SCMSourceRetriever(gitSCMSourc
 
 SCMSourceRetriever sCMSourceRetrieverPipelines = new SCMSourceRetriever(gitSCMSourcePipelines)
 
-LibraryConfiguration libraryConfigurationStages = new LibraryConfiguration("EDP library stages",
+LibraryConfiguration libraryConfigurationStages = new LibraryConfiguration("edp-library-stages",
         sCMSourceRetrieverStages)
-LibraryConfiguration libraryConfigurationPipelines = new LibraryConfiguration("EDP library pipelines",
+LibraryConfiguration libraryConfigurationPipelines = new LibraryConfiguration("edp-library-pipelines",
         sCMSourceRetrieverPipelines)
 
 libraryConfigurationStages.setDefaultVersion("{{ stages_version }}")

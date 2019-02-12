@@ -45,12 +45,24 @@
     source_template: "{{ item_map.name + '.j2' if template_file.stat.exists else item_map.language | lower + '/' + item_map.framework | regex_replace('\\(.*', '') | lower + '.j2' }}"
   when: item_map is defined and (template_file.stat.exists or ( item_map.language is defined and item_map.framework is defined))
 
+- set_fact:
+    source_pipelines: ["code-review.groovy"]
+
 - block:
   - name: "Copying template for application"
     template:
       src: "{{ source_template }}"
       dest: "{{ templates_dir }}/{{ gerrit_project }}/deploy-templates/{{ item_map.name }}.yaml"
       force: no
+
+  - name: "Copying pipelines"
+    template:
+      src: "{{ item }}"
+      dest: "{{ templates_dir }}/{{ gerrit_project }}/{{ item }}"
+      force: no
+    with_items:
+      - "{{ source_pipelines }}"
+    when: item_map.language is defined
 
   - block:
       - name: "Check for existing sonar.properties"
