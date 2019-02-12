@@ -25,3 +25,4 @@
     perf_node_id: "{{ perf_settings.data.node_id }}"
     perf_web_url: "{{ perf_settings.data.url }}"
     perf_jenkins_ds_id: "{{ perf_settings.data.jenkins_ds_id }}"
+    perf_sonar_ds_id: "{{ perf_settings.data.sonar_ds_id }}"

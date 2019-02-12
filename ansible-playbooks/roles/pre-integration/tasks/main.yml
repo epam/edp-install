@@ -100,6 +100,7 @@
     --from-literal=node_id={{ perf_node_id }}
     --from-literal=url={{ perf_web_url }}
     --from-literal=jenkins_ds_id=''
+    --from-literal=sonar_ds_id=''
   when: perf_integration_enabled|bool == true
 
 - name: Create necessery role in default projects

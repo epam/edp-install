@@ -20,6 +20,11 @@
         tool_specific_parameter: "pipelineNames",
         template_file: "roles/perf/templates/register-edp-tool-ds.json.j2",
         when: "{{ perf_jenkins_ds_id == '' }}" }
+    - { tool: "sonar",
+        url: "{{ tools.sonar.web_url }}",
+        tool_specific_parameter: "projectKeys",
+        template_file: "roles/perf/templates/register-edp-tool-ds.json.j2",
+        when: "{{ perf_sonar_ds_id == '' }}" }
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
 
