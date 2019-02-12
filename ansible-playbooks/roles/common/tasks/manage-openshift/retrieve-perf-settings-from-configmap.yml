@@ -26,3 +26,4 @@
     perf_web_url: "{{ perf_settings.data.url }}"
     perf_jenkins_ds_id: "{{ perf_settings.data.jenkins_ds_id }}"
     perf_sonar_ds_id: "{{ perf_settings.data.sonar_ds_id }}"
+    perf_gerrit_ds_id: "{{ perf_settings.data.gerrit_ds_id }}"

@@ -25,6 +25,11 @@
         tool_specific_parameter: "projectKeys",
         template_file: "roles/perf/templates/register-edp-tool-ds.json.j2",
         when: "{{ perf_sonar_ds_id == '' }}" }
+    - { tool: "gerrit",
+        url: "{{ tools.gerrit.web_url }}",
+        tool_specific_parameter: "projectConfigs",
+        template_file: "roles/perf/templates/register-edp-tool-ds.json.j2",
+        when: "{{ perf_gerrit_ds_id == '' }}" }
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
 
