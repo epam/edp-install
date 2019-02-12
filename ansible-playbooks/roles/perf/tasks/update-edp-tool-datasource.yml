@@ -36,4 +36,13 @@
                   recursive=True ) | to_nice_json  }}"
   when: tool == "sonar"
 
+- block:
+    - set_fact:
+        new_parameter_value: "{{ datasource_config.config.projectConfigs + item.new_values }}"
+
+    - set_fact:
+        body: "{{ datasource_config | combine( { 'config': { 'projectConfigs': new_parameter_value } },
+                  recursive=True ) | to_nice_json  }}"
+  when: tool == "gerrit"
+
 - include_tasks: roles/api/perf/update-datasource.yml

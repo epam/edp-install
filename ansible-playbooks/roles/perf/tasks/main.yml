@@ -41,3 +41,6 @@
     - { tool: "sonar",
         datasource_id: "{{ perf_sonar_ds_id }}",
         new_values: "[ '{{ name }}:master' ]" }
+    - { tool: "gerrit",
+        datasource_id: "{{ perf_gerrit_ds_id }}",
+        new_values: [ { projectName: "{{ name }}", branches: [ "master" ] } ] }
