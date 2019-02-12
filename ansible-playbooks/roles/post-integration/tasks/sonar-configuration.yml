@@ -58,6 +58,11 @@
   with_items:
     - { login: 'jenkins', name: 'Jenkins', password: 'jenkins' }
 
+- include_tasks: sonar-api/create-user.yml
+  with_items:
+    - { login: "perf", name: "Perf", password: "{{ secrets.sonar_perf.password }}" }
+  when: perf_integration_enabled|bool == true
+
 - include_tasks: sonar-api/create-group.yml
   with_items:
     - non-interactive-users

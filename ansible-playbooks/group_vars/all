@@ -44,6 +44,8 @@ basic_pattern_url: "https://github.com/epmd-edp"
 secrets:
   sonar_admin:
     password: admin
+  sonar_perf:
+    password: ""
   nexus_admin:
     password: admin123
   gerrit_admin:
