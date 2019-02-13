@@ -14,7 +14,7 @@
 
 ---
 - block:
-    - name: "Push templates to gerrit"
+    - name: "Push commit to gerrit"
       shell: |
        git config user.email "admin@epam-edp.com"
        git config user.name "admin"

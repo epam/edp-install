@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include_tasks: roles/common/tasks/manage-gerrit/push-templates-to-gerrit.yml
+- include_tasks: roles/common/tasks/manage-gerrit/push-commit-to-gerrit.yml
   vars:
     gerrit_project: "{{ item.name }}"
     push_result: 1

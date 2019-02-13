@@ -52,7 +52,23 @@
       dest: "{{ templates_dir }}/{{ gerrit_project }}/deploy-templates/{{ item_map.name }}.yaml"
       force: no
 
-  - include_tasks: roles/common/tasks/manage-gerrit/push-templates-to-gerrit.yml
+  - block:
+      - name: "Check for existing sonar.properties"
+        stat:
+          path: "{{ templates_dir }}/{{ gerrit_project }}/sonar-project.properties"
+        register: stat_result
+
+      - name: "Create the file, if it doesn't exist already"
+        copy:
+          dest: "{{ templates_dir }}/{{ gerrit_project }}/sonar-project.properties"
+          content: |
+            sonar.projectKey={{ name }}
+            sonar.projectName={{ name }}
+            sonar.sources=src
+        when: stat_result.stat.exists == False
+    when: item_map.language is defined and item_map.language|lower == "javascript"
+
+  - include_tasks: roles/common/tasks/manage-gerrit/push-commit-to-gerrit.yml
     vars:
       commit_message: "Add template for {{ gerrit_project }}"
     with_sequence: count=5
@@ -68,22 +84,6 @@
       {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/s2i-{{ item_map.name }}.yaml
     when: item_map.language is defined and item_map.framework is defined
   when: source_template is defined
-
-- block:
-    - name: "Check for existing sonar.properties"
-      stat:
-        path: "{{ templates_dir }}/{{ gerrit_project }}/sonar-project.properties"
-      register: stat_result
-
-    - name: "Create the file, if it doesn't exist already"
-      copy:
-        dest: "{{ templates_dir }}/{{ gerrit_project }}/sonar-project.properties"
-        content: |
-          sonar.projectKey={{ name }}
-          sonar.projectName={{ name }}
-          sonar.sources=src
-      when: stat_result.stat.exists == False
-  when: item_map.language is defined and item_map.language|lower == "javascript"
 
 - debug:
     msg: "Template for application {{ name }} is not found and wasn't push to repository"
