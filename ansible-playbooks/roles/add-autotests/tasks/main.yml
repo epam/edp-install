@@ -23,6 +23,12 @@
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
 
+- block:
+    - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
+    - include_tasks: roles/common/tasks/manage-openshift/get-perf-credentials-from-secret.yml
+    - include_tasks: roles/api/perf/get-token.yml
+  when: perf_integration_enabled|bool == true
+
 - set_fact:
     vcs_project_path: "{{ project_vcs_group_path }}/{{ name }}"
   when: vcs_integration_enabled|bool == true
@@ -81,3 +87,21 @@
       vars:
         job_name: "Job-provisioning"
   when: permission_check_result | bool == true
+
+- block:
+    - include_tasks: roles/perf/tasks/update-datasource.yml
+      with_items:
+        - { tool: "jenkins",
+            datasource_id: "{{ perf_jenkins_ds_id }}",
+            new_values: "[ '/Gerrit-precommit-{{ name }}' ]" }
+        - { tool: "gerrit",
+            datasource_id: "{{ perf_gerrit_ds_id }}",
+            new_values: [ { projectName: "{{ name }}", branches: [ "master" ] } ] }
+
+    - include_tasks: roles/perf/tasks/update-datasource.yml
+      when: vcs_integration_enabled|bool == true and vcs_tool == 'gitlab'
+      with_items:
+        - { tool: "gitlab",
+            datasource_id: "{{ perf_gitlab_ds_id }}",
+            new_values: { repo: "{{ vcs_project_path }}", branch: "master" } }
+  when: perf_integration_enabled|bool == true
