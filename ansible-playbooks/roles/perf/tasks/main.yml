@@ -38,7 +38,7 @@
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
 
-- include_tasks: roles/perf/tasks/update-edp-tool-datasource.yml
+- include_tasks: roles/perf/tasks/update-datasource.yml
   with_items:
     - { tool: "jenkins",
         datasource_id: "{{ perf_jenkins_ds_id }}",
@@ -49,3 +49,10 @@
     - { tool: "gerrit",
         datasource_id: "{{ perf_gerrit_ds_id }}",
         new_values: [ { projectName: "{{ name }}", branches: [ "master" ] } ] }
+
+- include_tasks: roles/perf/tasks/update-datasource.yml
+  when: vcs_integration_enabled|bool == true and vcs_tool == 'gitlab'
+  with_items:
+    - { tool: "gitlab",
+        datasource_id: "{{ perf_gitlab_ds_id }}",
+        new_values: { repo: "{{ vcs_project_path }}", branch: "master" } }
