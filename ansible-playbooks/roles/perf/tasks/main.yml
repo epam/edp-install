@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include_tasks: roles/perf/tasks/register-edp-tool-datasource.yml
+- include_tasks: roles/perf/tasks/register-datasource.yml
   when: "item.when"
   with_items:
     - { tool: "jenkins",
@@ -30,6 +30,11 @@
         tool_specific_parameter: "projectConfigs",
         template_file: "roles/perf/templates/register-edp-tool-ds.json.j2",
         when: "{{ perf_gerrit_ds_id == '' }}" }
+    - { tool: "gitlab",
+        url: "{{ project_vcs_hostname_url }}",
+        tool_specific_parameter: "repositories",
+        template_file: "roles/perf/templates/register-gitlab-ds.json.j2",
+        when: "{{ vcs_integration_enabled|bool == true and vcs_tool == 'gitlab' and perf_gitlab_ds_id == '' }}" }
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
 

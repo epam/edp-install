@@ -102,6 +102,7 @@
     --from-literal=jenkins_ds_id=''
     --from-literal=sonar_ds_id=''
     --from-literal=gerrit_ds_id=''
+    --from-literal=gitlab_ds_id=''
   when: perf_integration_enabled|bool == true
 
 - name: Create necessery role in default projects
