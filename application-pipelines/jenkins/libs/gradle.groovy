@@ -33,7 +33,7 @@ def getGradleGroupID() {
 def getConstants() {
     vars['gradleInitScriptPath'] = "${vars.devopsRoot}/${vars.pipelinesPath}/settings/gradle/init.gradle"
     vars['gradlePropertiesPath'] = "${vars.devopsRoot}/${vars.pipelinesPath}/settings/gradle/gradle.properties"
-    vars['gradleCommand'] = "gradle -I ${vars.gradleInitScriptPath} -PnexusMavenRepositoryUrl=${vars.nexusMavenRepositoryUrl}-public"
+    vars['gradleCommand'] = "gradle -I ${vars.gradleInitScriptPath} -PnexusMavenRepositoryUrl=${vars.nexusMavenRepositoryUrl}-group"
 }
 
 return this;

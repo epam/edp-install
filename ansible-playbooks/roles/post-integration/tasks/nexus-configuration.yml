@@ -20,6 +20,13 @@
    - create-repo-npm-proxy
    - create-repo-npm-hosted
    - create-repo-npm-group
+   - create-repo-nuget-proxy
+   - create-repo-nuget-hosted
+   - create-repo-nuget-group
+   - create-repo-maven-proxy
+   - create-repo-maven-hosted
+   - create-repo-maven-group
+   - delete-repo
    - disable-outreach-capability
    - setup-capability
    - setup-privilege
@@ -28,8 +35,11 @@
    - create-task
    - enable-realm
 
+- include_tasks: nexus-api/delete-repo-each.yml
+  with_items: "{{ tools.nexus.repos_to_delete }}"
+
 - include_tasks: nexus-api/create-blobstore-each.yml
-  with_items: "{{ tools.nexus.repos_npm_blob }}"
+  with_items: "{{ tools.nexus.blobs }}"
 
 - include_tasks: nexus-api/create-repo-npm-proxy-each.yml
   with_items: "{{ tools.nexus.repos_npm_proxy }}"
@@ -39,6 +49,24 @@
 
 - include_tasks: nexus-api/create-repo-npm-group-each.yml
   with_items: "{{ tools.nexus.repos_npm_group }}"
+
+- include_tasks: nexus-api/create-repo-nuget-proxy-each.yml
+  with_items: "{{ tools.nexus.repos_dotnet_proxy }}"
+
+- include_tasks: nexus-api/create-repo-nuget-hosted-each.yml
+  with_items: "{{ tools.nexus.repos_dotnet_hosted }}"
+
+- include_tasks: nexus-api/create-repo-nuget-group-each.yml
+  with_items: "{{ tools.nexus.repos_dotnet_group }}"
+
+- include_tasks: nexus-api/create-repo-maven-proxy-each.yml
+  with_items: "{{ tools.nexus.repos_maven_proxy }}"
+
+- include_tasks: nexus-api/create-repo-maven-hosted-each.yml
+  with_items: "{{ tools.nexus.repos_maven_hosted }}"
+
+- include_tasks: nexus-api/create-repo-maven-group-each.yml
+  with_items: "{{ tools.nexus.repos_maven_group }}"
 
 - include_tasks: nexus-api/setup-role-each.yml
   with_items: "{{ tools.nexus.roles }}"

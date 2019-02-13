@@ -15,5 +15,6 @@
 ---
 - include_tasks: call-script.yml
   vars:
-    script_name: create-repo-npm-hosted
-    args: "{{ tools.nexus.repos_defaults|combine(item) }}"
+    script_name: delete-repo
+    args:
+      name: "{{ item }}"

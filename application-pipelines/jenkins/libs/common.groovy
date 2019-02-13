@@ -110,12 +110,12 @@ def getConstants(vars) {
     }
 
     vars['mavenSettings'] = "${vars.pipelinesPath}/settings/maven/settings.xml"
-    vars['nexusMavenRepositoryUrl'] = "http://nexus:8081/repository/maven"
+    vars['nexusMavenRepositoryUrl'] = "http://nexus:8081/repository/edp-maven"
 
-    vars['npmGroupRegistry']="http://nexus:8081/repository/npm-all/"
-    vars['npmInternalRegistry']="http://nexus:8081/repository/npm-internal/"
+    vars['npmGroupRegistry']="http://nexus:8081/repository/edp-npm-group/"
+    vars['npmInternalRegistry']="http://nexus:8081/repository/edp-npm-hosted/"
 
-    vars['nugetInternalRegistry'] = "http://nexus:8081/repository/nuget-hosted/"
+    vars['nugetInternalRegistry'] = "http://nexus:8081/repository/edp-nuget-hosted/"
     vars['nexusScripts'] = [:]
     vars['nexusScripts']['getNugetToken'] = "get-nuget-token"
     vars['nexusScriptsPath'] = "${vars.pipelinesPath}/files/nexus"

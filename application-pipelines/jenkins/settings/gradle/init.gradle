@@ -7,7 +7,7 @@ allprojects {
                     username nexusLogin
                     password nexusPassword
                 }
-                url "${nexusMavenRepositoryUrl}-public"
+                url "${nexusMavenRepositoryUrl}"
             }
         }
         dependencies {

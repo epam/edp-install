@@ -15,5 +15,5 @@
 ---
 - include_tasks: call-script.yml
   vars:
-    script_name: create-repo-npm-hosted
+    script_name: create-repo-maven-hosted
     args: "{{ tools.nexus.repos_defaults|combine(item) }}"

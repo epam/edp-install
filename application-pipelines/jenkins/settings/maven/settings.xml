@@ -28,7 +28,7 @@ limitations under the License. -->
             <!--This sends everything else to /public -->
             <id>nexus</id>
             <mirrorOf>*</mirrorOf>
-            <url>http://nexus:8081/repository/maven-public</url>
+            <url>http://nexus:8081/repository/edp-maven-group</url>
         </mirror>
     </mirrors>
 
@@ -41,7 +41,7 @@ limitations under the License. -->
             <repositories>
                 <repository>
                     <id>maven-releases</id>
-                    <url>http://nexus:8081/repository/maven-releases</url>
+                    <url>http://nexus:8081/repository/edp-maven-releases</url>
                     <name>Maven repository for release artefacts</name>
                     <releases>
                         <enabled>true</enabled>
@@ -55,7 +55,7 @@ limitations under the License. -->
                 <!-- -->
                 <repository>
                     <id>maven-snapshots</id>
-                    <url>http://nexus:8081/repository/maven-snapshots</url>
+                    <url>http://nexus:8081/repository/edp-maven-snapshots</url>
                     <name>Maven repository for snapshot artefacts</name>
                     <snapshots>
                         <enabled>true</enabled>
@@ -67,7 +67,7 @@ limitations under the License. -->
             <pluginRepositories>
                 <pluginRepository>
                     <id>microservices</id>
-                    <url>http://nexus:8081/repository/maven-public</url>
+                    <url>http://nexus:8081/repository/edp-maven-group</url>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>

@@ -16,4 +16,4 @@
 - include_tasks: call-script.yml
   vars:
     script_name: create-repo-npm-proxy
-    args: "{{ tools.nexus.repos_npm_defaults|combine(item) }}"
+    args: "{{ tools.nexus.repos_defaults|combine(item) }}"
