@@ -20,10 +20,10 @@
 
 - block:
     - set_fact:
-        new_parameter_value: "{{ datasource_config.config.pipelineNames + item.new_values }}"
+        new_parameter_value: "{{ datasource_config.config.jobNames + item.new_values }}"
 
     - set_fact:
-        body: "{{ datasource_config | combine( { 'config': { 'pipelineNames': new_parameter_value } },
+        body: "{{ datasource_config | combine( { 'config': { 'jobNames': new_parameter_value } },
                   recursive=True ) | to_nice_json  }}"
   when: tool == "jenkins"
 

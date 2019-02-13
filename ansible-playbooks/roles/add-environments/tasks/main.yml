@@ -23,6 +23,13 @@
 
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
+
+- block:
+    - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
+    - include_tasks: roles/common/tasks/manage-openshift/get-perf-credentials-from-secret.yml
+    - include_tasks: roles/api/perf/get-token.yml
+  when: perf_integration_enabled|bool == true
+
 - include_tasks: create_projects.yml
   when: env_map | length > 0
 - include_tasks: create_pipelines.yml
@@ -31,3 +38,16 @@
 - include_tasks: add-config-map-to-app.yml
 - include_tasks: add-env-specific-app-template.yml
 - include_tasks: trigger-postcommit-pipelines.yml
+
+- block:
+    - set_fact:
+        job_names: "{{ job_names | default([]) +
+          [ '/' + project_cicd + '/' + project_cicd + '-' + item.name + '-deploy-pipeline' ] }}"
+      with_items: "{{ env_map | list }}"
+
+    - include_tasks: roles/perf/tasks/update-datasource.yml
+      with_items:
+        - { tool: "jenkins",
+            datasource_id: "{{ perf_jenkins_ds_id }}",
+            new_values: "{{ job_names }}" }
+  when: perf_integration_enabled|bool == true and env_map | length > 0

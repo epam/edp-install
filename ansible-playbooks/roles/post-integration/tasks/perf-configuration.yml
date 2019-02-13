@@ -20,7 +20,7 @@
   with_items:
     - { tool: "jenkins",
         url: "{{ tools.jenkins.web_url }}",
-        tool_specific_parameter: "pipelineNames",
+        tool_specific_parameter: "jobNames",
         template_file: "roles/perf/templates/register-edp-tool-ds.json.j2" }
     - { tool: "sonar",
         url: "{{ tools.sonar.web_url }}",
