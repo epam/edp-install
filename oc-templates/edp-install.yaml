@@ -166,7 +166,7 @@ parameters:
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest"
 - displayName: Backend docker image.
   name: JENKINS_BACKEND_MAVEN_IMAGE
-  value: "quay.io/openshift/origin-jenkins-agent-maven:v4.0.0"
+  value: "openshift/jenkins-agent-maven-35-centos7:v3.10"
 - displayName: Backend gradle docker image.
   name: JENKINS_BACKEND_GRADLE_IMAGE
   value: "epamedp/jenkins-slave-gradle-openshift:1.10.0"

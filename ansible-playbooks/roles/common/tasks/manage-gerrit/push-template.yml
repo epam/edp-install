@@ -46,7 +46,7 @@
   when: item_map is defined and (template_file.stat.exists or ( item_map.language is defined and item_map.framework is defined))
 
 - set_fact:
-    source_pipelines: ["code-review.groovy"]
+    source_pipelines: ["code-review.groovy","build.groovy"]
 
 - block:
   - name: "Copying template for application"

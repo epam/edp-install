@@ -120,7 +120,7 @@
 
         - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
           vars:
-            job_name: "Gerrit-postcommit-{{ name }}"
+            job_name: "Build-{{ name }}"
             parameterized: true
       when: env_map | length > 0
 
@@ -131,7 +131,7 @@
       with_items:
         - { tool: "jenkins",
             datasource_id: "{{ perf_jenkins_ds_id }}",
-            new_values: "[ '/Gerrit-precommit-{{ name }}', '/Gerrit-postcommit-{{ name }}' ]" }
+            new_values: "[ '/Code-review-{{ name }}', '/Build-{{ name }}' ]" }
         - { tool: "sonar",
             datasource_id: "{{ perf_sonar_ds_id }}",
             new_values: "[ '{{ name }}:master' ]" }

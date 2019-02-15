@@ -32,7 +32,7 @@ import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPA
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
-import static com.epam.edp.sittests.smoke.StringConstants.PRECOMMIT_PIPELINE_SUFFIX;
+import static com.epam.edp.sittests.smoke.StringConstants.CODEREVIEW_PIPELINE_SUFFIX;
 import static io.restassured.RestAssured.given;
 
 /**
@@ -93,7 +93,7 @@ public class AddAutotestSmokeTest {
         String username = new String(secret.getData("username")).trim();
         String token = new String(secret.getData("token")).trim();
 
-        String pipeline = PRECOMMIT_PIPELINE_SUFFIX + autotest;
+        String pipeline = CODEREVIEW_PIPELINE_SUFFIX + autotest;
         given().log().all()
                 .pathParam("pipeline", pipeline)
                 .auth()

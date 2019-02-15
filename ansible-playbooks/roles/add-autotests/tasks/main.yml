@@ -86,6 +86,11 @@
     - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
       vars:
         job_name: "Job-provisioning"
+
+    - include_tasks: roles/common/tasks/manage-gerrit/push-pipelines.yml
+      vars:
+        gerrit_project: "{{ name }}"
+
   when: permission_check_result | bool == true
 
 - block:
@@ -93,7 +98,7 @@
       with_items:
         - { tool: "jenkins",
             datasource_id: "{{ perf_jenkins_ds_id }}",
-            new_values: "[ '/Gerrit-precommit-{{ name }}' ]" }
+            new_values: "[ '/Code-review-{{ name }}' ]" }
         - { tool: "gerrit",
             datasource_id: "{{ perf_gerrit_ds_id }}",
             new_values: [ { projectName: "{{ name }}", branches: [ "master" ] } ] }

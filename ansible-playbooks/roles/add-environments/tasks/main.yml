@@ -37,7 +37,7 @@
 - include_tasks: clone-projects.yml
 - include_tasks: add-config-map-to-app.yml
 - include_tasks: add-env-specific-app-template.yml
-- include_tasks: trigger-postcommit-pipelines.yml
+- include_tasks: trigger-build-pipelines.yml
 
 - block:
     - set_fact:

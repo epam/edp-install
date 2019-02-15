@@ -17,9 +17,9 @@ def run(vars) {
         def scannerHome = tool 'SonarScannerMSBuild'
         withSonarQubeEnv('Sonar') {
             sh """
-                dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:${vars.gerritProject} 
-                /d:sonar.projectKey=${vars.gerritProject}
-                /d:sonar.projectName=${vars.gerritProject}               
+                dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:${vars.gerritProject} \\ 
+                /d:sonar.projectKey=${vars.gerritProject} \\
+                /d:sonar.projectName=${vars.gerritProject} \\               
                 /d:sonar.branch=${vars.serviceBranch} /d:sonar.cs.opencover.reportsPaths=${vars.workDir}/*Tests*/*.xml
                 dotnet build ${vars.sln_filename}
                 dotnet ${scannerHome}/SonarScanner.MSBuild.dll end

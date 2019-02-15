@@ -34,8 +34,8 @@ import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_CICD_NAMESPA
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_MASTER_URL;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_PASSWORD;
 import static com.epam.edp.sittests.smoke.StringConstants.OPENSHIFT_USERNAME;
-import static com.epam.edp.sittests.smoke.StringConstants.POSTCOMMIT_PIPELINE_SUFFIX;
-import static com.epam.edp.sittests.smoke.StringConstants.PRECOMMIT_PIPELINE_SUFFIX;
+import static com.epam.edp.sittests.smoke.StringConstants.BUILD_PIPELINE_SUFFIX;
+import static com.epam.edp.sittests.smoke.StringConstants.CODEREVIEW_PIPELINE_SUFFIX;
 import static io.restassured.RestAssured.given;
 
 /**
@@ -52,12 +52,12 @@ public class AddApplicationSmokeTest {
     private String clonedJavaMavenAppName;
     private String clonedJavascriptNpmAppName;
     private String createdJavaGradleAppName;
-    private String preCommitCreatedJavaGradleAppName;
-    private String postCommitCreatedJavaGradleAppName;
-    private String preCommitClonedJavaMavenAppName;
-    private String postCommitClonedJavaMavenAppName;
-    private String preCommitClonedJavascriptNpmAppAppName;
-    private String postCommitClonedJavascriptNpmAppAppName;
+    private String codeReviewCreatedJavaGradleAppName;
+    private String buildCreatedJavaGradleAppName;
+    private String codeReviewClonedJavaMavenAppName;
+    private String buildClonedJavaMavenAppName;
+    private String codeReviewClonedJavascriptNpmAppAppName;
+    private String buildClonedJavascriptNpmAppAppName;
 
     @Feature("Setup Openshift Client")
     @BeforeClass
@@ -76,20 +76,20 @@ public class AddApplicationSmokeTest {
         this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
         this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
         this.createdJavaGradleAppName = ocpEdpPrefix + "-" + CREATED_JAVA_GRADLE_APP_SUFFIX;
-        this.preCommitCreatedJavaGradleAppName = PRECOMMIT_PIPELINE_SUFFIX + createdJavaGradleAppName;
-        this.postCommitCreatedJavaGradleAppName = POSTCOMMIT_PIPELINE_SUFFIX + createdJavaGradleAppName;
+        this.codeReviewCreatedJavaGradleAppName = CODEREVIEW_PIPELINE_SUFFIX + createdJavaGradleAppName;
+        this.buildCreatedJavaGradleAppName = BUILD_PIPELINE_SUFFIX + createdJavaGradleAppName;
         this.clonedJavaMavenAppName = ocpEdpPrefix + "-" + CLONED_JAVA_MAVEN_APP_SUFFIX;
-        this.preCommitClonedJavaMavenAppName = PRECOMMIT_PIPELINE_SUFFIX + clonedJavaMavenAppName;
-        this.postCommitClonedJavaMavenAppName = POSTCOMMIT_PIPELINE_SUFFIX + clonedJavaMavenAppName;
+        this.codeReviewClonedJavaMavenAppName = CODEREVIEW_PIPELINE_SUFFIX + clonedJavaMavenAppName;
+        this.buildClonedJavaMavenAppName = BUILD_PIPELINE_SUFFIX + clonedJavaMavenAppName;
         this.clonedJavascriptNpmAppName = ocpEdpPrefix + "-" + CLONED_JAVASCRIPT_NPM_APP_SUFFIX;
-        this.preCommitClonedJavascriptNpmAppAppName = PRECOMMIT_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
-        this.postCommitClonedJavascriptNpmAppAppName = POSTCOMMIT_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
+        this.codeReviewClonedJavascriptNpmAppAppName = CODEREVIEW_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
+        this.buildClonedJavascriptNpmAppAppName = BUILD_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
     }
 
     @DataProvider(name = "pipeline")
     public Object[][] pipeline() {
-        return new Object[][]{{preCommitCreatedJavaGradleAppName}, {postCommitCreatedJavaGradleAppName}, {preCommitClonedJavaMavenAppName},
-                {postCommitClonedJavaMavenAppName}, {preCommitClonedJavascriptNpmAppAppName}, {postCommitClonedJavascriptNpmAppAppName}};
+        return new Object[][]{{codeReviewCreatedJavaGradleAppName}, {buildCreatedJavaGradleAppName}, {codeReviewClonedJavaMavenAppName},
+                {buildClonedJavaMavenAppName}, {codeReviewClonedJavascriptNpmAppAppName}, {buildClonedJavascriptNpmAppAppName}};
     }
 
     @DataProvider(name = "application")

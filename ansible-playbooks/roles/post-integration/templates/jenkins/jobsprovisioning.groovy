@@ -14,7 +14,7 @@ limitations under the License. */
 
 import groovy.json.*
 
-def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, devopsRepository) {
+def createPipeline(pipelineName, applicationName, applicationStages, pipelineScript, pipelinePath, devopsRepository) {
     pipelineJob("${pipelineName}") {
         logRotator {
             numToKeep(10)
@@ -23,7 +23,7 @@ def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, 
         triggers {
             gerrit {
                 events {
-                    if (pipelineName.contains("postcommit"))
+                    if (pipelineName.contains("Build"))
                         changeMerged()
                     else
                         patchsetCreated()
@@ -41,13 +41,10 @@ def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, 
                     }
                 }
                 parameters {
-                    stringParam("PIPELINES_PATH", "${pipelinePath}")
-                    stringParam("GERRIT_PROJECT_NAME", "${applicationName}")
-                    if (pipelineName.contains("postcommit"))
-                        stringParam("SERVICE_BRANCH", "master")
-                    else
-                        stringParam("STAGES", "[{\"name\": \"gerrit-checkout\"}," +
-                                "{\"name\": \"compile\"},{\"name\": \"tests\"},{\"name\": \"sonar\"}]")
+                    stringParam("STAGES", "${applicationStages}","")
+                    stringParam("GERRIT_PROJECT_NAME", "${applicationName}","")
+                    if (pipelineName.contains("Build"))
+                        stringParam("BRANCH", "master","")
                 }
             }
         }
@@ -55,16 +52,32 @@ def createPipeline(pipelineName, applicationName, pipelineScript, pipelinePath, 
 }
 
 def gerritSshPort = "{{ gerrit_ssh_port }}"
-def devopsRepository = "ssh://jenkins@gerrit:${gerritSshPort}/{{ full_edp_name }}"
 def appRepositoryBase = "ssh://jenkins@gerrit:${gerritSshPort}"
-def pipelinePath = 'application-pipelines/jenkins'
+def stages = [:]
+stages['Code-review-application'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"compile\"},{\"name\": \"tests\"}," +
+        "{\"name\": \"sonar\"}]"
+stages['Code-review-autotest'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"tests\"},{\"name\": \"sonar\"}]"
+stages['Build-maven'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+        "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build\"},{\"name\": \"build-image\"}," +
+        "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
+stages['Build-npm'] = stages['Build-maven']
+stages['Build-gradle'] = stages['Build-maven']
+stages['Build-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+        "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build-image\"}," +
+        "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
 
 ['app.settings.json', 'auto-test.settings.json'].each() { settingsFile ->
     new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/${settingsFile}").text).each() { item ->
         def applicationName = item.name
-        createPipeline("Code-review-${applicationName}", applicationName, "code-review.groovy", "",
-                "${appRepositoryBase}/${item.name}")
-        if (settingsFile == 'app.settings.json')
-            createPipeline("Gerrit-postcommit-${applicationName}", applicationName, "${pipelinePath}/Gerrit-postcommit-pipeline.groovy", pipelinePath,  devopsRepository)
+        if (settingsFile == 'app.settings.json') {
+            createPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-application'],
+                    "code-review.groovy", "", "${appRepositoryBase}/${item.name}")
+            createPipeline("Build-${applicationName}", applicationName, stages["Build-${item.build_tool.toLowerCase()}"],
+                    "build.groovy", "", "${appRepositoryBase}/${item.name}")
+        }
+        else
+            createPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-autotest'],
+                    "code-review.groovy", "", "${appRepositoryBase}/${item.name}")
+
     }
 }
