@@ -42,6 +42,7 @@ import org.jenkinsci.plugins.workflow.libs.SCMSourceRetriever
 import jenkins.plugins.git.traits.*
 import jenkins.scm.api.trait.SCMSourceTrait
 import jenkins.plugins.git.traits.RefSpecsSCMSourceTrait.RefSpecTemplate
+import hudson.markup.RawHtmlMarkupFormatter
 
 // Check "done" file to avoid multiple runs
 def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
@@ -230,6 +231,10 @@ libraryConfigurationPipelines.setImplicit(false)
 
 globalLibraries.get().setLibraries([libraryConfigurationStages,libraryConfigurationPipelines])
 
+// Configure Markup Formatter for Safe HTML
+if (Jenkins.instance.markupFormatter.class != RawHtmlMarkupFormatter) {
+    Jenkins.instance.markupFormatter = new RawHtmlMarkupFormatter(false)
+}
 Jenkins.instance.save()
 
 // Create "done" file to avoid multiple runs
