@@ -93,7 +93,7 @@ tools:
     web_url: "https://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   nexus:
     secret: "nexus-passwords"
-    version: "{{ nexus_version | default('3.6.2') }}"
+    version: "{{ nexus_version | default('3.15.1') }}"
     volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"
     repos_defaults:
       blob_store: default # Note : cannot be updated once the repo has been created

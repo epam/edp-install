@@ -163,7 +163,7 @@ objects:
 parameters:
 - displayName: Sonatype Nexus version
   name: NEXUS_VERSION
-  value: "3.6.2"
+  value: "3.15.1"
 - description: Volume space available for Sonatype Nexus e.g. 512Mi, 2Gi
   displayName: Volume Space for Nexus
   name: NEXUS_VOLUME_CAPACITY

@@ -15,7 +15,7 @@
 ---
 - name: Removing (potential) previously declared Groovy script {{ item }}
   uri:
-    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/siesta/rest/v1/script/{{ item }}"
+    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/rest/v1/script/{{ item }}"
     user: 'admin'
     password: "{{ secrets.nexus_admin.default_password }}"
     method: DELETE
@@ -24,7 +24,7 @@
 
 - name: Declaring Groovy script {{ item }}
   uri:
-    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/siesta/rest/v1/script"
+    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/rest/v1/script"
     user: 'admin'
     password: "{{ secrets.nexus_admin.default_password }}"
     body_format: json

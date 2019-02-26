@@ -15,7 +15,7 @@
 ---
 - name: Calling Groovy script {{ script_name }}
   uri:
-    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/siesta/rest/v1/script/{{ script_name }}/run"
+    url: "http://{{ nexus_host }}:{{ nexus_port }}/service/rest/v1/script/{{ script_name }}/run"
     user: 'admin'
     password: "{{ nexus_default_password is defined | ternary(nexus_default_password, nexus_admin_password.stdout) }}"
     headers:
