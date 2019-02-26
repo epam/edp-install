@@ -102,7 +102,6 @@ objects:
     resources:
       requests:
         storage: ${JENKINS_VOLUME_CAPACITY}
-{% endif %}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -114,6 +113,7 @@ objects:
     resources:
       requests:
         storage: ${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}
+{% endif %}
 - apiVersion: v1
   kind: ConfigMap
   metadata:
@@ -314,11 +314,18 @@ objects:
           <memory>false</memory>
         </workspaceVolume>
         <volumes>
+{% if mr_deploy == 'false' %}
           <org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
             <mountPath>/opt/caches/maven</mountPath>
             <claimName>maven-cache</claimName>
             <readOnly>false</readOnly>
           </org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
+{% else %}
+          <org.csanchez.jenkins.plugins.kubernetes.volumes.EmptyDirVolume>
+            <mountPath>/opt/caches/maven</mountPath>
+            <memory>false</memory>
+          </org.csanchez.jenkins.plugins.kubernetes.volumes.EmptyDirVolume>
+{% endif %}
         </volumes>
         <containers>
           <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
