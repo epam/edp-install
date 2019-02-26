@@ -130,9 +130,12 @@
     - "{{ edp_super_admins }}"
     - "{{ edp_admins }}"
 
+- set_fact:
+    gerrit_jenkins_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
+
 - include_tasks: gerrit-cli/create-user.yml
   with_items:
-    - { username: "jenkins", password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}", full_name: "CI Jenkins" }
+    - { username: "jenkins", password: "{{ gerrit_jenkins_password }}", full_name: "CI Jenkins" }
     - { username: "project-creator", password: "{{ lookup('password', '/dev/null length=11 chars=ascii_letters') }}", full_name: "Project Creator" }
     - "{{ gerrit_admins }}"
 
