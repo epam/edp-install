@@ -101,6 +101,7 @@
     - include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
       vars:
         job_name: "Job-provisioning"
+        parameterized: true
 
     - include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
       vars:

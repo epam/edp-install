@@ -12,37 +12,37 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
-import jenkins.model.*
-import hudson.model.*
-import org.csanchez.jenkins.plugins.kubernetes.*
-import hudson.plugins.sonar.*
-import hudson.plugins.sonar.model.*
-import hudson.tools.*
-import com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl
-import com.sonyericsson.hudson.plugins.gerrit.trigger.GerritServer
-import com.sonyericsson.hudson.plugins.gerrit.trigger.config.PluginConfig
-import net.sf.json.*
-import hudson.model.FreeStyleProject
-import hudson.tasks.Shell
-import javaposse.jobdsl.plugin.*
-import hudson.triggers.*
-import com.cloudbees.plugins.credentials.CredentialsScope
-import com.cloudbees.plugins.credentials.domains.Domain
+
 import com.cloudbees.jenkins.plugins.sshcredentials.impl.*
 import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.CredentialsScope
 import com.cloudbees.plugins.credentials.common.*
 import com.cloudbees.plugins.credentials.domains.*
+import com.cloudbees.plugins.credentials.domains.Domain
 import com.cloudbees.plugins.credentials.impl.*
-import ru.yandex.qatools.allure.jenkins.tools.*
-import hudson.scm.SCM
+import com.sonyericsson.hudson.plugins.gerrit.trigger.GerritServer
+import com.sonyericsson.hudson.plugins.gerrit.trigger.PluginImpl
+import com.sonyericsson.hudson.plugins.gerrit.trigger.config.PluginConfig
+import hudson.markup.RawHtmlMarkupFormatter
+import hudson.model.*
+import hudson.model.FreeStyleProject
+import hudson.plugins.sonar.*
+import hudson.plugins.sonar.model.*
+import hudson.tasks.Shell
+import hudson.tools.*
+import hudson.triggers.*
+import javaposse.jobdsl.plugin.*
+import jenkins.model.*
 import jenkins.plugins.git.GitSCMSource
+import jenkins.plugins.git.traits.*
+import jenkins.plugins.git.traits.RefSpecsSCMSourceTrait.RefSpecTemplate
+import jenkins.scm.api.trait.SCMSourceTrait
+import net.sf.json.*
+import org.csanchez.jenkins.plugins.kubernetes.*
 import org.jenkinsci.plugins.workflow.libs.*
 import org.jenkinsci.plugins.workflow.libs.LibraryConfiguration
 import org.jenkinsci.plugins.workflow.libs.SCMSourceRetriever
-import jenkins.plugins.git.traits.*
-import jenkins.scm.api.trait.SCMSourceTrait
-import jenkins.plugins.git.traits.RefSpecsSCMSourceTrait.RefSpecTemplate
-import hudson.markup.RawHtmlMarkupFormatter
+import ru.yandex.qatools.allure.jenkins.tools.*
 
 // Check "done" file to avoid multiple runs
 def JENKINS_HOME = System.getenv().get('JENKINS_HOME')
@@ -96,17 +96,17 @@ server = new GerritServer("gerrit", false)
 def config = server.getConfig()
 
 def triggerConfig = [
-    'gerritBuildStartedVerifiedValue':0,
-    'gerritBuildStartedCodeReviewValue':0,
-    'gerritBuildSuccessfulVerifiedValue':1,
-    'gerritBuildSuccessfulCodeReviewValue':0,
-    'gerritBuildFailedVerifiedValue':-1,
-    'gerritBuildFailedCodeReviewValue':0,
-    'gerritBuildUnstableVerifiedValue':0,
-    'gerritBuildUnstableCodeReviewValue':0,
-    'gerritBuildNotBuiltVerifiedValue':0,
-    'gerritBuildNotBuiltCodeReviewValue':0,
-  ]
+        'gerritBuildStartedVerifiedValue'     : 0,
+        'gerritBuildStartedCodeReviewValue'   : 0,
+        'gerritBuildSuccessfulVerifiedValue'  : 1,
+        'gerritBuildSuccessfulCodeReviewValue': 0,
+        'gerritBuildFailedVerifiedValue'      : -1,
+        'gerritBuildFailedCodeReviewValue'    : 0,
+        'gerritBuildUnstableVerifiedValue'    : 0,
+        'gerritBuildUnstableCodeReviewValue'  : 0,
+        'gerritBuildNotBuiltVerifiedValue'    : 0,
+        'gerritBuildNotBuiltCodeReviewValue'  : 0,
+]
 config.setValues(JSONObject.fromObject(triggerConfig))
 server.setConfig(config)
 
@@ -161,6 +161,14 @@ executeDslScripts.setTargets("*.groovy")
 executeDslScripts.setLookupStrategy(LookupStrategy.JENKINS_ROOT)
 
 project.getBuildersList().add(executeDslScripts)
+
+def definitionList = [new BooleanParameterDefinition("PARAM", false, ""),
+                      new StringParameterDefinition("NAME", ""),
+                      new StringParameterDefinition("TYPE", ""),
+                      new StringParameterDefinition("BUILD_TOOL", "")]
+
+project.addProperty(new ParametersDefinitionProperty(definitionList))
+
 project.save()
 project.scheduleBuild()
 
@@ -170,7 +178,7 @@ cmd = [
         """set -x
            |mkdir -p ${JENKINS_HOME}/jobs/${jobName}/workspace
            |cp ${JENKINS_HOME}/init.groovy.d/dsl/*.groovy ${JENKINS_HOME}/jobs/${jobName}/workspace/
-           |""".stripMargin() ]
+           |""".stripMargin()]
 println("[DEBUG] ${cmd.execute().text}")
 
 // Configure Allure
@@ -229,7 +237,7 @@ libraryConfigurationPipelines.setDefaultVersion("{{ pipelines_version }}")
 libraryConfigurationStages.setImplicit(false)
 libraryConfigurationPipelines.setImplicit(false)
 
-globalLibraries.get().setLibraries([libraryConfigurationStages,libraryConfigurationPipelines])
+globalLibraries.get().setLibraries([libraryConfigurationStages, libraryConfigurationPipelines])
 
 // Configure Markup Formatter for Safe HTML
 if (Jenkins.instance.markupFormatter.class != RawHtmlMarkupFormatter) {

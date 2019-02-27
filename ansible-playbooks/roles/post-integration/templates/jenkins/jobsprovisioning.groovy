@@ -70,6 +70,7 @@ stages['Build-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},
     new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/${settingsFile}").text).each() { item ->
         def applicationName = item.name
         if (settingsFile == 'app.settings.json') {
+
             createPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-application'],
                     "code-review.groovy", "", "${appRepositoryBase}/${item.name}")
             createPipeline("Build-${applicationName}", applicationName, stages["Build-${item.build_tool.toLowerCase()}"],
@@ -79,5 +80,17 @@ stages['Build-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},
             createPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-autotest'],
                     "code-review.groovy", "", "${appRepositoryBase}/${item.name}")
 
+    }
+}
+
+if (Boolean.valueOf("${PARAM}")) {
+    def appName = "${NAME}"
+    def type = "${TYPE}"
+    def buildTool = "${BUILD_TOOL}"
+    if (type == "app") {
+        createPipeline("Code-review-${appName}", appName, stages['Code-review-application'], "code-review.groovy", "", "${appRepositoryBase}/${appName}")
+        createPipeline("Build-${appName}", appName, stages["Build-${buildTool}"], "build.groovy", "", "${appRepositoryBase}/${appName}")
+    } else {
+        createPipeline("Code-review-${appName}", appName, stages['Code-review-autotest'], "code-review.groovy", "", "${appRepositoryBase}/${appName}")
     }
 }
