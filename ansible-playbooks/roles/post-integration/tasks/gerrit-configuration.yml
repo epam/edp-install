@@ -52,6 +52,16 @@
 - name: "Run sql script in gerrit-db pod"
   shell: "{{ ocadm }} exec -i $({{ gerrit_db_pod }}) -- psql --dbname={{ secrets.gerrit_db.db_name }} --file=/tmp/gerrit-admin-user.sql -U gerrit"
 
+- name: "Create symlink to gerrit SSH config"
+  shell: |
+    {{ ocadm }} exec -i $({{ gerrit_pod }}) -- bash -c 'mkdir /var/gerrit/.ssh && ln -s /var/gerrit/gerrit_configs/config /var/gerrit/.ssh/config'
+  when: vcs_integration_enabled|bool == true
+
+- name: "Create symlink to gerrit replication config"
+  shell: |
+    {{ ocadm }} exec -i $({{ gerrit_pod }}) -- bash -c 'ln -s /var/gerrit/gerrit_configs/replication.config /var/gerrit/review_site/etc/replication.config'
+  when: vcs_integration_enabled|bool == true
+
 - name: "Generate ssh keys for gerrit users"
   shell: cat /dev/zero | ssh-keygen -b 4096 -t rsa -f {{ post_integration_dir }}/gerrit/{{ item }} -C "edp@example.com" -q -N ""
   when: gerrit_key.stat.islnk is not defined

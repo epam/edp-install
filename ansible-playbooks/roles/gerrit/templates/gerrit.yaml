@@ -281,8 +281,8 @@ objects:
             - mountPath: /var/gerrit/review_site
               name: gerrit-data
 {% if vcs_integration_enabled|bool == true %}
-            - mountPath: /var/gerrit/.ssh
-              name: ssh-config
+            - mountPath: /var/gerrit/gerrit_configs
+              name: gerrit-configs
 {% endif %}
         serviceAccount: gerrit
         volumes:
@@ -294,13 +294,10 @@ objects:
             emptyDir: {}
 {% endif %}
 {% if vcs_integration_enabled|bool == true %}
-          - configMap:
+          - name: gerrit-configs
+            configMap:
               defaultMode: 420
-              items:
-                - key: config
-                  path: config
               name: gerrit
-            name: ssh-config
 {% endif %}
 parameters:
 - displayName: Gerrit version
