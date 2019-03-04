@@ -216,7 +216,7 @@ def checkDeployment(object, type) {
     println("[JENKINS][DEBUG] Validate deployment - ${object.name} in ${vars.deployProject}")
     try {
         openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: "${object.name}",
-                namespace: "${vars.deployProject}", replicaCount: '1', verbose: 'false',
+                namespace: "${vars.deployProject}", verbose: 'false',
                 verifyReplicaCount: 'true', waitTime: '600', waitUnit: 'sec'
         if (type == 'application' && getDeploymentVersion(object) != object.currentDeploymentVersion) {
             println("[JENKINS][DEBUG] Deployment ${object.name} in project ${vars.deployProject} has been rolled out")
@@ -231,7 +231,7 @@ def checkDeployment(object, type) {
                     "[JENKINS][WARNING] Rolling back to the previous version")
             sh("oc -n ${vars.deployProject} rollout undo dc ${object.name}")
             openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: "${object.name}",
-                    namespace: "${vars.deployProject}", replicaCount: '1', verbose: 'false',
+                    namespace: "${vars.deployProject}", verbose: 'false',
                     verifyReplicaCount: 'true', waitTime: '600', waitUnit: 'sec'
             println("[JENKINS][WARNING] Rolling out of ${object.name} with version ${object.version} has been failed.")
         } else
