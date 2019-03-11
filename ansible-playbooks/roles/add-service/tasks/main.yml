@@ -29,6 +29,4 @@
 
 - include_tasks: roles/api/vcs/generate-ssh-config.yml
 
-- include_tasks: roles/common/tasks/manage-gerrit/push-template.yml
-  vars:
-    gerrit_project: "{{ edp_name }}-edp"
+- include_tasks: roles/common/tasks/manage-openshift/create-template.yml
