@@ -49,14 +49,14 @@ def run(vars) {
 
         vars.get(vars.svcSettingsKey).each() { service ->
             deployTemplatesPath = "${vars.devopsRoot}/${vars.deployTemplatesDirectory}"
-            if (!checkTemplateExists(service.name, deployTemplatesPath))
+            if (!checkOpenshiftTemplateExists(service.name))
                 return
 
             sh "oc adm policy add-scc-to-user anyuid -z ${service.name} -n ${vars.deployProject}"
-            sh("oc -n ${vars.deployProject} process -f ${deployTemplatesPath}/${service.name}.yaml " +
+            sh("oc -n ${vars.projectPrefix}-edp-cicd process ${service.name} " +
                     "-p SERVICE_IMAGE=${service.image} " +
                     "-p SERVICE_VERSION=${service.version} " +
-                    "--local=true -o json | oc -n ${vars.deployProject} apply -f -")
+                    "-o json | oc -n ${vars.deployProject} apply -f -")
             checkDeployment(service, 'service')
         }
 
@@ -198,6 +198,17 @@ def checkImageExists(object) {
     if (tagExist == "") {
         println("[JENKINS][WARNING] Image stream ${object.name} with tag ${object.version} doesn't exist in the project ${vars.metaProject}\r\n" +
                 "[JENKINS][WARNING] Deploy will be skipped")
+        return false
+    }
+    return true
+}
+
+def checkOpenshiftTemplateExists(templateName) {
+    try {
+        sh "oc get template ${templateName} -n ${vars.projectPrefix}-edp-cicd"
+    }
+    catch(Exception ex) {
+        println("[JENKINS][WARNING] Template which called ${templateName} doesn't exist in ${vars.projectPrefix}-edp-cicd namespace")
         return false
     }
     return true

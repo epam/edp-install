@@ -18,8 +18,9 @@ import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
-import com.openshift.internal.restclient.model.Secret;
+import com.openshift.internal.restclient.model.template.Template;
 import com.openshift.restclient.ClientBuilder;
 import com.openshift.restclient.IClient;
 import com.openshift.restclient.ResourceKind;
@@ -65,20 +66,10 @@ public class AddServiceSmokeTest {
 
     @Test
     public void testServiceTemplateHasBeenAdded() {
-        Secret secret = openShiftClient.get(ResourceKind.SECRET, GERRIT_SECRET, openshiftNamespace);
-        String gerrit_password = new String(secret.getData("password")).trim();
-
-        given().log().all()
-                .pathParam("service", RABBITMQ_SERVICE_NAME)
-                .pathParam("project", ocpEdpPrefix + "-edp")
-                .urlEncodingEnabled(false)
-                .auth()
-                .basic(GERRIT_USER, gerrit_password)
-                .when()
-                .get(urlBuilder.buildUrl("https",
-                        "gerrit", OPENSHIFT_CICD_NAMESPACE,
-                        "a/projects/{project}/branches/master/files/deploy-templates%2F{service}.yaml/content"))
-                .then()
-                .statusCode(HttpStatus.SC_OK);
+        try {
+            Template template = openShiftClient.get(ResourceKind.TEMPLATE, RABBITMQ_SERVICE_NAME, openshiftNamespace);
+        } catch (Exception ex) {
+            Assert.fail("Template for "+ RABBITMQ_SERVICE_NAME + " in namespace " + openshiftNamespace + " not found");
+        }
     }
 }
