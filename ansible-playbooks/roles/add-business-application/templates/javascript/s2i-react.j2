@@ -17,13 +17,13 @@ kind: ImageStream
 metadata:
   name: s2i-javascript
 spec:
-  dockerImageRepository: ibotty/s2i-nginx
+  dockerImageRepository: epamedp/s2i-nginx
   lookupPolicy:
     local: false
   tags:
   - from:
       kind: DockerImage
-      name: ibotty/s2i-nginx:latest
+      name: epamedp/s2i-nginx:latest
     name: "latest"
     referencePolicy:
       type: Source

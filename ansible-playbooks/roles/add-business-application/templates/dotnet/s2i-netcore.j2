@@ -36,27 +36,8 @@ spec:
       version: "2.0"
     from:
       kind: DockerImage
-      name: registry.centos.org/dotnet/dotnet-20-centos7:latest
+      name: epamedp/dotnet-20-centos7:latest
     importPolicy: {}
-    name: "2.0"
-    referencePolicy:
-      type: Source
-  - annotations:
-      description: |-
-        Build and run .NET Core applications on CentOS 7. For more information about using this builder image, including OpenShift considerations, see https://github.com/redhat-developer/s2i-dotnetcore/tree/master/2.0/build/README.md.
-
-        WARNING: By selecting this tag, your application will automatically update to use the latest version of .NET Core available on OpenShift, including major versions updates.
-      iconClass: icon-dotnet
-      openshift.io/display-name: .NET Core (Latest)
-      sampleContextDir: app
-      sampleRef: dotnetcore-2.0
-      sampleRepo: https://github.com/redhat-developer/s2i-dotnetcore-ex.git
-      supports: dotnet
-      tags: builder,.net,dotnet,dotnetcore
-    from:
-      kind: ImageStreamTag
-      name: "2.0"
-    importPolicy: {}
-    name: latest
+    name: "latest"
     referencePolicy:
       type: Source
