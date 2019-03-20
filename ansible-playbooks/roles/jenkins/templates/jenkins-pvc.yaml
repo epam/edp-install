@@ -67,6 +67,13 @@ objects:
     - securitycontextconstraints
     verbs:
     - update
+  - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resources:
+    - businessapplications
+    verbs:
+    - get
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding
