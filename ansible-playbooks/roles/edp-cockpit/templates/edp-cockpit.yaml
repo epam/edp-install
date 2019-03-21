@@ -209,6 +209,8 @@ objects:
               configMapKeyRef:
                 name: msra
                 key: modifiable-service-quickstart.json
+          - name: ADMIN_CONSOLE_URL
+            value: ${ADMIN_CONSOLE_URL}
     triggers:
     - type: ConfigChange
 parameters:
@@ -218,3 +220,6 @@ parameters:
 - displayName: Enable trust certificates
   name: OPENSHIFT_TRUST_CERTIFICATES
   value: "true"
+- displayName: Admin console url
+  name: ADMIN_CONSOLE_URL
+  value: ""

@@ -46,6 +46,7 @@ edp_admins: "{{ admin_users.split(',') }}"
 edp_viewers: "{{ view_users.split(',') }}"
 basic_pattern_url: "https://github.com/epmd-edp"
 random_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
+admin_console_url: "{{ admin_console_url }}"
 secrets:
   sonar_admin:
     password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"

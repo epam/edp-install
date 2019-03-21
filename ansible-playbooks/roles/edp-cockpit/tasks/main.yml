@@ -82,6 +82,7 @@
     {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/cockpit/edp-cockpit.yaml
     -p EDP_COCKPIT_VERSION={{ tools.cockpit.version }}
     -p OPENSHIFT_TRUST_CERTIFICATES={{ tools.cockpit.openshift_trust_certificates }}
+    -p ADMIN_CONSOLE_URL={{ admin_console_url }}
   register: result
   changed_when: '"already" not in result.stderr'
   failed_when:
