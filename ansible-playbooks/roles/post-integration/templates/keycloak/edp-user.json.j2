@@ -9,8 +9,10 @@
   "credentials": [
     {
       "type": "password",
-      "value": "secret"
+      "value": "{{ password }}"
     }
   ],
+  {% if update_required %}
   "requiredActions" : [ "UPDATE_PASSWORD", "UPDATE_PROFILE" ]
+  {% endif %}
 }

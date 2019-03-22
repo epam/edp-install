@@ -25,6 +25,8 @@
   vars:
     - username: "{{ item|lower }}"
     - realm: "openshift"
+    - password: "secret"
+    - update_required: true
   when: user_location == "undefined"
 
 - name: "Assign admin role in edp client"

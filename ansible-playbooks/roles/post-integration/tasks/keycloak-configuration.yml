@@ -175,3 +175,37 @@
      redirection_url: "{{ tools.nexus.web_url }}", upstream_port: 8081, roles: "administrator,developer" }
     - { upstream_resource: "edp-cockpit", client_id: "{{ tools.cockpit.client_id }}",
      redirection_url: "{{ tools.cockpit.web_url }}", upstream_port: 8080, roles: "cockpit-administrators" }
+
+- name: "Get username for Admin Console Reader"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-reader
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: ac_username
+
+- name: "Get password for Admin Console Reader"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-reader
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: ac_password
+
+- set_fact:
+    ac_username: "{{ ac_username.stdout }}"
+    ac_password: "{{ ac_password.stdout }}"
+
+- include_tasks: keycloak-api/create-user-in-realm.yml
+  vars:
+    - username: "{{ ac_username }}"
+    - realm: "openshift"
+    - password: "{{ ac_password }}"
+    - update_required: false
+
+- name: "Assign dev role in edp client"
+  uri:
+    url: "{{ user_location }}/role-mappings/clients/{{ edp_client_id }}"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+      Content-Type: "application/json"
+    status_code: 204
+    body: "[ {{ dev_role.json | to_json }} ]"
+    body_format: json
