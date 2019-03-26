@@ -90,6 +90,7 @@
     --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=perf_integration_enabled={{ perf_integration_enabled }}
     --from-literal=vcs_integration_enabled={{ vcs_integration_enabled }}
+    --from-literal=admin_console_url={{ admin_console_url }}
     {{ '--from-literal=vcs_group_name_url=' + vcs_group_name if vcs_integration_enabled|bool == true else '' }}
     {{ '--from-literal=vcs_tool_name=' + vcs_tool_name | lower if vcs_integration_enabled|bool == true else '' }}
     {{ '--from-literal=vcs_ssh_port=' + vcs_ssh_port if vcs_integration_enabled|bool == true else '' }}
