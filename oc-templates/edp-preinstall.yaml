@@ -156,6 +156,7 @@ objects:
     - gerrit-project-creator
     - keycloak
     - keycloak-parameters
+    - admin-console-client
     resources:
     - secrets
     verbs:
