@@ -165,7 +165,8 @@ project.getBuildersList().add(executeDslScripts)
 def definitionList = [new BooleanParameterDefinition("PARAM", false, ""),
                       new StringParameterDefinition("NAME", ""),
                       new StringParameterDefinition("TYPE", ""),
-                      new StringParameterDefinition("BUILD_TOOL", "")]
+                      new StringParameterDefinition("BUILD_TOOL", ""),
+                      new StringParameterDefinition("BRANCH", "")]
 
 project.addProperty(new ParametersDefinitionProperty(definitionList))
 

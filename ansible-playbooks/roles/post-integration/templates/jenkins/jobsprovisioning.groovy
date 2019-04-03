@@ -14,8 +14,8 @@ limitations under the License. */
 
 import groovy.json.*
 
-def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineScript, devopsRepository) {
-    pipelineJob("${pipelineName}") {
+def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineScript, repository, watchBranch = "master") {
+    pipelineJob("${watchBranch.toUpperCase()}-${pipelineName}") {
         logRotator {
             numToKeep(10)
             daysToKeep(7)
@@ -28,30 +28,30 @@ def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineS
                     else
                         patchsetCreated()
                 }
-                project("plain:${applicationName}", ['ant:**'])
+                project("plain:${applicationName}", ["plain:${watchBranch}"])
             }
         }
         definition {
             cpsScm {
                 scm {
                     git {
-                        remote { url(devopsRepository) }
+                        remote { url(repository) }
                         branches("master")
                         scriptPath("${pipelineScript}")
                     }
                 }
                 parameters {
-                    stringParam("STAGES", "${applicationStages}", "")
-                    stringParam("GERRIT_PROJECT_NAME", "${applicationName}", "")
+                    stringParam("STAGES", "${applicationStages}", "Consequence of stages in JSON format to be run during execution")
+                    stringParam("GERRIT_PROJECT_NAME", "${applicationName}", "Gerrit project name(Application name) to be build")
                     if (pipelineName.contains("Build"))
-                        stringParam("BRANCH", "master", "")
+                        stringParam("BRANCH", "${watchBranch}", "Branch to build artifact from")
                 }
             }
         }
     }
 }
 
-def createReleasePipeline(pipelineName, applicationName, applicationStages, pipelineScript, devopsRepository) {
+def createReleasePipeline(pipelineName, applicationName, applicationStages, pipelineScript, repository) {
     pipelineJob("${pipelineName}") {
         logRotator {
             numToKeep(14)
@@ -61,7 +61,7 @@ def createReleasePipeline(pipelineName, applicationName, applicationStages, pipe
             cpsScm {
                 scm {
                     git {
-                        remote { url(devopsRepository) }
+                        remote { url(repository) }
                         branches("master")
                         scriptPath("${pipelineScript}")
                     }
@@ -115,9 +115,10 @@ if (Boolean.valueOf("${PARAM}")) {
     def appName = "${NAME}"
     def type = "${TYPE}"
     def buildTool = "${BUILD_TOOL}"
+    def branch = BRANCH ? "${BRANCH}" : "master"
     if (type == "app") {
-        createCiPipeline("Code-review-${appName}", appName, stages['Code-review-application'], "code-review.groovy", "${appRepositoryBase}/${appName}")
-        createCiPipeline("Build-${appName}", appName, stages["Build-${buildTool}"], "build.groovy", "${appRepositoryBase}/${appName}")
+        createCiPipeline("Code-review-${appName}", appName, stages['Code-review-application'], "code-review.groovy", "${appRepositoryBase}/${appName}", branch)
+        createCiPipeline("Build-${appName}", appName, stages["Build-${buildTool}"], "build.groovy", "${appRepositoryBase}/${appName}", branch)
         createReleasePipeline("Create-release-${appName}", appName, stages["Create-release"], "create-release.groovy", "${appRepositoryBase}/${appName}")
     } else {
         createCiPipeline("Code-review-${appName}", appName, stages['Code-review-autotest'], "code-review.groovy", "${appRepositoryBase}/${appName}")
