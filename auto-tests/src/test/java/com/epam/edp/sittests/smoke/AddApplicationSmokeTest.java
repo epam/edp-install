@@ -76,14 +76,14 @@ public class AddApplicationSmokeTest {
         this.urlBuilder = new UrlBuilder(ocpEdpPrefix);
         this.openshiftNamespace = ocpEdpPrefix + "-" + OPENSHIFT_CICD_NAMESPACE;
         this.createdJavaGradleAppName = ocpEdpPrefix + "-" + CREATED_JAVA_GRADLE_APP_SUFFIX;
-        this.codeReviewCreatedJavaGradleAppName = CODEREVIEW_PIPELINE_SUFFIX + createdJavaGradleAppName;
-        this.buildCreatedJavaGradleAppName = BUILD_PIPELINE_SUFFIX + createdJavaGradleAppName;
+        this.codeReviewCreatedJavaGradleAppName = createdJavaGradleAppName + "/job/" + CODEREVIEW_PIPELINE_SUFFIX + createdJavaGradleAppName;
+        this.buildCreatedJavaGradleAppName = createdJavaGradleAppName + "/job/" + BUILD_PIPELINE_SUFFIX + createdJavaGradleAppName;
         this.clonedJavaMavenAppName = ocpEdpPrefix + "-" + CLONED_JAVA_MAVEN_APP_SUFFIX;
-        this.codeReviewClonedJavaMavenAppName = CODEREVIEW_PIPELINE_SUFFIX + clonedJavaMavenAppName;
-        this.buildClonedJavaMavenAppName = BUILD_PIPELINE_SUFFIX + clonedJavaMavenAppName;
+        this.codeReviewClonedJavaMavenAppName = clonedJavaMavenAppName + "/job/" + CODEREVIEW_PIPELINE_SUFFIX + clonedJavaMavenAppName;
+        this.buildClonedJavaMavenAppName = clonedJavaMavenAppName + "/job/" + BUILD_PIPELINE_SUFFIX + clonedJavaMavenAppName;
         this.clonedJavascriptNpmAppName = ocpEdpPrefix + "-" + CLONED_JAVASCRIPT_NPM_APP_SUFFIX;
-        this.codeReviewClonedJavascriptNpmAppAppName = CODEREVIEW_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
-        this.buildClonedJavascriptNpmAppAppName = BUILD_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
+        this.codeReviewClonedJavascriptNpmAppAppName = clonedJavascriptNpmAppName + "/job/" + CODEREVIEW_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
+        this.buildClonedJavascriptNpmAppAppName = clonedJavascriptNpmAppName + "/job/" + BUILD_PIPELINE_SUFFIX + clonedJavascriptNpmAppName;
     }
 
     @DataProvider(name = "pipeline")
@@ -127,6 +127,7 @@ public class AddApplicationSmokeTest {
                 .auth()
                 .preemptive()
                 .basic(username, token)
+                .urlEncodingEnabled(false)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "jenkins",

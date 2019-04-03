@@ -15,7 +15,7 @@ limitations under the License. */
 import groovy.json.*
 
 def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineScript, repository, watchBranch = "master") {
-    pipelineJob("${watchBranch.toUpperCase()}-${pipelineName}") {
+    pipelineJob("${applicationName}/${watchBranch.toUpperCase()}-${pipelineName}") {
         logRotator {
             numToKeep(10)
             daysToKeep(7)
@@ -52,7 +52,7 @@ def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineS
 }
 
 def createReleasePipeline(pipelineName, applicationName, applicationStages, pipelineScript, repository) {
-    pipelineJob("${pipelineName}") {
+    pipelineJob("${applicationName}/${pipelineName}") {
         logRotator {
             numToKeep(14)
             daysToKeep(30)
@@ -98,6 +98,7 @@ stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch
 ['app.settings.json', 'auto-test.settings.json'].each() { settingsFile ->
     new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/${settingsFile}").text).each() { item ->
         def applicationName = item.name
+        folder(applicationName)
         if (settingsFile == 'app.settings.json') {
             createCiPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-application'],
                     "code-review.groovy", "${appRepositoryBase}/${item.name}")
@@ -117,6 +118,7 @@ if (Boolean.valueOf("${PARAM}")) {
     def type = "${TYPE}"
     def buildTool = "${BUILD_TOOL}"
     def branch = BRANCH ? "${BRANCH}" : "master"
+    folder(appName)
     if (type == "application") {
         createCiPipeline("Code-review-${appName}", appName, stages['Code-review-application'], "code-review.groovy", "${appRepositoryBase}/${appName}", branch)
         createCiPipeline("Build-${appName}", appName, stages["Build-${buildTool.toLowerCase()}"], "build.groovy", "${appRepositoryBase}/${appName}", branch)

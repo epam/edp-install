@@ -96,12 +96,13 @@ public class AddAutotestSmokeTest {
         String username = new String(secret.getData("username")).trim();
         String token = new String(secret.getData("token")).trim();
 
-        String pipeline = CODEREVIEW_PIPELINE_SUFFIX + autotest;
+        String pipeline = autotest + "/job/" + CODEREVIEW_PIPELINE_SUFFIX + autotest;
         given().log().all()
                 .pathParam("pipeline", pipeline)
                 .auth()
                 .preemptive()
                 .basic(username, token)
+                .urlEncodingEnabled(false)
                 .when()
                 .get(urlBuilder.buildUrl("https",
                         "jenkins",

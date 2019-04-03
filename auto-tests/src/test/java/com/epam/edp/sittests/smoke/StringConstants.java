@@ -23,8 +23,8 @@ public class StringConstants {
 
     public static final String RABBITMQ_SERVICE_NAME = "rabbitmq";
 
-    public static final String CODEREVIEW_PIPELINE_SUFFIX = "MASTER-code-review-";
-    public static final String BUILD_PIPELINE_SUFFIX = "MASTER-build-";
+    public static final String CODEREVIEW_PIPELINE_SUFFIX = "MASTER-Code-review-";
+    public static final String BUILD_PIPELINE_SUFFIX = "MASTER-Build-";
     public static final String DELETION_PIPELINE_NAME = "deletion-pipeline";
 
     public static final String GERRIT_USER = "admin";
