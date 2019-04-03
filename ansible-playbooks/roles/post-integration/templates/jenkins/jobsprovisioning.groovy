@@ -36,7 +36,7 @@ def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineS
                 scm {
                     git {
                         remote { url(repository) }
-                        branches("master")
+                        branches("${watchBranch}")
                         scriptPath("${pipelineScript}")
                     }
                 }
@@ -93,7 +93,7 @@ stages['Build-gradle'] = stages['Build-maven']
 stages['Build-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
         "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build-image\"}," +
         "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
-stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch\"}]"
+stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch\"},{\"name\": \"trigger-job\"}]"
 
 ['app.settings.json', 'auto-test.settings.json'].each() { settingsFile ->
     new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/${settingsFile}").text).each() { item ->
@@ -117,9 +117,9 @@ if (Boolean.valueOf("${PARAM}")) {
     def type = "${TYPE}"
     def buildTool = "${BUILD_TOOL}"
     def branch = BRANCH ? "${BRANCH}" : "master"
-    if (type == "app") {
+    if (type == "application") {
         createCiPipeline("Code-review-${appName}", appName, stages['Code-review-application'], "code-review.groovy", "${appRepositoryBase}/${appName}", branch)
-        createCiPipeline("Build-${appName}", appName, stages["Build-${buildTool}"], "build.groovy", "${appRepositoryBase}/${appName}", branch)
+        createCiPipeline("Build-${appName}", appName, stages["Build-${buildTool.toLowerCase()}"], "build.groovy", "${appRepositoryBase}/${appName}", branch)
         createReleasePipeline("Create-release-${appName}", appName, stages["Create-release"], "create-release.groovy", "${appRepositoryBase}/${appName}")
     } else {
         createCiPipeline("Code-review-${appName}", appName, stages['Code-review-autotest'], "code-review.groovy", "${appRepositoryBase}/${appName}")
