@@ -70,7 +70,8 @@ def createReleasePipeline(pipelineName, applicationName, applicationStages, pipe
                     stringParam("STAGES", "${applicationStages}", "")
                     if (pipelineName.contains("Create-release")) {
                         stringParam("GERRIT_PROJECT", "${applicationName}", "")
-                        stringParam("RELEASE_NAME", "", "")
+                        stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
+                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, HEAD of master will be used")
                     }
                 }
             }
