@@ -166,7 +166,7 @@ objects:
             initialDelaySeconds: 60
             timeoutSeconds: 5
             periodSeconds: 20
-            failureThreshold: 6
+            failureThreshold: 15
           readinessProbe:
             exec:
               command:
