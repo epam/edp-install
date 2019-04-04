@@ -18,12 +18,12 @@
 
 - include_tasks: get-user-location.yml
   vars:
-    - username: "{{ item|lower }}"
+    - username: "{{ item }}"
     - realm: "openshift"
 
 - include_tasks: create-user-in-realm.yml
   vars:
-    - username: "{{ item|lower }}"
+    - username: "{{ item }}"
     - realm: "openshift"
     - password: "secret"
     - update_required: true
