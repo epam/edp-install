@@ -165,6 +165,7 @@ objects:
               - exec pg_isready --host $POD_IP
             initialDelaySeconds: 60
             timeoutSeconds: 5
+            periodSeconds: 20
             failureThreshold: 6
           readinessProbe:
             exec:
@@ -172,9 +173,9 @@ objects:
               - sh
               - -c
               - exec pg_isready --host $POD_IP
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60
             timeoutSeconds: 3
-            periodSeconds: 5
+            periodSeconds: 20
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: gerrit-db
