@@ -47,9 +47,9 @@
 
 - include_tasks: roles/common/tasks/manage-openshift/join-users-to-group.yml
   with_items:
-    - { group: "{{ edp_name }}-edp-super-admin", users: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users | replace(',', ' ') ) }}" }
-    - { group: "{{ edp_name }}-edp-admin", users: "{{ admin_users | replace(',', ' ') }}" }
-    - { group: "{{ edp_name }}-edp-view", users: "{{ view_users | replace(',', ' ') }}" }
+    - { group: "{{ edp_name }}-edp-super-admin", users: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users | replace(',', ' ') ) | lower }}" }
+    - { group: "{{ edp_name }}-edp-admin", users: "{{ admin_users | replace(',', ' ') | lower }}" }
+    - { group: "{{ edp_name }}-edp-view", users: "{{ view_users | replace(',', ' ') | lower }}" }
 
 - name: "Create project in Openshift"
   shell: "{{ ocadm }} new-project {{ item }}"
