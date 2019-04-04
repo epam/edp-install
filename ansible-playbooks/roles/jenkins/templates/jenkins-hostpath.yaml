@@ -196,8 +196,6 @@ objects:
                 key: password
           - name: JENKINS_UI_URL
             value: ${JENKINS_UI_URL}
-          - name: INSTALL_PLUGINS
-            value: "sonar:2.7.1"
           image: ${JENKINS_IMAGE_VERSION}
           imagePullPolicy: IfNotPresent
           readinessProbe:
