@@ -13,6 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import groovy.json.*
+import jenkins.model.Jenkins
 
 def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineScript, repository, watchBranch = "master") {
     pipelineJob("${applicationName}/${watchBranch.toUpperCase()}-${pipelineName}") {
@@ -79,9 +80,32 @@ def createReleasePipeline(pipelineName, applicationName, applicationStages, pipe
     }
 }
 
+def createListView(applicationName,branchName){
+    listView("${applicationName}/${branchName}") {
+        jobFilters {
+            regex {
+                matchType(MatchType.INCLUDE_MATCHED)
+                matchValue(RegexMatchValue.NAME)
+                regex("^${branchName}-(Code-review|Build).*")
+            }
+        }
+        columns {
+            status()
+            weather()
+            name()
+            lastSuccess()
+            lastFailure()
+            lastDuration()
+            buildButton()
+        }
+    }
+}
+
+Jenkins jenkins = Jenkins.instance
 def gerritSshPort = "{{ gerrit_ssh_port }}"
 def appRepositoryBase = "ssh://jenkins@gerrit:${gerritSshPort}"
 def stages = [:]
+
 stages['Code-review-application'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"compile\"},{\"name\": \"tests\"}," +
         "{\"name\": \"sonar\"}]"
 stages['Code-review-autotest'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"tests\"},{\"name\": \"sonar\"}]"
@@ -98,7 +122,11 @@ stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch
 ['app.settings.json', 'auto-test.settings.json'].each() { settingsFile ->
     new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/${settingsFile}").text).each() { item ->
         def applicationName = item.name
-        folder(applicationName)
+        def applicationFolder = jenkins.getItem(applicationName)
+        if (applicationFolder == null){
+            folder(applicationName)
+        }
+        createListView(applicationName,"MASTER")
         if (settingsFile == 'app.settings.json') {
             createCiPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-application'],
                     "code-review.groovy", "${appRepositoryBase}/${item.name}")
@@ -118,7 +146,12 @@ if (Boolean.valueOf("${PARAM}")) {
     def type = "${TYPE}"
     def buildTool = "${BUILD_TOOL}"
     def branch = BRANCH ? "${BRANCH}" : "master"
-    folder(appName)
+
+    def applicationFolder = jenkins.getItem(appName)
+    if (applicationFolder == null){
+        folder(appName)
+    }
+    createListView(appName,"${branch.toUpperCase()}")
     if (type == "application") {
         createCiPipeline("Code-review-${appName}", appName, stages['Code-review-application'], "code-review.groovy", "${appRepositoryBase}/${appName}", branch)
         createCiPipeline("Build-${appName}", appName, stages["Build-${buildTool.toLowerCase()}"], "build.groovy", "${appRepositoryBase}/${appName}", branch)

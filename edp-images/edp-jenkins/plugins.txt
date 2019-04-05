@@ -85,6 +85,7 @@ subversion:2.11.1
 test-results-analyzer:0.3.5
 token-macro:2.5
 validating-string-parameter:2.3
+view-job-filters:2.1.1
 workflow-api:2.27
 workflow-basic-steps:2.8
 workflow-cps-global-lib:2.9
