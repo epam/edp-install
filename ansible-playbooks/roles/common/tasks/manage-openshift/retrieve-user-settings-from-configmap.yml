@@ -36,6 +36,7 @@
 
 - set_fact:
     dns_wildcard: "{{ user_settings.data.dns_wildcard }}"
+    admin_console_url: "{{ user_settings.data.admin_console_url }}"
     edp_name: "{{ user_settings.data.edp_name }}"
     gerrit_ssh_port: "{{ gerrit_ssh_port.stdout }}"
     vcs_integration_enabled: "{{ user_settings.data.vcs_integration_enabled }}"

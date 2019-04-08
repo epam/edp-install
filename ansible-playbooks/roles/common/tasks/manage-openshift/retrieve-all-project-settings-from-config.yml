@@ -18,13 +18,59 @@
    {{ ocadm }} -n {{ project_cicd }} get cm project-settings -o=jsonpath='{ .data.env\.settings\.json }'
   register: env_settings_json
 
-- name: "Get applications settings from project-settings config map"
-  command: |
-   {{ ocadm }} -n {{ project_cicd }} get cm project-settings -o=jsonpath='{ .data.app\.settings\.json }'
-  register: app_settings_json
+- name: "Get username from admin-console-reader secret"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-reader
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: admin_console_reader_username
+
+- name: "Get password from admin-console-reader secret"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-reader
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: admin_console_reader_password
+  no_log: true
+
+- name: "Get username from admin-console-client secret"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: admin_console_client_id
+
+- name: "Get password from admin-console-client secret"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: admin_console_client_secret
+  no_log: true
+
+- set_fact:
+    keycloak_base_url: "https://keycloak-security.{{ dns_wildcard }}/auth"
+
+- name: "Login to Keycloak and get token"
+  uri:
+    url: "{{ keycloak_base_url }}/realms/openshift/protocol/openid-connect/token"
+    method: POST
+    body: 'grant_type=password&username={{ admin_console_reader_username.stdout }}&password={{ admin_console_reader_password.stdout }}&client_id={{ admin_console_client_id.stdout }}&client_secret={{ admin_console_client_secret.stdout }}'
+  register: access_token
+  no_log: true
+
+- set_fact:
+    access_token: "{{ access_token.json.access_token }}"
+  no_log: true
+
+- name: "Get application list from admin console"
+  uri:
+    url: "{{ admin_console_url }}/api/v1/edp/application"
+    method: GET
+    return_content: yes
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+  register: applications
+  no_log: true
 
 - name: "Convert json to map"
   set_fact:
     env_map: "{{ env_settings_json.stdout| from_json }}"
-    app_map: "{{ app_settings_json.stdout| from_json }}"
+    app_map: "{{ applications.json }}"
     env_names_list: "{{ env_settings_json.stdout| from_json | map(attribute='name') | list | map('regex_replace', '(.*)', '\\1-meta') | list }}"

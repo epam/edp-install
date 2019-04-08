@@ -21,8 +21,8 @@
 - set_fact:
     project_cicd: "{{ lookup('env','PROJECT_CICD') }}"
 
-- include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
 - include_tasks: roles/common/tasks/manage-openshift/retrieve-user-settings-from-configmap.yml
+- include_tasks: roles/common/tasks/manage-openshift/retrieve-all-project-settings-from-config.yml
 
 - block:
     - include_tasks: roles/common/tasks/manage-openshift/retrieve-perf-settings-from-configmap.yml
