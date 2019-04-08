@@ -1,0 +1,68 @@
+# Copyright 2018 EPAM Systems.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+- name: "Copy admin-console templates"
+  template:
+    src: "{{ item }}"
+    dest: "{{ templates_dir }}/admin_console/{{ item }}"
+  with_items:
+    - "admin-console.yaml"
+
+- name: "Get username for Admin Console Keycloak Client"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: ac_keycloak_client_id
+
+- name: "Get password for Admin Console Keycloak Client"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: ac_keycloak_client_secret
+  no_log: true
+
+- set_fact:
+    ac_keycloak_client_id: "{{ ac_keycloak_client_id.stdout }}"
+    ac_keycloak_client_secret: "{{ ac_keycloak_client_secret.stdout }}"
+  no_log: true
+
+- name: "Install admin-console app"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/admin_console/admin-console.yaml
+    -p EDP_ADMIN_CONSOLE_VERSION={{ tools.admin_console.version }}
+    -p EDP_DEPLOY_PROJECT={{ operators_deploy_project }}
+    -p HOST={{ tools.admin_console.web_url }}
+    -p DNS_WILDCARD={{ dns_wildcard }}
+    -p KEYCLOAK_URL={{ tools.keycloak.web_url }}/auth/realms/{{ full_edp_name }}
+    -p KEYCLOAK_CLIENT_ID={{ ac_keycloak_client_id }}
+    -p KEYCLOAK_CLIENT_SECRET={{ ac_keycloak_client_secret }}
+    -p TENANT={{ edp_name }}
+  register: result
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
+- name: "Assign necessary permissions for admin-console service account"
+  shell: >
+    {{ ocadm }} {{ item }}
+  with_items:
+  - "adm policy add-role-to-user admin system:serviceaccount:{{ project_cicd }}:admin-console -n {{ project_cicd }}"
+  - "adm policy add-scc-to-user anyuid system:serviceaccount:{{ project_cicd }}:admin-console"
+  register: result
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'

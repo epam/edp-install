@@ -36,6 +36,8 @@ perf_node_id: "{{ perf_node_id if perf_integration_enabled|bool == true else und
 perf_user_secret_name: "{{ 'perf-user-edp-' + edp_name + '-temp' if perf_integration_enabled|bool == true else undefined }}"
 perf_web_url: "{{ perf_url if perf_integration_enabled|bool == true else undefined }}"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
+default_operators_deploy_project: "{{ edp_name }}-deploy-project"
+operators_deploy_project: "{{ default_operators_deploy_project if mr_deploy|bool == true else edp_deploy_project }}"
 stages_repo: "{{ lookup('env', 'STAGES_REPO') | default('https://github.com/epmd-edp/edp-library-stages.git',true) }}"
 pipelines_repo: "{{ lookup('env', 'PIPELINES_REPO') | default('https://github.com/epmd-edp/edp-library-pipelines.git',true) }}"
 stages_version: "{{ lookup('env', 'STAGES_VERSION') }}"
@@ -46,7 +48,6 @@ edp_admins: "{{ admin_users.split(',') | lower }}"
 edp_viewers: "{{ view_users.split(',') | lower }}"
 basic_pattern_url: "https://github.com/epmd-edp"
 random_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-admin_console_url: "{{ admin_console_url }}"
 secrets:
   sonar_admin:
     password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
@@ -71,9 +72,6 @@ secrets:
     db_name: sonar
     db_user: sonar
     db_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-  admin_console:
-    user: "admin-console-reader-{{ edp_name }}"
-    password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
 tools:
   jenkins:
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
@@ -268,6 +266,10 @@ tools:
     openshift_trust_certificates: "true"
     client_id: "cockpit"
     web_url: "https://edp-cockpit-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
+  admin_console:
+    db_secret: "admin-console-db"
+    version: "{{ admin_console_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-admin-console:snapshot') }}"
+    web_url: "https://edp-admin-console-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   keycloak:
     realm_name: "{{ full_edp_name }}"
     web_url: "https://keycloak-security.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"

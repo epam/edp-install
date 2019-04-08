@@ -21,4 +21,5 @@
     - { role: nexus, tags: [ 'nexus' ] }
     - { role: sonar, tags: [ 'sonar' ] }
     - { role: edp-cockpit, tags: [ 'edp-cockpit' ] }
+    - { role: admin-console, tags: [ 'admin-console' ] }
     - { role: post-integration, tags: [ 'post-integration' ] }

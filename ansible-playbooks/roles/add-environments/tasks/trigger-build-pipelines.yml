@@ -16,6 +16,6 @@
 - name: "Trigger build pipeline for each application"
   include_tasks: roles/common/tasks/manage-jenkins/trigger-job.yml
   vars:
-    job_name: "MASTER-Build-{{ item.name }}"
+    job_name: "{{ item.name }}/job/MASTER-Build-{{ item.name }}"
     parameterized: true
   with_items: "{{ app_map | list }}"

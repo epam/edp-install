@@ -36,8 +36,54 @@
   register: password
   no_log: true
 
+- name: "Get username for Admin Console Reader"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-reader
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: ac_reader_username
+
+- name: "Get password for Admin Console Reader"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-reader
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: ac_reader_password
+  no_log: true
+
+- name: "Get username for Admin Console Creator"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-creator
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: ac_creator_username
+
+- name: "Get password for Admin Console Creator"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-creator
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: ac_creator_password
+  no_log: true
+
+- name: "Get username for Admin Console Keycloak Client"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: ac_keycloak_client_id
+
+- name: "Get password for Admin Console Keycloak Client"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: ac_keycloak_client_secret
+  no_log: true
+
 - set_fact:
+    ac_reader_username: "{{ ac_reader_username.stdout }}"
+    ac_reader_password: "{{ ac_reader_password.stdout }}"
+    ac_creator_username: "{{ ac_creator_username.stdout }}"
+    ac_creator_password: "{{ ac_creator_password.stdout }}"
+    ac_keycloak_client_id: "{{ ac_keycloak_client_id.stdout }}"
+    ac_keycloak_client_secret: "{{ ac_keycloak_client_secret.stdout }}"
     keycloak_base_url: "http://keycloak.security:8080/auth"
+  no_log: true
 
 - name: "Login to Keycloak and get token"
   uri:
@@ -175,37 +221,3 @@
      redirection_url: "{{ tools.nexus.web_url }}", upstream_port: 8081, roles: "administrator,developer" }
     - { upstream_resource: "edp-cockpit", client_id: "{{ tools.cockpit.client_id }}",
      redirection_url: "{{ tools.cockpit.web_url }}", upstream_port: 8080, roles: "cockpit-administrators" }
-
-- name: "Get username for Admin Console Reader"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-reader
-    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
-  register: ac_username
-
-- name: "Get password for Admin Console Reader"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-reader
-    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
-  register: ac_password
-
-- set_fact:
-    ac_username: "{{ ac_username.stdout }}"
-    ac_password: "{{ ac_password.stdout }}"
-
-- include_tasks: keycloak-api/create-user-in-realm.yml
-  vars:
-    - username: "{{ ac_username }}"
-    - realm: "openshift"
-    - password: "{{ ac_password }}"
-    - update_required: false
-
-- name: "Assign dev role in edp client"
-  uri:
-    url: "{{ user_location }}/role-mappings/clients/{{ edp_client_id }}"
-    method: POST
-    headers:
-      Authorization: "Bearer {{ access_token }}"
-      Content-Type: "application/json"
-    status_code: 204
-    body: "[ {{ dev_role.json | to_json }} ]"
-    body_format: json

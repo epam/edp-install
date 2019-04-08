@@ -87,7 +87,7 @@ objects:
             - "-e perf_integration_enabled=${PERF_INTEGRATION_ENABLED}"
             - "-e perf_node_id=${PERF_NODE_ID}"
             - "-e perf_url=${PERF_URL}"
-            - "-e admin_console_url=${ADMIN_CONSOLE_URL}"
+            - "-e admin_console_version=${ADMIN_CONSOLE_VERSION}"
             - "ansible-playbooks/install.yml"
 parameters:
 - displayName: Name for EDP tenant
@@ -226,6 +226,9 @@ parameters:
   description: Perf URL location
   name: PERF_URL
   value: ""
+- displayName: Version of Admin Console
+  name: ADMIN_CONSOLE_VERSION
+  value: "docker-registry.default.svc:5000/edp-cicd-delivery/edp-admin-console:master"
 - displayName: Admin console url
   description: Admin console url
   name: ADMIN_CONSOLE_URL

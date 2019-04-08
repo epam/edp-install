@@ -150,6 +150,21 @@
         "{{ tools.cockpit.web_url }}"
       ],
       "adminUrl":"{{ tools.cockpit.web_url }}/"
+    },
+    {
+      "clientId":"{{ ac_keycloak_client_id }}",
+      "enabled":true,
+      "publicClient":false,
+      "directAccessGrantsEnabled": true,
+      "rootUrl":"{{ tools.admin_console.web_url }}",
+      "redirectUris":[
+        "{{ tools.admin_console.web_url }}/*"
+      ],
+      "webOrigins":[
+        "{{ tools.admin_console.web_url }}"
+      ],
+      "adminUrl":"{{ tools.admin_console.web_url }}/",
+      "secret":"{{ ac_keycloak_client_secret }}"
     }
   ],
   "identityProviders":[
@@ -543,6 +558,36 @@
       "config":{
         "defaultProvider":"openshift"
       }
+    }
+  ],
+  "users": [
+    {
+      "username": "{{ ac_reader_username }}",
+      "enabled": true,
+      "email": "{{ ac_reader_username }}@example.com",
+      "firstName": "Reader",
+      "lastName": "EDP",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "{{ ac_reader_password }}"
+        }
+      ],
+      "realmRoles": [ "developer" ]
+    },
+    {
+      "username": "{{ ac_creator_username }}",
+      "enabled": true,
+      "email": "{{ ac_creator_username }}@example.com",
+      "firstName": "Administrator",
+      "lastName": "EDP",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "{{ ac_creator_password }}"
+        }
+      ],
+      "realmRoles": [ "administrator" ]
     }
   ]
 }
