@@ -34,7 +34,7 @@ objects:
   kind: ServiceAccount
   metadata:
     name: gerrit
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -182,7 +182,7 @@ objects:
         serviceAccount: gerrit
         volumes:
         - name: gerrit-db
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
           persistentVolumeClaim:
             claimName: gerrit-db
 {% else %}
@@ -288,7 +288,7 @@ objects:
         serviceAccount: gerrit
         volumes:
           - name: gerrit-data
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
             persistentVolumeClaim:
               claimName: gerrit-data
 {% else %}

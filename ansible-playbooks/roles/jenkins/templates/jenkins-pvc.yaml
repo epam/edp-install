@@ -97,7 +97,7 @@ objects:
     to:
       kind: Service
       name: jenkins
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -205,7 +205,7 @@ objects:
         serviceAccountName: jenkins
         volumes:
         - name: jenkins-data
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
           persistentVolumeClaim:
             claimName: jenkins-data
 {% else %}
@@ -319,7 +319,7 @@ objects:
           <memory>false</memory>
         </workspaceVolume>
         <volumes>
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
           <org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
             <mountPath>/opt/caches/maven</mountPath>
             <claimName>maven-cache</claimName>

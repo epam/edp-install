@@ -211,7 +211,7 @@ GitSCMSource gitSCMSourcePipelines = new GitSCMSource(
         false
 )
 
-{% if mr_deploy == 'true' %}
+{% if dev_deploy == 'true' %}
 List<SCMSourceTrait> traits = new ArrayList<>()
 traits.add(new BranchDiscoveryTrait())
 List<RefSpecsSCMSourceTrait.RefSpecTemplate> templates = new ArrayList<>()

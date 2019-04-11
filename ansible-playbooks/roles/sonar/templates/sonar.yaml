@@ -28,7 +28,7 @@ metadata:
     template.openshift.io/support-url: https://access.redhat.com
 message: "Login to SonarQube with the default admin user: admin/admin"
 objects:
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -171,7 +171,7 @@ objects:
         serviceAccount: sonar
         volumes:
         - name: sonar-data
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
           persistentVolumeClaim:
             claimName: sonar-data
 {% else %}
@@ -251,7 +251,7 @@ objects:
         serviceAccount: sonar
         volumes:
         - name: sonar-db
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
           persistentVolumeClaim:
             claimName: sonar-db
 {% else %}

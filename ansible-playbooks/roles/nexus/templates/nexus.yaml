@@ -33,7 +33,7 @@ metadata:
     template.openshift.io/provider-display-name: Red Hat, Inc.
     template.openshift.io/support-url: https://access.redhat.com
 objects:
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -113,7 +113,7 @@ objects:
         terminationGracePeriodSeconds: 30
         volumes:
         - name: nexus-data
-{% if mr_deploy == 'false' %}
+{% if ephemeral_data == 'false' %}
           persistentVolumeClaim:
             claimName: nexus-data
 {% else %}
