@@ -66,3 +66,10 @@
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
+
+- name: "Check health of admin-console deployment in project {{ project_cicd }}"
+  shell: "{{ ocadm }} -n {{ project_cicd }} rollout status dc edp-admin-console"
+  retries: 240
+  delay: 15
+  register: result
+  until: '"successfully rolled out" in result.stdout'
