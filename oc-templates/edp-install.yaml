@@ -229,7 +229,3 @@ parameters:
 - displayName: Version of Admin Console
   name: ADMIN_CONSOLE_VERSION
   value: "docker-registry.default.svc:5000/edp-cicd-delivery/edp-admin-console:master"
-- displayName: Admin console url
-  description: Admin console url
-  name: ADMIN_CONSOLE_URL
-  value: ""
