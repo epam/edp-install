@@ -40,7 +40,6 @@
     regexp: '\${DOCKER_IMAGE}'
     replace: "{{ edp_version }}"
   with_items:
-    - '{{ templates_dir }}/add-business-application.yaml'
     - '{{ templates_dir }}/add-autotests.yaml'
     - '{{ templates_dir }}/add-environments.yaml'
     - '{{ templates_dir }}/add-service.yaml'
@@ -53,7 +52,6 @@
      --from-file=app-types.json={{ templates_dir }}/cockpit/app-types.json
      --from-file=autotest-types.json={{ templates_dir }}/cockpit/autotest-types.json
      --from-file=service-types.json={{ templates_dir }}/cockpit/service-types.json"
-    - "{{ ocadm }} apply -f {{ templates_dir }}/add-business-application.yaml"
     - "{{ ocadm }} apply -f {{ templates_dir }}/add-autotests.yaml"
     - "{{ ocadm }} apply -f {{ templates_dir }}/add-environments.yaml"
     - "{{ ocadm }} apply -f {{ templates_dir }}/add-service.yaml"

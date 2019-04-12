@@ -26,7 +26,7 @@ metadata:
     openshift.io/display-name: Add environments
     tags: ci-cd
     template.openshift.io/documentation-url: https://kb.epam.com/display/EPMDEDP/EPMD-EDP+Home
-    template.openshift.io/long-description: This template add application for letting EDP know about it.
+    template.openshift.io/long-description: This template add environment for letting EDP know about it.
     template.openshift.io/provider-display-name: EPAM
     template.openshift.io/support-url: https://www.epam.com
 objects:
