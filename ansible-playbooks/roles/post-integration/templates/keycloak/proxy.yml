@@ -44,7 +44,7 @@ objects:
         containers:
         - image: quay.io/gambol99/keycloak-proxy:v2.2.2
           name: keycloak-proxy
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
               protocol: TCP
