@@ -119,44 +119,32 @@ stages['Build-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},
         "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
 stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch\"},{\"name\": \"trigger-job\"}]"
 
-['app.settings.json', 'auto-test.settings.json'].each() { settingsFile ->
-    new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/${settingsFile}").text).each() { item ->
-        def applicationName = item.name
-        def applicationFolder = jenkins.getItem(applicationName)
-        if (applicationFolder == null){
-            folder(applicationName)
-        }
-        createListView(applicationName,"MASTER")
-        if (settingsFile == 'app.settings.json') {
-            createCiPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-application'],
-                    "code-review.groovy", "${appRepositoryBase}/${item.name}")
-            createCiPipeline("Build-${applicationName}", applicationName, stages["Build-${item.build_tool.toLowerCase()}"],
-                    "build.groovy", "${appRepositoryBase}/${item.name}")
-            createReleasePipeline("Create-release-${applicationName}", applicationName, stages["Create-release"],
-                    "create-release.groovy", "${appRepositoryBase}/${item.name}")
-        } else
-            createCiPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-autotest'],
-                    "code-review.groovy", "${appRepositoryBase}/${item.name}")
-
+new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/auto-test.settings.json").text).each() { item ->
+    def applicationName = item.name
+    def applicationFolder = jenkins.getItem(applicationName)
+    if (applicationFolder == null){
+        folder(applicationName)
     }
+    createListView(applicationName,"MASTER")
+    createCiPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-autotest'],
+            "code-review.groovy", "${appRepositoryBase}/${item.name}")
 }
 
 if (Boolean.valueOf("${PARAM}")) {
     def appName = "${NAME}"
-    def type = "${TYPE}"
     def buildTool = "${BUILD_TOOL}"
-    def branch = BRANCH ? "${BRANCH}" : "master"
 
     def applicationFolder = jenkins.getItem(appName)
     if (applicationFolder == null){
         folder(appName)
     }
-    createListView(appName,"${branch.toUpperCase()}")
-    if (type == "application") {
+
+    createReleasePipeline("Create-release-${appName}", appName, stages["Create-release"], "create-release.groovy", "${appRepositoryBase}/${appName}")
+
+    if (BRANCH) {
+        def branch = "${BRANCH}"
+        createListView(appName,"${branch.toUpperCase()}")
         createCiPipeline("Code-review-${appName}", appName, stages['Code-review-application'], "code-review.groovy", "${appRepositoryBase}/${appName}", branch)
         createCiPipeline("Build-${appName}", appName, stages["Build-${buildTool.toLowerCase()}"], "build.groovy", "${appRepositoryBase}/${appName}", branch)
-        createReleasePipeline("Create-release-${appName}", appName, stages["Create-release"], "create-release.groovy", "${appRepositoryBase}/${appName}")
-    } else {
-        createCiPipeline("Code-review-${appName}", appName, stages['Code-review-autotest'], "code-review.groovy", "${appRepositoryBase}/${appName}")
     }
 }
