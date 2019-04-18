@@ -115,6 +115,28 @@ public class AddApplicationSmokeTest {
                 .statusCode(HttpStatus.SC_OK);
     }
 
+    @Test(dataProvider = "pipeline")
+    public void testJenkinsPipelineWasCreated(String pipeline) {
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, "jenkins-token", openshiftNamespace);
+
+        String username = new String(secret.getData("username")).trim();
+        String token = new String(secret.getData("token")).trim();
+
+        given().log().all()
+                .pathParam("pipeline", pipeline)
+                .auth()
+                .preemptive()
+                .basic(username, token)
+                .urlEncodingEnabled(false)
+                .when()
+                .get(urlBuilder.buildUrl("https",
+                        "jenkins",
+                        "edp-cicd",
+                        "job/{pipeline}/api/json"))
+                .then()
+                .statusCode(HttpStatus.SC_OK);
+    }
+
     @Test(dataProvider = "application")
     public void testApplicationTemplateHasBeenAdded(String application) {
         Secret secret = openShiftClient.get(ResourceKind.SECRET, GERRIT_SECRET, openshiftNamespace);
