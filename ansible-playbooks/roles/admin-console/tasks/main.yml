@@ -33,10 +33,24 @@
   register: ac_keycloak_client_secret
   no_log: true
 
+- name: "Retrieve database username from secret"
+  shell: >
+   {{ ocadm }} -n {{ operators_deploy_project }} get secret {{ tools.admin_console.db_secret }}
+   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: admin_console_db_username
+  no_log: true
+
 - set_fact:
     ac_keycloak_client_id: "{{ ac_keycloak_client_id.stdout }}"
     ac_keycloak_client_secret: "{{ ac_keycloak_client_secret.stdout }}"
+    admin_console_db_username: "{{ admin_console_db_username.stdout }}"
+    admin_console_db_pod: "{{ ocadm }} -n {{ operators_deploy_project }} get pods \
+                          --no-headers -o custom-columns=NAME:.metadata.name | egrep 'edp-install-wizard-db-[0-9]+'"
   no_log: true
+
+- name: "Create schema in database"
+  shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
+         -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA \"{{ edp_name }}\";' -U {{ admin_console_db_username }}"
 
 - name: "Install admin-console app"
   shell: >
