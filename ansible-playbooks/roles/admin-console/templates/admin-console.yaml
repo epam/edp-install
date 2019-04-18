@@ -33,6 +33,7 @@ objects:
         resources:
           - businessapplications
           - applicationbranches
+          - cdpipelines
         verbs:
           - get
           - create
