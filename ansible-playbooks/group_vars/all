@@ -74,6 +74,9 @@ secrets:
     db_name: sonar
     db_user: sonar
     db_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
+  shared_database:
+    database_tenant_username: "admin-{{ edp_name }}"
+    database_tenant_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
 tools:
   jenkins:
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"

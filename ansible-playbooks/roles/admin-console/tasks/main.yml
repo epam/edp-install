@@ -33,6 +33,19 @@
   register: ac_keycloak_client_secret
   no_log: true
 
+- name: "Create secret for Admin Console Reader"
+  register: result
+  ignore_errors: true
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create secret generic shared-database-tenant-user
+    --from-literal=username={{ secrets.shared_database.database_tenant_username }}
+    --from-literal=password={{ secrets.shared_database.database_tenant_password }}
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+  no_log: true
+
 - name: "Retrieve database username from secret"
   shell: >
    {{ ocadm }} -n {{ operators_deploy_project }} get secret {{ tools.admin_console.db_secret }}
@@ -51,6 +64,17 @@
 - name: "Create schema in database"
   shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
          -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA \"{{ edp_name }}\";' -U {{ admin_console_db_username }}"
+
+- name: "Create tenant user in database"
+  raw: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
+         -- psql --dbname={{ shared_database }} {{ admin_console_db_username }} \
+         -c 'CREATE USER \"{{ secrets.shared_database.database_tenant_username }}\" \
+         WITH ENCRYPTED PASSWORD '\u005C''\u0027'{{ secrets.shared_database.database_tenant_password }}'\u005C''\u0027';'"
+
+- name: "Grant all privileges for tenant user in database scheme"
+  shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
+         -- psql --dbname={{ shared_database }} -c 'GRANT ALL PRIVILEGES ON SCHEMA \"{{ edp_name }}\" \
+         TO \"{{ secrets.shared_database.database_tenant_username }}\";' -U {{ admin_console_db_username }}"
 
 - name: "Install admin-console app"
   shell: >
