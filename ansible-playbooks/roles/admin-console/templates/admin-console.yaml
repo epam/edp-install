@@ -137,6 +137,8 @@ objects:
                   value: "5432"
                 - name: TENANT
                   value: ${TENANT}
+                - name: EDP_VERSION
+                  value: ${EDP_VERSION}
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
           dnsPolicy: ClusterFirst
@@ -211,5 +213,9 @@ parameters:
     required: true
   - displayName: Tenant name
     name: TENANT
+    value: ''
+    required: true
+  - displayName: Version of EDP
+    name: EDP_VERSION
     value: ''
     required: true
