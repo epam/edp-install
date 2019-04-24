@@ -36,6 +36,7 @@ perf_node_id: "{{ perf_node_id if perf_integration_enabled|bool == true else und
 perf_user_secret_name: "{{ 'perf-user-edp-' + edp_name + '-temp' if perf_integration_enabled|bool == true else undefined }}"
 perf_web_url: "{{ perf_url if perf_integration_enabled|bool == true else undefined }}"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
+shared_secrets_mask: "edp-shared-"
 stages_repo: "{{ lookup('env', 'STAGES_REPO') | default('https://github.com/epmd-edp/edp-library-stages.git',true) }}"
 pipelines_repo: "{{ lookup('env', 'PIPELINES_REPO') | default('https://github.com/epmd-edp/edp-library-pipelines.git',true) }}"
 stages_version: "{{ lookup('env', 'STAGES_VERSION') }}"
@@ -264,6 +265,10 @@ tools:
     openshift_trust_certificates: "true"
     client_id: "cockpit"
     web_url: "https://edp-cockpit-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
+  admin_console:
+    db_secret: "admin-console-db"
+    version: "{{ admin_console_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-admin-console:snapshot') }}"
+    web_url: "https://edp-admin-console-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   keycloak:
     realm_name: "{{ full_edp_name }}"
     web_url: "https://keycloak-security.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
