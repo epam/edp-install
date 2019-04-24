@@ -63,6 +63,24 @@ objects:
   rules:
   - apiGroups:
     - ""
+    - network.openshift.io
+    attributeRestrictions: null
+    resources:
+    - clusternetworks
+    verbs:
+    - list
+    - get
+  - apiGroups:
+    - ""
+    - network.openshift.io
+    attributeRestrictions: null
+    resources:
+    - netnamespaces
+    verbs:
+    - get
+    - update
+  - apiGroups:
+    - ""
     - image.openshift.io
     attributeRestrictions: null
     resources:

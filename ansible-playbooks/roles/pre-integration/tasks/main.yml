@@ -61,6 +61,14 @@
     openshift.io/display-name={{ edp_name }}-edp
     openshift.io/description='Version: {{ edp_version.split(':') | last }}'
 
+- name: "Check network plugin"
+  shell: "{{ ocadm }} get clusternetwork -o custom-columns=PLUGIN:.pluginName --no-headers=true"
+  register: cluster_network_type
+
+- name: "Giving access if multitenant"
+  shell: "{{ ocadm }} adm pod-network join-projects --to={{ edp_deploy_project }} {{ project_cicd }}"
+  when: '"multitenant" in cluster_network_type.stdout'
+
 - name: "Giving admin roles to groups"
   shell: "{{ ocadm }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
   with_nested:
