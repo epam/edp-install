@@ -85,6 +85,7 @@
      {{ ocadm }} get secret -n {{ edp_deploy_project }} -o custom-columns=NAME:.metadata.name
      --no-headers=true | grep {{ shared_secrets_mask }}
   register: edp_shared_secrets
+  ignore_errors: true
 
 - name: "Clone shared secrets to CICD project"
   shell: >
