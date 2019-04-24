@@ -40,6 +40,7 @@ dev_deploy: "{{ (lookup('env', 'DEV_DEPLOY') == 'true') | ternary('true', 'false
 default_operators_deploy_project: "{{ edp_name }}-deploy-project"
 operators_deploy_project: "{{ default_operators_deploy_project if dev_deploy|bool == true else edp_deploy_project }}"
 shared_database: "edp-install-wizard-db"
+shared_secrets_mask: "edp-shared-"
 stages_repo: "{{ lookup('env', 'STAGES_REPO') | default('https://github.com/epmd-edp/edp-library-stages.git',true) }}"
 pipelines_repo: "{{ lookup('env', 'PIPELINES_REPO') | default('https://github.com/epmd-edp/edp-library-pipelines.git',true) }}"
 stages_version: "{{ lookup('env', 'STAGES_VERSION') }}"
