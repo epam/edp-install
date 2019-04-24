@@ -33,11 +33,11 @@
   register: ac_keycloak_client_secret
   no_log: true
 
-- name: "Create secret for Admin Console Reader"
+- name: "Create secret for Admin Console tenant admin"
   register: result
   ignore_errors: true
   command: |
-    {{ ocadm }} -n {{ project_cicd }} create secret generic shared-database-tenant-user
+    {{ ocadm }} -n {{ project_cicd }} create secret generic admin-console-db
     --from-literal=username={{ secrets.shared_database.database_tenant_username }}
     --from-literal=password={{ secrets.shared_database.database_tenant_password }}
   changed_when: '"already" not in result.stderr'
@@ -53,28 +53,43 @@
   register: admin_console_db_username
   no_log: true
 
+- name: "Get username for Admin Console DB tenant admin"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-db
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: admin_console_db_tenant_admin_username
+
+- name: "Get password for Admin Console DB tenant admin"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-db
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: admin_console_db_tenant_admin_password
+  no_log: true
+
 - set_fact:
     ac_keycloak_client_id: "{{ ac_keycloak_client_id.stdout }}"
     ac_keycloak_client_secret: "{{ ac_keycloak_client_secret.stdout }}"
-    admin_console_db_username: "{{ admin_console_db_username.stdout }}"
+    admin_console_db_tenant_admin_username: "{{ admin_console_db_tenant_admin_username.stdout }}"
+    admin_console_db_tenant_admin_password: "{{ admin_console_db_tenant_admin_password.stdout }}"
+    admin_console_db_admin_username: "{{ admin_console_db_username.stdout }}"
     admin_console_db_pod: "{{ ocadm }} -n {{ operators_deploy_project }} get pods \
                           --no-headers -o custom-columns=NAME:.metadata.name | egrep 'edp-install-wizard-db-[0-9]+'"
   no_log: true
 
 - name: "Create schema in database"
   shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
-         -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA \"{{ edp_name }}\";' -U {{ admin_console_db_username }}"
+         -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA \"{{ edp_name }}\";' -U {{ admin_console_db_admin_username }}"
 
 - name: "Create tenant user in database"
   raw: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
-         -- psql --dbname={{ shared_database }} {{ admin_console_db_username }} \
-         -c 'CREATE USER \"{{ secrets.shared_database.database_tenant_username }}\" \
-         WITH ENCRYPTED PASSWORD '\u005C''\u0027'{{ secrets.shared_database.database_tenant_password }}'\u005C''\u0027';'"
+         -- psql --dbname={{ shared_database }} {{ admin_console_db_admin_username }} \
+         -c 'CREATE USER \"{{ admin_console_db_tenant_admin_username }}\" \
+         WITH PASSWORD '\u005C''\u0027'{{ admin_console_db_tenant_admin_password }}'\u005C''\u0027';'"
 
 - name: "Grant all privileges for tenant user in database scheme"
   shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
          -- psql --dbname={{ shared_database }} -c 'GRANT ALL PRIVILEGES ON SCHEMA \"{{ edp_name }}\" \
-         TO \"{{ secrets.shared_database.database_tenant_username }}\";' -U {{ admin_console_db_username }}"
+         TO \"{{ admin_console_db_tenant_admin_username }}\";' -U {{ admin_console_db_admin_username }}"
 
 - name: "Install admin-console app"
   shell: >
