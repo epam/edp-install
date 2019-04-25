@@ -101,7 +101,6 @@
     -p KEYCLOAK_URL={{ tools.keycloak.web_url }}/auth/realms/{{ full_edp_name }}
     -p KEYCLOAK_CLIENT_ID={{ ac_keycloak_client_id }}
     -p KEYCLOAK_CLIENT_SECRET={{ ac_keycloak_client_secret }}
-    -p TENANT={{ edp_name }}
     -p EDP_VERSION={{ edp_version.split(':') | last }}
   register: result
   changed_when: '"already" not in result.stderr'

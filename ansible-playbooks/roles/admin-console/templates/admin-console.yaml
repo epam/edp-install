@@ -135,8 +135,6 @@ objects:
                       key: password
                 - name: PG_PORT
                   value: "5432"
-                - name: TENANT
-                  value: ${TENANT}
                 - name: EDP_VERSION
                   value: ${EDP_VERSION}
               terminationMessagePath: /dev/termination-log
@@ -209,10 +207,6 @@ parameters:
     required: true
   - displayName: Keycloak Client Secret
     name: KEYCLOAK_CLIENT_SECRET
-    value: ''
-    required: true
-  - displayName: Tenant name
-    name: TENANT
     value: ''
     required: true
   - displayName: Version of EDP
