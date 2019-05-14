@@ -37,6 +37,7 @@ perf_user_secret_name: "{{ 'perf-user-edp-' + edp_name + '-temp' if perf_integra
 perf_web_url: "{{ perf_url if perf_integration_enabled|bool == true else undefined }}"
 mr_deploy: "{{ (lookup('env', 'MR_DEPLOY') == 'true') | ternary('true', 'false') }}"
 shared_secrets_mask: "edp-shared-"
+image_puller_secret_mask: "image-puller-"
 stages_repo: "{{ lookup('env', 'STAGES_REPO') | default('https://github.com/epmd-edp/edp-library-stages.git',true) }}"
 pipelines_repo: "{{ lookup('env', 'PIPELINES_REPO') | default('https://github.com/epmd-edp/edp-library-pipelines.git',true) }}"
 stages_version: "{{ lookup('env', 'STAGES_VERSION') }}"

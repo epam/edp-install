@@ -68,3 +68,17 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
   no_log: true
+
+- name: "Looking for image puller secrets in project CI/CD"
+  shell: >
+    {{ ocadm }} get secret -n {{ project_cicd }} -o custom-columns=NAME:.metadata.name
+    --no-headers=true | grep {{ image_puller_secret_mask }}
+  register: edp_puller_secrets
+  ignore_errors: true
+
+- name: "Add secret to service account for pulling images"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} secrets add serviceaccount/gerrit secrets/{{ item }} --for=pull
+  with_items:
+    - "{{ edp_puller_secrets.stdout_lines }}"
+  ignore_errors: true
