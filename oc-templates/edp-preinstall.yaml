@@ -199,6 +199,7 @@ objects:
     - applicationbranches
     - businessapplications
     - cdpipelines
+    - stages
     verbs:
     - '*'
 - apiVersion: security.openshift.io/v1
