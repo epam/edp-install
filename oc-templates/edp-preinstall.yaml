@@ -200,6 +200,8 @@ objects:
     - businessapplications
     - cdpipelines
     - stages
+    - sonars
+    - sonars/finalizers
     verbs:
     - '*'
 - apiVersion: security.openshift.io/v1
