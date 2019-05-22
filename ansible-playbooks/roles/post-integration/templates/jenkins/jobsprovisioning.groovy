@@ -15,8 +15,64 @@ limitations under the License. */
 import groovy.json.*
 import jenkins.model.Jenkins
 
-def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineScript, repository, watchBranch = "master") {
-    pipelineJob("${applicationName}/${watchBranch.toUpperCase()}-${pipelineName}") {
+Jenkins jenkins = Jenkins.instance
+def gerritSshPort = "{{ gerrit_ssh_port }}"
+def codebaseRepositoryBase = "ssh://jenkins@gerrit:${gerritSshPort}"
+def stages = [:]
+
+stages['Code-review-application'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"compile\"},{\"name\": \"tests\"}," +
+        "{\"name\": \"sonar\"}]"
+stages['Code-review-autotests'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"tests\"},{\"name\": \"sonar\"}]"
+stages['Build-maven'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+        "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build\"},{\"name\": \"build-image\"}," +
+        "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
+stages['Build-npm'] = stages['Build-maven']
+stages['Build-gradle'] = stages['Build-maven']
+stages['Build-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+        "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build-image\"}," +
+        "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
+stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch\"},{\"name\": \"trigger-job\"}]"
+
+new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/auto-test.settings.json").text).each() { item ->
+    def codebaseName = item.name
+    def codebaseFolder = jenkins.getItem(codebaseName)
+    if (codebaseFolder == null) {
+        folder(codebaseName)
+    }
+    createListView(codebaseName, "MASTER")
+    createCiPipeline("Code-review-${codebaseName}", codebaseName, stages['Code-review-autotests'],
+            "code-review.groovy", "${codebaseRepositoryBase}/${item.name}")
+}
+
+if (Boolean.valueOf("${PARAM}")) {
+    def codebaseName = "${NAME}"
+    def buildTool = "${BUILD_TOOL}"
+
+    def codebaseFolder = jenkins.getItem(codebaseName)
+    if (codebaseFolder == null) {
+        folder(codebaseName)
+    }
+
+    createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
+            "${codebaseRepositoryBase}/${codebaseName}")
+
+    if (BRANCH) {
+        def branch = "${BRANCH}"
+        createListView(codebaseName, "${branch.toUpperCase()}")
+
+        def type = "${TYPE}"
+        createCiPipeline("Code-review-${codebaseName}", codebaseName, stages["Code-review-${type}"], "code-review.groovy",
+                "${codebaseRepositoryBase}/${codebaseName}", branch)
+
+        if (type.equalsIgnoreCase('application')) {
+            createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${buildTool.toLowerCase()}"], "build.groovy",
+                    "${codebaseRepositoryBase}/${codebaseName}", branch)
+        }
+    }
+}
+
+def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, watchBranch = "master") {
+    pipelineJob("${codebaseName}/${watchBranch.toUpperCase()}-${pipelineName}") {
         logRotator {
             numToKeep(10)
             daysToKeep(7)
@@ -29,7 +85,7 @@ def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineS
                     else
                         patchsetCreated()
                 }
-                project("plain:${applicationName}", ["plain:${watchBranch}"])
+                project("plain:${codebaseName}", ["plain:${watchBranch}"])
             }
         }
         definition {
@@ -42,8 +98,8 @@ def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineS
                     }
                 }
                 parameters {
-                    stringParam("STAGES", "${applicationStages}", "Consequence of stages in JSON format to be run during execution")
-                    stringParam("GERRIT_PROJECT_NAME", "${applicationName}", "Gerrit project name(Application name) to be build")
+                    stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
+                    stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
                     if (pipelineName.contains("Build"))
                         stringParam("BRANCH", "${watchBranch}", "Branch to build artifact from")
                 }
@@ -52,8 +108,8 @@ def createCiPipeline(pipelineName, applicationName, applicationStages, pipelineS
     }
 }
 
-def createReleasePipeline(pipelineName, applicationName, applicationStages, pipelineScript, repository) {
-    pipelineJob("${applicationName}/${pipelineName}") {
+def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository) {
+    pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
             numToKeep(14)
             daysToKeep(30)
@@ -68,9 +124,9 @@ def createReleasePipeline(pipelineName, applicationName, applicationStages, pipe
                     }
                 }
                 parameters {
-                    stringParam("STAGES", "${applicationStages}", "")
+                    stringParam("STAGES", "${codebaseStages}", "")
                     if (pipelineName.contains("Create-release")) {
-                        stringParam("GERRIT_PROJECT", "${applicationName}", "")
+                        stringParam("GERRIT_PROJECT", "${codebaseName}", "")
                         stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
                         stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, HEAD of master will be used")
                     }
@@ -80,8 +136,8 @@ def createReleasePipeline(pipelineName, applicationName, applicationStages, pipe
     }
 }
 
-def createListView(applicationName,branchName){
-    listView("${applicationName}/${branchName}") {
+def createListView(codebaseName, branchName) {
+    listView("${codebaseName}/${branchName}") {
         jobFilters {
             regex {
                 matchType(MatchType.INCLUDE_MATCHED)
@@ -98,53 +154,5 @@ def createListView(applicationName,branchName){
             lastDuration()
             buildButton()
         }
-    }
-}
-
-Jenkins jenkins = Jenkins.instance
-def gerritSshPort = "{{ gerrit_ssh_port }}"
-def appRepositoryBase = "ssh://jenkins@gerrit:${gerritSshPort}"
-def stages = [:]
-
-stages['Code-review-application'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"compile\"},{\"name\": \"tests\"}," +
-        "{\"name\": \"sonar\"}]"
-stages['Code-review-autotest'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"tests\"},{\"name\": \"sonar\"}]"
-stages['Build-maven'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
-        "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build\"},{\"name\": \"build-image\"}," +
-        "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
-stages['Build-npm'] = stages['Build-maven']
-stages['Build-gradle'] = stages['Build-maven']
-stages['Build-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
-        "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build-image\"}," +
-        "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
-stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch\"},{\"name\": \"trigger-job\"}]"
-
-new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/auto-test.settings.json").text).each() { item ->
-    def applicationName = item.name
-    def applicationFolder = jenkins.getItem(applicationName)
-    if (applicationFolder == null){
-        folder(applicationName)
-    }
-    createListView(applicationName,"MASTER")
-    createCiPipeline("Code-review-${applicationName}", applicationName, stages['Code-review-autotest'],
-            "code-review.groovy", "${appRepositoryBase}/${item.name}")
-}
-
-if (Boolean.valueOf("${PARAM}")) {
-    def appName = "${NAME}"
-    def buildTool = "${BUILD_TOOL}"
-
-    def applicationFolder = jenkins.getItem(appName)
-    if (applicationFolder == null){
-        folder(appName)
-    }
-
-    createReleasePipeline("Create-release-${appName}", appName, stages["Create-release"], "create-release.groovy", "${appRepositoryBase}/${appName}")
-
-    if (BRANCH) {
-        def branch = "${BRANCH}"
-        createListView(appName,"${branch.toUpperCase()}")
-        createCiPipeline("Code-review-${appName}", appName, stages['Code-review-application'], "code-review.groovy", "${appRepositoryBase}/${appName}", branch)
-        createCiPipeline("Build-${appName}", appName, stages["Build-${buildTool.toLowerCase()}"], "build.groovy", "${appRepositoryBase}/${appName}", branch)
     }
 }
