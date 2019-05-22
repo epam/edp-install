@@ -197,7 +197,7 @@ objects:
     attributeRestrictions: null
     resources:
     - applicationbranches
-    - businessapplications
+    - codebases
     - cdpipelines
     - stages
     - sonars
