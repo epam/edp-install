@@ -197,6 +197,7 @@ objects:
     attributeRestrictions: null
     resources:
     - applicationbranches
+    - codebasebranches
     - codebases
     - cdpipelines
     - stages

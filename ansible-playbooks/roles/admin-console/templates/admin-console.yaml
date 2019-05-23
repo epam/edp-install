@@ -33,6 +33,7 @@ objects:
         resources:
           - codebases
           - applicationbranches
+          - codebasebranches
           - cdpipelines
           - stages
         verbs:
