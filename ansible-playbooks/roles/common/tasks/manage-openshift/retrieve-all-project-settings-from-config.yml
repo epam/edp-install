@@ -61,7 +61,7 @@
 
 - name: "Get application list from admin console"
   uri:
-    url: "{{ admin_console_url }}/api/v1/edp/application"
+    url: "{{ admin_console_url }}/api/v1/edp/codebase?type=application"
     method: GET
     return_content: yes
     headers:
