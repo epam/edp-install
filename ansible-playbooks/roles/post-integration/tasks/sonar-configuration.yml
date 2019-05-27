@@ -13,100 +13,25 @@
 # limitations under the License.
 
 ---
-- name: "Retrieve password from Secrets"
+- name: "Retrieve credentials from Secrets"
   shell: >
    {{ ocadm }} -n {{ project_cicd }} get secret {{ tools.sonar.secret }}
    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: sonar_admin_password
   no_log: true
 
-- name: "Retrieve perf password from Secrets"
+- name: "Retrieve ci user token from Secrets"
   shell: >
-   {{ ocadm }} -n {{ project_cicd }} get secret sonar-perf
-   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
-  register: sonar_perf_password
+    {{ ocadm }} -n {{ project_cicd }} get secret sonar-ciuser-token
+    --template={% raw %}'{{ index .data "token" }}'{% endraw %} | base64 --decode
+  register: sonar_ciuser_token
   no_log: true
 
-- include_tasks: sonar-api/change-admin-password.yml
-
-- set_fact:
-   sonar_reboot: false
-
-- include_tasks: sonar-api/install-plugins.yml
-  with_items:
-    - authoidc
-    - checkstyle
-    - findbugs
-    - pmd
-
-- include_tasks: sonar-api/restart.yml
-  when: sonar_reboot|bool == true
-
-- include_tasks: sonar-api/upload-profile.yml
-  with_items:
-    - { name: 'EDP way', filename: "quality-profile.xml"}
-
-- include_tasks: sonar-api/set-default-profile.yml
-  with_items:
-    - { name: 'EDP way', language: 'java' }
-
-- include_tasks: sonar-api/deactivate-profile-rules.yml
-  with_items: "{{ profile_id }}"
-
-- include_tasks: sonar-api/create-quality-gate.yml
-  with_items:
-    - { name: "EDP way" }
-
-- include_tasks: sonar-api/create-condition.yml
-  with_items:
-    - { gate_id: "{{ quality_gate_id }}", error: "80", metric: "new_coverage", op: "LT", period: "1" }
-    - { gate_id: "{{ quality_gate_id }}", error: "0", metric: "test_errors", op: "GT" }
-    - { gate_id: "{{ quality_gate_id }}", error: "3", metric: "new_duplicated_lines_density", op: "GT", period: "1" }
-    - { gate_id: "{{ quality_gate_id }}", error: "0", metric: "test_failures", op: "GT" }
-    - { gate_id: "{{ quality_gate_id }}", error: "0", metric: "blocker_violations", op: "GT" }
-    - { gate_id: "{{ quality_gate_id }}", error: "0", metric: "critical_violations", op: "GT" }
-
-- include_tasks: sonar-api/set-default-quality-gate.yml
-  with_items:
-    - { id: "{{ quality_gate_id }}" }
-
-- include_tasks: sonar-api/create-user.yml
-  with_items:
-    - { login: "jenkins", name: "Jenkins", password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}" }
-
-- include_tasks: sonar-api/create-user.yml
-  with_items:
-    - { login: "perf", name: "Perf", password: "{{ sonar_perf_password.stdout }}" }
-  when: perf_integration_enabled|bool == true
-
-- include_tasks: sonar-api/create-group.yml
-  with_items:
-    - non-interactive-users
-
-- include_tasks: sonar-api/add-user-to-group.yml
-  with_items:
-    - { login: 'jenkins', group: 'non-interactive-users' }
-
-- include_tasks: sonar-api/add-permission-to-user.yml
-  with_items:
-    - { login: 'jenkins', permission: 'admin' }
-
-- include_tasks: sonar-api/add-permission-to-group.yml
-  with_items:
-    - { group: 'non-interactive-users', permission: 'scan' }
-
-- include_tasks: sonar-api/generate_token.yml
-  with_items:
-    - { login: 'jenkins', name: 'Jenkins' }
-
-- include_tasks: sonar-api/add-webhook.yml
-  with_items:
-    - { name: 'jenkins', url: 'http://jenkins:8080/sonarqube-webhook/' }
-
-- include_tasks: sonar-api/set-general-setting.yml
-  vars:
-    value_type: values
-  with_items:
-    - { key: 'sonar.typescript.lcov.reportPaths', value: 'coverage/lcov.info' }
+- name: "Retrieve read user token from Secrets"
+  shell: >
+   {{ ocadm }} -n {{ project_cicd }} get secret sonar-readuser-token
+   --template={% raw %}'{{ index .data "token" }}'{% endraw %} | base64 --decode
+  register: sonar_readuser_token
+  no_log: true
 
 - include_tasks: sonar-api/set-keycloak-integration.yml

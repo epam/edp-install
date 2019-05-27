@@ -13,13 +13,9 @@
 # limitations under the License.
 
 ---
-- name: "Add permission {{ item.permission }} to user {{ item.login }}"
-  uri:
-    url: "{{ sonar_api_url }}/permissions/add_user"
-    body: "login={{ item.login }}&permission={{ item.permission }}"
-    method: POST
-    return_content: yes
-    user: admin
-    password: "{{ sonar_admin_password.stdout }}"
-    force_basic_auth: "yes"
-    status_code: 200,204
+- name: "Check health of {{ item.component }} component in project {{ item.project }}"
+  shell: "{{ ocadm }} -n {{ item.project }} get {{ item.component }} {{ item.component }} -o jsonpath='{.status.status}'"
+  retries: 240
+  delay: 15
+  register: result
+  until: '"ready" in result.stdout'

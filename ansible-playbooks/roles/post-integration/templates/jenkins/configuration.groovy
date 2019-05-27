@@ -57,7 +57,7 @@ SonarGlobalConfiguration sonarConf = Hudson.instance.getDescriptorByType(SonarGl
 def sonarProperties = new SonarInstallation(
         "Sonar",
         "http://sonar:9000",
-        "{{ sonar_token_id }}",
+        "{{ sonar_ciuser_token.stdout }}",
         "5.3",
         "",
         new TriggersConfig(),

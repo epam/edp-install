@@ -58,11 +58,6 @@ edp_viewers: "{{ view_users.split(',') | lower }}"
 basic_pattern_url: "https://github.com/epmd-edp"
 random_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
 secrets:
-  sonar_admin:
-    password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-    default_password: admin
-  sonar_perf:
-    password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
   nexus_admin:
     password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
     default_password: admin123
@@ -76,10 +71,6 @@ secrets:
   gerrit_db:
     db_name: gerrit
     db_user: gerrit
-    db_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-  sonar_db:
-    db_name: sonar
-    db_user: sonar
     db_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
   shared_database:
     database_tenant_username: "admin-{{ edp_name }}"
@@ -265,13 +256,10 @@ tools:
     client_id: "nexus3"
     web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   sonar:
-    secret: "sonar-passwords"
-    db_secret: "sonar-db"
+    secret: "sonar-admin-password"
     version: "{{ sonar_version | default('7.1') }}"
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
-    profiles:
-      - { name: "EDP way", filename: 'quality-profile.xml' }
     web_url: "https://sonar-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   cockpit:
     version: "{{ cockpit_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"

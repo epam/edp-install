@@ -21,14 +21,20 @@
     - { tool: "jenkins",
         url: "{{ tools.jenkins.web_url }}",
         tool_specific_parameter: "jobNames",
+        tool_secret_name: "jenkins-perf",
+        tool_secret_key: "password",
         template_file: "roles/perf/templates/register-edp-tool-ds.json.j2" }
     - { tool: "sonar",
         url: "{{ tools.sonar.web_url }}",
         tool_specific_parameter: "projectKeys",
+        tool_secret_name: "sonar-readuser-token",
+        tool_secret_key: "token",
         template_file: "roles/perf/templates/register-edp-tool-ds.json.j2" }
     - { tool: "gerrit",
         url: "{{ tools.gerrit.web_url }}",
         tool_specific_parameter: "projectConfigs",
+        tool_secret_name: "sonar-gerrit",
+        tool_secret_key: "password",
         template_file: "roles/perf/templates/register-edp-tool-ds.json.j2" }
 
 - include_tasks: roles/perf/tasks/register-datasource.yml
@@ -36,5 +42,7 @@
   with_items:
     - { tool: "gitlab",
         url: "{{ project_vcs_hostname_url }}",
+        tool_secret_name: "sonar-gitlab",
         tool_specific_parameter: "repositories",
+        tool_secret_key: "password",
         template_file: "roles/perf/templates/register-gitlab-ds.json.j2" }

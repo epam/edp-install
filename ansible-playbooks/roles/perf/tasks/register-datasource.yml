@@ -15,6 +15,8 @@
 - set_fact:
     tool: "{{ item.tool }}"
     tool_specific_parameter: "{{ item.tool_specific_parameter }}"
+    tool_secret_name: "{{ item.tool_secret_name }}"
+    tool_secret_key: "{{ item.tool_secret_key }}"
 
 - include_tasks: roles/common/tasks/manage-openshift/get-perf-tool-credentials.yml
 
