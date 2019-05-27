@@ -80,6 +80,15 @@
   with_items:
     - "{{ projects_list }}"
 
+- name: "Giving permissions to edp SA for operators"
+  shell: >
+    {{ ocadm }} create rolebinding {{ item }}-admin-role-to-edp-sa
+    --clusterrole=admin
+    --serviceaccount={{ operators_deploy_project }}:edp
+    --namespace={{ project_cicd }}
+  with_items:
+    - "{{ operators_list }}"
+
 - name: "Looking for shared secrets"
   shell: >
      {{ ocadm }} get secret -n {{ edp_deploy_project }} -o custom-columns=NAME:.metadata.name

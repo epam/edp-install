@@ -25,6 +25,12 @@ edp_deploy_project: "{{ lookup('env', 'DEPLOY-PROJECT') }}"
 projects_list: [
     "{{ edp_name }}-edp-cicd"
     ]
+operators_list: [
+    "sonar-operator",
+    "codebase-operator",
+    "reconciler",
+    "cd-pipeline-handler-controller"
+    ]
 project_cicd: "{{ edp_name }}-edp-cicd"
 full_edp_name: "{{ edp_name }}-edp"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
