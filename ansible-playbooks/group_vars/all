@@ -261,11 +261,6 @@ tools:
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
     web_url: "https://sonar-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
-  cockpit:
-    version: "{{ cockpit_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-cockpit:snapshot') }}"
-    openshift_trust_certificates: "true"
-    client_id: "cockpit"
-    web_url: "https://edp-cockpit-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   admin_console:
     db_secret: "admin-console-db"
     version: "{{ admin_console_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-admin-console:snapshot') }}"

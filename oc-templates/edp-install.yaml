@@ -79,7 +79,6 @@ objects:
             - "-e sonar_version=${SONAR_VERSION}"
             - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
             - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
-            - "-e cockpit_version=${EDP_COCKPIT_VERSION}"
             - "-e vcs_integration_enabled=${VCS_INTEGRATION_ENABLED}"
             - "-e vcs_tool_name=${VCS_TOOL_NAME}"
             - "-e vcs_group_name=${VCS_GROUP_NAME_URL}"
@@ -122,7 +121,7 @@ parameters:
   name: EDP_VIEWERS
   value: ""
 - displayName: Applications to install
-  description: For separate installation, defines what tools will be deployed during installation. For now it can be jenkins,nexus,gerrit,sonar,edp-cockpit.
+  description: For separate installation, defines what tools will be deployed during installation. For now it can be jenkins,nexus,gerrit,sonar.
   name: APPS_TO_INSTALL
   value: "all"
 #Gerrit parameters
@@ -191,10 +190,6 @@ parameters:
   displayName: SonarQube database Volume Capacity
   name: SONAR_DB_CAPACITY
   value: 5Gi
-#EDP Cockpit parameters
-- displayName: Version of edp-cockpit
-  name: EDP_COCKPIT_VERSION
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-cockpit:SNAPSHOT"
 #VCS parameters
 - displayName: Does intergration with VCS is enabled(true/false)
   description: Defines whether integration with VCS is enabled or not

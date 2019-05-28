@@ -16,9 +16,6 @@
         "name":"gerrit-administrators"
       },
       {
-        "name":"cockpit-administrators"
-      },
-      {
         "name":"sonar-users"
       },
       {
@@ -35,7 +32,6 @@
             "sonar-administrators",
             "jenkins-administrators",
             "gerrit-administrators",
-            "cockpit-administrators"
           ]
         }
       },
@@ -137,19 +133,6 @@
         "{{ tools.nexus.web_url }}"
       ],
       "adminUrl":"{{ tools.nexus.web_url }}/"
-    },
-    {
-      "clientId":"{{ tools.cockpit.client_id }}",
-      "enabled":true,
-      "publicClient":true,
-      "rootUrl":"{{ tools.cockpit.web_url }}",
-      "redirectUris":[
-        "{{ tools.cockpit.web_url }}/*"
-      ],
-      "webOrigins":[
-        "{{ tools.cockpit.web_url }}"
-      ],
-      "adminUrl":"{{ tools.cockpit.web_url }}/"
     },
     {
       "clientId":"{{ ac_keycloak_client_id }}",

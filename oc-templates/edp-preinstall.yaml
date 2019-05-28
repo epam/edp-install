@@ -184,7 +184,6 @@ objects:
     attributeRestrictions: null
     resourceNames:
     - edp-jenkins
-    - edp-cockpit
     resources:
     - roles
     - rolebindings
