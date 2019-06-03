@@ -23,6 +23,8 @@ def stages = [:]
 stages['Code-review-application'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"compile\"},{\"name\": \"tests\"}," +
         "{\"name\": \"sonar\"}]"
 stages['Code-review-autotests'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"tests\"},{\"name\": \"sonar\"}]"
+stages['Build-library'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+        "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build\"},{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
 stages['Build-maven'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
         "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build\"},{\"name\": \"build-image\"}," +
         "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
@@ -66,6 +68,10 @@ if (Boolean.valueOf("${PARAM}")) {
 
         if (type.equalsIgnoreCase('application')) {
             createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${buildTool.toLowerCase()}"], "build.groovy",
+                    "${codebaseRepositoryBase}/${codebaseName}", branch)
+        }
+        if (type.equalsIgnoreCase('library')) {
+            createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}"], "build.groovy",
                     "${codebaseRepositoryBase}/${codebaseName}", branch)
         }
     }
