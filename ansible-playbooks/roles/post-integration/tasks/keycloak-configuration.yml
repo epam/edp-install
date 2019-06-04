@@ -12,6 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: "Get client_id for sonar client for keycloak"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret sonar-is-credentials
+    --template={% raw %}'{{ index .data "client_id" }}'{% endraw %} | base64 --decode
+  register: sonar_client_id
+  no_log: true
+
+- name: "Get client_secret for sonar client for keycloak"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret sonar-is-credentials
+    --template={% raw %}'{{ index .data "client_secret" }}'{% endraw %} | base64 --decode
+  register: sonar_client_secret
+  no_log: true
+
+- set_fact:
+    sonar_client_id: "{{ sonar_client_id.stdout }}"
+    sonar_client_secret: "{{ sonar_client_secret.stdout }}"
+  no_log: true
+
 - name: "Get secret for gerrit client from keycloak"
   shell: >
    {{ ocadm }} -n {{ project_cicd }} get secret keycloak-gerrit
@@ -99,6 +118,7 @@
 
 - set_fact:
     edp_client_secret: "{{ lookup('password', '/dev/null length=15 chars=ascii_letters') }}"
+  no_log: true
 
 - name: "Create realm for Keycloak"
   uri:

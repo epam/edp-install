@@ -37,7 +37,6 @@
     nexus_port: "8081"
     sonar_api_url: "http://sonar.{{ project_cicd }}:9000/api"
     sonar_claim_name: "roles"
-    sonar_client_id: "sonar"
 
 - set_fact:
     project_vcs_hostname: "{{ vcs_group_name | urlsplit('hostname') }}"
