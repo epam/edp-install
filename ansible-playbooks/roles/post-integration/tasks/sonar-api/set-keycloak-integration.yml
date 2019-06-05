@@ -13,39 +13,6 @@
 # limitations under the License.
 
 ---
-- name: "Get username from security project Keycloak secret"
-  shell: >
-   {{ ocadm }} -n security get secret keycloak
-   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
-  register: username
-
-- name: "Get password from security project Keycloak secret"
-  shell: >
-   {{ ocadm }} -n security get secret keycloak
-   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
-  register: password
-  no_log: true
-
-- name: "Get OIDC provider configuration"
-  uri:
-    url: "http://keycloak.security:8080/auth/realms/{{ tools.keycloak.realm_name }}/.well-known/openid-configuration"
-    method: GET
-    return_content: yes
-    user: "{{ username.stdout }}"
-    password: "{{ password.stdout }}"
-    force_basic_auth: "yes"
-    status_code: 200
-  register: result
-
-- name: "Copy OIDC provider configuration to file"
-  copy: content="{{ result.content }}" dest=/tmp/openid-configuration.json
-
-- name: "Replace internal Keycloak links with external"
-  replace:
-    path: /tmp/openid-configuration.json
-    regexp: "http://keycloak.security:8080"
-    replace: "{{ tools.keycloak.web_url }}"
-
 - name: "Set key sonar.auth.oidc.providerConfiguration to value {{ lookup('file','/tmp/openid-configuration.json') }}"
   uri:
     url: "{{ sonar_api_url }}/settings/set"
