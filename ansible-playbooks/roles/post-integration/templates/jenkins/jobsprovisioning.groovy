@@ -49,6 +49,7 @@ new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/au
         folder(codebaseName)
     }
     createListView(codebaseName, "MASTER")
+    createListView(codebaseName, "Releases")
     createCiPipeline("Code-review-${codebaseName}", codebaseName, stages['Code-review-autotests'],
             "code-review.groovy", "${codebaseRepositoryBase}/${item.name}")
 }
@@ -62,6 +63,7 @@ if (Boolean.valueOf("${PARAM}")) {
         folder(codebaseName)
     }
 
+    createListView(codebaseName, "Releases")
     createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
             "${codebaseRepositoryBase}/${codebaseName}")
 
@@ -147,11 +149,21 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
 
 def createListView(codebaseName, branchName) {
     listView("${codebaseName}/${branchName}") {
-        jobFilters {
-            regex {
-                matchType(MatchType.INCLUDE_MATCHED)
-                matchValue(RegexMatchValue.NAME)
-                regex("^${branchName}-(Code-review|Build).*")
+        if (branchName.toLowerCase() == "releases") {
+            jobFilters {
+                regex {
+                    matchType(MatchType.INCLUDE_MATCHED)
+                    matchValue(RegexMatchValue.NAME)
+                    regex("^Create-release.*")
+                }
+            }
+        } else {
+            jobFilters {
+                regex {
+                    matchType(MatchType.INCLUDE_MATCHED)
+                    matchValue(RegexMatchValue.NAME)
+                    regex("^${branchName}-(Code-review|Build).*")
+                }
             }
         }
         columns {
