@@ -148,3 +148,8 @@
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
+
+- name: "Adding templates to Openshift"
+  shell: "{{ ocadm }} create -f {{ item }} -n {{ project_cicd }} "
+  with_fileglob:
+    - "../templates/*"
