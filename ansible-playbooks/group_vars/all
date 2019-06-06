@@ -257,7 +257,7 @@ tools:
     web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   sonar:
     secret: "sonar-admin-password"
-    version: "{{ sonar_version | default('7.1') }}"
+    version: "{{ sonar_version | default('7.6-community') }}"
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
     web_url: "https://sonar-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
