@@ -63,5 +63,3 @@
 
 - name: "Create config map for openid configuration"
   shell: "{{ ocadm }} -n {{ project_cicd }} create cm keycloak-sonaropenid-config --from-file=/tmp/openid-configuration.json"
-
-- include_tasks: sonar-api/set-keycloak-integration.yml
