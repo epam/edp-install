@@ -22,15 +22,22 @@ def stages = [:]
 
 stages['Code-review-application'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"compile\"},{\"name\": \"tests\"}," +
         "{\"name\": \"sonar\"}]"
+stages['Code-review-library'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"compile\"},{\"name\": \"tests\"}," +
+        "{\"name\": \"sonar\"}]"
 stages['Code-review-autotests'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"tests\"},{\"name\": \"sonar\"}]"
-stages['Build-library'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+
+stages['Build-library-maven'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
         "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build\"},{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
-stages['Build-maven'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+stages['Build-library-npm'] = stages['Build-library-maven']
+stages['Build-library-gradle'] = stages['Build-library-maven']
+stages['Build-library-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+        "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
+stages['Build-application-maven'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
         "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build\"},{\"name\": \"build-image\"}," +
         "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
-stages['Build-npm'] = stages['Build-maven']
-stages['Build-gradle'] = stages['Build-maven']
-stages['Build-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
+stages['Build-application-npm'] = stages['Build-application-maven']
+stages['Build-application-gradle'] = stages['Build-application-maven']
+stages['Build-application-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get-version\"},{\"name\": \"compile\"}," +
         "{\"name\": \"tests\"},{\"name\": \"sonar\"},{\"name\": \"build-image\"}," +
         "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
 stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch\"},{\"name\": \"trigger-job\"}]"
@@ -66,12 +73,8 @@ if (Boolean.valueOf("${PARAM}")) {
         createCiPipeline("Code-review-${codebaseName}", codebaseName, stages["Code-review-${type}"], "code-review.groovy",
                 "${codebaseRepositoryBase}/${codebaseName}", branch)
 
-        if (type.equalsIgnoreCase('application')) {
-            createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${buildTool.toLowerCase()}"], "build.groovy",
-                    "${codebaseRepositoryBase}/${codebaseName}", branch)
-        }
-        if (type.equalsIgnoreCase('library')) {
-            createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}"], "build.groovy",
+        if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
+            createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}-${buildTool.toLowerCase()}"], "build.groovy",
                     "${codebaseRepositoryBase}/${codebaseName}", branch)
         }
     }
