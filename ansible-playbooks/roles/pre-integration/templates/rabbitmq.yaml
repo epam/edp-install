@@ -166,11 +166,11 @@ parameters:
 - displayName: Service version
   name: SERVICE_VERSION
   required: true
-  value: "{{ item_map.version }}"
+  value: "3.7.5"
 - displayName: Service image
   name: SERVICE_IMAGE
   required: true
-  value: "{{ item_map.image }}"
+  value: "rabbitmq"
 - displayName: Rabbitmq user
   name: USERNAME
   required: true
