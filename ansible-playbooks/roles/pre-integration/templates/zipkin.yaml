@@ -32,8 +32,8 @@ objects:
     - ReadWriteOnce
     resources:
       requests:
-        storage: "{{ item_map.storage.capacity }}"
-    storageClassName: "{{ item_map.storage.class }}"
+        storage: ${STORAGE_CAPACITY}
+    storageClassName: ${STORAGE_CLASS}
 - apiVersion: v1
   kind: Route
   metadata:
@@ -223,3 +223,11 @@ parameters:
   name: SERVICE_IMAGE
   value: "openzipkin/zipkin"
   required: true
+- displayName: Zipkin storage class
+  name: STORAGE_CLASS
+  required: true
+  value: "gp2"
+- displayName: Zipkin storage capacity
+  name: STORAGE_CAPACITY
+  required: true
+  value: "1Gi"

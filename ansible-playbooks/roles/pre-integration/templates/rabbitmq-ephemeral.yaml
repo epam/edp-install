@@ -98,12 +98,12 @@ objects:
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:
                 secretKeyRef:
-                    name: "rabbitmq-secret"
+                    name: ${SERVICE_NAME}
                     key: rabbitmq.username
             - name: RABBITMQ_DEFAULT_PASS
               valueFrom:
                 secretKeyRef:
-                    name: "rabbitmq-secret"
+                    name: ${SERVICE_NAME}
                     key: rabbitmq.password
           livenessProbe:
             failureThreshold: 5
@@ -142,7 +142,7 @@ objects:
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: "rabbitmq-secret"
+    name: ${SERVICE_NAME}
   stringData:
     rabbitmq.username: ${USERNAME}
     rabbitmq.password: ${PASSWORD}
@@ -150,11 +150,11 @@ parameters:
 - displayName: Service name
   name: SERVICE_NAME
   required: true
-  value: "rabbitmq"
+  value: "rabbitmq-ephemeral"
 - displayName: Service version
   name: SERVICE_VERSION
   required: true
-  value: "3.7.5"
+  value: "3.7.15-management"
 - displayName: Service image
   name: SERVICE_IMAGE
   required: true

@@ -138,12 +138,12 @@ objects:
             - name: ACTIVEMQ_ADMIN_LOGIN
               valueFrom:
                 secretKeyRef:
-                    name: "activemq-secret"
+                    name: ${SERVICE_NAME}
                     key: activemq.username
             - name: ACTIVEMQ_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                    name: "activemq-secret"
+                    name: ${SERVICE_NAME}
                     key: activemq.password
           livenessProbe:
             failureThreshold: 5
@@ -209,7 +209,7 @@ objects:
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: "activemq-secret"
+    name: ${SERVICE_NAME}
   stringData:
     activemq.username: ${USERNAME}
     activemq.password: ${PASSWORD}

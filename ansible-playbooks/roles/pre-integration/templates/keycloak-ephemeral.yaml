@@ -30,13 +30,6 @@ objects:
   stringData:
     username: ${KEYCLOAK_USER}
     password: ${KEYCLOAK_PASSWORD}
-- kind: Secret
-  apiVersion: v1
-  metadata:
-    name: "${SERVICE_NAME}-db"
-  stringData:
-    ${SERVICE_NAME}-db-user: ${DB_USER}
-    ${SERVICE_NAME}-db-password: ${DB_PASSWORD}
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
@@ -72,20 +65,6 @@ objects:
       app: ${SERVICE_NAME}
     type: ClusterIP
 - apiVersion: v1
-  kind: Service
-  metadata:
-    name: "${SERVICE_NAME}-db"
-    labels:
-      app: "${SERVICE_NAME}-db"
-  spec:
-    ports:
-    - name: "${SERVICE_NAME}-db"
-      port: 5432
-    selector:
-      app: "${SERVICE_NAME}-db"
-    type: ClusterIP
-    sessionAffinity: None
-- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     name: ${SERVICE_NAME}
@@ -110,11 +89,9 @@ objects:
         labels:
           app: ${SERVICE_NAME}
       spec:
+        securityContext:
+          fsGroup: 0
         serviceAccountName: ${SERVICE_NAME}
-        initContainers:
-        - name: "init-${SERVICE_NAME}-db"
-          image: busybox
-          command: ["sh", "-c", "while ! nc -w 1 ${SERVICE_NAME}-db 5432 </dev/null; do echo waiting for ${SERVICE_NAME}-db; sleep 10; done;"]
         containers:
         - name: ${SERVICE_NAME}
           image: "${SERVICE_IMAGE}:${SERVICE_VERSION}"
@@ -123,6 +100,8 @@ objects:
             - name: gui
               containerPort: 8080
           env:
+          - name: DB_VENDOR
+            value: h2
           - name: KEYCLOAK_USER
             valueFrom:
               secretKeyRef:
@@ -133,22 +112,6 @@ objects:
               secretKeyRef:
                 name: ${SERVICE_NAME}
                 key: password
-          - name: POSTGRES_DATABASE
-            value: ${SERVICE_NAME}-db
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-db
-                key: ${SERVICE_NAME}-db-user
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-db
-                key: ${SERVICE_NAME}-db-password
-          - name: POSTGRES_PORT_5432_TCP_ADDR
-            value: ${SERVICE_NAME}-db
-          - name: POSTGRES_PORT_5432_TCP_PORT
-            value: '5432'
           - name: PROXY_ADDRESS_FORWARDING
             value: "true"
           livenessProbe:
@@ -175,88 +138,14 @@ objects:
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
-        securityContext: {}
         terminationGracePeriodSeconds: 30
     triggers:
       - type: ConfigChange
-- apiVersion: v1
-  kind: DeploymentConfig
-  metadata:
-    labels:
-      app: ${SERVICE_NAME}
-    name: "${SERVICE_NAME}-db"
-  spec:
-    replicas: 1
-    selector:
-      app: "${SERVICE_NAME}-db"
-    strategy:
-      activeDeadlineSeconds: 21600
-      recreateParams:
-        timeoutSeconds: 600
-      resources: {}
-      type: Recreate
-    template:
-      metadata:
-        labels:
-          app: "${SERVICE_NAME}-db"
-      spec:
-        containers:
-        - name: "${SERVICE_NAME}-db"
-          env:
-          - name: POSTGRES_DB
-            value: "${SERVICE_NAME}-db"
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-db
-                key: ${SERVICE_NAME}-db-user
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-db
-                key: ${SERVICE_NAME}-db-password
-          - name: PGDATA
-            value: /var/lib/postgresql/data/pgdata
-          - name: POD_IP
-            valueFrom: { fieldRef: { fieldPath: status.podIP } }
-          image: postgres:9.6
-          imagePullPolicy: IfNotPresent
-          resources:
-            requests:
-              memory: 500Mi
-          ports:
-            - containerPort: 5432
-              protocol: TCP
-          livenessProbe:
-            exec:
-              command:
-              - sh
-              - -c
-              - exec pg_isready --host $POD_IP
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-            failureThreshold: 6
-          readinessProbe:
-            exec:
-              command:
-              - sh
-              - -c
-              - exec pg_isready --host $POD_IP
-            initialDelaySeconds: 60
-            timeoutSeconds: 3
-            periodSeconds: 5
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: ${SERVICE_NAME}-db
-        serviceAccount: ${SERVICE_NAME}
-        volumes:
-        - name: ${SERVICE_NAME}-db
-          emptyDir: {}
 parameters:
 - displayName: Service name
   name: SERVICE_NAME
   required: true
-  value: "keycloak"
+  value: "keycloak-ephemeral"
 - displayName: Application version
   name: SERVICE_VERSION
   required: true
@@ -265,13 +154,6 @@ parameters:
   name: SERVICE_IMAGE
   value: "jboss/keycloak"
   required: true
-- displayName: "keycloak-db password"
-  name: DB_PASSWORD
-  generate: expression
-  from: "[a-zA-Z0-9]{10}"
-- displayName: "keycloak-db user"
-  name: DB_USER
-  value: "keycloak"
 - displayName: "keycloak password"
   name: KEYCLOAK_PASSWORD
   value: admin

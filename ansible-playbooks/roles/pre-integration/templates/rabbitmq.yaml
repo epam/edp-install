@@ -32,8 +32,8 @@ objects:
     - ReadWriteOnce
     resources:
       requests:
-        storage: "{{ item_map.storage.capacity }}"
-    storageClassName: "{{ item_map.storage.class }}"
+        storage: ${STORAGE_CAPACITY}
+    storageClassName: ${STORAGE_CLASS}
 - apiVersion: v1
   kind: Route
   metadata:
@@ -109,12 +109,12 @@ objects:
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:
                 secretKeyRef:
-                    name: "rabbitmq-secret"
+                    name: ${SERVICE_NAME}
                     key: rabbitmq.username
             - name: RABBITMQ_DEFAULT_PASS
               valueFrom:
                 secretKeyRef:
-                    name: "rabbitmq-secret"
+                    name: ${SERVICE_NAME}
                     key: rabbitmq.password
           livenessProbe:
             failureThreshold: 5
@@ -154,7 +154,7 @@ objects:
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: "rabbitmq-secret"
+    name: ${SERVICE_NAME}
   stringData:
     rabbitmq.username: ${USERNAME}
     rabbitmq.password: ${PASSWORD}
@@ -166,7 +166,7 @@ parameters:
 - displayName: Service version
   name: SERVICE_VERSION
   required: true
-  value: "3.7.5"
+  value: "3.7.15-management"
 - displayName: Service image
   name: SERVICE_IMAGE
   required: true
@@ -179,3 +179,11 @@ parameters:
   name: PASSWORD
   required: true
   value: "secret-rabbit"
+- displayName: Rabbitmq storage class
+  name: STORAGE_CLASS
+  required: true
+  value: "gp2"
+- displayName: Rabbitmq storage capacity
+  name: STORAGE_CAPACITY
+  required: true
+  value: "2Gi"
