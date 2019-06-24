@@ -21,8 +21,8 @@ spec:
   version: '{{ tools.sonar.version }}'
   volumes:
     - name: "data"
-      storage_class: "efs"
+      storage_class: "{{ storage_class_name }}"
       capacity: "{{ tools.sonar.volume_capacity }}"
     - name: "db"
-      storage_class: "efs"
+      storage_class: "{{ storage_class_name }}"
       capacity: "{{ tools.sonar.volume_db_capacity }}"
