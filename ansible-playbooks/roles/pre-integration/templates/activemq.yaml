@@ -26,17 +26,6 @@ objects:
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-    name: "${SERVICE_NAME}-conf"
-  spec:
-    accessModes:
-    - ReadWriteOnce
-    resources:
-      requests:
-        storage: ${STORAGE_CAPACITY}
-    storageClassName: ${STORAGE_CLASS}
-- apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
     name: "${SERVICE_NAME}-data"
   spec:
     accessModes:
@@ -165,16 +154,11 @@ objects:
             requests:
               memory: 500Mi
           volumeMounts:
-            - mountPath: /opt/activemq/conf
-              name: "${SERVICE_NAME}-conf"
             - mountPath: /opt/activemq/data
               name: "${SERVICE_NAME}-data"
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
         volumes:
-        - name: "${SERVICE_NAME}-conf"
-          persistentVolumeClaim:
-            claimName: "${SERVICE_NAME}-conf"
         - name: "${SERVICE_NAME}-data"
           persistentVolumeClaim:
             claimName: "${SERVICE_NAME}-data"
@@ -188,9 +172,7 @@ objects:
             - sh
             - '-c'
             - >-
-              chown activemq:activemq /mnt/conf && chown activemq:activemq
-              /mnt/data && cp -a /opt/activemq/conf/* /mnt/conf/ && cp -a
-              /opt/activemq/data/* /mnt/data/
+              chown activemq:activemq /mnt/data && cp -a /opt/activemq/data/* /mnt/data/
             image: "${SERVICE_IMAGE}:${SERVICE_VERSION}"
             imagePullPolicy: IfNotPresent
             name: init-activemq
@@ -200,8 +182,6 @@ objects:
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
             volumeMounts:
-              - mountPath: /mnt/conf
-                name: "${SERVICE_NAME}-conf"
               - mountPath: /mnt/data
                 name: "${SERVICE_NAME}-data"
     triggers:
@@ -225,7 +205,7 @@ parameters:
 - displayName: Service image
   name: SERVICE_IMAGE
   required: true
-  value: "rmohr/activemq"
+  value: "epamedp/activemq"
 - displayName: Activemq user
   name: USERNAME
   required: true
