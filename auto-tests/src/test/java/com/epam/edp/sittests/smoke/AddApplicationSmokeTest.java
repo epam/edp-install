@@ -66,7 +66,7 @@ public class AddApplicationSmokeTest {
                 .toCluster(OPENSHIFT_MASTER_URL)
                 .withUserName(OPENSHIFT_USERNAME)
                 .withPassword(OPENSHIFT_PASSWORD)
-                .sslCertCallbackWithDefaultHostnameVerifier(true)
+                .sslCertCallbackWithDefaultHostnameVerifier(false)
                 .build();
     }
 
