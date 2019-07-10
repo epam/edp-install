@@ -29,7 +29,8 @@ operators_list: [
     "sonar-operator",
     "codebase-operator",
     "reconciler",
-    "cd-pipeline-handler-controller"
+    "cd-pipeline-handler-controller",
+    "admin-console-operator"
     ]
 project_cicd: "{{ edp_name }}-edp-cicd"
 full_edp_name: "{{ edp_name }}-edp"

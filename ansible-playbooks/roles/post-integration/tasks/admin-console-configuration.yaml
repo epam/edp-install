@@ -1,0 +1,72 @@
+# Copyright 2018 EPAM Systems.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+- name: "Get username for Admin Console Keycloak Client"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: ac_keycloak_client_id
+
+- name: "Get password for Admin Console Keycloak Client"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: ac_keycloak_client_secret
+  no_log: true
+
+- name: "Retrieve database username from secret"
+  shell: >
+   {{ ocadm }} -n {{ operators_deploy_project }} get secret {{ tools.admin_console.db_secret }}
+   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: admin_console_db_username
+  no_log: true
+
+- name: "Get username for Admin Console DB tenant admin"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-db
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: admin_console_db_tenant_admin_username
+
+- name: "Get password for Admin Console DB tenant admin"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-db
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: admin_console_db_tenant_admin_password
+  no_log: true
+
+- set_fact:
+    ac_keycloak_client_id: "{{ ac_keycloak_client_id.stdout }}"
+    ac_keycloak_client_secret: "{{ ac_keycloak_client_secret.stdout }}"
+    admin_console_db_tenant_admin_username: "{{ admin_console_db_tenant_admin_username.stdout }}"
+    admin_console_db_tenant_admin_password: "{{ admin_console_db_tenant_admin_password.stdout }}"
+    admin_console_db_admin_username: "{{ admin_console_db_username.stdout }}"
+    admin_console_db_pod: "{{ ocadm }} -n {{ operators_deploy_project }} get pods \
+                          --no-headers -o custom-columns=NAME:.metadata.name | egrep 'edp-install-wizard-db-[0-9]+'"
+  no_log: true
+
+- name: "Create schema in database"
+  shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
+         -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA \"{{ edp_name }}\";' -U {{ admin_console_db_admin_username }}"
+
+- name: "Create tenant user in database"
+  raw: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
+         -- psql --dbname={{ shared_database }} {{ admin_console_db_admin_username }} \
+         -c 'CREATE USER \"{{ admin_console_db_tenant_admin_username }}\" \
+         WITH PASSWORD '\u005C''\u0027'{{ admin_console_db_tenant_admin_password }}'\u005C''\u0027';'"
+
+- name: "Grant all privileges for tenant user in database scheme"
+  shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
+         -- psql --dbname={{ shared_database }} -c 'GRANT ALL PRIVILEGES ON SCHEMA \"{{ edp_name }}\" \
+         TO \"{{ admin_console_db_tenant_admin_username }}\";' -U {{ admin_console_db_admin_username }}"

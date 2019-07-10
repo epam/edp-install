@@ -20,5 +20,5 @@
     - { role: jenkins, tags: [ 'jenkins' ] }
     - { role: nexus, tags: [ 'nexus' ] }
     - { role: sonar, tags: [ 'sonar' ] }
-    - { role: post-integration, tags: [ 'post-integration' ] }
     - { role: admin-console, tags: [ 'admin-console' ] }
+    - { role: post-integration, tags: [ 'post-integration' ] }

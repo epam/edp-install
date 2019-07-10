@@ -14,7 +14,7 @@
 
 ---
 - name: "Check health of {{ item.component }} component in project {{ item.project }}"
-  shell: "{{ ocadm }} -n {{ item.project }} get {{ item.component }} {{ item.component }} -o jsonpath='{.status.status}'"
+  shell: "{{ ocadm }} -n {{ item.project }} get {{ item.component }} {{ item.name }} -o jsonpath='{.status.status}'"
   retries: 240
   delay: 15
   register: result

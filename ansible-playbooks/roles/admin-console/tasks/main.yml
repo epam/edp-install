@@ -13,125 +13,17 @@
 # limitations under the License.
 
 ---
-- name: "Copy admin-console templates"
+- name: "Copy Admin Console template"
   template:
-    src: "{{ item }}"
-    dest: "{{ templates_dir }}/admin_console/{{ item }}"
-  with_items:
-    - "admin-console.yaml"
+    src: "admin-console.yaml"
+    dest: "{{ templates_dir }}/admin_console/admin-console.yaml"
 
-- name: "Get username for Admin Console Keycloak Client"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
-    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
-  register: ac_keycloak_client_id
-
-- name: "Get password for Admin Console Keycloak Client"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
-    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
-  register: ac_keycloak_client_secret
-  no_log: true
-
-- name: "Create secret for Admin Console tenant admin"
+- name: "Install Admin Console app"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/admin_console/admin-console.yaml
   register: result
   ignore_errors: true
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} create secret generic admin-console-db
-    --from-literal=username={{ secrets.shared_database.database_tenant_username }}
-    --from-literal=password={{ secrets.shared_database.database_tenant_password }}
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
-  no_log: true
-
-- name: "Retrieve database username from secret"
-  shell: >
-   {{ ocadm }} -n {{ operators_deploy_project }} get secret {{ tools.admin_console.db_secret }}
-   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
-  register: admin_console_db_username
-  no_log: true
-
-- name: "Get username for Admin Console DB tenant admin"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-db
-    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
-  register: admin_console_db_tenant_admin_username
-
-- name: "Get password for Admin Console DB tenant admin"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-db
-    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
-  register: admin_console_db_tenant_admin_password
-  no_log: true
-
-- name: "Get console URL"
-  shell: >
-    {{ ocadm }} -n openshift-web-console get cm webconsole-config
-    -o jsonpath='{.data.webconsole-config\.yaml}' | grep -oP "consolePublicURL: \K.*" | grep -Eo '(http|https)://[^/"]+'
-  register: openshift_cluster_url
-  no_log: false
-
-- set_fact:
-    ac_keycloak_client_id: "{{ ac_keycloak_client_id.stdout }}"
-    ac_keycloak_client_secret: "{{ ac_keycloak_client_secret.stdout }}"
-    admin_console_db_tenant_admin_username: "{{ admin_console_db_tenant_admin_username.stdout }}"
-    admin_console_db_tenant_admin_password: "{{ admin_console_db_tenant_admin_password.stdout }}"
-    admin_console_db_admin_username: "{{ admin_console_db_username.stdout }}"
-    admin_console_db_pod: "{{ ocadm }} -n {{ operators_deploy_project }} get pods \
-                          --no-headers -o custom-columns=NAME:.metadata.name | egrep 'edp-install-wizard-db-[0-9]+'"
-    openshift_cluster_url: "{{ openshift_cluster_url.stdout }}"
-  no_log: true
-
-- name: "Create schema in database"
-  shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
-         -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA \"{{ edp_name }}\";' -U {{ admin_console_db_admin_username }}"
-
-- name: "Create tenant user in database"
-  raw: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
-         -- psql --dbname={{ shared_database }} {{ admin_console_db_admin_username }} \
-         -c 'CREATE USER \"{{ admin_console_db_tenant_admin_username }}\" \
-         WITH PASSWORD '\u005C''\u0027'{{ admin_console_db_tenant_admin_password }}'\u005C''\u0027';'"
-
-- name: "Grant all privileges for tenant user in database scheme"
-  shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
-         -- psql --dbname={{ shared_database }} -c 'GRANT ALL PRIVILEGES ON SCHEMA \"{{ edp_name }}\" \
-         TO \"{{ admin_console_db_tenant_admin_username }}\";' -U {{ admin_console_db_admin_username }}"
-
-- name: "Install admin-console app"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} new-app -f {{ templates_dir }}/admin_console/admin-console.yaml
-    -p EDP_ADMIN_CONSOLE_VERSION={{ tools.admin_console.version }}
-    -p EDP_DEPLOY_PROJECT={{ operators_deploy_project }}
-    -p HOST={{ tools.admin_console.web_url }}
-    -p DNS_WILDCARD={{ dns_wildcard }}
-    -p KEYCLOAK_URL={{ tools.keycloak.web_url }}/auth/realms/{{ full_edp_name }}
-    -p KEYCLOAK_CLIENT_ID={{ ac_keycloak_client_id }}
-    -p KEYCLOAK_CLIENT_SECRET={{ ac_keycloak_client_secret }}
-    -p EDP_VERSION={{ edp_version.split(':') | last }}
-    -p OPENSHIFT_CLUSTER_URL={{ openshift_cluster_url }}
-  register: result
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-- name: "Assign necessary permissions for admin-console service account"
-  shell: >
-    {{ ocadm }} {{ item }}
-  with_items:
-  - "adm policy add-role-to-user admin system:serviceaccount:{{ project_cicd }}:admin-console -n {{ project_cicd }}"
-  - "adm policy add-scc-to-user anyuid system:serviceaccount:{{ project_cicd }}:admin-console"
-  register: result
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-- name: "Check health of admin-console deployment in project {{ project_cicd }}"
-  shell: "{{ ocadm }} -n {{ project_cicd }} rollout status dc edp-admin-console"
-  retries: 240
-  delay: 15
-  register: result
-  until: '"successfully rolled out" in result.stdout'

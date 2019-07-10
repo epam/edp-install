@@ -208,6 +208,11 @@ objects:
     - sonars
     - sonars/finalizers
     - sonars/status
+    - adminconsoles
+    - adminconsoles/finalizers
+    - adminconsoles/status
+    - deployments/finalizers
+    - deployments/finalizers.extensions
     verbs:
     - '*'
 - apiVersion: security.openshift.io/v1
