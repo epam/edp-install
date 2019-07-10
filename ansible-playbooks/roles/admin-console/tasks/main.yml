@@ -66,6 +66,13 @@
   register: admin_console_db_tenant_admin_password
   no_log: true
 
+- name: "Get console URL"
+  shell: >
+    {{ ocadm }} -n openshift-web-console get cm webconsole-config
+    -o jsonpath='{.data.webconsole-config\.yaml}' | grep -oP "consolePublicURL: \K.*" | grep -Eo '(http|https)://[^/"]+'
+  register: openshift_cluster_url
+  no_log: false
+
 - set_fact:
     ac_keycloak_client_id: "{{ ac_keycloak_client_id.stdout }}"
     ac_keycloak_client_secret: "{{ ac_keycloak_client_secret.stdout }}"
@@ -74,6 +81,7 @@
     admin_console_db_admin_username: "{{ admin_console_db_username.stdout }}"
     admin_console_db_pod: "{{ ocadm }} -n {{ operators_deploy_project }} get pods \
                           --no-headers -o custom-columns=NAME:.metadata.name | egrep 'edp-install-wizard-db-[0-9]+'"
+    openshift_cluster_url: "{{ openshift_cluster_url.stdout }}"
   no_log: true
 
 - name: "Create schema in database"
@@ -102,6 +110,7 @@
     -p KEYCLOAK_CLIENT_ID={{ ac_keycloak_client_id }}
     -p KEYCLOAK_CLIENT_SECRET={{ ac_keycloak_client_secret }}
     -p EDP_VERSION={{ edp_version.split(':') | last }}
+    -p OPENSHIFT_CLUSTER_URL={{ openshift_cluster_url }}
   register: result
   changed_when: '"already" not in result.stderr'
   failed_when:

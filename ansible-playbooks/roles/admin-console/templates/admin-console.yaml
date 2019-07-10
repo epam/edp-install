@@ -139,6 +139,8 @@ objects:
                   value: "5432"
                 - name: EDP_VERSION
                   value: ${EDP_VERSION}
+                - name: OPENSHIFT_CLUSTER_URL
+                  value: ${OPENSHIFT_CLUSTER_URL}
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
           dnsPolicy: ClusterFirst
@@ -213,5 +215,9 @@ parameters:
     required: true
   - displayName: Version of EDP
     name: EDP_VERSION
+    value: ''
+    required: true
+  - displayName: Console URL
+    name: OPENSHIFT_CLUSTER_URL
     value: ''
     required: true
