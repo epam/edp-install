@@ -196,12 +196,18 @@ objects:
     attributeRestrictions: null
     resources:
     - applicationbranches
+    - applicationbranches/status
     - codebasebranches
+    - codebasebranches/status
     - codebases
+    - codebases/status
     - cdpipelines
+    - cdpipelines/status
     - stages
+    - stages/status
     - sonars
     - sonars/finalizers
+    - sonars/status
     verbs:
     - '*'
 - apiVersion: security.openshift.io/v1
