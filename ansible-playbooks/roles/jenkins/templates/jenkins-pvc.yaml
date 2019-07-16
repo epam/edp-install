@@ -155,6 +155,17 @@ objects:
         labels:
           app: jenkins
       spec:
+        initContainers:
+        - command:
+            - sh
+            - '-c'
+            - 'if [ -d /var/lib/jenkins/.ssh/ ]; then cd /var/lib/jenkins/.ssh/; for file in config id_rsa jenkins-slave-id_rsa; do if [ -f $file ]; then chmod 400 $file; fi; done; fi;'
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          name: grant-permissions
+          volumeMounts:
+          - mountPath: /var/lib/jenkins
+            name: jenkins-data
         containers:
         - capabilities: {}
           env:
