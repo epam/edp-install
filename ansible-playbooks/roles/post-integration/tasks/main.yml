@@ -50,7 +50,7 @@
     project_vcs_hostname_url: "{{ vcs_group_name | urlsplit('scheme') }}://{{ project_vcs_hostname }}"
   when: vcs_integration_enabled|bool == true
 
-- include_tasks: admin-console-configuration.yaml
+
 
 - include_tasks: check-deployment-health.yml
   with_items:
@@ -61,9 +61,16 @@
 - include_tasks: check-cr-health.yml
   with_items:
     - { project: '{{ project_cicd }}', component: 'sonar', name: 'sonar'  }
+
+- include_tasks: admin-console-configuration.yaml
+
+- include_tasks: check-cr-health.yml
+  with_items:
     - { project: '{{ project_cicd }}', component: 'adminconsole', name: 'edp-admin-console' }
 
 - include_tasks: keycloak-configuration.yml
+
+
 
 - include_tasks: check-deployment-health.yml
   with_items:
