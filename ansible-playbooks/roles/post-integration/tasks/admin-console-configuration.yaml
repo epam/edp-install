@@ -13,17 +13,12 @@
 # limitations under the License.
 
 ---
-- name: "Get username for Admin Console Keycloak Client"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
-    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
-  register: ac_keycloak_client_id
-
-- name: "Get password for Admin Console Keycloak Client"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-client
-    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
-  register: ac_keycloak_client_secret
+- name: "Check that secret is created"
+  shell: "{{ ocadm }} -n '{{ project_cicd }}' get secret admin-console-db "
+  retries: 12
+  delay: 10
+  register: result
+  until: '"NotFound" not in result.stderr'
   no_log: true
 
 - name: "Retrieve database username from secret"
@@ -47,8 +42,6 @@
   no_log: true
 
 - set_fact:
-    ac_keycloak_client_id: "{{ ac_keycloak_client_id.stdout }}"
-    ac_keycloak_client_secret: "{{ ac_keycloak_client_secret.stdout }}"
     admin_console_db_tenant_admin_username: "{{ admin_console_db_tenant_admin_username.stdout }}"
     admin_console_db_tenant_admin_password: "{{ admin_console_db_tenant_admin_password.stdout }}"
     admin_console_db_admin_username: "{{ admin_console_db_username.stdout }}"
