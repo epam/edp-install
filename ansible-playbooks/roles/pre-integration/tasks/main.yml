@@ -149,7 +149,14 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
 
+- name: "Process services templates"
+  template:
+    src: "{{ item }}"
+    dest: "{{ item | regex_replace('^(.*).j2$', '\\1')}}.yaml"
+  with_fileglob:
+    - "../templates/*.j2"
+
 - name: "Adding templates to Openshift"
   shell: "{{ ocadm }} create -f {{ item }} -n {{ project_cicd }} "
   with_fileglob:
-    - "../templates/*"
+    - "../templates/*.yaml"

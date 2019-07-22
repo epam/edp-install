@@ -15,32 +15,14 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: keycloak
+  name: zipkin
   annotations:
-    iconClass: icon-keycloak
-    description: Openshift template for KeyCloak service
+    iconClass: icon-zipkin
+    description: Openshift template for Zipkin service
     openshift.io/provider-display-name: EDP
     openshift.io/support-url: https://www.epam.com
     tags: edp
 objects:
-- kind: Secret
-  apiVersion: v1
-  metadata:
-    name: ${SERVICE_NAME}
-  stringData:
-    username: ${KEYCLOAK_USER}
-    password: ${KEYCLOAK_PASSWORD}
-- kind: Secret
-  apiVersion: v1
-  metadata:
-    name: "${SERVICE_NAME}-db"
-  stringData:
-    ${SERVICE_NAME}-db-user: ${DB_USER}
-    ${SERVICE_NAME}-db-password: ${DB_PASSWORD}
-- apiVersion: v1
-  kind: ServiceAccount
-  metadata:
-    name: ${SERVICE_NAME}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -78,7 +60,7 @@ objects:
   spec:
     ports:
     - name: gui
-      port: 8080
+      port: 9411
     selector:
       app: ${SERVICE_NAME}
     type: ClusterIP
@@ -91,11 +73,15 @@ objects:
   spec:
     ports:
     - name: "${SERVICE_NAME}-db"
-      port: 5432
+      port: 9042
     selector:
       app: "${SERVICE_NAME}-db"
     type: ClusterIP
     sessionAffinity: None
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: ${SERVICE_NAME}
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -122,53 +108,27 @@ objects:
           app: ${SERVICE_NAME}
       spec:
         serviceAccountName: ${SERVICE_NAME}
-        initContainers:
-        - name: "init-${SERVICE_NAME}-db"
-          image: busybox
-          command: ["sh", "-c", "while ! nc -w 1 ${SERVICE_NAME}-db 5432 </dev/null; do echo waiting for ${SERVICE_NAME}-db; sleep 10; done;"]
         containers:
         - name: ${SERVICE_NAME}
           image: "${SERVICE_IMAGE}:${SERVICE_VERSION}"
           imagePullPolicy: Always
           ports:
             - name: gui
-              containerPort: 8080
+              containerPort: 9411
           env:
-          - name: KEYCLOAK_USER
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}
-                key: username
-          - name: KEYCLOAK_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}
-                key: password
-          - name: POSTGRES_DATABASE
-            value: ${SERVICE_NAME}-db
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-db
-                key: ${SERVICE_NAME}-db-user
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-db
-                key: ${SERVICE_NAME}-db-password
-          - name: POSTGRES_PORT_5432_TCP_ADDR
-            value: ${SERVICE_NAME}-db
-          - name: POSTGRES_PORT_5432_TCP_PORT
-            value: '5432'
-          - name: PROXY_ADDRESS_FORWARDING
-            value: "true"
+          - name: STORAGE_TYPE
+            value: "cassandra"
+          - name: CASSANDRA_ENSURE_SCHEMA
+            value: "false"
+          - name: CASSANDRA_CONTACT_POINTS
+            value: "${SERVICE_NAME}-db"
           livenessProbe:
             failureThreshold: 5
             initialDelaySeconds: 180
             periodSeconds: 20
             successThreshold: 1
             tcpSocket:
-              port: 8080
+              port: 9411
             timeoutSeconds: 5
           readinessProbe:
             failureThreshold: 5
@@ -176,7 +136,7 @@ objects:
             periodSeconds: 20
             successThreshold: 1
             tcpSocket:
-              port: 8080
+              port: 9411
             timeoutSeconds: 5
           resources:
             requests:
@@ -211,53 +171,39 @@ objects:
         labels:
           app: "${SERVICE_NAME}-db"
       spec:
+        securityContext:
+          fsGroup: 0
         containers:
         - name: "${SERVICE_NAME}-db"
-          env:
-          - name: POSTGRES_DB
-            value: "${SERVICE_NAME}-db"
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-db
-                key: ${SERVICE_NAME}-db-user
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: ${SERVICE_NAME}-db
-                key: ${SERVICE_NAME}-db-password
-          - name: PGDATA
-            value: /var/lib/postgresql/data/pgdata
-          - name: POD_IP
-            valueFrom: { fieldRef: { fieldPath: status.podIP } }
-          image: postgres:9.6
-          imagePullPolicy: IfNotPresent
+          image: "openzipkin/zipkin-cassandra:${SERVICE_VERSION}"
+          imagePullPolicy: Always
           resources:
             requests:
               memory: 500Mi
           ports:
-            - containerPort: 5432
+            - containerPort: 9042
               protocol: TCP
           livenessProbe:
-            exec:
-              command:
-              - sh
-              - -c
-              - exec pg_isready --host $POD_IP
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-            failureThreshold: 6
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 9042
+            timeoutSeconds: 1
           readinessProbe:
             exec:
               command:
-              - sh
-              - -c
-              - exec pg_isready --host $POD_IP
-            initialDelaySeconds: 60
-            timeoutSeconds: 3
-            periodSeconds: 5
+                - /bin/sh
+                - '-c'
+                - cd /cassandra/bin && ./cassandra -v
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
+            - mountPath: /cassandra/data/
               name: ${SERVICE_NAME}-db
         serviceAccount: ${SERVICE_NAME}
         volumes:
@@ -268,37 +214,20 @@ parameters:
 - displayName: Service name
   name: SERVICE_NAME
   required: true
-  value: "keycloak"
-- displayName: Service name
-  name: SERVICE_NAME
-  required: true
-  value: "keycloak"
+  value: "zipkin"
 - displayName: Application version
   name: SERVICE_VERSION
   required: true
-  value: "3.4.3.Final"
+  value: "2.6.0"
 - displayName: Application image
   name: SERVICE_IMAGE
-  value: "jboss/keycloak"
+  value: "openzipkin/zipkin"
   required: true
-- displayName: "keycloak-db password"
-  name: DB_PASSWORD
-  generate: expression
-  from: "[a-zA-Z0-9]{10}"
-- displayName: "keycloak-db user"
-  name: DB_USER
-  value: "keycloak"
-- displayName: "keycloak password"
-  name: KEYCLOAK_PASSWORD
-  value: admin
-- displayName: "keycloak user"
-  name: KEYCLOAK_USER
-  value: admin
 - displayName: Zipkin storage class
   name: STORAGE_CLASS
   required: true
-  value: "gp2"
+  value: "{{ storage_class_name }}"
 - displayName: Zipkin storage capacity
   name: STORAGE_CAPACITY
   required: true
-  value: "2Gi"
+  value: "1Gi"

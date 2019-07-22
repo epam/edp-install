@@ -15,10 +15,10 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: rabbitmq
+  name: activemq
   annotations:
-    iconClass: icon-rabbitmq
-    description: Openshift template for RabbitMQ service
+    iconClass: icon-activemq
+    description: Openshift template for ActiveMQ service
     openshift.io/provider-display-name: EDP
     openshift.io/support-url: https://www.epam.com
     tags: edp
@@ -50,7 +50,7 @@ objects:
       kind: Service
       name: ${SERVICE_NAME}
     port:
-      targetPort: management
+      targetPort: ui
 - apiVersion: v1
   kind: Service
   metadata:
@@ -59,10 +59,18 @@ objects:
       app: ${SERVICE_NAME}
   spec:
     ports:
-    - name: listener
+    - name: jms
+      port: 61616
+    - name: ui
+      port: 8161
+    - name: amqp
       port: 5672
-    - name: management
-      port: 15672
+    - name: stomp
+      port: 61613
+    - name: mqtt
+      port: 1883
+    - name: ws
+      port: 61614
     selector:
       app: ${SERVICE_NAME}
     type: ClusterIP
@@ -101,21 +109,31 @@ objects:
           image: "${SERVICE_IMAGE}:${SERVICE_VERSION}"
           imagePullPolicy: Always
           ports:
-            - name: listener
+            - name: jms
+              containerPort: 61616
+            - name: ui
+              containerPort: 8161
+            - name: amqp
               containerPort: 5672
-            - name: management
-              containerPort: 15672
+            - name: stomp
+              containerPort: 61613
+            - name: mqtt
+              containerPort: 1883
+            - name: ws
+              containerPort: 61614
           env:
-            - name: RABBITMQ_DEFAULT_USER
+            - name: ACTIVEMQ_NODENAME
+              value: ${SERVICE_NAME}
+            - name: ACTIVEMQ_ADMIN_LOGIN
               valueFrom:
                 secretKeyRef:
                     name: ${SERVICE_NAME}
-                    key: rabbitmq.username
-            - name: RABBITMQ_DEFAULT_PASS
+                    key: activemq.username
+            - name: ACTIVEMQ_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
                     name: ${SERVICE_NAME}
-                    key: rabbitmq.password
+                    key: activemq.password
           livenessProbe:
             failureThreshold: 5
             initialDelaySeconds: 180
@@ -136,7 +154,7 @@ objects:
             requests:
               memory: 500Mi
           volumeMounts:
-            - mountPath: /var/lib/rabbitmq
+            - mountPath: /opt/activemq/data
               name: "${SERVICE_NAME}-data"
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
@@ -149,6 +167,23 @@ objects:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
+        initContainers:
+          - command:
+            - sh
+            - '-c'
+            - >-
+              chown activemq:activemq /mnt/data && cp -a /opt/activemq/data/* /mnt/data/
+            image: "${SERVICE_IMAGE}:${SERVICE_VERSION}"
+            imagePullPolicy: IfNotPresent
+            name: init-activemq
+            resources: {}
+            securityContext:
+              runAsUser: 0
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+              - mountPath: /mnt/data
+                name: "${SERVICE_NAME}-data"
     triggers:
       - type: ConfigChange
 - kind: Secret
@@ -156,34 +191,34 @@ objects:
   metadata:
     name: ${SERVICE_NAME}
   stringData:
-    rabbitmq.username: ${USERNAME}
-    rabbitmq.password: ${PASSWORD}
+    activemq.username: ${USERNAME}
+    activemq.password: ${PASSWORD}
 parameters:
 - displayName: Service name
   name: SERVICE_NAME
   required: true
-  value: "rabbitmq"
+  value: "activemq"
 - displayName: Service version
   name: SERVICE_VERSION
   required: true
-  value: "3.7.15-management"
+  value: "5.15.6"
 - displayName: Service image
   name: SERVICE_IMAGE
   required: true
-  value: "rabbitmq"
-- displayName: Rabbitmq user
+  value: "epamedp/activemq"
+- displayName: Activemq user
   name: USERNAME
   required: true
   value: "admin"
-- displayName: Rabbitmq password
+- displayName: Activemq password
   name: PASSWORD
   required: true
-  value: "secret-rabbit"
-- displayName: Rabbitmq storage class
+  value: "secret-active"
+- displayName: Activemq storage class
   name: STORAGE_CLASS
   required: true
-  value: "gp2"
-- displayName: Rabbitmq storage capacity
+  value: "{{ storage_class_name }}"
+- displayName: Activemq storage capacity
   name: STORAGE_CAPACITY
   required: true
-  value: "2Gi"
+  value: "1Gi"
