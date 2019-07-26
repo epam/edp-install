@@ -143,11 +143,6 @@ def jobName = "Job-provisioning"
 project = Jenkins.instance.createProject(FreeStyleProject, jobName)
 project.getBuildersList().clear()
 
-// Remove OpenShift Sample job
-def sampleJob = Jenkins.instance.getItemByFullName('OpenShift Sample')
-println("[DEBUG] Deleting ${sampleJob.name}")
-sampleJob.delete()
-
 // Copy app settings
 def checkDir = "mkdir -p \"${JENKINS_HOME}/project-settings\"\n"
 def getAppSettings = $/oc get cm project-settings -o jsonpath='{ .data.app\.settings\.json }' > \
@@ -169,7 +164,7 @@ def definitionList = [new BooleanParameterDefinition("PARAM", false, ""),
                       new StringParameterDefinition("BRANCH", "")]
 
 project.addProperty(new ParametersDefinitionProperty(definitionList))
-
+project.setConcurrentBuild(true)
 project.save()
 project.scheduleBuild()
 
@@ -181,6 +176,11 @@ cmd = [
            |cp ${JENKINS_HOME}/init.groovy.d/dsl/*.groovy ${JENKINS_HOME}/jobs/${jobName}/workspace/
            |""".stripMargin()]
 println("[DEBUG] ${cmd.execute().text}")
+
+// Remove OpenShift Sample job
+def sampleJob = Jenkins.instance.getItemByFullName('OpenShift Sample')
+println("[DEBUG] Deleting ${sampleJob.name}")
+sampleJob.delete()
 
 // Configure Allure
 def allureDescriptor = Jenkins.instance.getDescriptor("ru.yandex.qatools.allure.jenkins.tools.AllureCommandlineInstallation")
