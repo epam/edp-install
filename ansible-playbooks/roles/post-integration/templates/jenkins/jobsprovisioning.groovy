@@ -42,18 +42,6 @@ stages['Build-application-dotnet'] = "[{\"name\": \"checkout\"},{\"name\": \"get
         "{\"name\": \"push\"},{\"name\": \"git-tag\"}]"
 stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch\"},{\"name\": \"trigger-job\"}]"
 
-new JsonSlurperClassic().parseText(new File("${JENKINS_HOME}/project-settings/auto-test.settings.json").text).each() { item ->
-    def codebaseName = item.name
-    def codebaseFolder = jenkins.getItem(codebaseName)
-    if (codebaseFolder == null) {
-        folder(codebaseName)
-    }
-    createListView(codebaseName, "MASTER")
-    createListView(codebaseName, "Releases")
-    createCiPipeline("Code-review-${codebaseName}", codebaseName, stages['Code-review-autotests'],
-            "code-review.groovy", "${codebaseRepositoryBase}/${item.name}")
-}
-
 if (Boolean.valueOf("${PARAM}")) {
     def codebaseName = "${NAME}"
     def buildTool = "${BUILD_TOOL}"

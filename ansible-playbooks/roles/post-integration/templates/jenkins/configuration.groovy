@@ -144,12 +144,8 @@ project = Jenkins.instance.createProject(FreeStyleProject, jobName)
 project.getBuildersList().clear()
 
 // Copy app settings
-def checkDir = "mkdir -p \"${JENKINS_HOME}/project-settings\"\n"
-def getAppSettings = $/oc get cm project-settings -o jsonpath='{ .data.app\.settings\.json }' > \
-${JENKINS_HOME}/project-settings/app.settings.json/$
-def getAutotestSettings = $/oc get cm project-settings -o jsonpath='{ .data.auto-test\.settings\.json }' > \
-${JENKINS_HOME}/project-settings/auto-test.settings.json/$
-project.buildersList.add(new Shell(checkDir + getAppSettings + "\n" + getAutotestSettings + "\n"))
+def scriptCopy = "cp \$WORKSPACE/../*.groovy \$WORKSPACE/"
+project.buildersList.add(new Shell(scriptCopy + "\n"))
 
 executeDslScripts = new ExecuteDslScripts()
 executeDslScripts.setTargets("*.groovy")
@@ -173,7 +169,7 @@ cmd = [
         '-c',
         """set -x
            |mkdir -p ${JENKINS_HOME}/jobs/${jobName}/workspace
-           |cp ${JENKINS_HOME}/init.groovy.d/dsl/*.groovy ${JENKINS_HOME}/jobs/${jobName}/workspace/
+           |cp ${JENKINS_HOME}/init.groovy.d/dsl/*.groovy ${JENKINS_HOME}/jobs/${jobName}/
            |""".stripMargin()]
 println("[DEBUG] ${cmd.execute().text}")
 
