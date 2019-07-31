@@ -208,6 +208,9 @@ objects:
     - sonars
     - sonars/finalizers
     - sonars/status
+    - nexuses
+    - nexuses/finalizers
+    - nexuses/status
     - adminconsoles
     - adminconsoles/finalizers
     - adminconsoles/status
