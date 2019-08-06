@@ -60,13 +60,13 @@
 
 - include_tasks: check-cr-health.yml
   with_items:
-    - { project: '{{ project_cicd }}', component: 'sonar', name: 'sonar'  }
+    - { project: '{{ project_cicd }}', component: 'sonars.v2.edp.epam.com', name: 'sonar'  }
 
 - include_tasks: admin-console-configuration.yaml
 
 - include_tasks: check-cr-health.yml
   with_items:
-    - { project: '{{ project_cicd }}', component: 'adminconsole', name: 'edp-admin-console' }
+    - { project: '{{ project_cicd }}', component: 'adminconsoles.v2.edp.epam.com', name: 'edp-admin-console' }
 
 - include_tasks: keycloak-configuration.yml
 
