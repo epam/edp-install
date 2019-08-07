@@ -214,6 +214,9 @@ objects:
     - adminconsoles
     - adminconsoles/finalizers
     - adminconsoles/status
+    - gerrits
+    - gerrits/finalizers
+    - gerrits/status
     - deployments/finalizers
     - deployments/finalizers.extensions
     verbs:
