@@ -67,7 +67,7 @@
       "enabled":true,
       "publicClient":false,
       "clientAuthenticatorType":"client-secret",
-      "secret":"{{ keycloak_gerrit_realm_secret }}",
+      "secret":"{{ gerrit_client_secret }}",
       "rootUrl":"{{ tools.gerrit.web_url }}",
       "redirectUris":[
         "{{ tools.gerrit.web_url }}/*"
@@ -122,7 +122,7 @@
       ]
     },
     {
-      "clientId":"{{ tools.nexus.client_id }}",
+      "clientId":"{{ nexus_client_id }}",
       "enabled":true,
       "publicClient":true,
       "rootUrl":"{{ tools.nexus.web_url }}",

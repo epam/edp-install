@@ -12,162 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: v1
-kind: Template
-labels:
-  template: nexus3-persistent-template
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Nexus
 metadata:
-  name: nexus3-persistent
-  #namespace: team-mb
-  annotations:
-    description: |-
-          Nexus service, with persistent storage.
-          NOTE: You must have persistent volumes available in your cluster to use this template.
-    iconClass: icon-jenkins
-    openshift.io/display-name: Nexus (Persistent)
-    tags: ci-cd
-    #template.openshift.io/documentation-url: https://docs.openshift.org/latest/using_images/other_images/jenkins.html
-    template.openshift.io/long-description: This template deploys a Nexus server
-      capable of managing OpenShift Pipeline builds and supporting OpenShift-based
-      oauth login.
-    template.openshift.io/provider-display-name: Red Hat, Inc.
-    template.openshift.io/support-url: https://access.redhat.com
-objects:
-{% if ephemeral_data == 'false' %}
-- apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    labels:
-      app: nexus
-    name: nexus-data
-  spec:
-    storageClassName: ${STORAGE_CLASS_NAME}
-    accessModes:
-    - ReadWriteOnce
-    resources:
-      requests:
-        storage: ${NEXUS_VOLUME_CAPACITY}
-{% endif %}
-- apiVersion: v1
-  kind: DeploymentConfig
-  metadata:
-    labels:
-      app: nexus
-    name: nexus
-  spec:
-    replicas: 1
-    selector:
-      app: nexus
-    strategy:
-      recreateParams:
-        timeoutSeconds: 1200
-      type: Recreate
-    template:
-      metadata:
-        labels:
-          app: nexus
-      spec:
-        containers:
-        - env:
-          - name: CONTEXT_PATH
-            value: /
-          image: sonatype/nexus3:${NEXUS_VERSION}
-          imagePullPolicy: IfNotPresent
-          livenessProbe:
-            exec:
-              command:
-              - echo
-              - ok
-            failureThreshold: 3
-            initialDelaySeconds: 180
-            periodSeconds: 1
-            successThreshold: 1
-            timeoutSeconds: 10
-          name: nexus
-          ports:
-          - containerPort: 8081
-            protocol: TCP
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /
-              port: 8081
-              scheme: HTTP
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 1
-          resources:
-            requests:
-              memory: 500Mi
-          terminationMessagePath: /dev/termination-log
-          volumeMounts:
-          - mountPath: /nexus-data
-            name: nexus-data
-          - mountPath: /opt/sonatype/nexus/etc/nexus-default.properties
-            name: nexus-props
-            subPath: nexus-default.properties
-        dnsPolicy: ClusterFirst
-        restartPolicy: Always
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-        volumes:
-        - name: nexus-data
-{% if ephemeral_data == 'false' %}
-          persistentVolumeClaim:
-            claimName: nexus-data
-{% else %}
-          emptyDir: {}
-{% endif %}
-        - name: nexus-props
-          configMap:
-            name: nexus-props
-    test: false
-    triggers:
-    - type: ConfigChange
-- apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
-      app: nexus
-    name: nexus
-  spec:
-    ports:
-    - name: 8081-tcp
-      port: 8081
-      protocol: TCP
-      targetPort: 8081
-    selector:
-      app: nexus
-    sessionAffinity: None
-    type: ClusterIP
-- apiVersion: v1
-  kind: Route
-  metadata:
-    annotations:
-      description: Route for Nexus's https service.
-      template.openshift.io/expose-uri: http://{.spec.host}{.spec.path}
-    labels:
-      app: nexus
-    name: nexus
-  spec:
-    port:
-      targetPort: 8081-tcp
-    tls:
-      insecureEdgeTerminationPolicy: Redirect
-      termination: edge
-    to:
-      kind: Service
-      name: nexus
-      weight: 100
-parameters:
-- displayName: Sonatype Nexus version
-  name: NEXUS_VERSION
-  value: "3.15.1"
-- description: Volume space available for Sonatype Nexus e.g. 512Mi, 2Gi
-  displayName: Volume Space for Nexus
-  name: NEXUS_VOLUME_CAPACITY
-  value: 500Mi
-- displayName: Nexus storage class name
-  description: Storage class name to consume by Nexus
-  name: STORAGE_CLASS_NAME
+  name: nexus
+spec:
+  version: "{{ tools.nexus.version }}"
+  keycloakSpec:
+    enabled: true
+    url: "{{ tools.keycloak.web_url }}/auth/realms/{{ full_edp_name }}"
+  volumes:
+    - name: "data"
+      storage_class: "{{ storage_class_name }}"
+      capacity: "{{ tools.sonar.volume_capacity }}"
+  users:
+{% for user in nexus_super_admins %}
+    - username: {{ user['username'] }}
+      first_name: ""
+      last_name: ""
+      email: ""
+      roles:
+        - nx-admin
+{% endfor %}
+{% for user in nexus_admins %}
+    - username: {{ user['username'] }}
+      first_name: ""
+      last_name: ""
+      email: ""
+      roles:
+        - edp-admin
+{% endfor %}
+{% for user in nexus_viewers %}
+    - username: {{ user['username'] }}
+      first_name: ""
+      last_name: ""
+      email: ""
+      roles:
+        - edp-viewer
+{% endfor %}

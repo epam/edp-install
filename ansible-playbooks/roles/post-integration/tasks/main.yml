@@ -55,12 +55,12 @@
 - include_tasks: check-deployment-health.yml
   with_items:
     - { project: '{{ project_cicd }}', service: 'gerrit' }
-    - { project: '{{ project_cicd }}', service: 'nexus' }
     - { project: '{{ project_cicd }}', service: 'jenkins' }
 
 - include_tasks: check-cr-health.yml
   with_items:
     - { project: '{{ project_cicd }}', component: 'sonars.v2.edp.epam.com', name: 'sonar'  }
+    - { project: '{{ project_cicd }}', component: 'nexus.v2.edp.epam.com', name: 'nexus'  }
 
 - include_tasks: admin-console-configuration.yaml
 
@@ -70,13 +70,10 @@
 
 - include_tasks: keycloak-configuration.yml
 
-
-
 - include_tasks: check-deployment-health.yml
   with_items:
     - { project: '{{ project_cicd }}', service: 'nexus' }
 
-- include_tasks: nexus-configuration.yml
 - include_tasks: sonar-configuration.yml
 - include_tasks: gerrit-configuration.yml
 - include_tasks: jenkins-configuration.yml

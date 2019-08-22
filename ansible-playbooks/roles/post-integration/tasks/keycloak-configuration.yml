@@ -26,20 +26,11 @@
   register: sonar_client_secret
   no_log: true
 
-- set_fact:
-    sonar_client_id: "{{ sonar_client_id.stdout }}"
-    sonar_client_secret: "{{ sonar_client_secret.stdout }}"
-  no_log: true
-
 - name: "Get secret for gerrit client from keycloak"
   shell: >
    {{ ocadm }} -n {{ project_cicd }} get secret keycloak-gerrit
    --template={% raw %}'{{ index .data "secret" }}'{% endraw %} | base64 --decode
-  register: keycloak_gerrit
-  no_log: true
-
-- set_fact:
-    keycloak_gerrit_realm_secret: "{{ keycloak_gerrit.stdout }}"
+  register: gerrit_client_secret
   no_log: true
 
 - name: "Get username from security project Keycloak secret"
@@ -94,7 +85,18 @@
   register: ac_keycloak_client_secret
   no_log: true
 
+- name: "Get id for nexus client for keycloak"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret nexus-is-credentials
+    --template={% raw %}'{{ index .data "client_id" }}'{% endraw %} | base64 --decode
+  register: nexus_client_id
+  no_log: true
+
 - set_fact:
+    nexus_client_id: "{{ nexus_client_id.stdout }}"
+    sonar_client_id: "{{ sonar_client_id.stdout }}"
+    sonar_client_secret: "{{ sonar_client_secret.stdout }}"
+    gerrit_client_secret: "{{ gerrit_client_secret.stdout }}"
     ac_reader_username: "{{ ac_reader_username.stdout }}"
     ac_reader_password: "{{ ac_reader_password.stdout }}"
     ac_creator_username: "{{ ac_creator_username.stdout }}"
@@ -228,14 +230,3 @@
 - include_tasks: keycloak-api/manage-edp-viewers.yml
   when: item != ""
   with_items: "{{ edp_viewers }}"
-
-- name: "Copy Keycloak proxy file"
-  template:
-    src: "keycloak/proxy.yml"
-    dest: "{{ post_integration_dir }}/keycloak/proxy.yml"
-
-- name: "Install Keycloak proxy to the pod"
-  include_tasks: keycloak-api/install-proxy.yml
-  with_items:
-    - { upstream_resource: "nexus", client_id: "{{ tools.nexus.client_id }}",
-     redirection_url: "{{ tools.nexus.web_url }}", upstream_port: 8081, roles: "administrator,developer" }

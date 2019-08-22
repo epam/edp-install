@@ -87,10 +87,27 @@
 
 - include_tasks: jenkins-api/restart.yml
 
+- name: "Retrieve ci user password for Nexus from Secrets"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret nexus-ci-credentials
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: nexus_ciuser_password
+  no_log: true
+
+- name: "Retrieve ci user login for Nexus from Secrets"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret nexus-ci-credentials
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+  register: nexus_ciuser_username
+  no_log: true
+
 - include_tasks: jenkins-api/create-user.yml
   with_items:
-    - "{{ tools.nexus.local_users }}"
-  when: item.jenkins_id is defined
+    - { username: "{{ nexus_ciuser_username.stdout }}",
+        password: "{{ nexus_ciuser_password.stdout }}",
+        last_name: "Nexus",
+        first_name: "User",
+        jenkins_id: "nexus"}
 
 - block:
   - include_tasks: jenkins-api/create-user.yml
