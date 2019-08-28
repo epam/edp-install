@@ -132,6 +132,11 @@
   with_items:
     - "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- bash -c '[ -f $JENKINS_HOME/.ssh/id_rsa ] || ssh-keygen -b 4096 -t rsa -f $JENKINS_HOME/.ssh/id_rsa -q -N \"\"'"
     - "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- bash -c 'cat $JENKINS_HOME/.ssh/id_rsa.pub' > {{ post_integration_dir }}/gerrit/gerrit_jenkins_rsa.pub"
+    - "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- bash -c 'cat $JENKINS_HOME/.ssh/id_rsa' > {{ post_integration_dir }}/gerrit/gerrit_jenkins_rsa"
+
+- name: "Copy secret for Jenkins"
+  shell: "{{ ocadm }} -n {{ project_cicd }} create secret generic gerrit-jenkins-ssh --from-file=id_rsa.pub={{ post_integration_dir }}/gerrit/gerrit_jenkins_rsa.pub --from-file=id_rsa={{ post_integration_dir }}/gerrit/gerrit_jenkins_rsa"
+  no_log: false
 
 - set_fact:
     gerrit_admins: "{{ gerrit_admins | default([]) + [ { 'username': item, 'group': 'Administrators', 'full_name': item } ] }}"
