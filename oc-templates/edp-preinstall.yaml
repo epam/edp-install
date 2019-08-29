@@ -217,6 +217,9 @@ objects:
     - gerrits
     - gerrits/finalizers
     - gerrits/status
+    - jenkinses
+    - jenkinses/finalizers
+    - jenkinses/status
     - deployments/finalizers
     - deployments/finalizers.extensions
     verbs:
