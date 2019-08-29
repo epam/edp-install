@@ -31,7 +31,7 @@ public class StringConstants {
     public static final String GERRIT_SECRET = "gerrit-passwords";
 
     public static final String OPENSHIFT_CICD_NAMESPACE = "edp-cicd";
-    public static final String OPENSHIFT_MASTER_URL = "https://localhost:8443";
+    public static final String OPENSHIFT_MASTER_URL = "https://master.delivery.openshift.local:8443";
     public static final String OPENSHIFT_USERNAME = "integration_tests";
     public static final String OPENSHIFT_PASSWORD = "tests2018";
     public static final Boolean OPENSHIFT_TRUST_CERTS = false;
