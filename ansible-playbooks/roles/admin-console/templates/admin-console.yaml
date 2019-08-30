@@ -27,7 +27,7 @@ spec:
   dbSpec:
     enabled: true
     name: {{ shared_database }}
-    hostname: {{ shared_database }}.{{ edp_name }}-deploy-project
+    hostname: {{ tools.admin_console.shared_db_service }}
     port: "5432"
   keycloakSpec:
     enabled: true
