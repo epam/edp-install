@@ -28,8 +28,8 @@
 
 - name: "Get secret for gerrit client from keycloak"
   shell: >
-   {{ ocadm }} -n {{ project_cicd }} get secret keycloak-gerrit
-   --template={% raw %}'{{ index .data "secret" }}'{% endraw %} | base64 --decode
+   {{ ocadm }} -n {{ project_cicd }} get secret gerrit-is-credentials
+   --template={% raw %}'{{ index .data "client_secret" }}'{% endraw %} | base64 --decode
   register: gerrit_client_secret
   no_log: true
 

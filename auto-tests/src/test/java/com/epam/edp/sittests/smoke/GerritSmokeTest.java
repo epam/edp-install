@@ -40,7 +40,7 @@ import static io.restassured.RestAssured.given;
  */
 public class GerritSmokeTest {
     private static final String GERRIT_USER = "admin";
-    private static final String GERRIT_SECRET = "gerrit-passwords";
+    private static final String GERRIT_SECRET = "gerrit-admin-password";
     private static final String GERRIT_ADMIN = "admin";
     private static final String GERRIT_PROJECT_CREATOR = "project-creator";
     private static final String GERRIT_JENKINS = "jenkins";

@@ -13,6 +13,26 @@
 # limitations under the License.
 
 ---
+- include_tasks: check-cr-health.yml
+  with_items:
+    - { project: '{{ project_cicd }}', component: 'gerrits.v2.edp.epam.com', name: 'gerrit' }
+
+- name: "Get Gerrit ssh port"
+  shell: "{{ ocadm }} -n {{ project_cicd }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].port}'"
+  register: ssh_port
+
+- set_fact:
+    jenkins_pod: "{{ ocadm }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'jenkins-[0-9]+'"
+    gerrit_ssh_port: "{{ ssh_port.stdout }}"
+    gerrit_api_url: "http://gerrit.{{ project_cicd }}:8080/a"
+    nexus_host: "nexus.{{ project_cicd }}"
+    nexus_port: "8081"
+    sonar_api_url: "http://sonar.{{ project_cicd }}:9000/api"
+    sonar_claim_name: "roles"
+
+- name: "Create config map with Gerrit node port"
+  shell: "{{ ocadm }} -n {{ project_cicd }} create cm gerrit --from-literal=sshPort={{ gerrit_ssh_port }}"
+
 - name: Creates work directory
   file:
     path: "{{ post_integration_dir }}/{{ item }}"
@@ -21,10 +41,6 @@
       - "{{ tools.keys() }}"
 - name: "Switching to CICD project"
   shell: "{{ ocadm }} project {{ project_cicd }}"
-
-- name: "Get Gerrit ssh port"
-  shell: "{{ ocadm }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].port}'"
-  register: ssh_port
 
 - name: Creates directory for GitServer templates
   file:
@@ -47,17 +63,14 @@
     - '"already" not in result.stderr'
   no_log: true
 
+- name: "Get username from gerrit-ciuser-password secret"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-ciuser-password
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+  register: gerrit_ciuser_password
+
 - set_fact:
-    jenkins_pod: "{{ ocadm }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'jenkins-[0-9]+'"
-    gerrit_ssh_port: "{{ ssh_port.stdout }}"
-    gerrit_pod: "{{ ocadm }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'gerrit-[0-9]+'"
-    gerrit_db_pod: "{{ ocadm }} get pods --no-headers -o custom-columns=NAME:.metadata.name | egrep 'gerrit-db-[0-9]+'"
-    gerrit_manage: "ssh -p {{ ssh_port.stdout }} gerrit.{{ project_cicd }} gerrit"
-    gerrit_api_url: "http://gerrit.{{ project_cicd }}:8080/a"
-    nexus_host: "nexus.{{ project_cicd }}"
-    nexus_port: "8081"
-    sonar_api_url: "http://sonar.{{ project_cicd }}:9000/api"
-    sonar_claim_name: "roles"
+    gerrit_jenkins_password: "{{ gerrit_ciuser_password.stdout }}"
 
 - set_fact:
     project_vcs_hostname: "{{ vcs_group_name | urlsplit('hostname') }}"
@@ -71,15 +84,13 @@
     project_vcs_hostname_url: "{{ vcs_group_name | urlsplit('scheme') }}://{{ project_vcs_hostname }}"
   when: vcs_integration_enabled|bool == true
 
-
-
 - include_tasks: check-deployment-health.yml
   with_items:
-    - { project: '{{ project_cicd }}', service: 'gerrit' }
     - { project: '{{ project_cicd }}', service: 'jenkins' }
 
 - include_tasks: check-cr-health.yml
   with_items:
+    - { project: '{{ project_cicd }}', component: 'gerrits.v2.edp.epam.com', name: 'gerrit'  }
     - { project: '{{ project_cicd }}', component: 'sonars.v2.edp.epam.com', name: 'sonar'  }
     - { project: '{{ project_cicd }}', component: 'nexus.v2.edp.epam.com', name: 'nexus'  }
 
@@ -96,7 +107,6 @@
     - { project: '{{ project_cicd }}', service: 'nexus' }
 
 - include_tasks: sonar-configuration.yml
-- include_tasks: gerrit-configuration.yml
 - include_tasks: jenkins-configuration.yml
 - include_tasks: perf-configuration.yml
   when: perf_integration_enabled|bool == true

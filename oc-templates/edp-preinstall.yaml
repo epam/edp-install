@@ -222,6 +222,8 @@ objects:
     - jenkinses/status
     - deployments/finalizers
     - deployments/finalizers.extensions
+    - gerritreplicationconfigs
+    - gerritreplicationconfigs/status
     verbs:
     - '*'
 - apiVersion: security.openshift.io/v1

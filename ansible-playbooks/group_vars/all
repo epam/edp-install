@@ -30,7 +30,8 @@ operators_list: [
     "codebase-operator",
     "reconciler",
     "cd-pipeline-handler-controller",
-    "admin-console-operator"
+    "admin-console-operator",
+    "gerrit-operator"
     ]
 project_cicd: "{{ edp_name }}-edp-cicd"
 full_edp_name: "{{ edp_name }}-edp"
@@ -93,11 +94,8 @@ tools:
     backend_gradle_image: "{{ jenkins_backend_gradle_image | default('epamedp/jenkins-slave-gradle-openshift') }}"
     jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   gerrit:
-    secret: "gerrit-passwords"
-    db_secret: "gerrit-db"
-    version: "{{ gerrit_version | default('2.14.8') }}"
+    version: "{{ gerrit_version | default('2.16.10') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
-    volume_db_capacity: "{{ gerrit_volume_db_capacity | default('2Gi') }}"
     web_url: "https://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   nexus:
     version: "{{ nexus_version | default('3.15.1') }}"

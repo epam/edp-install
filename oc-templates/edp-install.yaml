@@ -65,7 +65,6 @@ objects:
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
             - "-e gerrit_version=${GERRIT_VERSION}"
             - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
-            - "-e gerrit_volume_db_capacity=${GERRIT_DB_CAPACITY}"
             - "-e jenkins_fs_type=${JENKINS_FS_TYPE}"
             - "-e jenkins_host_path_volume=${JENKINS_HOST_PATH_VOLUME}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
@@ -126,16 +125,11 @@ parameters:
   value: "all"
 #Gerrit parameters
 - displayName: Gerrit version
-  value: "2.14.8"
+  value: "2.16.10"
   name: GERRIT_VERSION
 - displayName: Gerrit Volume Capacity
   description: Volume space available for Gerrit data
   name: GERRIT_DATA_CAPACITY
-  value: 5Gi
-  required: true
-- displayName: Gerrit database Volume Capacity
-  description: Volume space available for Gerrit DB
-  name: GERRIT_DB_CAPACITY
   value: 5Gi
   required: true
 #Jenkins parameters

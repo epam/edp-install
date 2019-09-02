@@ -13,6 +13,13 @@
 # limitations under the License.
 
 ---
+- name: Creates work directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "~/.ssh"
+
 - name: "Retrieve password from Secrets"
   shell: >
    {{ ocadm }} -n {{ project_cicd }} get secret {{ tools.jenkins.secret }}
@@ -23,6 +30,13 @@
 - include_tasks: jenkins-api/retrieve-token.yml
   with_items:
     - { username: 'admin', secret_name: 'jenkins-token' }
+
+- name: "Get SSH key for jenkins user in gerrit"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-ciuser
+    --template={% raw %}'{{ index .data "id_rsa" }}'{% endraw %} | base64 --decode
+  register: gerrit_ciuser_key
+  no_log: true
 
 - set_fact:
     tools: "{{ tools | combine({ 'jenkins': { 'admin_token': token }}, recursive=True) }}"
@@ -39,6 +53,13 @@
         IdentityFile /var/lib/jenkins/.ssh/id_rsa
         IdentitiesOnly yes
     dest: ~/.ssh/jenkins_config
+    force: no
+
+- name: "Generate config ssh for jenkins"
+  copy:
+    content: "{{ gerrit_ciuser_key.stdout }}"
+    dest: ~/.ssh/id_rsa
+    mode: 0600
     force: no
 
 - name: "Generate ssh key for jenkins-slave user"
@@ -72,7 +93,7 @@
     - "init.groovy"
 
 - name: "Create directories in jenkins pods"
-  shell: "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- bash -c 'mkdir -p /var/lib/jenkins/init.groovy.d/dsl'"
+  shell: "{{ ocadm }} exec -i $({{ jenkins_pod }}) -- bash -c 'mkdir -p /var/lib/jenkins/init.groovy.d/dsl /var/lib/jenkins/.ssh'"
 
 - name: "Copy files to jenkins pod"
   shell: "{{ ocadm }} cp {{ item.src }} {{ project_cicd }}/$({{ jenkins_pod }}):{{ item.dest }}"
@@ -83,6 +104,7 @@
       - { src: "{{ post_integration_dir }}/jenkins/jobsprovisioning.groovy", dest: "/var/lib/jenkins/init.groovy.d/dsl/jobsprovisioning.groovy"}
       - { src: "{{ post_integration_dir }}/jenkins/scriptApproval.xml", dest: "/var/lib/jenkins/scriptApproval.xml"}
       - { src: "~/.ssh/jenkins_config", dest: "/var/lib/jenkins/.ssh/config"}
+      - { src: "~/.ssh/id_rsa", dest: "/var/lib/jenkins/.ssh/id_rsa"}
       - { src: "{{ post_integration_dir }}/jenkins/jenkins-slave-id_rsa", dest: "/var/lib/jenkins/.ssh/jenkins-slave-id_rsa"}
 
 - include_tasks: jenkins-api/restart.yml
