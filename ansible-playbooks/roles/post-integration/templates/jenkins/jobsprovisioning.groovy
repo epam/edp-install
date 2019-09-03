@@ -45,6 +45,7 @@ stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch
 if (Boolean.valueOf("${PARAM}")) {
     def codebaseName = "${NAME}"
     def buildTool = "${BUILD_TOOL}"
+    def gitServerCrName = "${GIT_SERVER_CR_NAME}"
 
     def codebaseFolder = jenkins.getItem(codebaseName)
     if (codebaseFolder == null) {
@@ -61,16 +62,16 @@ if (Boolean.valueOf("${PARAM}")) {
 
         def type = "${TYPE}"
         createCiPipeline("Code-review-${codebaseName}", codebaseName, stages["Code-review-${type}"], "code-review.groovy",
-                "${codebaseRepositoryBase}/${codebaseName}", branch)
+                "${codebaseRepositoryBase}/${codebaseName}", branch, gitServerCrName)
 
         if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
             createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}-${buildTool.toLowerCase()}"], "build.groovy",
-                    "${codebaseRepositoryBase}/${codebaseName}", branch)
+                    "${codebaseRepositoryBase}/${codebaseName}", branch, gitServerCrName)
         }
     }
 }
 
-def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, watchBranch = "master") {
+def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, watchBranch = "master", gitServerCrName) {
     pipelineJob("${codebaseName}/${watchBranch.toUpperCase()}-${pipelineName}") {
         logRotator {
             numToKeep(10)
@@ -97,6 +98,7 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
                     }
                 }
                 parameters {
+                    stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                     stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
                     stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
                     if (pipelineName.contains("Build"))

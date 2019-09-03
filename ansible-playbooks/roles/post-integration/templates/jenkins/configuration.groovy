@@ -157,7 +157,8 @@ def definitionList = [new BooleanParameterDefinition("PARAM", false, ""),
                       new StringParameterDefinition("NAME", ""),
                       new StringParameterDefinition("TYPE", ""),
                       new StringParameterDefinition("BUILD_TOOL", ""),
-                      new StringParameterDefinition("BRANCH", "")]
+                      new StringParameterDefinition("BRANCH", ""),
+                      new StringParameterDefinition("GIT_SERVER_CR_NAME", "")]
 
 project.addProperty(new ParametersDefinitionProperty(definitionList))
 project.setConcurrentBuild(true)
