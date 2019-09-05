@@ -163,6 +163,8 @@
   with_items:
     - { login: "jenkins", group: "Continuous Integration Tools" }
     - { login: "jenkins", group: "Non-Interactive Users" }
+    - { login: "jenkins", group: "Administrators" }
+    - { login: "jenkins", group: "Project Bootstrappers" }
     - { login: "project-creator", group: "Administrators" }
     - { login: "project-creator", group: "Project Bootstrappers" }
 
