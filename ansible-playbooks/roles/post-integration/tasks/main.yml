@@ -66,6 +66,12 @@
 - name: "Get username from gerrit-ciuser-password secret"
   shell: >
     {{ ocadm }} -n {{ project_cicd }} get secret gerrit-ciuser-password
+    --template={% raw %}'{{ index .data "user" }}'{% endraw %} | base64 --decode
+  register: gerrit_ciuser_username
+
+- name: "Get password from gerrit-ciuser-password secret"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-ciuser-password
     --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: gerrit_ciuser_password
 

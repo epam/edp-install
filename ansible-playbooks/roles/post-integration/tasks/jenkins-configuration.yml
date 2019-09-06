@@ -131,6 +131,12 @@
         first_name: "User",
         jenkins_id: "nexus"}
 
+- include_tasks: jenkins-api/create-credentials.yml
+  with_items:
+    - { username: "{{ gerrit_ciuser_username.stdout }}",
+        description: "CI user ssh key for Git/Gerrit",
+        user_id: "gerrit-ciuser-sshkey"}
+
 - block:
   - include_tasks: jenkins-api/create-user.yml
     with_items:
