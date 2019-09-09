@@ -33,7 +33,7 @@
 
 - name: "Get SSH key for jenkins user in gerrit"
   shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-ciuser
+    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-ciuser-sshkey
     --template={% raw %}'{{ index .data "id_rsa" }}'{% endraw %} | base64 --decode
   register: gerrit_ciuser_key
   no_log: true
