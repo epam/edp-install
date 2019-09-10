@@ -54,7 +54,7 @@ if (Boolean.valueOf("${PARAM}")) {
 
     createListView(codebaseName, "Releases")
     createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
-            "${codebaseRepositoryBase}/${codebaseName}")
+            "${codebaseRepositoryBase}/${codebaseName}", gitServerCrName)
 
     if (BRANCH) {
         def branch = "${BRANCH}"
@@ -109,7 +109,7 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
     }
 }
 
-def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository) {
+def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, gitServerCrName) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
             numToKeep(14)
@@ -130,6 +130,7 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
                         stringParam("GERRIT_PROJECT", "${codebaseName}", "")
                         stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
                         stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, HEAD of master will be used")
+                        stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                     }
                 }
             }
