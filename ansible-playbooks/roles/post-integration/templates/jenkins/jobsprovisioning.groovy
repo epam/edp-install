@@ -46,6 +46,7 @@ if (Boolean.valueOf("${PARAM}")) {
     def codebaseName = "${NAME}"
     def buildTool = "${BUILD_TOOL}"
     def gitServerCrName = "${GIT_SERVER_CR_NAME}"
+    def gitServerCrVersion = "${GIT_SERVER_CR_VERSION}"
 
     def codebaseFolder = jenkins.getItem(codebaseName)
     if (codebaseFolder == null) {
@@ -54,7 +55,7 @@ if (Boolean.valueOf("${PARAM}")) {
 
     createListView(codebaseName, "Releases")
     createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
-            "${codebaseRepositoryBase}/${codebaseName}", gitServerCrName)
+            "${codebaseRepositoryBase}/${codebaseName}", gitServerCrName, gitServerCrVersion)
 
     if (BRANCH) {
         def branch = "${BRANCH}"
@@ -62,16 +63,17 @@ if (Boolean.valueOf("${PARAM}")) {
 
         def type = "${TYPE}"
         createCiPipeline("Code-review-${codebaseName}", codebaseName, stages["Code-review-${type}"], "code-review.groovy",
-                "${codebaseRepositoryBase}/${codebaseName}", branch, gitServerCrName)
+                "${codebaseRepositoryBase}/${codebaseName}", branch, gitServerCrName, gitServerCrVersion)
 
         if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
             createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}-${buildTool.toLowerCase()}"], "build.groovy",
-                    "${codebaseRepositoryBase}/${codebaseName}", branch, gitServerCrName)
+                    "${codebaseRepositoryBase}/${codebaseName}", branch, gitServerCrName, gitServerCrVersion)
         }
     }
 }
 
-def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, watchBranch = "master", gitServerCrName) {
+def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, watchBranch = "master",
+                        gitServerCrName, gitServerCrVersion) {
     pipelineJob("${codebaseName}/${watchBranch.toUpperCase()}-${pipelineName}") {
         logRotator {
             numToKeep(10)
@@ -98,6 +100,7 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
                     }
                 }
                 parameters {
+                    stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                     stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                     stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
                     stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
@@ -109,7 +112,7 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
     }
 }
 
-def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, gitServerCrName) {
+def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, gitServerCrName, gitServerCrVersion) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
             numToKeep(14)
@@ -131,6 +134,7 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
                         stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
                         stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, HEAD of master will be used")
                         stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
+                        stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                     }
                 }
             }
