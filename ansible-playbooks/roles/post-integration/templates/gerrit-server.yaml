@@ -15,11 +15,11 @@
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: GitServer
 metadata:
-  name: gerrit
+  name: "{{ tools.gerrit.web_url | urlsplit('hostname') }}"
 spec:
-  gitHost: "{{ tools.gerrit.web_url }}"
+  gitHost: "{{ tools.gerrit.web_url | urlsplit('hostname') }}"
   gitUser: "jenkins"
   httpsPort: "443"
   sshPort: "{{ gerrit_ssh_port }}"
-  nameSshKeySecret: "gerrit-ciuser"
+  nameSshKeySecret: "gerrit-ciuser-sshkey"
   createCodeReviewPipeline: false
