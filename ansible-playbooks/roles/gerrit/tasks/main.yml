@@ -42,14 +42,6 @@
   with_items:
     - "gerrit.yaml"
 
-- name: "Copy Gerrit Replication Config CR"
-  template:
-    src: "{{ item }}"
-    dest: "{{ templates_dir }}/gerrit/{{ item }}"
-  when: vcs_integration_enabled|bool == true
-  with_items:
-    - "gerrit-replication-config.yaml"
-
 - name: "Install Gerrit app"
   command: |
     {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/gerrit/gerrit.yaml
@@ -59,7 +51,3 @@
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
-
-- name: "Create gerrit replication config cr"
-  shell: "{{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/gerrit/gerrit-replication-config.yaml"
-  when: vcs_integration_enabled|bool == true

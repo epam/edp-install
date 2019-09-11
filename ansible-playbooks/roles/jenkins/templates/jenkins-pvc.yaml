@@ -169,11 +169,6 @@ objects:
         containers:
         - capabilities: {}
           env:
-          - name: GERRIT_SSH_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: gerrit
-                key: sshPort
           - name: OPENSHIFT_ENABLE_OAUTH
             value: "false"
           - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT

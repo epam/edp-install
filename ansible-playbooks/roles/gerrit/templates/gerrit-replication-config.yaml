@@ -1,7 +1,0 @@
-apiVersion: v2.edp.epam.com/v1alpha1
-kind: GerritReplicationConfig
-metadata:
-  name: test-project
-spec:
-  ssh_url: "{{ clone_repo_url }}"
-  owner_name: "example-gerrit"
