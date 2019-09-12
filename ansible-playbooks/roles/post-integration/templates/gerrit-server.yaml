@@ -15,7 +15,7 @@
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: GitServer
 metadata:
-  name: "{{ tools.gerrit.web_url | urlsplit('hostname') }}"
+  name: gerrit
 spec:
   gitHost: "{{ tools.gerrit.web_url | urlsplit('hostname') }}"
   gitUser: "jenkins"
