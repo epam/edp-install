@@ -1,0 +1,24 @@
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Jenkins
+metadata:
+  name: jenkins
+spec:
+  image: {{ ':'.join(tools.jenkins.version.split(':')[0:-1]) }}
+  version: {{ tools.jenkins.version.split(':') | last }}
+  volumes:
+    - name: "data"
+      storageClass: "{{ storage_class_name }}"
+      capacity: "{{ tools.jenkins.volume_capacity }}"
+  sharedLibraries:
+    - name: "edp-library-stages"
+      id: "Stages"
+      repository: "{{ stages_repo }}"
+      version: "{{ stages_version }}"
+    - name: "edp-library-pipelines"
+      id: "Pipelines"
+      repository: "{{ pipelines_repo }}"
+      version: "{{ pipelines_version }}"
+  keycloakSpec:
+    enabled: true
+    url: "{{ tools.keycloak.web_url }}"
+    realm: "{{ tools.keycloak.realm_name }}"

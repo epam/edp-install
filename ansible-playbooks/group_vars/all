@@ -25,14 +25,6 @@ edp_deploy_project: "{{ lookup('env', 'DEPLOY-PROJECT') }}"
 projects_list: [
     "{{ edp_name }}-edp-cicd"
     ]
-operators_list: [
-    "sonar-operator",
-    "codebase-operator",
-    "reconciler",
-    "cd-pipeline-handler-controller",
-    "admin-console-operator",
-    "gerrit-operator"
-    ]
 project_cicd: "{{ edp_name }}-edp-cicd"
 full_edp_name: "{{ edp_name }}-edp"
 ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
@@ -60,39 +52,11 @@ edp_super_admins: "{{ (super_admin_users == '') | ternary(default_super_admin, s
 edp_admins: "{{ admin_users.split(',') | lower }}"
 edp_viewers: "{{ view_users.split(',') | lower }}"
 basic_pattern_url: "https://github.com/epmd-edp"
-random_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-secrets:
-  nexus_admin:
-    password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-    default_password: admin123
-  gerrit_admin:
-    password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-    email: admin@example.com
-  gerrit_perf:
-    password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-  jenkins_admin:
-    password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-  gerrit_db:
-    db_name: gerrit
-    db_user: gerrit
-    db_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
-  shared_database:
-    database_tenant_username: "admin-{{ edp_name }}"
-    database_tenant_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
 tools:
   jenkins:
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
-    secret: "jenkins-passwords"
-    admin_token: "{{ jenkins_admin_token | default('token') }}"
-    fs_type: "{{ jenkins_fs_type | default('pvc') }}"
-    host_path_volume: "{{ jenkins_host_path_volume | default('/opt/data/jenkins') }}"
-    service_name: "{{ jenkins_service_name | default('jenkins') }}"
     volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
-    maven_cache_volume_capacity: "{{ jenkins_maven_cache_volume_capacity | default('5Gi') }}"
-    frontend_image: "{{ jenkins_frontend_image | default('openshift/jenkins-agent-nodejs-8-centos7:v3.10') }}"
-    backend_maven_image: "{{ jenkins_backend_maven_image | default('openshift/jenkins-slave-maven-centos7') }}"
-    backend_gradle_image: "{{ jenkins_backend_gradle_image | default('epamedp/jenkins-slave-gradle-openshift') }}"
-    jenkins_image: "{{ jenkins_image_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
+    version: "docker-registry.default.svc:5000/edp-cicd-delivery/edp-jenkins:2.176.3"
   gerrit:
     version: "{{ gerrit_version | default('2.16.10') }}"
     volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
@@ -102,7 +66,6 @@ tools:
     volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"
     web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   sonar:
-    secret: "sonar-admin-password"
     version: "{{ sonar_version | default('7.6-community') }}"
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
