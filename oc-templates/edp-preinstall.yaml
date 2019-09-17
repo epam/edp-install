@@ -225,6 +225,15 @@ objects:
     - deployments/finalizers.extensions
     - gerritreplicationconfigs
     - gerritreplicationconfigs/status
+    - keycloaks
+    - keycloaks/finalizers
+    - keycloaks/status
+    - keycloakclients
+    - keycloakclients/finalizers
+    - keycloakclients/status
+    - keycloakrealms
+    - keycloakrealms/finalizers
+    - keycloakrealms/status
     verbs:
     - '*'
 - apiVersion: security.openshift.io/v1

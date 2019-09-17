@@ -23,7 +23,7 @@
 - name: "Retrieve ci user token from Secrets"
   shell: >
     {{ ocadm }} -n {{ project_cicd }} get secret sonar-ciuser-token
-    --template={% raw %}'{{ index .data "token" }}'{% endraw %} | base64 --decode
+    --template={% raw %}'{{ index .data "secret" }}'{% endraw %} | base64 --decode
   register: sonar_ciuser_token
   no_log: true
 

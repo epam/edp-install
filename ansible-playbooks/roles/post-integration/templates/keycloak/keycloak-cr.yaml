@@ -1,0 +1,23 @@
+apiVersion: v1.edp.epam.com/v1alpha1
+kind: Keycloak
+metadata:
+  name: main
+spec:
+  url: https://keycloak-security.delivery.aws.main.edp.projects.epam.com
+  secret: keycloak-main-secret
+  users:
+{% for user in keycloak_super_admins %}
+    - username: {{ user['username'] }}
+      realmRoles:
+        - administrator
+{% endfor %}
+{% for user in keycloak_admins %}
+    - username: {{ user['username'] }}
+      realmRoles:
+        - administrator
+{% endfor %}
+{% for user in keycloak_developers %}
+    - username: {{ user['username'] }}
+      realmRoles:
+        - developer
+{% endfor %}

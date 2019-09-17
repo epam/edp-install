@@ -28,21 +28,21 @@
 
 - name: "Get secret for gerrit client from keycloak"
   shell: >
-   {{ ocadm }} -n {{ project_cicd }} get secret gerrit-is-credentials
-   --template={% raw %}'{{ index .data "client_secret" }}'{% endraw %} | base64 --decode
+    {{ ocadm }} -n {{ project_cicd }} get secret gerrit-is-credentials
+    --template={% raw %}'{{ index .data "client_secret" }}'{% endraw %} | base64 --decode
   register: gerrit_client_secret
   no_log: true
 
 - name: "Get username from security project Keycloak secret"
   shell: >
-   {{ ocadm }} -n security get secret keycloak
-   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+    {{ ocadm }} -n security get secret keycloak
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: username
 
 - name: "Get password from security project Keycloak secret"
   shell: >
-   {{ ocadm }} -n security get secret keycloak
-   --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
+    {{ ocadm }} -n security get secret keycloak
+    --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
   no_log: true
 
@@ -230,3 +230,42 @@
 - include_tasks: keycloak-api/manage-edp-viewers.yml
   when: item != ""
   with_items: "{{ edp_viewers }}"
+
+- name: "Install Keycloak secret for admin connection"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create secret generic keycloak-main-secret
+    --from-literal=username={{ username.stdout }}
+    --from-literal=password={{ password.stdout }}
+  ignore_errors: true
+
+- set_fact:
+    keycloak_super_admins: "{{ keycloak_super_admins | default([]) + [ { 'username': item } ] }}"
+  when: item != ""
+  with_items:
+    - "{{ edp_super_admins }}"
+
+- set_fact:
+    keycloak_admins: "{{ keycloak_admins | default([]) + [ { 'username': item } ] }}"
+  when: item != ""
+  with_items:
+    - "{{ edp_admins }}"
+
+- set_fact:
+    keycloak_developers: "{{ keycloak_developers | default([]) + [ { 'username': item } ] }}"
+  with_items:
+    - "{{ edp_viewers }}"
+
+- name: "Create directory for Keycloak templates"
+  file:
+    path: "{{ templates_dir }}/keycloak"
+    state: directory
+
+- name: "Copy Keycloak template"
+  template:
+    src: "keycloak/keycloak-cr.yaml"
+    dest: "{{ templates_dir}}/keycloak/keycloak-cr.yaml"
+
+- name: "Install Keycloak CR"
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir}}/keycloak/keycloak-cr.yaml
+  ignore_errors: true
