@@ -17,7 +17,7 @@ kind: GitServer
 metadata:
   name: gerrit
 spec:
-  gitHost: "{{ tools.gerrit.web_url | urlsplit('hostname') }}"
+  gitHost: "gerrit.{{ project_cicd }}"
   gitUser: "jenkins"
   httpsPort: "443"
   sshPort: "{{ gerrit_ssh_port }}"
