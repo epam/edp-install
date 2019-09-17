@@ -16,8 +16,6 @@ import groovy.json.*
 import jenkins.model.Jenkins
 
 Jenkins jenkins = Jenkins.instance
-def gerritSshPort = "{{ gerrit_ssh_port }}"
-def codebaseRepositoryBase = "ssh://jenkins@gerrit:${gerritSshPort}"
 def stages = [:]
 
 stages['Code-review-application'] = "[{\"name\": \"gerrit-checkout\"},{\"name\": \"compile\"},{\"name\": \"tests\"}," +
@@ -45,8 +43,14 @@ stages['Create-release'] = "[{\"name\": \"checkout\"},{\"name\": \"create-branch
 if (Boolean.valueOf("${PARAM}")) {
     def codebaseName = "${NAME}"
     def buildTool = "${BUILD_TOOL}"
-    def gitServerCrName = "${GIT_SERVER_CR_NAME}"
-    def gitServerCrVersion = "${GIT_SERVER_CR_VERSION}"
+    def gitServerCrName = "${GIT_SERVER_CR_NAME ? GIT_SERVER_CR_NAME : 'gerrit'}"
+    def gitServerCrVersion = "${GIT_SERVER_CR_VERSION ? GIT_SERVER_CR_VERSION : 'v2'}"
+    def gitServer = "${GIT_SERVER ? GIT_SERVER : 'gerrit'}"
+    def gitSshPort = "${GIT_SSH_PORT ? GIT_SSH_PORT : '{{ gerrit_ssh_port }}'}"
+    def gitUsername = "${GIT_USERNAME ? GIT_USERNAME : 'jenkins'}"
+    def gitCredentialsId = "${GIT_CREDENTIALS_ID ? GIT_CREDENTIALS_ID : 'gerrit-ciuser-sshkey'}"
+
+    def codebaseRepositoryBase = "ssh://${gitUsername}@${gitServer}:${gitSshPort}"
 
     def codebaseFolder = jenkins.getItem(codebaseName)
     if (codebaseFolder == null) {
@@ -55,7 +59,7 @@ if (Boolean.valueOf("${PARAM}")) {
 
     createListView(codebaseName, "Releases")
     createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
-            "${codebaseRepositoryBase}/${codebaseName}", gitServerCrName, gitServerCrVersion)
+            "${codebaseRepositoryBase}/${codebaseName}", gitCredentialsId, gitServerCrName, gitServerCrVersion)
 
     if (BRANCH) {
         def branch = "${BRANCH}"
@@ -63,7 +67,7 @@ if (Boolean.valueOf("${PARAM}")) {
 
         def type = "${TYPE}"
         createCiPipeline("Code-review-${codebaseName}", codebaseName, stages["Code-review-${type}"], "code-review.groovy",
-                "${codebaseRepositoryBase}/${codebaseName}", branch, gitServerCrName, gitServerCrVersion)
+                "${codebaseRepositoryBase}/${codebaseName}", gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
 
         if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
             createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}-${buildTool.toLowerCase()}"], "build.groovy",
@@ -72,7 +76,7 @@ if (Boolean.valueOf("${PARAM}")) {
     }
 }
 
-def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, watchBranch = "master",
+def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, watchBranch = "master",
                         gitServerCrName, gitServerCrVersion) {
     pipelineJob("${codebaseName}/${watchBranch.toUpperCase()}-${pipelineName}") {
         logRotator {
@@ -94,7 +98,10 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
             cpsScm {
                 scm {
                     git {
-                        remote { url(repository) }
+                        remote {
+                            url(repository)
+                            credentials(credId)
+                        }
                         branches("${watchBranch}")
                         scriptPath("${pipelineScript}")
                     }
@@ -112,7 +119,7 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
     }
 }
 
-def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, gitServerCrName, gitServerCrVersion) {
+def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, gitServerCrName, gitServerCrVersion) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
             numToKeep(14)
@@ -122,7 +129,10 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
             cpsScm {
                 scm {
                     git {
-                        remote { url(repository) }
+                        remote {
+                            url(repository)
+                            credentials(credId)
+                        }
                         branches("master")
                         scriptPath("${pipelineScript}")
                     }
