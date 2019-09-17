@@ -49,8 +49,8 @@ if (Boolean.valueOf("${PARAM}")) {
     def gitSshPort = "${GIT_SSH_PORT ? GIT_SSH_PORT : '{{ gerrit_ssh_port }}'}"
     def gitUsername = "${GIT_USERNAME ? GIT_USERNAME : 'jenkins'}"
     def gitCredentialsId = "${GIT_CREDENTIALS_ID ? GIT_CREDENTIALS_ID : 'gerrit-ciuser-sshkey'}"
-
-    def codebaseRepositoryBase = "ssh://${gitUsername}@${gitServer}:${gitSshPort}"
+    def defaultRepoPath = "ssh://${gitUsername}@${gitServer}:${gitSshPort}/${codebaseName}"
+    def repositoryPath = "${REPOSITORY_PATH ? REPOSITORY_PATH : defaultRepoPath}"
 
     def codebaseFolder = jenkins.getItem(codebaseName)
     if (codebaseFolder == null) {
@@ -59,7 +59,7 @@ if (Boolean.valueOf("${PARAM}")) {
 
     createListView(codebaseName, "Releases")
     createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
-            "${codebaseRepositoryBase}/${codebaseName}", gitCredentialsId, gitServerCrName, gitServerCrVersion)
+            repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion)
 
     if (BRANCH) {
         def branch = "${BRANCH}"
@@ -67,11 +67,11 @@ if (Boolean.valueOf("${PARAM}")) {
 
         def type = "${TYPE}"
         createCiPipeline("Code-review-${codebaseName}", codebaseName, stages["Code-review-${type}"], "code-review.groovy",
-                "${codebaseRepositoryBase}/${codebaseName}", gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
+                repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
 
         if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
             createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}-${buildTool.toLowerCase()}"], "build.groovy",
-                    "${codebaseRepositoryBase}/${codebaseName}", branch, gitServerCrName, gitServerCrVersion)
+                    repositoryPath, branch, gitServerCrName, gitServerCrVersion)
         }
     }
 }
@@ -107,6 +107,8 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
                     }
                 }
                 parameters {
+                    stringParam("GIT_CREDENTIALS_ID", "${credId}", "Credential Id")
+                    stringParam("REPOSITORY_PATH", "${repository}", "Path to repository")
                     stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                     stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                     stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
@@ -140,6 +142,8 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
                 parameters {
                     stringParam("STAGES", "${codebaseStages}", "")
                     if (pipelineName.contains("Create-release")) {
+                        stringParam("GIT_CREDENTIALS_ID", "${credId}", "Credential Id")
+                        stringParam("REPOSITORY_PATH", "${repository}", "Path to repository")
                         stringParam("GERRIT_PROJECT", "${codebaseName}", "")
                         stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
                         stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, HEAD of master will be used")
