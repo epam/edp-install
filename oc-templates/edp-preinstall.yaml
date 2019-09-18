@@ -199,6 +199,7 @@ objects:
     - applicationbranches/status
     - codebasebranches
     - codebasebranches/status
+    - gitservers
     - codebases
     - codebases/status
     - cdpipelines

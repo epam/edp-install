@@ -56,6 +56,7 @@ objects:
     - projects
     - rolebindings
     - securitycontextconstraints
+    - gitservers
     verbs:
     - get
     - list

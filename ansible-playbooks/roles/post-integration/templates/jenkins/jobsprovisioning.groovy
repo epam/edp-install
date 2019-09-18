@@ -71,7 +71,7 @@ if (Boolean.valueOf("${PARAM}")) {
 
         if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
             createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}-${buildTool.toLowerCase()}"], "build.groovy",
-                    repositoryPath, branch, gitServerCrName, gitServerCrVersion)
+                    repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
         }
     }
 }
