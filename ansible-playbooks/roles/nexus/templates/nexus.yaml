@@ -24,7 +24,7 @@ spec:
   volumes:
     - name: "data"
       storage_class: "{{ storage_class_name }}"
-      capacity: "{{ tools.sonar.volume_capacity }}"
+      capacity: "{{ tools.nexus.volume_capacity }}"
   users:
 {% for user in nexus_super_admins %}
     - username: {{ user['username'] }}
