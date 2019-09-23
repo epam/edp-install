@@ -129,7 +129,7 @@
         password: "{{ nexus_ciuser_password.stdout }}",
         last_name: "Nexus",
         first_name: "User",
-        jenkins_id: "nexus"}
+        jenkins_id: "ci.user"}
 
 - include_tasks: jenkins-api/create-credentials.yml
   with_items:
