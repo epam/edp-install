@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ---
-- include_tasks: apply-keycloak-cr.yml
+- include_tasks: keycloak-configuration.yml
 
 - include_tasks: check-cr-health.yml
   with_items:
@@ -51,8 +51,6 @@
 - include_tasks: check-cr-health.yml
   with_items:
     - { project: '{{ project_cicd }}', component: 'adminconsoles.v2.edp.epam.com', name: 'edp-admin-console' }
-
-- include_tasks: keycloak-configuration.yml
 
 - name: "Install Gerrit GitServer CR"
   command: |

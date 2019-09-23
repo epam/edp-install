@@ -70,7 +70,7 @@ public class AddCDPipelineSmokeTest {
     @BeforeMethod
     @Parameters("ocpEdpPrefix")
     public void setUpAccessToken(String ocpEdpPrefix) {
-        Secret secret = openShiftClient.get(ResourceKind.SECRET, "admin-console-creator", openshiftNamespace);
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, "ac-creator", openshiftNamespace);
 
         String userName = new String(secret.getData("username")).trim();
         String userPassword = new String(secret.getData("password")).trim();
@@ -88,7 +88,7 @@ public class AddCDPipelineSmokeTest {
                 .param("username", userName)
                 .param("password", userPassword)
                 .when()
-                .post(StringConstants.KEYCLOAK_URL + "/auth/realms/"+ ocpEdpPrefix + "-edp/protocol/openid-connect/token")
+                .post(StringConstants.KEYCLOAK_URL + "/auth/realms/"+ ocpEdpPrefix + "-edp-cicd-main/protocol/openid-connect/token")
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .contentType(ContentType.JSON)
