@@ -13,6 +13,8 @@
 # limitations under the License.
 
 ---
+- include_tasks: apply-keycloak-cr.yml
+
 - include_tasks: check-cr-health.yml
   with_items:
     - { project: '{{ project_cicd }}', component: 'gerrits.v2.edp.epam.com', name: 'gerrit' }
