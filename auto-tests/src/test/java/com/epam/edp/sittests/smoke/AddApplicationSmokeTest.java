@@ -117,10 +117,10 @@ public class AddApplicationSmokeTest {
 
     @Test(dataProvider = "pipeline")
     public void testJenkinsPipelineWasCreated(String pipeline) {
-        Secret secret = openShiftClient.get(ResourceKind.SECRET, "jenkins-token", openshiftNamespace);
+        Secret secret = openShiftClient.get(ResourceKind.SECRET, "jenkins-admin-token", openshiftNamespace);
 
         String username = new String(secret.getData("username")).trim();
-        String token = new String(secret.getData("token")).trim();
+        String token = new String(secret.getData("password")).trim();
 
         given().log().all()
                 .pathParam("pipeline", pipeline)

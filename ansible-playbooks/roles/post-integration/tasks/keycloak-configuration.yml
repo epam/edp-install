@@ -95,6 +95,7 @@
 
 - set_fact:
     nexus_client_id: "{{ nexus_client_id.stdout }}"
+    sonar_claim_name: "roles"
     sonar_client_id: "{{ sonar_client_id.stdout }}"
     sonar_client_secret: "{{ sonar_client_secret.stdout }}"
     gerrit_client_secret: "{{ gerrit_client_secret.stdout }}"
