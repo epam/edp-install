@@ -105,13 +105,6 @@
 
 - include_tasks: keycloak-configuration.yml
 
-- include_tasks: check-deployment-health.yml
-  with_items:
-    - { project: '{{ project_cicd }}', service: 'gerrit' }
-    - { project: '{{ project_cicd }}', service: 'nexus' }
-    - { project: '{{ project_cicd }}', service: 'sonar' }
-    - { project: '{{ project_cicd }}', service: 'jenkins' }
-
 - name: "Install Gerrit GitServer CR"
   command: |
     {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/git_server/gerrit-server.yaml
@@ -122,3 +115,19 @@
     - 'result.rc != 0'
     - '"already" not in result.stderr'
   no_log: true
+
+- include_tasks: check-cr-health.yml
+  with_items:
+    - { project: '{{ project_cicd }}', component: 'gerrits.v2.edp.epam.com', name: 'gerrit'  }
+    - { project: '{{ project_cicd }}', component: 'sonars.v2.edp.epam.com', name: 'sonar'  }
+    - { project: '{{ project_cicd }}', component: 'nexus.v2.edp.epam.com', name: 'nexus'  }
+    - { project: '{{ project_cicd }}', component: 'adminconsoles.v2.edp.epam.com', name: 'edp-admin-console' }
+    - { project: '{{ project_cicd }}', component: 'jenkins.v2.edp.epam.com', name: 'jenkins' }
+
+- include_tasks: check-deployment-health.yml
+  with_items:
+    - { project: '{{ project_cicd }}', service: 'gerrit' }
+    - { project: '{{ project_cicd }}', service: 'nexus' }
+    - { project: '{{ project_cicd }}', service: 'sonar' }
+    - { project: '{{ project_cicd }}', service: 'jenkins' }
+    - { project: '{{ project_cicd }}', service: 'edp-admin-console' }
