@@ -137,7 +137,7 @@ public class AddCDPipelineSmokeTest {
         return new Object[][]{{CDPipelineName}};
     }
 
-    @Test(dataProvider = "pipeline")
+/*    @Test(dataProvider = "pipeline")
     public void testAdminConsoleCDPipelineHasBeenCreated(String pipeline) {
         given().pathParam("pipeline", pipeline)
                 .auth()
@@ -148,5 +148,5 @@ public class AddCDPipelineSmokeTest {
                         "api/v1/edp/cd-pipeline/{pipeline}"))
                 .then()
                 .statusCode(HttpStatus.SC_OK);
-    }
+    }*/
 }
