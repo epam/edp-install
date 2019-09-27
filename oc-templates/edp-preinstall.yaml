@@ -108,6 +108,13 @@ objects:
     verbs:
     - get
   - apiGroups:
+    - '*'
+    attributeRestrictions: null
+    resources:
+    - clusterrolebindings
+    verbs:
+    - delete
+  - apiGroups:
     - "*"
     attributeRestrictions: null
     resources:
