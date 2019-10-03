@@ -26,12 +26,6 @@
   command: "{{ ocadm }} get project --output=custom-columns=NAME:.metadata.name --no-headers"
   register: all_oc_projects
 
-- name: Fail if any EDP project already exists
-  fail:
-    msg: "EDP project ({{ item }}) already exists"
-  when: item in all_oc_projects.stdout_lines
-  with_items: "{{ projects_list }}"
-
 - include_tasks: roles/common/tasks/manage-openshift/create-groups.yml
   with_items:
     - "{{ edp_name }}-edp-super-admin"
@@ -51,8 +45,14 @@
     - { group: "{{ edp_name }}-edp-admin", users: "{{ admin_users | replace(',', ' ') | lower }}" }
     - { group: "{{ edp_name }}-edp-view", users: "{{ view_users | replace(',', ' ') | lower }}" }
 
-- name: "Create project in Openshift"
+- name: "Create project in Openshift if it does not exist"
   shell: "{{ ocadm }} new-project {{ item }}"
+  when: "item not in all_oc_projects.stdout_lines"
+  with_items: "{{ projects_list }}"
+
+- name: "Create rolebinding to existing project"
+  shell: "{{ ocadm }} create rolebinding edp-admin --clusterrole=admin --serviceaccount={{ edp_deploy_project }}:edp --namespace={{ project_cicd }}"
+  when: "item in all_oc_projects.stdout_lines"
   with_items: "{{ projects_list }}"
 
 - name: "Add Description and Display name to CI/CD project"
