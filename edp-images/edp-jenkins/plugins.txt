@@ -61,6 +61,7 @@ maven-plugin:3.4
 mercurial:2.8
 metrics:4.0.2.5
 momentjs:1.1.1
+openshift-sync:1.0.42
 pam-auth:1.5.1
 parameterized-trigger:2.35.2
 pipeline-build-step:2.9
