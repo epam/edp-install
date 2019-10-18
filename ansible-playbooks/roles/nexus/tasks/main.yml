@@ -27,6 +27,7 @@
 
 - set_fact:
     nexus_viewers : "{{ nexus_viewers | default([]) + [ { 'username': item } ] }}"
+  when: item != ""
   with_items:
     - "{{ edp_viewers }}"
 

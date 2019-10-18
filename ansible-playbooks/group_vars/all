@@ -49,8 +49,16 @@ stages_version: "{{ lookup('env', 'STAGES_VERSION') }}"
 pipelines_version: "{{ lookup('env', 'PIPELINES_VERSION') }}"
 default_super_admin: "admin-{{ edp_name }}-edp"
 edp_super_admins: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users.split(',')) | lower }}"
-edp_admins: "{{ admin_users.split(',') | lower }}"
-edp_viewers: "{{ view_users.split(',') | lower }}"
+edp_admins: "{{ admin_users.split(',') | lower | default([]) }}"
+edp_viewers: "{{ view_users.split(',') | lower | default([]) }}"
+gerrit_super_admins: []
+gerrit_admins: []
+nexus_super_admins: []
+nexus_admins: []
+nexus_viewers: []
+keycloak_super_admins: []
+keycloak_admins: []
+keycloak_developers: []
 basic_pattern_url: "https://github.com/epmd-edp"
 tools:
   jenkins:

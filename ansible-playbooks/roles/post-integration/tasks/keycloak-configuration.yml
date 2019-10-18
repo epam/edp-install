@@ -46,6 +46,7 @@
 
 - set_fact:
     keycloak_developers: "{{ keycloak_developers | default([]) + [ { 'username': item } ] }}"
+  when: item != ""
   with_items:
     - "{{ edp_viewers }}"
 
