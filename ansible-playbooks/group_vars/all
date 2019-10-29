@@ -86,3 +86,5 @@ tools:
   keycloak:
     realm_name: "{{ full_edp_name }}"
     web_url: "https://keycloak-security.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
+  openshift_dashboard:
+    web_url: "https://master.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"

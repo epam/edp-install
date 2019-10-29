@@ -29,16 +29,6 @@
 - name: "Create config map with Gerrit node port"
   shell: "{{ ocadm }} -n {{ project_cicd }} create cm gerrit --from-literal=sshPort={{ gerrit_ssh_port }}"
 
-- name: Creates directory for GitServer templates
-  file:
-    path: "{{ templates_dir }}/git_server"
-    state: directory
-
-- name: "Copy Gerrit GitServer template"
-  template:
-    src: "gerrit-server.yaml"
-    dest: "{{ templates_dir }}/git_server/gerrit-server.yaml"
-
 - include_tasks: check-cr-health.yml
   with_items:
     - { project: '{{ project_cicd }}', component: 'gerrits.v2.edp.epam.com', name: 'gerrit'  }
@@ -52,16 +42,30 @@
   with_items:
     - { project: '{{ project_cicd }}', component: 'adminconsoles.v2.edp.epam.com', name: 'edp-admin-console' }
 
-- name: "Install Gerrit GitServer CR"
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/git_server/gerrit-server.yaml
+- name: "Creates directory for templates"
+  file:
+    path: "{{ templates_dir }}/other"
+    state: directory
+
+- name: "Copy templates for other resources"
+  template:
+    src: "{{ item }}"
+    dest: "{{ templates_dir }}/other/{{ item }}"
+  with_items:
+    - "edp-component.yaml"
+    - "gerrit-server.yaml"
+
+- name: "Install EDP Component"
+  shell: >
+    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/other/{{ item }}
   register: result
-  ignore_errors: true
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
-  no_log: true
+  with_items:
+    - "edp-component.yaml"
+    - "gerrit-server.yaml"
 
 - include_tasks: check-cr-health.yml
   with_items:

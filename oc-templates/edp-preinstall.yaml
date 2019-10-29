@@ -241,6 +241,9 @@ objects:
     - keycloakrealms
     - keycloakrealms/finalizers
     - keycloakrealms/status
+    - edpcomponents
+    - edpcomponents/finalizers
+    - edpcomponents/status
     verbs:
     - '*'
 - apiVersion: security.openshift.io/v1
