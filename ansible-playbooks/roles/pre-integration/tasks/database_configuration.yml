@@ -1,52 +1,37 @@
-# Copyright 2018 EPAM Systems.
-
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# http://www.apache.org/licenses/LICENSE-2.0
-
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 ---
-- name: "Install Admin Console app"
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/admin_console/admin-console.yaml
+- set_fact:
+    random_password: "{{ lookup('password', '/dev/null length=10 chars=ascii_letters') }}"
+  no_log: true
+
+- name: "Create secret for DB User"
   register: result
   ignore_errors: true
+  command: |
+    {{ ocadm }} -n {{ project_cicd }} create secret generic db-admin-console
+    --from-literal=username={{ edp_name }}-admin
+    --from-literal=password={{ random_password }}
   changed_when: '"already" not in result.stderr'
   failed_when:
     - 'result.rc != 0'
     - '"already" not in result.stderr'
-
-- name: "Check that secret is created"
-  shell: "{{ ocadm }} -n '{{ project_cicd }}' get secret admin-console-db "
-  retries: 12
-  delay: 10
-  register: result
-  until: '"NotFound" not in result.stderr'
   no_log: true
 
-- name: "Retrieve database username from secret"
+- name: "Retrieve database admin name from secret"
   shell: >
-   {{ ocadm }} -n {{ operators_deploy_project }} get secret {{ tools.admin_console.db_secret }}
-   --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
+    {{ ocadm }} -n {{ operators_deploy_project }} get secret {{ tools.admin_console.db_secret }}
+    --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: admin_console_db_username
   no_log: true
 
 - name: "Get username for Admin Console DB tenant admin"
   shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-db
+    {{ ocadm }} -n {{ project_cicd }} get secret db-admin-console
     --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: admin_console_db_tenant_admin_username
 
 - name: "Get password for Admin Console DB tenant admin"
   shell: >
-    {{ ocadm }} -n {{ project_cicd }} get secret admin-console-db
+    {{ ocadm }} -n {{ project_cicd }} get secret db-admin-console
     --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: admin_console_db_tenant_admin_password
   no_log: true
@@ -58,6 +43,10 @@
     admin_console_db_pod: "{{ ocadm }} -n {{ operators_deploy_project }} get pods \
                           --no-headers -o custom-columns=NAME:.metadata.name | egrep 'edp-install-wizard-db-[0-9]+'"
   no_log: true
+
+- name: "Create schema in database"
+  shell: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
+         -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA \"{{ edp_name }}\";' -U {{ admin_console_db_admin_username }}"
 
 - name: "Create tenant user in database"
   raw: "{{ ocadm }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \

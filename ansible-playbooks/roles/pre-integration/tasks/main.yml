@@ -147,3 +147,5 @@
   shell: "{{ ocadm }} create -f {{ item }} -n {{ project_cicd }} "
   with_fileglob:
     - "../templates/*.yaml"
+
+- include_tasks: database_configuration.yml
