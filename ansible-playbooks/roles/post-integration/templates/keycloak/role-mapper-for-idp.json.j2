@@ -1,9 +1,0 @@
-{
-  "name": "{{ item.name }}",
-  "identityProviderAlias": "{{ tools.keycloak.realm_name }}",
-  "identityProviderMapper": "keycloak-oidc-role-to-role-idp-mapper",
-  "config": {
-    "external.role": "{{ item.external_role }}",
-    "role": "{{ item.role }}"
-  }
-}

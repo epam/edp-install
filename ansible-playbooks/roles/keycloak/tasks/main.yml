@@ -1,4 +1,4 @@
-# Copyright 2018 EPAM Systems.
+# Copyright 2019 EPAM Systems.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,6 +11,8 @@
 
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+---
 
 - name: "Get username from security project Keycloak secret"
   shell: >
@@ -30,7 +32,7 @@
     {{ ocadm }} -n {{ project_cicd }} create secret generic keycloak-main-secret
     --from-literal=username={{ username.stdout }}
     --from-literal=password={{ password.stdout }}
-  ignore_errors: true
+  no_log: true
 
 - set_fact:
     keycloak_super_admins: "{{ keycloak_super_admins | default([]) + [ { 'username': item } ] }}"
@@ -57,10 +59,9 @@
 
 - name: "Copy Keycloak template"
   template:
-    src: "keycloak/keycloak-cr.yaml"
+    src: "keycloak-cr.yaml"
     dest: "{{ templates_dir}}/keycloak/keycloak-cr.yaml"
 
 - name: "Install Keycloak CR"
   command: |
     {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir}}/keycloak/keycloak-cr.yaml
-  ignore_errors: true

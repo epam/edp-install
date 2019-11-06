@@ -21,4 +21,5 @@
     - { role: nexus, tags: [ 'nexus' ] }
     - { role: sonar, tags: [ 'sonar' ] }
     - { role: admin-console, tags: [ 'admin-console' ] }
+    - { role: keycloak, tags: [ 'keycloak' ] }
     - { role: post-integration, tags: [ 'post-integration' ] }
