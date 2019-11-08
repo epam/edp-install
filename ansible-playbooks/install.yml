@@ -16,10 +16,7 @@
   roles:
     - { role: pre-integration, tags: [ 'pre-integration' ] }
     - { role: secrets, tags: [ 'secrets' ] }
-    - { role: gerrit, tags: [ 'gerrit' ] }
     - { role: jenkins, tags: [ 'jenkins' ] }
-    - { role: nexus, tags: [ 'nexus' ] }
-    - { role: sonar, tags: [ 'sonar' ] }
     - { role: admin-console, tags: [ 'admin-console' ] }
     - { role: keycloak, tags: [ 'keycloak' ] }
     - { role: post-integration, tags: [ 'post-integration' ] }

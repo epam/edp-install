@@ -55,6 +55,7 @@ objects:
             - "-i"
             - "localhost,"
             - "-e edp_name=${EDP_NAME}"
+            - "-e additional_tools_template_name=${ADDITIONAL_TOOLS_TEMPLATE_NAME}"
             - "-e ocadm=oc"
             - "-e ansible_connection=local"
             - "-e super_admin_users=${EDP_SUPER_ADMINS}"
@@ -63,8 +64,6 @@ objects:
             - "-e edp_version=${EDP_VERSION}"
             - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
-            - "-e gerrit_version=${GERRIT_VERSION}"
-            - "-e gerrit_volume_capacity=${GERRIT_DATA_CAPACITY}"
             - "-e jenkins_fs_type=${JENKINS_FS_TYPE}"
             - "-e jenkins_host_path_volume=${JENKINS_HOST_PATH_VOLUME}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
@@ -75,9 +74,6 @@ objects:
             - "-e jenkins_image_version=${JENKINS_IMAGE_VERSION}"
             - "-e nexus_version=${NEXUS_VERSION}"
             - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
-            - "-e sonar_version=${SONAR_VERSION}"
-            - "-e sonar_volume_capacity=${SONAR_VOLUME_CAPACITY}"
-            - "-e sonar_volume_db_capacity=${SONAR_DB_CAPACITY}"
             - "-e vcs_integration_enabled=${VCS_INTEGRATION_ENABLED}"
             - "-e vcs_tool_name=${VCS_TOOL_NAME}"
             - "-e vcs_group_name=${VCS_GROUP_NAME_URL}"
@@ -97,6 +93,11 @@ parameters:
   description: DNS wildcard of your project that should be specified during Openshift cluster installation
   name: DNS_WILDCARD
   value: ""
+  required: true
+- displayName: Name of the template for non mandatory tools of EDP
+  description: Template that will be used during EDP provisioning for deploying additional tools like Sonar, GitServe etc.
+  name: ADDITIONAL_TOOLS_TEMPLATE_NAME
+  value: "additional-tools"
   required: true
 - displayName: Storage class name
   description: Storage class name to consume by every EDP tool
@@ -123,15 +124,6 @@ parameters:
   description: For separate installation, defines what tools will be deployed during installation. For now it can be jenkins,nexus,gerrit,sonar.
   name: APPS_TO_INSTALL
   value: "all"
-#Gerrit parameters
-- displayName: Gerrit version
-  value: "2.16.10"
-  name: GERRIT_VERSION
-- displayName: Gerrit Volume Capacity
-  description: Volume space available for Gerrit data
-  name: GERRIT_DATA_CAPACITY
-  value: 5Gi
-  required: true
 #Jenkins parameters
 - displayName: Jenkins filesystem type
   description: Allowed values only 'pvc'(Persistant volume claim) or 'hostpath'

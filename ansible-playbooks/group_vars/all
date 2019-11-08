@@ -21,6 +21,7 @@ secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/oc-templates"
 files_dir: "{{ work_dir }}/files"
 edp_name: ""
+additional_tools_template_name: ""
 edp_deploy_project: "{{ lookup('env', 'DEPLOY-PROJECT') }}"
 projects_list: [
     "{{ edp_name }}-edp-cicd"
@@ -51,11 +52,6 @@ default_super_admin: "admin-{{ edp_name }}-edp"
 edp_super_admins: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users.split(',')) | lower }}"
 edp_admins: "{{ admin_users.split(',') | lower | default([]) }}"
 edp_viewers: "{{ view_users.split(',') | lower | default([]) }}"
-gerrit_super_admins: []
-gerrit_admins: []
-nexus_super_admins: []
-nexus_admins: []
-nexus_viewers: []
 keycloak_super_admins: []
 keycloak_admins: []
 keycloak_developers: []
@@ -65,19 +61,6 @@ tools:
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
     volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
     version: "{{ jenkins_image_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
-  gerrit:
-    version: "{{ gerrit_version | default('2.16.10') }}"
-    volume_capacity: "{{ gerrit_volume_capacity | default('5Gi') }}"
-    web_url: "https://gerrit-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
-  nexus:
-    version: "{{ nexus_version | default('3.15.1') }}"
-    volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"
-    web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
-  sonar:
-    version: "{{ sonar_version | default('7.6-community') }}"
-    volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
-    volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
-    web_url: "https://sonar-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   admin_console:
     db_secret: "admin-console-db"
     version: "{{ admin_console_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-admin-console:snapshot') }}"

@@ -12,19 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
---- # Sonar full installation
-- name: "Copy Sonar template"
-  template:
-    src: "sonar.yaml"
-    dest: "{{ templates_dir }}/sonar/sonar.yaml"
+---
 
-- name: "Install Sonar app"
-  command: |
-    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/sonar/sonar.yaml
-  register: result
-  ignore_errors: true
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-  no_log: true
+- name: Deploy additional EDP tools from template
+  shell: >
+    {{ ocadm }} -n {{ edp_deploy_project }} get template {{ additional_tools_template_name }}
+    --no-headers
+    --ignore-not-found
+    -o jsonpath='{.metadata.name}'
+    | xargs --no-run-if-empty -I '{}' oc -n {{ edp_deploy_project }} new-app --template='{}'
+    -p EDP_NAME={{ edp_name }}

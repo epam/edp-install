@@ -1,4 +1,4 @@
-# Copyright 2018 EPAM Systems.
+# Copyright 2019 EPAM Systems.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,16 +13,14 @@
 # limitations under the License.
 
 ---
-- include_tasks: check-cr-health.yml
-  with_items:
-    - { project: '{{ project_cicd }}', component: 'gerrits.v2.edp.epam.com', name: 'gerrit' }
-
 - name: "Get Gerrit ssh port"
-  shell: "{{ ocadm }} -n {{ project_cicd }} get svc gerrit -o=jsonpath='{.spec.ports[?(@.name==\"ssh\")].port}'"
+  shell: "{{ ocadm }} -n {{ edp_deploy_project }} get template additional-tools-{{ edp_name }} -o jsonpath='{.objects[?(@.kind==\"Gerrit\")].spec.sshPort}'"
   register: ssh_port
 
 - set_fact:
     gerrit_ssh_port: "{{ ssh_port.stdout }}"
+
+- include_tasks: deploy_additional_tools.yml
 
 - name: "Create config map with Gerrit node port"
   shell: "{{ ocadm }} -n {{ project_cicd }} create cm gerrit --from-literal=sshPort={{ gerrit_ssh_port }}"
@@ -51,7 +49,6 @@
     dest: "{{ templates_dir }}/other/{{ item }}"
   with_items:
     - "edp-component.yaml"
-    - "gerrit-server.yaml"
 
 - name: "Install EDP Component"
   shell: >
@@ -63,7 +60,6 @@
     - '"already" not in result.stderr'
   with_items:
     - "edp-component.yaml"
-    - "gerrit-server.yaml"
 
 - include_tasks: check-cr-health.yml
   with_items:
