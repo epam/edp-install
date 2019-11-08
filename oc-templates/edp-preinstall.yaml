@@ -259,6 +259,9 @@ objects:
   defaultAddCapabilities: null
   fsGroup:
     type: MustRunAs
+    ranges:
+      - min: 1
+        max: 65543
   groups: []
   metadata:
     name: edp
@@ -271,8 +274,8 @@ objects:
   - SETGID
   runAsUser:
     type: MustRunAsRange
-    uidRangeMin: 999
-    uidRangeMax: 1000
+    uidRangeMin: 1
+    uidRangeMax: 65543
   seLinuxContext:
     type: MustRunAs
   supplementalGroups:
