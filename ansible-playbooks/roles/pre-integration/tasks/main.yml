@@ -119,6 +119,7 @@
     {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
     --from-literal=edp_name={{ edp_name }}
     --from-literal=edp_version={{ edp_version.split(':') | last }}
+    --from-literal=dns_wildcard={{ dns_wildcard }}
     --from-literal=perf_integration_enabled={{ perf_integration_enabled }}
     --from-literal=vcs_integration_enabled={{ vcs_integration_enabled }}
     {{ '--from-literal=vcs_group_name_url=' + vcs_group_name if vcs_integration_enabled|bool == true else '' }}
