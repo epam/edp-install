@@ -225,6 +225,9 @@ objects:
     - gerrits
     - gerrits/finalizers
     - gerrits/status
+    - jenkins
+    - jenkins/finalizers
+    - jenkins/status
     - jenkinses
     - jenkinses/finalizers
     - jenkinses/status
