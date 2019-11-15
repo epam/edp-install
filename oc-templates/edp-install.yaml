@@ -44,9 +44,9 @@ objects:
           imagePullPolicy: Always
           name: edp-deploy
           env:
-          - name: PLATFORM-TYPE
+          - name: PLATFORM_TYPE
             value: "openshift"
-          - name: DEPLOY-PROJECT
+          - name: DEPLOY_PROJECT
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
@@ -58,7 +58,7 @@ objects:
             - "localhost,"
             - "-e edp_name=${EDP_NAME}"
             - "-e additional_tools_template_name=${ADDITIONAL_TOOLS_TEMPLATE_NAME}"
-            - "-e ocadm=oc"
+            - "-e console_tool=oc"
             - "-e ansible_connection=local"
             - "-e super_admin_users=${EDP_SUPER_ADMINS}"
             - "-e admin_users=${EDP_ADMINS}"

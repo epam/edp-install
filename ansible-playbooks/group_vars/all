@@ -20,15 +20,18 @@ post_integration_dir: "{{ work_dir }}/post-integration"
 secrets_dir: "{{ work_dir }}/secrets"
 templates_dir: "{{ work_dir }}/oc-templates"
 files_dir: "{{ work_dir }}/files"
+platform_type: "{{ lookup('env', 'PLATFORM_TYPE') }}"
 edp_name: ""
 additional_tools_template_name: ""
-edp_deploy_project: "{{ lookup('env', 'DEPLOY-PROJECT') }}"
+dev_deploy: "{{ (lookup('env', 'DEV_DEPLOY') == 'true') | ternary('true', 'false') }}"
+default_operators_deploy_project: "{{ edp_name }}-deploy-project"
+edp_deploy_project: "{{ lookup('env', 'DEPLOY_PROJECT') }}"
+operators_deploy_project: "{{ default_operators_deploy_project if dev_deploy|bool == true else edp_deploy_project }}"
 projects_list: [
     "{{ edp_name }}-edp-cicd"
     ]
 project_cicd: "{{ edp_name }}-edp-cicd"
 full_edp_name: "{{ edp_name }}-edp"
-ocadm: "oc --config=/etc/origin/master/admin.kubeconfig"
 vcs_integration_enabled: "{{ vcs_integration_enabled | lower | default 'false'}}"
 vcs_ssh_port: "{{ vcs_ssh_port | default('7999') if vcs_integration_enabled|bool == true else undefined }}"
 vcs_auto_user_secret_name: "{{ 'vcs-autouser-edp-' + edp_name + '-temp' if vcs_integration_enabled|bool == true else undefined }}"
@@ -36,10 +39,6 @@ perf_integration_enabled: "{{ perf_integration_enabled | lower | default 'false'
 perf_node_id: "{{ perf_node_id if perf_integration_enabled|bool == true else undefined }}"
 perf_user_secret_name: "{{ 'perf-user-edp-' + edp_name + '-temp' if perf_integration_enabled|bool == true else undefined }}"
 perf_web_url: "{{ perf_url if perf_integration_enabled|bool == true else undefined }}"
-ephemeral_data: "{{ (lookup('env', 'EPHEMERAL_DATA') == 'true') | ternary('true', 'false') }}"
-dev_deploy: "{{ (lookup('env', 'DEV_DEPLOY') == 'true') | ternary('true', 'false') }}"
-default_operators_deploy_project: "{{ edp_name }}-deploy-project"
-operators_deploy_project: "{{ default_operators_deploy_project if dev_deploy|bool == true else edp_deploy_project }}"
 shared_database: "edp-install-wizard-db"
 shared_db_dev_service:  "{{ shared_database }}.{{ edp_name }}-deploy-project"
 shared_db_prod_service: "{{ shared_database }}.{{ edp_deploy_project }}"
@@ -50,8 +49,8 @@ stages_version: "{{ lookup('env', 'STAGES_VERSION') }}"
 pipelines_version: "{{ lookup('env', 'PIPELINES_VERSION') }}"
 default_super_admin: "admin-{{ edp_name }}-edp"
 edp_super_admins: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users.split(',')) | lower }}"
-edp_admins: "{{ admin_users.split(',') | lower | default([]) }}"
-edp_viewers: "{{ view_users.split(',') | lower | default([]) }}"
+edp_admins: "{{ admin_users.split(',') | lower if admin_users != '' else [] }}"
+edp_viewers: "{{ view_users.split(',') | lower if view_users != '' else [] }}"
 keycloak_super_admins: []
 keycloak_admins: []
 keycloak_developers: []
@@ -62,7 +61,7 @@ tools:
     volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
     version: "{{ jenkins_image_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   admin_console:
-    db_secret: "admin-console-db"
+    super_admin_secret: "admin-console-db"
     version: "{{ admin_console_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-admin-console:snapshot') }}"
     web_url: "https://edp-admin-console-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
     shared_db_service: "{{ shared_db_dev_service if dev_deploy | bool == true else shared_db_prod_service }}"
@@ -71,3 +70,5 @@ tools:
     web_url: "https://keycloak-security.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   openshift_dashboard:
     web_url: "https://master.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
+  kubernetes_dashboard:
+    web_url: "https://console.{{ dns_wildcard | default('eks-delivery.aws.main.edp.projects.epam.com') }}"

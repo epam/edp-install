@@ -1,0 +1,95 @@
+# Copyright 2018 EPAM Systems.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+- name: "Get the list of all projects"
+  command: "{{ console_tool }} get project --output=custom-columns=NAME:.metadata.name --no-headers"
+  register: current_projects_list
+
+- set_fact:
+    current_projects_list: "{{ current_projects_list.stdout_lines }}"
+
+- name: "Create project in Openshift if it does not exist"
+  shell: "{{ console_tool }} new-project {{ item }}"
+  when: "item not in current_projects_list"
+  with_items: "{{ projects_list }}"
+
+- include_tasks: roles/common/tasks/manage-openshift/create-groups.yml
+  with_items:
+    - "{{ edp_name }}-edp-super-admin"
+    - "{{ edp_name }}-edp-admin"
+    - "{{ edp_name }}-edp-view"
+
+- include_tasks: roles/common/tasks/manage-openshift/create-users.yml
+  when: item != ""
+  with_items:
+    - "{{ edp_super_admins }}"
+    - "{{ edp_admins }}"
+    - "{{ edp_viewers }}"
+
+- include_tasks: roles/common/tasks/manage-openshift/join-users-to-group.yml
+  with_items:
+    - { group: "{{ edp_name }}-edp-super-admin", users: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users | replace(',', ' ') ) | lower }}" }
+    - { group: "{{ edp_name }}-edp-admin", users: "{{ admin_users | replace(',', ' ') | lower }}" }
+    - { group: "{{ edp_name }}-edp-view", users: "{{ view_users | replace(',', ' ') | lower }}" }
+
+- name: "Add Description and Display name to CI/CD project"
+  shell: >
+    {{ console_tool }} annotate project {{ project_cicd }} --overwrite
+    openshift.io/display-name={{ edp_name }}-edp
+    openshift.io/description='Version: {{ edp_version.split(':') | last }}'
+
+- name: "Check network plugin"
+  shell: "{{ console_tool }} get clusternetwork -o custom-columns=PLUGIN:.pluginName --no-headers=true"
+  register: cluster_network_type
+
+- name: "Giving access if multitenant"
+  shell: "{{ console_tool }} adm pod-network join-projects --to={{ edp_deploy_project }}| {{ project_cicd }}"
+  when: '"multitenant" in cluster_network_type.stdout'
+
+- name: "Giving admin roles to groups"
+  shell: "{{ console_tool }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
+  with_nested:
+    - [ "{{ edp_name }}-edp-super-admin", "{{ edp_name }}-edp-admin" ]
+    - "{{ projects_list }}"
+
+- name: "Giving view roles to groups"
+  shell: "{{ console_tool }} adm policy add-role-to-group view {{ edp_name }}-edp-view -n {{ item }}"
+  with_items:
+    - "{{ projects_list }}"
+
+- name: "Switching to CICD project"
+  shell: "{{ console_tool }} project {{ project_cicd }}"
+
+- name: Create necessery role in default projects
+  shell: >
+    {{ console_tool }} create clusterrolebinding serviceaccounts-registry-viewer --clusterrole=registry-viewer --group=system:serviceaccounts
+  register: result
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'
+
+- name: "Process services templates"
+  template:
+    src: "{{ item }}"
+    dest: "{{ item | regex_replace('^(.*).j2$', '\\1')}}.yaml"
+  with_fileglob:
+    - "../templates/*.j2"
+
+- name: "Adding templates to Openshift"
+  shell: "{{ console_tool }} create -f {{ item }} -n {{ project_cicd }} "
+  with_fileglob:
+    - "../templates/*.yaml"
+

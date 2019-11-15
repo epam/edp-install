@@ -3,6 +3,8 @@ kind: Jenkins
 metadata:
   name: jenkins
 spec:
+  edpSpec:
+    dnsWildcard: "{{ dns_wildcard }}"
   image: {{ ':'.join(tools.jenkins.version.split(':')[0:-1]) }}
   version: {{ tools.jenkins.version.split(':') | last }}
   volumes:

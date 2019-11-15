@@ -14,10 +14,10 @@
 
 ---
 - name: "Check if Openshift user {{ item }} already exists"
-  shell: "{{ ocadm }} get user {{ item }} -o jsonpath={.metadata.name}"
+  shell: "{{ console_tool }} get user {{ item }} -o jsonpath={.metadata.name}"
   register: result
   ignore_errors: true
 
 - name: "Create user {{ item }} in Openshift"
-  shell: "{{ ocadm }} create user {{ item }}"
+  shell: "{{ console_tool }} create user {{ item }}"
   when: result.stdout != item

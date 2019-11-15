@@ -13,44 +13,8 @@
 # limitations under the License.
 
 ---
-- name: "Obtain components from additional-tools template"
-  shell: "{{ ocadm }} get template -n {{ edp_deploy_project }} {{ additional_tools_template_name }} -o jsonpath='{.objects[?(@.kind!=\"GitServer\")].kind}'"
-  register: tools_list
-
-- name: "Get Gerrit ssh port"
-  shell: "{{ ocadm }} -n {{ edp_deploy_project }} get template additional-tools-{{ edp_name }} -o jsonpath='{.objects[?(@.kind==\"Gerrit\")].spec.sshPort}'"
-  register: ssh_port
-
-- set_fact:
-    gerrit_ssh_port: "{{ ('Gerrit' in tools_list.stdout) | ternary(ssh_port.stdout, '22') }}"
-
-- include_tasks: deploy_additional_tools.yml
+- include_tasks: deploy_additional_tools_{{ platform_type }}.yaml
+- include_tasks: deploy_edp_components.yaml
 
 - name: "Create config map with Gerrit node port"
-  shell: "{{ ocadm }} -n {{ project_cicd }} create cm gerrit --from-literal=sshPort={{ gerrit_ssh_port }}"
-
-- include_tasks: admin-console-configuration.yaml
-
-
-- name: "Creates directory for templates"
-  file:
-    path: "{{ templates_dir }}/other"
-    state: directory
-
-- name: "Copy templates for other resources"
-  template:
-    src: "{{ item }}"
-    dest: "{{ templates_dir }}/other/{{ item }}"
-  with_items:
-    - "edp-component.yaml"
-
-- name: "Install EDP Component"
-  shell: >
-    {{ ocadm }} -n {{ project_cicd }} apply -f {{ templates_dir }}/other/{{ item }}
-  register: result
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-  with_items:
-    - "edp-component.yaml"
+  shell: "{{ console_tool }} -n {{ project_cicd }} create cm gerrit --from-literal=sshPort={{ gerrit_ssh_port }}"

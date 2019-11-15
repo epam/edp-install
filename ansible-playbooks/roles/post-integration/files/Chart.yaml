@@ -1,0 +1,7 @@
+apiVersion: v1
+description: Helm chart for deploying additional tools for EDP such Sonar, Gerrit, Nexus, GitServer
+name: additional-tools
+version: 2.0
+keywords:
+  - additional-tools
+home: https://www.epam.com

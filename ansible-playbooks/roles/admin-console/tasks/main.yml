@@ -17,3 +17,13 @@
   template:
     src: "admin-console.yaml"
     dest: "{{ templates_dir }}/admin_console/admin-console.yaml"
+
+- name: "Install Admin Console app"
+  command: |
+    {{ console_tool }} -n {{ project_cicd }} apply -f {{ templates_dir }}/admin_console/admin-console.yaml
+  register: result
+  ignore_errors: true
+  changed_when: '"already" not in result.stderr'
+  failed_when:
+    - 'result.rc != 0'
+    - '"already" not in result.stderr'

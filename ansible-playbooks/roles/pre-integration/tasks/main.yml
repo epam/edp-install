@@ -13,99 +13,32 @@
 # limitations under the License.
 
 ---
-- name: "Login to openshift"
-  shell: "{{ ocadm }} login -u system:admin"
-  register: can_login
-  when: ocadm != "oc"
+- include_tasks: "{{ platform_type }}.yml"
 
-- fail:
-    msg: "Sorry, we can't login to the cluster. Check permissions on the cluster's side"
-  when: not can_login|skipped and can_login.stdout == "false"
-
-- name: "Get the list of all projects"
-  command: "{{ ocadm }} get project --output=custom-columns=NAME:.metadata.name --no-headers"
-  register: all_oc_projects
-
-- include_tasks: roles/common/tasks/manage-openshift/create-groups.yml
-  with_items:
-    - "{{ edp_name }}-edp-super-admin"
-    - "{{ edp_name }}-edp-admin"
-    - "{{ edp_name }}-edp-view"
-
-- include_tasks: roles/common/tasks/manage-openshift/create-users.yml
-  when: item != ""
-  with_items:
-    - "{{ edp_super_admins }}"
-    - "{{ edp_admins }}"
-    - "{{ edp_viewers }}"
-
-- include_tasks: roles/common/tasks/manage-openshift/join-users-to-group.yml
-  with_items:
-    - { group: "{{ edp_name }}-edp-super-admin", users: "{{ (super_admin_users == '') | ternary(default_super_admin, super_admin_users | replace(',', ' ') ) | lower }}" }
-    - { group: "{{ edp_name }}-edp-admin", users: "{{ admin_users | replace(',', ' ') | lower }}" }
-    - { group: "{{ edp_name }}-edp-view", users: "{{ view_users | replace(',', ' ') | lower }}" }
-
-- name: "Create project in Openshift if it does not exist"
-  shell: "{{ ocadm }} new-project {{ item }}"
-  when: "item not in all_oc_projects.stdout_lines"
-  with_items: "{{ projects_list }}"
-
-- name: "Create rolebinding to existing project"
-  shell: "{{ ocadm }} create rolebinding edp-admin --clusterrole=admin --serviceaccount={{ edp_deploy_project }}:edp --namespace={{ project_cicd }}"
-  when: "item in all_oc_projects.stdout_lines"
-  with_items: "{{ projects_list }}"
-
-- name: "Add Description and Display name to CI/CD project"
+- name: "Create rolebindings for operators"
   shell: >
-    {{ ocadm }} annotate project {{ project_cicd }} --overwrite
-    openshift.io/display-name={{ edp_name }}-edp
-    openshift.io/description='Version: {{ edp_version.split(':') | last }}'
-
-- name: "Check network plugin"
-  shell: "{{ ocadm }} get clusternetwork -o custom-columns=PLUGIN:.pluginName --no-headers=true"
-  register: cluster_network_type
-
-- name: "Giving access if multitenant"
-  shell: "{{ ocadm }} adm pod-network join-projects --to={{ edp_deploy_project }} {{ project_cicd }}"
-  when: '"multitenant" in cluster_network_type.stdout'
-
-- name: "Giving admin roles to groups"
-  shell: "{{ ocadm }} adm policy add-role-to-group admin {{ item[0] }} -n {{ item[1] }}"
-  with_nested:
-    - [ "{{ edp_name }}-edp-super-admin", "{{ edp_name }}-edp-admin" ]
-    - "{{ projects_list }}"
-
-- name: "Giving view roles to groups"
-  shell: "{{ ocadm }} adm policy add-role-to-group view {{ edp_name }}-edp-view -n {{ item }}"
-  with_items:
-    - "{{ projects_list }}"
-
-- name: "Giving permissions to edp SA for operators"
-  shell: >
-    {{ ocadm }} create rolebinding operators-admin-role-to-edp-sa
-    --clusterrole=admin
+    {{ console_tool }} create rolebinding operators-admin-role-to-edp-sa
+    --clusterrole=admin 
     --serviceaccount={{ operators_deploy_project }}:edp
     --namespace={{ project_cicd }}
+  when: "project_cicd not in current_projects_list"
 
 - name: "Looking for shared secrets"
   shell: >
-     {{ ocadm }} get secret -n {{ edp_deploy_project }} -o custom-columns=NAME:.metadata.name
+     {{ console_tool }} get secret -n {{ edp_deploy_project }} -o custom-columns=NAME:.metadata.name
      --no-headers=true | grep {{ shared_secrets_mask }}
   register: edp_shared_secrets
   ignore_errors: true
 
 - name: "Clone shared secrets to CICD project"
   shell: >
-    {{ ocadm }} get --export -o yaml secret {{ item }} -n {{ edp_deploy_project }} |
+    {{ console_tool }} get --export -o yaml secret {{ item }} -n {{ edp_deploy_project }} |
     oc -n {{ project_cicd }} apply -f - &&
-    {{ ocadm }} get --export -o yaml secret {{ item }} -n {{ edp_deploy_project }} |
+    {{ console_tool }} get --export -o yaml secret {{ item }} -n {{ edp_deploy_project }} |
     sed -e 's/{{ item }}/{{ item | regex_replace(shared_secrets_mask) }}/' |
     oc -n {{ project_cicd }} apply -f -
   with_items:
     - "{{ edp_shared_secrets.stdout_lines }}"
-
-- name: "Switching to CICD project"
-  shell: "{{ ocadm }} project {{ project_cicd }}"
 
 - name: Creates directory for templates
   file:
@@ -116,7 +49,7 @@
 
 - name: Create ConfigMap with secret name and VCS group name URL
   shell: >
-    {{ ocadm }} create -n {{ project_cicd }} configmap user-settings
+    {{ console_tool }} create -n {{ project_cicd }} configmap user-settings
     --from-literal=edp_name={{ edp_name }}
     --from-literal=edp_version={{ edp_version.split(':') | last }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
@@ -125,10 +58,11 @@
     {{ '--from-literal=vcs_group_name_url=' + vcs_group_name if vcs_integration_enabled|bool == true else '' }}
     {{ '--from-literal=vcs_tool_name=' + vcs_tool_name | lower if vcs_integration_enabled|bool == true else '' }}
     {{ '--from-literal=vcs_ssh_port=' + vcs_ssh_port if vcs_integration_enabled|bool == true else '' }}
+    --dry-run -o yaml | {{ console_tool }} -n {{ project_cicd }} apply -f -
 
 - name: Create ConfigMap with EDP Config
   shell: >
-    {{ ocadm }} create -n {{ project_cicd }} configmap edp-config
+    {{ console_tool }} create -n {{ project_cicd }} configmap edp-config
     --from-literal=edp_name={{ edp_name }}
     --from-literal=edp_version={{ edp_version.split(':') | last }}
     --from-literal=dns_wildcard={{ dns_wildcard }}
@@ -137,26 +71,6 @@
     {{ '--from-literal=vcs_group_name_url=' + vcs_group_name if vcs_integration_enabled|bool == true else '' }}
     {{ '--from-literal=vcs_tool_name=' + vcs_tool_name | lower if vcs_integration_enabled|bool == true else '' }}
     {{ '--from-literal=vcs_ssh_port=' + vcs_ssh_port if vcs_integration_enabled|bool == true else '' }}
-
-- name: Create necessery role in default projects
-  shell: >
-    {{ ocadm }} create clusterrolebinding serviceaccounts-registry-viewer --clusterrole=registry-viewer --group=system:serviceaccounts
-  register: result
-  changed_when: '"already" not in result.stderr'
-  failed_when:
-    - 'result.rc != 0'
-    - '"already" not in result.stderr'
-
-- name: "Process services templates"
-  template:
-    src: "{{ item }}"
-    dest: "{{ item | regex_replace('^(.*).j2$', '\\1')}}.yaml"
-  with_fileglob:
-    - "../templates/*.j2"
-
-- name: "Adding templates to Openshift"
-  shell: "{{ ocadm }} create -f {{ item }} -n {{ project_cicd }} "
-  with_fileglob:
-    - "../templates/*.yaml"
+    --dry-run -o yaml | {{ console_tool }} -n {{ project_cicd }} apply -f -
 
 - include_tasks: database_configuration.yml

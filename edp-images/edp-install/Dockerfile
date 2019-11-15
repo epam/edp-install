@@ -16,6 +16,7 @@ FROM openshift/origin
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y git ansible
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
 
 RUN groupadd -g 1000 edp && useradd -u 1000 -g edp -m -c edp_user -d /home/edp edp \
     && mkdir -p /var/lib/origin/openshift.local.config \

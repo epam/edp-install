@@ -1,0 +1,47 @@
+# Copyright 2018 EPAM Systems.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+- name: "Looking for additional tools template"
+  shell: >
+    {{ console_tool }} -n {{ edp_deploy_project }} get template -o custom-columns=NAME:.metadata.name
+    --no-headers=true
+  register: additional_tools_template
+  ignore_errors: true
+
+- block:
+  - name: Deploy additional EDP tools from template
+    shell: >
+      {{ console_tool }} -n {{ edp_deploy_project }} get template {{ additional_tools_template_name }}
+      --no-headers
+      --ignore-not-found
+      -o jsonpath='{.metadata.name}'
+      | xargs --no-run-if-empty -I '{}' oc -n {{ edp_deploy_project }} new-app --template='{}'
+      -p EDP_NAME={{ edp_name }} -p DNS_WILDCARD={{ dns_wildcard }}
+
+  - name: "Obtain components from additional-tools template"
+    shell: "{{ console_tool }} get template -n {{ edp_deploy_project }} {{ additional_tools_template_name }} -o jsonpath='{.objects[?(@.kind!=\"GitServer\")].kind}'"
+    register: tools_list
+
+  - name: "Get Gerrit ssh port"
+    shell: "{{ console_tool }} -n {{ edp_deploy_project }} get template additional-tools-{{ edp_name }} -o jsonpath='{.objects[?(@.kind==\"Gerrit\")].spec.sshPort}'"
+    register: ssh_port
+
+  - set_fact:
+      gerrit_ssh_port: "{{ ('Gerrit' in tools_list.stdout) | ternary(ssh_port.stdout, '22') }}"
+  when: "additional_tools_template_name in additional_tools_template.stdout_lines"
+
+- set_fact:
+    gerrit_ssh_port: "22"
+  when: "additional_tools_template_name not in additional_tools_template.stdout_lines"

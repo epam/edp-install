@@ -14,5 +14,5 @@
 
 ---
 - name: "Join users to group {{ item.group }}"
-  shell: "{{ ocadm }} adm groups add-users {{ item.group }} {{ item.users }}"
+  shell: "{{ console_tool }} adm groups add-users {{ item.group }} {{ item.users }}"
   when: item.users != ""

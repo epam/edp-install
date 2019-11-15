@@ -23,7 +23,7 @@ spec:
     name: {{ edp_name }}
     dnsWildcard: {{ dns_wildcard }}
     version: {{ edp_version.split(':') | last }}
-    integrationStrategies: "Create,Clone"
+    integrationStrategies: "Create,Clone,Import"
   dbSpec:
     enabled: true
     name: {{ shared_database }}
