@@ -13,30 +13,24 @@
 # limitations under the License.
 
 ---
+- name: "Obtain components from additional-tools template"
+  shell: "{{ ocadm }} get template -n {{ edp_deploy_project }} {{ additional_tools_template_name }} -o jsonpath='{.objects[?(@.kind!=\"GitServer\")].kind}'"
+  register: tools_list
+
 - name: "Get Gerrit ssh port"
   shell: "{{ ocadm }} -n {{ edp_deploy_project }} get template additional-tools-{{ edp_name }} -o jsonpath='{.objects[?(@.kind==\"Gerrit\")].spec.sshPort}'"
   register: ssh_port
 
 - set_fact:
-    gerrit_ssh_port: "{{ ssh_port.stdout }}"
+    gerrit_ssh_port: "{{ ('Gerrit' in tools_list.stdout) | ternary(ssh_port.stdout, '22') }}"
 
 - include_tasks: deploy_additional_tools.yml
 
 - name: "Create config map with Gerrit node port"
   shell: "{{ ocadm }} -n {{ project_cicd }} create cm gerrit --from-literal=sshPort={{ gerrit_ssh_port }}"
 
-- include_tasks: check-cr-health.yml
-  with_items:
-    - { project: '{{ project_cicd }}', component: 'gerrits.v2.edp.epam.com', name: 'gerrit'  }
-    - { project: '{{ project_cicd }}', component: 'sonars.v2.edp.epam.com', name: 'sonar'  }
-    - { project: '{{ project_cicd }}', component: 'nexus.v2.edp.epam.com', name: 'nexus'  }
-    - { project: '{{ project_cicd }}', component: 'jenkins.v2.edp.epam.com', name: 'jenkins' }
-
 - include_tasks: admin-console-configuration.yaml
 
-- include_tasks: check-cr-health.yml
-  with_items:
-    - { project: '{{ project_cicd }}', component: 'adminconsoles.v2.edp.epam.com', name: 'edp-admin-console' }
 
 - name: "Creates directory for templates"
   file:
@@ -60,19 +54,3 @@
     - '"already" not in result.stderr'
   with_items:
     - "edp-component.yaml"
-
-- include_tasks: check-cr-health.yml
-  with_items:
-    - { project: '{{ project_cicd }}', component: 'gerrits.v2.edp.epam.com', name: 'gerrit'  }
-    - { project: '{{ project_cicd }}', component: 'sonars.v2.edp.epam.com', name: 'sonar'  }
-    - { project: '{{ project_cicd }}', component: 'nexus.v2.edp.epam.com', name: 'nexus'  }
-    - { project: '{{ project_cicd }}', component: 'adminconsoles.v2.edp.epam.com', name: 'edp-admin-console' }
-    - { project: '{{ project_cicd }}', component: 'jenkins.v2.edp.epam.com', name: 'jenkins' }
-
-- include_tasks: check-deployment-health.yml
-  with_items:
-    - { project: '{{ project_cicd }}', service: 'gerrit' }
-    - { project: '{{ project_cicd }}', service: 'nexus' }
-    - { project: '{{ project_cicd }}', service: 'sonar' }
-    - { project: '{{ project_cicd }}', service: 'jenkins' }
-    - { project: '{{ project_cicd }}', service: 'edp-admin-console' }
