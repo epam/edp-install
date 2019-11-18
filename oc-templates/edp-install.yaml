@@ -163,7 +163,7 @@ parameters:
 - displayName: Volume Space for Nexus
   description: Volume space available for Sonatype Nexus data
   name: NEXUS_VOLUME_CAPACITY
-  value: 5Gi
+  value: 10Gi
 #Sonar parameters
 - displayName: SonarQube version
   value: "7.6-community"
