@@ -21,4 +21,4 @@
     --ignore-not-found
     -o jsonpath='{.metadata.name}'
     | xargs --no-run-if-empty -I '{}' oc -n {{ edp_deploy_project }} new-app --template='{}'
-    -p EDP_NAME={{ edp_name }}
+    -p EDP_NAME={{ edp_name }} -p DNS_WILDCARD={{ dns_wildcard }}
