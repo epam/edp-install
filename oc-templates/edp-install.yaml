@@ -44,6 +44,8 @@ objects:
           imagePullPolicy: Always
           name: edp-deploy
           env:
+          - name: PLATFORM-TYPE
+            value: "openshift"
           - name: DEPLOY-PROJECT
             valueFrom:
               fieldRef:
@@ -64,13 +66,7 @@ objects:
             - "-e edp_version=${EDP_VERSION}"
             - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
-            - "-e jenkins_fs_type=${JENKINS_FS_TYPE}"
-            - "-e jenkins_host_path_volume=${JENKINS_HOST_PATH_VOLUME}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
-            - "-e jenkins_maven_cache_volume_capacity=${JENKINS_MAVEN_CACHE_VOLUME_CAPACITY}"
-            - "-e jenkins_frontend_image=${JENKINS_FRONTEND_IMAGE}"
-            - "-e jenkins_backend_maven_image=${JENKINS_BACKEND_MAVEN_IMAGE}"
-            - "-e jenkins_backend_gradle_image=${JENKINS_BACKEND_GRADLE_IMAGE}"
             - "-e jenkins_image_version=${JENKINS_IMAGE_VERSION}"
             - "-e nexus_version=${NEXUS_VERSION}"
             - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
@@ -125,37 +121,14 @@ parameters:
   name: APPS_TO_INSTALL
   value: "all"
 #Jenkins parameters
-- displayName: Jenkins filesystem type
-  description: Allowed values only 'pvc'(Persistant volume claim) or 'hostpath'
-  name: JENKINS_FS_TYPE
-  value: "pvc"
-  required: true
-- displayName: Jenkins HostPath volume path
-  description: Define it in case you chose 'hostpath' on the previous field. Otherwise, it should be ignored.
-  name: JENKINS_HOST_PATH_VOLUME
-  value: "/opt/data/jenkins"
 - displayName: Volume Capacity
   description: Volume space available for Jenkins data
   name: JENKINS_VOLUME_CAPACITY
   value: 10Gi
   required: true
-- displayName: Maven Cache Volume Capacity
-  description: Volume space available for maven cache data
-  name: JENKINS_MAVEN_CACHE_VOLUME_CAPACITY
-  required: true
-  value: 10Gi
-- displayName: Frontend docker image.
-  name: JENKINS_FRONTEND_IMAGE
-  value: "openshift/jenkins-agent-nodejs-8-centos7:v3.10"
 - displayName: Jenkins EDP docker image.
   name: JENKINS_IMAGE_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest"
-- displayName: Backend docker image.
-  name: JENKINS_BACKEND_MAVEN_IMAGE
-  value: "openshift/jenkins-agent-maven-35-centos7:v3.10"
-- displayName: Backend gradle docker image.
-  name: JENKINS_BACKEND_GRADLE_IMAGE
-  value: "epamedp/jenkins-slave-gradle-openshift:1.10.0"
 #Nexus parameters
 - displayName: Sonatype Nexus version
   name: NEXUS_VERSION

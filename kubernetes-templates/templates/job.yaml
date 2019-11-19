@@ -1,0 +1,59 @@
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: {{ .Values.edpName }}-edp-deploy
+  spec:
+    parallelism: 1
+    completions: 1
+    activeDeadlineSeconds: 3600
+    template:
+      metadata:
+        name: edp-deploy
+      spec:
+        securityContext:
+          runAsUser: 1000
+        restartPolicy: Never
+        serviceAccount: edp
+        containers:
+          - image: {{ .Values.edpVersion }}
+            imagePullPolicy: Always
+            name: edp-deploy
+            env:
+              - name: PLATFORM_TYPE
+                value: "kubernetes"
+              - name: DEPLOY-PROJECT
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+            command:
+              - "ansible-playbook"
+              - "-v"
+              - "-i"
+              - "localhost,"
+              - "-e edp_name={{ .Values.edpName }}"
+              - "-e console_tool=kubectl"
+              - "-e ansible_connection=local"
+              - "-e super_admin_users={{ .Values.edpSuperAdmins }}"
+              - "-e admin_users={{ .Values.edpAdmins }}"
+              - "-e view_users={{ .Values.edpViewers }}"
+              - "-e edp_version={{ .Values.edpVersion }}"
+              - "-e dns_wildcard={{ .Values.dnsWildCard }}"
+              - "-e storage_class_name={{ .Values.storageClass }}"
+              - "-e gerrit_version={{ .Values.gerritVersion }}"
+              - "-e gerrit_volume_capacity={{ .Values.gerritVolumeCapacity }}"
+              - "-e jenkins_volume_capacity={{ .Values.jenkinsVolumeCapacity }}"
+              - "-e jenkins_image_version={{ .Values.jenkinsVersion }}"
+              - "-e nexus_version={{ .Values.nexusVersion }}"
+              - "-e nexus_volume_capacity={{ .Values.nexusVolumeCapacity }}"
+              - "-e sonar_version={{ .Values.sonarVersion }}"
+              - "-e sonar_volume_capacity={{ .Values.sonarVolumeCapacity }}"
+              - "-e sonar_volume_db_capacity={{ .Values.sonarDbVolumeCapacity }}"
+              - "-e admin_console_version={{ .Values.adminConsoleVersion }}"
+              - "-e vcs_integration_enabled={{ .Values.vcsIntegrationEnabled }}"
+              - "-e vcs_tool_name={{ .Values.vcsToolName }}"
+              - "-e vcs_group_name={{ .Values.vcsGroupName }}"
+              - "-e vcs_ssh_port={{ .Values.vcsSshPort }}"
+              - "-e perf_integration_enabled={{ .Values.perfIntegrationEnabled }}"
+              - "-e perf_node_id={{ .Values.perfNodeId }}"
+              - "-e perf_url={{ .Values.perfUrl }}"
+              - "ansible-playbooks/install.yml"
