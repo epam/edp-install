@@ -1,0 +1,238 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    kubernetes.io/display-name: System project for EDP deployment
+  name: edp-deploy
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: edp
+  namespace: edp-deploy
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: edp-deploy-role
+rules:
+- apiGroups:
+    - "*"
+  attributeRestrictions: null
+  resources:
+    - namespaces
+  verbs:
+    - get
+    - list
+    - create
+    - patch
+- apiGroups:
+    - ""
+    - network.openshift.io
+  attributeRestrictions: null
+  resources:
+    - ""
+  verbs:
+    - list
+    - get
+- apiGroups:
+    - ""
+    - network.openshift.io
+  attributeRestrictions: null
+  resources:
+    - netnamespaces
+  verbs:
+    - get
+    - update
+- apiGroups:
+    - ""
+    - image.openshift.io
+  attributeRestrictions: null
+  resources:
+    - imagestreamimages
+    - imagestreammappings
+    - imagestreams
+    - imagestreamtags
+  verbs:
+    - get
+    - list
+    - watch
+- apiGroups:
+    - ""
+    - image.openshift.io
+  attributeRestrictions: null
+  resources:
+    - imagestreams/layers
+  verbs:
+    - get
+- apiGroups:
+    - '*'
+  attributeRestrictions: null
+  resources:
+    - clusterrolebindings
+  verbs:
+    - delete
+- apiGroups:
+    - "*"
+  attributeRestrictions: null
+  resources:
+    - templates
+    - processedtemplates
+    - rolebindings
+    - roles
+    - clusterroles
+    - clusterrolebindings
+    - projectrequests
+    - projects
+    - namespaces
+    - pods
+    - pods/exec
+    - groups
+    - users
+    - securitycontextconstraints
+    - podsecuritypolicies
+    - pods/portforward
+    - jobs
+    - configmaps
+    - routes
+    - imagestreams
+    - buildconfigs
+  verbs:
+    - get
+    - list
+    - create
+- apiGroups:
+    - '*'
+  attributeRestrictions: null
+  resources:
+    - storageclasses
+  verbs:
+    - get
+    - list
+- apiGroups:
+    - '*'
+  attributeRestrictions: null
+  resources:
+    - configmaps
+    - routes
+    - imagestreams
+    - buildconfigs
+    - jobs
+    - groups
+    - users
+    - securitycontextconstraints
+    - podsecuritypolicies
+  verbs:
+    - patch
+    - update
+- apiGroups:
+    - '*'
+  attributeRestrictions: null
+  resources:
+    - jobs
+  verbs:
+    - delete
+- apiGroups:
+    - '*'
+  attributeRestrictions: null
+  resources:
+    - secrets
+  verbs:
+    - create
+- apiGroups:
+    - '*'
+  attributeRestrictions: null
+  resourceNames:
+    - vcs-autouser
+    - gerrit-admin
+    - jenkins-token
+    - keycloak-admin
+    - keycloak-gerrit
+    - gerrit-project-creator
+    - keycloak
+    - keycloak-parameters
+    - admin-console-client
+  resources:
+    - secrets
+  verbs:
+    - get
+- apiGroups:
+    - "*"
+  attributeRestrictions: null
+  resourceNames:
+    - edp-jenkins
+  resources:
+    - roles
+    - rolebindings
+    - clusterroles
+  verbs:
+    - patch
+    - update
+- apiGroups:
+    - '*'
+  attributeRestrictions: null
+  resources:
+    - gitservers
+    - gitservers/status
+    - gitservers/finalizers
+    - codebases
+    - codebases/status
+    - codebases/finalizers
+    - codebasebranches
+    - codebasebranches/status
+    - codebasebranches/finalizers
+    - codebaseimagestreams
+    - codebaseimagestreams/status
+    - codebaseimagestreams/finalizers
+    - cdpipelines
+    - cdpipelines/status
+    - cdpipelines/finalizers
+    - stages
+    - stages/status
+    - stages/finalizers
+    - sonars
+    - sonars/finalizers
+    - sonars/status
+    - nexuses
+    - nexuses/finalizers
+    - nexuses/status
+    - adminconsoles
+    - adminconsoles/finalizers
+    - adminconsoles/status
+    - gerrits
+    - gerrits/finalizers
+    - gerrits/status
+    - jenkins
+    - jenkins/finalizers
+    - jenkins/status
+    - jenkinses
+    - jenkinses/finalizers
+    - jenkinses/status
+    - jenkinsserviceaccounts
+    - jenkinsserviceaccounts/finalizers
+    - jenkinsserviceaccounts/status
+    - jenkinsscripts
+    - jenkinsscripts/finalizers
+    - jenkinsscripts/status
+    - deployments/finalizers
+    - deployments/finalizers.extensions
+    - gerritreplicationconfigs
+    - gerritreplicationconfigs/status
+    - keycloaks
+    - keycloaks/finalizers
+    - keycloaks/status
+    - keycloakclients
+    - keycloakclients/finalizers
+    - keycloakclients/status
+    - keycloakrealms
+    - keycloakrealms/finalizers
+    - keycloakrealms/status
+    - edpcomponents
+    - edpcomponents/finalizers
+    - edpcomponents/status
+  verbs:
+    - '*'

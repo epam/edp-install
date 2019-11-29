@@ -62,11 +62,21 @@ objects:
     name: edp-deploy-role
   rules:
   - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resources:
+    - namespaces
+    verbs:
+    - get
+    - list
+    - create
+    - patch
+  - apiGroups:
     - ""
     - network.openshift.io
     attributeRestrictions: null
     resources:
-
+    - ""
     verbs:
     - list
     - get
@@ -98,7 +108,6 @@ objects:
     attributeRestrictions: null
     resources:
     - imagestreams/layers
-    - namespaces
     verbs:
     - get
   - apiGroups:
@@ -120,6 +129,7 @@ objects:
     - clusterrolebindings
     - projectrequests
     - projects
+    - namespaces
     - pods
     - pods/exec
     - groups
@@ -140,10 +150,10 @@ objects:
     - '*'
     attributeRestrictions: null
     resources:
-      - storageclasses
+    - storageclasses
     verbs:
-      - get
-      - list
+    - get
+    - list
   - apiGroups:
     - '*'
     attributeRestrictions: null
@@ -207,18 +217,24 @@ objects:
     - '*'
     attributeRestrictions: null
     resources:
-    - applicationbranches
-    - applicationbranches/status
-    - codebasebranches
-    - codebasebranches/status
     - gitservers
     - gitservers/status
+    - gitservers/finalizers
     - codebases
     - codebases/status
+    - codebases/finalizers
+    - codebasebranches
+    - codebasebranches/status
+    - codebasebranches/finalizers
+    - codebaseimagestreams
+    - codebaseimagestreams/status
+    - codebaseimagestreams/finalizers
     - cdpipelines
     - cdpipelines/status
+    - cdpipelines/finalizers
     - stages
     - stages/status
+    - stages/finalizers
     - sonars
     - sonars/finalizers
     - sonars/status
@@ -237,6 +253,12 @@ objects:
     - jenkinses
     - jenkinses/finalizers
     - jenkinses/status
+    - jenkinsserviceaccounts
+    - jenkinsserviceaccounts/finalizers
+    - jenkinsserviceaccounts/status
+    - jenkinsscripts
+    - jenkinsscripts/finalizers
+    - jenkinsscripts/status
     - deployments/finalizers
     - deployments/finalizers.extensions
     - gerritreplicationconfigs
