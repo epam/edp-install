@@ -61,7 +61,7 @@ tools:
     volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
     version: "{{ jenkins_image_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
   admin_console:
-    super_admin_secret: "admin-console-db"
+    super_admin_secret: "super-admin-db"
     version: "{{ admin_console_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-admin-console:snapshot') }}"
     web_url: "https://edp-admin-console-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
     shared_db_service: "{{ shared_db_dev_service if dev_deploy | bool == true else shared_db_prod_service }}"

@@ -197,6 +197,8 @@ objects:
     - keycloak
     - keycloak-parameters
     - admin-console-client
+    - super-admin-db
+    - admin-console-db
     resources:
     - secrets
     verbs:
