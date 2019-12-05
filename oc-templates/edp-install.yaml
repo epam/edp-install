@@ -68,8 +68,6 @@ objects:
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
             - "-e jenkins_image_version=${JENKINS_IMAGE_VERSION}"
-            - "-e nexus_version=${NEXUS_VERSION}"
-            - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
             - "-e vcs_integration_enabled=${VCS_INTEGRATION_ENABLED}"
             - "-e vcs_tool_name=${VCS_TOOL_NAME}"
             - "-e vcs_group_name=${VCS_GROUP_NAME_URL}"
@@ -129,26 +127,6 @@ parameters:
 - displayName: Jenkins EDP docker image.
   name: JENKINS_IMAGE_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest"
-#Nexus parameters
-- displayName: Sonatype Nexus version
-  name: NEXUS_VERSION
-  value: "3.15.1"
-- displayName: Volume Space for Nexus
-  description: Volume space available for Sonatype Nexus data
-  name: NEXUS_VOLUME_CAPACITY
-  value: 10Gi
-#Sonar parameters
-- displayName: SonarQube version
-  value: "7.6-community"
-  name: SONAR_VERSION
-- description: Volume space available for SonarQube
-  displayName: SonarQube Volume Capacity
-  name: SONAR_VOLUME_CAPACITY
-  value: 5Gi
-- description: Volume space available for SonarQube Database
-  displayName: SonarQube database Volume Capacity
-  name: SONAR_DB_CAPACITY
-  value: 5Gi
 #VCS parameters
 - displayName: Does intergration with VCS is enabled(true/false)
   description: Defines whether integration with VCS is enabled or not
