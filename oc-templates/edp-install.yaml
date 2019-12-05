@@ -1,4 +1,4 @@
-# Copyright 2018 EPAM Systems.
+# Copyright 2019 EPAM Systems.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -46,6 +46,10 @@ objects:
           env:
           - name: PLATFORM_TYPE
             value: "openshift"
+          - name: STAGES_VERSION
+            value: ${JENKINS_STAGES_VERSION}
+          - name: PIPELINES_VERSION
+            value: ${JENKINS_PIPELINES_VERSION}
           - name: DEPLOY_PROJECT
             valueFrom:
               fieldRef:
@@ -68,6 +72,8 @@ objects:
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
             - "-e jenkins_image_version=${JENKINS_IMAGE_VERSION}"
+            - "-e nexus_version=${NEXUS_VERSION}"
+            - "-e nexus_volume_capacity=${NEXUS_VOLUME_CAPACITY}"
             - "-e vcs_integration_enabled=${VCS_INTEGRATION_ENABLED}"
             - "-e vcs_tool_name=${VCS_TOOL_NAME}"
             - "-e vcs_group_name=${VCS_GROUP_NAME_URL}"
@@ -127,6 +133,12 @@ parameters:
 - displayName: Jenkins EDP docker image.
   name: JENKINS_IMAGE_VERSION
   value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest"
+- displayName: Jenkins stages shared library version
+  name: JENKINS_STAGES_VERSION
+  value: ""
+- displayName: Jenkins pipelines shared library version
+  name: JENKINS_PIPELINES_VERSION
+  value: ""
 #VCS parameters
 - displayName: Does intergration with VCS is enabled(true/false)
   description: Defines whether integration with VCS is enabled or not
