@@ -176,7 +176,14 @@ spec:
    - JENKINS_STAGES_VERSION - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
    - JENKINS_PIPELINES_VERSION - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
 
-    Find below a sample for additional tools:
+Inspect the list of parameters that can be used in the OpenShift template and replaced during the provisioning:
+    
+   - EDP_NAME - this parameter will be replaced with the EDP_NAME value, which is set in EDP-Install template;
+   - DNS_WILDCARD - this parameter will be replaced with the DNS_WILDCARD value, which is set in EDP-Install template;
+       
+_*NOTE*: Other parameters must be hardcorded in a template._
+
+Find below a template sample for additional tools:
 ```
 apiVersion: template.openshift.io/v1
 kind: Template
@@ -264,6 +271,8 @@ parameters:
   required: true
   value: default_wildcard
 ```
+
+
 * Create files with an additional template and create a template in OpenShift with the following command:
 
 `oc -n edp-deploy apply -f <filename>`

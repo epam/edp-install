@@ -178,9 +178,17 @@ spec:
     - jenkins.stagesVersion - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
     - jenkins.pipelinesVersion - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
     - adminConsole.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
-    - edp.additionalToolsTemplate - name of the config map in edp-deploy project with a Helm template that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, edpName, dnsWildCard, etc.). User variables can be used and are replaced during the provisioning, all the rest must be hardcoded in a template.  
+    - edp.additionalToolsTemplate - name of the config map in edp-deploy project with a Helm template that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, Any other resources). 
     
-    Find below a template sample:
+Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
+    
+   - edpName - this parameter will be replaced with the edp.name value, which is set in EDP-Install chart;
+   - dnsWildCard - this parameter will be replaced with the edp.dnsWildCard value, which is set in EDP-Install chart;
+   - users - this parameter will be replaced with the edp.superAdmins value, which is set in EDP-Install chart. 
+    
+_*NOTE*: The users parameter should be used in a cycle because it is presented as the list. Other parameters must be hardcorded in a template._
+    
+Become familiar with a template sample:
 ```
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Nexus
@@ -258,12 +266,13 @@ spec:
   credentials: 'gitlab-sshkey'
   type: ssh
 ```
- - Create a file with the template and create config map with the following command:
+
+ * Create a file with the template and create config map with the following command:
 
 `kubectl -n edp-deploy create cm additional-tools --from-file=template=<filename>`
 
- - Edit kubernetes-templates/values.yaml file with your own parameters
- - Run Helm chart installation
+ * Edit kubernetes-templates/values.yaml file with your own parameters;
+ * Run Helm chart installation;
 
 Find below the sample of launching a Helm template for EDP installation:
 ```
