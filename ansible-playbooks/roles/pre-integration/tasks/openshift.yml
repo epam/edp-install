@@ -1,4 +1,4 @@
-# Copyright 2018 EPAM Systems.
+# Copyright 2019 EPAM Systems.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 - name: "Get the list of all projects"
   command: "{{ console_tool }} get project --output=custom-columns=NAME:.metadata.name --no-headers"
   register: current_projects_list
+  check_mode: no
 
 - set_fact:
     current_projects_list: "{{ current_projects_list.stdout_lines }}"
@@ -53,6 +54,7 @@
 - name: "Check network plugin"
   shell: "{{ console_tool }} get clusternetwork -o custom-columns=PLUGIN:.pluginName --no-headers=true"
   register: cluster_network_type
+  check_mode: no
 
 - name: "Giving access if multitenant"
   shell: "{{ console_tool }} adm pod-network join-projects --to={{ edp_deploy_project }}| {{ project_cicd }}"

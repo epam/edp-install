@@ -19,6 +19,7 @@
     {{ console_tool }} -n security get secret keycloak
     --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: username
+  check_mode: no
 
 - name: "Get password from security project Keycloak secret"
   shell: >
@@ -26,6 +27,7 @@
     --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
   no_log: true
+  check_mode: no
 
 - name: "Install Keycloak secret for admin connection"
   command: |
