@@ -1,6 +1,6 @@
 edp:
-  name: "test"
-  version: "epamedp/edp-install:latest"
+  name: ""
+  version: "epamedp/edp-install:2.2.0"
   additionalToolsTemplate: "additional-tools"
   superAdmins: ""
   admins: ""
@@ -9,12 +9,12 @@ edp:
   storageClass: "gp2"
   devDeploy: "false"
 jenkins:
-  version: "epamedp/edp-jenkins:latest"
+  version: "epamedp/edp-jenkins:2.2.0"
   volumeCapacity: "10Gi"
-  stagesVersion: "master"
-  pipelinesVersion: "master"
+  stagesVersion: "2.3.0"
+  pipelinesVersion: "2.3.0"
 adminConsole:
-  version: "epamedp/edp-admin-console:latest"
+  version: "epamedp/edp-admin-console:2.2.1"
 vcs:
   enabled: "false"
   toolName: ""

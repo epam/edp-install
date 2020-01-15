@@ -85,7 +85,7 @@ parameters:
 - displayName: Name for EDP tenant
   description: Unique name for EDP tenant which will be used during installation
   name: EDP_NAME
-  value: "test"
+  value: ""
   required: true
 - displayName: DNS wildcard
   description: DNS wildcard of your project that should be specified during Openshift cluster installation
@@ -100,12 +100,12 @@ parameters:
 - displayName: Storage class name
   description: Storage class name to consume by every EDP tool
   name: STORAGE_CLASS_NAME
-  value: "efs"
+  value: "gp2"
   required: true
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed
   name: EDP_VERSION
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-test:test"
+  value: "epamedp/edp-install:2.2.0"
 - displayName: EDP Super Admins
   description: Users that will have full admin permissions in this EDP tenant (comma-separated, NO spaces)
   name: EDP_SUPER_ADMINS
@@ -130,13 +130,13 @@ parameters:
   required: true
 - displayName: Jenkins EDP docker image.
   name: JENKINS_IMAGE_VERSION
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest"
+  value: "epamedp/edp-jenkins:2.2.0"
 - displayName: Jenkins stages shared library version
   name: JENKINS_STAGES_VERSION
-  value: ""
+  value: "2.3.0"
 - displayName: Jenkins pipelines shared library version
   name: JENKINS_PIPELINES_VERSION
-  value: ""
+  value: "2.3.0"
 #VCS parameters
 - displayName: Does intergration with VCS is enabled(true/false)
   description: Defines whether integration with VCS is enabled or not
@@ -170,4 +170,4 @@ parameters:
   value: ""
 - displayName: Version of Admin Console
   name: ADMIN_CONSOLE_VERSION
-  value: "docker-registry.default.svc:5000/edp-cicd-delivery/edp-admin-console:master"
+  value: "epamedp/edp-admin-console:2.2.1"
