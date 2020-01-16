@@ -167,24 +167,12 @@ spec:
     - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
     - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
 
-* Apply EDP chart using Helm. Find below the description of each parameter: 
-    - edp.name - name of your EDP tenant to be deployed;
-    - edp.version - EDP Image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
-    - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
-    - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
-    - edp.storageClass - storage class that will be used for persistent volumes provisioning;
-    - jenkins.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
-    - jenkins.volumeCapacity - size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB;
-    - jenkins.stagesVersion - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
-    - jenkins.pipelinesVersion - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
-    - adminConsole.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
-    - edp.additionalToolsTemplate - name of the config map in edp-deploy project with a Helm template that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, Any other resources). 
+* Create a config map with additional tools (e.g. Sonar, Gerrit, Nexus, Secrets, any other resources) that are non-mandatory.
+* Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
     
-Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
-    
-   - edpName - this parameter will be replaced with the edp.name value, which is set in EDP-Install chart;
-   - dnsWildCard - this parameter will be replaced with the edp.dnsWildCard value, which is set in EDP-Install chart;
-   - users - this parameter will be replaced with the edp.superAdmins value, which is set in EDP-Install chart. 
+    - edpName - this parameter will be replaced with the edp.name value, which is set in EDP-Install chart;
+    - dnsWildCard - this parameter will be replaced with the edp.dnsWildCard value, which is set in EDP-Install chart;
+    - users - this parameter will be replaced with the edp.superAdmins value, which is set in EDP-Install chart. 
     
 _*NOTE*: The users parameter should be used in a cycle because it is presented as the list. Other parameters must be hardcorded in a template._
     
@@ -267,10 +255,38 @@ spec:
   type: ssh
 ```
 
- * Create a file with the template and create config map with the following command:
+* Create a file with the template and create a config map with the following command:
 
 `kubectl -n edp-deploy create cm additional-tools --from-file=template=<filename>`
 
+* Apply EDP chart using Helm. 
+
+>**WARNING**: Chart has some **hardcoded** parameters, which are optional for editing, and some **mandatory** parameters that can be specified by user. 
+ 
+Find below the description of both parameters types.
+
+Hardcoded parameters (optional): 
+```
+    - edp.version - EDP Image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
+    - edp.additionalToolsTemplate - name of the config map in edp-deploy project with a Helm template that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, Any other resources). **You created it in the previous point.**
+    - edp.devDeploy: Used for develomplent deploy using CI for production installation should be false;
+    - jenkins.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
+    - jenkins.volumeCapacity - size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB;
+    - jenkins.stagesVersion - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
+    - jenkins.pipelinesVersion - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
+    - adminConsole.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
+    - vcs.* - parameters used for integrating Gerrit with external VCS. Are deprecated and will be removed soon. **DO NOT CHANGE THEM.**
+    - perf.* - Integration with PERF is in progress. Should be false so far. 
+```
+ 
+Mandatory parameters:
+ ```
+    - edp.name - name of your EDP tenant to be deployed;
+    - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
+    - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
+    - edp.storageClass - storage class that will be used for persistent volumes provisioning;
+ ```  
+ 
  * Edit kubernetes-templates/values.yaml file with your own parameters;
  * Run Helm chart installation;
 
@@ -278,4 +294,4 @@ Find below the sample of launching a Helm template for EDP installation:
 ```
 helm install <helm_release_name> --namespace edp-deploy kubernetes-templates
 ```
-* In several seconds, the project <*edp-name*>-edp-cicd will be created. The full installation with integration between tools will take at least 10 minutes.
+* The full installation with integration between tools will take at least 10 minutes.

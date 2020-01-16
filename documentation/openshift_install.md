@@ -163,20 +163,8 @@ spec:
     - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
     - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
 
-* Apply EDP template using oc. Find below the description of each parameter:
-   - EDP_NAME - name of your EDP tenant to be deployed;
-   - DNS_WILDCARD - DNS wildcard for routing in your K8S cluster;
-   - ADDITIONAL_TOOLS_TEMPLATE_NAME - name of the OpenShift template in the edp-deploy project that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, edpName, dnsWildCard, etc.). User variables can be used and are replaced during the provisioning, all the rest must be hardcoded in a template.
-   - STORAGE_CLASS_NAME - storage class that will be used for persistent volumes provisioning;
-   - EDP_VERSION - EDP Image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
-   - EDP_SUPER_ADMINS - administrators of your tenant separated by comma (,);
-   - JENKINS_VOLUME_CAPACITY - size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB;
-   - JENKINS_IMAGE_VERSION - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
-   - ADMIN_CONSOLE_VERSION - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
-   - JENKINS_STAGES_VERSION - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
-   - JENKINS_PIPELINES_VERSION - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
-
-Inspect the list of parameters that can be used in the OpenShift template and replaced during the provisioning:
+* Create an OpenShift template with with additional tools (e.g. Sonar, Gerrit, Nexus, Secrets, any other resources) that are non-mandatory.
+* Inspect the list of parameters that can be used in the OpenShift template and replaced during the provisioning:
     
    - EDP_NAME - this parameter will be replaced with the EDP_NAME value, which is set in EDP-Install template;
    - DNS_WILDCARD - this parameter will be replaced with the DNS_WILDCARD value, which is set in EDP-Install template;
@@ -272,10 +260,35 @@ parameters:
   value: default_wildcard
 ```
 
-
-* Create files with an additional template and create a template in OpenShift with the following command:
+* Create a file with the template and create an OpenShift template with the following command:
 
 `oc -n edp-deploy apply -f <filename>`
+
+* Apply EDP template using oc. 
+
+>**WARNING**: Chart has some **hardcoded** parameters, which are optional for editing, and some **mandatory** parameters that can be specified by user.
+
+Find below the description of both parameters types:
+
+Hardcoded parameters (optional): 
+```
+   - EDP_VERSION - EDP Image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
+   - ADDITIONAL_TOOLS_TEMPLATE_NAME - name of the OpenShift template in the edp-deploy project that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, edpName, dnsWildCard, etc.). User variables can be used and are replaced during the provisioning, all the rest must be hardcoded in a template.
+   - JENKINS_VOLUME_CAPACITY - size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB;
+   - JENKINS_IMAGE_VERSION - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
+   - JENKINS_STAGES_VERSION - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
+   - JENKINS_PIPELINES_VERSION - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
+   - ADMIN_CONSOLE_VERSION - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
+```
+
+ Mandatory parameters:
+```
+   - EDP_NAME - name of your EDP tenant to be deployed;
+   - DNS_WILDCARD - DNS wildcard for routing in your K8S cluster;
+   - STORAGE_CLASS_NAME - storage class that will be used for persistent volumes provisioning;
+   - EDP_SUPER_ADMINS - administrators of your tenant separated by comma (,);
+```
+
 
 * Edit the oc-templates/edp-install.yaml file by applying your own parameters;
 * Add EDP install template in OpenShift with the following command:
@@ -288,4 +301,4 @@ Find below the sample of launching an OpenShift template for EDP installation:
 ```
 oc new-app --template=edp --param=<>... --param=<>
 ```
-* In several seconds, the project <*edp-name*>-edp-cicd will be created. The full installation with integration between tools will take at least 10 minutes.
+* The full installation with integration between tools will take at least 10 minutes.
