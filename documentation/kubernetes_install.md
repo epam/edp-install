@@ -3,10 +3,15 @@
 ### Prerequisites
 1. Kubernetes cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
 2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
-3. Helm installed by executing the following command:
-
-`curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-`
+3. Ingress controller, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/) is installed in cluster;
+4. Ingress controller configured with HTTP/2 protocol disabled and header size 32k support;
+5. Load balancer (if any exists in front of ingress controller) configured with HTTP/2 protocol disabled and header size 32k support;
+6. Keycloak instance is installed in "security" namespace;
+7. Secret "keycloak" with administrative access username and password exists in "security" namespace; 
+8. Helm installed on installation machine by executing the following command:
+```bash
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+```
 
 ### Admin Space
 
@@ -16,23 +21,26 @@ To deploy the Admin Space, follow the steps below:
 
 * Go to the [releases](https://github.com/epmd-edp/edp-install/releases) page of this repository, choose a version, download an archive and unzip it.
 
-_**NOTE:**: It is highly recommended to use the latest released version._
+_**NOTE:** It is highly recommended to use the latest released version._
 
 * Apply the "edp-preinstall" template to create the Admin Space:
- 
  `kubectl apply -f kubernetes-templates/edp-preinstall.yaml`
-* Add the edp-deploy-role role to EDP service account: 
 
+* Add the edp-deploy-role role to EDP service account: 
 `kubectl create clusterrolebinding <any_name> --clusterrole=edp-deploy-role --serviceaccount=edp-deploy:edp`
  
 * Add admin role to EDP service account: 
-
 `kubectl create clusterrolebinding <any_name> --clusterrole=admin --serviceaccount=edp-deploy:edp`
-* Create secret for database:
 
-`kubectl -n edp-deploy create secret generic admin-console-db --from-literal=username=<your_username> --from-literal=password=<your_password>`
-* Deploy database from the following template:
-```
+* If this is your first EDP tenant in this cluster
+
+    * Create admin secret for the Wizard database: 
+`
+kubectl -n edp-deploy create secret generic super-admin-db --from-literal=username=<db_admin_username> --from-literal=password=<db_admin_password>
+`
+
+    * Deploy database from the following template:
+```yaml
 apiVersion: v1 #PVC for EDP Install Wizard DB
 kind: PersistentVolumeClaim
 metadata:
@@ -72,12 +80,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: username
-                  name: admin-console-db
+                  name: super-admin-db
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
-                  name: admin-console-db
+                  name: super-admin-db
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
             - name: POD_IP
@@ -142,9 +150,14 @@ spec:
     app: edp-install-wizard-db
   type: ClusterIP
 ```
+
+* Create secret for EDP tenant database user:
+```bash
+kubectl -n edp-deploy create secret generic admin-console-db --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
+```
     
 ### Install EDP
-* Choose an edp name, e.g. "demo", and create the <edp_name>-edp-cicd namespace (e.g. "demo-edp-cicd").
+* Choose an EDP tenant name, e.g. "demo", and create the <edp_name>-edp-cicd namespace (e.g. "demo-edp-cicd").
 * Create EDP service account in the <edp_name>-edp-cicd namespace:
 
 `kubectl -n <your_edp_name>-edp-cicd create sa edp`
@@ -177,7 +190,7 @@ spec:
 _*NOTE*: The users parameter should be used in a cycle because it is presented as the list. Other parameters must be hardcorded in a template._
     
 Become familiar with a template sample:
-```
+```yaml
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Nexus
 metadata:
@@ -256,7 +269,6 @@ spec:
 ```
 
 * Create a file with the template and create a config map with the following command:
-
 `kubectl -n edp-deploy create cm additional-tools --from-file=template=<filename>`
 
 * Apply EDP chart using Helm. 
@@ -281,7 +293,7 @@ Hardcoded parameters (optional):
  
 Mandatory parameters:
  ```
-    - edp.name - name of your EDP tenant to be deployed;
+    - edp.name - previously defined name of your EDP tenant to be deployed (e.g. demo);
     - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
     - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
     - edp.storageClass - storage class that will be used for persistent volumes provisioning;
@@ -291,7 +303,7 @@ Mandatory parameters:
  * Run Helm chart installation;
 
 Find below the sample of launching a Helm template for EDP installation:
-```
+```bash
 helm install <helm_release_name> --namespace edp-deploy kubernetes-templates
 ```
 * The full installation with integration between tools will take at least 10 minutes.

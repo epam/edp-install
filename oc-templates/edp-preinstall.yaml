@@ -62,6 +62,14 @@ objects:
     name: edp-deploy-role
   rules:
   - apiGroups:
+      - ""
+      - network.openshift.io
+    attributeRestrictions: null
+    resources:
+      - clusternetworks
+    verbs:
+      - list
+  - apiGroups:
     - "*"
     attributeRestrictions: null
     resources:
