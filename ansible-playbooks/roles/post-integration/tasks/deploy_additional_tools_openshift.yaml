@@ -35,7 +35,7 @@
     register: tools_list
 
   - name: "Get Gerrit ssh port"
-    shell: "{{ console_tool }} -n {{ edp_deploy_project }} get template additional-tools-{{ edp_name }} -o jsonpath='{.objects[?(@.kind==\"Gerrit\")].spec.sshPort}'"
+    shell: "{{ console_tool }} -n {{ edp_deploy_project }} get template {{ additional_tools_template_name }} -o jsonpath='{.objects[?(@.kind==\"Gerrit\")].spec.sshPort}'"
     register: ssh_port
 
   - set_fact:

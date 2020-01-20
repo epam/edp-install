@@ -2,33 +2,44 @@
 
 ### Prerequisites
 1. OpenShift cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
-2. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) installed with a cluster-admin access to the OpenShift cluster;
+2. Load balancer (if any exists in front of Openshift router or ingress controller) configured with HTTP/2 protocol disabled and header size 32k support;
+3. Keycloak instance is installed in "security" project;
+4. Secret "keycloak" with administrative access username and password exists in "security" project; 
+5. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) installed with a cluster-admin access to the OpenShift cluster;
 
 ### Admin Space
-
 Before starting EDP deployment, the Admin Space (a special namespace in K8S or a project in OpenShift) should be deployed from where afterwards EDP will be deployed.
 
 To deploy the Admin Space, follow the steps below:
 
 * Go to the [releases](https://github.com/epmd-edp/edp-install/releases) page of this repository, choose a version, download an archive and unzip it.
 
-_**NOTE:**: It is highly recommended to use the latest released version._
+_**NOTE:** It is highly recommended to use the latest released version._
 
 * Apply the "edp-preinstall" template to create the Admin Space:
- 
- `oc apply -f oc-templates/edp-preinstall.yaml`
+```bash
+ oc process -f oc-templates/edp-preinstall.yaml | oc apply -f -
+```
 * Add the edp-deploy-role role to EDP service account: 
-
 `oc create clusterrolebinding <any_name> --clusterrole=edp-deploy-role --serviceaccount=edp-deploy:edp`
  
 * Add admin role to EDP service account: 
-
 `oc create clusterrolebinding <any_name> --clusterrole=admin --serviceaccount=edp-deploy:edp`
-* Create secret for database:
 
-`oc -n edp-deploy create secret generic admin-console-db --from-literal=username=<your_username> --from-literal=password=<your_password>`
-* Deploy database from the following template:
+* Add security context constraint edp to edp service account in edp-deploy project: 
+```bash
+oc adm policy add-scc-to-user edp -z edp -n edp-deploy
 ```
+
+* If this is your first EDP tenant in this cluster
+
+    * Create admin secret for the Wizard database: 
+`
+oc -n edp-deploy create secret generic super-admin-db --from-literal=username=<db_admin_username> --from-literal=password=<db_admin_password>
+`
+
+    * Deploy database from the following template:
+```yaml
 apiVersion: v1 #PVC for EDP Install Wizard DB
 kind: PersistentVolumeClaim
 metadata:
@@ -138,19 +149,23 @@ spec:
     app: edp-install-wizard-db
   type: ClusterIP
 ```
+
+* Create secret for EDP tenant database user:
+```bash
+oc -n edp-deploy create secret generic admin-console-db --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
+```
     
 ### Install EDP
-* Choose an edp name, e.g. "demo", and create the <edp_name>-edp-cicd namespace (e.g. "demo-edp-cicd").
+* Choose an EDP tenant name, e.g. "demo", and create the <edp_name>-edp-cicd namespace (e.g. "demo-edp-cicd").
 * Create EDP service account in the <edp_name>-edp-cicd namespace:
-
 `oc -n <your_edp_name>-edp-cicd create sa edp`
-* Add the edp-deploy-role role to EDP service account: 
 
+* Add the edp-deploy-role role to EDP service account: 
 `oc create clusterrolebinding <any_unique_name> --clusterrole=edp-deploy-role --serviceaccount=<your_edp_name>-edp-cicd:edp`
  
 * Add admin role to EDP service account: 
-
 `oc create clusterrolebinding <any_unique_name> --clusterrole=admin --serviceaccount=<your_edp_name>-edp-cicd:edp`
+
 * Deploy operators in the <edp_name>-edp-cicd namespace by following the corresponding instructions in their repositories:
     - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
     - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
@@ -169,10 +184,10 @@ spec:
    - EDP_NAME - this parameter will be replaced with the EDP_NAME value, which is set in EDP-Install template;
    - DNS_WILDCARD - this parameter will be replaced with the DNS_WILDCARD value, which is set in EDP-Install template;
        
-_*NOTE*: Other parameters must be hardcorded in a template._
+_*NOTE:* Other parameters must be hardcoded in a template._
 
 Find below a template sample for additional tools:
-```
+```yaml
 apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
@@ -239,7 +254,7 @@ objects:
     keycloakSpec:
       enabled: true
       url: ""
-    sshPort: 22
+    sshPort: 0
     type: Gerrit
     version: 2.16.10
     volumes:
@@ -283,12 +298,11 @@ Hardcoded parameters (optional):
 
  Mandatory parameters:
 ```
-   - EDP_NAME - name of your EDP tenant to be deployed;
+   - EDP_NAME - previously defined name of your EDP tenant to be deployed (e.g. demo);
    - DNS_WILDCARD - DNS wildcard for routing in your K8S cluster;
    - STORAGE_CLASS_NAME - storage class that will be used for persistent volumes provisioning;
    - EDP_SUPER_ADMINS - administrators of your tenant separated by comma (,);
 ```
-
 
 * Edit the oc-templates/edp-install.yaml file by applying your own parameters;
 * Add EDP install template in OpenShift with the following command:
