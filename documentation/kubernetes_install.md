@@ -6,7 +6,7 @@
 3. Ingress controller, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/) is installed in cluster;
 4. Ingress controller configured with HTTP/2 protocol disabled and header size 32k support;
 5. Load balancer (if any exists in front of ingress controller) configured with HTTP/2 protocol disabled and header size 32k support;
-6. Keycloak instance is installed in "security" namespace;
+6. Keycloak instance is installed in "security" namespace (You can install Keycloak following the [instruction](documentation/kubernetes_install_keycloak.md));
 7. Secret "keycloak" with administrative access username and password exists in "security" namespace; 
 8. Helm installed on installation machine by executing the following command:
 ```bash

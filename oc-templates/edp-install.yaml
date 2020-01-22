@@ -105,7 +105,7 @@ parameters:
 - displayName: Image of EDP container
   description: Image and tag that defines version of EDP that will be deployed
   name: EDP_VERSION
-  value: "epamedp/edp-install:2.2.0"
+  value: "epamedp/edp-install:2.2.1"
 - displayName: EDP Super Admins
   description: Users that will have full admin permissions in this EDP tenant (comma-separated, NO spaces)
   name: EDP_SUPER_ADMINS
