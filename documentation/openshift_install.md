@@ -3,7 +3,7 @@
 ### Prerequisites
 1. OpenShift cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
 2. Load balancer (if any exists in front of Openshift router or ingress controller) configured with HTTP/2 protocol disabled and header size 32k support;
-3. Keycloak instance is installed in "security" project;
+3. Keycloak instance is installed in "security" project (You can install Keycloak following the [instruction](openshift_install_keycloak.md));
 4. Secret "keycloak" with administrative access username and password exists in "security" project; 
 5. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) installed with a cluster-admin access to the OpenShift cluster;
 
@@ -165,6 +165,11 @@ oc -n edp-deploy create secret generic admin-console-db --from-literal=username=
  
 * Add admin role to EDP service account: 
 `oc create clusterrolebinding <any_unique_name> --clusterrole=admin --serviceaccount=<your_edp_name>-edp-cicd:edp`
+
+* Add security context constraint edp to edp service account in <your_edp_name>-edp-cicd project: 
+```bash
+oc adm policy add-scc-to-user edp -z edp -n <your_edp_name>-edp-cicd
+```
 
 * Deploy operators in the <edp_name>-edp-cicd namespace by following the corresponding instructions in their repositories:
     - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
