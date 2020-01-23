@@ -130,6 +130,13 @@ objects:
     attributeRestrictions: null
     resources:
     - templates
+    verbs:
+    - watch
+  - apiGroups:
+    - "*"
+    attributeRestrictions: null
+    resources:
+    - templates
     - processedtemplates
     - rolebindings
     - roles
