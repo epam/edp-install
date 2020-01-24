@@ -6,9 +6,10 @@
 3. Ingress controller, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/) is installed in cluster;
 4. Ingress controller configured with HTTP/2 protocol disabled and header size 32k support;
 5. Load balancer (if any exists in front of ingress controller) configured with HTTP/2 protocol disabled and header size 32k support;
-6. Keycloak instance is installed in "security" namespace (You can install Keycloak following the [instruction](kubernetes_install_keycloak.md));
-7. Secret "keycloak" with administrative access username and password exists in "security" namespace; 
-8. Helm installed on installation machine by executing the following command:
+6. Cluster nodes, and as a result pods, should have access to cluster using external URLs (for instance in AWS you should add your VPC NAT gateway elastic IP to your cluster external Load Balancers security group);
+7. Keycloak instance is installed in "security" namespace (You can install Keycloak following the [instruction](kubernetes_install_keycloak.md));
+8. Secret "keycloak" with administrative access username and password exists in "security" namespace; 
+9. Helm installed on installation machine by executing the following command:
 ```bash
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 ```
@@ -24,7 +25,7 @@ To deploy the Admin Space, follow the steps below:
 _**NOTE:** It is highly recommended to use the latest released version._
 
 * Apply the "edp-preinstall" template to create the Admin Space:
- `kubectl apply -f kubernetes-templates/edp-preinstall.yaml`
+`kubectl apply -f kubernetes-templates/edp-preinstall.yaml`
 
 * Add the edp-deploy-role role to EDP service account: 
 `kubectl create clusterrolebinding <any_name> --clusterrole=edp-deploy-role --serviceaccount=edp-deploy:edp`
