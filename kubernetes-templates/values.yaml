@@ -1,6 +1,6 @@
 edp:
   name: ""
-  version: "epamedp/edp-install:2.2.0"
+  version: "epamedp/edp-install:2.2.1"
   additionalToolsTemplate: "additional-tools"
   superAdmins: ""
   admins: ""
