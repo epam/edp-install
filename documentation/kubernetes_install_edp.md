@@ -1,15 +1,15 @@
-## Installation on Kubernetes
+## EDP Installation on Kubernetes
 
 ### Prerequisites
 1. Kubernetes cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
 2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
-3. Ingress controller, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/) is installed in cluster;
-4. Ingress controller configured with HTTP/2 protocol disabled and header size 32k support;
-5. Load balancer (if any exists in front of ingress controller) configured with HTTP/2 protocol disabled and header size 32k support;
-6. Cluster nodes, and as a result pods, should have access to cluster using external URLs (for instance in AWS you should add your VPC NAT gateway elastic IP to your cluster external Load Balancers security group);
-7. Keycloak instance is installed in "security" namespace (You can install Keycloak following the [instruction](kubernetes_install_keycloak.md));
-8. Secret "keycloak" with administrative access username and password exists in "security" namespace; 
-9. Helm installed on installation machine by executing the following command:
+3. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
+4. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 32k support;
+5. Load balancer (if any exists in front of ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
+6. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+7. Keycloak instance is installed in the "security" namespace. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
+8. The "keycloak" secret with administrative access username and password exists in the "security" namespace; 
+9. Helm is installed on installation machine by executing the following command:
 ```bash
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 ```
@@ -22,7 +22,7 @@ To deploy the Admin Space, follow the steps below:
 
 * Go to the [releases](https://github.com/epmd-edp/edp-install/releases) page of this repository, choose a version, download an archive and unzip it.
 
-_**NOTE:** It is highly recommended to use the latest released version._
+_**NOTE**: It is highly recommended to use the latest released version._
 
 * Apply the "edp-preinstall" template to create the Admin Space:
 `kubectl apply -f kubernetes-templates/edp-preinstall.yaml`
@@ -33,7 +33,7 @@ _**NOTE:** It is highly recommended to use the latest released version._
 * Add admin role to EDP service account: 
 `kubectl create clusterrolebinding <any_name> --clusterrole=admin --serviceaccount=edp-deploy:edp`
 
-* If this is your first EDP tenant in this cluster
+* If this is your first EDP tenant on this cluster, perform the following:
 
     * Create admin secret for the Wizard database: 
 `
@@ -152,7 +152,7 @@ spec:
   type: ClusterIP
 ```
 
-* Create secret for EDP tenant database user:
+* Create secret for the EDP tenant database user:
 ```bash
 kubectl -n edp-deploy create secret generic admin-console-db --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
@@ -294,7 +294,7 @@ Hardcoded parameters (optional):
  
 Mandatory parameters:
  ```
-    - edp.name - previously defined name of your EDP tenant to be deployed (e.g. demo);
+    - edp.name - previously defined name of your EDP tenant that is to be deployed (e.g. "demo");
     - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
     - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
     - edp.storageClass - storage class that will be used for persistent volumes provisioning;
