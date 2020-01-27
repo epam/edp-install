@@ -9,10 +9,7 @@
 6. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
 7. Keycloak instance is installed in the "security" namespace. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
 8. The "keycloak" secret with administrative access username and password exists in the "security" namespace; 
-9. Helm is installed on installation machine by executing the following command:
-```bash
-curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-```
+9. Helm 2 (Helm 3 is not currently supported by EDP) is installed on installation machine and in Kubernetes cluster with the following [instruction](install_helm2.md) by executing the following command:
 
 ### Admin Space
 
