@@ -2,14 +2,20 @@
 
 ### Prerequisites
 1. Kubernetes cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
-2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
-3. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
-4. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 32k support;
-5. Load balancer (if any exists in front of ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
-6. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
-7. Keycloak instance is installed in the "security" namespace. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
-8. The "keycloak" secret with administrative access username and password exists in the "security" namespace; 
-9. Helm 2 (Helm 3 is not currently supported by EDP) is installed on installation machine and in Kubernetes cluster with the following [instruction](install_helm2.md) by executing the following command:
+2. Nodes kernel parameters and security limits are configured to meet Docker host for Sonarqube 7.9 [requirements](https://hub.docker.com/_/sonarqube):
+    - vm.max_map_count=262144
+    - fs.file-max=65536
+    - ulimit nofile 65536
+    - ulimit nproc 4096
+3. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
+4. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
+5. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 32k support;
+6. Load balancer (if any exists in front of ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
+7. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+8. Keycloak instance is installed in the "security" namespace. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
+9. The "openshift" realm is created in Keycloak;
+10. The "keycloak" secret with administrative access username and password exists in the "security" namespace; 
+11. Helm 2 (Helm 3 is not currently supported by EDP) is installed on installation machine and in Kubernetes cluster with the following [instruction](install_helm2.md) by executing the following command:
 
 ### Admin Space
 
@@ -167,16 +173,16 @@ kubectl -n edp-deploy create secret generic admin-console-db --from-literal=user
 
 `kubectl create clusterrolebinding <any_unique_name> --clusterrole=admin --serviceaccount=<your_edp_name>-edp-cicd:edp`
 * Deploy operators in the <edp_name>-edp-cicd namespace by following the corresponding instructions in their repositories:
-    - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
-    - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
-    - [reconciler](https://github.com/epmd-edp/reconciler)
-    - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator)
-    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator)
-    - [nexus-operator](https://github.com/epmd-edp/nexus-operator)
-    - [sonar-operator](https://github.com/epmd-edp/sonar-operator)
-    - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator)
-    - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
-    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
+    - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator/tree/v1.2.1-80)
+    - [codebase-operator](https://github.com/epmd-edp/codebase-operator/tree/v2.2.0-90)
+    - [reconciler](https://github.com/epmd-edp/reconciler/tree/v2.2.0-111)
+    - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator/tree/v2.2.1-57)
+    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator/tree/v0.1.0-3)
+    - [nexus-operator](https://github.com/epmd-edp/nexus-operator/tree/v2.2.0-62)
+    - [sonar-operator](https://github.com/epmd-edp/sonar-operator/tree/v2.2.0-99)
+    - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator/tree/v2.2.0-77)
+    - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator/tree/release-2.2)
+    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator/tree/v2.2.1-131)
 
 * Create a config map with additional tools (e.g. Sonar, Gerrit, Nexus, Secrets, any other resources) that are non-mandatory.
 * Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
@@ -223,7 +229,7 @@ spec:
   edpSpec:
     dnsWildcard: '{{ .Values.dnsWildCard }}'
   type: Sonar
-  version: 7.6-community
+  version: 7.9-community
   volumes:
     - capacity: 1Gi
       name: data

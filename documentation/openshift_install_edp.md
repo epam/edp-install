@@ -2,11 +2,17 @@
 
 ### Prerequisites
 1. OpenShift cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
-2. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
-3. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
-4. Keycloak instance is installed in the "security" project. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
-5. The "keycloak" secret with administrative access username and password exists in the "security" project; 
-6. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) is installed with a cluster-admin access to the OpenShift cluster;
+2. Nodes kernel parameters and security limits are configured to meet Docker host for Sonarqube 7.9 [requirements](https://hub.docker.com/_/sonarqube):
+    - vm.max_map_count=262144
+    - fs.file-max=65536
+    - ulimit nofile 65536
+    - ulimit nproc 4096   
+3. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
+4. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+5. Keycloak instance is installed in the "security" project. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
+6. The "openshift" realm is created in Keycloak;
+7. The "keycloak" secret with administrative access username and password exists in the "security" project; 
+8. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) is installed with a cluster-admin access to the OpenShift cluster;
 
 ### Admin Space
 Before starting EDP deployment, the Admin Space (a special namespace in K8S or a project in OpenShift) should be deployed from where afterwards EDP will be deployed.
@@ -173,22 +179,24 @@ oc adm policy add-scc-to-user edp -z edp -n <your_edp_name>-edp-cicd
 ```
 
 * Deploy operators in the <edp_name>-edp-cicd namespace by following the corresponding instructions in their repositories:
-    - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
-    - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
-    - [reconciler](https://github.com/epmd-edp/reconciler)
-    - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator)
-    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator)
-    - [nexus-operator](https://github.com/epmd-edp/nexus-operator)
-    - [sonar-operator](https://github.com/epmd-edp/sonar-operator)
-    - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator)
-    - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
-    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
+    - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator/tree/v1.2.1-80)
+    - [codebase-operator](https://github.com/epmd-edp/codebase-operator/tree/v2.2.0-90)
+    - [reconciler](https://github.com/epmd-edp/reconciler/tree/v2.2.0-111)
+    - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator/tree/v2.2.1-57)
+    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator/tree/v0.1.0-3)
+    - [nexus-operator](https://github.com/epmd-edp/nexus-operator/tree/v2.2.0-62)
+    - [sonar-operator](https://github.com/epmd-edp/sonar-operator/tree/v2.2.0-99)
+    - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator/tree/v2.2.0-77)
+    - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator/tree/release-2.2)
+    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator/tree/v2.2.1-131)
 
 * Create an OpenShift template with with additional tools (e.g. Sonar, Gerrit, Nexus, Secrets, any other resources) that are non-mandatory.
 * Inspect the list of parameters that can be used in the OpenShift template and replaced during the provisioning:
     
    - EDP_NAME - this parameter will be replaced with the EDP_NAME value, which is set in EDP-Install template;
    - DNS_WILDCARD - this parameter will be replaced with the DNS_WILDCARD value, which is set in EDP-Install template;
+       
+* "Users" section in Gerrit and Nexus resources definitions should be filled with administrators of your tenant 
        
 _*NOTE*: Other parameters must be hardcoded in a template._
 
@@ -220,6 +228,19 @@ objects:
     - capacity: 10Gi
       name: data
       storage_class: gp2
+    users:
+    - email: ""
+      first_name: ""
+      last_name: ""
+      roles:
+      - nx-admin
+      username: admin1@example.com
+    - email: ""
+      first_name: ""
+      last_name: ""
+      roles:
+      - nx-admin
+      username: admin2@example.com
 - apiVersion: v2.edp.epam.com/v1alpha1
   kind: Sonar
   metadata:
@@ -229,7 +250,7 @@ objects:
     edpSpec:
       dnsWildcard: ${DNS_WILDCARD}
     type: Sonar
-    version: 7.6-community
+    version: 7.9-community
     volumes:
     - capacity: 1Gi
       name: data
@@ -267,6 +288,13 @@ objects:
     - capacity: 1Gi
       name: data
       storage_class: gp2
+    users:
+    - groups:
+      - Administrators
+      username: admin1@example.com
+    - groups:
+      - Administrators
+      username: admin2@example.com
 parameters:
 - description: Unique name for EDP tenant which will be used during installation
   displayName: Name for EDP tenant

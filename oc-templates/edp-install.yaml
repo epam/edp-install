@@ -133,7 +133,7 @@ parameters:
   value: "epamedp/edp-jenkins:2.2.0"
 - displayName: Jenkins stages shared library version
   name: JENKINS_STAGES_VERSION
-  value: "2.3.0"
+  value: "2.3.1"
 - displayName: Jenkins pipelines shared library version
   name: JENKINS_PIPELINES_VERSION
   value: "2.3.0"
