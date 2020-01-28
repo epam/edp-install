@@ -1,12 +1,12 @@
-## Installation on OpenShift
+## EDP Installation on OpenShift
 
 ### Prerequisites
 1. OpenShift cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
-2. Load balancer (if any exists in front of Openshift router or ingress controller) configured with HTTP/2 protocol disabled and header size 32k support;
-3. Cluster nodes, and as a result pods, should have access to cluster using external URLs (for instance in AWS you should add your VPC NAT gateway elastic IP to your cluster external Load Balancers security group);
-4. Keycloak instance is installed in "security" project (You can install Keycloak following the [instruction](openshift_install_keycloak.md));
-5. Secret "keycloak" with administrative access username and password exists in "security" project; 
-6. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) installed with a cluster-admin access to the OpenShift cluster;
+2. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
+3. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+4. Keycloak instance is installed in the "security" project. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
+5. The "keycloak" secret with administrative access username and password exists in the "security" project; 
+6. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) is installed with a cluster-admin access to the OpenShift cluster;
 
 ### Admin Space
 Before starting EDP deployment, the Admin Space (a special namespace in K8S or a project in OpenShift) should be deployed from where afterwards EDP will be deployed.
@@ -15,7 +15,7 @@ To deploy the Admin Space, follow the steps below:
 
 * Go to the [releases](https://github.com/epmd-edp/edp-install/releases) page of this repository, choose a version, download an archive and unzip it.
 
-_**NOTE:** It is highly recommended to use the latest released version._
+_**NOTE**: It is highly recommended to use the latest released version._
 
 * Apply the "edp-preinstall" template to create the Admin Space:
 ```bash
@@ -27,12 +27,12 @@ _**NOTE:** It is highly recommended to use the latest released version._
 * Add admin role to EDP service account: 
 `oc create clusterrolebinding <any_name> --clusterrole=admin --serviceaccount=edp-deploy:edp`
 
-* Add security context constraint edp to edp service account in edp-deploy project: 
+* Add the security context constraint edp to edp service account in edp-deploy project: 
 ```bash
 oc adm policy add-scc-to-user edp -z edp -n edp-deploy
 ```
 
-* If this is your first EDP tenant in this cluster
+* If this is your first EDP tenant on this cluster, perform the following
 
     * Create admin secret for the Wizard database: 
 `
@@ -190,7 +190,7 @@ oc adm policy add-scc-to-user edp -z edp -n <your_edp_name>-edp-cicd
    - EDP_NAME - this parameter will be replaced with the EDP_NAME value, which is set in EDP-Install template;
    - DNS_WILDCARD - this parameter will be replaced with the DNS_WILDCARD value, which is set in EDP-Install template;
        
-_*NOTE:* Other parameters must be hardcoded in a template._
+_*NOTE*: Other parameters must be hardcoded in a template._
 
 Find below a template sample for additional tools:
 ```yaml
@@ -304,7 +304,7 @@ Hardcoded parameters (optional):
 
  Mandatory parameters:
 ```
-   - EDP_NAME - previously defined name of your EDP tenant to be deployed (e.g. demo);
+   - EDP_NAME - previously defined name of your EDP tenant that is to be deployed (e.g. "demo");
    - DNS_WILDCARD - DNS wildcard for routing in your K8S cluster;
    - STORAGE_CLASS_NAME - storage class that will be used for persistent volumes provisioning;
    - EDP_SUPER_ADMINS - administrators of your tenant separated by comma (,);

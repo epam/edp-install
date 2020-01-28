@@ -1,16 +1,18 @@
-## Keycloak installation on OpenShift
+## Keycloak Installation on OpenShift
 
-* Create security project 
+In order to install Keycloak on OpenShift cluster, follow the steps below:
+
+* Create a security project: 
 ```bash
 oc create project security
 ```
 
-* Add security context constraint anyuid to keycloak service account in security project:
+* Add a security context constraint anyuid to the Keycloak service account in a security project:
 ```bash
 oc adm policy add-scc-to-user anyuid -z keycloak -n security
 ```
 
-* Deploy keycloak in security namespace from the following template:
+* Deploy Keycloak in security namespace from the following template:
 ```yaml
 apiVersion: v1
 kind: Template
@@ -304,4 +306,4 @@ parameters:
   value: "2Gi"
 ```
 
-* Wait for keycloak URL to be accessible 
+* Wait for the Keycloak URL to become accessible. 
