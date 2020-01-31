@@ -292,6 +292,13 @@ objects:
     - edpcomponents
     - edpcomponents/finalizers
     - edpcomponents/status
+    - projectrequests
+    - projects
+    - projects/finalizers
+    - projects/status
+    - jenkinsfolders
+    - jenkinsfolders/finalizers
+    - jenkinsfolders/status
     verbs:
     - '*'
 - apiVersion: security.openshift.io/v1

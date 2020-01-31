@@ -241,5 +241,11 @@ rules:
     - edpcomponents
     - edpcomponents/finalizers
     - edpcomponents/status
+    - namespaces
+    - namespaces/finalizers
+    - namespaces/status
+    - jenkinsfolders
+    - jenkinsfolders/finalizers
+    - jenkinsfolders/status
   verbs:
     - '*'
