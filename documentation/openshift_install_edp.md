@@ -196,7 +196,9 @@ oc adm policy add-scc-to-user edp -z edp -n <your_edp_name>-edp-cicd
    - EDP_NAME - this parameter will be replaced with the EDP_NAME value, which is set in EDP-Install template;
    - DNS_WILDCARD - this parameter will be replaced with the DNS_WILDCARD value, which is set in EDP-Install template;
        
-* "Users" section in Gerrit and Nexus resources definitions should be filled with administrators of your tenant 
+* "Users" section in Gerrit and Nexus resources definitions should be filled with administrators of your tenant
+
+* "GerritSSHPort" value in Gerrit and GitServer custom resources should be set to any free NodePort in your cluster 
        
 _*NOTE*: Other parameters must be hardcoded in a template._
 
@@ -271,7 +273,7 @@ objects:
     gitUser: jenkins
     httpsPort: 443
     nameSshKeySecret: gerrit-ciuser-sshkey
-    sshPort: 22
+    sshPort: GerritSSHPort
 - apiVersion: v2.edp.epam.com/v1alpha1
   kind: Gerrit
   metadata:
@@ -281,7 +283,7 @@ objects:
     keycloakSpec:
       enabled: true
       url: ""
-    sshPort: 0
+    sshPort: GerritSSHPort
     type: Gerrit
     version: 2.16.10
     volumes:
