@@ -2,11 +2,17 @@
 
 ### Prerequisites
 1. OpenShift cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
-2. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
-3. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
-4. Keycloak instance is installed in the "security" project. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
-5. The "keycloak" secret with administrative access username and password exists in the "security" project; 
-6. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) is installed with a cluster-admin access to the OpenShift cluster;
+2. Nodes kernel parameters and security limits are configured to meet Docker host for Sonarqube 7.9 [requirements](https://hub.docker.com/_/sonarqube):
+    - vm.max_map_count=262144
+    - fs.file-max=65536
+    - ulimit nofile 65536
+    - ulimit nproc 4096   
+3. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
+4. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+5. Keycloak instance is installed in the "security" project. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
+6. The "openshift" realm is created in Keycloak;
+7. The "keycloak" secret with administrative access username and password exists in the "security" project; 
+8. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) is installed with a cluster-admin access to the OpenShift cluster;
 
 ### Admin Space
 Before starting EDP deployment, the Admin Space (a special namespace in K8S or a project in OpenShift) should be deployed from where afterwards EDP will be deployed.
@@ -190,6 +196,10 @@ oc adm policy add-scc-to-user edp -z edp -n <your_edp_name>-edp-cicd
    - EDP_NAME - this parameter will be replaced with the EDP_NAME value, which is set in EDP-Install template;
    - DNS_WILDCARD - this parameter will be replaced with the DNS_WILDCARD value, which is set in EDP-Install template;
        
+* "Users" section in Gerrit and Nexus resources definitions should be filled with administrators of your tenant
+
+* "GerritSSHPort" value in Gerrit and GitServer custom resources should be set to any free NodePort in your cluster 
+       
 _*NOTE*: Other parameters must be hardcoded in a template._
 
 Find below a template sample for additional tools:
@@ -220,6 +230,19 @@ objects:
     - capacity: 10Gi
       name: data
       storage_class: gp2
+    users:
+    - email: ""
+      first_name: ""
+      last_name: ""
+      roles:
+      - nx-admin
+      username: admin1@example.com
+    - email: ""
+      first_name: ""
+      last_name: ""
+      roles:
+      - nx-admin
+      username: admin2@example.com
 - apiVersion: v2.edp.epam.com/v1alpha1
   kind: Sonar
   metadata:
@@ -229,7 +252,7 @@ objects:
     edpSpec:
       dnsWildcard: ${DNS_WILDCARD}
     type: Sonar
-    version: 7.6-community
+    version: 7.9-community
     volumes:
     - capacity: 1Gi
       name: data
@@ -250,7 +273,7 @@ objects:
     gitUser: jenkins
     httpsPort: 443
     nameSshKeySecret: gerrit-ciuser-sshkey
-    sshPort: 22
+    sshPort: GerritSSHPort
 - apiVersion: v2.edp.epam.com/v1alpha1
   kind: Gerrit
   metadata:
@@ -260,13 +283,20 @@ objects:
     keycloakSpec:
       enabled: true
       url: ""
-    sshPort: 22
+    sshPort: GerritSSHPort
     type: Gerrit
     version: 2.16.10
     volumes:
     - capacity: 1Gi
       name: data
       storage_class: gp2
+    users:
+    - groups:
+      - Administrators
+      username: admin1@example.com
+    - groups:
+      - Administrators
+      username: admin2@example.com
 parameters:
 - description: Unique name for EDP tenant which will be used during installation
   displayName: Name for EDP tenant
