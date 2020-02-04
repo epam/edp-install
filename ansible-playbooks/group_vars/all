@@ -66,7 +66,7 @@ tools:
     volume_capacity: "{{ nexus_volume_capacity | default('5Gi') }}"
     web_url: "https://nexus-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
   sonar:
-    version: "{{ sonar_version | default('7.6-community') }}"
+    version: "{{ sonar_version | default('7.9-community') }}"
     volume_capacity: "{{ sonar_volume_capacity | default('1Gi') }}"
     volume_db_capacity: "{{ sonar_volume_db_capacity | default('2Gi') }}"
     web_url: "https://sonar-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"

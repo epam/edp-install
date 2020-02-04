@@ -18,10 +18,6 @@
   register: can_login
   when: ocadm != "oc"
 
-- fail:
-    msg: "Sorry, we can't login to the cluster. Check permissions on the cluster's side"
-  when: not can_login|skipped and can_login.stdout == "false"
-
 - name: "Get the list of all projects"
   command: "{{ ocadm }} get project --output=custom-columns=NAME:.metadata.name --no-headers"
   register: all_oc_projects
