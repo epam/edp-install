@@ -23,10 +23,10 @@ metadata:
     template.openshift.io/provider-display-name: EPAM
     template.openshift.io/support-url: https://www.epam.com
 objects:
-  - apiVersion: v1
-    kind: ServiceAccount
-    metadata:
-      name: edp
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: edp
 - apiVersion: batch/v1
   kind: Job
   metadata:
