@@ -40,7 +40,7 @@ objects:
         restartPolicy: Never
         serviceAccount: edp
         containers:
-        - image: ${EDP_VERSION}
+        - image: ${IMAGE_NAME}:${APP_VERSION}
           imagePullPolicy: Always
           name: edp-deploy
           env:
