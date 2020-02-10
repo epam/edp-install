@@ -89,6 +89,11 @@ parameters:
   name: EDP_NAME
   value: "oc-green-test-edp"
   required: true
+- displayName: Name for EDP tenant
+  description: Unique name for EDP tenant which will be used during installation
+  name: NAMESPACE
+  value: ""
+  required: true
 - displayName: DNS wildcard
   description: DNS wildcard of your project that should be specified during Openshift cluster installation
   name: DNS_WILDCARD
