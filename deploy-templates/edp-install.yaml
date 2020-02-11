@@ -85,6 +85,7 @@ objects:
             - "-e perf_integration_enabled=${PERF_INTEGRATION_ENABLED}"
             - "-e perf_node_id=${PERF_NODE_ID}"
             - "-e perf_url=${PERF_URL}"
+            - "-e shared_database=${DATABASE_NAME}"
             - "-e admin_console_version=${ADMIN_CONSOLE_VERSION}"
             - "ansible-playbooks/install.yml"
 parameters:
@@ -97,6 +98,11 @@ parameters:
   description: Unique name for EDP tenant which will be used during installation
   name: NAMESPACE
   value: ""
+  required: true
+- displayName: Database name
+  description: Name of the shared EDP database
+  name: DATABASE_NAME
+  value: "postgres"
   required: true
 - displayName: DNS wildcard
   description: DNS wildcard of your project that should be specified during Openshift cluster installation
