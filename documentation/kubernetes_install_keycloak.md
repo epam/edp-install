@@ -2,7 +2,7 @@
 
 In order to install Keycloak on Kubernetes cluster, follow the steps below:
 
-* Create a security project: 
+* Create a security project:
 ```bash
 kubectl create namespace security
 ```
@@ -224,7 +224,8 @@ spec:
           claimName: keycloak-data
 ```
 
-* Modify the "host" value in the following template and deploy it in a security namespace:  
+* Modify the "host" value (using `keycloak-security.<your-domain.name>` format)
+  in the following template and deploy it in a `security` namespace:
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -235,7 +236,7 @@ metadata:
   name: keycloak
 spec:
   rules:
-  - host: keycloak.example.com
+  - host: keycloak-security.example.com
     http:
       paths:
       - backend:
@@ -244,4 +245,4 @@ spec:
         path: /
 ```
 
-* Wait for the Keycloak URL to become accessible. 
+* Wait for the Keycloak URL to become accessible.
