@@ -44,7 +44,7 @@ objects:
         restartPolicy: Never
         serviceAccount: edp
         containers:
-        - image: ${IMAGE_NAME}:${APP_VERSION}
+        - image: "docker-registry.default.svc:5000/${IMAGE_NAME}:${APP_VERSION}"
           imagePullPolicy: Always
           name: edp-deploy
           env:
@@ -71,7 +71,7 @@ objects:
             - "-e super_admin_users=${EDP_SUPER_ADMINS}"
             - "-e admin_users=${EDP_ADMINS}"
             - "-e view_users=${EDP_VIEWERS}"
-            - "-e edp_version=${IMAGE_NAME}:${APP_VERSION}"
+            - "-e edp_version=docker-registry.default.svc:5000/${IMAGE_NAME}:${APP_VERSION}"
             - "-e dns_wildcard=${DNS_WILDCARD}"
             - "-e storage_class_name=${STORAGE_CLASS_NAME}"
             - "-e jenkins_volume_capacity=${JENKINS_VOLUME_CAPACITY}"
@@ -149,7 +149,7 @@ parameters:
   required: true
 - displayName: Jenkins EDP docker image.
   name: JENKINS_IMAGE_VERSION
-  value: "docker-registry-default.main.edp.projects.epam.com/infra/edp-jenkins:latest"
+  value: "docker-registry.default.svc:5000/oc-green-edp-cicd/edp-jenkins-master:latest"
 - displayName: Jenkins stages shared library version
   name: JENKINS_STAGES_VERSION
   value: "2.3.1"
