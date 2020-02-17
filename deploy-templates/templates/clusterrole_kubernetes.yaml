@@ -1,24 +1,8 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  annotations:
-    kubernetes.io/display-name: System project for EDP deployment
-  name: edp-deploy
-spec:
-  finalizers:
-    - kubernetes
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: edp
-  namespace: edp-deploy
----
+{{- if eq .Values.edp.platform "kubernetes" -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: edp-deploy-role
+  name: edp-deploy-role-{{ .Values.edp.name }}
 rules:
 - apiGroups:
     - "*"
@@ -249,3 +233,4 @@ rules:
     - jenkinsfolders/status
   verbs:
     - '*'
+{{ end }}

@@ -1,0 +1,45 @@
+{{- if eq .Values.edp.platform "openshift"  -}}
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegedContainer: false
+allowedCapabilities: []
+allowedFlexVolumes: []
+defaultAddCapabilities: []
+fsGroup:
+  type: MustRunAs
+  ranges:
+    - min: 1
+      max: 65543
+groups: []
+metadata:
+  name: edp-{{ .Values.edp.name }}
+priority: 0
+readOnlyRootFilesystem: false
+requiredDropCapabilities:
+- KILL
+- MKNOD
+- SETUID
+- SETGID
+runAsUser:
+  type: MustRunAsRange
+  uidRangeMin: 1
+  uidRangeMax: 65543
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:{{ .Values.edp.name }}:edp
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
+{{- end -}}

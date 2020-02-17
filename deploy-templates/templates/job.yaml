@@ -26,7 +26,7 @@ spec:
             - name: PIPELINES_VERSION
               value: "{{ .Values.jenkins.pipelinesVersion }}"
             - name: PLATFORM_TYPE
-              value: "kubernetes"
+              value: "{{ .Values.edp.platform }}"
             - name: DEPLOY_PROJECT
               valueFrom:
                 fieldRef:
@@ -38,8 +38,13 @@ spec:
             - "localhost,"
             - "-e edp_name={{ .Values.edp.name }}"
             - "-e additional_tools_template_name={{ .Values.edp.additionalToolsTemplate }}"
+            {{ if eq .Values.edp.platform "openshift"  }}
+            - "-e console_tool=oc"
+            {{ else }}
             - "-e console_tool=kubectl"
+            {{ end }}
             - "-e ansible_connection=local"
+            - "-e shared_database=edp-install-wizard-db"
             - "-e super_admin_users={{ .Values.edp.superAdmins }}"
             - "-e admin_users={{ .Values.edp.admins }}"
             - "-e view_users={{ .Values.edp.viewers }}"

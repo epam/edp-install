@@ -1,20 +1,21 @@
 edp:
-  name: "test"
+  name: "voronin-test"
+  platform: "openshift"
   version: "epamedp/edp-install:latest"
-  additionalToolsTemplate: "additional-tools"
-  superAdmins: ""
+  additionalToolsTemplate: "edp-install-template"
+  superAdmins: "viktor_voronin@epam.com"
   admins: ""
   viewers: ""
-  dnsWildCard: ""
+  dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
   storageClass: "gp2"
   devDeploy: "false"
 jenkins:
-  version: "epamedp/edp-jenkins:latest"
+  version: "epamedp/edp-jenkins:2.2.0"
   volumeCapacity: "10Gi"
   stagesVersion: "master"
   pipelinesVersion: "master"
 adminConsole:
-  version: "epamedp/edp-admin-console:latest"
+  version: "epamedp/edp-admin-console:2.2.1"
 vcs:
   enabled: "false"
   toolName: ""

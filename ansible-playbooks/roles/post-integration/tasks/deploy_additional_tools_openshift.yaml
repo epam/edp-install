@@ -13,36 +13,37 @@
 # limitations under the License.
 
 ---
+- name: Creates directory for templates
+  file:
+    path: "{{ role_path }}/files/templates"
+    state: directory
+
 - name: "Looking for additional tools template"
   shell: >
-    {{ console_tool }} -n {{ edp_deploy_project }} get template -o custom-columns=NAME:.metadata.name
+    {{ console_tool }} -n {{ edp_deploy_project }} get cm -o custom-columns=NAME:.metadata.name
     --no-headers=true
   register: additional_tools_template
   ignore_errors: true
   check_mode: no
 
 - block:
-  - name: Deploy additional EDP tools from template
+  - name: Get additional tools template from config map
     shell: >
-      {{ console_tool }} -n {{ edp_deploy_project }} get template {{ additional_tools_template_name }}
-      --no-headers
-      --ignore-not-found
-      -o jsonpath='{.metadata.name}'
-      | xargs --no-run-if-empty -I '{}' oc -n {{ edp_deploy_project }} new-app --template='{}'
-      -p EDP_NAME={{ edp_name }} -p DNS_WILDCARD={{ dns_wildcard }}
-
-  - name: "Obtain components from additional-tools template"
-    shell: "{{ console_tool }} get template -n {{ edp_deploy_project }} {{ additional_tools_template_name }} -o jsonpath='{.objects[?(@.kind!=\"GitServer\")].kind}'"
-    register: tools_list
-
-  - name: "Get Gerrit ssh port"
-    shell: "{{ console_tool }} -n {{ edp_deploy_project }} get template {{ additional_tools_template_name }} -o jsonpath='{.objects[?(@.kind==\"Gerrit\")].spec.sshPort}'"
-    register: ssh_port
+      {{ console_tool }} -n {{ edp_deploy_project }} get cm {{ additional_tools_template_name }} -o jsonpath='{.data.template}' > {{ role_path }}/files/templates/template.yaml
 
   - set_fact:
-      gerrit_ssh_port: "{{ ('Gerrit' in tools_list.stdout) | ternary(ssh_port.stdout, '22') }}"
+      users: "{{ '{'+edp_super_admins|join(',') }}"
+
+  - set_fact:
+      users: "{{ users + ',' if edp_admins|length != 0 else users }}"
+
+  - set_fact:
+      users: "{{ users + edp_admins|join(',') + '}' }}"
+
+  - name: Install Helm Chart
+    shell: >
+      helm install additional-tools --namespace={{ project_cicd }} --set edpName={{ edp_name }} --set dnsWildCard={{ dns_wildcard }} --set users='{{ users }}' {{ role_path }}/files
   when: "additional_tools_template_name in additional_tools_template.stdout_lines"
 
 - set_fact:
-    gerrit_ssh_port: "22"
-  when: "additional_tools_template_name not in additional_tools_template.stdout_lines"
+    gerrit_ssh_port: "31666"

@@ -1,0 +1,78 @@
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Nexus
+metadata:
+  name: nexus
+  namespace: '{{ .Values.edpName }}'
+spec:
+  edpSpec:
+    dnsWildcard: '{{ .Values.dnsWildCard }}'
+  keycloakSpec:
+    enabled: true
+  users:
+  {{ range .Values.users }}
+  - email: ''
+    first_name: ''
+    last_name: ''
+    roles:
+      - nx-admin
+    username: {{ . }}
+  {{ end }}
+  version: 3.15.1
+  volumes:
+    - capacity: 10Gi
+      name: data
+      storage_class: gp2
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Sonar
+metadata:
+  name: sonar
+  namespace: '{{ .Values.edpName }}'
+spec:
+  edpSpec:
+    dnsWildcard: '{{ .Values.dnsWildCard }}'
+  type: Sonar
+  version: 7.9-community
+  volumes:
+    - capacity: 1Gi
+      name: data
+      storage_class: gp2
+    - capacity: 1Gi
+      name: db
+      storage_class: gp2
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: GitServer
+metadata:
+  name: gerrit
+  namespace: '{{ .Values.edpName }}'
+spec:
+  createCodeReviewPipeline: false
+  edpSpec:
+    dnsWildcard: '{{ .Values.dnsWildCard }}'
+  gitHost: 'gerrit.{{ .Values.edpName }}'
+  gitUser: jenkins
+  httpsPort: 443
+  nameSshKeySecret: gerrit-ciuser-sshkey
+  sshPort: 22
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Gerrit
+metadata:
+  name: gerrit
+  namespace: '{{ .Values.edpName }}'
+spec:
+  keycloakSpec:
+    enabled: true
+    url: ''
+  sshPort: 22
+  type: Gerrit
+  users:
+  {{ range .Values.users }}
+    - groups:
+        - Administrators
+      username: {{ . }}
+  {{ end }}
+  version: 2.16.10
+  volumes:
+    - capacity: 1Gi
+      name: data
+      storage_class: gp2
+
