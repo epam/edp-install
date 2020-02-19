@@ -22,6 +22,7 @@ spec:
     - capacity: 10Gi
       name: data
       storage_class: gp2
+---
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Sonar
 metadata:
@@ -39,6 +40,7 @@ spec:
     - capacity: 1Gi
       name: db
       storage_class: gp2
+---
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: GitServer
 metadata:
@@ -53,6 +55,7 @@ spec:
   httpsPort: 443
   nameSshKeySecret: gerrit-ciuser-sshkey
   sshPort: 22
+---
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Gerrit
 metadata:
