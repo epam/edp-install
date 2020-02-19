@@ -8,6 +8,21 @@
     - ulimit nofile 65536
     - ulimit nproc 4096   
 3. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
+    - Example of Config Map:
+    ```
+    kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: nginx-configuration
+      namespace: ingress-nginx
+      labels:
+        app.kubernetes.io/name: ingress-nginx
+        app.kubernetes.io/part-of: ingress-nginx
+    data:
+      client-header-buffer-size: 64k
+      large-client-header-buffers: 4 64k
+      use-http2: "false"
+      ```
 4. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
 5. Keycloak instance is installed in the "security" project. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
 6. The "openshift" realm is created in Keycloak;
