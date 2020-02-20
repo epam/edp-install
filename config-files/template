@@ -62,6 +62,7 @@ metadata:
   name: gerrit
   namespace: '{{ .Values.edpName }}'
 spec:
+  image: openfrontier/gerrit
   keycloakSpec:
     enabled: true
     url: ''
