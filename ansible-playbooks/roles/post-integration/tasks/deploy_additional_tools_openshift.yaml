@@ -45,5 +45,12 @@
       helm install additional-tools --namespace={{ project_cicd }} --set edpName={{ edp_name }} --set dnsWildCard={{ dns_wildcard }} --set users='{{ users }}' {{ role_path }}/files
   when: "additional_tools_template_name in additional_tools_template.stdout_lines"
 
+- name: Get Gerrit port from CR
+  shell: >
+    {{ console_tool }} -n {{ edp_deploy_project }} get gerrits.v2.edp.epam.com --ignore-not-found=true gerrit -o jsonpath='{.spec.sshPort}'
+  register: result
+  ignore_errors: true
+  check_mode: no
+
 - set_fact:
-    gerrit_ssh_port: "31666"
+    gerrit_ssh_port: "{{ (result.stdout == '') | ternary(22,result.stdout) }}"
