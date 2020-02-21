@@ -95,7 +95,6 @@ rules:
   - pods/exec
   - groups
   - users
-  - securitycontextconstraints
   - podsecuritypolicies
   - pods/portforward
   - jobs
@@ -127,11 +126,22 @@ rules:
   - jobs
   - groups
   - users
-  - securitycontextconstraints
   - podsecuritypolicies
   verbs:
   - patch
   - update
+- apiGroups:
+    - '*'
+  attributeRestrictions: null
+  resources:
+    - securitycontextconstraints
+  verbs:
+    - patch
+    - update
+    - delete
+    - get
+    - list
+    - create
 - apiGroups:
   - '*'
   attributeRestrictions: null
