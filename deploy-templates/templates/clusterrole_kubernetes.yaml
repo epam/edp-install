@@ -125,6 +125,7 @@ rules:
   attributeRestrictions: null
   resources:
     - jobs
+    - namespaces
   verbs:
     - delete
 - apiGroups:
