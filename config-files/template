@@ -32,6 +32,7 @@ spec:
   edpSpec:
     dnsWildcard: '{{ .Values.dnsWildCard }}'
   type: Sonar
+  image: sonarqube
   version: 7.9-community
   volumes:
     - capacity: 1Gi
