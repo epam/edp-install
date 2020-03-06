@@ -16,5 +16,11 @@
 - include_tasks: deploy_additional_tools_{{ platform_type }}.yaml
 - include_tasks: deploy_edp_components.yaml
 
+- name: "Check config map with Gerrit node port exists"
+  shell: "{{ console_tool }} -n {{ project_cicd }} get cm gerrit --output=custom-columns=NAME:.metadata.name --no-headers"
+  register: gerrit_config_map
+
 - name: "Create config map with Gerrit node port"
   shell: "{{ console_tool }} -n {{ project_cicd }} create cm gerrit --from-literal=sshPort={{ gerrit_ssh_port }}"
+  when: gerrit_config_map.stdout is not search("gerrit")
+  ignore_errors: "{{ ansible_check_mode }}"

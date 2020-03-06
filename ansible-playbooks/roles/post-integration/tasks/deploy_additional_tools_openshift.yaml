@@ -40,9 +40,21 @@
   - set_fact:
       users: "{{ users + edp_admins|join(',') + '}' }}"
 
+  - name: Check Helm chart is installed
+    shell: "helm list -q -a -f 'additional-tools' --namespace={{ project_cicd }}"
+    register: helm_exists
+
+  - set_fact:
+      helm_options: "install"
+
+  - set_fact:
+      helm_options: "upgrade --force"
+    when: helm_exists.stdout is search("additional-tools")
+
+
   - name: Install Helm Chart
     shell: >
-      helm install additional-tools --namespace={{ project_cicd }} --set edpName={{ edp_name }} --set dnsWildCard={{ dns_wildcard }} --set users='{{ users }}' {{ role_path }}/files
+      helm {{helm_options}} additional-tools --namespace={{ project_cicd }} --set edpName={{ edp_name }} --set dnsWildCard={{ dns_wildcard }} --set users='{{ users }}' {{ role_path }}/files
   when: "additional_tools_template_name in additional_tools_template.stdout_lines"
 
 - name: Get Gerrit port from CR

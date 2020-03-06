@@ -1,4 +1,4 @@
-# Copyright 2019 EPAM Systems.
+# Copyright 2020 EPAM Systems.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -91,7 +91,7 @@
     - "../templates/*.j2"
 
 - name: "Adding templates to Openshift"
-  shell: "{{ console_tool }} create -f {{ item }} -n {{ project_cicd }} "
+  shell: "{{ console_tool }} apply -f {{ item }} -n {{ project_cicd }} "
   with_fileglob:
     - "../templates/*.yaml"
 

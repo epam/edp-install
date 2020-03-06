@@ -29,12 +29,23 @@
   no_log: true
   check_mode: no
 
+- name: "Check Keycloak secret for admin connection exists"
+  command: |
+    {{ console_tool }} -n {{ project_cicd }} get secret keycloak-main-secret --output=custom-columns=NAME:.metadata.name --no-headers
+  no_log: true
+  check_mode: no
+  register: keycloak_secret
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: "Install Keycloak secret for admin connection"
   command: |
     {{ console_tool }} -n {{ project_cicd }} create secret generic keycloak-main-secret
     --from-literal=username={{ username.stdout }}
     --from-literal=password={{ password.stdout }}
   no_log: true
+  when: keycloak_secret.stdout is not search("keycloak-main-secret")
+  check_mode: no
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - set_fact:
     keycloak_super_admins: "{{ keycloak_super_admins | default([]) + [ { 'username': item } ] }}"

@@ -2,9 +2,14 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Values.edp.name }}-edp-deploy
+  annotations:
+    "helm.sh/hook": post-install, post-upgrade
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   parallelism: 1
   completions: 1
+  backoffLimit: 1
   activeDeadlineSeconds: 3600
   template:
     metadata:

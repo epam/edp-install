@@ -1,4 +1,4 @@
-# Copyright 2019 EPAM Systems.
+# Copyright 2020 EPAM Systems.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -63,13 +63,23 @@
 
 - name: "Create schema in database"
   shell: "{{ console_tool }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
-         -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA \"{{ edp_name }}\";' -U {{ admin_console_db_admin_username }}"
+         -- psql --dbname={{ shared_database }} -c 'CREATE SCHEMA IF NOT EXISTS \"{{ edp_name }}\";' \
+         -U {{ admin_console_db_admin_username }}"
+
+- name: "Check tenant user exists in database"
+  shell: "{{ console_tool }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
+         -- psql --dbname={{ shared_database }} -tc \"SELECT 1 FROM pg_user WHERE \
+         usename = '{{ admin_console_db_tenant_admin_username }}';\" \
+         -U {{ admin_console_db_admin_username }}"
+  register: database_user_exists
 
 - name: "Create tenant user in database"
   raw: "{{ console_tool }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
          -- psql --dbname={{ shared_database }} {{ admin_console_db_admin_username }} \
          -c 'CREATE USER \"{{ admin_console_db_tenant_admin_username }}\" \
          WITH PASSWORD '\u005C''\u0027'{{ admin_console_db_tenant_admin_password }}'\u005C''\u0027';'"
+  when: database_user_exists.stdout is not search("1")
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: "Grant all privileges for tenant user in database scheme"
   shell: "{{ console_tool }} -n {{ operators_deploy_project }} exec -i $({{ admin_console_db_pod }}) \
