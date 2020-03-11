@@ -17,7 +17,7 @@
 - include_tasks: deploy_edp_components.yaml
 
 - name: "Check config map with Gerrit node port exists"
-  shell: |
+  command: |
     {{ console_tool }} -n {{ project_cicd }} get cm gerrit
     --output=custom-columns=NAME:.metadata.name --no-headers --ignore-not-found=true
   register: gerrit_config_map
