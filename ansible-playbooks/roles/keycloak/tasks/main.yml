@@ -31,7 +31,8 @@
 
 - name: "Check Keycloak secret for admin connection exists"
   command: |
-    {{ console_tool }} -n {{ project_cicd }} get secret keycloak-main-secret --output=custom-columns=NAME:.metadata.name --no-headers
+    {{ console_tool }} -n {{ project_cicd }} get secret keycloak-main-secret
+    --output=custom-columns=NAME:.metadata.name --no-headers --ignore-not-found=true
   no_log: true
   check_mode: no
   register: keycloak_secret
