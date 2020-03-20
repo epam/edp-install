@@ -66,4 +66,6 @@ spec:
             - "-e perf_integration_enabled={{ .Values.perf.enabled }}"
             - "-e perf_node_id={{ .Values.perf.nodeId }}"
             - "-e perf_url={{ .Values.perf.url }}"
+            - "-e keycloak_namespace={{ .Values.edp.keycloakNamespace }}"
+            - "-e keycloak_url={{ .Values.edp.keycloakUrl }}"
             - "ansible-playbooks/install.yml"

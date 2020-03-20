@@ -9,6 +9,8 @@ edp:
   dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
   storageClass: "gp2"
   devDeploy: "false"
+  keycloakNamespace: "security"
+  keycloakUrl: "https://keycloak-security.delivery.aws.main.edp.projects.epam.com"
 jenkins:
   version: "epamedp/edp-jenkins:2.2.0"
   volumeCapacity: "10Gi"

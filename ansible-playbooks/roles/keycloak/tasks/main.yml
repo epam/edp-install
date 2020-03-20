@@ -16,14 +16,14 @@
 
 - name: "Get username from security project Keycloak secret"
   shell: >
-    {{ console_tool }} -n security get secret keycloak
+    {{ console_tool }} -n {{ keycloak_namespace | default('security') }} get secret keycloak
     --template={% raw %}'{{ index .data "username" }}'{% endraw %} | base64 --decode
   register: username
   check_mode: no
 
 - name: "Get password from security project Keycloak secret"
   shell: >
-    {{ console_tool }} -n security get secret keycloak
+    {{ console_tool }} -n {{ keycloak_namespace | default('security') }} get secret keycloak
     --template={% raw %}'{{ index .data "password" }}'{% endraw %} | base64 --decode
   register: password
   no_log: true
