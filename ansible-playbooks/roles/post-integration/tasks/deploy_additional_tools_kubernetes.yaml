@@ -42,7 +42,7 @@
 
   - name: Install Helm Chart
     shell: >
-      helm install additional-tools --namespace={{ project_cicd }} --set edpName={{ edp_name }} --set dnsWildCard={{ dns_wildcard }} --set users='{{ users }}' {{ role_path }}/files
+      helm upgrade --install --force additional-tools --namespace={{ project_cicd }} --set edpName={{ edp_name }} --set dnsWildCard={{ dns_wildcard }} --set users='{{ users }}' {{ role_path }}/files
   when: "additional_tools_template_name in additional_tools_template.stdout_lines"
 
 - set_fact:
