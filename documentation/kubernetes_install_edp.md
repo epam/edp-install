@@ -32,7 +32,7 @@
 8. Keycloak instance is installed in the "security" namespace. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
 9. The "openshift" realm is created in Keycloak;
 10. The "keycloak" secret with administrative access username and password exists in the "security" namespace;
-11. Helm 2 (Helm 3 is not currently supported by EDP) is installed on installation machine and in Kubernetes cluster with the following [instruction](install_helm2.md) by executing the following command:
+11. Helm 3 CLI is installed on installation machine with the help of the following [instruction](https://v3.helm.sh/docs/intro/install/).
 
 ### Admin Space
 
