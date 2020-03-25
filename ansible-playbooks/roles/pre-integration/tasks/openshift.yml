@@ -57,7 +57,7 @@
   check_mode: no
 
 - name: "Giving access if multitenant"
-  shell: "{{ console_tool }} adm pod-network join-projects --to={{ edp_deploy_project }}| {{ project_cicd }}"
+  shell: "{{ console_tool }} adm pod-network join-projects --to={{ edp_deploy_project }} {{ project_cicd }}"
   when: '"multitenant" in cluster_network_type.stdout'
 
 - name: "Giving admin roles to groups"
