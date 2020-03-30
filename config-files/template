@@ -18,7 +18,7 @@ spec:
     username: {{ . }}
   {{ end }}
   image: "sonatype/nexus3"
-  version: 3.15.1
+  version: 3.21.2
   basePath: ""
   volumes:
     - capacity: 10Gi
