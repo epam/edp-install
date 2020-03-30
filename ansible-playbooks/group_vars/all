@@ -31,6 +31,7 @@ projects_list: [
     "{{ edp_name }}-edp-cicd"
     ]
 project_cicd: "{{ edp_name }}-edp-cicd"
+pull_secrets: "{{ image_pull_secrets | default('') }}"
 full_edp_name: "{{ edp_name }}-edp"
 vcs_integration_enabled: "{{ vcs_integration_enabled | lower | default 'false'}}"
 vcs_ssh_port: "{{ vcs_ssh_port | default('7999') if vcs_integration_enabled|bool == true else undefined }}"

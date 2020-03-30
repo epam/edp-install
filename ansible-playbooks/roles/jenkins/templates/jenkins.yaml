@@ -7,6 +7,8 @@ spec:
     dnsWildcard: "{{ dns_wildcard }}"
   image: {{ ':'.join(tools.jenkins.version.split(':')[0:-1]) }}
   version: {{ tools.jenkins.version.split(':') | last }}
+  imagePullSecrets:
+  - name: "{{ pull_secrets }}"
   volumes:
     - name: "data"
       storageClass: "{{ storage_class_name }}"
