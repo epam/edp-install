@@ -32,6 +32,7 @@ projects_list: [
     ]
 project_cicd: "{{ edp_name }}"
 full_edp_name: "{{ edp_name }}-edp"
+pull_secrets: "{{ image_pull_secrets | default('') }}"
 vcs_integration_enabled: "{{ vcs_integration_enabled | lower | default 'false'}}"
 vcs_ssh_port: "{{ vcs_ssh_port | default('7999') if vcs_integration_enabled|bool == true else undefined }}"
 vcs_auto_user_secret_name: "{{ 'vcs-autouser-edp-' + edp_name + '-temp' if vcs_integration_enabled|bool == true else undefined }}"
