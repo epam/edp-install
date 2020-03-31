@@ -68,7 +68,6 @@ spec:
   image: openfrontier/gerrit
   keycloakSpec:
     enabled: true
-    url: ''
   sshPort: 22
   type: Gerrit
   users:

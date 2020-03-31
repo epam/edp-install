@@ -22,5 +22,4 @@ spec:
       version: "{{ pipelines_version }}"
   keycloakSpec:
     enabled: true
-    url: "{{ tools.keycloak.web_url }}"
     realm: "{{ tools.keycloak.realm_name }}"

@@ -296,7 +296,6 @@ objects:
   spec:
     keycloakSpec:
       enabled: true
-      url: ""
     sshPort: GerritSSHPort
     type: Gerrit
     version: 2.16.10
