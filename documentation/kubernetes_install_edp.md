@@ -307,7 +307,6 @@ Hardcoded parameters (optional):
     - jenkins.stagesVersion - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
     - jenkins.pipelinesVersion - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
     - adminConsole.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
-    - vcs.* - parameters used for integrating Gerrit with external VCS. Are deprecated and will be removed soon. **DO NOT CHANGE THEM.**
     - perf.* - Integration with PERF is in progress. Should be false so far. 
 ```
  
