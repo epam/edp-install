@@ -298,7 +298,7 @@ objects:
       enabled: true
     sshPort: GerritSSHPort
     type: Gerrit
-    version: 2.16.10
+    version: 3.1.4
     volumes:
     - capacity: 1Gi
       name: data
