@@ -2,17 +2,17 @@
 
 In order to install Keycloak on OpenShift cluster, follow the steps below:
 
-* Create a security project: 
+* Create a project with any name <keycloak-namespace> for Keycloak: 
 ```bash
-oc create project security
+oc create project <keycloak-namespace>
 ```
 
-* Add a security context constraint anyuid to the Keycloak service account in a security project:
+* Add a security context constraint anyuid to the Keycloak service account in a <keycloak-namespace> project:
 ```bash
-oc adm policy add-scc-to-user anyuid -z keycloak -n security
+oc adm policy add-scc-to-user anyuid -z keycloak -n <keycloak-namespace>
 ```
 
-* Deploy Keycloak in security namespace from the following template:
+* Deploy Keycloak in <keycloak-namespace> project from the following template:
 ```yaml
 apiVersion: v1
 kind: Template
@@ -146,22 +146,24 @@ objects:
               secretKeyRef:
                 name: ${SERVICE_NAME}
                 key: password
-          - name: POSTGRES_DATABASE
+          - name: DB_DATABASE
             value: ${SERVICE_NAME}-db
-          - name: POSTGRES_USER
+          - name: DB_USER
             valueFrom:
               secretKeyRef:
                 name: ${SERVICE_NAME}-db
                 key: ${SERVICE_NAME}-db-user
-          - name: POSTGRES_PASSWORD
+          - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: ${SERVICE_NAME}-db
                 key: ${SERVICE_NAME}-db-password
-          - name: POSTGRES_PORT_5432_TCP_ADDR
+          - name: DB_ADDR
             value: ${SERVICE_NAME}-db
-          - name: POSTGRES_PORT_5432_TCP_PORT
+          - name: DB_PORT
             value: '5432'
+          - name: DB_VENDOR
+            value: postgres
           - name: PROXY_ADDRESS_FORWARDING
             value: "true"
           livenessProbe:
@@ -278,10 +280,10 @@ parameters:
 - displayName: Application version
   name: SERVICE_VERSION
   required: true
-  value: "3.4.3.Final"
+  value: "8.0.2"
 - displayName: Application image
   name: SERVICE_IMAGE
-  value: "jboss/keycloak"
+  value: "quay.io/keycloak/keycloak"
   required: true
 - displayName: "keycloak-db password"
   name: DB_PASSWORD

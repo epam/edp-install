@@ -2,19 +2,19 @@
 
 In order to install Keycloak on Kubernetes cluster, follow the steps below:
 
-* Create a security project:
+* Create a namespace with any name <keycloak-namespace> for Keycloak:
 ```bash
-kubectl create namespace security
+kubectl create namespace <keycloak-namespace>
 ```
 
 * Create a secret for Keycloak database:
 ```bash
-kubectl -n security create secret generic keycloak-db --from-literal=keycloak-db-user=<keycloak_db_username> --from-literal=keycloak-db-password=<keycloak_db_password>
+kubectl -n <keycloak-namespace> create secret generic keycloak-db --from-literal=keycloak-db-user=<keycloak_db_username> --from-literal=keycloak-db-password=<keycloak_db_password>
 ```
 
 * Create a secret for Keycloak admin user:
 ```bash
-kubectl -n security create secret generic keycloak --from-literal=username=<keycloak_admin_username> --from-literal=password=<keycloak_admin_password>
+kubectl -n <keycloak-namespace> create secret generic keycloak --from-literal=username=<keycloak_admin_username> --from-literal=password=<keycloak_admin_password>
 ```
 
 * Deploy Keycloak in security namespace from the following template:
@@ -90,7 +90,7 @@ spec:
         command: ["sh", "-c", "while ! nc -w 1 keycloak-db 5432 </dev/null; do echo waiting for keycloak-db; sleep 10; done;"]
       containers:
       - name: keycloak
-        image: "jboss/keycloak:3.4.3.Final"
+        image: "quay.io/keycloak/keycloak:8.0.2"
         imagePullPolicy: Always
         ports:
           - name: gui
@@ -106,22 +106,24 @@ spec:
             secretKeyRef:
               name: keycloak
               key: password
-        - name: POSTGRES_DATABASE
+        - name: DB_DATABASE
           value: keycloak-db
-        - name: POSTGRES_USER
+        - name: DB_USER
           valueFrom:
             secretKeyRef:
               name: keycloak-db
               key: keycloak-db-user
-        - name: POSTGRES_PASSWORD
+        - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: keycloak-db
               key: keycloak-db-password
-        - name: POSTGRES_PORT_5432_TCP_ADDR
+        - name: DB_ADDR
           value: keycloak-db
-        - name: POSTGRES_PORT_5432_TCP_PORT
+        - name: DB_PORT
           value: '5432'
+        - name: DB_VENDOR
+          value: postgres
         - name: PROXY_ADDRESS_FORWARDING
           value: "true"
         livenessProbe:
@@ -230,6 +232,8 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   generation: 1
   labels:
     app: keycloak

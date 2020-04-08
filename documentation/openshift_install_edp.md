@@ -2,14 +2,9 @@
 
 ### Prerequisites
 1. OpenShift cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
-2. Nodes kernel parameters and security limits are configured to meet Docker host for Sonarqube 7.9 [requirements](https://hub.docker.com/_/sonarqube):
-    - vm.max_map_count=262144
-    - fs.file-max=65536
-    - ulimit nofile 65536
-    - ulimit nproc 4096   
-3. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
-    - Example of Config Map:
-    ```
+2. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with session stickiness, disabled HTTP/2 protocol and header size of 32k support;
+    - Example of Config Map for Nginx ingress controller:
+    ```yaml
     kind: ConfigMap
     apiVersion: v1
     metadata:
@@ -23,44 +18,23 @@
       large-client-header-buffers: 4 64k
       use-http2: "false"
       ```
-4. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
-5. Keycloak instance is installed in the "security" project. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
-6. The "openshift" realm is created in Keycloak;
-7. The "keycloak" secret with administrative access username and password exists in the "security" project; 
-8. Machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) is installed with a cluster-admin access to the OpenShift cluster;
+3. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
+5. The "openshift" realm is created in Keycloak;
+6. The "keycloak" secret with administrative access username and password exists in the namespace where Keycloak in installed;
+7. Installation machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) installed with the cluster-admin access to the OpenShift cluster; 
+8. Helm 3 installed on the installation machine with the help of the following [instruction](https://v3.helm.sh/docs/intro/install/).
 
-### Admin Space
-Before starting EDP deployment, the Admin Space (a special namespace in K8S or a project in OpenShift) should be deployed from where afterwards EDP will be deployed.
+### EDP project
+* Choose an EDP tenant name, e.g. "demo", and create the <edp-project> project with any name (e.g. "demo").
+Before starting EDP deployment, EDP project <edp-project> in OpenShift should be created.
 
-To deploy the Admin Space, follow the steps below:
-
-* Go to the [releases](https://github.com/epmd-edp/edp-install/releases) page of this repository, choose a version, download an archive and unzip it.
-
-_**NOTE**: It is highly recommended to use the latest released version._
-
-* Apply the "edp-preinstall" template to create the Admin Space:
+* Create admin secret for the Wizard database: 
 ```bash
- oc process -f oc-templates/edp-preinstall.yaml | oc apply -f -
-```
-* Add the edp-deploy-role role to EDP service account: 
-`oc create clusterrolebinding <any_name> --clusterrole=edp-deploy-role --serviceaccount=edp-deploy:edp`
- 
-* Add admin role to EDP service account: 
-`oc create clusterrolebinding <any_name> --clusterrole=admin --serviceaccount=edp-deploy:edp`
-
-* Add the security context constraint edp to edp service account in edp-deploy project: 
-```bash
-oc adm policy add-scc-to-user edp -z edp -n edp-deploy
+oc -n <edp-project> create secret generic super-admin-db --from-literal=username=<db_admin_username> --from-literal=password=<db_admin_password>
 ```
 
-* If this is your first EDP tenant on this cluster, perform the following
-
-    * Create admin secret for the Wizard database: 
-`
-oc -n edp-deploy create secret generic super-admin-db --from-literal=username=<db_admin_username> --from-literal=password=<db_admin_password>
-`
-
-    * Deploy database from the following template:
+* Deploy database from the following template:
 ```yaml
 apiVersion: v1 #PVC for EDP Install Wizard DB
 kind: PersistentVolumeClaim
@@ -174,26 +148,11 @@ spec:
 
 * Create secret for EDP tenant database user:
 ```bash
-oc -n edp-deploy create secret generic admin-console-db --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
+oc -n <edp-project> create secret generic admin-console-db --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
     
 ### Install EDP
-* Choose an EDP tenant name, e.g. "demo", and create the <edp_name>-edp-cicd namespace (e.g. "demo-edp-cicd").
-* Create EDP service account in the <edp_name>-edp-cicd namespace:
-`oc -n <your_edp_name>-edp-cicd create sa edp`
-
-* Add the edp-deploy-role role to EDP service account: 
-`oc create clusterrolebinding <any_unique_name> --clusterrole=edp-deploy-role --serviceaccount=<your_edp_name>-edp-cicd:edp`
- 
-* Add admin role to EDP service account: 
-`oc create clusterrolebinding <any_unique_name> --clusterrole=admin --serviceaccount=<your_edp_name>-edp-cicd:edp`
-
-* Add security context constraint edp to edp service account in <your_edp_name>-edp-cicd project: 
-```bash
-oc adm policy add-scc-to-user edp -z edp -n <your_edp_name>-edp-cicd
-```
-
-* Deploy operators in the <edp_name>-edp-cicd namespace by following the corresponding instructions in their repositories:
+* Deploy operators in the <edp-project> project by following the corresponding instructions in their repositories:
     - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
     - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
     - [reconciler](https://github.com/epmd-edp/reconciler)
@@ -204,164 +163,145 @@ oc adm policy add-scc-to-user edp -z edp -n <your_edp_name>-edp-cicd
     - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
     - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
 
-* Create an OpenShift template with with additional tools (e.g. Sonar, Gerrit, Nexus, Secrets, any other resources) that are non-mandatory.
-* Inspect the list of parameters that can be used in the OpenShift template and replaced during the provisioning:
+* Create a config map with additional tools (e.g. Sonar, Gerrit, Nexus, Secrets, any other resources) that are non-mandatory.
+* Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
     
-   - EDP_NAME - this parameter will be replaced with the EDP_NAME value, which is set in EDP-Install template;
-   - DNS_WILDCARD - this parameter will be replaced with the DNS_WILDCARD value, which is set in EDP-Install template;
+    - edpName - this parameter will be replaced with the edp.name value, which is set in EDP-Install chart;
+    - dnsWildCard - this parameter will be replaced with the edp.dnsWildCard value, which is set in EDP-Install chart;
+    - users - this parameter will be replaced with the edp.superAdmins value, which is set in EDP-Install chart. 
        
-* "Users" section in Gerrit and Nexus resources definitions should be filled with administrators of your tenant
-
-* "GerritSSHPort" value in Gerrit and GitServer custom resources should be set to any free NodePort in your cluster 
+* "sshPort" value in Gerrit and GitServer custom resources should be set to the same any free NodePort in your cluster which become Gerrit ssh port 
        
-_*NOTE*: Other parameters must be hardcoded in a template._
+_*NOTE*: The users parameter should be used in a cycle because it is presented as the list. Other parameters must be hardcorded in a template._
 
 Find below a template sample for additional tools:
 ```yaml
-apiVersion: template.openshift.io/v1
-kind: Template
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Nexus
 metadata:
-  annotations:
-    description: Template for deploying additional components on top of EDP
-    openshift.io/display-name: EDP - The Rocket
-    template.openshift.io/provider-display-name: EPAM
-    template.openshift.io/support-url: https://www.epam.com
-  creationTimestamp: null
-  name: additional-tools
-objects:
-- apiVersion: v2.edp.epam.com/v1alpha1
-  kind: Nexus
-  metadata:
-    name: nexus
-    namespace: ${EDP_NAME}-edp-cicd
-  spec:
-    edpSpec:
-      dnsWildcard: ${DNS_WILDCARD}
-    keycloakSpec:
-      enabled: true
-    version: 3.15.1
-    volumes:
+  name: nexus
+  namespace: '{{ .Values.edpName }}'
+spec:
+  edpSpec:
+    dnsWildcard: '{{ .Values.dnsWildCard }}'
+  keycloakSpec:
+    enabled: true
+  users:
+  {{ range .Values.users }}
+  - email: ''
+    first_name: ''
+    last_name: ''
+    roles:
+      - nx-admin
+    username: {{ . }}
+  {{ end }}
+  image: "sonatype/nexus3"
+  version: 3.21.2
+  basePath: ""
+  volumes:
     - capacity: 10Gi
       name: data
       storage_class: gp2
-    users:
-    - email: ""
-      first_name: ""
-      last_name: ""
-      roles:
-      - nx-admin
-      username: admin1@example.com
-    - email: ""
-      first_name: ""
-      last_name: ""
-      roles:
-      - nx-admin
-      username: admin2@example.com
-- apiVersion: v2.edp.epam.com/v1alpha1
-  kind: Sonar
-  metadata:
-    name: sonar
-    namespace: ${EDP_NAME}-edp-cicd
-  spec:
-    edpSpec:
-      dnsWildcard: ${DNS_WILDCARD}
-    type: Sonar
-    version: 7.9-community
-    volumes:
-    - capacity: 1Gi
+---
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Sonar
+metadata:
+  name: sonar
+  namespace: '{{ .Values.edpName }}'
+spec:
+  edpSpec:
+    dnsWildcard: '{{ .Values.dnsWildCard }}'
+  type: Sonar
+  image: sonarqube
+  version: 7.9-community
+  volumes:
+    - capacity: 10Gi
       name: data
       storage_class: gp2
-    - capacity: 1Gi
+    - capacity: 10Gi
       name: db
       storage_class: gp2
-- apiVersion: v2.edp.epam.com/v1alpha1
-  kind: GitServer
-  metadata:
-    name: gerrit
-    namespace: ${EDP_NAME}-edp-cicd
-  spec:
-    createCodeReviewPipeline: false
-    edpSpec:
-      dnsWildcard: ${DNS_WILDCARD}
-    gitHost: gerrit.${EDP_NAME}-edp-cicd
-    gitUser: jenkins
-    httpsPort: 443
-    nameSshKeySecret: gerrit-ciuser-sshkey
-    sshPort: GerritSSHPort
-- apiVersion: v2.edp.epam.com/v1alpha1
-  kind: Gerrit
-  metadata:
-    name: gerrit
-    namespace: ${EDP_NAME}-edp-cicd
-  spec:
-    keycloakSpec:
-      enabled: true
-    sshPort: GerritSSHPort
-    type: Gerrit
-    version: 3.1.4
-    volumes:
-    - capacity: 1Gi
+---
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: GitServer
+metadata:
+  name: gerrit
+  namespace: '{{ .Values.edpName }}'
+spec:
+  createCodeReviewPipeline: false
+  edpSpec:
+    dnsWildcard: '{{ .Values.dnsWildCard }}'
+  gitHost: 'gerrit.{{ .Values.edpName }}'
+  gitUser: jenkins
+  httpsPort: 443
+  nameSshKeySecret: gerrit-ciuser-sshkey
+  sshPort: 22
+---
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Gerrit
+metadata:
+  name: gerrit
+  namespace: '{{ .Values.edpName }}'
+spec:
+  image: openfrontier/gerrit
+  keycloakSpec:
+    enabled: true
+  sshPort: 22
+  type: Gerrit
+  users:
+  {{ range .Values.users }}
+    - groups:
+        - Administrators
+      username: {{ . }}
+  {{ end }}
+  version: 3.1.4
+  volumes:
+    - capacity: 10Gi
       name: data
       storage_class: gp2
-    users:
-    - groups:
-      - Administrators
-      username: admin1@example.com
-    - groups:
-      - Administrators
-      username: admin2@example.com
-parameters:
-- description: Unique name for EDP tenant which will be used during installation
-  displayName: Name for EDP tenant
-  name: EDP_NAME
-  required: true
-  value: test
-- description: Unique DNS wildcard name for EDP tenant which will be used by ingresses
-    in k8s
-  displayName: DNS wildcard for EDP tenant
-  name: DNS_WILDCARD
-  required: true
-  value: default_wildcard
 ```
 
-* Create a file with the template and create an OpenShift template with the following command:
+* Create a file with the template and create a config map with the following command:
+```bash
+oc -n <edp-project> create cm additional-tools --from-file=template=<filename>`
+```
 
-`oc -n edp-deploy apply -f <filename>`
+* Apply EDP chart using Helm. 
 
-* Apply EDP template using oc. 
-
->**WARNING**: Chart has some **hardcoded** parameters, which are optional for editing, and some **mandatory** parameters that can be specified by user.
-
-Find below the description of both parameters types:
+>**WARNING**: Chart has some **hardcoded** parameters, which are optional for editing, and some **mandatory** parameters that can be specified by user. 
+ 
+Find below the description of both parameters types.
 
 Hardcoded parameters (optional): 
 ```
-   - EDP_VERSION - EDP Image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
-   - ADDITIONAL_TOOLS_TEMPLATE_NAME - name of the OpenShift template in the edp-deploy project that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, edpName, dnsWildCard, etc.). User variables can be used and are replaced during the provisioning, all the rest must be hardcoded in a template.
-   - JENKINS_VOLUME_CAPACITY - size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB;
-   - JENKINS_IMAGE_VERSION - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
-   - JENKINS_STAGES_VERSION - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
-   - JENKINS_PIPELINES_VERSION - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
-   - ADMIN_CONSOLE_VERSION - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
+    - edp.version - EDP Image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
+    - edp.additionalToolsTemplate - name of the config map in edp-deploy project with a Helm template that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, Any other resources). **You created it in the previous point.**
+    - edp.devDeploy: Used for develomplent deploy using CI for production installation should be false;
+    - jenkins.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
+    - jenkins.volumeCapacity - size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB;
+    - jenkins.stagesVersion - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
+    - jenkins.pipelinesVersion - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
+    - adminConsole.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
+    - perf.* - Integration with PERF is in progress. Should be false so far;
+    - edp.keycloakNamespace: namespace where Keycloak is installed;
+    - edp.keycloakUrl: FQDN Keycloak URL.
 ```
 
- Mandatory parameters:
-```
-   - EDP_NAME - previously defined name of your EDP tenant that is to be deployed (e.g. "demo");
-   - DNS_WILDCARD - DNS wildcard for routing in your K8S cluster;
-   - STORAGE_CLASS_NAME - storage class that will be used for persistent volumes provisioning;
-   - EDP_SUPER_ADMINS - administrators of your tenant separated by comma (,);
-```
-
-* Edit the oc-templates/edp-install.yaml file by applying your own parameters;
-* Add EDP install template in OpenShift with the following command:
+Mandatory parameters:
  ```
-oc -n edp-deploy apply -f oc-templates/edp-install.yaml
-```
-* Run an OpenShift template deployment or apply template directly in OpenShift Web Console.
+    - edp.name - previously defined name of your EDP project <edp-project>;
+    - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
+    - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
+    - edp.storageClass - storage class that will be used for persistent volumes provisioning;
+    - edp.platform - openshift or kubernetes
+ ```  
 
-Find below the sample of launching an OpenShift template for EDP installation:
+ * Edit kubernetes-templates/values.yaml file with your own parameters;
+ * Run Helm chart installation;
+
+Find below the sample of launching a Helm template for EDP installation:
+```bash
+helm install edp-install --namespace <edp-project> deploy-templates
 ```
-oc new-app --template=edp --param=<>... --param=<>
-```
+
 * The full installation with integration between tools will take at least 10 minutes.

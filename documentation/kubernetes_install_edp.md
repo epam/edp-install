@@ -2,17 +2,12 @@
 
 ### Prerequisites
 1. Kubernetes cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
-2. Nodes kernel parameters and security limits are configured to meet Docker host for Sonarqube 7.9 [requirements](https://hub.docker.com/_/sonarqube):
-    - vm.max_map_count=262144
-    - fs.file-max=65536
-    - ulimit nofile 65536
-    - ulimit nproc 4096
-3. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
-4. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
-5. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 32k support;
+2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
+3. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
+4. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 32k support;
 
-    - Example of Config Map:
-    ```
+    - Example of Config Map for Nginx ingress controller:
+    ```yaml
     kind: ConfigMap
     apiVersion: v1
     metadata:
@@ -27,40 +22,23 @@
       use-http2: "false"
       ```
 
-6. Load balancer (if any exists in front of ingress controller) is configured with the disabled HTTP/2 protocol and header size of 32k support;
-7. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
-8. Keycloak instance is installed in the "security" namespace. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
-9. The "openshift" realm is created in Keycloak;
-10. The "keycloak" secret with administrative access username and password exists in the "security" namespace;
-11. Helm 3 CLI is installed on installation machine with the help of the following [instruction](https://v3.helm.sh/docs/intro/install/).
+5. Load balancer (if any exists in front of ingress controller) is configured with session stickiness, disabled HTTP/2 protocol and header size of 32k support;
+6. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
+8. The "openshift" realm is created in Keycloak;
+9. The "keycloak" secret with administrative access username and password exists in the namespace where Keycloak in installed;
+10. Helm 3 is installed on installation machine with the help of the following [instruction](https://v3.helm.sh/docs/intro/install/).
 
-### Admin Space
+### EDP namespace
+* Choose an EDP tenant name, e.g. "demo", and create the <edp-project> namespace with any name (e.g. "demo").
+Before starting EDP deployment, EDP namespace <edp-project> in K8s should be created.
 
-Before starting EDP deployment, the Admin Space (a special namespace in K8S or a project in OpenShift) should be deployed from where afterwards EDP will be deployed. 
+* Create admin secret for the Wizard database: 
+```bash
+kubectl -n <edp-project> create secret generic super-admin-db --from-literal=username=<db_admin_username> --from-literal=password=<db_admin_password>
+```
 
-To deploy the Admin Space, follow the steps below:
-
-* Go to the [releases](https://github.com/epmd-edp/edp-install/releases) page of this repository, choose a version, download an archive and unzip it.
-
-_**NOTE**: It is highly recommended to use the latest released version._
-
-* Apply the "edp-preinstall" template to create the Admin Space:
-`kubectl apply -f kubernetes-templates/edp-preinstall.yaml`
-
-* Add the edp-deploy-role role to EDP service account: 
-`kubectl create clusterrolebinding <any_name> --clusterrole=edp-deploy-role --serviceaccount=edp-deploy:edp`
- 
-* Add admin role to EDP service account: 
-`kubectl create clusterrolebinding <any_name> --clusterrole=admin --serviceaccount=edp-deploy:edp`
-
-* If this is your first EDP tenant on this cluster, perform the following:
-
-    * Create admin secret for the Wizard database: 
-`
-kubectl -n edp-deploy create secret generic super-admin-db --from-literal=username=<db_admin_username> --from-literal=password=<db_admin_password>
-`
-
-    * Deploy database from the following template:
+* Deploy database from the following template:
 ```yaml
 apiVersion: v1 #PVC for EDP Install Wizard DB
 kind: PersistentVolumeClaim
@@ -174,22 +152,11 @@ spec:
 
 * Create secret for the EDP tenant database user:
 ```bash
-kubectl -n edp-deploy create secret generic admin-console-db --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
+kubectl -n <edp-project> create secret generic admin-console-db --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
     
 ### Install EDP
-* Choose an EDP tenant name, e.g. "demo", and create the <edp_name>-edp-cicd namespace (e.g. "demo-edp-cicd").
-* Create EDP service account in the <edp_name>-edp-cicd namespace:
-
-`kubectl -n <your_edp_name>-edp-cicd create sa edp`
-* Add the edp-deploy-role role to EDP service account: 
-
-`kubectl create clusterrolebinding <any_unique_name> --clusterrole=edp-deploy-role --serviceaccount=<your_edp_name>-edp-cicd:edp`
- 
-* Add admin role to EDP service account: 
-
-`kubectl create clusterrolebinding <any_unique_name> --clusterrole=admin --serviceaccount=<your_edp_name>-edp-cicd:edp`
-* Deploy operators in the <edp_name>-edp-cicd namespace by following the corresponding instructions in their repositories:
+* Deploy operators in the <edp-project> namespace by following the corresponding instructions in their repositories:
     - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
     - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
     - [reconciler](https://github.com/epmd-edp/reconciler)
@@ -200,7 +167,7 @@ kubectl -n edp-deploy create secret generic admin-console-db --from-literal=user
     - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
     - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
 
-* Create a config map with additional tools (e.g. Sonar, Gerrit, Nexus, Secrets, any other resources) that are non-mandatory.
+* Create a config map with additional tools (e.g. Sonar, Nexus, Secrets, any other resources) that are non-mandatory.
 * Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
     
     - edpName - this parameter will be replaced with the edp.name value, which is set in EDP-Install chart;
@@ -215,7 +182,7 @@ apiVersion: v2.edp.epam.com/v1alpha1
 kind: Nexus
 metadata:
   name: nexus
-  namespace: '{{ .Values.edpName }}-edp-cicd'
+  namespace: '{{ .Values.edpName }}'
 spec:
   edpSpec:
     dnsWildcard: '{{ .Values.dnsWildCard }}'
@@ -230,7 +197,8 @@ spec:
       - nx-admin
     username: {{ . }}
   {{ end }}
-  version: 3.15.1
+  image: 'sonatype/nexus3'
+  version: 3.21.2
   volumes:
     - capacity: 5Gi
       name: data
@@ -240,11 +208,12 @@ apiVersion: v2.edp.epam.com/v1alpha1
 kind: Sonar
 metadata:
   name: sonar
-  namespace: '{{ .Values.edpName }}-edp-cicd'
+  namespace: '{{ .Values.edpName }}'
 spec:
   edpSpec:
     dnsWildcard: '{{ .Values.dnsWildCard }}'
   type: Sonar
+  image: sonarqube
   version: 7.9-community
   volumes:
     - capacity: 1Gi
@@ -258,7 +227,7 @@ apiVersion: v2.edp.epam.com/v1alpha1
 kind: GitServer
 metadata:
   name: git-epam
-  namespace: '{{ .Values.edpName }}-edp-cicd'
+  namespace: '{{ .Values.edpName }}'
 spec:
   createCodeReviewPipeline: true
   gitHost: 'git.epam.com'
@@ -275,21 +244,21 @@ data:
 kind: Secret
 metadata:
   name: gitlab-sshkey
-  namespace: '{{ .Values.edpName }}-edp-cicd'
+  namespace: '{{ .Values.edpName }}'
 type: Opaque
 ---
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: JenkinsServiceAccount
 metadata:
   name: gitlab-sshkey
-  namespace: '{{ .Values.edpName }}-edp-cicd'
+  namespace: '{{ .Values.edpName }}'
 spec:
   credentials: 'gitlab-sshkey'
   type: ssh
 ```
 
 * Create a file with the template and create a config map with the following command:
-`kubectl -n edp-deploy create cm additional-tools --from-file=template=<filename>`
+`kubectl -n <edp-project> create cm additional-tools --from-file=template=<filename>`
 
 * Apply EDP chart using Helm. 
 
@@ -307,12 +276,14 @@ Hardcoded parameters (optional):
     - jenkins.stagesVersion - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
     - jenkins.pipelinesVersion - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
     - adminConsole.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
-    - perf.* - Integration with PERF is in progress. Should be false so far. 
+    - perf.* - Integration with PERF is in progress. Should be false so far;
+    - edp.keycloakNamespace: namespace where Keycloak is installed;
+    - edp.keycloakUrl: FQDN Keycloak URL. 
 ```
  
 Mandatory parameters:
  ```
-    - edp.name - previously defined name of your EDP tenant that is to be deployed (e.g. "demo");
+    - edp.name - previously defined name of your EDP project <edp-project>;
     - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
     - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
     - edp.storageClass - storage class that will be used for persistent volumes provisioning;
@@ -323,9 +294,9 @@ Mandatory parameters:
 
 Find below the sample of launching a Helm template for EDP installation:
 ```bash
-helm install <helm_release_name> --namespace edp-deploy kubernetes-templates
+helm install edp-install --namespace <edp-project> deploy-templates
 ```
- * Add the EDP Component CR to the namespace (<edp_name>-cicd) that was created after the installation for Docker Registry with its specified URL.
+ * Add the EDP Component CR to the namespace (<edp-project>) that was created after the installation for Docker Registry with its specified URL.
 ```yaml
 apiVersion: v1.edp.epam.com/v1alpha1
 kind: EDPComponent
