@@ -9,6 +9,7 @@ Follow the necessary instruction to get accurate information:
 
 ----
 
-_Related Instructions:_
-* _[Keycloak Installation on Kubernetes](documentation/kubernetes_install_keycloak.md)_
-* _[Keycloak Installation on OpenShift](documentation/openshift_install_keycloak.md)_
+### Related Instructions
+* [Keycloak Installation on Kubernetes](documentation/kubernetes_install_keycloak.md)
+* [Keycloak Installation on OpenShift](documentation/openshift_install_keycloak.md)
+* [Google Container Registry Integration](../documentation/setup_google_container_registry.md)
