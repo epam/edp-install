@@ -5,8 +5,12 @@ metadata:
 spec:
   edpSpec:
     dnsWildcard: "{{ dns_wildcard }}"
+{% if pull_secrets != '' %}
   imagePullSecrets:
-  - name: {{ pull_secrets }}
+{% for secret in pull_secrets.split(',') %}
+    - name: {{ secret }}
+{% endfor %}
+{% endif %}
   image: {{ ':'.join(tools.jenkins.version.split(':')[0:-1]) }}
   version: {{ tools.jenkins.version.split(':') | last }}
   volumes:
