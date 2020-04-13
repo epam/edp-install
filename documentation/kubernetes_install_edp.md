@@ -40,6 +40,11 @@ kubectl -n <edp-project> create secret generic super-admin-db --from-literal=use
 
 * Deploy database from the following template:
 ```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: postgres
+---
 apiVersion: v1 #PVC for EDP Install Wizard DB
 kind: PersistentVolumeClaim
 metadata:
@@ -129,7 +134,7 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: edp-install-wizard-db
-      serviceAccountName: edp
+      serviceAccountName: postgres
       volumes:
         - name: edp-install-wizard-db
           persistentVolumeClaim:
@@ -166,6 +171,7 @@ kubectl -n <edp-project> create secret generic admin-console-db --from-literal=u
     - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator)
     - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
     - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
+    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator)
 
 * Create a config map with additional tools (e.g. Sonar, Nexus, Secrets, any other resources) that are non-mandatory.
 * Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:

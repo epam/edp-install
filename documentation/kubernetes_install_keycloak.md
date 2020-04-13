@@ -17,7 +17,7 @@ kubectl -n <keycloak-namespace> create secret generic keycloak-db --from-literal
 kubectl -n <keycloak-namespace> create secret generic keycloak --from-literal=username=<keycloak_admin_username> --from-literal=password=<keycloak_admin_password>
 ```
 
-* Deploy Keycloak in security namespace from the following template:
+* Deploy Keycloak in <keycloak-namespace> namespace from the following template:
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -226,8 +226,8 @@ spec:
           claimName: keycloak-data
 ```
 
-* Modify the "host" value (using `keycloak-security.<your-domain.name>` format)
-  in the following template and deploy it in a `security` namespace:
+* Modify the "host" value (using `keycloak-<keycloak-namespace>.<your-domain.name>` format)
+  in the following template and deploy it in a <keycloak-namespace> namespace:
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
