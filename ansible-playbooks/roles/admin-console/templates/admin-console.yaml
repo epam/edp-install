@@ -23,7 +23,11 @@ spec:
     name: {{ edp_name }}
     dnsWildcard: {{ dns_wildcard }}
     version: {{ edp_version.split(':') | last }}
+{% if platform_type == 'openshift' %}
     integrationStrategies: "Create,Clone,Import"
+{% else %}
+    integrationStrategies: "Import"
+{% endif %}
   dbSpec:
     enabled: true
     name: {{ shared_database }}
