@@ -25,25 +25,24 @@ Discover the steps below to apply the GCR integration correctly:
     _**NOTE**: Probably, such permissions should be requested from a support team._
 
 2. Grant this role your service account which will be used to push images (e.g. cluster_sa) and check that it is assigned:
-
-![go_Grant_custom_role](../documentation-resources/go_Grant_custom_role.png "go_Grant_custom_role")
+![go_Grant_custom_role](../documentation-resources/go_grant_custom_role.png "go_Grant_custom_role")
 _**NOTE**: Probably, it is necessary to request this assignment via a support team as well._
 
-3.Create a key file in JSON format and save it with the **kaniko-secret.json** name. To do this, follow the steps below:
+3. Create a key file in JSON format and save it with the **kaniko-secret.json** name. To do this, follow the steps below:
     
     * Navigate to "IAM & Admin -> Service Accounts":
-![go_to_IAM](../documentation-resources/go_to_IAM2.png "go_to_IAM")    
+    ![go_to_IAM](../documentation-resources/go_to_iam2.png "go_to_IAM")    
     * Find your service account, click the Actions menu and select the Create key option:   
-![go_to_Create_key.png](../documentation-resources/go_to_Create_key2.png "go_to_Create_key.png")    
+    ![go_to_Create_key.png](../documentation-resources/go_to_create_key2.png "go_to_Create_key.png")    
     * Select the JSON key type and click CREATE:      
-![go_Create.png](../documentation-resources/go_Create.png "go_Create.png")
-_**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a Google Container Registry*._
+    ![go_Create.png](../documentation-resources/go_create.png "go_Create.png")
+    _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a Google Container Registry*._
 
-4.Go to the cluster console and create a Secret with the **kaniko-secret** name in your EDP namespace from the previous file:
+4. Go to the cluster console and create a Secret with the **kaniko-secret** name in your EDP namespace from the previous file:
    ```bash
    kubectl -n <edp_namespace> create secret generic kaniko-secret --from-file kaniko-secret.json
    ```
-5.Create a ConfigMap object with the **kaniko-template** name in the **demo-edp-cicd** namespace by applying the following template:
+5. Create a ConfigMap object with the **kaniko-template** name in the **demo-edp-cicd** namespace by applying the following template:
    
    ```yaml
    apiVersion: v1
@@ -117,7 +116,7 @@ _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a 
    metadata:  
      name: kaniko-template 
    ```
-6.Before running pipelines, create EDP component CR that points to the Google Container Registry URL, which will be **gcr.io/<GCP_Project_ID>**. For instance, **gcr.io/or2-msq-epmd-edp-t1iylu**. Use the following template to create EDP component:
+6. Before running pipelines, create EDP component CR that points to the Google Container Registry URL, which will be **gcr.io/<GCP_Project_ID>**. For instance, **gcr.io/or2-msq-epmd-edp-t1iylu**. Use the following template to create EDP component:
 
    ```yaml
    apiVersion: v1.edp.epam.com/v1alpha1
@@ -129,6 +128,6 @@ _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a 
      type: docker-registry
      url: <GCR URL>
    ```
-7.As a result, the built images will be pushed by Build pipelines in the Container Registry section of the GCP Web console:
+7. As a result, the built images will be pushed by Build pipelines in the Container Registry section of the GCP Web console:
 
 ![gcr_images](../documentation-resources/gcr_images.png "gcr_images")
