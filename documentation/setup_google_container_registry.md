@@ -31,11 +31,13 @@ _**NOTE**: Probably, it is necessary to request this assignment via a support te
 3. Create a key file in JSON format and save it with the **kaniko-secret.json** name. To do this, follow the steps below:
     
     * Navigate to "IAM & Admin -> Service Accounts":
+    
     ![go_to_iam](../documentation-resources/go_to_iam2.png "go_to_iam")    
     * Find your service account, click the Actions menu and select the Create key option:   
     ![go_to_create_key.png](../documentation-resources/go_to_create_key2.png "go_to_create_key.png")    
     * Select the JSON key type and click CREATE:      
     ![go_create.png](../documentation-resources/go_create.png "go_create.png")
+
     _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a Google Container Registry*._
 
 4. Go to the cluster console and create a Secret with the **kaniko-secret** name in your EDP namespace from the previous file:
