@@ -32,12 +32,16 @@ Discover the steps below to apply the GCR integration correctly:
 
 3. Create a key file in JSON format and save it with the **kaniko-secret.json** name. To do this, follow the steps below:
     * Navigate to "IAM & Admin -> Service Accounts":
-    ![go_to_IAM](../documentation-resources/go_to_IAM2.png "go_to_IAM")
-    * Find your service account, click the Actions menu and select the Create key option:
-    ![go_to_Create_key.png](../documentation-resources/go_to_Create_key2.png "go_to_Create_key.png")
-    * Select the JSON key type and click CREATE:
+    
+    ![go_to_IAM](../documentation-resources/go_to_IAM2.png "go_to_IAM")    
+    * Find your service account, click the Actions menu and select the Create key option:   
+     
+    ![go_to_Create_key.png](../documentation-resources/go_to_Create_key2.png "go_to_Create_key.png")    
+    * Select the JSON key type and click CREATE:    
+    
     ![go_Create.png](../documentation-resources/go_Create.png "go_Create.png")
-     _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a Google Container Registry*._
+
+    _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a Google Container Registry*._
 
 4. Go to the cluster console and create a Secret with the **kaniko-secret** name in your EDP namespace from the previous file:
    ```bash
