@@ -293,9 +293,10 @@ Mandatory parameters:
     - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
     - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
     - edp.storageClass - storage class that will be used for persistent volumes provisioning;
+    - edp.platform - openshift or kubernetes
  ```  
  
- * Edit kubernetes-templates/values.yaml file with your own parameters;
+ * Edit deploy-templates/values.yaml file with your own parameters;
  * Run Helm chart installation;
 
 Find below the sample of launching a Helm template for EDP installation:

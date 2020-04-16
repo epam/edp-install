@@ -302,7 +302,7 @@ Mandatory parameters:
     - edp.platform - openshift or kubernetes
  ```  
 
- * Edit kubernetes-templates/values.yaml file with your own parameters;
+ * Edit deploy-templates/values.yaml file with your own parameters;
  * Run Helm chart installation;
 
 Find below the sample of launching a Helm template for EDP installation:
