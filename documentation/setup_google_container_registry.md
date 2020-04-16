@@ -26,21 +26,21 @@ Discover the steps below to apply the GCR integration correctly:
 
 2. Grant this role your service account which will be used to push images (e.g. cluster_sa) and check that it is assigned:
 
-    ![go_Grant_custom_role](../documentation-resources/go_Grant_custom_role.png "go_Grant_custom_role")
+   ![go_Grant_custom_role](../documentation-resources/go_Grant_custom_role.png "go_Grant_custom_role")
  
     _**NOTE**: Probably, it is necessary to request this assignment via a support team as well._
 
 3. Create a key file in JSON format and save it with the **kaniko-secret.json** name. To do this, simply navigate to "IAM & Admin -> Service Accounts":
                                                                         
-    ![go_to_IAM](../documentation-resources/go_to_IAM2.png "go_to_IAM")
+   ![go_to_IAM](../documentation-resources/go_to_IAM2.png "go_to_IAM")
 
      * Find your service account, click the Actions menu and select the Create key option:
 
-      ![go_to_Create_key.png](../documentation-resources/go_to_Create_key2.png "go_to_Create_key.png")
+   ![go_to_Create_key.png](../documentation-resources/go_to_Create_key2.png "go_to_Create_key.png")
 
      * Select the JSON key type and click CREATE:
 
-      ![go_Create.png](../documentation-resources/go_Create.png "go_Create.png")
+   ![go_Create.png](../documentation-resources/go_Create.png "go_Create.png")
  
    _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a Google Container Registry*._
 
