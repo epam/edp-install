@@ -25,24 +25,20 @@ Discover the steps below to apply the GCR integration correctly:
     _**NOTE**: Probably, such permissions should be requested from a support team._
 
 2. Grant this role your service account which will be used to push images (e.g. cluster_sa) and check that it is assigned:
+![go_grant_custom_role](../documentation-resources/go_grant_custom_role.png "go_grant_custom_role")
+_**NOTE**: Probably, it is necessary to request this assignment via a support team as well._
 
-    ![go_Grant_custom_role](../documentation-resources/go_Grant_custom_role.png "go_Grant_custom_role")
- 
-    _**NOTE**: Probably, it is necessary to request this assignment via a support team as well._
+3. Create a key file in JSON format and save it with the **kaniko-secret.json** name. To do this, follow the steps below:
+    
+    * Navigate to "IAM & Admin -> Service Accounts":
+    
+    ![go_to_iam](../documentation-resources/go_to_iam2.png "go_to_iam")    
+    * Find your service account, click the Actions menu and select the Create key option:   
+    ![go_to_create_key.png](../documentation-resources/go_to_create_key2.png "go_to_create_key.png")    
+    * Select the JSON key type and click CREATE:      
+    ![go_create.png](../documentation-resources/go_create.png "go_create.png")
 
-3. Create a key file in JSON format and save it with the **kaniko-secret.json** name. To do this, simply navigate to "IAM & Admin -> Service Accounts":
-                                                                        
-    ![go_to_IAM](../documentation-resources/go_to_IAM2.png "go_to_IAM")
-
-     * Find your service account, click the Actions menu and select the Create key option:
-
-      ![go_to_Create_key.png](../documentation-resources/go_to_Create_key2.png "go_to_Create_key.png")
-
-     * Select the JSON key type and click CREATE:
-
-      ![go_Create.png](../documentation-resources/go_Create.png "go_Create.png")
- 
-   _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a Google Container Registry*._
+    _**NOTE**: Keep it secure in order to be authorized to Kaniko while accessing a Google Container Registry*._
 
 4. Go to the cluster console and create a Secret with the **kaniko-secret** name in your EDP namespace from the previous file:
    ```bash
@@ -136,4 +132,4 @@ Discover the steps below to apply the GCR integration correctly:
    ```
 7. As a result, the built images will be pushed by Build pipelines in the Container Registry section of the GCP Web console:
 
-    ![gcr_images](../documentation-resources/gcr_images.png "gcr_images")
+![gcr_images](../documentation-resources/gcr_images.png "gcr_images")

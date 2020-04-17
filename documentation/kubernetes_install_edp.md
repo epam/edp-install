@@ -30,6 +30,8 @@
 10. Helm 3 is installed on installation machine with the help of the following [instruction](https://v3.helm.sh/docs/intro/install/).
 
 ### EDP namespace
+* Clone or download and extract the latest release version that should be installed to a separate folder; 
+
 * Choose an EDP tenant name, e.g. "demo", and create the <edp-project> namespace with any name (e.g. "demo").
 Before starting EDP deployment, EDP namespace <edp-project> in K8s should be created.
 
@@ -162,16 +164,16 @@ kubectl -n <edp-project> create secret generic admin-console-db --from-literal=u
     
 ### Install EDP
 * Deploy operators in the <edp-project> namespace by following the corresponding instructions in their repositories:
-    - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
-    - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
-    - [reconciler](https://github.com/epmd-edp/reconciler)
-    - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator)
-    - [nexus-operator](https://github.com/epmd-edp/nexus-operator)
-    - [sonar-operator](https://github.com/epmd-edp/sonar-operator)
-    - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator)
-    - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
-    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
-    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator)
+    - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator/tree/release-1.3)
+    - [codebase-operator](https://github.com/epmd-edp/codebase-operator/tree/release-2.3)
+    - [reconciler](https://github.com/epmd-edp/reconciler/tree/release-2.3)
+    - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator/tree/release-2.3)
+    - [nexus-operator](https://github.com/epmd-edp/nexus-operator/tree/release-2.3)
+    - [sonar-operator](https://github.com/epmd-edp/sonar-operator/tree/release-2.3)
+    - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator/tree/release-2.3)
+    - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator/tree/release-2.3)
+    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator/tree/release-2.3)
+    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator/tree/release-0.2)
 
 * Create a config map with additional tools (e.g. Sonar, Nexus, Secrets, any other resources) that are non-mandatory.
 * Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
@@ -268,7 +270,9 @@ spec:
 
 * Apply EDP chart using Helm. 
 
->**WARNING**: Chart has some **hardcoded** parameters, which are optional for editing, and some **mandatory** parameters that can be specified by user. 
+The deploy-templates/values.yaml file contains EDP Helm chart parameters.
+
+>**WARNING**: Chart has some **hardcoded** parameters, which are already fixed in file and are optional for editing, and some **mandatory** parameters that must be specified by user. 
  
 Find below the description of both parameters types.
 
@@ -283,8 +287,6 @@ Hardcoded parameters (optional):
     - jenkins.pipelinesVersion - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
     - adminConsole.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
     - perf.* - Integration with PERF is in progress. Should be false so far;
-    - edp.keycloakNamespace: namespace where Keycloak is installed;
-    - edp.keycloakUrl: FQDN Keycloak URL. 
 ```
  
 Mandatory parameters:
@@ -294,6 +296,8 @@ Mandatory parameters:
     - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
     - edp.storageClass - storage class that will be used for persistent volumes provisioning;
     - edp.platform - openshift or kubernetes
+    - edp.keycloakNamespace: namespace where Keycloak is installed;
+    - edp.keycloakUrl: FQDN Keycloak URL. 
  ```  
  
  * Edit deploy-templates/values.yaml file with your own parameters;
