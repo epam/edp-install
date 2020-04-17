@@ -171,7 +171,6 @@ kubectl -n <edp-project> create secret generic admin-console-db --from-literal=u
     - [nexus-operator](https://github.com/epmd-edp/nexus-operator/tree/release-2.3)
     - [sonar-operator](https://github.com/epmd-edp/sonar-operator/tree/release-2.3)
     - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator/tree/release-2.3)
-    - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator/tree/release-2.3)
     - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator/tree/release-2.3)
     - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator/tree/release-0.2)
 
