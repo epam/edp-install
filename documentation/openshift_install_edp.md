@@ -82,12 +82,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: username
-                  name: admin-console-db
+                  name: super-admin-db
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
-                  name: admin-console-db
+                  name: super-admin-db
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
             - name: POD_IP
