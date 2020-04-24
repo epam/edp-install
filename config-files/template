@@ -60,6 +60,16 @@ spec:
   sshPort: 22
 ---
 apiVersion: v2.edp.epam.com/v1alpha1
+kind: JiraServer
+metadata:
+  name: epam-jira
+  namespace: '{{ .Values.edpName }}'
+spec:
+  apiUrl: https://jiraeu-api.epam.com
+  rootUrl: https://jiraeu.epam.com
+  credentialName: epam-jira-user
+---
+apiVersion: v2.edp.epam.com/v1alpha1
 kind: Gerrit
 metadata:
   name: gerrit
