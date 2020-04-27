@@ -256,6 +256,9 @@ rules:
   - jenkinsfolders
   - jenkinsfolders/finalizers
   - jenkinsfolders/status
+  - jiraservers
+  - jiraservers/finalizers
+  - jiraservers/status
   verbs:
   - '*'
 {{ end }}
