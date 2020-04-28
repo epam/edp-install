@@ -166,13 +166,13 @@ kubectl -n <edp-project> create secret generic admin-console-db --from-literal=u
 * Deploy operators in the <edp-project> namespace by following the corresponding instructions in their repositories:
     - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator/tree/release-1.3)
     - [codebase-operator](https://github.com/epmd-edp/codebase-operator/tree/release-2.3)
-    - [reconciler](https://github.com/epmd-edp/reconciler/tree/release-2.3)
+    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator/tree/release-2.3)
+    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator/tree/release-0.2)    
     - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator/tree/release-2.3)
     - [nexus-operator](https://github.com/epmd-edp/nexus-operator/tree/release-2.3)
     - [sonar-operator](https://github.com/epmd-edp/sonar-operator/tree/release-2.3)
     - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator/tree/release-2.3)
-    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator/tree/release-2.3)
-    - [edp-component-operator](https://github.com/epmd-edp/edp-component-operator/tree/release-0.2)
+    - [reconciler](https://github.com/epmd-edp/reconciler/tree/release-2.3)
 
 * Create a config map with additional tools (e.g. Sonar, Nexus, Secrets, any other resources) that are non-mandatory.
 * Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
