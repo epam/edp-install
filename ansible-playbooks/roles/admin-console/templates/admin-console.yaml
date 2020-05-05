@@ -18,6 +18,12 @@ metadata:
   name: edp-admin-console
 spec:
   image: {{ ':'.join(tools.admin_console.version.split(':')[0:-1]) }}
+{% if pull_secrets != '' %}
+  imagePullSecrets:
+{% for secret in pull_secrets.split(',') %}
+      - name: {{ secret }}
+{% endfor %}
+{% endif %}
   version: {{ tools.admin_console.version.split(':') | last }}
   edpSpec:
     name: {{ edp_name }}
