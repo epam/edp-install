@@ -24,7 +24,7 @@ ssh -p <gerrit_ssh_ port> jenkins@gerrit.<CICD_namespace>.svc gerrit set-account
 ### Create Projects in Gerrit
 In order to create a project, create empty repositories (without initial commit) in Gerrit before the launch of the GerritSync pipeline:
 
-![New project in Gerrit](resources/readme/edp_libs_1.png)
+![New project in Gerrit](../documentation-resources/edp_libs_1.png)
 
 ### Copy Custom Resources
 The codebase, codebasebranch, cdpipelines and stages custom resources (CRs) should be copied from Dev to Prod environment. The status property value should be set to 'initialized' for all CRs. 
@@ -101,17 +101,17 @@ status:
 ```
 As a result, after all the CRs have been copied, the corresponding resources (applications, branches, pipelines, stages) will be created in Admin Console with the respective "green" status:
 
-![Apps in adminconsole](resources/readme/ac_apps.png)
+![Apps in adminconsole](../documentation-resources/ac_apps.png)
 
-![Branches in adminconsole](resources/readme/ac_branches.png)
+![Branches in adminconsole](../documentation-resources/ac_branches.png)
 
-![Pipelines in adminconsole](resources/readme/ac_pipelines.png)
+![Pipelines in adminconsole](../documentation-resources/ac_pipelines.png)
 
 The CD pipelines folders and stages jobs will be created in Jenkins as well, see the screenshots below:
 
-![Pipelines in jenkins](resources/readme/jenkins_cdpipeline.png)
+![Pipelines in jenkins](../documentation-resources/jenkins_cdpipeline.png)
 
-![Stages in jenkins](resources/readme/jenkins_stages.png)
+![Stages in jenkins](../documentation-resources/jenkins_stages.png)
 
 
 ### Copy Repositories Content
