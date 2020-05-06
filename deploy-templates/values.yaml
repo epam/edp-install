@@ -11,6 +11,7 @@ edp:
   devDeploy: "false"
   keycloakNamespace: "security"
   keycloakUrl: "https://keycloak-security.delivery.aws.main.edp.projects.epam.com"
+  webConsole: ""
 jenkins:
   version: "epamedp/edp-jenkins:2.2.0"
   volumeCapacity: "10Gi"

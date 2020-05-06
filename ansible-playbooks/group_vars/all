@@ -69,6 +69,6 @@ tools:
   keycloak:
     realm_name: "{{ full_edp_name }}"
   openshift_dashboard:
-    web_url: "https://master.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
+    web_url: "{{ web_console | default('https://master.delivery.aws.main.edp.projects.epam.com') }}"
   kubernetes_dashboard:
-    web_url: "https://console.{{ dns_wildcard | default('eks-delivery.aws.main.edp.projects.epam.com') }}"
+    web_url: "{{ web_console | default('https://console.eks-delivery.aws.main.edp.projects.epam.com') }}"
