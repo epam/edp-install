@@ -296,7 +296,8 @@ Mandatory parameters:
     - edp.storageClass - storage class that will be used for persistent volumes provisioning;
     - edp.platform - openshift or kubernetes
     - edp.keycloakNamespace: namespace where Keycloak is installed;
-    - edp.keycloakUrl: FQDN Keycloak URL. 
+    - edp.keycloakUrl: FQDN Keycloak URL.
+    - edp.webConsole - Kubernetes web console URL (e.g. https://master.example.com:8443); 
  ```  
  
  * Edit deploy-templates/values.yaml file with your own parameters;

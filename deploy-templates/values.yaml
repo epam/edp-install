@@ -11,6 +11,7 @@ edp:
   devDeploy: "false"
   keycloakNamespace: "security"
   keycloakUrl: ""
+  webConsole: ""
 jenkins:
   version: "epamedp/edp-jenkins:2.3.0"
   volumeCapacity: "10Gi"
