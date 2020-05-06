@@ -13,3 +13,4 @@ Follow the necessary instruction to get accurate information:
 * [Keycloak Installation on Kubernetes](documentation/kubernetes_install_keycloak.md)
 * [Keycloak Installation on OpenShift](documentation/openshift_install_keycloak.md)
 * [Google Container Registry Integration](documentation/setup_google_container_registry.md)
+* [Replication of Gerrit Development to Gerrit Production Repositories](documentation/gerrit_dev_to_prod.md)
