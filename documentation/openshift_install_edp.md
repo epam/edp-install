@@ -338,6 +338,7 @@ Hardcoded parameters (optional):
    - DNS_WILDCARD - DNS wildcard for routing in your K8S cluster;
    - STORAGE_CLASS_NAME - storage class that will be used for persistent volumes provisioning;
    - EDP_SUPER_ADMINS - administrators of your tenant separated by comma (,);
+   - OPENSHIFT_WEB_CONSOLE - URL to the OpenShift web console;
 ```
 
 * Edit the oc-templates/edp-install.yaml file by applying your own parameters;

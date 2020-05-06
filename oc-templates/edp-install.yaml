@@ -80,6 +80,7 @@ objects:
             - "-e perf_node_id=${PERF_NODE_ID}"
             - "-e perf_url=${PERF_URL}"
             - "-e admin_console_version=${ADMIN_CONSOLE_VERSION}"
+            - "-e openshift_web_url=${OPENSHIFT_WEB_CONSOLE}"
             - "ansible-playbooks/install.yml"
 parameters:
 - displayName: Name for EDP tenant
@@ -171,3 +172,6 @@ parameters:
 - displayName: Version of Admin Console
   name: ADMIN_CONSOLE_VERSION
   value: "epamedp/edp-admin-console:2.2.1"
+- displayName: OpenShift web console URL (change to appropriate)
+  name: OPENSHIFT_WEB_CONSOLE
+  value: ""
