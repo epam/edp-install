@@ -287,6 +287,7 @@ Mandatory parameters:
     - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
     - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
     - edp.storageClass - storage class that will be used for persistent volumes provisioning;
+    - edp.webConsole – web console URL (e.g. https://master.example.com:8443);
  ```  
  
  * Edit kubernetes-templates/values.yaml file with your own parameters;
