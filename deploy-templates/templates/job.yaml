@@ -64,5 +64,4 @@ spec:
             - "-e perf_url={{ .Values.perf.url }}"
             - "-e keycloak_namespace={{ .Values.edp.keycloakNamespace }}"
             - "-e keycloak_url={{ .Values.edp.keycloakUrl }}"
-            - "-e web_console={{ .Values.edp.webConsole }}"
             - "ansible-playbooks/install.yml"
