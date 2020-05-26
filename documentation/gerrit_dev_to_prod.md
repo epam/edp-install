@@ -1,6 +1,13 @@
-## Replication of Gerrit Development to Gerrit Production Repositories
+# Replication of Gerrit Development to Gerrit Production
 
 Get acquainted with the detailed information that allows setting up the replication of the Gerrit development to the Gerrit production repositories using Jenkins.
+
+* [Replication of Repositories From Gerrit Development to Gerrit Production](#repositories_dev_to_prod)
+* [Replication of Image Streams From Gerrit Development to Gerrit Production](#image_streams_dev_to_prod)
+
+## Replication of Repositories From Gerrit Development to Gerrit Production <a name="repositories_dev_to_prod"></a>
+
+In order to replicate repositories from Gerrit development to Gerrit production using Jenkins, follow the steps described below.
 
 ### General Considerations
 
@@ -129,8 +136,9 @@ To copy repositories content, follow the steps below:
 
 _**NOTE**: Pay attention that the job updates only the existing in Admin Console codebase repositories. If there is a necessity to apply scheduled updates, configure the Cron of this Jenkins job._
 
+## Replication of Image Streams From Gerrit Development to Gerrit Production <a name="image_streams_dev_to_prod"></a>
 
-## Replication of Gerrit Dev to Gerrit Prod Image Streams Using Jenkins
+In order to replicate image streams from Gerrit development to Gerrit production using Jenkins, follow the steps described below.
 
 ### Create Secret for Registry Access
 
