@@ -15,8 +15,3 @@
 - hosts: all
   roles:
     - { role: pre-integration, tags: [ 'pre-integration' ] }
-    - { role: secrets, tags: [ 'secrets' ] }
-    - { role: jenkins, tags: [ 'jenkins' ] }
-    - { role: admin-console, tags: [ 'admin-console' ] }
-    - { role: keycloak, tags: [ 'keycloak' ] }
-    - { role: post-integration, tags: [ 'post-integration' ] }

@@ -32,9 +32,3 @@
     kubernetes.io/display-name={{ edp_name }}-edp
     kubernetes.io/description='Version: {{ edp_version.split(':') | last }}'
 
-- name: "Copy pod security"
-  shell: "{{ console_tool }} apply -f {{ role_path }}/files/{{ item }}"
-  with_items:
-    - "privileged-policy.yaml"
-    - "restricted-policy.yaml"
-

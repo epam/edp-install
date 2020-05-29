@@ -1,0 +1,22 @@
+{{- if .Values.edp.helmDeploy -}}
+  {{- if not (lookup "v1" "v1.edp.epam.com/v1alpha1" .Values.edp.name .Values.keycloak.crName).metadata }}
+apiVersion: v1.edp.epam.com/v1alpha1
+kind: Keycloak
+metadata:
+  name: {{.Values.keycloak.crName}}
+spec:
+  url: {{ .Values.keycloak.url }}
+  secret: {{ .Values.keycloak.secret }}
+  users:
+  {{- range .Values.edp.admins }}
+    - username: {{.}}
+      realmRoles:
+        - administrator
+  {{- end}}
+  {{- range .Values.edp.developers }}
+    - username: {{.}}
+      realmRoles:
+        - developer
+  {{- end}}
+  {{end}}
+{{end}}

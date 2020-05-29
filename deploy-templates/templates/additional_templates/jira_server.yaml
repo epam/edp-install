@@ -1,0 +1,12 @@
+{{- if and .Values.edp.helmDeploy .Values.additionalTemplates.jiraServer.deploy -}}
+  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "JiraServer" .Values.edp.name .Values.additionalTemplates.jiraServer.name).metadata }}
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: JiraServer
+metadata:
+  name: {{.Values.additionalTemplates.jiraServer.name}}
+spec:
+  apiUrl: {{.Values.additionalTemplates.jiraServer.apiUrl}}
+  rootUrl: {{.Values.additionalTemplates.jiraServer.rootUrl}}
+  credentialName: {{.Values.additionalTemplates.jiraServer.credentialName}}
+  {{end}}
+{{end}}

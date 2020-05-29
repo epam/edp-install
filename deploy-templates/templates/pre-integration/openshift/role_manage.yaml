@@ -1,0 +1,35 @@
+{{- if and .Values.edp.helmDeploy (eq .Values.edp.platform "openshift") -}}
+apiVersion: authorization.openshift.io/v1
+groupNames:
+  {{- range .Values.edp.adminGroups }}
+  - {{. -}}
+  {{end}}
+kind: RoleBinding
+metadata:
+  name: admin
+roleRef:
+  name: admin
+subjects:
+  {{- range .Values.edp.adminGroups }}
+  - kind: Group
+    name: {{. -}}
+  {{end}}
+userNames: []
+---
+apiVersion: authorization.openshift.io/v1
+groupNames:
+  {{- range .Values.edp.developerGroups }}
+  - {{. -}}
+  {{end}}
+kind: RoleBinding
+metadata:
+  name: view
+roleRef:
+  name: view
+subjects:
+  {{- range .Values.edp.developerGroups }}
+  - kind: Group
+    name: {{. -}}
+  {{end}}
+userNames: []
+{{end}}

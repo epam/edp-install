@@ -1,0 +1,19 @@
+{{- if .Values.edp.helmDeploy -}}
+  {{- if not .Values.edp.db.host }}
+    {{- if not (lookup "v1" "Service" ".Values.edp.name" ".Values.edp.db.name").metadata }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.edp.db.name}}
+spec:
+  ports:
+    - name: db
+      port: {{.Values.edp.db.port}}
+      protocol: TCP
+      targetPort: {{.Values.edp.db.port}}
+  selector:
+    app: {{.Values.edp.db.name}}
+  type: ClusterIP
+    {{end}}
+  {{end}}
+{{end}}

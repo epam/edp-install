@@ -1,0 +1,16 @@
+{{- if and .Values.edp.helmDeploy (eq .Values.edp.platform "openshift") -}}
+  {{- if not (lookup "authorization.openshift.io/v1" "ClusterRoleBinding" "" "serviceaccounts-registry-viewer").metadata}}
+apiVersion: authorization.openshift.io/v1
+groupNames:
+  - system:serviceaccounts
+kind: ClusterRoleBinding
+metadata:
+  name: serviceaccounts-registry-viewer
+roleRef:
+  name: registry-viewer
+subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts
+userNames: []
+  {{end}}
+{{end}}

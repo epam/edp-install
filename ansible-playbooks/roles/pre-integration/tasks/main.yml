@@ -47,18 +47,3 @@
     state: directory
   with_items:
     - "{{ tools.keys() }}"
-
-- name: Create ConfigMap with EDP Config
-  shell: >
-    {{ console_tool }} create -n {{ project_cicd }} configmap edp-config
-    --from-literal=edp_name={{ edp_name }}
-    --from-literal=edp_version={{ edp_version.split(':') | last }}
-    --from-literal=dns_wildcard={{ dns_wildcard }}
-    --from-literal=perf_integration_enabled={{ perf_integration_enabled }}
-    --from-literal=vcs_integration_enabled={{ vcs_integration_enabled }}
-    {{ '--from-literal=vcs_group_name_url=' + vcs_group_name if vcs_integration_enabled|bool == true else '' }}
-    {{ '--from-literal=vcs_tool_name=' + vcs_tool_name | lower if vcs_integration_enabled|bool == true else '' }}
-    {{ '--from-literal=vcs_ssh_port=' + vcs_ssh_port if vcs_integration_enabled|bool == true else '' }}
-    --dry-run -o yaml | {{ console_tool }} -n {{ project_cicd }} apply -f -
-
-- include_tasks: database_configuration.yml
