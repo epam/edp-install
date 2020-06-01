@@ -13,7 +13,7 @@ spec:
       {{- end -}}
     {{end}}
   image: "{{.Values.jenkins.image}}"
-  version: {{(split ":" .Values.jenkins.version)._1}}
+  version: {{.Values.jenkins.version}}
   volumes:
     - name: "data"
       storageClass: "{{ .Values.jenkins.storageClass }}"

@@ -31,7 +31,7 @@ edp:
       username: super-admin
       password: super-admin
     tenantAdminSecret:
-      name: admin-console-db
+      name: db-admin-console
       username: admin
       password: admin
     storage:

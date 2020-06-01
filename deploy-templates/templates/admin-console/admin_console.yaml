@@ -11,7 +11,7 @@ spec:
     - {{. -}}
     {{- end -}}
   {{end}}
-  version: {{(split ":" .Values.adminConsole.version)._1}}
+  version: {{.Values.adminConsole.version}}
   edpSpec:
     name: {{ .Values.edp.name }}
     dnsWildcard: {{ .Values.edp.dnsWildCard }}
@@ -21,7 +21,7 @@ spec:
     enabled: true
     name: {{ .Values.edp.db.name }}
     hostname: {{ if .Values.edp.db.host }}{{ .Values.edp.db.host }}{{else}}"{{.Values.edp.db.name}}.{{.Values.edp.name}}"{{end}}
-    port: {{ .Values.edp.db.port }}
+    port: "{{ .Values.edp.db.port }}"
   keycloakSpec:
     enabled: true
 {{end}}
