@@ -1,4 +1,3 @@
-{{- if .Values.edp.helmDeploy -}}
   {{- if eq .Values.edp.platform "openshift" }}
     {{- if .Values.additionalTemplates.gerrit.deploy -}}
       {{- if not (lookup "v1" "ConfigMap" ".Values.edp.name" ".Values.additionalTemplates.gerrit.name").metadata }}
@@ -11,4 +10,3 @@ metadata:
       {{end}}
     {{end}}
   {{end}}
-{{end}}

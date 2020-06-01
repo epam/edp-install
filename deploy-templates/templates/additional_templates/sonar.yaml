@@ -1,4 +1,4 @@
-{{- if and .Values.edp.helmDeploy .Values.additionalTemplates.sonar.deploy -}}
+{{- if .Values.additionalTemplates.sonar.deploy -}}
   {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Sonar" .Values.edp.name .Values.additionalTemplates.sonar.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Sonar

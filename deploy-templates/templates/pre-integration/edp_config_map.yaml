@@ -1,5 +1,4 @@
-{{- if .Values.edp.helmDeploy -}}
-  {{- if not (lookup "v1" "ConfigMap" ".Values.edp.name" ".Values.edp.configMapName").metadata }}
+{{- if not (lookup "v1" "ConfigMap" ".Values.edp.name" ".Values.edp.configMapName").metadata }}
 apiVersion: v1
 data:
   edp_name: {{ .Values.edp.name }}
@@ -10,5 +9,4 @@ data:
 kind: ConfigMap
 metadata:
   name: {{.Values.edp.configMapName}}
-  {{end}}
 {{end}}

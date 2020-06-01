@@ -1,5 +1,4 @@
-{{- if .Values.edp.helmDeploy -}}
-  {{- if not (lookup "v1" "v1.edp.epam.com/v1alpha1" .Values.edp.name .Values.keycloak.crName).metadata }}
+{{- if not (lookup "v1" "v1.edp.epam.com/v1alpha1" .Values.edp.name .Values.keycloak.crName).metadata }}
 apiVersion: v1.edp.epam.com/v1alpha1
 kind: Keycloak
 metadata:
@@ -18,5 +17,4 @@ spec:
       realmRoles:
         - developer
   {{- end}}
-  {{end}}
 {{end}}

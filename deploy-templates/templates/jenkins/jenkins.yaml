@@ -1,5 +1,4 @@
-{{- if .Values.edp.helmDeploy -}}
-  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Jenkins" ".Values.edp.name" ".Values.jenkins.name").metadata }}
+{{- if not (lookup "v2.edp.epam.com/v1alpha1" "Jenkins" ".Values.edp.name" ".Values.jenkins.name").metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Jenkins
 metadata:
@@ -31,5 +30,4 @@ spec:
   keycloakSpec:
     enabled: true
     realm: "{{ .Values.edp.name }}-edp"
-  {{end}}
 {{end}}

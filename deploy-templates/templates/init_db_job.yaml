@@ -1,4 +1,3 @@
-{{- if .Values.edp.helmDeploy -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -40,4 +39,3 @@ spec:
               value: {{.Values.edp.db.name}}
             - name: PGHOST
               value: {{if .Values.edp.db.host}}{{.Values.edp.db.host}}{{else}}"{{.Values.edp.db.name}}.{{.Values.edp.name}}"{{end}}
-{{end}}

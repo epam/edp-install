@@ -1,5 +1,4 @@
-{{- if .Values.edp.helmDeploy -}}
-  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "AdminConsole" ".Values.edp.name" "edp-admin-console").metadata }}
+{{- if not (lookup "v2.edp.epam.com/v1alpha1" "AdminConsole" ".Values.edp.name" "edp-admin-console").metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: AdminConsole
 metadata:
@@ -25,5 +24,4 @@ spec:
     port: {{ .Values.edp.db.port }}
   keycloakSpec:
     enabled: true
-  {{end}}
 {{end}}

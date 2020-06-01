@@ -1,4 +1,4 @@
-{{- if and .Values.edp.helmDeploy .Values.additionalTemplates.nexus.deploy -}}
+{{- if .Values.additionalTemplates.nexus.deploy -}}
   {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Nexus" .Values.edp.name .Values.additionalTemplates.nexus.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Nexus

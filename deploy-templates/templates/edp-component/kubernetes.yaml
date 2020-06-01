@@ -1,4 +1,4 @@
-{{- if and .Values.edp.helmDeploy (eq .Values.edp.platform "kubernetes") -}}
+{{- if eq .Values.edp.platform "kubernetes" -}}
   {{- if not (lookup "v2.edp.epam.com/v1alpha1" "EDPComponent" ".Values.edp.name" "kubernetes").metadata }}
 apiVersion: v1.edp.epam.com/v1alpha1
 kind: EDPComponent

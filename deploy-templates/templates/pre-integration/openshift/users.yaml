@@ -1,5 +1,4 @@
-{{- if and .Values.edp.helmDeploy (eq .Values.edp.platform "openshift") -}}
-
+{{- if eq .Values.edp.platform "openshift" -}}
   {{- range .Values.edp.admins -}}
     {{- if not (lookup "user.openshift.io/v1" "User" "" .).metadata }}
 ---
@@ -24,5 +23,4 @@ metadata:
   name: {{.}}
         {{end}}
     {{end}}
-
 {{end}}

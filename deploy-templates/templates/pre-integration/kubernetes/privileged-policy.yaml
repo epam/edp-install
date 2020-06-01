@@ -1,4 +1,4 @@
-{{- if and .Values.edp.helmDeploy (eq .Values.edp.platform "kubernetes") -}}
+{{- if eq .Values.edp.platform "kubernetes" -}}
 apiVersion: extensions/v1beta1
 kind: PodSecurityPolicy
 metadata:

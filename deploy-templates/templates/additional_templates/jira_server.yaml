@@ -1,4 +1,4 @@
-{{- if and .Values.edp.helmDeploy .Values.additionalTemplates.jiraServer.deploy -}}
+{{- if .Values.additionalTemplates.jiraServer.deploy -}}
   {{- if not (lookup "v2.edp.epam.com/v1alpha1" "JiraServer" .Values.edp.name .Values.additionalTemplates.jiraServer.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: JiraServer

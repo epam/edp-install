@@ -1,4 +1,4 @@
-{{- if and .Values.edp.helmDeploy (eq .Values.edp.platform "openshift") -}}
+{{- if eq .Values.edp.platform "openshift" -}}
 apiVersion: authorization.openshift.io/v1
 groupNames:
   {{- range .Values.edp.adminGroups }}

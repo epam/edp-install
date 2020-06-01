@@ -16,7 +16,6 @@ edp:
   keycloakNamespace: "keycloak"
   keycloakUrl: "https://keycloak-keycloak.delivery.aws.main.edp.projects.epam.com"
   webConsole: "https://master.delivery.aws.main.edp.projects.epam.com"
-  helmDeploy: true
   adminGroups:
     - "tarianyk-helm-chart-edp-admin"
   developerGroups:

@@ -1,4 +1,4 @@
-{{- if and .Values.edp.helmDeploy (eq .Values.edp.platform "openshift") -}}
+{{- if eq .Values.edp.platform "openshift" -}}
   {{- if .Values.additionalTemplates.gerrit.deploy -}}
     {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Gerrit" .Values.edp.name .Values.additionalTemplates.gerrit.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1

@@ -1,6 +1,5 @@
-{{- if .Values.edp.helmDeploy -}}
-  {{- if not .Values.edp.db.host }}
-    {{- if not (lookup "v1" "Service" ".Values.edp.name" ".Values.edp.db.name").metadata }}
+{{- if not .Values.edp.db.host }}
+  {{- if not (lookup "v1" "Service" ".Values.edp.name" ".Values.edp.db.name").metadata }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,6 +13,5 @@ spec:
   selector:
     app: {{.Values.edp.db.name}}
   type: ClusterIP
-    {{end}}
   {{end}}
 {{end}}
