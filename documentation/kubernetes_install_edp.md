@@ -64,7 +64,7 @@ spec:
   storageClassName: gp2
   volumeMode: Filesystem
 ---
-apiVersion: extensions/v1beta1 # EDP Install Wizard DB Deployment
+apiVersion: apps/v1 # EDP Install Wizard DB Deployment
 kind: Deployment
 metadata:
   generation: 1

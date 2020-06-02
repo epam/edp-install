@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   annotations:
@@ -7,7 +7,6 @@ metadata:
     eks.amazonaws.com/component: pod-security-policy
     kubernetes.io/cluster-service: "true"
   name: privileged
-  selfLink: /apis/extensions/v1beta1/podsecuritypolicies/eks.privileged
 spec:
   allowPrivilegeEscalation: true
   allowedCapabilities:
