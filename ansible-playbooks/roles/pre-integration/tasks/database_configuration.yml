@@ -58,7 +58,7 @@
     admin_console_db_tenant_admin_password: "{{ admin_console_db_tenant_admin_password.stdout }}"
     admin_console_db_admin_username: "{{ admin_console_db_username.stdout }}"
     admin_console_db_pod: "{{ console_tool }} -n {{ operators_deploy_project }} get pods \
-                          --no-headers -o custom-columns=NAME:.metadata.name | egrep 'edp-install-wizard-db-[0-9]+'"
+                          --no-headers -o custom-columns=NAME:.metadata.name | egrep 'edp-install-wizard-db-[a-z0-9]+'"
   no_log: true
 
 - name: "Create schema in database"
