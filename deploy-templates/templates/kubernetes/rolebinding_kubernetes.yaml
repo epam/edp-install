@@ -1,14 +1,16 @@
 {{- if eq .Values.edp.platform "kubernetes"  -}}
+  {{-  $name := printf "edp-%s-admin" .Values.edp.name -}}
+  {{- if not (lookup "rbac.authorization.k8s.io/v1" "RoleBinding" .Values.edp.name $name).metadata}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: edp-{{ .Values.edp.name }}-admin
-  namespace: {{ .Values.edp.name }}
+  name: {{$name}}
 roleRef:
   kind: ClusterRole
   name: admin
   apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: ServiceAccount
-  name: edp
+  - kind: ServiceAccount
+    name: edp
+  {{- end -}}
 {{- end -}}

@@ -1,4 +1,5 @@
 {{- if eq .Values.edp.platform "kubernetes" -}}
+  {{- if not (lookup "rbac.authorization.k8s.io/v1" "ClusterRoleBinding" "" .Values.edp.name).metadata}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -11,4 +12,5 @@ subjects:
 - kind: ServiceAccount
   name: edp
   namespace: {{ .Values.edp.name }}
+  {{- end -}}
 {{- end -}}

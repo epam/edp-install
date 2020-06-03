@@ -1,4 +1,5 @@
 {{- if eq .Values.edp.platform "kubernetes" -}}
+  {{- if not (lookup "policy/v1beta1" "PodSecurityPolicy" "" "restricted").metadata }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
@@ -41,4 +42,5 @@ spec:
     ranges:
       - min: 1
         max: 65535
+  {{end}}
 {{end}}
