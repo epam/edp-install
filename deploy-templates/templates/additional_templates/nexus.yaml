@@ -19,7 +19,7 @@ spec:
     username: {{ . }}
   {{ end }}
   image: {{.Values.additionalTemplates.nexus.image}}
-  version: {{.Values.additionalTemplates.nexus.image}}
+  version: {{.Values.additionalTemplates.nexus.version}}
   basePath: ""
   volumes:
     - capacity: 10Gi
