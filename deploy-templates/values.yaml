@@ -1,7 +1,7 @@
 edp:
   name: "tarianyk-helm-chart"
   platform: "openshift"
-  version: "epamedp/edp-install:latest"
+  version: "master-2.0.10"
   additionalToolsTemplate: "edp-install-template"
   superAdmins: "user3"
   admins:

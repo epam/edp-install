@@ -2,7 +2,7 @@
 apiVersion: v1
 data:
   edp_name: {{ .Values.edp.name }}
-  edp_version: {{(split ":" .Values.edp.version)._1}}
+  edp_version: {{.Values.edp.version}}
   dns_wildcard: {{ .Values.edp.dnsWildCard }}
   perf_integration_enabled: "{{ .Values.perf.enabled }}"
   vcs_integration_enabled: "{{ .Values.vcs.enabled }}"

@@ -15,7 +15,7 @@ spec:
   edpSpec:
     name: {{ .Values.edp.name }}
     dnsWildcard: {{ .Values.edp.dnsWildCard }}
-    version: {{(split ":" .Values.edp.version)._1}}
+    version: {{.Values.edp.version}}
     integrationStrategies: "Create,Clone,Import"
   dbSpec:
     enabled: true
