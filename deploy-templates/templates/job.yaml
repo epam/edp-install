@@ -58,6 +58,7 @@ spec:
             - "-e storage_class_name={{ .Values.edp.storageClass }}"
             - "-e jenkins_volume_capacity={{ .Values.jenkins.volumeCapacity }}"
             - "-e jenkins_image_version={{ .Values.jenkins.version }}"
+            - "-e jenkins_init_image={{ .Values.jenkins.initImage }}"
             - "-e admin_console_version={{ .Values.adminConsole.version }}"
             - "-e perf_integration_enabled={{ .Values.perf.enabled }}"
             - "-e perf_node_id={{ .Values.perf.nodeId }}"

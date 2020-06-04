@@ -13,6 +13,7 @@ spec:
 {% endif %}
   image: {{ ':'.join(tools.jenkins.version.split(':')[0:-1]) }}
   version: {{ tools.jenkins.version.split(':') | last }}
+  initImage: "{{ tools.jenkins.init_image }}"
   volumes:
     - name: "data"
       storageClass: "{{ storage_class_name }}"

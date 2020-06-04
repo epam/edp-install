@@ -222,6 +222,7 @@ spec:
   type: Sonar
   image: sonarqube
   version: 7.9-community
+  initImage: busybox
   volumes:
     - capacity: 10Gi
       name: data

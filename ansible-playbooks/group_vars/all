@@ -61,6 +61,7 @@ tools:
     web_url: "https://jenkins-{{ project_cicd }}.{{ dns_wildcard | default('delivery.aws.main.edp.projects.epam.com') }}"
     volume_capacity: "{{ jenkins_volume_capacity | default('5Gi') }}"
     version: "{{ jenkins_image_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-jenkins:latest') }}"
+    init_image: "{{ jenkins_init_image | default('busybox') }}"
   admin_console:
     super_admin_secret: "super-admin-db"
     version: "{{ admin_console_version | default('docker-registry-default.delivery.aws.main.edp.projects.epam.com/infra/edp-admin-console:snapshot') }}"

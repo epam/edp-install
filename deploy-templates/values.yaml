@@ -17,6 +17,7 @@ jenkins:
   volumeCapacity: "10Gi"
   stagesVersion: "release-2.4"
   pipelinesVersion: "release-2.4"
+  initImage: "busybox"
 adminConsole:
   version: "epamedp/edp-admin-console:2.3.0"
 perf:
