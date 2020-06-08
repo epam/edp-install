@@ -223,6 +223,7 @@ spec:
   image: sonarqube
   version: 7.9-community
   initImage: busybox
+  dbImage: 'postgres:9.6'
   volumes:
     - capacity: 10Gi
       name: data
