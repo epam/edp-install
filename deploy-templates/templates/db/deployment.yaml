@@ -1,0 +1,81 @@
+{{- if not .Values.edp.db.host }}
+  {{- if not (lookup "v1" "Deployment" ".Values.edp.name" ".Values.edp.db.name").metadata }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  generation: 1
+  labels:
+    app: {{.Values.edp.db.name}}
+  name: {{.Values.edp.db.name}}
+spec:
+  selector:
+    matchLabels:
+      app: {{.Values.edp.db.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.edp.db.name}}
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: {{.Values.edp.db.superAdminSecret.name}}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: {{.Values.edp.db.superAdminSecret.name}}
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: POSTGRES_DB
+              value: {{.Values.edp.db.name}}
+          image: {{.Values.edp.db.image}}
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - exec pg_isready --host $POD_IP -U postgres -d postgres
+            failureThreshold: 5
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: {{.Values.edp.db.name}}
+          ports:
+            - containerPort: {{.Values.edp.db.port}}
+              name: db
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - exec pg_isready --host $POD_IP -U postgres -d postgres
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            requests:
+              memory: 512Mi
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: {{.Values.edp.db.name}}
+      serviceAccountName: edp
+      volumes:
+        - name: {{.Values.edp.db.name}}
+          persistentVolumeClaim:
+            claimName: {{.Values.edp.db.name}}
+  {{end}}
+{{end}}

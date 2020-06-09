@@ -1,0 +1,12 @@
+{{- if not (lookup "v1" "ConfigMap" ".Values.edp.name" ".Values.edp.configMapName").metadata }}
+apiVersion: v1
+data:
+  edp_name: {{ .Values.edp.name }}
+  edp_version: {{.Values.edp.version}}
+  dns_wildcard: {{ .Values.edp.dnsWildCard }}
+  perf_integration_enabled: "{{ .Values.perf.enabled }}"
+  vcs_integration_enabled: "{{ .Values.vcs.enabled }}"
+kind: ConfigMap
+metadata:
+  name: {{.Values.edp.configMapName}}
+{{end}}

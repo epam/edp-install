@@ -1,0 +1,27 @@
+{{- if eq .Values.edp.platform "openshift" -}}
+  {{- if .Values.additionalTemplates.gerrit.deploy -}}
+    {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Gerrit" .Values.edp.name .Values.additionalTemplates.gerrit.name).metadata }}
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Gerrit
+metadata:
+  name: {{.Values.additionalTemplates.gerrit.name}}
+spec:
+  image: {{.Values.additionalTemplates.gerrit.image}}
+  keycloakSpec:
+    enabled: true
+  sshPort: {{.Values.additionalTemplates.gerrit.sshPort}}
+  type: Gerrit
+  users:
+  {{- range .Values.edp.admins }}
+  - groups:
+      - Administrators
+    username: {{ . }}
+  {{ end }}
+  version: {{.Values.additionalTemplates.gerrit.version}}
+  volumes:
+    - capacity: 1Gi
+      name: data
+      storage_class: gp2
+    {{end}}
+  {{end}}
+{{end}}

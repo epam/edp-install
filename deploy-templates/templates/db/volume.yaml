@@ -1,0 +1,16 @@
+{{- if not .Values.edp.db.host }}
+  {{- if not (lookup "v1" "PersistentVolumeClaim" ".Values.edp.name" ".Values.edp.db.name").metadata }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{.Values.edp.db.name}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{.Values.edp.db.storage.size}}
+  storageClassName: {{.Values.edp.db.storage.class}}
+  volumeMode: Filesystem
+  {{end}}
+{{end}}
