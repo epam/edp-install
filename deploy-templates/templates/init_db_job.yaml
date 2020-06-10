@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-init
+  annotations:
+    "helm.sh/hook": post-install, post-upgrade
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  backoffLimit: 10
+  template:
+    metadata:
+      name: db-init
+      labels:
+        app: {{.Values.edp.db.name}}
+    spec:
+      restartPolicy: Never
+      containers:
+        - image: {{.Values.edp.db.image}}
+          name: db-init
+          command:
+            - "/bin/bash"
+            - "-c"
+            - "psql -h $PGHOST -d $POSTGRES_DB -U $POSTGRES_USER -c 'CREATE SCHEMA IF NOT EXISTS \"{{.Values.edp.name}}\"; \
+              DO \
+              $do$ \
+              BEGIN \
+                 IF NOT EXISTS (SELECT 1 FROM pg_user WHERE usename = '\u005C''\u0027'{{.Values.edp.db.tenantAdminSecret.username}}'\u005C''\u0027') THEN \
+                    CREATE USER \"{{.Values.edp.db.tenantAdminSecret.username}}\" WITH PASSWORD '\u005C''\u0027'$TENANT_ADMIN_PASSWORD'\u005C''\u0027'; \
+                 END IF; \
+              END \
+              $do$; \
+              GRANT ALL PRIVILEGES ON SCHEMA \"{{.Values.edp.name}}\" TO \"{{.Values.edp.db.tenantAdminSecret.username}}\"';"
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Values.edp.db.superAdminSecret.name}}
+                  key: password
+            - name: TENANT_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Values.edp.db.tenantAdminSecret.name}}
+                  key: password
+            - name: POSTGRES_USER
+              value: {{.Values.edp.db.superAdminSecret.username}}
+            - name: POSTGRES_DB
+              value: {{.Values.edp.db.name}}
+            - name: PGHOST
+              value: {{if .Values.edp.db.host}}{{.Values.edp.db.host}}{{else}}"{{.Values.edp.db.name}}.{{.Values.edp.name}}"{{end}}

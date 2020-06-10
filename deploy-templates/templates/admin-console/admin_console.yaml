@@ -1,0 +1,27 @@
+{{- if not (lookup "v2.edp.epam.com/v1alpha1" "AdminConsole" ".Values.edp.name" "edp-admin-console").metadata }}
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: AdminConsole
+metadata:
+  name: edp-admin-console
+spec:
+  image: {{.Values.adminConsole.image}}
+  {{- if .Values.adminConsole.pullSecrets}}
+  imagePullSecrets:
+    {{- range .Values.adminConsole.pullSecrets }}
+    - {{. -}}
+    {{- end -}}
+  {{end}}
+  version: {{.Values.adminConsole.version}}
+  edpSpec:
+    name: {{ .Values.edp.name }}
+    dnsWildcard: {{ .Values.edp.dnsWildCard }}
+    version: {{.Values.edp.version}}
+    integrationStrategies: "Create,Clone,Import"
+  dbSpec:
+    enabled: true
+    name: {{ .Values.edp.db.name }}
+    hostname: {{ if .Values.edp.db.host }}{{ .Values.edp.db.host }}{{else}}"{{.Values.edp.db.name}}.{{.Values.edp.name}}"{{end}}
+    port: "{{ .Values.edp.db.port }}"
+  keycloakSpec:
+    enabled: true
+{{end}}

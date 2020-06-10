@@ -1,0 +1,12 @@
+  {{- if eq .Values.edp.platform "openshift" }}
+    {{- if .Values.additionalTemplates.gerrit.deploy -}}
+      {{- if not (lookup "v1" "ConfigMap" ".Values.edp.name" ".Values.additionalTemplates.gerrit.name").metadata }}
+apiVersion: v1
+data:
+  sshPort: "{{.Values.additionalTemplates.gerrit.sshPort}}"
+kind: ConfigMap
+metadata:
+  name: {{.Values.additionalTemplates.gerrit.name}}
+      {{end}}
+    {{end}}
+  {{end}}

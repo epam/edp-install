@@ -1,0 +1,35 @@
+{{- if eq .Values.edp.platform "kubernetes" -}}
+  {{- if not (lookup "policy/v1beta1" "PodSecurityPolicy" "" "privileged").metadata }}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+  labels:
+    eks.amazonaws.com/component: pod-security-policy
+    kubernetes.io/cluster-service: "true"
+  name: privileged
+  selfLink: /apis/extensions/v1beta1/podsecuritypolicies/eks.privileged
+spec:
+  allowPrivilegeEscalation: true
+  allowedCapabilities:
+    - '*'
+  fsGroup:
+    rule: RunAsAny
+  hostIPC: true
+  hostNetwork: true
+  hostPID: true
+  hostPorts:
+    - max: 65535
+      min: 0
+  privileged: true
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  volumes:
+    - '*'
+  {{end}}
+{{end}}

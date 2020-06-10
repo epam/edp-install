@@ -1,0 +1,39 @@
+{{- if eq .Values.edp.platform "openshift" -}}
+  {{- if not (lookup "authorization.openshift.io/v1" "RoleBinding" .Values.edp.name "admin").metadata}}
+apiVersion: authorization.openshift.io/v1
+groupNames:
+  {{- range .Values.edp.adminGroups }}
+  - {{. -}}
+  {{end}}
+kind: RoleBinding
+metadata:
+  name: admin
+roleRef:
+  name: admin
+subjects:
+  {{- range .Values.edp.adminGroups }}
+  - kind: Group
+    name: {{. -}}
+  {{end}}
+userNames: []
+  {{end}}
+---
+  {{- if not (lookup "authorization.openshift.io/v1" "RoleBinding" .Values.edp.name "view").metadata}}
+apiVersion: authorization.openshift.io/v1
+groupNames:
+  {{- range .Values.edp.developerGroups }}
+  - {{. -}}
+  {{end}}
+kind: RoleBinding
+metadata:
+  name: view
+roleRef:
+  name: view
+subjects:
+  {{- range .Values.edp.developerGroups }}
+  - kind: Group
+    name: {{. -}}
+  {{end}}
+userNames: []
+  {{end}}
+{{end}}
