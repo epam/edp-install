@@ -7,7 +7,7 @@ metadata:
     "helm.sh/hook-weight": "1"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
-  backoffLimit: 10
+  backoffLimit: 25
   template:
     metadata:
       name: db-init
@@ -21,12 +21,12 @@ spec:
           command:
             - "/bin/bash"
             - "-c"
-            - "psql -h $PGHOST -d $POSTGRES_DB -U $POSTGRES_USER -c 'CREATE SCHEMA IF NOT EXISTS \"{{.Values.edp.name}}\"; \
+            - "psql -h $(PGHOST) -d $(POSTGRES_DB) -U $(POSTGRES_USER) -c 'CREATE SCHEMA IF NOT EXISTS \"{{.Values.edp.name}}\"; \
               DO \
               $do$ \
               BEGIN \
                  IF NOT EXISTS (SELECT 1 FROM pg_user WHERE usename = '\u005C''\u0027'{{.Values.edp.db.tenantAdminSecret.username}}'\u005C''\u0027') THEN \
-                    CREATE USER \"{{.Values.edp.db.tenantAdminSecret.username}}\" WITH PASSWORD '\u005C''\u0027'$TENANT_ADMIN_PASSWORD'\u005C''\u0027'; \
+                    CREATE USER \"{{.Values.edp.db.tenantAdminSecret.username}}\" WITH PASSWORD '\u005C''\u0027'$(TENANT_ADMIN_PASSWORD)'\u005C''\u0027'; \
                  END IF; \
               END \
               $do$; \
