@@ -1,5 +1,5 @@
-{{- if .Values.additionalTemplates.nexus.deploy -}}
-  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Nexus" .Values.edp.name .Values.additionalTemplates.nexus.name).metadata }}
+{{- if .Values.nexus.deploy -}}
+  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Nexus" .Values.edp.name .Values.nexus.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Nexus
 metadata:
@@ -18,8 +18,8 @@ spec:
       - nx-admin
     username: {{ . }}
   {{ end }}
-  image: {{.Values.additionalTemplates.nexus.image}}
-  version: {{.Values.additionalTemplates.nexus.version}}
+  image: {{.Values.nexus.image}}
+  version: {{.Values.nexus.version}}
   basePath: ""
   volumes:
     - capacity: 10Gi

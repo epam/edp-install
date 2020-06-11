@@ -1,15 +1,15 @@
-{{- if .Values.additionalTemplates.sonar.deploy -}}
-  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Sonar" .Values.edp.name .Values.additionalTemplates.sonar.name).metadata }}
+{{- if .Values.sonar.deploy -}}
+  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Sonar" .Values.edp.name .Values.sonar.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Sonar
 metadata:
-  name: {{.Values.additionalTemplates.sonar.name}}
+  name: {{.Values.sonar.name}}
 spec:
   edpSpec:
     dnsWildcard: {{ .Values.edp.dnsWildCard }}
   type: Sonar
-  image: {{.Values.additionalTemplates.sonar.image}}
-  version: {{.Values.additionalTemplates.sonar.version}}
+  image: {{.Values.sonar.image}}
+  version: {{.Values.sonar.version}}
   volumes:
     - capacity: 1Gi
       name: data

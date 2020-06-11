@@ -66,32 +66,31 @@ keycloak:
   secretToCopy: "keycloak"
   secret: "keycloak-main-secret"
   crName: "main"
-additionalTemplates:
-  gerrit:
-    deploy: true
-    name: "gerrit"
-    image: "openfrontier/gerrit"
-    sshPort: "22"
-    version: "3.1.4"
-  gitServer:
-    name: "gerrit"
-    user: "jenkins"
-    httpsPort: 443
-    nameSshKeySecret: "gerrit-ciuser-sshkey"
-    sshPort: 22
-  jiraIntegration:
-    deploy: true
-    name: "epam-jira"
-    apiUrl: "https://jiraeu-api.epam.com"
-    rootUrl: "https://jiraeu.epam.com"
-    credentialName: "epam-jira-user"
-  nexus:
-    deploy: true
-    name: "nexus"
-    image: "sonatype/nexus3"
-    version: "3.21.2"
-  sonar:
-    deploy: true
-    name: "sonar"
-    image: "sonarqube"
-    version: "7.9-community"
+gerrit:
+  deploy: true
+  name: "gerrit"
+  image: "openfrontier/gerrit"
+  sshPort: "22"
+  version: "3.1.4"
+gitServer:
+  name: "gerrit"
+  user: "jenkins"
+  httpsPort: 443
+  nameSshKeySecret: "gerrit-ciuser-sshkey"
+  sshPort: 22
+jiraIntegration:
+  deploy: true
+  name: "epam-jira"
+  apiUrl: "https://jiraeu-api.epam.com"
+  rootUrl: "https://jiraeu.epam.com"
+  credentialName: "epam-jira-user"
+nexus:
+  deploy: true
+  name: "nexus"
+  image: "sonatype/nexus3"
+  version: "3.21.2"
+sonar:
+  deploy: true
+  name: "sonar"
+  image: "sonarqube"
+  version: "7.9-community"

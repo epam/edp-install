@@ -1,19 +1,19 @@
 {{- if eq .Values.edp.platform "openshift" -}}
-  {{- if .Values.additionalTemplates.gerrit.deploy -}}
-    {{- if not (lookup "v2.edp.epam.com/v1alpha1" "GitServer" .Values.edp.name .Values.additionalTemplates.gerrit.name).metadata }}
+  {{- if .Values.gerrit.deploy -}}
+    {{- if not (lookup "v2.edp.epam.com/v1alpha1" "GitServer" .Values.edp.name .Values.gerrit.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: GitServer
 metadata:
-  name: {{.Values.additionalTemplates.gitServer.name}}
+  name: {{.Values.gitServer.name}}
 spec:
   createCodeReviewPipeline: false
   edpSpec:
     dnsWildcard: {{ .Values.edp.dnsWildCard }}
   gitHost: 'gerrit.{{ .Values.edp.name }}'
-  gitUser: {{.Values.additionalTemplates.gitServer.user}}
-  httpsPort: {{.Values.additionalTemplates.gitServer.httpsPort}}
-  nameSshKeySecret: {{.Values.additionalTemplates.gitServer.nameSshKeySecret}}
-  sshPort: {{.Values.additionalTemplates.gitServer.sshPort}}
+  gitUser: {{.Values.gitServer.user}}
+  httpsPort: {{.Values.gitServer.httpsPort}}
+  nameSshKeySecret: {{.Values.gitServer.nameSshKeySecret}}
+  sshPort: {{.Values.gitServer.sshPort}}
     {{end}}
   {{end}}
 {{end}}
