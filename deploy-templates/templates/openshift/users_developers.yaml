@@ -1,0 +1,13 @@
+{{- if eq .Values.edp.platform "openshift" -}}
+  {{- range .Values.edp.developers -}}
+    {{- if not (lookup "user.openshift.io/v1" "User" "" .).metadata }}
+---
+apiVersion: user.openshift.io/v1
+kind: User
+identities: []
+groups: []
+metadata:
+  name: {{.}}
+        {{end}}
+    {{end}}
+{{end}}

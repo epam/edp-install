@@ -1,12 +1,12 @@
-{{- if .Values.jiraIntegration.deploy -}}
-  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "JiraServer" .Values.edp.name .Values.jiraIntegration.name).metadata }}
+{{- if .Values.jira.integration -}}
+  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "JiraServer" .Values.edp.name .Values.jira.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: JiraServer
 metadata:
-  name: {{.Values.jiraIntegration.name}}
+  name: {{.Values.jira.name}}
 spec:
-  apiUrl: {{.Values.jiraIntegration.apiUrl}}
-  rootUrl: {{.Values.jiraIntegration.rootUrl}}
-  credentialName: {{.Values.jiraIntegration.credentialName}}
+  apiUrl: {{.Values.jira.apiUrl}}
+  rootUrl: {{.Values.jira.rootUrl}}
+  credentialName: {{.Values.jira.credentialName}}
   {{end}}
 {{end}}

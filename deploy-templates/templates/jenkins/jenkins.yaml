@@ -16,16 +16,16 @@ spec:
   version: {{.Values.jenkins.version}}
   volumes:
     - name: "data"
-      storageClass: "{{ .Values.jenkins.storageClass }}"
-      capacity: "{{ .Values.jenkins.volumeCapacity }}"
+      storageClass: {{ if .Values.jenkins.storageClass }}"{{ .Values.jenkins.storageClass }}"{{else}}"gp2"{{end}}
+      capacity: {{ if .Values.jenkins.volumeCapacity }}"{{ .Values.jenkins.volumeCapacity }}"{{else}}"10Gi"{{end}}
   sharedLibraries:
     - name: "edp-library-stages"
       id: "Stages"
-      repository: "{{ .Values.jenkins.sharedLibraryRepo.stages }}"
+      repository: {{ if .Values.jenkins.sharedLibraryRepo.stages }}"{{ .Values.jenkins.sharedLibraryRepo.stages }}"{{else}}"https://github.com/epmd-edp/edp-library-stages.git"{{end}}
       version: "{{ .Values.jenkins.sharedLibraryVersion.stages }}"
     - name: "edp-library-pipelines"
       id: "Pipelines"
-      repository: "{{ .Values.jenkins.sharedLibraryRepo.pipelines }}"
+      repository: {{ if .Values.jenkins.sharedLibraryRepo.pipelines }}"{{ .Values.jenkins.sharedLibraryRepo.pipelines }}"{{else}}"https://github.com/epmd-edp/edp-library-pipelines.git"{{end}}
       version: "{{ .Values.jenkins.sharedLibraryVersion.pipelines }}"
   keycloakSpec:
     enabled: true

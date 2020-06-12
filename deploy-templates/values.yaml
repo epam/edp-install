@@ -64,8 +64,6 @@ keycloak:
   namespace: "keycloak"
   url: "https://keycloak-keycloak.delivery.aws.main.edp.projects.epam.com"
   secretToCopy: "keycloak"
-  secret: "keycloak-main-secret"
-  crName: "main"
 gerrit:
   deploy: true
   name: "gerrit"
@@ -78,8 +76,8 @@ gitServer:
   httpsPort: 443
   nameSshKeySecret: "gerrit-ciuser-sshkey"
   sshPort: 22
-jiraIntegration:
-  deploy: true
+jira:
+  integration: true
   name: "epam-jira"
   apiUrl: "https://jiraeu-api.epam.com"
   rootUrl: "https://jiraeu.epam.com"
@@ -94,3 +92,5 @@ sonar:
   name: "sonar"
   image: "sonarqube"
   version: "7.9-community"
+dockerRegistry:
+  url: "093899590031.dkr.ecr.eu-central-1.amazonaws.com"

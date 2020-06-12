@@ -1,6 +1,5 @@
-{{- if eq .Values.edp.platform "openshift" -}}
-  {{- if .Values.gerrit.deploy -}}
-    {{- if not (lookup "v2.edp.epam.com/v1alpha1" "GitServer" .Values.edp.name .Values.gerrit.name).metadata }}
+{{- if .Values.gerrit.deploy -}}
+  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "GitServer" .Values.edp.name .Values.gerrit.name).metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: GitServer
 metadata:
@@ -14,6 +13,5 @@ spec:
   httpsPort: {{.Values.gitServer.httpsPort}}
   nameSshKeySecret: {{.Values.gitServer.nameSshKeySecret}}
   sshPort: {{.Values.gitServer.sshPort}}
-    {{end}}
   {{end}}
 {{end}}

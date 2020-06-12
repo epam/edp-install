@@ -1,0 +1,20 @@
+{{- if eq .Values.edp.platform "openshift" -}}
+  {{- if not (lookup "authorization.openshift.io/v1" "RoleBinding" .Values.edp.name "admin").metadata}}
+apiVersion: authorization.openshift.io/v1
+groupNames:
+  {{- range .Values.edp.adminGroups }}
+  - {{. -}}
+  {{end}}
+kind: RoleBinding
+metadata:
+  name: admin
+roleRef:
+  name: admin
+subjects:
+  {{- range .Values.edp.adminGroups }}
+  - kind: Group
+    name: {{. -}}
+  {{end}}
+userNames: []
+  {{end}}
+{{end}}
