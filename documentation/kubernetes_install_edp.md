@@ -1,6 +1,8 @@
-## EDP Installation on Kubernetes
+# EDP Installation on Kubernetes
 
-### Prerequisites
+Inspect the prerequisites and the main steps to perform with the aim to install EPAM Delivery Platform on Kubernetes.
+
+## Prerequisites
 1. Kubernetes cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
 2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
 3. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
@@ -27,285 +29,105 @@
 7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
 8. The "openshift" realm is created in Keycloak;
 9. The "keycloak" secret with administrative access username and password exists in the namespace where Keycloak in installed;
-10. Helm 3 is installed on installation machine with the help of the following [instruction](https://v3.helm.sh/docs/intro/install/).
+10. Helm 3.1 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
 
-### EDP namespace
-* Choose an EDP tenant name, e.g. "demo", and create the <edp-project> namespace with any name (e.g. "demo").
-Before starting EDP deployment, EDP namespace <edp-project> in K8s should be created.
-
-* Create admin secret for the Wizard database: 
-```bash
-kubectl -n <edp-project> create secret generic super-admin-db --from-literal=username=<db_admin_username> --from-literal=password=<db_admin_password>
-```
-
-* Deploy database from the following template:
-```yaml
-apiVersion: v1 #PVC for EDP Install Wizard DB
-kind: PersistentVolumeClaim
-metadata:
-  annotations:
-    volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
-  finalizers:
-    - kubernetes.io/pvc-protection
-  name: edp-install-wizard-db
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-  storageClassName: gp2
-  volumeMode: Filesystem
----
-apiVersion: extensions/v1beta1 # EDP Install Wizard DB Deployment
-kind: Deployment
-metadata:
-  generation: 1
-  labels:
-    app: edp-install-wizard-db
-  name: edp-install-wizard-db
-spec:
-  selector:
-    matchLabels:
-      app: edp-install-wizard-db
-  template:
-    metadata:
-      labels:
-        app: edp-install-wizard-db
-    spec:
-      containers:
-        - env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  key: username
-                  name: super-admin-db
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: super-admin-db
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
-            - name: POD_IP
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: status.podIP
-            - name: POSTGRES_DB
-              value: edp-install-wizard-db
-          image: postgres:9.6
-          imagePullPolicy: IfNotPresent
-          livenessProbe:
-            exec:
-              command:
-                - sh
-                - -c
-                - exec pg_isready --host $POD_IP -U postgres -d postgres
-            failureThreshold: 5
-            initialDelaySeconds: 60
-            periodSeconds: 20
-            successThreshold: 1
-            timeoutSeconds: 5
-          name: edp-install-wizard-db
-          ports:
-            - containerPort: 5432
-              name: db
-              protocol: TCP
-          readinessProbe:
-            exec:
-              command:
-                - sh
-                - -c
-                - exec pg_isready --host $POD_IP -U postgres -d postgres
-            failureThreshold: 3
-            initialDelaySeconds: 60
-            periodSeconds: 20
-            successThreshold: 1
-            timeoutSeconds: 3
-          resources:
-            requests:
-              memory: 512Mi
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: edp-install-wizard-db
-      serviceAccountName: edp
-      volumes:
-        - name: edp-install-wizard-db
-          persistentVolumeClaim:
-            claimName: edp-install-wizard-db
----
-apiVersion: v1 # EDP Install Wizard DB Service
-kind: Service
-metadata:
-  name: edp-install-wizard-db
-spec:
-  ports:
-    - name: db
-      port: 5432
-      protocol: TCP
-      targetPort: 5432
-  selector:
-    app: edp-install-wizard-db
-  type: ClusterIP
-```
-
-* Create secret for the EDP tenant database user:
-```bash
-kubectl -n <edp-project> create secret generic admin-console-db --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
-```
-    
-### Install EDP
-* Deploy operators in the <edp-project> namespace by following the corresponding instructions in their repositories:
-    - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
-    - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
-    - [reconciler](https://github.com/epmd-edp/reconciler)
-    - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator)
-    - [nexus-operator](https://github.com/epmd-edp/nexus-operator)
-    - [sonar-operator](https://github.com/epmd-edp/sonar-operator)
-    - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator)
-    - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
-    - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
-
-* Create a config map with additional tools (e.g. Sonar, Nexus, Secrets, any other resources) that are non-mandatory.
-* Inspect the list of parameters that can be used in the Helm chart and replaced during the provisioning:
-    
-    - edpName - this parameter will be replaced with the edp.name value, which is set in EDP-Install chart;
-    - dnsWildCard - this parameter will be replaced with the edp.dnsWildCard value, which is set in EDP-Install chart;
-    - users - this parameter will be replaced with the edp.superAdmins value, which is set in EDP-Install chart. 
-    
-_*NOTE*: The users parameter should be used in a cycle because it is presented as the list. Other parameters must be hardcorded in a template._
-    
-Become familiar with a template sample:
-```yaml
-apiVersion: v2.edp.epam.com/v1alpha1
-kind: Nexus
-metadata:
-  name: nexus
-  namespace: '{{ .Values.edpName }}'
-spec:
-  edpSpec:
-    dnsWildcard: '{{ .Values.dnsWildCard }}'
-  keycloakSpec:
-    enabled: true
-  users:
-  {{ range .Values.users }}
-  - email: ''
-    first_name: ''
-    last_name: ''
-    roles:
-      - nx-admin
-    username: {{ . }}
-  {{ end }}
-  image: 'sonatype/nexus3'
-  version: 3.21.2
-  volumes:
-    - capacity: 5Gi
-      name: data
-      storage_class: gp2
----
-apiVersion: v2.edp.epam.com/v1alpha1
-kind: Sonar
-metadata:
-  name: sonar
-  namespace: '{{ .Values.edpName }}'
-spec:
-  edpSpec:
-    dnsWildcard: '{{ .Values.dnsWildCard }}'
-  type: Sonar
-  image: sonarqube
-  version: 7.9-community
-  volumes:
-    - capacity: 1Gi
-      name: data
-      storage_class: gp2
-    - capacity: 1Gi
-      name: db
-      storage_class: gp2
----
-apiVersion: v2.edp.epam.com/v1alpha1
-kind: GitServer
-metadata:
-  name: git-epam
-  namespace: '{{ .Values.edpName }}'
-spec:
-  createCodeReviewPipeline: true
-  gitHost: 'git.epam.com'
-  gitUser: git
-  httpsPort: 443
-  nameSshKeySecret: gitlab-sshkey
-  sshPort: 22
----
-apiVersion: v1
-data:
-  id_rsa: XXXXXXXXXXXXXXXXXXXXXXXX
-  id_rsa.pub: XXXXXXXXXXXXXXXXXXXXXXXX
-  username: XXXXXXXXXXXXXXXXXXXXXXX
-kind: Secret
-metadata:
-  name: gitlab-sshkey
-  namespace: '{{ .Values.edpName }}'
-type: Opaque
----
-apiVersion: v2.edp.epam.com/v1alpha1
-kind: JenkinsServiceAccount
-metadata:
-  name: gitlab-sshkey
-  namespace: '{{ .Values.edpName }}'
-spec:
-  credentials: 'gitlab-sshkey'
-  type: ssh
-```
-
-* Create a file with the template and create a config map with the following command:
-`kubectl -n <edp-project> create cm additional-tools --from-file=template=<filename>`
-
+## Install EDP
 * Apply EDP chart using Helm. 
 
->**WARNING**: Chart has some **hardcoded** parameters, which are optional for editing, and some **mandatory** parameters that can be specified by user. 
- 
-Find below the description of both parameters types.
+Find below the description of optional and mandatory parameters types.
 
-Hardcoded parameters (optional): 
-```
-    - edp.version - EDP Image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
-    - edp.additionalToolsTemplate - name of the config map in edp-deploy project with a Helm template that is additionally deployed during the installation (Sonar, Gerrit, Nexus, Secrets, Any other resources). **You created it in the previous point.**
-    - edp.devDeploy: Used for develomplent deploy using CI for production installation should be false;
-    - jenkins.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
-    - jenkins.volumeCapacity - size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB;
-    - jenkins.stagesVersion - version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
-    - jenkins.pipelinesVersion - version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
-    - adminConsole.version - EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
-    - perf.* - Integration with PERF is in progress. Should be false so far;
-    - edp.keycloakNamespace: namespace where Keycloak is installed;
-    - edp.keycloakUrl: FQDN Keycloak URL. 
-```
- 
-Mandatory parameters:
+Optional parameters:
  ```
-    - edp.name - previously defined name of your EDP project <edp-project>;
-    - edp.superAdmins - administrators of your tenant separated by escaped comma (\,);
-    - edp.dnsWildCard - DNS wildcard for routing in your K8S cluster;
-    - edp.storageClass - storage class that will be used for persistent volumes provisioning;
-    - edp.webConsole – web console URL (e.g. https://master.example.com:8443);
- ```  
- 
- * Edit kubernetes-templates/values.yaml file with your own parameters;
- * Run Helm chart installation;
+    - jenkins.sharedLibraryRepo.pipelines           # URL to library pipelines repository. By default: https://github.com/epmd-edp/edp-library-pipelines.git;
+    - jenkins.sharedLibraryRepo.stages              # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
+    - edp.db.superAdminSecret.password              # Super admin password to DB (if there is no password, a random password will be generated);
+    - edp.db.tenantAdminSecret.password             # Tenant password to DB (if there is no passwors, a random password will be generated);
+    - jenkins.storageClass                          # Type of storage class. By default: gp2; 
+    - jenkins.volumeCapacity                        # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
+ ```
+ Mandatory parameters: 
+  ```   
+    General parameters:
+    - edp.name                                      # name of your EDP project <edp-project> that was previously defined;
+    - edp.platform                                  # OpenShift or Kubernetes;
+    - edp.version                                   # EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
+    - edp.dnsWildCard                               # DNS wildcard for routing in your K8S cluster;
+    - edp.admins                                    # Administrators of your tenant separated by comma (,) (eg --set 'edp.admins={test@mail.com}');
+    - edp.developers                                # Developers of your tenant separated by comma (,) (eg --set 'edp.developers={test@mail.com}');
+    - edp.adminGroups                               # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
+    - edp.developerGroups                           # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
+    - edp.webConsole                                # URL to Openshift Web console;
+    - dockerRegistry.url                            # URL to docker registry;
+      
+    Database parameters:
+    - edp.db.image                                  # DB image, e.g. postgres:9.6;
+    - edp.db.port                                   # Port of DB;
+    - edp.db.storage.class                          # Type of storage class;
+    - edp.db.storage.size                           # Size of storage;
+      
+    Jenkins parameters:
+    - jenkins.image                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins);
+    - jenkins.version                               # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
+    - jenkins.sharedLibraryVersion.pipelines        # Version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
+    - jenkins.sharedLibraryVersion.stages           # Version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
+     
+    Admin Console parameters:
+    - adminConsole.image                            # EDP image. The image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console);
+    - adminConsole.version                          # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
+     
+    Keycloak parameters:
+    - keycloak.url                                  # URL to Keycloak;
+    - keycloak.namespace                            # Namespace with deployed Keycloak;
+    - keycloak.secretToCopy                         # Secret name for Keycloak to be copied to your namespace;
+     
+    GitServer parameters:
+    - gitServer.name                                # GitServer CR name;
+    - gitServer.user                                # Git user to connect;
+    - gitServer.httpsPort                           # HTTPS port;
+    - gitServer.sshPort                             # SSH port;
+     
+    Jira parameters:
+    - jira.integration                              # Flag to enable/disable Jira integration;
+    - jira.name                                     # JiraServer CR name;
+    - jira.apiUrl                                   # API URL for development;
+    - jira.rootUrl                                  # URL to Jira server;
+    - jira.credentialName                           # Name of secret with credentials to Jira server;
 
-Find below the sample of launching a Helm template for EDP installation:
+    Gerrit parameters:
+    - gerrit.deploy                                 # Flag to enable/disable Gerrit deploy;
+    - gerrit.image                                  # Gerrit image, e.g. openfrontier/gerrit;
+    - gerrit.version                                # Gerrit version, e.g. 3.1.4;
+    - gerrit.sshPort                                # SSH port;
+      
+    Nexus parameters:
+    - nexus.deploy                                  # Flag to enable/disable Nexus deploy;
+    - nexus.image                                   # Image for Nexus. The image can be found on [Dockerhub] (https://hub.docker.com/r/sonatype/nexus3);
+    - nexus.version                                 # Nexus version. The released version can be found on [Dockerhub](https://hub.docker.com/r/sonatype/nexus3/tags)'
+      
+    Sonar parameters:
+    - sonar.deploy                                  # Flag to enable/disable Sonar deploy;
+    - sonar.image                                   # Image for Sonar. The image can be found on [Dockerhub] (https://hub.docker.com/_/sonarqube);
+    - sonar.version                                 # Sonar version. The released version can be found on [Dockerhub](https://hub.docker.com/_/sonarqube/?tab=tags);
+```
+
+Inspect the sample of launching a Helm template for EDP installation:
+
 ```bash
-helm install edp-install --namespace <edp-project> deploy-templates
+helm install edp-install --wait --timeout=900s --namespace <edp-project> --create-namespace --set edp.name=<edp-project> deploy-templates
 ```
- * Add the EDP Component CR to the namespace (<edp-project>) that was created after the installation for Docker Registry with its specified URL.
-```yaml
-apiVersion: v1.edp.epam.com/v1alpha1
-kind: EDPComponent
-metadata:
-  name: arbitraryName
- spec:
-  icon: bas64 encoded image
-  type: docker-registry #this value should be exactly the same
-  url: url for docker registry
-```
->_**NOTE**: The full installation with integration between tools can take at least 10 minutes._
+
+As soon as Helm deploys components, create secrets for JIRA/GIT integration (if enabled) manually. Pay attention that 
+secret names must be the same as 'credentialName' property for JIRA and 'nameSshKeySecret' for GIT.
+ 
+ * Deploy operators in the <edp-project> namespace by following the corresponding instructions in their repositories:
+     - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
+     - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
+     - [reconciler](https://github.com/epmd-edp/reconciler)
+     - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator)
+     - [nexus-operator](https://github.com/epmd-edp/nexus-operator)
+     - [sonar-operator](https://github.com/epmd-edp/sonar-operator)
+     - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator)
+     - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
+     - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
+     
+>_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
