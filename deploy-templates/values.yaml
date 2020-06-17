@@ -25,6 +25,12 @@ edp:
     name: edp-install-wizard-db
     port: 5432
     host:
+    superAdminSecret:
+      name: super-admin
+      username: super-admin
+    tenantAdminSecret:
+      name: db-admin-console
+      username: admin
     storage:
       class: gp2
       size: 2Gi
