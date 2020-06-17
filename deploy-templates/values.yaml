@@ -64,7 +64,7 @@ keycloak:
   url: "https://keycloak-keycloak.delivery.aws.main.edp.projects.epam.com"
   secretToCopy: "keycloak"
 gerrit:
-  deploy: true
+  deploy: false
   name: "gerrit"
   image: "openfrontier/gerrit"
   sshPort: "22"
