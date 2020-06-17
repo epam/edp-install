@@ -38,6 +38,7 @@ Optional parameters:
     - jenkins.sharedLibraryRepo.stages              # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
     - edp.db.superAdminSecret.password              # Super admin password to DB (if there is no password, a random password will be generated);
     - edp.db.tenantAdminSecret.password             # Tenant password to DB (if there is no passwors, a random password will be generated);
+    - edp.db.tenantAdminSecret.username             # Tenant username to DB;
     - jenkins.storageClass                          # Type of storage class. By default: gp2; 
     - jenkins.volumeCapacity                        # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
  ```
@@ -58,6 +59,7 @@ Mandatory parameters:
     Database parameters:
     - edp.db.image                                  # DB image, e.g. postgres:9.6;
     - edp.db.port                                   # Port of DB;
+    - edp.db.host                                   # Host to DB in another namespace (<namespace>.<db-name>);
     - edp.db.storage.class                          # Type of storage class;
     - edp.db.storage.size                           # Size of storage;
     

@@ -25,12 +25,12 @@ spec:
               DO \
               $do$ \
               BEGIN \
-                 IF NOT EXISTS (SELECT 1 FROM pg_user WHERE usename = '\u005C''\u0027'admin'\u005C''\u0027') THEN \
-                    CREATE USER \"admin\" WITH PASSWORD '\u005C''\u0027'$(TENANT_ADMIN_PASSWORD)'\u005C''\u0027'; \
+                 IF NOT EXISTS (SELECT 1 FROM pg_user WHERE usename = '\u005C''\u0027'{{.Values.edp.db.tenantAdminSecret.username}}'\u005C''\u0027') THEN \
+                    CREATE USER \"{{.Values.edp.db.tenantAdminSecret.username}}\" WITH PASSWORD '\u005C''\u0027'$(TENANT_ADMIN_PASSWORD)'\u005C''\u0027'; \
                  END IF; \
               END \
               $do$; \
-              GRANT ALL PRIVILEGES ON SCHEMA \"{{.Values.edp.name}}\" TO \"admin\"';"
+              GRANT ALL PRIVILEGES ON SCHEMA \"{{.Values.edp.name}}\" TO \"{{.Values.edp.db.tenantAdminSecret.username}}\"';"
           env:
             - name: PGPASSWORD
               valueFrom:
