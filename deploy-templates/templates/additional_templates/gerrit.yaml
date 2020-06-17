@@ -1,10 +1,10 @@
 {{- if eq .Values.edp.platform "openshift" -}}
   {{- if .Values.gerrit.deploy -}}
-    {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Gerrit" .Values.edp.name .Values.gerrit.name).metadata }}
+    {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Gerrit" .Values.edp.name "gerrit").metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Gerrit
 metadata:
-  name: {{.Values.gerrit.name}}
+  name: gerrit
 spec:
   image: {{.Values.gerrit.image}}
   keycloakSpec:

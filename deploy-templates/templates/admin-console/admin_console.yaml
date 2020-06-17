@@ -19,8 +19,8 @@ spec:
     integrationStrategies: "Create,Clone,Import"
   dbSpec:
     enabled: true
-    name: {{ .Values.edp.db.name }}
-    hostname: {{ if .Values.edp.db.host }}{{ .Values.edp.db.host }}{{else}}"{{.Values.edp.db.name}}.{{.Values.edp.name}}"{{end}}
+    name: edp-install-wizard-db
+    hostname: {{ if .Values.edp.db.host }}{{ .Values.edp.db.host }}{{else}}"edp-install-wizard-db.{{.Values.edp.name}}"{{end}}
     port: "{{ .Values.edp.db.port }}"
   keycloakSpec:
     enabled: true

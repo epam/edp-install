@@ -1,9 +1,9 @@
 {{- if not .Values.edp.db.host }}
-  {{- if not (lookup "v1" "PersistentVolumeClaim" ".Values.edp.name" ".Values.edp.db.name").metadata }}
+  {{- if not (lookup "v1" "PersistentVolumeClaim" ".Values.edp.name" "edp-install-wizard-db").metadata }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{.Values.edp.db.name}}
+  name: edp-install-wizard-db
 spec:
   accessModes:
     - ReadWriteOnce

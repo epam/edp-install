@@ -1,20 +1,20 @@
 {{- if not .Values.edp.db.host }}
-  {{- if not (lookup "v1" "Deployment" ".Values.edp.name" ".Values.edp.db.name").metadata }}
+  {{- if not (lookup "v1" "Deployment" ".Values.edp.name" "edp-install-wizard-db").metadata }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   generation: 1
   labels:
-    app: {{.Values.edp.db.name}}
-  name: {{.Values.edp.db.name}}
+    app: edp-install-wizard-db
+  name: edp-install-wizard-db
 spec:
   selector:
     matchLabels:
-      app: {{.Values.edp.db.name}}
+      app: edp-install-wizard-db
   template:
     metadata:
       labels:
-        app: {{.Values.edp.db.name}}
+        app: edp-install-wizard-db
     spec:
       containers:
         - env:
@@ -22,12 +22,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: username
-                  name: {{.Values.edp.db.superAdminSecret.name}}
+                  name: super-admin-db
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
-                  name: {{.Values.edp.db.superAdminSecret.name}}
+                  name: super-admin-db
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
             - name: POD_IP
@@ -36,7 +36,7 @@ spec:
                   apiVersion: v1
                   fieldPath: status.podIP
             - name: POSTGRES_DB
-              value: {{.Values.edp.db.name}}
+              value: edp-install-wizard-db
           image: {{.Values.edp.db.image}}
           imagePullPolicy: IfNotPresent
           livenessProbe:
@@ -50,7 +50,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             timeoutSeconds: 5
-          name: {{.Values.edp.db.name}}
+          name: edp-install-wizard-db
           ports:
             - containerPort: {{.Values.edp.db.port}}
               name: db
@@ -71,11 +71,11 @@ spec:
               memory: 512Mi
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: {{.Values.edp.db.name}}
+              name: edp-install-wizard-db
       serviceAccountName: edp
       volumes:
-        - name: {{.Values.edp.db.name}}
+        - name: edp-install-wizard-db
           persistentVolumeClaim:
-            claimName: {{.Values.edp.db.name}}
+            claimName: edp-install-wizard-db
   {{end}}
 {{end}}

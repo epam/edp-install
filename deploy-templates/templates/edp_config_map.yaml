@@ -1,4 +1,4 @@
-{{- if not (lookup "v1" "ConfigMap" ".Values.edp.name" ".Values.edp.configMapName").metadata }}
+{{- if not (lookup "v1" "ConfigMap" ".Values.edp.name" "edp-config").metadata }}
 apiVersion: v1
 data:
   edp_name: {{ .Values.edp.name }}
@@ -8,5 +8,5 @@ data:
   vcs_integration_enabled: "{{ .Values.vcs.enabled }}"
 kind: ConfigMap
 metadata:
-  name: {{.Values.edp.configMapName}}
+  name: edp-config
 {{end}}

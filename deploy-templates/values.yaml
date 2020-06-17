@@ -20,18 +20,11 @@ edp:
     - "tarianyk-helm-chart-edp-admin"
   developerGroups:
     - "tarianyk-helm-chart-edp-developer"
-  configMapName: "edp-config"
   db:
     image: "postgres:9.6"
     name: edp-install-wizard-db
     port: 5432
     host:
-    superAdminSecret:
-      name: super-admin-db
-      username: super-admin
-    tenantAdminSecret:
-      name: db-admin-console
-      username: admin
     storage:
       class: gp2
       size: 2Gi

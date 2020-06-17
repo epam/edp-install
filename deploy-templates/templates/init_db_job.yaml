@@ -12,7 +12,7 @@ spec:
     metadata:
       name: db-init
       labels:
-        app: {{.Values.edp.db.name}}
+        app: edp-install-wizard-db
     spec:
       restartPolicy: Never
       containers:
@@ -25,26 +25,26 @@ spec:
               DO \
               $do$ \
               BEGIN \
-                 IF NOT EXISTS (SELECT 1 FROM pg_user WHERE usename = '\u005C''\u0027'{{.Values.edp.db.tenantAdminSecret.username}}'\u005C''\u0027') THEN \
-                    CREATE USER \"{{.Values.edp.db.tenantAdminSecret.username}}\" WITH PASSWORD '\u005C''\u0027'$(TENANT_ADMIN_PASSWORD)'\u005C''\u0027'; \
+                 IF NOT EXISTS (SELECT 1 FROM pg_user WHERE usename = '\u005C''\u0027'admin'\u005C''\u0027') THEN \
+                    CREATE USER \"admin\" WITH PASSWORD '\u005C''\u0027'$(TENANT_ADMIN_PASSWORD)'\u005C''\u0027'; \
                  END IF; \
               END \
               $do$; \
-              GRANT ALL PRIVILEGES ON SCHEMA \"{{.Values.edp.name}}\" TO \"{{.Values.edp.db.tenantAdminSecret.username}}\"';"
+              GRANT ALL PRIVILEGES ON SCHEMA \"{{.Values.edp.name}}\" TO \"admin\"';"
           env:
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{.Values.edp.db.superAdminSecret.name}}
+                  name: super-admin-db
                   key: password
             - name: TENANT_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{.Values.edp.db.tenantAdminSecret.name}}
+                  name: db-admin-console
                   key: password
             - name: POSTGRES_USER
-              value: {{.Values.edp.db.superAdminSecret.username}}
+              value: super-admin
             - name: POSTGRES_DB
-              value: {{.Values.edp.db.name}}
+              value: edp-install-wizard-db
             - name: PGHOST
-              value: {{if .Values.edp.db.host}}{{.Values.edp.db.host}}{{else}}"{{.Values.edp.db.name}}.{{.Values.edp.name}}"{{end}}
+              value: {{if .Values.edp.db.host}}{{.Values.edp.db.host}}{{else}}"edp-install-wizard-db.{{.Values.edp.name}}"{{end}}

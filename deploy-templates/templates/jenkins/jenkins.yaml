@@ -1,8 +1,8 @@
-{{- if not (lookup "v2.edp.epam.com/v1alpha1" "Jenkins" ".Values.edp.name" ".Values.jenkins.name").metadata }}
+{{- if not (lookup "v2.edp.epam.com/v1alpha1" "Jenkins" ".Values.edp.name" "jenkins").metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Jenkins
 metadata:
-  name: {{.Values.jenkins.name}}
+  name: jenkins
 spec:
   edpSpec:
     dnsWildcard: "{{ .Values.edp.dnsWildCard }}"

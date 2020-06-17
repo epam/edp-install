@@ -1,5 +1,5 @@
 {{- if .Values.nexus.deploy -}}
-  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Nexus" .Values.edp.name .Values.nexus.name).metadata }}
+  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Nexus" .Values.edp.name "nexus").metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Nexus
 metadata:

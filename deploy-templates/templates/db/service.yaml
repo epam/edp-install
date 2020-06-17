@@ -1,9 +1,9 @@
 {{- if not .Values.edp.db.host }}
-  {{- if not (lookup "v1" "Service" ".Values.edp.name" ".Values.edp.db.name").metadata }}
+  {{- if not (lookup "v1" "Service" ".Values.edp.name" "edp-install-wizard-db").metadata }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Values.edp.db.name}}
+  name: edp-install-wizard-db
 spec:
   ports:
     - name: db
@@ -11,7 +11,7 @@ spec:
       protocol: TCP
       targetPort: {{.Values.edp.db.port}}
   selector:
-    app: {{.Values.edp.db.name}}
+    app: edp-install-wizard-db
   type: ClusterIP
   {{end}}
 {{end}}

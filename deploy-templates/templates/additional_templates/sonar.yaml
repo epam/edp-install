@@ -1,9 +1,9 @@
 {{- if .Values.sonar.deploy -}}
-  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Sonar" .Values.edp.name .Values.sonar.name).metadata }}
+  {{- if not (lookup "v2.edp.epam.com/v1alpha1" "Sonar" .Values.edp.name "sonar").metadata }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Sonar
 metadata:
-  name: {{.Values.sonar.name}}
+  name: sonar
 spec:
   edpSpec:
     dnsWildcard: {{ .Values.edp.dnsWildCard }}
