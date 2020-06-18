@@ -19,3 +19,64 @@ version: 0.1.0
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
 appVersion: 1.16.0
+
+dependencies:
+- name: keycloak-operator
+  repository: "@epamedp"
+  version: "1.4.0-SNAPSHOT-24"
+  tags:
+    - keycloak-operator
+
+- name: codebase-operator
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-94"
+  tags:
+    - codebase-operator
+
+- name: jenkins-operator
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-97"
+  tags:
+    - jenkins-operator
+
+- name: edp-component-operator
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-2"
+  tags:
+    - edp-component-operator
+
+- name: cd-pipeline-operator
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-34"
+  tags:
+    - cd-pipeline-operator
+
+- name: nexus-operator
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-32"
+  tags:
+    - nexus-operator
+
+- name: sonar-operator
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-52"
+  tags:
+    - sonar-operator
+
+- name: admin-console-operator
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-31"
+  tags:
+    - admin-console-operator
+
+- name: gerrit-operator
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-29"
+  tags:
+    - gerrit-operator
+
+- name: reconciler
+  repository: "@epamedp"
+  version: "2.4.0-SNAPSHOT-46"
+  tags:
+    - reconciler
