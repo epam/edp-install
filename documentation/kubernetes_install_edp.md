@@ -32,6 +32,20 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 10. Helm 3.1 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
 
 ## Install EDP
+* Choose an EDP tenant name, e.g. "demo", and create the <edp-project> project with any name (e.g. "demo").
+Before starting EDP deployment, EDP project <edp-project> in K8S should be created.
+
+* Create secret for EDP admin database user:
+```
+kubectl -n <edp-project> create secret generic super-admin-db --from-literal=username=<super_admin_db_username> --from-literal=password=<super_admin_db_password>
+```
+
+* Create secret for EDP tenant database user:
+```
+kubectl -n <edp-project> create secret generic db-admin-console --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
+```
+
+
 * Apply EDP chart using Helm. 
 
 Find below the description of optional and mandatory parameters types.
@@ -40,9 +54,6 @@ Optional parameters:
  ```
     - jenkins.sharedLibraryRepo.pipelines           # URL to library pipelines repository. By default: https://github.com/epmd-edp/edp-library-pipelines.git;
     - jenkins.sharedLibraryRepo.stages              # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
-    - edp.db.superAdminSecret.password              # Super admin password to DB (if there is no password, a random password will be generated);
-    - edp.db.tenantAdminSecret.password             # Tenant password to DB (if there is no passwors, a random password will be generated);
-    - edp.db.tenantAdminSecret.username             # Tenant username to DB;
     - jenkins.storageClass                          # Type of storage class. By default: gp2; 
     - jenkins.volumeCapacity                        # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
  ```
@@ -63,7 +74,7 @@ Optional parameters:
     Database parameters:
     - edp.db.image                                  # DB image, e.g. postgres:9.6;
     - edp.db.port                                   # Port of DB;
-    - edp.db.host                                   # Host to DB in another namespace (<namespace>.<db-name>);
+    - edp.db.host                                   # Host to DB (<db-name>.<namespace>);
     - edp.db.storage.class                          # Type of storage class;
     - edp.db.storage.size                           # Size of storage;
       
@@ -114,8 +125,13 @@ Optional parameters:
 
 Inspect the sample of launching a Helm template for EDP installation:
 
+For some reasons, you may want to integrate with DB from another namespace. To achieve this:
+   * Set edp.db.host as <db-name>.<another_namespace>;
+   * Create 'super-admin-db' secret with credentials from existing admin credentials to DB;
+   * Create 'db-admin-console' secret;
+   
 ```bash
-helm install edp-install --wait --timeout=900s --namespace <edp-project> --create-namespace --set edp.name=<edp-project> deploy-templates
+helm install edp-install --wait --timeout=900s --namespace <edp-project> --set edp.name=<edp-project> deploy-templates
 ```
 
 As soon as Helm deploys components, create secrets for JIRA/GIT integration (if enabled) manually. Pay attention that 
