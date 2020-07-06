@@ -1,6 +1,6 @@
 {{- if not .Values.edp.db.host }}
   {{- if not (lookup "v1" "Deployment" ".Values.edp.name" "edp-install-wizard-db").metadata }}
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   generation: 1
