@@ -49,20 +49,12 @@ jenkins:
     pipelines: "master"
     stages: "master"
   pullSecrets:
-adminConsole:
-  version: "master-2.4.0-111"
-  image: "docker-registry.default.svc:5000/oc-green-edp-cicd/edp-admin-console-master"
-  pullSecrets:
 perf:
   enabled: "false"
   nodeId: ""
   url: ""
 vcs:
   enabled: "false"
-keycloak:
-  namespace: "keycloak"
-  url: "https://keycloak-keycloak.delivery.aws.main.edp.projects.epam.com"
-  secretToCopy: "keycloak"
 dockerRegistry:
   url: "093899590031.dkr.ecr.eu-central-1.amazonaws.com"
 
@@ -83,6 +75,9 @@ keycloak-operator:
   image:
     name: docker-registry.default.svc:5000/oc-green-edp-cicd/keycloak-operator-master-dev-keycloak-operator-verified
     version: 1.4.0-SNAPSHOT.24
+  keycloak:
+    name: "main"
+    url: "https://keycloak-keycloak.delivery.aws.main.edp.projects.epam.com"
 
 codebase-operator:
   namespace: "mm-helm-charts-test"
@@ -155,6 +150,10 @@ admin-console-operator:
   image:
     name: docker-registry.default.svc:5000/oc-green-edp-cicd/admin-console-operator-master-dev-admin-console-operator-verified
     version: 2.4.0-SNAPSHOT.30
+  adminConsole:
+    image: "docker-registry.default.svc:5000/oc-green-edp-cicd/edp-admin-console-master"
+    version: "2.4.0-SNAPSHOT.122"
+    pullSecrets:
 
 gerrit-operator:
   namespace: "mm-helm-charts-test"
