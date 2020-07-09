@@ -1,5 +1,5 @@
-{{- if eq .Values.edp.platform "openshift" -}}
-  {{- range .Values.edp.admins -}}
+{{- if eq .Values.global.platform "openshift" -}}
+  {{- range .Values.global.admins -}}
     {{- if not (lookup "user.openshift.io/v1" "User" "" .).metadata }}
 ---
 apiVersion: user.openshift.io/v1

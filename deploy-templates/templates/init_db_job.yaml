@@ -12,16 +12,16 @@ spec:
     metadata:
       name: db-init
       labels:
-        app: edp-install-wizard-db
+        app: {{.Values.global.database.name}}
     spec:
       restartPolicy: Never
       containers:
-        - image: {{.Values.edp.db.image}}
+        - image: {{.Values.global.database.image}}
           name: db-init
           command:
             - "/bin/bash"
             - "-c"
-            - "psql -h $(PGHOST) -d $(POSTGRES_DB) -U $(POSTGRES_USER) -c 'CREATE SCHEMA IF NOT EXISTS \"{{.Values.edp.name}}\"; \
+            - "psql -h $(PGHOST) -d $(POSTGRES_DB) -U $(POSTGRES_USER) -c 'CREATE SCHEMA IF NOT EXISTS \"{{.Values.global.edpName}}\"; \
               DO \
               $do$ \
               BEGIN \
@@ -30,7 +30,7 @@ spec:
                  END IF; \
               END \
               $do$; \
-              GRANT ALL PRIVILEGES ON SCHEMA \"{{.Values.edp.name}}\" TO \"$(TENANT_ADMIN_USERNAME)\"';"
+              GRANT ALL PRIVILEGES ON SCHEMA \"{{.Values.global.edpName}}\" TO \"$(TENANT_ADMIN_USERNAME)\"';"
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -53,6 +53,6 @@ spec:
                   name: db-admin-console
                   key: password
             - name: POSTGRES_DB
-              value: edp-install-wizard-db
+              value: {{.Values.global.database.name}}
             - name: PGHOST
-              value: {{if .Values.edp.db.host}}{{.Values.edp.db.host}}{{else}}"edp-install-wizard-db.{{.Values.edp.name}}"{{end}}
+              value: {{if .Values.global.database.host}}{{.Values.global.database.host}}{{else}}"{{.Values.global.database.name}}.{{.Values.global.edpName}}"{{end}}

@@ -1,6 +1,6 @@
-{{- if eq .Values.edp.platform "kubernetes"  -}}
-  {{-  $name := printf "edp-%s-admin" .Values.edp.name -}}
-  {{- if not (lookup "rbac.authorization.k8s.io/v1" "RoleBinding" .Values.edp.name $name).metadata}}
+{{- if eq .Values.global.platform "kubernetes"  -}}
+  {{-  $name := printf "edp-%s-admin" .Values.global.edpName -}}
+  {{- if not (lookup "rbac.authorization.k8s.io/v1" "RoleBinding" .Values.global.edpName $name).metadata}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

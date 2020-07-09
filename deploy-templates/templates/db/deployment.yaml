@@ -1,20 +1,20 @@
-{{- if not .Values.edp.db.host }}
-  {{- if not (lookup "v1" "Deployment" ".Values.edp.name" "edp-install-wizard-db").metadata }}
+{{- if not .Values.global.database.host }}
+  {{- if not (lookup "v1" "Deployment" ".Values.global.edpName" .Values.global.database.name).metadata }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   generation: 1
   labels:
-    app: edp-install-wizard-db
-  name: edp-install-wizard-db
+    app: {{.Values.global.database.name}}
+  name: {{.Values.global.database.name}}
 spec:
   selector:
     matchLabels:
-      app: edp-install-wizard-db
+      app: {{.Values.global.database.name}}
   template:
     metadata:
       labels:
-        app: edp-install-wizard-db
+        app: {{.Values.global.database.name}}
     spec:
       containers:
         - env:
@@ -36,8 +36,8 @@ spec:
                   apiVersion: v1
                   fieldPath: status.podIP
             - name: POSTGRES_DB
-              value: edp-install-wizard-db
-          image: {{.Values.edp.db.image}}
+              value: {{.Values.global.database.name}}
+          image: {{.Values.global.database.image}}
           imagePullPolicy: IfNotPresent
           livenessProbe:
             exec:
@@ -50,9 +50,9 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             timeoutSeconds: 5
-          name: edp-install-wizard-db
+          name: {{.Values.global.database.name}}
           ports:
-            - containerPort: {{.Values.edp.db.port}}
+            - containerPort: {{.Values.global.database.port}}
               name: db
               protocol: TCP
           readinessProbe:
@@ -71,11 +71,11 @@ spec:
               memory: 512Mi
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: edp-install-wizard-db
+              name: {{.Values.global.database.name}}
       serviceAccountName: edp
       volumes:
-        - name: edp-install-wizard-db
+        - name: {{.Values.global.database.name}}
           persistentVolumeClaim:
-            claimName: edp-install-wizard-db
+            claimName: {{.Values.global.database.name}}
   {{end}}
 {{end}}

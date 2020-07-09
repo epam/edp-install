@@ -1,4 +1,4 @@
-{{- if eq .Values.edp.platform "openshift"  -}}
+{{- if eq .Values.global.platform "openshift"  -}}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 allowHostDirVolumePlugin: false
@@ -17,7 +17,7 @@ fsGroup:
       max: 65543
 groups: []
 metadata:
-  name: edp-{{ .Values.edp.name }}
+  name: edp-{{ .Values.global.edpName }}
 priority: 0
 readOnlyRootFilesystem: false
 requiredDropCapabilities:
@@ -34,7 +34,7 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{ .Values.edp.name }}:edp
+- system:serviceaccount:{{ .Values.global.edpName }}:edp
 volumes:
 - configMap
 - downwardAPI

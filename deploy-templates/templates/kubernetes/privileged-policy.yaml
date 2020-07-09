@@ -1,4 +1,4 @@
-{{- if eq .Values.edp.platform "kubernetes" -}}
+{{- if eq .Values.global.platform "kubernetes" -}}
   {{- if not (lookup "policy/v1beta1" "PodSecurityPolicy" "" "privileged").metadata }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy

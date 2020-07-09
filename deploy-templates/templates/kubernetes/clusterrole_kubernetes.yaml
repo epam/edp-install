@@ -1,8 +1,8 @@
-{{- if eq .Values.edp.platform "kubernetes" -}}
+{{- if eq .Values.global.platform "kubernetes" -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: edp-deploy-role-{{ .Values.edp.name }}
+  name: edp-deploy-role-{{ .Values.global.edpName }}
 rules:
 - apiGroups:
     - "*"

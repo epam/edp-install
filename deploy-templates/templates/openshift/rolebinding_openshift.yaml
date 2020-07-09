@@ -1,6 +1,6 @@
-{{- if eq .Values.edp.platform "openshift"  -}}
-  {{- $name := printf "edp-%s-admin" .Values.edp.name -}}
-  {{- if not (lookup "rbac.authorization.k8s.io/v1" "RoleBinding" .Values.edp.name $name).metadata}}
+{{- if eq .Values.global.platform "openshift"  -}}
+  {{- $name := printf "edp-%s-admin" .Values.global.edpName -}}
+  {{- if not (lookup "rbac.authorization.k8s.io/v1" "RoleBinding" .Values.global.edpName $name).metadata}}
 apiVersion: authorization.openshift.io/v1
 kind: RoleBinding
 metadata:
@@ -11,10 +11,10 @@ subjects:
 - kind: User
   name: admin
 - kind: User
-  name: system:serviceaccount:{{ .Values.edp.name }}:edp
+  name: system:serviceaccount:{{ .Values.global.edpName }}:edp
 userNames:
 - admin
-- system:serviceaccount:{{ .Values.edp.name }}:edp
+- system:serviceaccount:{{ .Values.global.edpName }}:edp
 groupNames: []
   {{- end -}}
 {{- end -}}

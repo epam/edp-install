@@ -1,4 +1,4 @@
-{{- if eq .Values.edp.platform "openshift" -}}
+{{- if eq .Values.global.platform "openshift" -}}
   {{- if not (lookup "authorization.openshift.io/v1" "ClusterRoleBinding" "" "serviceaccounts-registry-viewer").metadata}}
 apiVersion: authorization.openshift.io/v1
 groupNames:

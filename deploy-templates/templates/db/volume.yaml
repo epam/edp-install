@@ -1,16 +1,16 @@
-{{- if not .Values.edp.db.host }}
-  {{- if not (lookup "v1" "PersistentVolumeClaim" ".Values.edp.name" "edp-install-wizard-db").metadata }}
+{{- if not .Values.global.database.host }}
+  {{- if not (lookup "v1" "PersistentVolumeClaim" ".Values.global.edpName" .Values.global.database.name).metadata }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: edp-install-wizard-db
+  name: {{.Values.global.database.name}}
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{.Values.edp.db.storage.size}}
-  storageClassName: {{.Values.edp.db.storage.class}}
+      storage: {{.Values.global.database.storage.size}}
+  storageClassName: {{.Values.global.database.storage.class}}
   volumeMode: Filesystem
   {{end}}
 {{end}}

@@ -52,86 +52,105 @@ Find below the description of optional and mandatory parameters types.
 
 Optional parameters:
  ```
-    - jenkins.sharedLibraryRepo.pipelines           # URL to library pipelines repository. By default: https://github.com/epmd-edp/edp-library-pipelines.git;
-    - jenkins.sharedLibraryRepo.stages              # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
-    - jenkins.storageClass                          # Type of storage class. By default: gp2; 
-    - jenkins.volumeCapacity                        # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
+    - jenkins-operator.jenkins.initImage                                # Init Docker image for Jenkins deployment;
+    - jenkins-operator.jenkins.pullSecrets                              # Secrets to pull from private Docker registry;
+    - jenkins-operator.jenkins.basePath                                 # Base path for Jenkins URL;
+    - jenkins-operator.jenkins.storageClass                             # Type of storage class. By default: gp2;
+    - jenkins-operator.jenkins.volumeCapacity                           # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
+    - jenkins-operator.jenkins.libraryPipelinesRepo                     # URL to library pipelines repository. By default: https://github.com/epmd-edp/edp-library-pipelines.git;
+    - jenkins-operator.jenkins.libraryPipelinesVersion                  # Version of EDP-Pipeline library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-pipelines/releases);
+    - jenkins-operator.jenkins.libraryStagesRepo                        # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
+    - jenkins-operator.jenkins.libraryStagesVersion                     # Version of EDP-Stages library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-stages/releases);
  ```
- Mandatory parameters: 
-  ```   
-    General parameters:
-    - edp.name                                      # name of your EDP project <edp-project> that was previously defined;
-    - edp.platform                                  # OpenShift or Kubernetes;
-    - edp.version                                   # EDP image and tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-install/tags);
-    - edp.dnsWildCard                               # DNS wildcard for routing in your K8S cluster;
-    - edp.admins                                    # Administrators of your tenant separated by comma (,) (eg --set 'edp.admins={test@mail.com}');
-    - edp.developers                                # Developers of your tenant separated by comma (,) (eg --set 'edp.developers={test@mail.com}');
-    - edp.adminGroups                               # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
-    - edp.developerGroups                           # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
-    - edp.webConsole                                # URL to Openshift Web console;
-    - dockerRegistry.url                            # URL to docker registry;
-      
-    Database parameters:
-    - edp.db.image                                  # DB image, e.g. postgres:9.6;
-    - edp.db.port                                   # Port of DB;
-    - edp.db.host                                   # Host to DB (<db-name>.<namespace>);
-    - edp.db.storage.class                          # Type of storage class;
-    - edp.db.storage.size                           # Size of storage;
-      
-    Jenkins parameters:
-    - jenkins.image                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins);
-    - jenkins.version                               # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
-    - jenkins.sharedLibraryVersion.pipelines        # Version of EDP-Pipeline library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-pipelines/releases);
-    - jenkins.sharedLibraryVersion.stages           # Version of EDP-Stages library for Jenkins. The released version can be found on [GitHub](https://github.com/epmd-edp/edp-library-stages/releases);
-     
-    Admin Console parameters:
-    - adminConsole.image                            # EDP image. The image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console);
-    - adminConsole.version                          # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
-     
-    Keycloak parameters:
-    - keycloak.url                                  # URL to Keycloak;
-    - keycloak.namespace                            # Namespace with deployed Keycloak;
-    - keycloak.secretToCopy                         # Secret name for Keycloak to be copied to your namespace;
-     
-    GitServer parameters:
-    - gitServer.name                                # GitServer CR name;
-    - gitServer.user                                # Git user to connect;
-    - gitServer.httpsPort                           # HTTPS port;
-    - gitServer.sshPort                             # SSH port;
-     
-    Jira parameters:
-    - jira.integration                              # Flag to enable/disable Jira integration;
-    - jira.name                                     # JiraServer CR name;
-    - jira.apiUrl                                   # API URL for development;
-    - jira.rootUrl                                  # URL to Jira server;
-    - jira.credentialName                           # Name of secret with credentials to Jira server;
 
-    Gerrit parameters:
-    - gerrit.deploy                                 # Flag to enable/disable Gerrit deploy;
-    - gerrit.image                                  # Gerrit image, e.g. openfrontier/gerrit;
-    - gerrit.version                                # Gerrit version, e.g. 3.1.4;
-    - gerrit.sshPort                                # SSH port;
-      
+Mandatory parameters: 
+ ```   
+    General parameters:
+    - global.version                                                    # EDP version;
+    - global.edpName                                                    # Name of your EDP project <edp-project> that was previously defined;
+    - global.platform                                                   # openshift or kubernetes;
+    - global.dnsWildCard                                                # DNS wildcard for routing in your K8S cluster;
+    - global.admins                                                     # Administrators of your tenant separated by comma (,) (eg --set 'global.admins={test@example.com}');
+    - global.developers                                                 # Developers of your tenant separated by comma (,) (eg --set 'global.developers={test@example.com}');
+    - global.database.image                                             # DB image, e.g. postgres:9.6;
+    - global.database.host                                              # Host to DB (<db-name>.<namespace>);
+    - global.database.name                                              # Name of DB;
+    - global.database.port                                              # Port of DB;
+    - global.database.storage.class                                     # Type of storage class;
+    - global.database.storage.size                                      # Size of storage;
+    - edp.webConsole                                                    # URL to Openshift Web console;
+    - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
+    - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
+    - dockerRegistry.url                                                # URL to docker registry;
+        
+    Jenkins parameters:
+    - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/jenkins-operator);
+    - jenkins-operator.image.version                                    # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/jenkins-operator/tags);
+    - jenkins-operator.jenkins.deploy                                   # Flag to enable/disable Jenkins deploy;
+    - jenkins-operator.jenkins.image                                    # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins);
+    - jenkins-operator.jenkins.version                                  # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
+    
+    CD pipeline parameters:
+    - cd-pipeline-operator.image.name                                   # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/cd-pipeline-operator);
+    - cd-pipeline-operator.image.version                                # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/cd-pipeline-operator/tags);
+        
+    Keycloak parameters:
+    - keycloak-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/keycloak-operator);
+    - keycloak-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/keycloak-operator/tags);
+    - keycloak-operator.keycloak.url                                    # URL to Keycloak;
+    
+    Codebase parameters:
+    - codebase-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/codebase-operator);
+    - codebase-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/codebase-operator/tags);
+    - codebase-operator.jira.integration                                # Flag to enable/disable Jira integration;
+    - codebase-operator.jira.name                                       # JiraServer CR name;
+    - codebase-operator.jira.apiUrl                                     # API URL for development;
+    - codebase-operator.jira.rootUrl                                    # URL to Jira server;
+    - codebase-operator.jira.credentialName                             # Name of secret with credentials to Jira server;
+    
     Nexus parameters:
-    - nexus.deploy                                  # Flag to enable/disable Nexus deploy;
-    - nexus.image                                   # Image for Nexus. The image can be found on [Dockerhub] (https://hub.docker.com/r/sonatype/nexus3);
-    - nexus.version                                 # Nexus version. The released version can be found on [Dockerhub](https://hub.docker.com/r/sonatype/nexus3/tags)'
-      
+    - nexus-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/nexus-operator);
+    - nexus-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/nexus-operator/tags);
+    - nexus-operator.nexus.deploy                                       # Flag to enable/disable Nexus deploy;
+    - nexus-operator.nexus.name                                         # Nexus name;
+    - nexus-operator.nexus.image                                        # Image for Nexus. The image can be found on [Dockerhub] (https://hub.docker.com/r/sonatype/nexus3);
+    - nexus-operator.nexus.version                                      # Nexus version. The released version can be found on [Dockerhub](https://hub.docker.com/r/sonatype/nexus3/tags)'
+    
     Sonar parameters:
-    - sonar.deploy                                  # Flag to enable/disable Sonar deploy;
-    - sonar.image                                   # Image for Sonar. The image can be found on [Dockerhub] (https://hub.docker.com/_/sonarqube);
-    - sonar.version                                 # Sonar version. The released version can be found on [Dockerhub](https://hub.docker.com/_/sonarqube/?tab=tags);
-```
+    - sonar-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/sonar-operator);
+    - sonar-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/sonar-operator/tags);
+    - sonar-operator.sonar.deploy                                       # Flag to enable/disable Sonar deploy;
+    - sonar-operator.sonar.name                                         # Flag to enable/disable Sonar deploy;
+    - sonar-operator.sonar.image                                        # Sonarqube Docker image name. Default supported is "sonarqube";
+    - sonar-operator.sonar.version                                      # Sonarqube Docker image tag. Default supported is "7.9-community";
+    - sonar-operator.sonar.initImage                                    # Init Docker image for Sonarqube deployment. Default is "busybox";
+    - sonar-operator.sonar.dbImage                                      # Docker image name for Sonarqube Database. Default in "postgres:9.6";
+    - sonar-operator.sonar.dataVolumeStorageClass                       # Storageclass for Sonarqube data volume. Default is "gp2";
+    - sonar-operator.sonar.dataVolumeCapacity                           # Sonarqube data volume capacity. Default is "1Gi";
+    - sonar-operator.sonar.dbVolumeStorageClass                         # Storageclass for Sonarqube database volume. Default is "gp2";
+    - sonar-operator.sonar.dbVolumeCapacity                             # Sonarqube database volume capacity. Default is "1Gi".
+    
+    Admin Console operator parameters:
+    - admin-console-operator.image.name                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/admin-console-operator);
+    - admin-console-operator.image.version                              # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/admin-console-operator/tags);
+    - admin-console-operator.adminConsole.image                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/edp-admin-console);
+    - admin-console-operator.adminConsole.version                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/edp-admin-console/tags);
+    - admin-console-operator.adminConsole.pullSecrets                   # Secrets to pull from private Docker registry;
+    
+    Reconciler parameters:
+    - reconciler.image.name                                             # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/reconciler);
+    - reconciler.image.version                                          # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/reconciler/tags);
+ ```  
 
 Inspect the sample of launching a Helm template for EDP installation:
 
 For some reasons, you may want to integrate with DB from another namespace. To achieve this:
-   * Set edp.db.host as <db-name>.<another_namespace>;
+   * Set global.database.host as <db-name>.<another_namespace>;
    * Create 'super-admin-db' secret with credentials from existing admin credentials to DB;
    * Create 'db-admin-console' secret;
    
 ```bash
-helm install edp-install --wait --timeout=900s --namespace <edp-project> --set edp.name=<edp-project> deploy-templates
+helm install edp-install --wait --timeout=900s --namespace <edp-project> --set global.edpName=<edp-project> deploy-templates
 ```
 
 As soon as Helm deploys components, create secrets for JIRA/GIT integration (if enabled) manually. Pay attention that 

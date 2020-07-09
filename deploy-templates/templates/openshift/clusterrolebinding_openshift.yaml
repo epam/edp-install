@@ -1,15 +1,15 @@
-{{- if eq .Values.edp.platform "openshift" -}}
+{{- if eq .Values.global.platform "openshift" -}}
 apiVersion: authorization.openshift.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Values.edp.name }}
+  name: {{ .Values.global.edpName }}
 roleRef:
-  name: edp-deploy-role-{{ .Values.edp.name }}
+  name: edp-deploy-role-{{ .Values.global.edpName }}
 subjects:
 - kind: ServiceAccount
   name: edp
-  namespace: {{ .Values.edp.name }}
+  namespace: {{ .Values.global.edpName }}
 userNames:
-- system:serviceaccount:{{ .Values.edp.name }}:edp
+- system:serviceaccount:{{ .Values.global.edpName }}:edp
 groupNames: []
 {{- end -}}

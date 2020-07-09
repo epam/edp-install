@@ -1,27 +1,27 @@
-{{- if eq .Values.edp.platform "openshift" -}}
+{{- if eq .Values.global.platform "openshift" -}}
   {{- range .Values.edp.adminGroups -}}
-    {{- if not (lookup "user.openshift.io/v1" "Group" "$.Values.edp.name" .)}}
+    {{- if not (lookup "user.openshift.io/v1" "Group" .Values.global.edpName .)}}
 ---
 apiVersion: user.openshift.io/v1
 kind: Group
 metadata:
   name: {{.}}
 users:
-      {{ range $.Values.edp.admins -}}
+      {{ range $.Values.global.admins -}}
   - {{.}}
       {{end}}
     {{end}}
   {{end}}
 
   {{- range .Values.edp.developerGroups -}}
-    {{- if not (lookup "user.openshift.io/v1" "Group" "$.Values.edp.name" .)}}
+    {{- if not (lookup "user.openshift.io/v1" "Group" .Values.global.edpName .)}}
 ---
 apiVersion: user.openshift.io/v1
 kind: Group
 metadata:
   name: {{.}}
 users:
-      {{ range $.Values.edp.developers -}}
+      {{ range $.Values.global.developers -}}
   - {{.}}
       {{end}}
     {{end}}

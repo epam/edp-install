@@ -1,16 +1,16 @@
-{{- if eq .Values.edp.platform "kubernetes" -}}
-  {{- if not (lookup "rbac.authorization.k8s.io/v1" "ClusterRoleBinding" "" .Values.edp.name).metadata}}
+{{- if eq .Values.global.platform "kubernetes" -}}
+  {{- if not (lookup "rbac.authorization.k8s.io/v1" "ClusterRoleBinding" "" .Values.global.edpName).metadata}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Values.edp.name }}
+  name: {{ .Values.global.edpName }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: edp-deploy-role-{{ .Values.edp.name }}
+  name: edp-deploy-role-{{ .Values.global.edpName }}
 subjects:
 - kind: ServiceAccount
   name: edp
-  namespace: {{ .Values.edp.name }}
+  namespace: {{ .Values.global.edpName }}
   {{- end -}}
 {{- end -}}

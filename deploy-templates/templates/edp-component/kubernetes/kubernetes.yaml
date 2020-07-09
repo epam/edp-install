@@ -1,5 +1,5 @@
-{{- if eq .Values.edp.platform "kubernetes" -}}
-  {{- if not (lookup "v1.edp.epam.com/v1alpha1" "EDPComponent" ".Values.edp.name" "kubernetes").metadata }}
+{{- if eq .Values.global.platform "kubernetes" -}}
+  {{- if not (lookup "v1.edp.epam.com/v1alpha1" "EDPComponent" ".Values.global.edpName" "kubernetes").metadata }}
 apiVersion: v1.edp.epam.com/v1alpha1
 kind: EDPComponent
 metadata:
