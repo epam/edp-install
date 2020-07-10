@@ -51,17 +51,6 @@ kubectl -n <edp-project> create secret generic db-admin-console --from-literal=u
 Find below the description of optional and mandatory parameters types.
 
 Optional parameters:
- ```
-    - jenkins-operator.jenkins.initImage                                # Init Docker image for Jenkins deployment;
-    - jenkins-operator.jenkins.pullSecrets                              # Secrets to pull from private Docker registry;
-    - jenkins-operator.jenkins.basePath                                 # Base path for Jenkins URL;
-    - jenkins-operator.jenkins.storageClass                             # Type of storage class. By default: gp2;
-    - jenkins-operator.jenkins.volumeCapacity                           # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
-    - jenkins-operator.jenkins.libraryPipelinesRepo                     # URL to library pipelines repository. By default: https://github.com/epmd-edp/edp-library-pipelines.git;
-    - jenkins-operator.jenkins.libraryPipelinesVersion                  # Version of EDP-Pipeline library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-pipelines/releases);
-    - jenkins-operator.jenkins.libraryStagesRepo                        # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
-    - jenkins-operator.jenkins.libraryStagesVersion                     # Version of EDP-Stages library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-stages/releases);
- ```
 
 Mandatory parameters: 
  ```   
@@ -72,6 +61,7 @@ Mandatory parameters:
     - global.dnsWildCard                                                # DNS wildcard for routing in your K8S cluster;
     - global.admins                                                     # Administrators of your tenant separated by comma (,) (eg --set 'global.admins={test@example.com}');
     - global.developers                                                 # Developers of your tenant separated by comma (,) (eg --set 'global.developers={test@example.com}');
+    - global.database.deploy                                            # Deploy DB to current namespace or use from another;
     - global.database.image                                             # DB image, e.g. postgres:9.6;
     - global.database.host                                              # Host to DB (<db-name>.<namespace>);
     - global.database.name                                              # Name of DB;
@@ -89,6 +79,15 @@ Mandatory parameters:
     - jenkins-operator.jenkins.deploy                                   # Flag to enable/disable Jenkins deploy;
     - jenkins-operator.jenkins.image                                    # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins);
     - jenkins-operator.jenkins.version                                  # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
+    - jenkins-operator.jenkins.initImage                                # Init Docker image for Jenkins deployment;
+    - jenkins-operator.jenkins.pullSecrets                              # Secrets to pull from private Docker registry;
+    - jenkins-operator.jenkins.basePath                                 # Base path for Jenkins URL;
+    - jenkins-operator.jenkins.storageClass                             # Type of storage class. By default: gp2;
+    - jenkins-operator.jenkins.volumeCapacity                           # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
+    - jenkins-operator.jenkins.libraryPipelinesRepo                     # URL to library pipelines repository. By default: https://github.com/epmd-edp/edp-library-pipelines.git;
+    - jenkins-operator.jenkins.libraryPipelinesVersion                  # Version of EDP-Pipeline library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-pipelines/releases);
+    - jenkins-operator.jenkins.libraryStagesRepo                        # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
+    - jenkins-operator.jenkins.libraryStagesVersion                     # Version of EDP-Stages library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-stages/releases);
     
     CD pipeline parameters:
     - cd-pipeline-operator.image.name                                   # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/cd-pipeline-operator);
@@ -115,6 +114,10 @@ Mandatory parameters:
     - nexus-operator.nexus.name                                         # Nexus name;
     - nexus-operator.nexus.image                                        # Image for Nexus. The image can be found on [Dockerhub] (https://hub.docker.com/r/sonatype/nexus3);
     - nexus-operator.nexus.version                                      # Nexus version. The released version can be found on [Dockerhub](https://hub.docker.com/r/sonatype/nexus3/tags)'
+    - nexus-operator.nexus.basePath                                     # Base path for Nexus URL;
+    - nexus-operator.nexus.imagePullSecrets                             # Secrets to pull from private Docker registry;
+    - nexus-operator.nexus.storage.class                                # Storageclass for Nexus data volume. Default is "gp2";
+    - nexus-operator.nexus.storage.size                                 # Nexus data volume capacity. Default is "10Gi";
     
     Sonar parameters:
     - sonar-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/sonar-operator);
@@ -129,6 +132,8 @@ Mandatory parameters:
     - sonar-operator.sonar.dataVolumeCapacity                           # Sonarqube data volume capacity. Default is "1Gi";
     - sonar-operator.sonar.dbVolumeStorageClass                         # Storageclass for Sonarqube database volume. Default is "gp2";
     - sonar-operator.sonar.dbVolumeCapacity                             # Sonarqube database volume capacity. Default is "1Gi".
+    - sonar-operator.sonar.imagePullSecrets                             # Secrets to pull from private Docker registry;
+    - sonar-operator.sonar.basePath                                     # Base path for Sonar URL;
     
     Admin Console operator parameters:
     - admin-console-operator.image.name                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/admin-console-operator);
@@ -136,6 +141,8 @@ Mandatory parameters:
     - admin-console-operator.adminConsole.image                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/edp-admin-console);
     - admin-console-operator.adminConsole.version                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/edp-admin-console/tags);
     - admin-console-operator.adminConsole.pullSecrets                   # Secrets to pull from private Docker registry;
+    - admin-console-operator.adminConsole.imagePullSecrets              # Secrets to pull from private Docker registry;
+    - admin-console-operator.adminConsole.basePath                      # Base path for Admin Console URL;
     
     Reconciler parameters:
     - reconciler.image.name                                             # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/reconciler);

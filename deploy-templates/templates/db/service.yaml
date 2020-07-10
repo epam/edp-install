@@ -1,4 +1,4 @@
-{{- if not .Values.global.database.host }}
+{{- if .Values.global.database.deploy }}
   {{- if not (lookup "v1" "Service" ".Values.global.edpName" .Values.global.database.name).metadata }}
 apiVersion: v1
 kind: Service

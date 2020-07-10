@@ -9,6 +9,7 @@ global:
     - "stub_user_one@example.com"
     - "stub_user_two@example.com"
   database:
+    deploy: true
     image: "postgres:9.6"
     host:
     name: "edp-install-wizard-db"
@@ -98,6 +99,11 @@ nexus-operator:
     name: "nexus"
     image: "sonatype/nexus3"
     version: "3.21.2"
+    basePath:
+    imagePullSecrets:
+    storage:
+      class: gp2
+      size: 10Gi
 
 sonar-operator:
   image:
@@ -114,6 +120,8 @@ sonar-operator:
     dataVolumeCapacity: 1Gi
     dbVolumeStorageClass: gp2
     dbVolumeCapacity: 1Gi
+    imagePullSecrets:
+    basePath:
 
 admin-console-operator:
   image:
@@ -122,7 +130,8 @@ admin-console-operator:
   adminConsole:
     image: epamedp/edp-admin-console
     version: 2.4.0
-    pullSecrets:
+    imagePullSecrets:
+    basePath:
 
 gerrit-operator:
   image:
@@ -134,6 +143,7 @@ gerrit-operator:
     image: "openfrontier/gerrit"
     sshPort: "22"
     version: "3.1.4"
+    imagePullSecrets:
   gitServer:
     name: "gerrit"
     user: "jenkins"

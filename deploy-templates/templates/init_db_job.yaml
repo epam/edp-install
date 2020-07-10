@@ -55,4 +55,4 @@ spec:
             - name: POSTGRES_DB
               value: {{.Values.global.database.name}}
             - name: PGHOST
-              value: {{if .Values.global.database.host}}{{.Values.global.database.host}}{{else}}"{{.Values.global.database.name}}.{{.Values.global.edpName}}"{{end}}
+              value: {{.Values.global.database.host}}
