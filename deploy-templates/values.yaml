@@ -56,7 +56,7 @@ keycloak-operator:
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: v1.4.0
+    version: v2.4.0
   jira:
     integration: true
     name: "epam-jira"
@@ -67,7 +67,7 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: v1.4.0
+    version: v2.4.0
   jenkins:
     deploy: true
     image: epamedp/edp-jenkins
@@ -80,7 +80,7 @@ jenkins-operator:
     libraryStagesRepo: "https://github.com/epmd-edp/edp-library-stages.git"
     libraryStagesVersion: "master"
     pullSecrets:
-    basePath:
+    basePath: ""
 
 edp-component-operator:
   namespace: "stub-namespace"
@@ -88,18 +88,18 @@ edp-component-operator:
 cd-pipeline-operator:
   image:
     name: epamedp/cd-pipeline-operator
-    version: v1.4.0
+    version: v2.4.0
 
 nexus-operator:
   image:
     name: epamedp/nexus-operator
-    version: v1.4.0
+    version: v2.4.0
   nexus:
     deploy: true
     name: "nexus"
     image: "sonatype/nexus3"
     version: "3.21.2"
-    basePath:
+    basePath: ""
     imagePullSecrets:
     storage:
       class: gp2
@@ -108,7 +108,7 @@ nexus-operator:
 sonar-operator:
   image:
     name: epamedp/sonar-operator
-    version: v1.4.0
+    version: v2.4.0
   sonar:
     deploy: true
     name: "sonar"
@@ -121,22 +121,22 @@ sonar-operator:
     dbVolumeStorageClass: gp2
     dbVolumeCapacity: 1Gi
     imagePullSecrets:
-    basePath:
+    basePath: ""
 
 admin-console-operator:
   image:
     name: epamedp/admin-console-operator
-    version: v1.4.0
+    version: v2.4.0
   adminConsole:
     image: epamedp/edp-admin-console
     version: 2.4.0
     imagePullSecrets:
-    basePath:
+    basePath: ""
 
 gerrit-operator:
   image:
     name: epamedp/gerrit-operator
-    version: v1.4.0
+    version: v2.4.0
   gerrit:
     deploy: true
     name: "gerrit"
@@ -154,4 +154,4 @@ gerrit-operator:
 reconciler:
   image:
     name: epamedp/reconciler
-    version: v1.4.0
+    version: v2.4.0
