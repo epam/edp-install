@@ -1,6 +1,6 @@
 {{- if eq .Values.global.platform "openshift" -}}
   {{- range .Values.edp.adminGroups -}}
-    {{- if not (lookup "user.openshift.io/v1" "Group" .Values.global.edpName .)}}
+    {{- if not (lookup "user.openshift.io/v1" "Group" $.Values.global.edpName .)}}
 ---
 apiVersion: user.openshift.io/v1
 kind: Group
@@ -14,7 +14,7 @@ users:
   {{end}}
 
   {{- range .Values.edp.developerGroups -}}
-    {{- if not (lookup "user.openshift.io/v1" "Group" .Values.global.edpName .)}}
+    {{- if not (lookup "user.openshift.io/v1" "Group" $.Values.global.edpName .)}}
 ---
 apiVersion: user.openshift.io/v1
 kind: Group
