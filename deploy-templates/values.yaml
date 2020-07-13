@@ -79,8 +79,9 @@ jenkins-operator:
     deploy: true
     image: epamedp/edp-jenkins
     version: 2.4.0
-    storageClass: gp2
-    volumeCapacity: 10Gi
+    storage:
+      class: gp2
+      size: 10Gi
     initImage:
     libraryPipelinesRepo: "https://github.com/epmd-edp/edp-library-pipelines.git"
     libraryPipelinesVersion: "master"
@@ -120,10 +121,13 @@ sonar-operator:
     version: "7.9-community"
     initImage: "busybox"
     dbImage: "postgres:9.6"
-    dataVolumeStorageClass: gp2
-    dataVolumeCapacity: 1Gi
-    dbVolumeStorageClass: gp2
-    dbVolumeCapacity: 1Gi
+    storage:
+      data:
+        class: gp2
+        size: 1Gi
+      database:
+        class: gp2
+        size: 1Gi
     imagePullSecrets:
     basePath: ""
 
@@ -148,12 +152,9 @@ gerrit-operator:
     sshPort: "22"
     version: "3.1.4"
     imagePullSecrets:
-  gitServer:
-    name: "gerrit"
-    user: "jenkins"
-    httpsPort: 443
-    nameSshKeySecret: "gerrit-ciuser-sshkey"
-    sshPort: 22
+    storage:
+      size: 1Gi
+      class: gp2
 
 reconciler:
   image:

@@ -87,8 +87,8 @@ Mandatory parameters:
     - jenkins-operator.jenkins.initImage                                # Init Docker image for Jenkins deployment;
     - jenkins-operator.jenkins.pullSecrets                              # Secrets to pull from private Docker registry;
     - jenkins-operator.jenkins.basePath                                 # Base path for Jenkins URL;
-    - jenkins-operator.jenkins.storageClass                             # Type of storage class. By default: gp2;
-    - jenkins-operator.jenkins.volumeCapacity                           # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
+    - jenkins-operator.jenkins.storage.class                            # Type of storage class. By default: gp2;
+    - jenkins-operator.jenkins.storage.size                             # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
     - jenkins-operator.jenkins.libraryPipelinesRepo                     # URL to library pipelines repository. By default: https://github.com/epmd-edp/edp-library-pipelines.git;
     - jenkins-operator.jenkins.libraryPipelinesVersion                  # Version of EDP-Pipeline library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-pipelines/releases);
     - jenkins-operator.jenkins.libraryStagesRepo                        # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
@@ -133,10 +133,10 @@ Mandatory parameters:
     - sonar-operator.sonar.version                                      # Sonarqube Docker image tag. Default supported is "7.9-community";
     - sonar-operator.sonar.initImage                                    # Init Docker image for Sonarqube deployment. Default is "busybox";
     - sonar-operator.sonar.dbImage                                      # Docker image name for Sonarqube Database. Default in "postgres:9.6";
-    - sonar-operator.sonar.dataVolumeStorageClass                       # Storageclass for Sonarqube data volume. Default is "gp2";
-    - sonar-operator.sonar.dataVolumeCapacity                           # Sonarqube data volume capacity. Default is "1Gi";
-    - sonar-operator.sonar.dbVolumeStorageClass                         # Storageclass for Sonarqube database volume. Default is "gp2";
-    - sonar-operator.sonar.dbVolumeCapacity                             # Sonarqube database volume capacity. Default is "1Gi".
+    - sonar-operator.sonar.storage.data.class                           # Storageclass for Sonarqube data volume. Default is "gp2";
+    - sonar-operator.sonar.storage.data.size                            # Sonarqube data volume size. Default is "1Gi";
+    - sonar-operator.sonar.storage.database.class                       # Storageclass for Sonarqube database volume. Default is "gp2";
+    - sonar-operator.sonar.storage.database.size                        # Sonarqube database volume size. Default is "1Gi"
     - sonar-operator.sonar.imagePullSecrets                             # Secrets to pull from private Docker registry;
     - sonar-operator.sonar.basePath                                     # Base path for Sonar URL;
     
