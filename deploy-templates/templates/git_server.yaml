@@ -1,0 +1,13 @@
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: GitServer
+metadata:
+  name: {{.Values.gitServer.name}}
+spec:
+  createCodeReviewPipeline: false
+  edpSpec:
+    dnsWildcard: {{ .Values.global.dnsWildCard }}
+  gitHost: 'gerrit.{{ .Values.global.edpName }}'
+  gitUser: {{.Values.gitServer.user}}
+  httpsPort: {{.Values.gitServer.httpsPort}}
+  nameSshKeySecret: {{.Values.gitServer.nameSshKeySecret}}
+  sshPort: {{.Values.gitServer.sshPort}}

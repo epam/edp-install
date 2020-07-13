@@ -18,6 +18,13 @@ global:
       class: gp2
       size: 2Gi
 
+gitServer:
+  name: "gerrit"
+  user: "jenkins"
+  httpsPort: 443
+  nameSshKeySecret: "gerrit-ciuser-sshkey"
+  sshPort: 22
+
 edp:
   webConsole: "https://master.delivery.aws.main.edp.projects.epam.com"
   adminGroups:
@@ -81,9 +88,6 @@ jenkins-operator:
     libraryStagesVersion: "master"
     pullSecrets:
     basePath: ""
-
-edp-component-operator:
-  namespace: "stub-namespace"
 
 cd-pipeline-operator:
   image:

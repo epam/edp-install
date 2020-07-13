@@ -64,6 +64,11 @@ Mandatory parameters:
     - edp.webConsole                                                    # URL to Openshift Web console;
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
+    - gitServer.name                                                    # GitServer CR name;
+    - gitServer.user                                                    # Git user to connect;
+    - gitServer.httpsPort                                               # HTTPS port;
+    - gitServer.nameSshKeySecret                                        # Name of secret with credentials to Git server;
+    - gitServer.sshPort                                                 # SSH port;
         
     Jenkins parameters:
     - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/jenkins-operator);
