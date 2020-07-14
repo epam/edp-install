@@ -17,16 +17,11 @@ global:
     storage:
       class: gp2
       size: 2Gi
-
-gitServer:
-  name: "gerrit"
-  user: "jenkins"
-  httpsPort: 443
-  nameSshKeySecret: "gerrit-ciuser-sshkey"
-  sshPort: 22
+  webConsole:
+    enabled: true
+    url: "https://master.delivery.aws.main.edp.projects.epam.com"
 
 edp:
-  webConsole: "https://master.delivery.aws.main.edp.projects.epam.com"
   adminGroups:
     - "stub-group-admin"
   developerGroups:

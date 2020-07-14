@@ -6,7 +6,7 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 1. Kubernetes cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
 2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
 3. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
-4. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 32k support;
+4. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 64k support;
 
     - Example of Config Map for Nginx ingress controller:
     ```yaml
@@ -28,14 +28,16 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 6. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
 7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
 8. The "openshift" realm is created in Keycloak;
-9. The "keycloak" secret with administrative access username and password exists in the namespace where Keycloak in installed;
-10. Helm 3.1 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
+9. Helm 3.1 or higher is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
+
+## EDP Namespace
+Choose an EDP tenant name, e.g. "demo", and create the <edp-project> namespace with this name.
+Before starting the EDP deployment, make sure to have the <edp-project> EDP namespace created in K8S.
 
 ## Install EDP
-* Choose an EDP tenant name, e.g. "demo", and create the <edp-project> project with any name (e.g. "demo").
-Before starting EDP deployment, EDP project <edp-project> in K8S should be created.
-
-* Create secret for EDP admin database user:
+To store EDP data, use any existing Postgres database or create one during the installation.
+In addition, create two secrets in the <edp-project> namespace: one with administrative credentials and one with credentials for the EDP tenant (database schema). 
+* Create secret for administrative access to database:
 ```
 kubectl -n <edp-project> create secret generic super-admin-db --from-literal=username=<super_admin_db_username> --from-literal=password=<super_admin_db_password>
 ```
@@ -45,38 +47,47 @@ kubectl -n <edp-project> create secret generic super-admin-db --from-literal=use
 kubectl -n <edp-project> create secret generic db-admin-console --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
 
+* For EDP, it is required to have Keycloak access to perform the integration. To do this, create manually secret with an administrative access username 
+and a password or use the existing secret and the commands as examples:  
+```bash
+kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export -o yaml | kubectl -n <edp_cicd_project> apply -f -
+```
 
-* Apply EDP chart using Helm. 
+* To add the Helm EPAMEDP Charts for local client, run "helm repo add":
+     ```bash
+     helm repo add epamedp https://chartmuseum.demo.edp-epam.com/
+     ```
+* Choose available Helm chart version:
+     ```bash
+     helm search repo epamedp/edp-install
+     NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+     epamedp/edp-install     2.4.0           1.16.0          A Helm chart for Kubernetes
+     ```
 
-Find below the description of optional and mandatory parameters types.
+     _**NOTE:** It is highly recommended to use the latest released version._
+     
+* EDP installation chart disposes of the following parameters: 
 
-Optional parameters:
-
-Mandatory parameters: 
  ```   
     General parameters:
     - global.version                                                    # EDP version;
-    - global.edpName                                                    # Name of your EDP project <edp-project> that was previously defined;
+    - global.edpName                                                    # Name of your <edp-project> EDP namespace that was previously defined;
     - global.platform                                                   # openshift or kubernetes;
     - global.dnsWildCard                                                # DNS wildcard for routing in your K8S cluster;
     - global.admins                                                     # Administrators of your tenant separated by comma (,) (eg --set 'global.admins={test@example.com}');
     - global.developers                                                 # Developers of your tenant separated by comma (,) (eg --set 'global.developers={test@example.com}');
-    - global.database.deploy                                            # Deploy DB to current namespace or use from another;
+    - global.database.deploy                                            # Deploy DB to current namespace or use from another. Set to true if you want to install new DB with this chart;
     - global.database.image                                             # DB image, e.g. postgres:9.6;
     - global.database.host                                              # Host to DB (<db-name>.<namespace>);
     - global.database.name                                              # Name of DB;
     - global.database.port                                              # Port of DB;
-    - global.database.storage.class                                     # Type of storage class;
-    - global.database.storage.size                                      # Size of storage;
-    - edp.webConsole                                                    # URL to Openshift Web console;
+    - global.database.storage.class                                     # Type of storage class for DB volume;
+    - global.database.storage.size                                      # Size of storage for DB volume;
+    - global.webConsole.enabled                                         # Set to true if you want to have Kubernetes dashboard link in Admin Console;
+    - global.webConsole.url                                             # Kubernetes dashboard URL;
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
     - dockerRegistry.url                                                # URL to docker registry;
-    - gitServer.name                                                    # GitServer CR name;
-    - gitServer.user                                                    # Git user to connect;
-    - gitServer.httpsPort                                               # HTTPS port;
-    - gitServer.nameSshKeySecret                                        # Name of secret with credentials to Git server;
-    - gitServer.sshPort                                                 # SSH port;
         
     Jenkins parameters:
     - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/jenkins-operator);
@@ -154,29 +165,16 @@ Mandatory parameters:
     - reconciler.image.version                                          # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/reconciler/tags);
  ```  
 
-Inspect the sample of launching a Helm template for EDP installation:
+* If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> namespace;
 
-For some reasons, you may want to integrate with DB from another namespace. To achieve this:
-   * Set global.database.host as <db-name>.<another_namespace>;
-   * Create 'super-admin-db' secret with credentials from existing admin credentials to DB;
-   * Create 'db-admin-console' secret;
-   
+* Install EDP in the <edp-project> namespace with the helm command; find below the installation command example:
 ```bash
-helm install edp-install --wait --timeout=900s --namespace <edp-project> --set global.edpName=<edp-project> deploy-templates
+helm install epamedp/edp-install --wait --timeout=900s --namespace <edp-project> --set global.edpName=<edp-project> --set global.dnsWildCard=<k8s_cluster_DNS_wilcdard> --set global.platform=kubernetes
 ```
 
-As soon as Helm deploys components, create secrets for JIRA/GIT integration (if enabled) manually. Pay attention that 
+* As soon as Helm deploys components, create secrets for JIRA/GIT integration (if enabled) manually. Pay attention that 
 secret names must be the same as 'credentialName' property for JIRA and 'nameSshKeySecret' for GIT.
  
- * Deploy operators in the <edp-project> namespace by following the corresponding instructions in their repositories:
-     - [keycloak-operator](https://github.com/epmd-edp/keycloak-operator)
-     - [codebase-operator](https://github.com/epmd-edp/codebase-operator)
-     - [reconciler](https://github.com/epmd-edp/reconciler)
-     - [cd-pipeline-operator](https://github.com/epmd-edp/cd-pipeline-operator)
-     - [nexus-operator](https://github.com/epmd-edp/nexus-operator)
-     - [sonar-operator](https://github.com/epmd-edp/sonar-operator)
-     - [admin-console-operator](https://github.com/epmd-edp/admin-console-operator)
-     - [gerrit-operator](https://github.com/epmd-edp/gerrit-operator)
-     - [jenkins-operator](https://github.com/epmd-edp/jenkins-operator)
-     
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
+
+* After the installation, it is necessary to configure the [GitHub](https://github.com/epmd-edp/jenkins-operator/blob/master/documentation/github-integration.md) or [GitLab](https://github.com/epmd-edp/jenkins-operator/blob/master/documentation/gitlab-integration.md) integration to work with EDP. 
