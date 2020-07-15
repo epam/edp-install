@@ -153,6 +153,7 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - admin-console-operator.adminConsole.version                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/edp-admin-console/tags);
     - admin-console-operator.adminConsole.imagePullSecrets              # Secrets to pull from private Docker registry;
     - admin-console-operator.adminConsole.basePath                      # Base path for Admin Console URL;
+    - admin-console-operator.adminConsole.testReportTools               # # List of automation tests frameworks. Default in "Allure";
     
     Gerrit parameters:
     - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/gerrit-operator);
@@ -188,4 +189,4 @@ secret names must be the same as 'credentialName' property for JIRA and 'nameSsh
       
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
 
-* After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epmd-edp/jenkins-operator/blob/master/documentation/github-integration.md) or [GitLab](https://github.com/epmd-edp/jenkins-operator/blob/master/documentation/gitlab-integration.md) integration to work with EDP.
+* After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epmd-edp/jenkins-operator/blob/release/2.4/documentation/github-integration.md) or [GitLab](https://github.com/epmd-edp/jenkins-operator/blob/release/2.4/documentation/gitlab-integration.md) integration to work with EDP.
