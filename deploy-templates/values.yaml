@@ -1,8 +1,8 @@
 global:
   version: "v2.4.0"
-  edpName: "stub-namespace"
+  edpName: "edp"
   platform: "openshift"
-  dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
+  dnsWildCard: ""
   admins:
     - "stub_user_one@example.com"
   developers:
@@ -11,7 +11,7 @@ global:
   database:
     deploy: true
     image: "postgres:9.6"
-    host:
+    host: "edp-install-wizard-db"
     name: "edp-install-wizard-db"
     port: 5432
     storage:
@@ -19,7 +19,7 @@ global:
       size: 2Gi
   webConsole:
     enabled: true
-    url: "https://master.delivery.aws.main.edp.projects.epam.com"
+    url: ""
 
 edp:
   adminGroups:
@@ -34,7 +34,7 @@ vcs:
   enabled: "false"
 
 dockerRegistry:
-  url: "093899590031.dkr.ecr.eu-central-1.amazonaws.com"
+  url: ""
 
 tags:
   keycloak-operator: false
@@ -53,18 +53,18 @@ keycloak-operator:
     name: epamedp/keycloak-operator
     version: v1.4.0
   keycloak:
-    url: "https://keycloak-keycloak.delivery.aws.main.edp.projects.epam.com"
+    url: ""
 
 codebase-operator:
   image:
     name: epamedp/codebase-operator
     version: v2.4.0
   jira:
-    integration: true
-    name: "epam-jira"
-    apiUrl: "https://jiraeu-api.epam.com"
-    rootUrl: "https://jiraeu.epam.com"
-    credentialName: "epam-jira-user"
+    integration: false
+    name: ""
+    apiUrl: ""
+    rootUrl: ""
+    credentialName: ""
 
 jenkins-operator:
   image:
@@ -79,9 +79,9 @@ jenkins-operator:
       size: 10Gi
     initImage:
     libraryPipelinesRepo: "https://github.com/epmd-edp/edp-library-pipelines.git"
-    libraryPipelinesVersion: "master"
+    libraryPipelinesVersion: "release-2.5"
     libraryStagesRepo: "https://github.com/epmd-edp/edp-library-stages.git"
-    libraryStagesVersion: "master"
+    libraryStagesVersion: "release-2.5"
     pullSecrets:
     basePath: ""
 
