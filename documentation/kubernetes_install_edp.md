@@ -88,7 +88,8 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
     - dockerRegistry.url                                                # URL to docker registry;
-        
+    - dockerRegistry.enabled                                            # Enable Docker registry link in Adminconsole       
+ 
     Jenkins parameters:
     - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/jenkins-operator);
     - jenkins-operator.image.version                                    # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/jenkins-operator/tags);

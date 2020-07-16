@@ -18,7 +18,7 @@ global:
       class: gp2
       size: 2Gi
   webConsole:
-    enabled: true
+    enabled: false
     url: ""
 
 edp:
@@ -34,6 +34,7 @@ vcs:
   enabled: "false"
 
 dockerRegistry:
+  enabled: false
   url: ""
 
 tags:
