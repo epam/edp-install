@@ -1,8 +1,6 @@
 {{- if eq .Values.global.platform "openshift"  -}}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
-annotations:
-  "helm.sh/hook": pre-install
 allowHostDirVolumePlugin: false
 allowHostIPC: false
 allowHostNetwork: false
@@ -19,6 +17,8 @@ fsGroup:
       max: 65543
 groups: []
 metadata:
+  annotations:
+    "helm.sh/hook": "pre-install"
   name: edp-{{ .Values.global.edpName }}
 priority: 0
 readOnlyRootFilesystem: false
