@@ -13,7 +13,7 @@ defaultAddCapabilities: []
 fsGroup:
   type: MustRunAs
   ranges:
-    - min: 1
+    - min: 999
       max: 65543
 groups: []
 metadata:
