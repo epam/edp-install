@@ -86,8 +86,8 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - dockerRegistry.enabled                                            # Enable Docker registry link in Adminconsole       
         
     Jenkins parameters:
-    - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/jenkins-operator);
-    - jenkins-operator.image.version                                    # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/jenkins-operator/tags);
+    - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator);
+    - jenkins-operator.image.version                                    # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator/tags);
     - jenkins-operator.jenkins.deploy                                   # Flag to enable/disable Jenkins deploy;
     - jenkins-operator.jenkins.image                                    # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins);
     - jenkins-operator.jenkins.version                                  # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
@@ -102,17 +102,17 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - jenkins-operator.jenkins.libraryStagesVersion                     # Version of EDP-Stages library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-stages/releases);
     
     CD pipeline parameters:
-    - cd-pipeline-operator.image.name                                   # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/cd-pipeline-operator);
-    - cd-pipeline-operator.image.version                                # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/cd-pipeline-operator/tags);
+    - cd-pipeline-operator.image.name                                   # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/cd-pipeline-operator);
+    - cd-pipeline-operator.image.version                                # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/cd-pipeline-operator/tags);
         
     Keycloak parameters:
-    - keycloak-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/keycloak-operator);
-    - keycloak-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/keycloak-operator/tags);
+    - keycloak-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/keycloak-operator);
+    - keycloak-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/keycloak-operator/tags);
     - keycloak-operator.keycloak.url                                    # URL to Keycloak;
     
     Codebase parameters:
-    - codebase-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/codebase-operator);
-    - codebase-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/codebase-operator/tags);
+    - codebase-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/codebase-operator);
+    - codebase-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/codebase-operator/tags);
     - codebase-operator.jira.integration                                # Flag to enable/disable Jira integration;
     - codebase-operator.jira.name                                       # JiraServer CR name;
     - codebase-operator.jira.apiUrl                                     # API URL for development;
@@ -120,8 +120,8 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - codebase-operator.jira.credentialName                             # Name of secret with credentials to Jira server;
     
     Nexus parameters:
-    - nexus-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/nexus-operator);
-    - nexus-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/nexus-operator/tags);
+    - nexus-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/nexus-operator);
+    - nexus-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/nexus-operator/tags);
     - nexus-operator.nexus.deploy                                       # Flag to enable/disable Nexus deploy;
     - nexus-operator.nexus.name                                         # Nexus name;
     - nexus-operator.nexus.image                                        # Image for Nexus. The image can be found on [Dockerhub] (https://hub.docker.com/r/sonatype/nexus3);
@@ -132,8 +132,8 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - nexus-operator.nexus.storage.size                                 # Nexus data volume capacity. Default is "10Gi";
     
     Sonar parameters:
-    - sonar-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/sonar-operator);
-    - sonar-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/sonar-operator/tags);
+    - sonar-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator);
+    - sonar-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags);
     - sonar-operator.sonar.deploy                                       # Flag to enable/disable Sonar deploy;
     - sonar-operator.sonar.name                                         # Flag to enable/disable Sonar deploy;
     - sonar-operator.sonar.image                                        # Sonarqube Docker image name. Default supported is "sonarqube";
@@ -149,17 +149,17 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
 
     
     Admin Console operator parameters:
-    - admin-console-operator.image.name                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/admin-console-operator);
-    - admin-console-operator.image.version                              # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/admin-console-operator/tags);
-    - admin-console-operator.adminConsole.image                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/edp-admin-console);
-    - admin-console-operator.adminConsole.version                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/edp-admin-console/tags);
+    - admin-console-operator.image.name                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/admin-console-operator);
+    - admin-console-operator.image.version                              # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/admin-console-operator/tags);
+    - admin-console-operator.adminConsole.image                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console);
+    - admin-console-operator.adminConsole.version                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
     - admin-console-operator.adminConsole.imagePullSecrets              # Secrets to pull from private Docker registry;
     - admin-console-operator.adminConsole.basePath                      # Base path for Admin Console URL;
     - admin-console-operator.adminConsole.testReportTools               # # List of automation tests frameworks. Default in "Allure";
     
     Gerrit parameters:
-    - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/gerrit-operator);
-    - gerrit-operator.image.version                                     # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/gerrit-operator/tags);
+    - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator);
+    - gerrit-operator.image.version                                     # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator/tags);
     - gerrit-operator.gerrit.deploy                                     # Flag to enable/disable Gerrit deploy;
     - gerrit-operator.gerrit.name                                       # Gerrit name;
     - gerrit-operator.gerrit.image                                      # Gerrit image, e.g. openfrontier/gerrit;
@@ -175,8 +175,8 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - gerrit-operator.gerrit.storage.size                               # Gerrit data volume size. Default is "1Gi";
     
     Reconciler parameters:
-    - reconciler.image.name                                             # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/reconciler);
-    - reconciler.image.version                                          # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/repository/docker/epamedp/reconciler/tags);
+    - reconciler.image.name                                             # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/reconciler);
+    - reconciler.image.version                                          # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/reconciler/tags);
  ```  
 
 * If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> project;
