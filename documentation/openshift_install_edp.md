@@ -23,7 +23,7 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 3. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
 4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
 5. The "openshift" realm is created in Keycloak;
-6. The installation machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) is installed with the cluster-admin access to the OpenShift cluster; 
+6. The installation machine with [oc](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html#cli-installing-cli_cli-developer-commands) is installed with the cluster-admin access to the OpenShift cluster; 
 7. Helm 3.1 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
 
 ## EDP Project
