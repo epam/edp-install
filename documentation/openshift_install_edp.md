@@ -22,7 +22,7 @@
 4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
 5. The "openshift" realm is created in Keycloak;
 6. The "keycloak" secret with administrative access username and password exists in the namespace where Keycloak in installed;
-7. Installation machine with [oc](https://docs.okd.io/latest/cli_reference/get_started_cli.html#installing-the-cli) installed with the cluster-admin access to the OpenShift cluster; 
+7. Installation machine with [oc](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html#cli-installing-cli_cli-developer-commands) installed with the cluster-admin access to the OpenShift cluster; 
 8. Helm 3 installed on the installation machine with the help of the following [instruction](https://v3.helm.sh/docs/intro/install/).
 
 ### EDP project
