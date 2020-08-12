@@ -150,14 +150,14 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - admin-console-operator.image.name                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/admin-console-operator);
     - admin-console-operator.image.version                              # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/admin-console-operator/tags);
     - admin-console-operator.adminConsole.image                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console);
-    - admin-console-operator.adminConsole.version                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
+    - admin-console-operator.adminConsole.version                       # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
     - admin-console-operator.adminConsole.imagePullSecrets              # Secrets to pull from private Docker registry;
     - admin-console-operator.adminConsole.basePath                      # Base path for Admin Console URL;
     
     Gerrit parameters:
     - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator);
     - gerrit-operator.image.version                                     # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator/tags);
-    - gerrit-operator.gerrit.deploy                                     # Flag to enable/disable Gerrit deploy;
+    - gerrit-operator.gerrit.deploy                                     # Flag to true/false Gerrit deploy;
     - gerrit-operator.gerrit.name                                       # Gerrit name;
     - gerrit-operator.gerrit.image                                      # Gerrit image, e.g. openfrontier/gerrit;
     - gerrit-operator.gerrit.imagePullSecrets                           # Secrets to pull from private Docker registry;
