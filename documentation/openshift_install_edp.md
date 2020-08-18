@@ -79,7 +79,8 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - global.database.port                                              # Port of DB;
     - global.database.storage.class                                     # Type of storage class;
     - global.database.storage.size                                      # Size of storage;
-    - edp.webConsole                                                    # URL to OpenShift Web console;
+    - global.webConsole.enabled                                         # Set to true if you want to have Openshift dashboard link in Admin Console;
+    - global.webConsole.url                                             # Openshift dashboard URL;
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
         
