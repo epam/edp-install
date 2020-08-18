@@ -93,7 +93,7 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     Jenkins parameters:
     - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator);
     - jenkins-operator.image.version                                    # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator/tags);
-    - jenkins-operator.jenkins.deploy                                   # Flag to enable/disable Jenkins deploy;
+    - jenkins-operator.jenkins.deploy                                   # Flag to enable/disable Jenkins deploy (eg true/false);
     - jenkins-operator.jenkins.image                                    # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins);
     - jenkins-operator.jenkins.version                                  # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
     - jenkins-operator.jenkins.initImage                                # Init Docker image for Jenkins deployment;
@@ -118,7 +118,7 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     Codebase parameters:
     - codebase-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/codebase-operator);
     - codebase-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/codebase-operator/tags);
-    - codebase-operator.jira.integration                                # Flag to enable/disable Jira integration;
+    - codebase-operator.jira.integration                                # Flag to enable/disable Jira integration (eg true/false);
     - codebase-operator.jira.name                                       # JiraServer CR name;
     - codebase-operator.jira.apiUrl                                     # API URL for development;
     - codebase-operator.jira.rootUrl                                    # URL to Jira server;
@@ -127,7 +127,7 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     Nexus parameters:
     - nexus-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/nexus-operator);
     - nexus-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/nexus-operator/tags);
-    - nexus-operator.nexus.deploy                                       # Flag to enable/disable Nexus deploy;
+    - nexus-operator.nexus.deploy                                       # Flag to enable/disable Nexus deploy (eg true/false);
     - nexus-operator.nexus.name                                         # Nexus name;
     - nexus-operator.nexus.image                                        # Image for Nexus. The image can be found on [Dockerhub] (https://hub.docker.com/r/sonatype/nexus3);
     - nexus-operator.nexus.version                                      # Nexus version. The released version can be found on [Dockerhub](https://hub.docker.com/r/sonatype/nexus3/tags)'
@@ -139,8 +139,8 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     Sonar parameters:
     - sonar-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator);
     - sonar-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags);
-    - sonar-operator.sonar.deploy                                       # Flag to enable/disable Sonar deploy;
-    - sonar-operator.sonar.name                                         # Flag to enable/disable Sonar deploy;
+    - sonar-operator.sonar.deploy                                       # Flag to enable/disable Sonar deploy (eg true/false);
+    - sonar-operator.sonar.name                                         # Sonar name;
     - sonar-operator.sonar.image                                        # Sonarqube Docker image name. Default supported is "sonarqube";
     - sonar-operator.sonar.version                                      # Sonarqube Docker image tag. Default supported is "7.9-community";
     - sonar-operator.sonar.initImage                                    # Init Docker image for Sonarqube deployment. Default is "busybox";
