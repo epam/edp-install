@@ -59,7 +59,7 @@ keycloak-operator:
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: v2.4.0
+    version: v2.4.1
   jira:
     integration: false
     name: ""
@@ -70,7 +70,7 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: v2.4.0
+    version: v2.4.1
   jenkins:
     deploy: true
     image: epamedp/edp-jenkins
