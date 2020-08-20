@@ -38,7 +38,7 @@ In addition, create two secrets in the <edp-project> project: one with administr
 oc -n <edp-project> create secret generic super-admin-db --from-literal=username=<super_admin_db_username> --from-literal=password=<super_admin_db_password>
 ```
 
-* Create secret for EDP tenant database user:
+* Create secret for EDP tenant database user. If you want to use the same username as for the administrative access, the passwords must be the same as well:
 ```
 oc -n <edp-project> create secret generic db-admin-console --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
