@@ -2,7 +2,7 @@
   {{- if not (lookup "authorization.openshift.io/v1" "RoleBinding" .Values.global.edpName "developer").metadata}}
 apiVersion: authorization.openshift.io/v1
 groupNames:
-  {{- range .Values.edp.adminGroups }}
+  {{- range .Values.edp.developerGroups }}
   - {{. -}}
   {{end}}
 kind: RoleBinding
@@ -11,7 +11,7 @@ metadata:
 roleRef:
   name: developer
 subjects:
-  {{- range .Values.edp.adminGroups }}
+  {{- range .Values.edp.developerGroups }}
   - kind: Group
     name: {{. -}}
   {{end}}
