@@ -1,0 +1,13 @@
+{{- if eq .Values.global.platform "openshift" -}}
+  {{- if not (lookup "v1.edp.epam.com/v1alpha1" "EDPComponent" ".Values.global.edpName" "docker-registry").metadata }}
+apiVersion: v1.edp.epam.com/v1alpha1
+kind: EDPComponent
+metadata:
+  name: docker-registry
+spec:
+  type: docker-registry
+  url: docker-registry.default.svc:5000
+  visible: false
+  icon: stub-value
+    {{end}}
+{{end}}
