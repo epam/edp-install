@@ -9,7 +9,7 @@ kind: RoleBinding
 metadata:
   name: developer
 roleRef:
-  name: developer
+  name: view
 subjects:
   {{- range .Values.edp.developerGroups }}
   - kind: Group
