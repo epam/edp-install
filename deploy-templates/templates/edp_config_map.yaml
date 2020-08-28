@@ -6,6 +6,8 @@ data:
   dns_wildcard: {{ .Values.global.dnsWildCard }}
   perf_integration_enabled: "{{ .Values.perf.enabled }}"
   vcs_integration_enabled: "{{ .Values.vcs.enabled }}"
+  adminGroups: {{ join "," .Values.edp.adminGroups }}
+  developerGroups: {{ join "," .Values.edp.developerGroups }}
 kind: ConfigMap
 metadata:
   name: edp-config
