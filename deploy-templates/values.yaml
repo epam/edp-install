@@ -1,5 +1,5 @@
 global:
-  version: "v2.4.0"
+  version: "v2.4.4"
   edpName: "edp"
   platform: "openshift"
   dnsWildCard: ""
@@ -59,7 +59,7 @@ keycloak-operator:
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: v2.4.1
+    version: v2.4.2
   jira:
     integration: false
     name: ""
@@ -70,7 +70,7 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: v2.4.1
+    version: v2.4.2
   jenkins:
     deploy: true
     image: epamedp/edp-jenkins
