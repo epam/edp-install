@@ -57,10 +57,10 @@ _Table 1. EDP Main Repositories and Documentation._
 
 | Repository | Documentation | Link |
 |---|---|---|
-| admin-console | EDP Admin Console user guide with the chapters describing possible actions on its functionality. In addition, the GitLab and GitHub integration, VCS integration, adding of other code language, adjustment of import strategy, integration with Jira server instructions as well as the CI/CD customization. | https://github.com/epmd-edp/admin-console/tree/master#edp-admin-console |
+| admin-console | EDP Admin Console user guide with the chapters describing possible actions on its functionality. In addition, the GitLab and GitHub integration, VCS integration, adding of other code language, adjustment of import strategy, integration with Jira server instructions as well as the **CI/CD customization**. | https://github.com/epmd-edp/admin-console/tree/master#edp-admin-console |
 | admin-console-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/admin-console-operator/tree/master#admin-console-operator |
-| edp-install | Main overview repository with the respective installation instructions on different platforms. | https://github.com/epmd-edp/edp-install/tree/master#epam-delivery-platform |
-| edp-architecture | The general architecture of EPAM Delivery Platform. | https://github.com/epmd-edp/edp-architecture#edp-architecture |
+| edp-install | Main overview repository with the respective **installation** instructions on different platforms. | https://github.com/epmd-edp/edp-install/tree/master#epam-delivery-platform |
+| edp-architecture | The general **architecture** of EPAM Delivery Platform. | https://github.com/epmd-edp/edp-architecture#edp-architecture |
 | codebase-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the Jira Fix Version, Jira Server, Git Server, Codebase, Codebase Branch controllers overview and schemes. | https://github.com/epmd-edp/codebase-operator/tree/master#codebase-operator |
 | edp-component-operator | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epmd-edp/edp-component-operator/tree/master#edp-component-operator |
 | cd-pipeline-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/cd-pipeline-operator/tree/master#cd-pipeline-operator |
@@ -85,5 +85,6 @@ _Table 1. EDP Main Repositories and Documentation._
 * [Google Container Registry Integration](documentation/setup_google_container_registry.md)
 * [Replication of Gerrit Development to Gerrit Production](documentation/gerrit_dev_to_prod.md)
 ---
-* [Add a New Custom Global Pipeline Library](https://github.com/epmd-edp/edp-library-pipelines/blob/master/documentation/add_new_custom_global_pipeline_lib.md#add-a-new-custom-global-pipeline-library)
-* [Customize CI Pipeline](https://github.com/epmd-edp/edp-library-pipelines/blob/master/documentation/customize_ci_pipeline.md#customize-ci-pipeline)
+* [Add a New Custom Global Pipeline Library](https://github.com/epmd-edp/admin-console/blob/master/documentation/cicd_customization/add_new_custom_global_pipeline_lib.md#add-a-new-custom-global-pipeline-library)
+* [Customize CI Pipeline](https://github.com/epmd-edp/admin-console/blob/master/documentation/cicd_customization/customize_ci_pipeline.md#customize-ci-pipeline)
+* [Customize CD Pipeline](https://github.com/epmd-edp/admin-console/blob/master/documentation/cicd_customization/customize-deploy-pipeline.md#customize-cd-pipeline)
