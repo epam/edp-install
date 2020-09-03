@@ -1,0 +1,19 @@
+{{- if not (lookup "v1" "ConfigMap" ".Values.global.edpName" "ist-template").metadata }}
+apiVersion: v1
+data:
+  ist.json: |
+            {
+              "apiVersion": "v2.edp.epam.com/v1alpha1",
+              "kind": "ImageStreamTag",
+              "metadata": {
+                "name": "replace"
+              },
+              "spec": {
+                "codebaseImageStreamName": "replace",
+                "tag": "replace"
+              }
+            }
+kind: ConfigMap
+metadata:
+  name: ist-template
+{{end}}
