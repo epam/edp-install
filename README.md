@@ -1,4 +1,4 @@
-# EPAM Delivery Platform
+# EPAM Delivery Platform :rocket:
 
 **EPAM Delivery platform (EDP)** is out of the box integrated ecosystem for software development connected to a local development environment. 
 
