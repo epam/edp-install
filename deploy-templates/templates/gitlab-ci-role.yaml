@@ -1,0 +1,27 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app: gitlab-ci
+  name: gitlab-ci
+  namespace: {{ .Values.global.edpName }}
+rules:
+- apiGroups:
+    - "*"
+  resources:
+    - codebasebranches
+    - codebasebranches/status
+    - codebaseimagestreams
+    - codebaseimagestreams/status
+    - configmaps
+    - gittags
+    - gittags/status
+    - imagestreamimages
+    - imagestreammappings
+    - imagestreams
+    - imagestreams/layers
+    - imagestreams/secrets
+    - imagestreamtags
+    - imagestreamtags/status
+  verbs:
+    - '*'
