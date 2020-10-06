@@ -1,5 +1,5 @@
 global:
-  version: "v2.4.0"
+  version: "v2.5.0"
   edpName: "stub-namespace"
   platform: "openshift"
   dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
@@ -51,14 +51,14 @@ tags:
 keycloak-operator:
   image:
     name: epamedp/keycloak-operator
-    version: v1.4.0
+    version: v1.5.0
   keycloak:
     url: "https://keycloak-keycloak.delivery.aws.main.edp.projects.epam.com"
 
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: v2.4.0
+    version: v2.5.0
   jira:
     integration: true
     name: "epam-jira"
@@ -69,11 +69,11 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: v2.4.0
+    version: v2.5.0
   jenkins:
     deploy: true
     image: epamedp/edp-jenkins
-    version: 2.4.0
+    version: 2.5.0
     storage:
       class: gp2
       size: 10Gi
@@ -88,17 +88,17 @@ jenkins-operator:
 cd-pipeline-operator:
   image:
     name: epamedp/cd-pipeline-operator
-    version: v2.4.0
+    version: v2.5.0
 
 nexus-operator:
   image:
     name: epamedp/nexus-operator
-    version: v2.4.0
+    version: v2.5.0
   nexus:
     deploy: true
     name: "nexus"
     image: "sonatype/nexus3"
-    version: "3.21.2"
+    version: "3.27.0"
     basePath: ""
     imagePullSecrets:
     storage:
@@ -108,7 +108,7 @@ nexus-operator:
 sonar-operator:
   image:
     name: epamedp/sonar-operator
-    version: v2.4.0
+    version: v2.5.0
   sonar:
     deploy: true
     name: "sonar"
@@ -129,23 +129,23 @@ sonar-operator:
 admin-console-operator:
   image:
     name: epamedp/admin-console-operator
-    version: v2.4.0
+    version: v2.5.0
   adminConsole:
     image: epamedp/edp-admin-console
-    version: 2.4.0
+    version: 2.5.0
     imagePullSecrets:
     basePath: ""
 
 gerrit-operator:
   image:
     name: epamedp/gerrit-operator
-    version: v2.4.0
+    version: v2.5.0
   gerrit:
     deploy: true
     name: "gerrit"
     image: "openfrontier/gerrit"
     sshPort: "22"
-    version: "3.1.4"
+    version: "3.2.3"
     imagePullSecrets:
     storage:
       size: 1Gi
@@ -154,4 +154,4 @@ gerrit-operator:
 reconciler:
   image:
     name: epamedp/reconciler
-    version: v2.4.0
+    version: v2.5.0
