@@ -189,4 +189,4 @@ secret names must be the same as 'credentialName' property for JIRA and 'nameSsh
       
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
 
-* After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epmd-edp/jenkins-operator/blob/master/documentation/github-integration.md) or [GitLab](https://github.com/epmd-edp/jenkins-operator/blob/master/documentation/gitlab-integration.md) integration to work with EDP.
+* After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epmd-edp/jenkins-operator/blob/release/2.5/documentation/github-integration.md) or [GitLab](https://github.com/epmd-edp/jenkins-operator/blob/release/2.5/documentation/gitlab-integration.md) integration to work with EDP.

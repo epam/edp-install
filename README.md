@@ -22,7 +22,7 @@ platforms.
 ## The Admin Console User Interface
 The Admin Console management tool allows users to collaborate easily with the environments: add and remove applications, autotests, libraries, CD pipelines, 
 branches and much more. To get more accurate information, please check the 
-[Admin Console](https://github.com/epmd-edp/admin-console/tree/master#edp-admin-console) user guide.
+[Admin Console](https://github.com/epmd-edp/admin-console/tree/release/2.5#edp-admin-console) user guide.
 
 ## EDP Pipeline Framework
 The general EDP Pipeline Framework consists of three parts:
@@ -57,21 +57,21 @@ _Table 1. EDP Main Repositories and Documentation._
 
 | Repository | Documentation | Link |
 |---|---|---|
-| admin-console | EDP Admin Console user guide with the chapters describing possible actions on its functionality. In addition, the GitLab and GitHub integration, VCS integration, adding of other code language, adjustment of import strategy, integration with Jira server instructions as well as the **CI/CD customization**. | https://github.com/epmd-edp/admin-console/tree/master#edp-admin-console |
-| admin-console-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/admin-console-operator/tree/master#admin-console-operator |
-| edp-install | Main overview repository with the respective **installation** instructions on different platforms. | https://github.com/epmd-edp/edp-install/tree/master#epam-delivery-platform |
+| admin-console | EDP Admin Console user guide with the chapters describing possible actions on its functionality. In addition, the GitLab and GitHub integration, VCS integration, adding of other code language, adjustment of import strategy, integration with Jira server instructions as well as the **CI/CD customization**. | https://github.com/epmd-edp/admin-console/tree/release/2.5#edp-admin-console |
+| admin-console-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/admin-console-operator/tree/release/2.5#admin-console-operator |
+| edp-install | Main overview repository with the respective **installation** instructions on different platforms. | https://github.com/epmd-edp/edp-install/tree/release/2.5#epam-delivery-platform |
 | edp-architecture | The general **architecture** of EPAM Delivery Platform. | https://github.com/epmd-edp/edp-architecture#edp-architecture |
-| codebase-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the Jira Fix Version, Jira Server, Git Server, Codebase, Codebase Branch controllers overview and schemes. | https://github.com/epmd-edp/codebase-operator/tree/master#codebase-operator |
-| edp-component-operator | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epmd-edp/edp-component-operator/tree/master#edp-component-operator |
-| cd-pipeline-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/cd-pipeline-operator/tree/master#cd-pipeline-operator |
-| edp-library-pipelines | The operator overview page with the corresponding description. | https://github.com/epmd-edp/edp-library-pipelines/blob/master/README.md#edp-library-pipelines |
+| codebase-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the Jira Fix Version, Jira Server, Git Server, Codebase, Codebase Branch controllers overview and schemes. | https://github.com/epmd-edp/codebase-operator/tree/release/2.5#codebase-operator |
+| edp-component-operator | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epmd-edp/edp-component-operator/tree/release/0.5#edp-component-operator |
+| cd-pipeline-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/cd-pipeline-operator/tree/release/2.5#cd-pipeline-operator |
+| edp-library-pipelines | The operator overview page with the corresponding description. | https://github.com/epmd-edp/edp-library-pipelines/blob/release-2.6/README.md#edp-library-pipelines |
 | edp-library-stages | The operator overview page with the corresponding description. | https://github.com/epmd-edp/edp-library-stages |
-| gerrit-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the Gerrit replication to GitLab. | https://github.com/epmd-edp/gerrit-operator/tree/master#gerrit-operator |
-| jenkins-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the adding of Jenkins slave and job provision. | https://github.com/epmd-edp/jenkins-operator/tree/master#jenkins-operator |
-| keycloak-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/keycloak-operator/tree/master#keycloak-operator |
-| nexus-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/nexus-operator/tree/master#nexus-operator |
-| reconciler | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epmd-edp/reconciler/tree/master#reconciler-operator |
-| sonar-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/sonar-operator/tree/master#sonar-operator |
+| gerrit-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the Gerrit replication to GitLab. | https://github.com/epmd-edp/gerrit-operator/tree/release/2.5#gerrit-operator |
+| jenkins-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the adding of Jenkins slave and job provision. | https://github.com/epmd-edp/jenkins-operator/tree/release/2.5#jenkins-operator |
+| keycloak-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/keycloak-operator/tree/release/1.5#keycloak-operator |
+| nexus-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/nexus-operator/tree/release/2.5#nexus-operator |
+| reconciler | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epmd-edp/reconciler/tree/release/2.5#reconciler-operator |
+| sonar-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/sonar-operator/tree/release/2.5#sonar-operator |
 
 
 ### Related Articles
@@ -80,11 +80,11 @@ _Table 1. EDP Main Repositories and Documentation._
 * [Keycloak Installation on Kubernetes](documentation/kubernetes_install_keycloak.md)
 * [Keycloak Installation on OpenShift](documentation/openshift_install_keycloak.md)
 ---
-* [GitHub Integration](https://github.com/epmd-edp/admin-console/blob/master/documentation/github-integration.md#github-integration)
-* [GitLab Integration](https://github.com/epmd-edp/admin-console/blob/master/documentation/gitlab-integration.md#gitlab-integration)
+* [GitHub Integration](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/github-integration.md#github-integration)
+* [GitLab Integration](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration)
 * [Google Container Registry Integration](documentation/setup_google_container_registry.md)
 * [Replication of Gerrit Development to Gerrit Production](documentation/gerrit_dev_to_prod.md)
 ---
-* [Add a New Custom Global Pipeline Library](https://github.com/epmd-edp/admin-console/blob/master/documentation/cicd_customization/add_new_custom_global_pipeline_lib.md#add-a-new-custom-global-pipeline-library)
-* [Customize CI Pipeline](https://github.com/epmd-edp/admin-console/blob/master/documentation/cicd_customization/customize_ci_pipeline.md#customize-ci-pipeline)
-* [Customize CD Pipeline](https://github.com/epmd-edp/admin-console/blob/master/documentation/cicd_customization/customize-deploy-pipeline.md#customize-cd-pipeline)
+* [Add a New Custom Global Pipeline Library](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/cicd_customization/add_new_custom_global_pipeline_lib.md#add-a-new-custom-global-pipeline-library)
+* [Customize CI Pipeline](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/cicd_customization/customize_ci_pipeline.md#customize-ci-pipeline)
+* [Customize CD Pipeline](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/cicd_customization/customize-deploy-pipeline.md#customize-cd-pipeline)
