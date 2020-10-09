@@ -2,10 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: db-init
-  annotations:
-    "helm.sh/hook": post-install, post-upgrade
-    "helm.sh/hook-weight": "1"
-    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   backoffLimit: 25
   template:
@@ -31,6 +27,39 @@ spec:
               END \
               $do$; \
               GRANT ALL PRIVILEGES ON SCHEMA \"{{.Values.global.edpName}}\" TO \"$(TENANT_ADMIN_USERNAME)\"';"
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: super-admin-db
+                  key: username
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: super-admin-db
+                  key: password
+            - name: TENANT_ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-admin-console
+                  key: username
+            - name: TENANT_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-admin-console
+                  key: password
+            - name: POSTGRES_DB
+              value: {{.Values.global.database.name}}
+            - name: PGHOST
+              value: {{.Values.global.database.host}}
+      initContainers:
+        - image: {{.Values.global.database.image}}
+          name: db-wait
+          command:
+            - /bin/bash
+            - -c
+            - while ! pg_isready -d $(POSTGRES_DB) -h $(PGHOST) -U $(POSTGRES_USER)  </dev/null; do echo waiting for edp-install-wizard;
+              sleep 10; done;
           env:
             - name: POSTGRES_USER
               valueFrom:
