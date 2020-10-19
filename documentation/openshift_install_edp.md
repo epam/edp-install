@@ -43,11 +43,12 @@ oc -n <edp-project> create secret generic super-admin-db --from-literal=username
 oc -n <edp-project> create secret generic db-admin-console --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
 
-* For EDP, it is required to have Keycloak access to perform integration. To do this, create manually secret with an administrative access username 
-and a password or use the existing secret and the commands as examples:
+* For EDP, it is required to have Keycloak access to perform integration. To do this, create 
+manually a secret with an administrative access username and a password or use the existing secret. 
+According to our templates, it is possible to execute the following secret export command:
 
 ```bash
-oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export -o yaml | oc -n <edp_cicd_project> apply -f -
+oc -n <edp_main_keycloak_project> get secret keycloak --export -o yaml | oc -n <edp_cicd_project> apply -f -
 ```
 
 * To add the Helm EPAMEDP Charts for local client, run "helm repo add":
@@ -92,7 +93,7 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - jenkins-operator.jenkins.deploy                                   # Flag to enable/disable Jenkins deploy (eg true/false);
     - jenkins-operator.jenkins.image                                    # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins);
     - jenkins-operator.jenkins.version                                  # EDP tag. The released version can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-jenkins/tags);
-    - jenkins-operator.jenkins.initImage                                # Init Docker image for Jenkins deployment;
+    - jenkins-operator.jenkins.initImage                                # Init Docker image for Jenkins deployment (busybox);
     - jenkins-operator.jenkins.imagePullSecrets                         # Secrets to pull from private Docker registry;
     - jenkins-operator.jenkins.basePath                                 # Base path for Jenkins URL;
     - jenkins-operator.jenkins.storage.class                            # Type of storage class. By default: gp2;
@@ -182,10 +183,41 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
 
 * If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> project;
 
-* Install EDP in the <edp-project> project with the helm command; find below the installation command example:
+* Install EDP in the <edp-project> project with the helm command. 
+Depending on the cloud provider, the parameter values may differ, make sure that the set of values​is correct for your provider.
+Find below the basic installation command example for AWS cloud:
 ```bash
-helm install epamedp/edp-install --wait --timeout=900s --namespace <edp-project> --set global.edpName=<edp-project> --set global.dnsWildCard=<k8s_cluster_DNS_wilcdard> --set global.platform=openshift
+    helm install <helm_release_name> epamedp/edp-install --version "2.4.4" --wait --timeout=900s --namespace <edp-project> \
+    --set global.edpName=<edp-project> \
+    --set global.dnsWildCard=<cluster_DNS_wilcdard> \
+    --set global.webConsole.enabled=true \
+    --set global.webConsole.url=<cluster_webConsole_url> \
+    --set global.platform=openshift \
+    --set 'global.admins={user1@example.com,user2@example.com}' \
+    --set 'global.developers={user@example.com}' \
+    --set global.database.storage.class=gp2 \
+    --set keycloak-operator.keycloak.url=<keycloak_url> \
+    --set gerrit-operator.gerrit.sshPort=<gerrit_port> \
+    --set gerrit-operator.gitServer.sshPort=<gerrit_port>  \
+    --set 'edp.adminGroups={<edp-project>-edp-admin}' \
+    --set 'edp.developerGroups={<edp-project>-edp-developer}' \
+    --set jenkins-operator.jenkins.storage.class=gp2 \
+    --set jenkins-operator.jenkins.storage.size=10Gi \
+    --set nexus-operator.nexus.storage.class=gp2 \
+    --set nexus-operator.nexus.storage.size=50Gi \
+    --set sonar-operator.sonar.storage.data.class=gp2 \
+    --set sonar-operator.sonar.storage.data.size=1Gi \
+    --set sonar-operator.sonar.storage.database.class=gp2 \
+    --set sonar-operator.sonar.storage.database.size=1Gi \
+    --set gerrit-operator.gerrit.storage.class=gp2 \
+    --set gerrit-operator.gerrit.storage.size=1Gi \
+    --set codebase-operator.jira.integration=false \
+    --set codebase-operator.jira.name=epam-jira \
+    --set codebase-operator.jira.apiUrl=https://jiraeu-api.epam.com \
+    --set codebase-operator.jira.rootUrl=https://jiraeu.epam.com \
+    --set codebase-operator.jira.credentialName=epam-jira-user
 ```
+
 
 * As soon as Helm deploys components, create secrets for JIRA/GIT integration (if enabled) manually. Pay attention that 
 secret names must be the same as 'credentialName' property for JIRA and 'nameSshKeySecret' for GIT.
