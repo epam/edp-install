@@ -181,7 +181,7 @@ oc -n <edp_main_keycloak_project> get secret keycloak --export -o yaml | oc -n <
 * If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> project;
 
 * Install EDP in the <edp-project> project with the helm command. 
-Depending on the cloud provider, the parameter values may differ, make sure that the set of values​is correct for your provider. 
+Depending on the cloud provider, the parameter values may differ, make sure that the set of values ​is correct for your provider. 
 Find below the basic installation command example for AWS cloud:
 ```bash
     helm install <helm_release_name> epamedp/edp-install --version "2.5.0" --wait --timeout=900s --namespace <edp-project> \
