@@ -83,6 +83,6 @@ dependencies:
 
 - name: perf-operator
   repository: "@epamedp"
-  version: "2.6.0-SNAPSHOT-5"
+  version: "2.6.0-SNAPSHOT-7"
   tags:
     - perf-operator
