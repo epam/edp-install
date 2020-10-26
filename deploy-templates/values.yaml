@@ -47,6 +47,7 @@ tags:
   admin-console-operator: false
   gerrit-operator: false
   reconciler: false
+  perf-operator: false
 
 keycloak-operator:
   image:
@@ -155,3 +156,15 @@ reconciler:
   image:
     name: epamedp/reconciler
     version: v2.5.0
+
+perf-operator:
+  image:
+    name: epamedp/perf-operator
+    version: v2.6.0
+  perf:
+    integration: true
+    name: "epam-perf"
+    apiUrl: "https://perf.delivery.epam.com"
+    rootUrl: "https://perf.delivery.epam.com"
+    credentialName: "epam-perf-user"
+    projectName: "EPMD-EDP"
