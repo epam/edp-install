@@ -84,6 +84,7 @@ oc -n <edp_main_keycloak_project> get secret keycloak --export -o yaml | oc -n <
     - global.webConsole.url                                             # Openshift dashboard URL;
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
+    - dockerRegistry.url                                                # URL to docker registry;
         
     Jenkins parameters:
     - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator);
@@ -195,6 +196,7 @@ Find below the basic installation command example for AWS cloud:
     --set 'global.developers={user@example.com}' \
     --set global.database.storage.class=gp2 \
     --set keycloak-operator.keycloak.url=<keycloak_url> \
+    --set dockerRegistry.url=<docker_registry_url> \
     --set gerrit-operator.gerrit.sshPort=<gerrit_port> \
     --set gerrit-operator.gitServer.sshPort=<gerrit_port>  \
     --set 'edp.adminGroups={<edp-project>-edp-admin}' \
