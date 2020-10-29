@@ -6,7 +6,7 @@ metadata:
   name: docker-registry
 spec:
   type: docker-registry
-  url: docker-registry.default.svc:5000
+  url: {{ .Values.dockerRegistry.url }}
   visible: false
   icon: stub-value
     {{end}}

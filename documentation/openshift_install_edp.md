@@ -83,6 +83,7 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - global.webConsole.url                                             # Openshift dashboard URL;
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
+    - dockerRegistry.url                                                # URL to docker registry;
         
     Jenkins parameters:
     - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator);
@@ -179,9 +180,41 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
 
 * If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> project;
 
-* Install EDP in the <edp-project> project with the helm command; find below the installation command example:
+* Install EDP in the <edp-project> project with the helm command. 
+Depending on the cloud provider, the parameter values may differ, make sure that the set of values ​is correct for your provider. 
+Find below the basic installation command example for AWS cloud:
 ```bash
-helm install epamedp/edp-install --wait --timeout=900s --namespace <edp-project> --set global.edpName=<edp-project> --set global.dnsWildCard=<k8s_cluster_DNS_wilcdard> --set global.platform=openshift
+    helm install <helm_release_name> epamedp/edp-install --version "2.5.0" --wait --timeout=900s --namespace <edp-project> \
+    --set global.edpName=<edp-project> \
+    --set global.dnsWildCard=<cluster_DNS_wilcdard> \
+    --set global.webConsole.enabled=true \
+    --set global.webConsole.url=<cluster_webConsole_url> \
+    --set global.database.host=<database_host> \
+    --set global.platform=openshift \
+    --set 'global.admins={user1@example.com,user2@example.com}' \
+    --set 'global.developers={user@example.com}' \
+    --set global.database.storage.class=gp2 \
+    --set keycloak-operator.keycloak.url=<keycloak_url> \
+    --set dockerRegistry.url=<docker_registry_url> \
+    --set gerrit-operator.gerrit.sshPort=<gerrit_port> \
+    --set gerrit-operator.gitServer.sshPort=<gerrit_port>  \
+    --set 'edp.adminGroups={<edp-project>-edp-admin}' \
+    --set 'edp.developerGroups={<edp-project>-edp-developer}' \
+    --set jenkins-operator.jenkins.storage.class=gp2 \
+    --set jenkins-operator.jenkins.storage.size=10Gi \
+    --set nexus-operator.nexus.storage.class=gp2 \
+    --set nexus-operator.nexus.storage.size=50Gi \
+    --set sonar-operator.sonar.storage.data.class=gp2 \
+    --set sonar-operator.sonar.storage.data.size=1Gi \
+    --set sonar-operator.sonar.storage.database.class=gp2 \
+    --set sonar-operator.sonar.storage.database.size=1Gi \
+    --set gerrit-operator.gerrit.storage.class=gp2 \
+    --set gerrit-operator.gerrit.storage.size=1Gi \
+    --set codebase-operator.jira.integration=false \
+    --set codebase-operator.jira.name=epam-jira \
+    --set codebase-operator.jira.apiUrl=https://jiraeu-api.epam.com \
+    --set codebase-operator.jira.rootUrl=https://jiraeu.epam.com \
+    --set codebase-operator.jira.credentialName=epam-jira-user
 ```
 
 * As soon as Helm deploys components, create secrets for JIRA/GIT integration (if enabled) manually. Pay attention that 
@@ -189,4 +222,4 @@ secret names must be the same as 'credentialName' property for JIRA and 'nameSsh
       
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
 
-* After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epmd-edp/jenkins-operator/blob/master/documentation/github-integration.md) or [GitLab](https://github.com/epmd-edp/jenkins-operator/blob/master/documentation/gitlab-integration.md) integration to work with EDP.
+* After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP.
