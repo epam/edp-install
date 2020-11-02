@@ -132,7 +132,7 @@ admin-console-operator:
     version: v2.5.0
   adminConsole:
     image: epamedp/edp-admin-console
-    version: 2.5.1
+    version: 2.5.2
     imagePullSecrets:
     basePath: ""
 
