@@ -62,7 +62,7 @@ _Table 1. EDP Main Repositories and Documentation._
 | edp-install | Main overview repository with the respective **installation** instructions on different platforms. | https://github.com/epmd-edp/edp-install/tree/release/2.5#epam-delivery-platform |
 | edp-architecture | The general **architecture** of EPAM Delivery Platform. | https://github.com/epmd-edp/edp-architecture#edp-architecture |
 | codebase-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the Jira Fix Version, Jira Server, Git Server, Codebase, Codebase Branch controllers overview and schemes. | https://github.com/epmd-edp/codebase-operator/tree/release/2.5#codebase-operator |
-| edp-component-operator | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epmd-edp/edp-component-operator/tree/release/0.5#edp-component-operator |
+| edp-component-operator | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epmd-edp/edp-component-operator/tree/master#edp-component-operator |
 | cd-pipeline-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/cd-pipeline-operator/tree/release/2.5#cd-pipeline-operator |
 | edp-library-pipelines | The operator overview page with the corresponding description. | https://github.com/epmd-edp/edp-library-pipelines/blob/release-2.6/README.md#edp-library-pipelines |
 | edp-library-stages | The operator overview page with the corresponding description. | https://github.com/epmd-edp/edp-library-stages |
