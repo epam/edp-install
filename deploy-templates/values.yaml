@@ -135,6 +135,8 @@ admin-console-operator:
     version: 2.5.2
     imagePullSecrets:
     basePath: ""
+    projectUrlMask: "/console/project/{namespace}/overview"
+    imageStreamUrlMask: "/console/project/{namespace}/browse/images/{stream}"
 
 gerrit-operator:
   image:
