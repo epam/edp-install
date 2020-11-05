@@ -202,7 +202,7 @@ secrets:
 
 ### Copy Image Streams
 
-By default, OpenShift is configured to import only five latest images during the image-import process. If there is a necessity to modify this behaviour, set the "MaxImagesBulkImportedPerRepository" parameter in the "imagePolicyConfig" section of the master-config.yaml file (https://docs.okd.io/latest/install_config/master_node_configuration.html#master-config-image-policy-config).
+By default, OpenShift is configured to import only five latest images during the image-import process. If there is a necessity to modify this behaviour, set the "MaxImagesBulkImportedPerRepository" parameter in the "imagePolicyConfig" section of the master-config.yaml file.
 
 To import _Imagestreams_ from Dev to Prod environment, follow the steps below: 
 * Create a separate pipeline job in Jenkins with the following string parameter:
