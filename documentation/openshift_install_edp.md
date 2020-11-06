@@ -155,8 +155,8 @@ oc -n <edp_main_keycloak_project> get secret keycloak --export -o yaml | oc -n <
     - admin-console-operator.adminConsole.version                       # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
     - admin-console-operator.adminConsole.imagePullSecrets              # Secrets to pull from private Docker registry;
     - admin-console-operator.adminConsole.basePath                      # Base path for Admin Console URL;
-    - admin-console-operator.adminConsole.projectUrlMask                # URL mask that leads to project in Openshift;
-    - admin-console-operator.adminConsole.imageStreamUrlMask            # URL mask that leads to image stream in Openshift;
+    - admin-console-operator.adminConsole.projectUrlMask                # URL mask that leads to project in Openshift (for Openshift 3.9 - /console/project/{namespace}/overview);
+    - admin-console-operator.adminConsole.imageStreamUrlMask            # URL mask that leads to image stream in Openshift (for Openshift 3.9 - /console/project/{namespace}/browse/images/{stream});
     
     Gerrit parameters:
     - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator);
