@@ -72,7 +72,7 @@ _Table 1. EDP Main Repositories and Documentation._
 | nexus-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/nexus-operator/tree/master#nexus-operator |
 | reconciler | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epmd-edp/reconciler/tree/master#reconciler-operator |
 | sonar-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/sonar-operator/tree/master#sonar-operator |
-
+| perf-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epmd-edp/perf-operator/tree/master#perf-operator |
 
 ### Related Articles
 * [EDP Installation on Kubernetes](documentation/kubernetes_install_edp.md)

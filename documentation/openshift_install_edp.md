@@ -176,6 +176,19 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     Reconciler parameters:
     - reconciler.image.name                                             # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/reconciler);
     - reconciler.image.version                                          # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/reconciler/tags);
+    
+    PERF operator parameters:
+    - perf-operator.image.name                                          # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/perf-operator);
+    - perf-operator.image.version                                       # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/perf-operator/tags);
+    - perf-operator.perf.integration                                    # Flag to enable/disable PERF integration (eg true/false);
+    - perf-operator.perf.name                                           # PerfServer CR name;
+    - perf-operator.perf.apiUrl                                         # API URL for development;
+    - perf-operator.perf.rootUrl                                        # URL to PERF project;
+    - perf-operator.perf.credentialName                                 # Name of secret with credentials to PERF server;
+    - perf-operator.perf.projectName                                    # Name of project in PERF;
+    - perf-operator.perf.luminate.enabled                               # Flag to enable/disable Luminate integration (eg true/false);
+    - perf-operator.perf.luminate.apiUrl                                # API URL for development;
+    - perf-operator.perf.luminate.credentialName                        # Name of secret with Luminate credentials;
  ```  
 
 * If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> project;
@@ -217,8 +230,10 @@ Find below the basic installation command example for AWS cloud:
     --set codebase-operator.jira.credentialName=epam-jira-user
 ```
 
-* As soon as Helm deploys components, create secrets for JIRA/GIT integration (if enabled) manually. Pay attention that 
-secret names must be the same as 'credentialName' property for JIRA and 'nameSshKeySecret' for GIT.
+* As soon as Helm deploys components, create secrets for JIRA/GIT/PERF integration (if enabled) manually. Pay attention that 
+secret names must be the same as 'credentialName' property for JIRA/GIT/PERF and 'nameSshKeySecret' for GIT.
+ If your system is required to use Luminate, pay attention that secret name must be the same as 'credentialName'
+that you specified during deploy in **perf-operator.perf.luminate.credentialName** property. 
       
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
 
