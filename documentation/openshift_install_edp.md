@@ -146,7 +146,6 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - sonar-operator.sonar.storage.database.size                        # Sonarqube database volume size. Default is "1Gi".
     - sonar-operator.sonar.imagePullSecrets                             # Secrets to pull from private Docker registry;
     - sonar-operator.sonar.basePath                                     # Base path for Sonar URL;
-
     
     Admin Console operator parameters:
     - admin-console-operator.image.name                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/admin-console-operator);
@@ -155,6 +154,8 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - admin-console-operator.adminConsole.version                       # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/edp-admin-console/tags);
     - admin-console-operator.adminConsole.imagePullSecrets              # Secrets to pull from private Docker registry;
     - admin-console-operator.adminConsole.basePath                      # Base path for Admin Console URL;
+    - admin-console-operator.adminConsole.projectUrlMask                # URL mask that leads to project in Openshift;
+    - admin-console-operator.adminConsole.imageStreamUrlMask            # URL mask that leads to image stream in Openshift;
     
     Gerrit parameters:
     - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator);
