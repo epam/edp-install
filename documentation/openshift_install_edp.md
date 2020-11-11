@@ -231,8 +231,8 @@ Find below the basic installation command example for AWS cloud:
     --set codebase-operator.jira.credentialName=epam-jira-user
 ```
 
-* As soon as Helm deploys components, create secrets for JIRA/GIT/PERF integration (if enabled) manually. Pay attention that 
-secret names must be the same as 'credentialName' property for JIRA/GIT/PERF and 'nameSshKeySecret' for GIT.
+* As soon as Helm deploys components, create manually secrets for JIRA/GIT/PERF integration (if enabled). 
+Pay attention that secret names should be the same as the 'credentialName' property for JIRA/GIT/PERF and the 'nameSshKeySecret' property for GIT.
 
 > **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the 'credentialName'
 that is specified in **perf-operator.perf.luminate.credentialName** property during the deployment. 
