@@ -169,13 +169,13 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     PERF operator parameters:
     - perf-operator.image.name                                          # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/perf-operator);
     - perf-operator.image.version                                       # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/perf-operator/tags);
-    - perf-operator.perf.integration                                    # Flag to enable/disable PERF integration (eg true/false);
+    - perf-operator.perf.integration                                    # Flag to enable/disable PERF integration (e.g. true/false);
     - perf-operator.perf.name                                           # PerfServer CR name;
     - perf-operator.perf.apiUrl                                         # API URL for development;
     - perf-operator.perf.rootUrl                                        # URL to PERF project;
     - perf-operator.perf.credentialName                                 # Name of secret with credentials to PERF server;
     - perf-operator.perf.projectName                                    # Name of project in PERF;
-    - perf-operator.perf.luminate.enabled                               # Flag to enable/disable Luminate integration (eg true/false);
+    - perf-operator.perf.luminate.enabled                               # Flag to enable/disable the Luminate integration (e.g. true/false);
     - perf-operator.perf.luminate.apiUrl                                # API URL for development;
     - perf-operator.perf.luminate.credentialName                        # Name of secret with Luminate credentials;
  ```  
@@ -189,9 +189,10 @@ helm install epamedp/edp-install --wait --timeout=900s --namespace <edp-project>
 
 * As soon as Helm deploys components, create secrets for JIRA/GIT/PERF integration (if enabled) manually. Pay attention that 
 secret names must be the same as 'credentialName' property for JIRA/GIT/PERF and 'nameSshKeySecret' for GIT.
- If your system is required to use Luminate, pay attention that secret name must be the same as 'credentialName'
-that you specified during deploy in **perf-operator.perf.luminate.credentialName** property. 
+
+> **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the 'credentialName'
+that is specified in **perf-operator.perf.luminate.credentialName** property during the deployment. 
  
->_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
 
 * After the installation, it is necessary to configure the [GitHub](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP. 
+>_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
