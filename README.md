@@ -46,6 +46,8 @@ If EDP pipelines are not enough for the CICD needs, it is possible to add a cust
 adds it to the application repository, thus extending the EDP Pipelines Framework by customization, 
 realization, and redefinition of the user stages. In such a case, the priority goes to the user stages.
 
+>_**NOTE**: For detailed information about the pipelines and stages, please check out the [EDP Pipeline Framework](https://github.com/epmd-edp/admin-console/blob/master/documentation/cicd_customization/edp_pipeline_framework.md#edp-pipeline-framework) page._ 
+
 ## EDP Repositories and Documentation 
 EDP consists of the components that are presented as repositories on the [EDP GitHub](https://github.com/epmd-edp) page. 
 To find the necessary documentation at once, firstly, inspect the Table 1 listing the EDP main repositories and stored documentation. 
