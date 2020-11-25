@@ -11,12 +11,12 @@ spec:
   selector:
     matchLabels:
       app: {{.Values.global.database.name}}
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: {{.Values.global.database.name}}
-  strategy:
-    type: Recreate
     spec:
       containers:
         - env:
