@@ -170,7 +170,6 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - gerrit-operator.gitServer.user                                    # Git user to connect;
     - gerrit-operator.gitServer.httpsPort                               # HTTPS port;
     - gerrit-operator.gitServer.nameSshKeySecret                        # Name of secret with credentials to Git server;
-    - gerrit-operator.gitServer.sshPort                                 # SSH port;
     - gerrit-operator.gerrit.storage.class                              # Storageclass for Gerrit data volume. Default is "gp2";
     - gerrit-operator.gerrit.storage.size                               # Gerrit data volume size. Default is "1Gi";
     
@@ -211,7 +210,6 @@ Find below the basic installation command example for AWS cloud:
     --set keycloak-operator.keycloak.url=<keycloak_url> \
     --set dockerRegistry.url=<docker_registry_url> \
     --set gerrit-operator.gerrit.sshPort=<gerrit_port> \
-    --set gerrit-operator.gitServer.sshPort=<gerrit_port>  \
     --set 'edp.adminGroups={<edp-project>-edp-admin}' \
     --set 'edp.developerGroups={<edp-project>-edp-developer}' \
     --set jenkins-operator.jenkins.storage.class=gp2 \
