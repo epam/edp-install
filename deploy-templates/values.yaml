@@ -156,4 +156,4 @@ gerrit-operator:
 reconciler:
   image:
     name: epamedp/reconciler
-    version: v2.5.0
+    version: v2.5.2
