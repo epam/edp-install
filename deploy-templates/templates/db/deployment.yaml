@@ -76,6 +76,8 @@ spec:
               name: {{.Values.global.database.name}}
       securityContext:
         runAsUser: 999
+        runAsNonRoot: true
+        fsGroup: 999
       serviceAccountName: edp
       volumes:
         - name: {{.Values.global.database.name}}
