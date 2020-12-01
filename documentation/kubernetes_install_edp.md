@@ -188,10 +188,10 @@ helm install epamedp/edp-install --wait --timeout=900s --namespace <edp-project>
 ```
 
 * As soon as Helm deploys components, create manually secrets for JIRA/GIT/PERF integration (if enabled). 
-Pay attention that secret names should be the same as the 'credentialName' property for JIRA/GIT/PERF and the 'nameSshKeySecret' property for GIT.
+Pay attention that secret names should be the same as the 'credentialName' property in JiraServer/PerfServer custom 
+resources, and the 'nameSshKeySecret' property for GIT.
 
-> **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the 'credentialName'
-that is specified in **perf-operator.perf.luminate.credentialName** property during the deployment. 
+> **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the **perf-operator.perf.luminate.credentialName** property. 
  
 
 * After the installation, it is necessary to configure the [GitHub](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP. 
