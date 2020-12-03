@@ -141,7 +141,7 @@ admin-console-operator:
 gerrit-operator:
   image:
     name: epamedp/gerrit-operator
-    version: v2.5.0
+    version: v2.5.1
   gerrit:
     deploy: true
     name: "gerrit"
