@@ -58,7 +58,7 @@ keycloak-operator:
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: v2.5.0
+    version: v2.5.4
   jira:
     integration: true
     name: "epam-jira"
