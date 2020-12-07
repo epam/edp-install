@@ -1,5 +1,5 @@
 global:
-  version: "v2.4.4"
+  version: "v2.4.6"
   edpName: "edp"
   platform: "openshift"
   dnsWildCard: ""
@@ -130,10 +130,10 @@ sonar-operator:
 admin-console-operator:
   image:
     name: epamedp/admin-console-operator
-    version: v2.4.0
+    version: v2.4.1
   adminConsole:
     image: epamedp/edp-admin-console
-    version: 2.4.0
+    version: 2.4.2
     imagePullSecrets:
     basePath: ""
     testReportTools: "Allure"
