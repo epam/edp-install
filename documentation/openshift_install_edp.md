@@ -156,6 +156,8 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - admin-console-operator.adminConsole.basePath                      # Base path for Admin Console URL;
     - admin-console-operator.adminConsole.projectUrlMask                # URL mask that leads to project in Openshift (for Openshift 3.9 - /console/project/{namespace}/overview);
     - admin-console-operator.adminConsole.imageStreamUrlMask            # URL mask that leads to image stream in Openshift (for Openshift 3.9 - /console/project/{namespace}/browse/images/{stream});
+    - admin-console-operator.adminConsole.authKeycloakEnabled           # Enabled or disabled integration with Keycloak;
+    - admin-console-operator.adminConsole.buildTools                    # List of build tools wich admin console supports (eg --set 'adminConsole.buildTools=maven,helm');
     
     Gerrit parameters:
     - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator);
