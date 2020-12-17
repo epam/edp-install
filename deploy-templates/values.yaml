@@ -17,6 +17,13 @@ global:
     storage:
       class: gp2
       size: 2Gi
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
   webConsole:
     enabled: true
     url: "https://master.delivery.aws.main.edp.projects.epam.com"

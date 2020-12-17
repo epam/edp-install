@@ -69,8 +69,7 @@ spec:
             successThreshold: 1
             timeoutSeconds: 3
           resources:
-            requests:
-              memory: 512Mi
+{{ toYaml .Values.global.database.resources | indent 12 }}
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: {{.Values.global.database.name}}
