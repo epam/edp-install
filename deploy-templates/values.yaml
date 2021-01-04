@@ -81,7 +81,7 @@ jenkins-operator:
   jenkins:
     deploy: true
     image: epamedp/edp-jenkins
-    version: 2.5.0
+    version: 2.6.0
     storage:
       class: gp2
       size: 10Gi
@@ -140,7 +140,7 @@ admin-console-operator:
     version: v2.5.0
   adminConsole:
     image: epamedp/edp-admin-console
-    version: 2.5.0
+    version: 2.6.0
     imagePullSecrets:
     basePath: ""
     projectUrlMask: "/console/project/{namespace}/overview"
