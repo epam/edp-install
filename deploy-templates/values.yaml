@@ -87,9 +87,9 @@ jenkins-operator:
       size: 10Gi
     initImage:
     libraryPipelinesRepo: "https://github.com/epmd-edp/edp-library-pipelines.git"
-    libraryPipelinesVersion: "master"
+    libraryPipelinesVersion: "release-2.7"
     libraryStagesRepo: "https://github.com/epmd-edp/edp-library-stages.git"
-    libraryStagesVersion: "master"
+    libraryStagesVersion: "release-2.7"
     pullSecrets:
     basePath: ""
 
