@@ -145,6 +145,7 @@ admin-console-operator:
     basePath: ""
     projectUrlMask: "/console/project/{namespace}/overview"
     imageStreamUrlMask: "/console/project/{namespace}/browse/images/{stream}"
+    buildTools: "maven"
 
 gerrit-operator:
   image:
