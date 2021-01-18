@@ -1,6 +1,5 @@
 {{- if eq .Values.global.platform "openshift" -}}
   {{- range .Values.global.admins -}}
-    {{- if not (lookup "user.openshift.io/v1" "User" "" .).metadata }}
 ---
 apiVersion: user.openshift.io/v1
 kind: User
@@ -8,6 +7,11 @@ identities: []
 groups: []
 metadata:
   name: {{.}}
-      {{end}}
+  labels:
+    {{- include "admin-console-operator.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{end}}
 {{end}}

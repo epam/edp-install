@@ -1,5 +1,4 @@
 {{- if eq .Values.global.platform "openshift" -}}
-  {{- if not (lookup "authorization.openshift.io/v1" "RoleBinding" .Values.global.edpName "developer").metadata}}
 apiVersion: authorization.openshift.io/v1
 groupNames:
   {{- range .Values.edp.adminGroups }}
@@ -8,6 +7,12 @@ groupNames:
 kind: RoleBinding
 metadata:
   name: developer
+  labels:
+    {{- include "admin-console-operator.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 roleRef:
   name: developer
 subjects:
@@ -16,5 +21,4 @@ subjects:
     name: {{. -}}
   {{end}}
 userNames: []
-  {{end}}
 {{end}}

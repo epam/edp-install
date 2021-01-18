@@ -1,10 +1,14 @@
 {{- if eq .Values.global.platform "kubernetes"  -}}
-  {{-  $name := printf "edp-%s-admin" .Values.global.edpName -}}
-  {{- if not (lookup "rbac.authorization.k8s.io/v1" "RoleBinding" .Values.global.edpName $name).metadata}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{$name}}
+  name: edp-{{ .Values.global.edpName }}
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 roleRef:
   kind: ClusterRole
   name: admin
@@ -12,5 +16,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: edp
-  {{- end -}}
 {{- end -}}

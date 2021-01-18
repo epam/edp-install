@@ -1,9 +1,14 @@
 {{- if .Values.global.database.deploy }}
-  {{- if not (lookup "v1" "Service" ".Values.global.edpName" .Values.global.database.name).metadata }}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{.Values.global.database.name}}
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ports:
     - name: db
@@ -13,5 +18,4 @@ spec:
   selector:
     app: {{.Values.global.database.name}}
   type: ClusterIP
-  {{end}}
 {{end}}

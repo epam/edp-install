@@ -1,10 +1,15 @@
 {{- if eq .Values.global.platform "openshift"  -}}
   {{- $name := printf "edp-%s-admin" .Values.global.edpName -}}
-  {{- if not (lookup "rbac.authorization.k8s.io/v1" "RoleBinding" .Values.global.edpName $name).metadata}}
 apiVersion: authorization.openshift.io/v1
 kind: RoleBinding
 metadata:
   name: {{$name}}
+  labels:
+    {{- include "admin-console-operator.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 roleRef:
   name: admin
 subjects:
@@ -16,5 +21,4 @@ userNames:
 - admin
 - system:serviceaccount:{{ .Values.global.edpName }}:edp
 groupNames: []
-  {{- end -}}
 {{- end -}}

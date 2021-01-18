@@ -1,9 +1,14 @@
 {{- if .Values.global.database.deploy }}
-  {{- if not (lookup "v1" "PersistentVolumeClaim" ".Values.global.edpName" .Values.global.database.name).metadata }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{.Values.global.database.name}}
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -12,5 +17,4 @@ spec:
       storage: {{.Values.global.database.storage.size}}
   storageClassName: {{.Values.global.database.storage.class}}
   volumeMode: Filesystem
-  {{end}}
 {{end}}

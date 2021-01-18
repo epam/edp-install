@@ -1,4 +1,3 @@
-{{- if not (lookup "v1" "ConfigMap" ".Values.global.edpName" "ist-template").metadata }}
 apiVersion: v1
 data:
   ist.json: |
@@ -16,4 +15,9 @@ data:
 kind: ConfigMap
 metadata:
   name: ist-template
-{{end}}
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}

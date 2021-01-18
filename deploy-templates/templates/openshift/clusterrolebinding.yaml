@@ -1,16 +1,20 @@
 {{- if eq .Values.global.platform "openshift" -}}
-  {{- if not (lookup "authorization.openshift.io/v1" "ClusterRoleBinding" "" "serviceaccounts-registry-viewer").metadata}}
 apiVersion: authorization.openshift.io/v1
 groupNames:
   - system:serviceaccounts
 kind: ClusterRoleBinding
 metadata:
   name: serviceaccounts-registry-viewer
+  labels:
+    {{- include "admin-console-operator.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 roleRef:
   name: registry-viewer
 subjects:
   - kind: SystemGroup
     name: system:serviceaccounts
 userNames: []
-  {{end}}
 {{end}}

@@ -1,15 +1,19 @@
 {{- if eq .Values.global.webConsole.enabled true -}}
 {{- if eq .Values.global.platform "kubernetes" -}}
-  {{- if not (lookup "v1.edp.epam.com/v1alpha1" "EDPComponent" ".Values.global.edpName" "kubernetes-console").metadata }}
 apiVersion: v1.edp.epam.com/v1alpha1
 kind: EDPComponent
 metadata:
   name: kubernetes-console
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: kubernetes-console
   url: https://5B1468C7DC248E401E445D5B8E98ED58.sk1.eu-central-1.eks.amazonaws.com
   visible: false
   icon: stub-value
-    {{end}}
 {{end}}
 {{end}}
