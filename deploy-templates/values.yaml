@@ -101,16 +101,16 @@ nexus-operator:
   image:
     name: epamedp/nexus-operator
     version: v2.5.0
-  nexus:
-    deploy: true
-    name: "nexus"
-    image: "sonatype/nexus3"
-    version: "3.27.0"
-    basePath: ""
-    imagePullSecrets:
-    storage:
-      class: gp2
-      size: 10Gi
+#  nexus:
+#    deploy: true
+#    name: "nexus"
+#    image: "sonatype/nexus3"
+#    version: "3.29.0"
+#    basePath: ""
+#    imagePullSecrets:
+#    storage:
+#      class: gp2
+#      size: 10Gi
 
 sonar-operator:
   image:
