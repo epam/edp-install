@@ -86,10 +86,10 @@ jenkins-operator:
       class: gp2
       size: 10Gi
     initImage:
-    libraryPipelinesRepo: "https://github.com/epmd-edp/edp-library-pipelines.git"
-    libraryPipelinesVersion: "release-2.7"
-    libraryStagesRepo: "https://github.com/epmd-edp/edp-library-stages.git"
-    libraryStagesVersion: "release-2.7"
+    libraryPipelinesRepo: "https://github.com/epam/edp-library-pipelines.git"
+    libraryPipelinesVersion: "release-2.7-2.7.0-3"
+    libraryStagesRepo: "https://github.com/epam/edp-library-stages.git"
+    libraryStagesVersion: "release-2.7-2.7.0-10"
     pullSecrets:
     basePath: ""
 
