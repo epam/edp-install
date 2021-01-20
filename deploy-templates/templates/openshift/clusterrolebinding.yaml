@@ -6,7 +6,7 @@ kind: ClusterRoleBinding
 metadata:
   name: serviceaccounts-registry-viewer
   labels:
-    {{- include "admin-console-operator.labels" . | nindent 4 }}
+    {{- include "edp-install.labels" . | nindent 4 }}
   {{- with .Values.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

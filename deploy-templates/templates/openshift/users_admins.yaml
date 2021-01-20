@@ -8,10 +8,10 @@ groups: []
 metadata:
   name: {{.}}
   labels:
-    {{- include "admin-console-operator.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    app.kubernetes.io/name: {{ template "edp-install.fullname" $ }}
+    helm.sh/chart: {{ $.Chart.Name }}-{{ $.Chart.Version }}
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+    app.kubernetes.io/version: {{ $.Chart.AppVersion }}
+    app.kubernetes.io/managed-by: {{ $.Release.Service }}
+          {{end}}
   {{end}}
-{{end}}
