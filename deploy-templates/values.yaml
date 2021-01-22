@@ -1,5 +1,5 @@
 global:
-  version: "v2.6.3"
+  version: "v2.6.4"
   edpName: "stub-namespace"
   platform: "openshift"
   dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
@@ -66,7 +66,7 @@ keycloak-operator:
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: v2.6.0
+    version: v2.6.1
   jira:
     integration: true
     name: "epam-jira"
