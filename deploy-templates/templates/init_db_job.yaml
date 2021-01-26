@@ -1,6 +1,8 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
   name: db-init
 spec:
   backoffLimit: 25

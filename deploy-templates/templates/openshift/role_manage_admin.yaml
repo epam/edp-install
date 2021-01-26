@@ -9,10 +9,6 @@ metadata:
   name: admin
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 roleRef:
   name: admin
 subjects:

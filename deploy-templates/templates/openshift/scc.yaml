@@ -17,6 +17,8 @@ fsGroup:
       max: 65543
 groups: []
 metadata:
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": "pre-install"
   name: edp-{{ .Values.global.edpName }}

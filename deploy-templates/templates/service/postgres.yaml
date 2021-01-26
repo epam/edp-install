@@ -1,6 +1,8 @@
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Service
 metadata:
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
   name: postgres
 spec:
   version: "9.6"

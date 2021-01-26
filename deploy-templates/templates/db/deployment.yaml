@@ -3,12 +3,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   generation: 1
-  labels:
-    app: {{.Values.global.database.name}}
   name: {{.Values.global.database.name}}
   labels:
+    app: {{.Values.global.database.name}}
     {{- include "edp-install.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
+  {{- with .Values.global.database.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -78,6 +77,18 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: {{.Values.global.database.name}}
+      {{- with .Values.global.database.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.database.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.database.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       securityContext:
         runAsUser: 999
         runAsNonRoot: true

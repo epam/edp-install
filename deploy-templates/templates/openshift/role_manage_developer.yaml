@@ -9,10 +9,6 @@ metadata:
   name: developer
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 roleRef:
   name: developer
 subjects:

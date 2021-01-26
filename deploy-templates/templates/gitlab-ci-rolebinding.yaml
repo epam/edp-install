@@ -3,6 +3,7 @@ kind: RoleBinding
 metadata:
   labels:
     app: gitlab-ci
+    {{- include "edp-install.labels" . | nindent 4 }}
   name: gitlab-ci
   namespace: {{ .Values.global.edpName }}
 roleRef:

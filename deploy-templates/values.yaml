@@ -23,6 +23,10 @@ global:
       requests:
         cpu: 50m
         memory: 64Mi
+    annotations: {}
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
   webConsole:
     enabled: true
     url: "https://master.delivery.aws.main.edp.projects.epam.com"

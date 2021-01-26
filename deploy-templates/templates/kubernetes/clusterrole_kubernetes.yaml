@@ -2,7 +2,9 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: edp-deploy-role-{{ .Values.global.edpName }}
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+  name: edp-{{ .Values.global.edpName }}
 rules:
 - apiGroups:
     - "*"

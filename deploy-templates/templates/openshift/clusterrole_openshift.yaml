@@ -2,10 +2,9 @@
 apiVersion: authorization.openshift.io/v1
 kind: ClusterRole
 metadata:
-  annotations:
-    openshift.io/description: Role for EDP service account that allows to deploy EPAM Delivery Platform (EDP) aka "The Rocket" tools
-    openshift.io/reconcile-protect: "false"
-  name: edp-deploy-role-{{ .Values.global.edpName }}
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+  name: edp-{{ .Values.global.edpName }}
 rules:
 - apiGroups:
     - ""

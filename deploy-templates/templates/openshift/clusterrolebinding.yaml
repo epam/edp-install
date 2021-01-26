@@ -7,10 +7,6 @@ metadata:
   name: serviceaccounts-registry-viewer
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 roleRef:
   name: registry-viewer
 subjects:

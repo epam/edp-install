@@ -16,5 +16,7 @@ data:
             }
 kind: ConfigMap
 metadata:
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
   name: gt-template
 {{end}}

@@ -8,5 +8,7 @@ data:
   vcs_integration_enabled: "{{ .Values.vcs.enabled }}"
 kind: ConfigMap
 metadata:
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
   name: edp-config
 {{end}}

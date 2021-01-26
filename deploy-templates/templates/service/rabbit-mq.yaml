@@ -1,6 +1,8 @@
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Service
 metadata:
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
   name: rabbit-mq
 spec:
   version: "3.7.15-management"
