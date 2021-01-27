@@ -1,5 +1,5 @@
 global:
-  version: "v2.5.0"
+  version: "v2.5.9"
   edpName: "edp"
   platform: "openshift"
   dnsWildCard: ""
@@ -129,10 +129,10 @@ sonar-operator:
 admin-console-operator:
   image:
     name: epamedp/admin-console-operator
-    version: v2.5.0
+    version: v2.5.4
   adminConsole:
     image: epamedp/edp-admin-console
-    version: 2.5.4
+    version: 2.5.5
     imagePullSecrets:
     basePath: ""
     projectUrlMask: "/console/project/{namespace}/overview"
