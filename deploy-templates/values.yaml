@@ -1,5 +1,5 @@
 global:
-  version: 2.6.4
+  version: 2.6.6
   edpName: stub-namespace
   platform: openshift
   dnsWildCard: delivery.aws.main.edp.projects.epam.com
@@ -11,7 +11,7 @@ global:
   database:
     deploy: true
     image: postgres:9.6
-    host: null
+    host: edp-db
     name: edp-db
     port: 5432
     storage:
