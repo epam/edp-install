@@ -1,5 +1,5 @@
 global:
-  version: "v2.5.10"
+  version: "v2.5.11"
   edpName: "edp"
   platform: "openshift"
   dnsWildCard: ""
@@ -51,7 +51,7 @@ tags:
 keycloak-operator:
   image:
     name: epamedp/keycloak-operator
-    version: v1.5.1
+    version: v1.5.2
   keycloak:
     url: ""
 
