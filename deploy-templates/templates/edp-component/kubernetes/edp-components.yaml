@@ -1,0 +1,19 @@
+{{- if eq .Values.global.platform "kubernetes" -}}
+{{- $edpComponentLables := include "edp-install.labels" . -}}
+{{- range $key, $value := index .Values.EDPComponents }}
+---
+{{- range $elem, $elemVal := $value }}
+apiVersion: v1.edp.epam.com/v1alpha1
+kind: EDPComponent
+metadata:
+  labels:
+    {{- $edpComponentLables | nindent 4 }}
+  name: {{ $elem }}
+spec:
+  type: {{ $elem }}
+  url: {{ .url }}
+  visible: {{ .visible }}
+  icon: {{ .icon }}
+  {{ end }}
+{{ end }}
+{{ end }}

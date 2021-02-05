@@ -187,3 +187,18 @@ perf-operator:
 #      enabled: true
 #      apiUrl: "https://api.epam.luminatesec.com"
 #      credentialName: "luminate-secret"
+
+# define EDPComponents, more details: https://github.com/epam/edp-component-operator/
+EDPComponents: {}
+  # - prometheus:
+  #     url: https://ingress-prometheus.example.com
+  #     visible: true
+  #     icon: icon_in_base64
+  # - kibana:
+  #     url: https://ingress-kibana.example.com
+  #     visible: false
+  #     icon: icon_in_base64
+  # - another_tool:
+  #     url: https://ingress-anothertool.example.com
+  #     visible: true
+  #     icon: icon_in_base64
