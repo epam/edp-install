@@ -59,4 +59,4 @@ dependencies:
 description: A Helm chart for Kubernetes
 name: edp-install
 type: application
-version: 2.6.7
+version: 2.6.8

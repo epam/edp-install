@@ -1,5 +1,5 @@
 global:
-  version: 2.6.7
+  version: 2.6.8
   edpName: stub-namespace
   platform: openshift
   dnsWildCard: delivery.aws.main.edp.projects.epam.com
