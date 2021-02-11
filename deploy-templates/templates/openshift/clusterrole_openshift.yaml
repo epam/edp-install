@@ -9,14 +9,12 @@ rules:
 - apiGroups:
     - ""
     - network.openshift.io
-  attributeRestrictions: null
   resources:
     - clusternetworks
   verbs:
     - list
 - apiGroups:
   - "*"
-  attributeRestrictions: null
   resources:
   - namespaces
   verbs:
@@ -27,7 +25,6 @@ rules:
 - apiGroups:
   - ""
   - network.openshift.io
-  attributeRestrictions: null
   resources:
   - ""
   verbs:
@@ -36,7 +33,6 @@ rules:
 - apiGroups:
   - ""
   - network.openshift.io
-  attributeRestrictions: null
   resources:
   - netnamespaces
   verbs:
@@ -45,7 +41,6 @@ rules:
 - apiGroups:
   - ""
   - image.openshift.io
-  attributeRestrictions: null
   resources:
   - imagestreamimages
   - imagestreammappings
@@ -58,28 +53,24 @@ rules:
 - apiGroups:
   - ""
   - image.openshift.io
-  attributeRestrictions: null
   resources:
   - imagestreams/layers
   verbs:
   - get
 - apiGroups:
   - '*'
-  attributeRestrictions: null
   resources:
   - clusterrolebindings
   verbs:
   - delete
 - apiGroups:
   - "*"
-  attributeRestrictions: null
   resources:
   - templates
   verbs:
   - watch
 - apiGroups:
   - "*"
-  attributeRestrictions: null
   resources:
   - templates
   - processedtemplates
@@ -108,7 +99,6 @@ rules:
   - patch
 - apiGroups:
   - '*'
-  attributeRestrictions: null
   resources:
   - storageclasses
   verbs:
@@ -116,7 +106,6 @@ rules:
   - list
 - apiGroups:
   - '*'
-  attributeRestrictions: null
   resources:
   - configmaps
   - routes
@@ -131,7 +120,6 @@ rules:
   - update
 - apiGroups:
     - '*'
-  attributeRestrictions: null
   resources:
     - securitycontextconstraints
   verbs:
@@ -143,21 +131,18 @@ rules:
     - create
 - apiGroups:
   - '*'
-  attributeRestrictions: null
   resources:
   - jobs
   verbs:
   - delete
 - apiGroups:
   - '*'
-  attributeRestrictions: null
   resources:
   - secrets
   verbs:
   - create
 - apiGroups:
   - '*'
-  attributeRestrictions: null
   resourceNames:
   - vcs-autouser
   - gerrit-admin
@@ -176,7 +161,6 @@ rules:
   - get
 - apiGroups:
   - "*"
-  attributeRestrictions: null
   resourceNames:
   - edp-jenkins
   resources:
@@ -188,7 +172,6 @@ rules:
   - update
 - apiGroups:
   - '*'
-  attributeRestrictions: null
   resources:
   - gitservers
   - gitservers/status
