@@ -196,5 +196,5 @@ resources, and the 'nameSshKeySecret' property for GIT.
 > **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the **perf-operator.perf.luminate.credentialName** property. 
  
 
-* After the installation, it is necessary to configure the [GitHub](https://github.com/epam/admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epam/admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP. 
+* After the installation, it is necessary to configure the [GitHub](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP. 
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
