@@ -51,8 +51,6 @@ metadata:
   namespace: '{{ .Values.edpName }}'
 spec:
   createCodeReviewPipeline: false
-  edpSpec:
-    dnsWildcard: '{{ .Values.dnsWildCard }}'
   gitHost: 'gerrit.{{ .Values.edpName }}'
   gitUser: jenkins
   httpsPort: 443
@@ -91,4 +89,3 @@ spec:
     - capacity: 1Gi
       name: data
       storage_class: gp2
-
