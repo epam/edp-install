@@ -130,7 +130,7 @@ To copy repositories content, follow the steps below:
     * DEV_GIT_SERVER - URL or IP address of the Dev Gerrit server;
     * DEV_GIT_PORT - SSH port number of the Dev Gerrit server.
     
-* Check out the job script from the pipeline script for job: https://github.com/epmd-edp/edp-library-pipelines.git with the EDP version tag as a branch selector;
+* Check out the job script from the pipeline script for job: https://github.com/epam/edp-library-pipelines.git with the EDP version tag as a branch selector;
 * Set the script path to "vars/GitSync.groovy";
 * Run this job to copy the Gerrit repositories from Dev to Prod environment. Each launch of the job will be updating the repositories content. 
 
@@ -208,7 +208,7 @@ To import _Imagestreams_ from Dev to Prod environment, follow the steps below:
 * Create a separate pipeline job in Jenkins with the following string parameter:
     * DEV_REGISTRY_URL - URL or ip address of Dev docker registry
 
-* Check out the job script from the pipeline script for job: https://github.com/epmd-edp/edp-library-pipelines.git with the EDP version tag as a branch selector;
+* Check out the job script from the pipeline script for job: https://github.com/epam/edp-library-pipelines.git with the EDP version tag as a branch selector;
 * Set the script path to"vars/ImageSync.groovy";
 * Run this job to import images from Dev to Prod registry. Each launch of the job will be updating _Imagestream_ tags.
 
