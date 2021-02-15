@@ -39,7 +39,7 @@ Build, Deploy pipelines and EDP Library Stages that keeps the description of the
 
 The main conception is realized on the [Jenkins Shared Libraries](https://www.jenkins.io/doc/book/pipeline/shared-libraries/) 
 allowing to define the external pipeline source and then reuse the predefined code from the central storage. The [EDP Library 
-Pipelines](https://github.com/epam/edp-library-pipelines#edp-library-pipelines) repository contains a structure and the execution subsequence of the stages parameters. 
+Pipelines](https://github.com/epam/edp-library-pipelines#edp-library-pipelines-overview) repository contains a structure and the execution subsequence of the stages parameters. 
 The EDP Library Stages repository describes the specific steps and their realization in frames of a specific pipeline.
 
 If EDP pipelines are not enough for the CICD needs, it is possible to add a custom stage. To do this, a user creates the stage, 
@@ -67,7 +67,7 @@ _Table 1. EDP Main Repositories and Documentation._
 | edp-component-operator | The operator overview page with the corresponding description, installation, and local development. | https://github.com/epam/edp-component-operator/tree/master#edp-component-operator |
 | cd-pipeline-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epam/edp-cd-pipeline-operator/tree/master#cd-pipeline-operator |
 | edp-library-pipelines | The operator overview page with the corresponding description. | https://github.com/epam/edp-library-pipelines/blob/master/README.md#edp-library-pipelines |
-| edp-library-stages | The operator overview page with the corresponding description. | https://github.com/epam/edp-library-stages#edp-library-stages |
+| edp-library-stages | The operator overview page with the corresponding description. | https://github.com/epam/edp-library-stages |
 | gerrit-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the Gerrit replication to GitLab. | https://github.com/epam/edp-gerrit-operator/tree/master#gerrit-operator |
 | jenkins-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the adding of Jenkins slave and job provision. | https://github.com/epam/edp-jenkins-operator/tree/master#jenkins-operator |
 | keycloak-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epam/edp-keycloak-operator/tree/master#keycloak-operator |
@@ -82,11 +82,11 @@ _Table 1. EDP Main Repositories and Documentation._
 * [Keycloak Installation on Kubernetes](documentation/kubernetes_install_keycloak.md)
 * [Keycloak Installation on OpenShift](documentation/openshift_install_keycloak.md)
 ---
-* [GitHub Integration](https://github.com/epam/admin-console/blob/master/documentation/github-integration.md#github-integration)
-* [GitLab Integration](https://github.com/epam/admin-console/blob/master/documentation/gitlab-integration.md#gitlab-integration)
+* [GitHub Integration](https://github.com/epam/edp-admin-console/blob/master/documentation/github-integration.md#github-integration)
+* [GitLab Integration](https://github.com/epam/edp-admin-console/blob/master/documentation/gitlab-integration.md#gitlab-integration)
 * [Google Container Registry Integration](documentation/setup_google_container_registry.md)
 * [Replication of Gerrit Development to Gerrit Production](documentation/gerrit_dev_to_prod.md)
 ---
-* [Add a New Custom Global Pipeline Library](https://github.com/epam/admin-console/blob/master/documentation/cicd_customization/add_new_custom_global_pipeline_lib.md#add-a-new-custom-global-pipeline-library)
-* [Customize CI Pipeline](https://github.com/epam/admin-console/blob/master/documentation/cicd_customization/customize_ci_pipeline.md#customize-ci-pipeline)
-* [Customize CD Pipeline](https://github.com/epam/admin-console/blob/master/documentation/cicd_customization/customize-deploy-pipeline.md#customize-cd-pipeline)
+* [Add a New Custom Global Pipeline Library](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/add_new_custom_global_pipeline_lib.md#add-a-new-custom-global-pipeline-library)
+* [Customize CI Pipeline](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/customize_ci_pipeline.md#customize-ci-pipeline)
+* [Customize CD Pipeline](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/customize-deploy-pipeline.md#customize-cd-pipeline)
