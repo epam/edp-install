@@ -100,10 +100,10 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     - jenkins-operator.jenkins.basePath                                 # Base path for Jenkins URL;
     - jenkins-operator.jenkins.storage.class                            # Type of storage class. By default: gp2;
     - jenkins-operator.jenkins.storage.size                             # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
-    - jenkins-operator.jenkins.libraryPipelinesRepo                     # URL to library pipelines repository. By default: https://github.com/epmd-edp/edp-library-pipelines.git;
-    - jenkins-operator.jenkins.libraryPipelinesVersion                  # Version of EDP-Pipeline library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-pipelines/releases);
-    - jenkins-operator.jenkins.libraryStagesRepo                        # URL to library stages repository. By default: https://github.com/epmd-edp/edp-library-stages.git;
-    - jenkins-operator.jenkins.libraryStagesVersion                     # Version of EDP-Stages library for Jenkins. The released version can be found on [Github](https://github.com/epmd-edp/edp-library-stages/releases);
+    - jenkins-operator.jenkins.libraryPipelinesRepo                     # URL to library pipelines repository. By default: https://github.com/epam/edp-library-pipelines.git;
+    - jenkins-operator.jenkins.libraryPipelinesVersion                  # Version of EDP-Pipeline library for Jenkins. The released version can be found on [Github](https://github.com/epam/edp-library-pipelines/releases);
+    - jenkins-operator.jenkins.libraryStagesRepo                        # URL to library stages repository. By default: https://github.com/epam/edp-library-stages.git;
+    - jenkins-operator.jenkins.libraryStagesVersion                     # Version of EDP-Stages library for Jenkins. The released version can be found on [Github](https://github.com/epam/edp-library-stages/releases);
     
     CD pipeline parameters:
     - cd-pipeline-operator.image.name                                   # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/cd-pipeline-operator);
@@ -196,5 +196,5 @@ resources, and the 'nameSshKeySecret' property for GIT.
 > **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the **perf-operator.perf.luminate.credentialName** property. 
  
 
-* After the installation, it is necessary to configure the [GitHub](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epmd-edp/admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP. 
->_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
+* After the installation, it is necessary to configure the [GitHub](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP. 
+                                                                                                >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
