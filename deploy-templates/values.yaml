@@ -91,10 +91,19 @@ jenkins-operator:
 #      class: gp2
 #      size: 10Gi
 #    initImage:
-#    libraryPipelinesRepo: "https://github.com/epmd-edp/edp-library-pipelines.git"
-    libraryPipelinesVersion: "master"
-#    libraryStagesRepo: "https://github.com/epmd-edp/edp-library-stages.git"
-    libraryStagesVersion: "master"
+#    sharedLibraries:
+#      - name: "edp-library-stages"
+#        url: "https://github.com/epam/edp-library-stages.git"
+#        tag: "master"
+#      - name: "edp-library-pipelines"
+#        url: "https://github.com/epam/edp-library-pipelines.git"
+#        tag: "master"
+# Example of using private repository:
+#      - name: "stub-name"
+#        url: "stub-url"
+#        tag: "stub-tag"
+#        secret: "stub-secret-name"
+#        type: "ssh" # can be "ssh", "password" or "token"
 #    pullSecrets:
 #    basePath: ""
 
