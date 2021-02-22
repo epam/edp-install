@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  generation: 1
   name: {{.Values.global.database.name}}
   labels:
     app: {{.Values.global.database.name}}
