@@ -29,6 +29,20 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
 8. The "openshift" realm is created in Keycloak;
 9. Helm 3.1 or higher is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
+10. It is highly recommended to use a storage class with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
+    - Storage class template with the Retain Reclaim Policy:
+    ```yaml
+    kind: StorageClass
+    apiVersion: storage.k8s.io/v1
+    metadata:
+      name: gp2-retain
+    provisioner: kubernetes.io/aws-ebs
+    parameters:
+      fsType: ext4
+      type: gp2
+    reclaimPolicy: Retain
+    volumeBindingMode: WaitForFirstConsumer
+    ```
 
 ## EDP Namespace
 Choose an EDP tenant name, e.g. "demo", and create the <edp-project> namespace with this name.
@@ -81,7 +95,7 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     - global.database.host                                              # Host to DB (<db-name>.<namespace>);
     - global.database.name                                              # Name of DB;
     - global.database.port                                              # Port of DB;
-    - global.database.storage.class                                     # Type of storage class for DB volume;
+    - global.database.storage.class                                     # Type of storage class for DB volume. By default: "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 10 of the Prerequisites section;
     - global.database.storage.size                                      # Size of storage for DB volume;
     - global.webConsole.enabled                                         # Set to true if you want to have Kubernetes dashboard link in Admin Console;
     - global.webConsole.url                                             # Kubernetes dashboard URL;
@@ -98,7 +112,7 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     - jenkins-operator.jenkins.initImage                                # Init Docker image for Jenkins deployment;
     - jenkins-operator.jenkins.pullSecrets                              # Secrets to pull from private Docker registry;
     - jenkins-operator.jenkins.basePath                                 # Base path for Jenkins URL;
-    - jenkins-operator.jenkins.storage.class                            # Type of storage class. By default: gp2;
+    - jenkins-operator.jenkins.storage.class                            # Type of storage class. By default: "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 10 of the Prerequisites section;
     - jenkins-operator.jenkins.storage.size                             # Size of persistent volume for Jenkins data, it is recommended to use not less then 10 GB. By default: 10Gi;
     - jenkins-operator.jenkins.sharedLibraries[i].name                  # EDP shared-library name;
     - jenkins-operator.jenkins.sharedLibraries[i].url                   # EDP shared-library repository link;
@@ -133,7 +147,7 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     - nexus-operator.nexus.version                                      # Nexus version. The released version can be found on [Dockerhub](https://hub.docker.com/r/sonatype/nexus3/tags)'
     - nexus-operator.nexus.basePath                                     # Base path for Nexus URL;
     - nexus-operator.nexus.imagePullSecrets                             # Secrets to pull from private Docker registry;
-    - nexus-operator.nexus.storage.class                                # Storageclass for Nexus data volume. Default is "gp2";
+    - nexus-operator.nexus.storage.class                                # Storageclass for Nexus data volume. Default is "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 10 of the Prerequisites section;
     - nexus-operator.nexus.storage.size                                 # Nexus data volume capacity. Default is "10Gi";
     
     Sonar parameters:
@@ -145,9 +159,9 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     - sonar-operator.sonar.version                                      # Sonarqube Docker image tag. Default supported is "7.9-community";
     - sonar-operator.sonar.initImage                                    # Init Docker image for Sonarqube deployment. Default is "busybox";
     - sonar-operator.sonar.dbImage                                      # Docker image name for Sonarqube Database. Default in "postgres:9.6";
-    - sonar-operator.sonar.storage.data.class                           # Storageclass for Sonarqube data volume. Default is "gp2";
+    - sonar-operator.sonar.storage.data.class                           # Storageclass for Sonarqube data volume. Default is "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 10 of the Prerequisites section;
     - sonar-operator.sonar.storage.data.size                            # Sonarqube data volume size. Default is "1Gi";
-    - sonar-operator.sonar.storage.database.class                       # Storageclass for Sonarqube database volume. Default is "gp2";
+    - sonar-operator.sonar.storage.database.class                       # Storageclass for Sonarqube database volume. Default is "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 10 of the Prerequisites section;
     - sonar-operator.sonar.storage.database.size                        # Sonarqube database volume size. Default is "1Gi"
     - sonar-operator.sonar.imagePullSecrets                             # Secrets to pull from private Docker registry;
     - sonar-operator.sonar.basePath                                     # Base path for Sonar URL;
@@ -164,6 +178,22 @@ kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --e
     - admin-console-operator.adminConsole.imageStreamUrlMask            # URL mask that leads to image stream in Kubernetes (eg --set 'adminConsole.imageStreamUrlMask=/{stream}/');
     - admin-console-operator.adminConsole.authKeycloakEnabled           # Enabled or disabled integration with Keycloak;
     - admin-console-operator.adminConsole.buildTools                    # List of build tools wich admin console supports (eg --set 'adminConsole.buildTools=maven,helm');
+
+    Gerrit parameters:
+    - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator);
+    - gerrit-operator.image.version                                     # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator/tags);
+    - gerrit-operator.gerrit.deploy                                     # Flag to true/false Gerrit deploy;
+    - gerrit-operator.gerrit.name                                       # Gerrit name;
+    - gerrit-operator.gerrit.image                                      # Gerrit image, e.g. openfrontier/gerrit;
+    - gerrit-operator.gerrit.imagePullSecrets                           # Secrets to pull from private Docker registry;
+    - gerrit-operator.gerrit.version                                    # Gerrit version, e.g. 3.1.4;
+    - gerrit-operator.gerrit.sshPort                                    # SSH port;
+    - gerrit-operator.gitServer.name                                    # GitServer CR name;
+    - gerrit-operator.gitServer.user                                    # Git user to connect;
+    - gerrit-operator.gitServer.httpsPort                               # HTTPS port;
+    - gerrit-operator.gitServer.nameSshKeySecret                        # Name of the secret with credentials to Git server;
+    - gerrit-operator.gerrit.storage.class                              # Storageclass for Gerrit data volume. Default is "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 10 of the Prerequisites section;
+    - gerrit-operator.gerrit.storage.size                               # Gerrit data volume size. Default is "1Gi";
     
     Reconciler parameters:
     - reconciler.image.name                                             # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/reconciler);
