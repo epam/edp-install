@@ -280,7 +280,7 @@ parameters:
 - displayName: Application version
   name: SERVICE_VERSION
   required: true
-  value: "8.0.2"
+  value: "12.0.4"
 - displayName: Application image
   name: SERVICE_IMAGE
   value: "quay.io/keycloak/keycloak"

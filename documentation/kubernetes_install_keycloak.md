@@ -26,11 +26,11 @@ Follow the steps below to install Keycloak:
     helm repo add codecentric https://codecentric.github.io/helm-charts
     helm repo update
     ```
-3. Install Keycloak v.11.0.2:
+3. Install Keycloak v.12.0.4:
 
     ```bash
     helm install keycloak codecentric/keycloak \
-    --version 9.5.0 \
+    --version 10.1.0 \
     --namespace security
     ```
 4. Wait for the Keycloak URL to become accessible.
