@@ -28,8 +28,8 @@ global:
     tolerations: []
     affinity: {}
   webConsole:
-    enabled: true
-    url: "https://master.delivery.aws.main.edp.projects.epam.com"
+    # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
+    url:
 
 edp:
   adminGroups:

@@ -23,7 +23,7 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 3. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
 4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
 5. The "openshift" realm is created in Keycloak;
-6. The installation machine with [oc](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html#cli-installing-cli_cli-developer-commands) is installed with the cluster-admin access to the OpenShift cluster; 
+6. The installation machine with [oc](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html#cli-installing-cli_cli-developer-commands) is installed with the cluster-admin access to the OpenShift cluster;
 7. Helm 3.1 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
 8. It is highly recommended to use a storage class with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
     - Storage class template with Retain Reclaim Policy:
@@ -45,8 +45,8 @@ Choose an EDP tenant name, e.g. "demo", and create the <edp-project> project wit
 Before starting EDP deployment, make sure to have the <edp-project> EDP project created in OpenShift.
 
 ## Install EDP
-To store EDP data, use any existing Postgres database or create one during the installation. 
-In addition, create two secrets in the <edp-project> project: one with administrative credentials and one with credentials for the EDP tenant (database schema). 
+To store EDP data, use any existing Postgres database or create one during the installation.
+In addition, create two secrets in the <edp-project> project: one with administrative credentials and one with credentials for the EDP tenant (database schema).
 * Create secret for administrative access to database:
 ```
 oc -n <edp-project> create secret generic super-admin-db --from-literal=username=<super_admin_db_username> --from-literal=password=<super_admin_db_password>
@@ -62,7 +62,7 @@ oc -n <edp-project> create secret generic db-admin-console --from-literal=userna
 oc -n <global.edpName> create secret generic sonar-db --from-literal=database-user=admin --from-literal=database-password=<password>
 ```
 
-* For EDP, it is required to have Keycloak access to perform integration. To do this, create manually secret with an administrative access username 
+* For EDP, it is required to have Keycloak access to perform integration. To do this, create manually secret with an administrative access username
 and a password or use the existing secret and the commands as examples:
 
 ```bash
@@ -82,8 +82,8 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
 
      _**NOTE:** It is highly recommended to use the latest released version._
 
-* EDP installation chart disposes of the following parameters: 
- ```   
+* EDP installation chart disposes of the following parameters:
+ ```
     General parameters:
     - global.version                                                    # EDP version;
     - global.edpName                                                    # Name of your EDP project <edp-project> that was previously defined;
@@ -98,12 +98,11 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - global.database.port                                              # Port of DB;
     - global.database.storage.class                                     # Type of storage class for DB volume. By default: "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 8 of the Prerequisites section;
     - global.database.storage.size                                      # Size of storage;
-    - global.webConsole.enabled                                         # Set to true if you want to have Openshift dashboard link in Admin Console;
     - global.webConsole.url                                             # Openshift dashboard URL;
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
     - dockerRegistry.url                                                # URL to docker registry;
-        
+
     Jenkins parameters:
     - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator);
     - jenkins-operator.image.version                                    # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator/tags);
@@ -120,16 +119,16 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - jenkins-operator.jenkins.sharedLibraries[i].tag                   # EDP shared-library repository version;
     - jenkins-operator.jenkins.sharedLibraries[i].secret                # Name of Kubernetes secret which contains credentials to private repository. Use only if repo is private.;
     - jenkins-operator.jenkins.sharedLibraries[i].type                  # Type of connection to repository (eg ssh, password and token);
-    
+
     CD pipeline parameters:
     - cd-pipeline-operator.image.name                                   # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/cd-pipeline-operator);
     - cd-pipeline-operator.image.version                                # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/cd-pipeline-operator/tags);
-        
+
     Keycloak parameters:
     - keycloak-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/keycloak-operator);
     - keycloak-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/keycloak-operator/tags);
     - keycloak-operator.keycloak.url                                    # URL to Keycloak;
-    
+
     Codebase parameters:
     - codebase-operator.image.name                                      # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/codebase-operator);
     - codebase-operator.image.version                                   # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/codebase-operator/tags);
@@ -138,7 +137,7 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - codebase-operator.jira.apiUrl                                     # API URL for development;
     - codebase-operator.jira.rootUrl                                    # URL to Jira server;
     - codebase-operator.jira.credentialName                             # Name of secret with credentials to Jira server;
-    
+
     Nexus parameters:
     - nexus-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/nexus-operator);
     - nexus-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/nexus-operator/tags);
@@ -150,7 +149,7 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - nexus-operator.nexus.imagePullSecrets                             # Secrets to pull from private Docker registry;
     - nexus-operator.nexus.storage.class                                # Storageclass for Nexus data volume. Default is "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 8 of the Prerequisites section;
     - nexus-operator.nexus.storage.size                                 # Nexus data volume capacity. Default is "10Gi";
-    
+
     Sonar parameters:
     - sonar-operator.image.name                                         # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator);
     - sonar-operator.image.version                                      # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/sonar-operator/tags);
@@ -166,7 +165,7 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - sonar-operator.sonar.storage.database.size                        # Sonarqube database volume size. Default is "1Gi".
     - sonar-operator.sonar.imagePullSecrets                             # Secrets to pull from private Docker registry;
     - sonar-operator.sonar.basePath                                     # Base path for Sonar URL;
-    
+
     Admin Console operator parameters:
     - admin-console-operator.image.name                                 # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/admin-console-operator);
     - admin-console-operator.image.version                              # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/admin-console-operator/tags);
@@ -178,7 +177,7 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - admin-console-operator.adminConsole.imageStreamUrlMask            # URL mask that leads to image stream in Openshift (for Openshift 3.9 - /console/project/{namespace}/browse/images/{stream});
     - admin-console-operator.adminConsole.authKeycloakEnabled           # Enabled or disabled integration with Keycloak;
     - admin-console-operator.adminConsole.buildTools                    # List of build tools wich admin console supports (eg --set 'adminConsole.buildTools=maven,helm');
-    
+
     Gerrit parameters:
     - gerrit-operator.image.name                                        # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator);
     - gerrit-operator.image.version                                     # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/gerrit-operator/tags);
@@ -194,11 +193,11 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - gerrit-operator.gitServer.nameSshKeySecret                        # Name of secret with credentials to Git server;
     - gerrit-operator.gerrit.storage.class                              # Storageclass for Gerrit data volume. Default is "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 8 of the Prerequisites section;
     - gerrit-operator.gerrit.storage.size                               # Gerrit data volume size. Default is "1Gi";
-    
+
     Reconciler parameters:
     - reconciler.image.name                                             # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/reconciler);
     - reconciler.image.version                                          # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/reconciler/tags);
-    
+
     PERF operator parameters:
     - perf-operator.image.name                                          # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/perf-operator);
     - perf-operator.image.version                                       # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/perf-operator/tags);
@@ -211,18 +210,17 @@ oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export
     - perf-operator.perf.luminate.enabled                               # Flag to enable/disable the Luminate integration (e.g. true/false);
     - perf-operator.perf.luminate.apiUrl                                # API URL for development;
     - perf-operator.perf.luminate.credentialName                        # Name of secret with Luminate credentials;
- ```  
+ ```
 
 * If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> project;
 
-* Install EDP in the <edp-project> project with the helm command. 
-Depending on the cloud provider, the parameter values may differ, make sure that the set of values ​is correct for your provider. 
+* Install EDP in the <edp-project> project with the helm command.
+Depending on the cloud provider, the parameter values may differ, make sure that the set of values ​is correct for your provider.
 Find below the basic installation command example for AWS cloud:
 ```bash
     helm install <helm_release_name> epamedp/edp-install --version "2.5.0" --wait --timeout=900s --namespace <edp-project> \
     --set global.edpName=<edp-project> \
     --set global.dnsWildCard=<cluster_DNS_wilcdard> \
-    --set global.webConsole.enabled=true \
     --set global.webConsole.url=<cluster_webConsole_url> \
     --set global.database.host=<database_host> \
     --set global.platform=openshift \
@@ -251,11 +249,11 @@ Find below the basic installation command example for AWS cloud:
     --set codebase-operator.jira.credentialName=epam-jira-user
 ```
 
-* As soon as Helm deploys components, create manually secrets for JIRA/GIT/PERF integration (if enabled). 
+* As soon as Helm deploys components, create manually secrets for JIRA/GIT/PERF integration (if enabled).
 Pay attention that secret names should be the same as the 'credentialName' property in JiraServer/PerfServer custom resources,
  and the 'nameSshKeySecret' property for GIT.
 
 > **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the **perf-operator.perf.luminate.credentialName** property.
-      
+
 * After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP.
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
