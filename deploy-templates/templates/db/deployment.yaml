@@ -92,7 +92,7 @@ spec:
         runAsUser: 999
         runAsNonRoot: true
         fsGroup: 999
-      serviceAccountName: edp
+      serviceAccountName: edp-db
       volumes:
         - name: {{.Values.global.database.name}}
           persistentVolumeClaim:
