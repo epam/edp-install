@@ -64,7 +64,7 @@ tags:
 keycloak-operator:
   image:
     name: epamedp/keycloak-operator
-    version: v1.7.0
+    version: v1.7.1
   keycloak:
     url: "keycloak.example.com"
 
