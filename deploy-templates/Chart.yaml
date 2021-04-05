@@ -3,8 +3,8 @@ description: A Helm chart for EDP Install
 home: https://solutionshub.epam.com/solution/epam-delivery-platform
 name: edp-install
 type: application
-version: 2.7.0
-appVersion: 2.7.0
+version: 2.7.1
+appVersion: 2.7.1
 maintainers:
   - name: EPAM EDP Team
 sources:
@@ -13,7 +13,7 @@ sources:
 dependencies:
 - name: keycloak-operator
   repository: "@epamedp"
-  version: "v1.7.0"
+  version: "v1.7.1"
   tags:
     - keycloak-operator
 
