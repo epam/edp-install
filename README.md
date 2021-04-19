@@ -79,8 +79,7 @@ _Table 1. EDP Main Repositories and Documentation._
 ### Related Articles
 * [EDP Installation on Kubernetes](documentation/kubernetes_install_edp.md)
 * [EDP Installation on OpenShift](documentation/openshift_install_edp.md)
-* [Keycloak Installation on Kubernetes](documentation/kubernetes_install_keycloak.md)
-* [Keycloak Installation on OpenShift](documentation/openshift_install_keycloak.md)
+* [Keycloak Installation on Kubernetes/OpenShift](documentation/install_keycloak.md)
 ---
 * [GitHub Integration](https://github.com/epam/edp-admin-console/blob/master/documentation/github-integration.md#github-integration)
 * [GitLab Integration](https://github.com/epam/edp-admin-console/blob/master/documentation/gitlab-integration.md#gitlab-integration)

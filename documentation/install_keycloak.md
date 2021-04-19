@@ -116,3 +116,33 @@ postgresql:
     size: "3Gi"
     storageClass: "gp2"
 ```
+
+## Configuration
+
+Follow the steps below to configure Keycloak:
+
+1. Ensure the "openshift" realm is created in Keycloak;
+
+
+2. Create a user in your Keycloak in "Master" realm;
+
+
+3. In the "Role Mappings" tab, assign the proper roles to user:
+
+* for realm:
+  - create-realm,
+   
+  - offline_access,
+   
+  - uma_authorization
+   
+* for openshift-realm client:
+  - impersonation,
+   
+  - manage-authorization,
+   
+  - manage-clients,
+    
+  - manage-users
+
+![Keycloak-roles](../documentation-resources/keycloak-roles.png "Keycloak-roles")

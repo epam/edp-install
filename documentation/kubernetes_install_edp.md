@@ -26,10 +26,9 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 
 5. Load balancer (if any exists in front of ingress controller) is configured with session stickiness, disabled HTTP/2 protocol and header size of 32k support;
 6. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
-7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](kubernetes_install_keycloak.md)) instruction;
-8. The "openshift" realm is created in Keycloak;
-9. Helm 3.1 or higher is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
-10. It is highly recommended to use a storage class with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
+7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](install_keycloak.md)) instruction;
+8. Helm 3.1 or higher is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
+9. It is highly recommended to use a storage class with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
     - Storage class template with the Retain Reclaim Policy:
     ```yaml
     kind: StorageClass
@@ -66,10 +65,10 @@ kubectl -n <edp-project> create secret generic db-admin-console --from-literal=u
 kubectl -n <global.edpName> create secret generic sonar-db --from-literal=database-user=admin --from-literal=database-password=<password>
 ```
 
-* For EDP, it is required to have Keycloak access to perform the integration. To do this, create manually secret with an administrative access username
-and a password or use the existing secret and the commands as examples:
-```bash
-kubectl -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export -o yaml | kubectl -n <edp_cicd_project> apply -f -
+* For EDP, it is required to have Keycloak access to perform the integration. Create secret with user and password provisioned in step 7 (see above):
+
+```
+kubectl -n <edp-project> create secret generic keycloak --from-literal=username=<username> --from-literal=password=<password>
 ```
 
 * To add the Helm EPAMEDP Charts for local client, run "helm repo add":

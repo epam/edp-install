@@ -21,11 +21,10 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
       use-http2: "false"
       ```
 3. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
-4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](openshift_install_keycloak.md) instruction;
-5. The "openshift" realm is created in Keycloak;
-6. The installation machine with [oc](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html#cli-installing-cli_cli-developer-commands) is installed with the cluster-admin access to the OpenShift cluster;
-7. Helm 3.1 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
-8. It is highly recommended to use a storage class with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
+4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](install_keycloak.md) instruction;
+5. The installation machine with [oc](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html#cli-installing-cli_cli-developer-commands) is installed with the cluster-admin access to the OpenShift cluster;
+6. Helm 3.1 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
+7. It is highly recommended to use a storage class with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
     - Storage class template with Retain Reclaim Policy:
     ```yaml
     kind: StorageClass
@@ -62,11 +61,10 @@ oc -n <edp-project> create secret generic db-admin-console --from-literal=userna
 oc -n <global.edpName> create secret generic sonar-db --from-literal=database-user=admin --from-literal=database-password=<password>
 ```
 
-* For EDP, it is required to have Keycloak access to perform integration. To do this, create manually secret with an administrative access username
-and a password or use the existing secret and the commands as examples:
+* For EDP, it is required to have Keycloak access to perform the integration. Create secret with user and password provisioned in step 4 (see above):
 
-```bash
-oc -n <edp_main_keycloak_project> get secret <edp_main_keycloak_secret> --export -o yaml | oc -n <edp_cicd_project> apply -f -
+```
+oc -n <edp-project> create secret generic keycloak --from-literal=username=<username> --from-literal=password=<password>
 ```
 
 * To add the Helm EPAMEDP Charts for local client, run "helm repo add":
