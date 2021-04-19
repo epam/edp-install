@@ -1,5 +1,5 @@
 global:
-  version: "2.7.2"
+  version: "2.7.3"
   edpName: "stub-namespace"
   platform: "openshift"
   dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
@@ -71,7 +71,7 @@ keycloak-operator:
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: v2.7.0
+    version: v2.7.1
 # jira:
 #   integration: true
 #   name: "epam-jira"
@@ -164,7 +164,7 @@ admin-console-operator:
 gerrit-operator:
   image:
     name: epamedp/gerrit-operator
-    version: v2.7.0
+    version: v2.7.1
 #  gerrit:
 #    deploy: true
 #    name: "gerrit"

@@ -3,8 +3,8 @@ description: A Helm chart for EDP Install
 home: https://solutionshub.epam.com/solution/epam-delivery-platform
 name: edp-install
 type: application
-version: 2.7.2
-appVersion: 2.7.2
+version: 2.7.3
+appVersion: 2.7.3
 maintainers:
   - name: EPAM EDP Team
 sources:
@@ -19,7 +19,7 @@ dependencies:
 
 - name: codebase-operator
   repository: "@epamedp"
-  version: "v2.7.0"
+  version: "v2.7.1"
   tags:
     - codebase-operator
 
@@ -61,7 +61,7 @@ dependencies:
 
 - name: gerrit-operator
   repository: "@epamedp"
-  version: "v2.7.0"
+  version: "v2.7.1"
   tags:
     - gerrit-operator
 
