@@ -3,8 +3,8 @@ description: A Helm chart for EDP Install
 home: https://solutionshub.epam.com/solution/epam-delivery-platform
 name: edp-install
 type: application
-version: 2.7.3
-appVersion: 2.7.3
+version: 2.7.4
+appVersion: 2.7.4
 maintainers:
   - name: EPAM EDP Team
 sources:
@@ -13,66 +13,66 @@ sources:
 dependencies:
 - name: keycloak-operator
   repository: "@epamedp"
-  version: "v1.7.1"
+  version: "v1.7.2"
   tags:
     - keycloak-operator
 
 - name: codebase-operator
   repository: "@epamedp"
-  version: "v2.7.1"
+  version: "v2.7.2"
   tags:
     - codebase-operator
 
 - name: jenkins-operator
   repository: "@epamedp"
-  version: "v2.7.1"
+  version: "v2.7.2"
   tags:
     - jenkins-operator
 
 - name: edp-component-operator
   repository: "@epamedp"
-  version: "v0.6.0"
+  version: "v0.6.1"
   tags:
     - edp-component-operator
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "v2.7.0"
+  version: "v2.7.1"
   tags:
     - cd-pipeline-operator
 
 - name: nexus-operator
   repository: "@epamedp"
-  version: "v2.7.0"
+  version: "v2.7.1"
   tags:
     - nexus-operator
 
 - name: sonar-operator
   repository: "@epamedp"
-  version: "v2.7.0"
+  version: "v2.7.1"
   tags:
     - sonar-operator
 
 - name: admin-console-operator
   repository: "@epamedp"
-  version: "v2.7.0"
+  version: "v2.7.1"
   tags:
     - admin-console-operator
 
 - name: gerrit-operator
   repository: "@epamedp"
-  version: "v2.7.1"
+  version: "v2.7.2"
   tags:
     - gerrit-operator
 
 - name: reconciler
   repository: "@epamedp"
-  version: "v2.7.0"
+  version: "v2.7.1"
   tags:
     - reconciler
 
 - name: perf-operator
   repository: "@epamedp"
-  version: "v2.7.0"
+  version: "v2.7.1"
   tags:
     - perf-operator

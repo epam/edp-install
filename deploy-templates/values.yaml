@@ -1,5 +1,5 @@
 global:
-  version: "2.7.3"
+  version: "2.7.4"
   edpName: "stub-namespace"
   platform: "openshift"
   dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
@@ -64,14 +64,14 @@ tags:
 keycloak-operator:
   image:
     name: epamedp/keycloak-operator
-    version: v1.7.1
+    version: v1.7.2
   keycloak:
     url: "keycloak.example.com"
 
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: v2.7.1
+    version: v2.7.2
 # jira:
 #   integration: true
 #   name: "epam-jira"
@@ -82,7 +82,7 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: v2.7.1
+    version: v2.7.2
   jenkins:
 #    deploy: true
 #    image: epamedp/edp-jenkins
@@ -110,12 +110,12 @@ jenkins-operator:
 cd-pipeline-operator:
   image:
     name: epamedp/cd-pipeline-operator
-    version: v2.7.0
+    version: v2.7.1
 
 nexus-operator:
   image:
     name: epamedp/nexus-operator
-    version: v2.7.0
+    version: v2.7.1
 #  nexus:
 #    deploy: true
 #    name: "nexus"
@@ -130,7 +130,7 @@ nexus-operator:
 sonar-operator:
   image:
     name: epamedp/sonar-operator
-    version: v2.7.0
+    version: v2.7.1
 #  sonar:
 #    deploy: true
 #    name: "sonar"
@@ -151,7 +151,7 @@ sonar-operator:
 admin-console-operator:
   image:
     name: epamedp/admin-console-operator
-    version: v2.7.0
+    version: v2.7.1
   adminConsole:
 #    image: epamedp/edp-admin-console
 #    version: 2.5.0
@@ -164,7 +164,7 @@ admin-console-operator:
 gerrit-operator:
   image:
     name: epamedp/gerrit-operator
-    version: v2.7.1
+    version: v2.7.2
 #  gerrit:
 #    deploy: true
 #    name: "gerrit"
@@ -179,12 +179,12 @@ gerrit-operator:
 reconciler:
   image:
     name: epamedp/reconciler
-    version: v2.7.0
+    version: v2.7.1
 
 perf-operator:
   image:
     name: epamedp/perf-operator
-    version: v2.7.0
+    version: v2.7.1
 #  perf:
 #    integration: true
 #    name: "epam-perf"
