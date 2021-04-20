@@ -82,7 +82,7 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: v2.7.0
+    version: v2.7.1
   jenkins:
 #    deploy: true
 #    image: epamedp/edp-jenkins
