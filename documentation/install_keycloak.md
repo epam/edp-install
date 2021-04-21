@@ -4,7 +4,7 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 
 ## Prerequisites
 
-* Keycloak v.[11.0.2](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-11-0-0) should 
+* Keycloak v.[12.0.4](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-12-0-0) should 
 be used with EDP installation.
 * [Helm](https://helm.sh) is installed. For details, to getting started, please refer to the [Helm Documentation](https://helm.sh/docs/).
 
