@@ -1,8 +1,8 @@
 global:
-  version: "2.7.4"
+  version: "2.7.5"
   edpName: "stub-namespace"
   platform: "openshift"
-  dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
+  dnsWildCard: "delivery.example.com"
   admins:
     - "stub_user_one@example.com"
   developers:
@@ -82,7 +82,7 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: v2.7.2
+    version: v2.7.3
   jenkins:
 #    deploy: true
 #    image: epamedp/edp-jenkins
@@ -151,7 +151,7 @@ sonar-operator:
 admin-console-operator:
   image:
     name: epamedp/admin-console-operator
-    version: v2.7.1
+    version: v2.7.2
   adminConsole:
 #    image: epamedp/edp-admin-console
 #    version: 2.5.0
