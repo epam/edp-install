@@ -1,5 +1,5 @@
 global:
-  version: "2.7.6"
+  version: "2.7.7"
   edpName: "stub-namespace"
   platform: "openshift"
   dnsWildCard: "delivery.example.com"
@@ -82,7 +82,7 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: v2.7.4
+    version: v2.7.5
   jenkins:
 #    deploy: true
 #    image: epamedp/edp-jenkins
