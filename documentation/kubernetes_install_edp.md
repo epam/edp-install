@@ -1,10 +1,12 @@
 # EDP Installation on Kubernetes
 
-Inspect the prerequisites and the main steps to perform with the aim to install EPAM Delivery Platform on Kubernetes.
+Inspect the prerequisites and the main steps to install EPAM Delivery Platform on Kubernetes.
 
-## Prerequisites
-1. Kubernetes cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
-2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed with a cluster-admin access to the Kubernetes cluster;
+## Kubernetes Cluster Settings
+
+Make sure the cluster meets the following conditions:
+1. Kubernetes cluster is installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
+2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) is installed with a cluster-admin access to the Kubernetes cluster;
 3. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
 4. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 64k support;
 
@@ -25,10 +27,10 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
       ```
 
 5. Load balancer (if any exists in front of ingress controller) is configured with session stickiness, disabled HTTP/2 protocol and header size of 32k support;
-6. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+6. Cluster nodes and pods have access to the cluster via external URLs. For instance, add in AWS the VPC NAT gateway elastic IP to the cluster external load balancers security group);
 7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](install_keycloak.md)) instruction;
 8. Helm 3.1 or higher is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
-9. It is highly recommended to use a storage class with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
+9. A storage class is used with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
     - Storage class template with the Retain Reclaim Policy:
     ```yaml
     kind: StorageClass
@@ -43,29 +45,75 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
     volumeBindingMode: WaitForFirstConsumer
     ```
 
+## Prerequisites for EDP Installation
+* Kiosk is deployed in the cluster. For details, please refer to the [Install kiosk](https://github.com/loft-sh/kiosk#1-install-kiosk) paragraph.
+* A service account is added to the configuration namespace (e.g. 'prerequisite-namespace' namespace).
+```
+kubectl -n <configuration_namespace> create sa <organization_name>
+```
+
+* The Account template is applied to the cluster. Please check the sample below:
+```yaml
+apiVersion: tenancy.kiosk.sh/v1alpha1
+kind: Account
+metadata:
+  name: <organization_name>
+spec:
+  space: 
+    clusterRole: kiosk-space-admin
+  subjects:
+  - kind: ServiceAccount
+    name: <organization_name>
+    namespace: <configuration_namespace>
+```
+
+* The ClusterRoleBinding is applied to the 'kiosk-edit' cluster role (current role is added during installation of Kiosk). Please check the sample below:
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: <organization_name>-kiosk-edit
+subjects:
+- kind: ServiceAccount
+  name: <organization_name>
+  namespace: <configuration_namespace>
+roleRef:
+  kind: ClusterRole
+  name: kiosk-edit
+  apiGroup: rbac.authorization.k8s.io
+```
+
 ## EDP Namespace
-Choose an EDP tenant name, e.g. "demo", and create the <edp-project> namespace with this name.
-Before starting the EDP deployment, make sure to have the <edp-project> EDP namespace created in K8S.
+Choose an EDP tenant name, e.g. "demo", and create the eponymous <edp-project> space custom resource. As a result, EDP namespace will appear. 
+Before starting the EDP deployment, make sure to have the <edp-project> EDP namespace created in K8S:
+```yaml
+apiVersion: tenancy.kiosk.sh/v1alpha1
+kind: Space
+metadata:
+  name: <edp-project>
+spec:
+  account: <organization_name>
+```
 
 ## Install EDP
 To store EDP data, use any existing Postgres database or create one during the installation.
-In addition, create two secrets in the <edp-project> namespace: one with administrative credentials and one with credentials for the EDP tenant (database schema).
-* Create secret for administrative access to database:
+Additionally, create two secrets in the <edp-project> namespace: one with administrative credentials and another with credentials for the EDP tenant (database schema).
+* Create a secret for administrative access to the database:
 ```
 kubectl -n <edp-project> create secret generic super-admin-db --from-literal=username=<super_admin_db_username> --from-literal=password=<super_admin_db_password>
 ```
 
-* Create secret for EDP tenant database user. If you want to use the same username as for the administrative access, the passwords must be the same as well:
+* Create a secret for an EDP tenant database user. If you want to use the same username as for the administrative access, the passwords must be the same as well:
 ```
 kubectl -n <edp-project> create secret generic db-admin-console --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
 
-* Create secret for Sonar database:
+* Create a secret for the Sonar database:
 ```
 kubectl -n <global.edpName> create secret generic sonar-db --from-literal=database-user=admin --from-literal=database-password=<password>
 ```
 
-* For EDP, it is required to have Keycloak access to perform the integration. Create secret with user and password provisioned in step 7 (see above):
+* For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 7 (see above):
 
 ```
 kubectl -n <edp-project> create secret generic keycloak --from-literal=username=<username> --from-literal=password=<password>
@@ -84,7 +132,7 @@ kubectl -n <edp-project> create secret generic keycloak --from-literal=username=
 
      _**NOTE:** It is highly recommended to use the latest released version._
 
-* EDP installation chart disposes of the following parameters:
+* Make sure EDP installation chart disposes of the following parameters:
 
  ```
     General parameters:
@@ -218,17 +266,18 @@ kubectl -n <edp-project> create secret generic keycloak --from-literal=username=
 
 * If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> namespace;
 
-* Install EDP in the <edp-project> namespace with the helm command; find below the installation command example:
+* Install EDP in the <edp-project> namespace with the helm command. Find the installation command example below:
+
 ```bash
 helm install epamedp/edp-install --wait --timeout=900s --namespace <edp-project> --set global.edpName=<edp-project> --set global.dnsWildCard=<k8s_cluster_DNS_wilcdard> --set global.platform=kubernetes
 ```
 
 * As soon as Helm deploys components, create manually secrets for JIRA/GIT/PERF integration (if enabled).
-Pay attention that secret names should be the same as the 'credentialName' property in JiraServer/PerfServer custom
+Make sure the secret names are the same as the 'credentialName' property in JiraServer/PerfServer custom
 resources, and the 'nameSshKeySecret' property for GIT.
 
-> **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the **perf-operator.perf.luminate.credentialName** property.
+> **INFO**: If your system requires to use Luminate, make sure the secret name is the same as the **perf-operator.perf.luminate.credentialName** property.
 
 
-* After the installation, it is necessary to configure the [GitHub](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP.
+* After the installation, configure the [GitHub](https://github.com/epam/edp-admin-console/blob/master/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epam/edp-admin-console/blob/master/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP.
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._

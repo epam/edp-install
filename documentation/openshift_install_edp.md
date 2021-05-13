@@ -1,9 +1,11 @@
 # EDP Installation on OpenShift
 
-Inspect the prerequisites and the main steps to perform with the aim to install EPAM Delivery Platform on OpenShift.
+Inspect the prerequisites and the main steps to install EPAM Delivery Platform on OpenShift.
 
-## Prerequisites
-1. OpenShift cluster installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
+## OpenShift Cluster Settings 
+
+Make sure the cluster meets the following conditions:
+1. OpenShift cluster is installed with minimum 2 worker nodes with total capacity 16 Cores and 40Gb RAM;
 2. Load balancer (if any exists in front of OpenShift router or ingress controller) is configured with session stickiness, disabled HTTP/2 protocol and header size of 64k support;
     - Example of Config Map for Nginx ingress controller:
     ```yaml
@@ -20,11 +22,11 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
       large-client-header-buffers: 4 64k
       use-http2: "false"
       ```
-3. Cluster nodes and pods should have access to the cluster via external URLs. For instance, you should add in AWS your VPC NAT gateway elastic IP to your cluster external load balancers security group);
+3. Cluster nodes and pods have access to the cluster via external URLs. For instance, add in AWS the VPC NAT gateway elastic IP to the cluster external load balancers security group);
 4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](install_keycloak.md) instruction;
 5. The installation machine with [oc](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html#cli-installing-cli_cli-developer-commands) is installed with the cluster-admin access to the OpenShift cluster;
 6. Helm 3.1 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
-7. It is highly recommended to use a storage class with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
+7. A storage class is used with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain):
     - Storage class template with Retain Reclaim Policy:
     ```yaml
     kind: StorageClass
@@ -39,24 +41,70 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
     volumeBindingMode: WaitForFirstConsumer
       ```
 
+## Prerequisites for EDP Installation
+* Kiosk is deployed in the cluster. For details, please refer to the [Install kiosk](https://github.com/loft-sh/kiosk#1-install-kiosk) paragraph.
+* A service account is added to the configuration namespace (e.g. 'prerequisite-namespace' namespace).
+```
+kubectl -n <configuration_namespace> create sa <organization_name>
+```
+
+* The Account template is applied to the cluster. Please check the sample below:
+```yaml
+apiVersion: tenancy.kiosk.sh/v1alpha1
+kind: Account
+metadata:
+  name: <organization_name>
+spec:
+  space: 
+    clusterRole: kiosk-space-admin
+  subjects:
+  - kind: ServiceAccount
+    name: <organization_name>
+    namespace: <configuration_namespace>
+```
+
+* The ClusterRoleBinding is applied to the 'kiosk-edit' cluster role (current role is added during installation of Kiosk). Please check the sample below:
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: <organization_name>-kiosk-edit
+subjects:
+- kind: ServiceAccount
+  name: <organization_name>
+  namespace: <configuration_namespace>
+roleRef:
+  kind: ClusterRole
+  name: kiosk-edit
+  apiGroup: rbac.authorization.k8s.io
+```
+
 ## EDP Project
-Choose an EDP tenant name, e.g. "demo", and create the <edp-project> project with this name.
-Before starting EDP deployment, make sure to have the <edp-project> EDP project created in OpenShift.
+Choose an EDP tenant name, e.g. "demo", and create the eponymous <edp-project> space custom resource. As a result, EDP namespace will appear. 
+Before starting the EDP deployment, make sure to have the <edp-project> EDP namespace created in OpenShift:
+```yaml
+apiVersion: tenancy.kiosk.sh/v1alpha1
+kind: Space
+metadata:
+  name: <edp-project>
+spec:
+  account: <organization_name>
+```
 
 ## Install EDP
 To store EDP data, use any existing Postgres database or create one during the installation.
-In addition, create two secrets in the <edp-project> project: one with administrative credentials and one with credentials for the EDP tenant (database schema).
-* Create secret for administrative access to database:
+Additionally, create two secrets in the <edp-project> project: one with administrative credentials and another with credentials for the EDP tenant (database schema).
+* Create a secret for administrative access to database:
 ```
 oc -n <edp-project> create secret generic super-admin-db --from-literal=username=<super_admin_db_username> --from-literal=password=<super_admin_db_password>
 ```
 
-* Create secret for EDP tenant database user. If you want to use the same username as for the administrative access, the passwords must be the same as well:
+* Create a secret for an EDP tenant database user. If you want to use the same username as for the administrative access, the passwords must be the same as well:
 ```
 oc -n <edp-project> create secret generic db-admin-console --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
 
-* Create secret for Sonar database:
+* Create a secret for the Sonar database:
 ```
 oc -n <global.edpName> create secret generic sonar-db --from-literal=database-user=admin --from-literal=database-password=<password>
 ```
@@ -80,7 +128,7 @@ oc -n <edp-project> create secret generic keycloak --from-literal=username=<user
 
      _**NOTE:** It is highly recommended to use the latest released version._
 
-* EDP installation chart disposes of the following parameters:
+* Make sure EDP installation chart disposes of the following parameters:
  ```
     General parameters:
     - global.version                                                    # EDP version;
@@ -213,8 +261,8 @@ oc -n <edp-project> create secret generic keycloak --from-literal=username=<user
 * If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> project;
 
 * Install EDP in the <edp-project> project with the helm command.
-Depending on the cloud provider, the parameter values may differ, make sure that the set of values ​is correct for your provider.
-Find below the basic installation command example for AWS cloud:
+Depending on the cloud provider, the parameter values may differ. Make sure that the set of values ​is correct for your provider.
+Find the basic installation command example for AWS cloud below:
 ```bash
     helm install <helm_release_name> epamedp/edp-install --version "2.5.0" --wait --timeout=900s --namespace <edp-project> \
     --set global.edpName=<edp-project> \
@@ -248,10 +296,10 @@ Find below the basic installation command example for AWS cloud:
 ```
 
 * As soon as Helm deploys components, create manually secrets for JIRA/GIT/PERF integration (if enabled).
-Pay attention that secret names should be the same as the 'credentialName' property in JiraServer/PerfServer custom resources,
+Make sure the secret names are the same as the 'credentialName' property in JiraServer/PerfServer custom resources,
  and the 'nameSshKeySecret' property for GIT.
 
-> **INFO**: If your system requires to use Luminate, pay attention that the secret name must be the same as the **perf-operator.perf.luminate.credentialName** property.
+> **INFO**: If the system requires to use Luminate, make sure the secret name is the same as the **perf-operator.perf.luminate.credentialName** property.
 
-* After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epam/edp-admin-console/blob/release/2.5/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP.
+* After the installation, if EDP is installed without Gerrit, it is possible to configure the [GitHub](https://github.com/epam/edp-admin-console/blob/master/documentation/github-integration.md#github-integration) or [GitLab](https://github.com/epam/edp-admin-console/blob/master/documentation/gitlab-integration.md#gitlab-integration) integration to work with EDP.
 >_**NOTE**: The full installation with integration between tools will take at least 10 minutes._
