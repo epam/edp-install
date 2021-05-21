@@ -43,6 +43,9 @@ perf:
 vcs:
   enabled: "false"
 
+# AWS IAM role with push access to ECR e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
+kanikoRoleArn:
+
 dockerRegistry:
   url: "093899590031.dkr.ecr.eu-central-1.amazonaws.com"
 

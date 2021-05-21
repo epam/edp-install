@@ -46,6 +46,7 @@ Make sure the cluster meets the following conditions:
     ```
 
 ## Prerequisites for EDP Installation
+### KIOSK
 * Kiosk is deployed in the cluster. For details, please refer to the [Install kiosk](https://github.com/loft-sh/kiosk#1-install-kiosk) paragraph.
 * A service account is added to the configuration namespace (e.g. 'prerequisite-namespace' namespace).
 ```
@@ -82,6 +83,52 @@ roleRef:
   name: kiosk-edit
   apiGroup: rbac.authorization.k8s.io
 ```
+### IAM Roles With Service Accounts (IRSA)
+The "build-image-kaniko" stage manages ECR through IRSA that should be available on the cluster. For details on how to associate IAM roles with service account, please refer to the [Associate IAM Roles With Service Accounts](https://github.com/epam/edp-admin-console/blob/master/documentation/enable_irsa.md#associate-iam-roles-with-service-accounts) page.
+Follow the steps below to create a required role:
+* Create AWS IAM Policy "AWSIRSA<CLUSTER_NAME><EDP_NAMESPACE>Kaniko_policy":
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:*",
+                "cloudtrail:LookupEvents"
+            ],
+            "Resource": "arn:aws:ecr:eu-central-1:<AWS_ACCOUNT_ID>:repository/<EDP_NAMESPACE>/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "ecr:GetAuthorizationToken",
+            "Resource": "*"
+        }
+    ]
+}
+```
+* Create AWS IAM Role "AWSIRSA<CLUSTER_NAME><EDP_NAMESPACE>Kaniko" with trust relationships:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::<AWS_ACCOUNT_ID>:oidc-provider/<OIDC_PROVIDER>"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "<OIDC_PROVIDER>:sub": "system:serviceaccount:<EDP_NAMESPACE>:edp-kaniko"
+       }
+     }
+   }
+ ]
+}
+```
+* Attach the "AWSIRSA<CLUSTER_NAME><EDP_NAMESPACE>Kaniko_policy" policy to the "AWSIRSA<CLUSTER_NAME><EDP_NAMESPACE>Kaniko" role.
+* Define the resulted **arn** role value into the **kanikoRoleArn** parameter during the installation.
 
 ## EDP Namespace
 Choose an EDP tenant name, e.g. "demo", and create the eponymous <edp-project> space custom resource. As a result, EDP namespace will appear. 
@@ -153,6 +200,7 @@ kubectl -n <edp-project> create secret generic keycloak --from-literal=username=
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
     - dockerRegistry.url                                                # URL to docker registry;
+    - kanikoRoleArn                                                     # AWS IAM role with push access to ECR e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>;
 
     Jenkins parameters:
     - jenkins-operator.image.name                                       # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/jenkins-operator);
