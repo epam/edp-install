@@ -43,6 +43,10 @@ oc -n <edp-project> create secret generic super-admin-db --from-literal=username
 oc -n <edp-project> create secret generic db-admin-console --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
 
+* Create secret for Sonar database:
+```
+oc -n <global.edpName> create secret generic sonar-db --from-literal=database-user=admin --from-literal=database-password=<password>
+```
 * For EDP, it is required to have Keycloak access to perform integration. To do this, create manually secret with an administrative access username 
 and a password or use the existing secret and the commands as examples:
 
