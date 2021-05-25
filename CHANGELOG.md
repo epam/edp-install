@@ -17,31 +17,25 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
 
-## Version 2.7.7 <a name="2.7.7"></a>
+## Version 2.7.7 <a name="2.7.7"></a> (April 30, 2021)
 
-The version 2.7.7 is released on April 30, 2021.
 #### Enhancements
 
 * The init stage runtime is decreased in Deploy pipeline.
 
-## Version 2.7.6 <a name="2.7.6"></a>
-
-The version 2.7.6 is released on April 26, 2021.
+## Version 2.7.6 <a name="2.7.6"></a> (April 26, 2021)
 
 #### Fixed Issues
 
 * Versioning and Jira integration for Terraform library are fixed.
 
-## Version 2.7.5 <a name="2.7.5"></a>
+## Version 2.7.5 <a name="2.7.5"></a> (April 22, 2021)
 
-The version 2.7.5 is released on April 22, 2021.
 #### New Functionality
 
 * Cyrillic characters support for Jira is implemented.
 
-## Version 2.7.4 <a name="2.7.4"></a>
-
-The version 2.7.4 is released on April 20, 2021.
+## Version 2.7.4 <a name="2.7.4"></a> (April 20, 2021)
 
 #### Upgrades
 
@@ -56,17 +50,13 @@ The version 2.7.4 is released on April 20, 2021.
 * Support for slash characters in ImageStreams objects is fixed.
 * The codebase operator with NPE failure under disabled Jira integration is fixed.
 
-## Version 2.7.2 <a name="2.7.2"></a>
-
-The version 2.7.2 is released on April 6, 2021.
+## Version 2.7.2 <a name="2.7.2"></a> (April 6, 2021)
 
 #### Fixed Issues
 
 * The keycloak operator dependency is fixed in the values.yaml file.
 
-## Version 2.7.1 <a name="2.7.1"></a>
-
-The version 2.7.1 is released on April 5, 2021.
+## Version 2.7.1 <a name="2.7.1"></a> (April 5, 2021)
 
 #### Fixed Issues
 
@@ -78,9 +68,7 @@ The version 2.7.1 is released on April 5, 2021.
 * The local development environment configuration is aligned with the documentation.
 * The deprecated variable normalizedName is removed.
 
-## Version 2.7.0 <a name="2.7.0"></a>
-
-The version 2.7.0 is released on April 2, 2021.
+## Version 2.7.0 <a name="2.7.0"></a> (April 2, 2021)
 
 ### What's New
 
@@ -95,11 +83,11 @@ honed the work of the libraries and repositories. See the list of upgrades, new 
 *  Jenkins is upgraded to version 2.263.4. For details, please refer to the [LTS Changelog](https://www.jenkins.io/changelog-stable/) page.
 *  Nexus is upgraded to version 3.30.0. For details, please refer to the [Nexus Release Notes](https://help.sonatype.com/repomanager3/release-notes#ReleaseNotes-NexusRepositoryManager3.30.0).
 *  Gerrit is upgraded to version 3.3.2. For details, please refer to the [Gerrit Release Notes](https://www.gerritcodereview.com/3.3.html).
-*  Keycloak is upgraded to version 12.0.4. For details, please refer to the [Keycloak Relese Notes](https://www.keycloak.org/docs/latest/release_notes/#keycloak-12-0-0).
+*  Keycloak is upgraded to version 12.0.4. For details, please refer to the [Keycloak Release Notes](https://www.keycloak.org/docs/latest/release_notes/#keycloak-12-0-0).
 *  EDP-delivery is upgraded to the master version.
 *  All go-alpine based images are updated to Alpine version 3.11.8. For details, please refer to the [Alpine Linux official page](https://alpinelinux.org/posts/Alpine-3.10.6-3.11.8-3.12.4-released.html).
 *  The Kaniko executor is upgraded to version v1.5.1. For details, please refer to the [Kaniko Release Notes](https://github.com/GoogleContainerTools/kaniko/releases/tag/v1.5.1) page on GitHub.
-*  The edp-admin-console Docker image is upgraded to Alpine 3.11.6. For details, please refer to the [Alpine Linux Relese Notes](https://alpinelinux.org/posts/Alpine-3.11.6-released.html).
+*  The edp-admin-console Docker image is upgraded to Alpine 3.11.6. For details, please refer to the [Alpine Linux Release Notes](https://alpinelinux.org/posts/Alpine-3.11.6-released.html).
 
 ### New Functionality and Enhancements
 
@@ -216,25 +204,19 @@ for the updates on the Jira integration.
     * [Inspect Autotests](https://github.com/epam/edp-admin-console/blob/master/documentation/inspect_autotest.md#inspect-autotest)
     * [Inspect Library](https://github.com/epam/edp-admin-console/blob/master/documentation/inspect_library.md#inspect-library)
 
-## Version 2.6.4 <a name="2.6.4"></a>
-
-The version 2.6.1 is released on January 22, 2021.
+## Version 2.6.4 <a name="2.6.4"></a> (January 22, 2021)
 
 #### Enhancements
 
 * Custom Resources Definition codebasebranches are improved.
 
-## Version 2.6.3 <a name="2.6.3"></a>
-
-The version 2.6.1 is released on January 18, 2021.
+## Version 2.6.3 <a name="2.6.3"></a> (January 18, 2021)
 
 #### Enhancements
 
 * The 'buildTools' parameter for Admin Console is added in the Helm chart.
 
-## Version 2.6.2 <a name="2.6.2"></a>
-
-The version 2.6.1 is released on January 11, 2021.
+## Version 2.6.2 <a name="2.6.2"></a> (January 11, 2021)
 
 #### Enhancements
 
@@ -244,9 +226,7 @@ The version 2.6.1 is released on January 11, 2021.
 
 * The database image path for Sonar Custom Resource is fixed.
 
-## Version 2.6.1 <a name="2.6.1"></a>
-
-The version 2.6.1 is released on January 4, 2021.
+## Version 2.6.1 <a name="2.6.1"></a> (January 4, 2021)
 
 #### Enhancements
 
@@ -261,9 +241,7 @@ The version 2.6.1 is released on January 4, 2021.
 * The CRD schema for codebasebranch is corrected.
 * EDP versioning functionality was improved to work as expected upon correcting an issue with the codebasebranch operator.
 
-## Version 2.6.0 <a name="2.6.0"></a>
-
-The version 2.6.0 is released on December 22, 2020.
+## Version 2.6.0 <a name="2.6.0"></a> (December 22, 2020)
 
 ### What's New
 
@@ -350,3 +328,4 @@ Please refer to the [Application Info](https://github.com/epam/edp-admin-console
 * The [EDP Overview](https://github.com/epam/edp-install/tree/master#epam-delivery-platform-rocket) page is updated.
 * The [EDP Pipeline Framework](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/edp_pipeline_framework.md#edp-pipeline-framework) page is added.
 * The [Keycloak Installation on Kubernetes](https://github.com/epam/edp-install/blob/master/documentation/install_keycloak.md) page is updated.
+
