@@ -17,33 +17,25 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
 
-## Version 2.7.7 <a name="2.7.7"></a>
-
-The version 2.7.7 is released on April 30, 2021.
+## Version 2.7.7 <a name="2.7.7"></a> (April 30, 2021)
 
 #### Enhancements
 
 * The init stage runtime is decreased in Deploy pipeline.
 
-## Version 2.7.6 <a name="2.7.6"></a>
-
-The version 2.7.6 is released on April 26, 2021.
+## Version 2.7.6 <a name="2.7.6"></a> (April 26, 2021)
 
 #### Fixed Issues
 
 * Versioning and Jira integration for Terraform library are fixed.
 
-## Version 2.7.5 <a name="2.7.5"></a>
-
-The version 2.7.5 is released on April 22, 2021.
+## Version 2.7.5 <a name="2.7.5"></a> (April 22, 2021)
 
 #### New Functionality
 
 * Cyrillic characters support for Jira is implemented.
 
-## Version 2.7.4 <a name="2.7.4"></a>
-
-The version 2.7.4 is released on April 20, 2021.
+## Version 2.7.4 <a name="2.7.4"></a> (April 20, 2021)
 
 #### Upgrades
 
@@ -58,17 +50,13 @@ The version 2.7.4 is released on April 20, 2021.
 * Support for slash characters in ImageStreams objects is fixed.
 * The codebase operator with NPE failure under disabled Jira integration is fixed.
 
-## Version 2.7.2 <a name="2.7.2"></a>
-
-The version 2.7.2 is released on April 6, 2021.
+## Version 2.7.2 <a name="2.7.2"></a> (April 6, 2021)
 
 #### Fixed Issues
 
 * The keycloak operator dependency is fixed in the values.yaml file.
 
-## Version 2.7.1 <a name="2.7.1"></a>
-
-The version 2.7.1 is released on April 5, 2021.
+## Version 2.7.1 <a name="2.7.1"></a> (April 5, 2021)
 
 #### Fixed Issues
 
@@ -80,9 +68,7 @@ The version 2.7.1 is released on April 5, 2021.
 * The local development environment configuration is aligned with the documentation.
 * The deprecated variable normalizedName is removed.
 
-## Version 2.7.0 <a name="2.7.0"></a>
-
-The version 2.7.0 is released on April 2, 2021.
+## Version 2.7.0 <a name="2.7.0"></a> (April 2, 2021)
 
 ### What's New
 
@@ -218,25 +204,19 @@ for the updates on the Jira integration.
     * [Inspect Autotests](https://github.com/epam/edp-admin-console/blob/master/documentation/inspect_autotest.md#inspect-autotest)
     * [Inspect Library](https://github.com/epam/edp-admin-console/blob/master/documentation/inspect_library.md#inspect-library)
 
-## Version 2.6.4 <a name="2.6.4"></a>
-
-The version 2.6.1 is released on January 22, 2021.
+## Version 2.6.4 <a name="2.6.4"></a> (January 22, 2021)
 
 #### Enhancements
 
 * Custom Resources Definition codebasebranches are improved.
 
-## Version 2.6.3 <a name="2.6.3"></a>
-
-The version 2.6.1 is released on January 18, 2021.
+## Version 2.6.3 <a name="2.6.3"></a> (January 18, 2021)
 
 #### Enhancements
 
 * The 'buildTools' parameter for Admin Console is added in the Helm chart.
 
-## Version 2.6.2 <a name="2.6.2"></a>
-
-The version 2.6.1 is released on January 11, 2021.
+## Version 2.6.2 <a name="2.6.2"></a> (January 11, 2021)
 
 #### Enhancements
 
@@ -246,9 +226,7 @@ The version 2.6.1 is released on January 11, 2021.
 
 * The database image path for Sonar Custom Resource is fixed.
 
-## Version 2.6.1 <a name="2.6.1"></a>
-
-The version 2.6.1 is released on January 4, 2021.
+## Version 2.6.1 <a name="2.6.1"></a> (January 4, 2021)
 
 #### Enhancements
 
@@ -263,9 +241,7 @@ The version 2.6.1 is released on January 4, 2021.
 * The CRD schema for codebasebranch is corrected.
 * EDP versioning functionality was improved to work as expected upon correcting an issue with the codebasebranch operator.
 
-## Version 2.6.0 <a name="2.6.0"></a>
-
-The version 2.6.0 is released on December 22, 2020.
+## Version 2.6.0 <a name="2.6.0"></a> (December 22, 2020)
 
 ### What's New
 
