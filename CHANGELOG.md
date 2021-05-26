@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.7.8](#2.7.8)
 *   [Version 2.7.7](#2.7.7)
 *   [Version 2.7.6](#2.7.6)
 *   [Version 2.7.5](#2.7.5)
@@ -16,6 +17,34 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.2](#2.6.2)
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
+
+## Version 2.7.8 <a name="2.7.8"></a> (May 26, 2021)
+
+#### Breaking Changes
+
+* Sonar KeycloakClient requires new configuration for correct assigning 'sonar-administrators' group to users from OIDC provider.
+
+Update Sonar KeycloakClient resource with *spec.protocolMappers* field:
+```yaml
+spec:
+  protocolMappers:
+    - config:
+        access.token.claim: 'false'
+        claim.name: roles
+        id.token.claim: 'true'
+        jsonType.label: String
+        multivalued: 'true'
+        userinfo.token.claim: 'true'
+      name: realm roles
+      protocol: openid-connect
+      protocolMapper: oidc-usermodel-realm-role-mapper
+```
+Then reload *sonar-operator* pod.
+
+#### Enhancements
+
+* The go module is renamed in keycloak-operator.
+* Terraform library support is improved (get-version stage is fixed).
 
 ## Version 2.7.7 <a name="2.7.7"></a> (April 30, 2021)
 
