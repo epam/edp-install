@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.8.0 (_Upcoming_)](#2.8.0)
 *   [Version 2.7.8](#2.7.8)
 *   [Version 2.7.7](#2.7.7)
 *   [Version 2.7.6](#2.7.6)
@@ -17,6 +18,26 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.2](#2.6.2)
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
+
+## Version 2.8.0 <a name="2.8.0"></a> (Unreleased)
+
+#### Breaking Changes
+
+* Init prerequisite is removed from deployment pipeline and added as a standalone stage.
+
+Reload *jenkins-operator* pod once EDP is updated to version 2.8.0.
+
+* New Auto deploy functionality requires updating CodebaseImageStream resources.
+
+Update all CodebaseImageStream resources with *spec.codebase: {application-name}* field to which Codebase belongs this resource.
+```yaml
+spec:
+  codebase: {application-name}
+  imageName: stub
+  tags:
+    - created: stub
+      name: stub
+```
 
 ## Version 2.7.8 <a name="2.7.8"></a> (May 26, 2021)
 
