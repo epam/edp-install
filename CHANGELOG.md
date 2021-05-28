@@ -39,7 +39,7 @@ spec:
       name: stub
 ```
 
-## Version 2.7.8 <a name="2.7.8"></a> (May 26, 2021)
+## Version 2.7.8 <a name="2.7.8"></a> (May 27, 2021)
 
 #### Breaking Changes
 
@@ -66,6 +66,7 @@ Then reload *sonar-operator* pod.
 
 * The go module is renamed in keycloak-operator.
 * Terraform library support is improved (get-version stage is fixed).
+* Allure download repository is changed to github.com.
 
 ## Version 2.7.7 <a name="2.7.7"></a> (April 30, 2021)
 
