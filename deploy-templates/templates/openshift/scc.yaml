@@ -39,6 +39,7 @@ supplementalGroups:
   type: RunAsAny
 users:
 - system:serviceaccount:{{ .Values.global.edpName }}:edp
+- system:serviceaccount:{{ .Values.global.edpName }}:edp-db
 volumes:
 - configMap
 - downwardAPI
