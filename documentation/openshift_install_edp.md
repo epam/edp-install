@@ -145,6 +145,7 @@ oc -n <edp-project> create secret generic keycloak --from-literal=username=<user
     - global.database.storage.class                                     # Type of storage class for DB volume. By default: "gp2", but it is highly recommended to use "gp2-retain". For details, please refer to point 8 of the Prerequisites section;
     - global.database.storage.size                                      # Size of storage;
     - global.webConsole.url                                             # Openshift dashboard URL;
+    - global.openshift.deploymentType                                   # Wich type of kind will be deployed to Openshift (values: deployments/deploymentConfigs);
     - edp.adminGroups                                                   # Admin groups of your tenant separated by comma (,) (eg --set 'edp.adminGroups={test-admin-group}');
     - edp.developerGroups                                               # Developer groups of your tenant separated by comma (,) (eg --set 'edp.developerGroups={test-admin-group}');
     - dockerRegistry.url                                                # URL to docker registry;
