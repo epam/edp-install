@@ -1,0 +1,45 @@
+site_name: EPAM Delivery Platform
+repo_name: "epam/edp-install"
+repo_url: https://github.com/epam/edp-install
+site_url: https://epam.github.io/edp-install
+
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - codehilite
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+
+theme:
+  # logo: assets/images/logo.png
+  # favicon: images/favicon.png
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+
+  palette:
+    primary: "cyan"
+    accent: "blue"
+
+  include_sidebar: true
+
+plugins:
+  - search
+  - awesome-pages
+  - minify:
+      minify_html: true
+
+nav:
+  - Overview: index.md
+  - Releases ⧉: https://github.com/epam/edp-install/releases
