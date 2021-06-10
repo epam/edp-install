@@ -1,9 +1,0 @@
-{{ if eq .Values.global.platform "kubernetes" }}
-kind: ServiceAccount
-apiVersion: v1
-metadata:
-  name: edp-kaniko
-  namespace: {{ .Values.global.edpName }}
-  annotations:
-    eks.amazonaws.com/role-arn: {{ required "A valid .Values.kanikoRoleArn entry is required!" .Values.kanikoRoleArn }}
-{{ end }}
