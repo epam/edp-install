@@ -6,31 +6,24 @@ site_url: https://epam.github.io/edp-install
 
 # Extensions
 markdown_extensions:
-  - abbr
   - admonition
-  - attr_list
   - codehilite
-  - def_list
-  - footnotes
+  - mdx_truly_sane_lists
   - meta
   - toc:
       permalink: true
 
 theme:
-  # logo: assets/images/logo.png
-  # favicon: images/favicon.png
+  logo: assets/logo.png
+  favicon: assets/favicon.png
   name: material
-  features:
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.instant
-    - navigation.sections
-    - navigation.expand
-    - navigation.top
 
   palette:
     primary: "cyan"
     accent: "blue"
+
+  features:
+    - navigation.sections
 
   include_sidebar: true
 
@@ -42,4 +35,30 @@ plugins:
 
 nav:
   - Overview: index.md
+  - glossary.md
+  - getting_started.md
+  - Operator Guide:
+    - operator-guide/index.md
+    - Jira Integration:
+      - Overview: operator-guide/jira-integration.md
+      - operator-guide/jira-gerrit-integration.md
+    - GitLab Integration:
+      - Overview: operator-guide/gitlab-integration.md
+      - operator-guide/gitlabci-integration.md
+  - User Guide:
+    - user-guide/index.md
+    - Application:
+      - Overview: user-guide/application.md
+      - user-guide/add-application.md
+    - Autotest:
+      - Overview: user-guide/autotest.md
+      - user-guide/add-autotest.md
+    - CD pipeline:
+      - user-guide/add-cd-pipeline.md
+    - Library:
+      - Overview: user-guide/library.md
+      - user-guide/add-library.md
+    - user-guide/d-d-diagram.md
+  - Developer Guide:
+    - developer-guide/index.md
   - Releases ⧉: https://github.com/epam/edp-install/releases
