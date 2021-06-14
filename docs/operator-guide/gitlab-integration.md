@@ -375,7 +375,7 @@ Discover the steps below to apply the GitLab integration correctly:
             return secret != null ? secret.getApiToken() : null
         }
 
-6. Create Secret, GitServer CR and Jenkins credentials with the "gitlab" ID by following the instruction: [Adjust Import Strategy](https://github.com/epam/edp-admin-console/blob/release/2.4/documentation/import-strategy.md)
+6. Create Secret, GitServer CR and Jenkins credentials with the "gitlab" ID by following the instruction: [Adjust Import Strategy](../operator-guide/import-strategy.md)
 
 7. After the steps above are performed, the new custom job-provision will be available in Advanced CI Settings during the application creation.
 
@@ -386,5 +386,5 @@ Discover the steps below to apply the GitLab integration correctly:
 
 ### Related Articles
 
-* [Adjust Import Strategy](https://github.com/epam/edp-admin-console/blob/master/documentation/import-strategy.md#adjust-import-strategy)
-* [Adjust Integration With Jira Server](https://github.com/epam/edp-admin-console/blob/release/2.7/documentation/jira-server.md#adjust-integration-with-jira-server)
+* [Adjust Import Strategy](import-strategy.md)
+* [Adjust Integration With Jira Server](jira-integration.md)

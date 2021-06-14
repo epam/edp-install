@@ -31,7 +31,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
   a. Import - this strategy allows configuring a replication from the Git server.
 
   !!! note
-        In order to use the import strategy, make sure to adjust it by following the [Adjust Import Strategy](import-strategy.md) page.
+        In order to use the import strategy, make sure to adjust it by following the [Adjust Import Strategy](../operator-guide/import-strategy.md) page.
 
     b. In the **Git Server** field, select the necessary Git server from the drop-down list.
 

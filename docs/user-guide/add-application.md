@@ -29,7 +29,7 @@ Once clicked, the six-step menu will appear:
   * Import - allows configuring a replication from the Git server. While importing the existing repository, you have to select the Git server and define the respective path to the repository.
 
   !!! note
-      In order to use the import strategy, make sure to adjust it by following the [Adjust Import Strategy](import-strategy.md) page.
+      In order to use the import strategy, make sure to adjust it by following the [Adjust Import Strategy](../operator-guide/import-strategy.md) page.
 
 2. In the **Git Repository URL** field, specify the link to the repository that is to be cloned. If the Import strategy is selected, specify the following fields:
 

@@ -39,6 +39,7 @@ nav:
   - getting_started.md
   - Operator Guide:
     - operator-guide/index.md
+    - operator-guide/import-strategy.md
     - Jira Integration:
       - Overview: operator-guide/jira-integration.md
       - operator-guide/jira-gerrit-integration.md
