@@ -58,12 +58,25 @@ nav:
     - Autotest:
       - Overview: user-guide/autotest.md
       - user-guide/add-autotest.md
-    - CD pipeline:
-      - user-guide/add-cd-pipeline.md
+      - user-guide/run-functional-autotest.md
     - Library:
       - Overview: user-guide/library.md
       - user-guide/add-library.md
-    - user-guide/pipeline-stages.md
+    - Pipelines:
+      - Overview: user-guide/pipeline-framework.md
+      - Add custom pipline library: user-guide/add-custom-global-pipeline-lib.md
+      - CI pipeline:
+        - user-guide/customize-ci-pipeline.md
+        - Stages:
+          - Overview: user-guide/pipeline-stages.md
+          - Dockerfile: user-guide/dockerfile-stages.md
+          - ECR-to-DockerHub: user-guide/ecr-to-docker-stages.md
+          - Helm: user-guide/helm-stages.md
+          - Open Policy Agent: user-guide/opa-stages.md
+          - Terraform: user-guide/terraform-stages.md
+      - CD pipeline:
+        - user-guide/add-cd-pipeline.md
+        - user-guide/customize-cd-pipeline.md
     - user-guide/d-d-diagram.md
   - Developer Guide:
     - developer-guide/index.md

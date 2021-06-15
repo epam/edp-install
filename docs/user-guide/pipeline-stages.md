@@ -11,7 +11,7 @@ Within EDP, the pipeline framework comprises the following pipelines:
 * Deploy.
 
 !!! note
-    Please refer to the [EDP Pipeline Framework](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/edp_pipeline_framework.md) page for details.
+    Please refer to the [EDP Pipeline Framework](pipeline-framework.md) page for details.
 
 The diagram below shows the commit path through these pipelines and the respective stages.
 

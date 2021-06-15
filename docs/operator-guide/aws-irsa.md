@@ -32,7 +32,7 @@ To successfully associate the IAM role with the service account, follow the step
 
     2.1. Provide the [stable](https://hub.docker.com/r/amazon/amazon-eks-pod-identity-webhook) version of the Docker image in the _deploy/deployment-base.yaml_ file.
 
-    2.2. Provide _${CA_BUNDLE}_ in the _deploy/mutatingwebhook.yaml_ file:
+    2.2. Provide _${CA_BUNDLE}_in the_deploy/mutatingwebhook.yaml_ file:
 
         secret_name=$(kubectl -n default get sa default -o jsonpath='{.secrets[0].name}') \
           CA_BUNDLE=$(kubectl -n default get secret/$secret_name -o jsonpath='{.data.ca\.crt}' | tr -d '\n')
@@ -78,4 +78,4 @@ To successfully associate the IAM role with the service account, follow the step
 
 ## Related Articles
 
-- [Use Terraform Library in EDP](../documentation/cicd_customization/terraform_stages.md)
+- [Use Terraform Library in EDP](../user-guide/terraform-stages.md)

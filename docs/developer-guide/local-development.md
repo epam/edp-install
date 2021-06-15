@@ -8,7 +8,7 @@
     The GOPATH and GOROOT environment variables should be added in PATH.
 
 * PostgreSQL client version higher than 9.5;
-* Configured access to the VCS, for details, refer to the [Gerrit Setup for Developer](gerrit-configuration.md) page;
+* Configured access to the VCS;
 * GoLand Intellij IDEA or another IDE.
 
 ## Start Operator
@@ -66,17 +66,13 @@ In order to run the operator, follow the steps below:
 
 After starting the Go build process, the following error will appear:
 
-```
-go: finding github.com/openshift/api v3.9.0
-go: finding github.com/openshift/client-go v3.9.0
-go: errors parsing go.mod:
-C:\Users\<<username>>\Desktop\EDP\edp-admin-console\go.mod:36: require github.com/openshift/api: version "v3.9.0" invalid: unknown revision v3.9.0
+        go: finding github.com/openshift/api v3.9.0
+        go: finding github.com/openshift/client-go v3.9.0
+        go: errors parsing go.mod:
+        C:\Users\<<username>>\Desktop\EDP\edp-admin-console\go.mod:36: require github.com/openshift/api: version "v3.9.0" invalid: unknown revision v3.9.0
 
-Compilation finished with exit code 1
-```
+        Compilation finished with exit code 1
 
 To resolve the issue, update the go dependency by applying the Golang command:
 
-```
-go get github.com/openshift/api@v3.9.0
-```
+        go get github.com/openshift/api@v3.9.0
