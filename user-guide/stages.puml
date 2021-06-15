@@ -1,0 +1,54 @@
+@startuml
+package "Code Review pipeline" as 1 {
+[init] as i
+[gerrit-checkout]
+[commit-validate]
+[build] as b
+[tests] as t
+package {
+[sonar] as s
+[lint]
+}
+
+i->[gerrit-checkout]
+[gerrit-checkout]->[commit-validate]
+[commit-validate]->b
+b->t
+t->s
+s-[lint]
+}
+
+
+package "Build pipeline" as 2 {
+[init] as i1
+[checkout]
+[get-version]
+[tests] as t1
+[sonar] as s1
+[build] as b1
+[build-image-kaniko]
+[create-jira-issue-metadata]
+[ecr-to-docker]
+[git-tag]
+
+i1->[checkout]
+[checkout]->[get-version]
+[get-version]->t1
+t1->s1
+s1->b1
+b1->[build-image-kaniko]
+[build-image-kaniko]->[create-jira-issue-metadata]
+[create-jira-issue-metadata]->[ecr-to-docker]
+[ecr-to-docker]->[git-tag]
+}
+
+package "Deploy pipeline" as 3 {
+[init] as i2
+i2->[deploy]
+[deploy]->[manual]
+[manual]->[promote-images]
+}
+
+1 -down->2
+2 -down->3
+@enduml
