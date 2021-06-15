@@ -39,10 +39,14 @@ nav:
   - getting_started.md
   - Operator Guide:
     - operator-guide/index.md
-    - operator-guide/import-strategy.md
+    - Enable IRSA (AWS): operator-guide/aws-irsa.md
+    - operator-guide/add-other-code-language.md
     - Jira Integration:
       - Overview: operator-guide/jira-integration.md
       - operator-guide/jira-gerrit-integration.md
+    - operator-guide/import-strategy.md
+    - GitHub Integration:
+      - Overview: operator-guide/github-integration.md
     - GitLab Integration:
       - Overview: operator-guide/gitlab-integration.md
       - operator-guide/gitlabci-integration.md
@@ -59,7 +63,10 @@ nav:
     - Library:
       - Overview: user-guide/library.md
       - user-guide/add-library.md
+    - user-guide/pipeline-stages.md
     - user-guide/d-d-diagram.md
   - Developer Guide:
     - developer-guide/index.md
+    - developer-guide/local-development.md
+    - developer-guide/rest-api.md
   - Releases ⧉: https://github.com/epam/edp-install/releases

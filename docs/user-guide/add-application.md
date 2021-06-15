@@ -71,7 +71,7 @@ Once clicked, the six-step menu will appear:
   * DotNet - selecting DotNet allows using the DotNet v.2.1 and DotNet v.3.1.
   * Go - selecting Go allows using the Beego and Operator SDK frameworks.
   * Python - selecting Python allows using the Python v.3.8.
-  * Other - selecting Other allows extending the default code languages when creating a codebase with the clone/import strategy. To add another code language, inspect the [Add Other Code Language](add_other_code_language.md) section.
+  * Other - selecting Other allows extending the default code languages when creating a codebase with the clone/import strategy. To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
 
   !!! note
       The Create strategy does not allow to customize the default code language set.

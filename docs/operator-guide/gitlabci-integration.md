@@ -9,7 +9,7 @@ Follow the steps below to adjust the GitLab CI tool:
 
   * To add variables, navigate to *Settings -> CI/CD -> Expand Variables -> Add Variable*:
 
-    ![gitlab-ci-env-variable](../assets/user-guide/gitlab-ci-env-variable.png "gitlab-ci-env-variable")
+    ![gitlab-ci-env-variable](../assets/operator-guide/gitlab-ci-env-variable.png "gitlab-ci-env-variable")
 
   * Apply the necessary variables as they differ in accordance with the cluster OpenShift / Kubernetes, see below:
 
@@ -23,7 +23,7 @@ Follow the steps below to adjust the GitLab CI tool:
     !!! info
       In order to get access to the Docker registry and OpenShift, use the **gitlab-ci** ServiceAccount; pay attention that SA description contains the credentials and secrets:
 
-    ![secrets-sa](../assets/user-guide/secrets-sa.png "secrets-sa")
+    ![secrets-sa](../assets/operator-guide/secrets-sa.png "secrets-sa")
 
     |Kubernetes Environment Variables | Description|
     |---|---|
