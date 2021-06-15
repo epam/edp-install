@@ -4,11 +4,11 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 
 ## Prerequisites
 
-* Keycloak v.[11.0.2](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-11-0-0) should 
+* Keycloak v.[12.0.4](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-12-0-0) should
 be used with EDP installation.
 * [Helm](https://helm.sh) is installed. For details, to getting started, please refer to the [Helm Documentation](https://helm.sh/docs/).
 
->_**NOTE**: EDP team is using a helm chart from the [codecentric](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak) 
+>_**NOTE**: EDP team is using a helm chart from the [codecentric](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak)
 repository, but other repositories can be used as well (e.g. [bitnami](https://github.com/bitnami/charts/tree/master/bitnami/keycloak/))._
 
 ## Installation
@@ -35,8 +35,8 @@ Follow the steps below to install Keycloak:
     ```
 4. Wait for the Keycloak URL to become accessible.
 
->**INFO**: The Keycloak can be deployed in a production ready mode (e.g. it can include multiple replicas, persistent storage, 
-autoscaling, monitoring, etc.), for details, please refer to the [Official Chart Documentation](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak). 
+>**INFO**: The Keycloak can be deployed in a production ready mode (e.g. it can include multiple replicas, persistent storage,
+autoscaling, monitoring, etc.), for details, please refer to the [Official Chart Documentation](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
 
 Check out the *value.yaml* file sample of the Keycloak customization:
 
