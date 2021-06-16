@@ -33,6 +33,10 @@ plugins:
   - minify:
       minify_html: true
 
+google_analytics:
+- 'G-7ZV6PJ2LSP'
+- 'auto'
+
 nav:
   - Overview: index.md
   - glossary.md
