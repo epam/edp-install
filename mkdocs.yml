@@ -33,9 +33,10 @@ plugins:
   - minify:
       minify_html: true
 
-google_analytics:
-- 'G-7ZV6PJ2LSP'
-- 'auto'
+extra:
+  analytics:
+    provider: google
+    property: G-7ZV6PJ2LSP
 
 nav:
   - Overview: index.md
