@@ -39,7 +39,7 @@ stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-versio
 ![jenkins-provisioner](../assets/operator-guide/ac_jenkins_provisioner.png "jenkins-provisioner")
 
 !!! note
-    Application is one of the available options. Another option might be to add a library. Please refer to the [Add Library](../user-guide/add-library.md) page for details._
+    Application is one of the available options. Another option might be to add a library. Please refer to the [Add Library](../user-guide/add-library.md) page for details
 
 ## Related Articles
 

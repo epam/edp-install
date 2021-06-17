@@ -29,7 +29,7 @@ In the **Build** pipeline, the following stages are available:
 1. **checkout** stage is a standard step during which all files are checked out from a master branch of Git repository.
 
   !!! note
-      With the Default versioning, in the base directory of the project, create a file named 'VERSION' with a proper Terraform version (e.g.1.0.0)._
+      With the Default versioning, in the base directory of the project, create a file named 'VERSION' with a proper Terraform version (e.g.1.0.0).
 
 2. **terraform-lint** stage containing a script that performs the same actions as in the Code-Review pipeline, namely:
 

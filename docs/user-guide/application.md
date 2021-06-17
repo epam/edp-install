@@ -40,7 +40,7 @@ The added application will be listed in the Applications list allowing you to do
   - Confirm the deletion by clicking the Delete button.
 
   !!! note
-      The application that is used in a CD pipeline cannot be removed._
+      The application that is used in a CD pipeline cannot be removed.
 
   ![inspect-app](../assets/user-guide/inspectapp2.png "inspect-app")
 
@@ -123,7 +123,7 @@ In order to remove the added branch with the corresponding  record in the Admin 
 3. Enter the branch name and click the Delete button;
 
 !!! note
-    The default **master** branch cannot be removed._
+    The default **master** branch cannot be removed.
 
 ## Related Articles
 

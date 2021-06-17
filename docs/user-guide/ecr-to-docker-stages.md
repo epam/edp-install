@@ -7,7 +7,7 @@ The **ecr-to-docker** stage is intended to perform the push of Docker images col
 This stage is optional and is designed for working with various EDP components.
 
 !!! note
-    When pushing the image from ECR to Docker Hub using [crane](https://michaelsauter.github.io/crane/docs.html), the SHA-256 value remains unchanged._
+    When pushing the image from ECR to Docker Hub using [crane](https://michaelsauter.github.io/crane/docs.html), the SHA-256 value remains unchanged.
 
 ![add_custom_lib2](../assets/user-guide/ecr_t_d1.png)
 

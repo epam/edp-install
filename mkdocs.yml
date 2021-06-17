@@ -1,8 +1,8 @@
 site_name: EPAM Delivery Platform
-repo_name: "epam/edp-install"
+repo_name: "GitHub"
 repo_url: https://github.com/epam/edp-install
 site_url: https://epam.github.io/edp-install
-
+edit_uri: ""
 
 # Extensions
 markdown_extensions:
@@ -19,8 +19,16 @@ theme:
   name: material
 
   palette:
-    primary: "cyan"
-    accent: "blue"
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+    - scheme: default
+      primary: cyan
+      accent: blue
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
 
   features:
     - navigation.sections

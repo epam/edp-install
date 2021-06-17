@@ -51,7 +51,7 @@ The table below provides the details on all the stages in the EDP pipeline frame
 | promote-images-ecr | | Promotes docker images to ECR | Deploy | + | | | [PromoteImagesECR.groovy](https://github.com/epam/edp-library-stages/blob/master/src/com/epam/edp/stages/impl/cd/impl/PromoteImagesECR.groovy) | |
 
 !!! note
-    The Create Release pipeline is an internal EDP mechanism for adding, importing or cloning a codebase. It is not a part of the pipeline framework._
+    The Create Release pipeline is an internal EDP mechanism for adding, importing or cloning a codebase. It is not a part of the pipeline framework.
 
 ## Related Articles
 

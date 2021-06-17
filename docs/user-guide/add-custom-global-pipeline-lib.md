@@ -17,7 +17,7 @@ Since these libraries will be globally usable, any Pipeline in the system can ut
   d and e - Allows using the default version of the configured shared-library when the "Load implicitly" check box is selected, or if the pipeline references to the library only by the name, for example, `@Library('my-shared-library')`.
 
   !!! note
-      If the "Default version" check box is **not defined**, the pipeline must specify a version, for example, `@Library('my-shared-library@master')`. If the "Allow default version to be overridden" check box is enabled in the Shared Library’s configuration, a @Library annotation may also override the default version defined for the library. This also enables the library with the selected "Load implicitly" check box to be loaded from a different version if necessary._
+      If the "Default version" check box is **not defined**, the pipeline must specify a version, for example, `@Library('my-shared-library@master')`. If the "Allow default version to be overridden" check box is enabled in the Shared Library’s configuration, a @Library annotation may also override the default version defined for the library. This also enables the library with the selected "Load implicitly" check box to be loaded from a different version if necessary.
 
   ![add_custom_lib2](../assets/user-guide/add_custom_lib2.png)
 

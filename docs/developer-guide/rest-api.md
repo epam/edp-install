@@ -7,7 +7,7 @@ EDP allows you to create three codebase types: Application, Autotest and Library
 Depending on the selected codebase type and the respective strategy, you should specify a different set of fields in a request.
 
 !!! note
-    The Route, Database and VCS are optional fields. In accordance with the necessary deploy set, you have to add the necessary fields into request._
+    The Route, Database and VCS are optional fields. In accordance with the necessary deploy set, you have to add the necessary fields into request
 
 ### Request
 

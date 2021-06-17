@@ -124,7 +124,7 @@ In order to remove the added branch with the corresponding  record in the Admin 
 3. Enter the branch name and click the Delete button;
 
 !!! note
-    The default **master** branch cannot be removed._
+    The default **master** branch cannot be removed.
 
 ## Related Articles
 

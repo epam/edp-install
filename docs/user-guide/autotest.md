@@ -38,7 +38,7 @@ The added autotest will be listed in the Autotests list allowing you to do the f
   - Confirm the deletion by clicking the Delete button.
 
   !!! note
-      The autotest that is used in a CD pipeline cannot be removed._
+      The autotest that is used in a CD pipeline cannot be removed.
 
    ![inspect-autotest](../assets/user-guide/inspectautotest2.png "inspect-autotest")
 
