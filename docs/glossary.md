@@ -1,6 +1,6 @@
 # Glossary
 
-Get familiar with the definitions and context for the most useful EDP terms presented in a table below.
+Get familiar with the definitions and context for the most useful EDP terms presented in table below.
 
  | Terms  | Details  |
  |---|---|
