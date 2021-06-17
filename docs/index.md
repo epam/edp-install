@@ -24,7 +24,7 @@ Admin Console is a central management tool in the EDP ecosystem that provides th
 !!! note
     To interact with Admin Console via REST API, explore the [Create Codebase Entity](developer-guide/rest-api.md) page.
 
-![overview-page](/assets/ac_overview_page.png "overview-page")
+![overview-page](./assets/ac_overview_page.png "overview-page")
 
 - **Navigation bar** – consists of seven sections: Overview, Continuous Delivery, Applications, Autotests, Libraries, and Delivery Dashboard Diagram. Click the necessary section to add an entity, open a home page or check the diagram.
 - **User name** – displays the registered user name.
@@ -44,7 +44,7 @@ Inspect the main features available in Admin Console by following the correspond
 EPAM Delivery Platform (EDP) is suitable for all aspects of delivery starting from development including the capability to deploy production environment.
 EDP architecture is represented on a diagram below.
 
-![high_level_arch_diagram](/assets/high_level_arch_diagram.png "high_level_arch_diagram")
+![high_level_arch_diagram](./assets/high_level_arch_diagram.png "high_level_arch_diagram")
 
 EDP consists of three cross-cutting concerns:
 
@@ -66,8 +66,7 @@ On the top of these indicated concerns, EDP adds several blocks that include:
 
 Explore the EDP technology stack diagram
 
-![edp_technology_stack](/assets/edp_technology_stack.png "edp_technology_stack")
-
+![edp_technology_stack](./assets/edp_technology_stack.png "edp_technology_stack")
 
 The EDP IaaS layer supports most popular public clouds AWS, Azure and GCP keeping the capability to be deployed on private/hybrid clouds based on OpenStack.
 EDP containers are based on [Docker technology](https://www.docker.com/), orchestrated by Kubernetes compatible solutions.
