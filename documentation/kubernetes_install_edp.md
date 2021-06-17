@@ -155,11 +155,6 @@ kubectl -n <edp-project> create secret generic super-admin-db --from-literal=use
 kubectl -n <edp-project> create secret generic db-admin-console --from-literal=username=<tenant_db_username> --from-literal=password=<tenant_db_password>
 ```
 
-* Create a secret for the Sonar database:
-```
-kubectl -n <global.edpName> create secret generic sonar-db --from-literal=database-user=admin --from-literal=database-password=<password>
-```
-
 * For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 7 (see above):
 
 ```
