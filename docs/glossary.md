@@ -1,3 +1,9 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
 # Glossary
 
 Get familiar with the definitions and context for the most useful EDP terms presented in table below.

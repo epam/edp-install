@@ -7,11 +7,12 @@ edit_uri: ""
 # Extensions
 markdown_extensions:
   - admonition
+  - attr_list
   - codehilite
   - mdx_truly_sane_lists
   - meta
   - toc:
-      permalink: true
+      permalink: ⚓︎
 
 theme:
   logo: assets/logo.png
@@ -29,11 +30,9 @@ theme:
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to light mode
-
   features:
     - navigation.sections
-
-  include_sidebar: true
+    - navigation.tabs
 
 plugins:
   - search
@@ -45,6 +44,9 @@ extra:
   analytics:
     provider: google
     property: G-7ZV6PJ2LSP
+  social:
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/u/epamedp
 
 nav:
   - Overview: index.md

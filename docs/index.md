@@ -1,6 +1,11 @@
+---
+hide:
+  - navigation
+---
+
 # EPAM Delivery Platform
 
-**EPAM Delivery platform (EDP)** is out of the box integrated ecosystem for software development connected to a local development environment.
+**EPAM Delivery platform (EDP)** is an **open-source** cloud-agnostic SaaS/PaaS solution for software development, licensed under **Apache License 2.0**. It provides a pre-defined set of CI/CD patterns and tools, which allow a user to start product development quickly with established **code review**, **release**, **versioning**, **branching**, **build** processes. These processes include static code analysis, security checks, linters, validators, dynamic feature environments provisioning. EDP consolidates the top Open-Source CI/CD tools by running them on Kubernetes/OpenShift, which enables web/app development either in isolated (on-prem) or cloud environments.
 
 EPAM Delivery Platform, which is also called **"The Rocket"**, is a platform that allows shortening the time that is passed before an active development can be started from several months to several hours.
 
@@ -9,10 +14,19 @@ EDP consists of the following:
 - The platform based on managed infrastructure and container orchestration;
 - Security covering authentication, authorization, and SSO for platform services;
 - Development and testing toolset;
-- Well-established engineering process and EPAM practices (EngX) reflected in CICD pipelines, and delivery analytics;
+- Well-established engineering process and EPAM practices (EngX) reflected in CI/CD pipelines, and delivery analytics;
 - Local development with debug capabilities.
 
 ## Features
+
+- Deployed and configured CI/CD toolset ([Jenkins](https://www.jenkins.io/){target=_blank}, [Gerrit](https://www.gerritcodereview.com/){target=_blank}, [Nexus](https://help.sonatype.com/repomanager3){target=_blank}, [SonarQube](https://www.sonarqube.org/){target=_blank})
+- Gerrit, GitLab or GitHub as a version control system for your code
+- Jenkins is a pipeline orchestrator
+- CI pipelines for Python, Java 8, Java 11, .Net, Go, React, Terraform, Jenkins Groovy Pipelines, Dockerfile, Helm
+- Build tools: Go, Apache Maven, Apache Gradle
+- Admin Console UI as a single entry point
+- CD pipeline for Microservice Deployment
+- Kubernetes native approach ([CRD, CR](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/){target=_blank}) to declare CI/CD pipelines
 
 ## Admin Console UI
 
