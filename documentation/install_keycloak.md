@@ -4,7 +4,7 @@ Inspect the prerequisites and the main steps to perform with the aim to install 
 
 ## Prerequisites
 
-* Keycloak v.[12.0.4](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-12-0-0) should 
+* Keycloak v.[13.0.1](https://www.keycloak.org/docs/latest/release_notes/index.html#keycloak-13-0-0) should 
 be used with EDP installation.
 * [Helm](https://helm.sh) is installed. For details, to getting started, please refer to the [Helm Documentation](https://helm.sh/docs/).
 
@@ -26,11 +26,12 @@ Follow the steps below to install Keycloak:
     helm repo add codecentric https://codecentric.github.io/helm-charts
     helm repo update
     ```
-3. Install Keycloak v.12.0.4:
+3. Install Keycloak v.13.0.1:
 
     ```bash
     helm install keycloak codecentric/keycloak \
-    --version 10.1.0 \
+    --version 11.0.1
+    --set image.tag=13.0.1 \
     --namespace security
     ```
 4. Wait for the Keycloak URL to become accessible.
@@ -66,7 +67,7 @@ extraVolumes: |
   - name: realm
     emptyDir: {}
 
-extraArgs: -Dkeycloak.import=/realm/openshift.json
+args: -Dkeycloak.import=/realm/openshift.json
 # end
 extraEnv: |
   - name: PROXY_ADDRESS_FORWARDING
