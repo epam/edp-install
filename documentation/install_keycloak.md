@@ -30,7 +30,7 @@ Follow the steps below to install Keycloak:
 
     ```bash
     helm install keycloak codecentric/keycloak \
-    --version 11.0.1
+    --version 11.0.1 \
     --set image.tag=13.0.1 \
     --namespace security
     ```
