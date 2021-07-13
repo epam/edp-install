@@ -27,14 +27,17 @@ List of Tools used on the Platform:
 
 |Domain|Related Tools/Solutions|
 |- |- |
-|Artefact|Nexus Repository, AWS ECR|
-|AWS|Amazon EKS Pod Identity Webhook, AWS ECR|
-|Build|dotnet, go, Apache Gradle, Apache Maven, npm|
+|Artefacts Management|Nexus Repository, AWS ECR|
+|AWS|Amazon EKS Pod Identity Webhook, AWS ECR, AWS EFS|
+|Build|.NET, Go, Apache Gradle, Apache Maven, NPM|
+|Cluster Backup|Velero|
 |Code Review|Gerrit, GitLab, GitHub |
-|Docker|hadolint, kaniko, crane|
-|Infrastructure as code|terraform, tflint|
+|Docker|Hadolint, kaniko, crane|
+|Infrastructure as Code|Terraform, TFLint|
 |Kubernetes deployment|kubectl, helm, ct (Chart Testing)|
-|Kubernetes multitenancy|Kiosk|
+|Kubernetes Multitenancy|Kiosk|
+|Logging|EFK, ELK, Loki|
+|Monitoring|Prometheus, Grafana|
 |Pipeline Orchestration|Jenkins, GitLab CI (basic)|
 |Policies/Rules|Open Policy Agent|
 |SSO|Keycloak, keycloak-proxy|

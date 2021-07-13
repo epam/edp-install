@@ -68,13 +68,13 @@ EDP consists of three cross-cutting concerns:
 
 On the top of these indicated concerns, EDP adds several blocks that include:
 
-- **EDP CICD Components**. EDP component enables a feature in CICD or an instance artifacts storage and distribution (Nexus or Artifactory), static code analysis (Sonar), etc.;
+- **EDP CI/CD Components**. EDP component enables a feature in CI/CD or an instance artifacts storage and distribution (Nexus or Artifactory), static code analysis (Sonar), etc.;
 - **EDP Artifacts**. This element represents an artifact that is being delivered through EDP and presented as a code.
 
     >_Artifact samples: frontend, backend, mobile, applications, functional and non-functional autotests, workloads for 3rd party components that can be deployed together with applications._
 
 - **EDP development and production environments** that share the same logic. Environments wrap a set of artifacts with a specific version, and allow performing SDLC routines in order to be sure of the artifacts quality;
-- **Pipelines**. Pipelines cover CICD process, production rollout and updates. They also connect three elements indicated above via automation allowing SDLC routines to be non-human;
+- **Pipelines**. Pipelines cover CI/CD process, production rollout and updates. They also connect three elements indicated above via automation allowing SDLC routines to be non-human;
 
 ### Technology Stack
 
@@ -83,7 +83,7 @@ Explore the EDP technology stack diagram
 ![edp_technology_stack](./assets/edp_technology_stack.png "edp_technology_stack")
 
 The EDP IaaS layer supports most popular public clouds AWS, Azure and GCP keeping the capability to be deployed on private/hybrid clouds based on OpenStack.
-EDP containers are based on [Docker technology](https://www.docker.com/), orchestrated by Kubernetes compatible solutions.
+EDP containers are based on [Docker technology](https://www.docker.com/){target=_blank}, orchestrated by Kubernetes compatible solutions.
 
 There are two main options for Kubernetes provided by EDP:
 

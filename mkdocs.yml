@@ -33,6 +33,7 @@ theme:
   features:
     - navigation.sections
     - navigation.tabs
+    - navigation.top
 
 plugins:
   - search
@@ -51,7 +52,7 @@ extra:
 nav:
   - Overview: index.md
   - glossary.md
-  - getting_started.md
+  - getting-started.md
   - Operator Guide:
     - operator-guide/index.md
     - Enable IRSA (AWS): operator-guide/aws-irsa.md
@@ -97,4 +98,6 @@ nav:
     - developer-guide/index.md
     - developer-guide/local-development.md
     - developer-guide/rest-api.md
+  - RoadMap: roadmap.md
+  - Use Cases: use-cases/index.md
   - Releases ⧉: https://github.com/epam/edp-install/releases
