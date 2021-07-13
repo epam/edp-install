@@ -294,6 +294,7 @@ kubectl -n <edp-project> create secret generic keycloak --from-literal=username=
     - reconciler.image.version                                          # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/reconciler/tags);
 
     PERF operator parameters:
+    - tags.perf-operator                                                # Flag to enable/disable Perf operator deploy (e.g. true/false). By default: "false";
     - perf-operator.image.name                                          # EDP image. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/perf-operator);
     - perf-operator.image.version                                       # EDP tag. The released image can be found on [Dockerhub](https://hub.docker.com/r/epamedp/perf-operator/tags);
     - perf-operator.perf.integration                                    # Flag to enable/disable PERF integration (e.g. true/false);
