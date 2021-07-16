@@ -4,7 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
-*   [Version 2.8.0 (_Upcoming_)](#2.8.0)
+*   [Version 2.8.0](#2.8.0)
 *   [Version 2.7.8](#2.7.8)
 *   [Version 2.7.7](#2.7.7)
 *   [Version 2.7.6](#2.7.6)
@@ -19,25 +19,171 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
 
-## Version 2.8.0 <a name="2.8.0"></a> (Unreleased)
+## Version 2.8.0 <a name="2.8.0"></a> (July 16, 2021)
 
-#### Breaking Changes
+### What's New
 
-* Init prerequisite is removed from deployment pipeline and added as a standalone stage.
+With the version 2.8.0, EDP offers a number of breaking changes making the work on the project smoother. For instance,
+Keycloak is set for work in multi-tenancy mode allowing to work on a set project without interrupting the work of others.
+Within the version 2.8.0, it is also possible to create an application with an empty repository and create
+namespaces using Kiosk API. The third-party service provision functionality and Exposing Info tab were removed from Admin
+Console. Besides, the initial structure for a new documentation framework is added to GitHub. 
 
-Reload *jenkins-operator* pod once EDP is updated to version 2.8.0.
+There are enhancements in the EDP CI/CD framework, such as CI pipeline availability for Open Policy Agent (OPA), CI
+pipelines defined for groovy-pipelines, and the possibility to apply a specific logic and customize the Init stage of
+a CD pipeline. 
 
-* New Auto deploy functionality requires updating CodebaseImageStream resources.
+See the list of actions required to work with EDP v.2.8.0, new functionality and enhancements, as well as the list of
+fixed issues and updated documentation below.
+ 
+ #### Breaking Changes Actions
+ 
+ * Init prerequisite is removed from deployment pipeline and added as a standalone stage.
+ 
+ Reload *jenkins-operator* pod once EDP is updated to version 2.8.0.
+ 
+ * New Auto deploy functionality requires updating CodebaseImageStream resources.
+ 
+ Update all CodebaseImageStream resources with *spec.codebase: {application-name}* field to which Codebase belongs this resource.
+ ```yaml
+ spec:
+   codebase: {application-name}
+   imageName: stub
+   tags:
+     - created: stub
+       name: stub
+ ```
 
-Update all CodebaseImageStream resources with *spec.codebase: {application-name}* field to which Codebase belongs this resource.
-```yaml
-spec:
-  codebase: {application-name}
-  imageName: stub
-  tags:
-    - created: stub
-      name: stub
-```
+### Upgrades
+
+* The operator-SDK library is updated to version 1.5.0.
+* The Controller-runtime library is updated to version 0.8.3.
+* Jenkins is upgraded to v.2.289.1. For details, please refer to the [Jenkins official website](https://www.jenkins.io/changelog-stable/).
+* Keycloak is upgraded to v.13.0.1. For details, please refer to the [Keycloak official website](https://www.keycloak.org/2021/05/keycloak-1301-released.html).
+* The Jenkins-agents are upgraded with dependencies to version.
+* Helm is upgraded to v.3.6.0 in Jenkins for deploy process. For details, please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.6.0) on GitHub.
+* Helm tool is upgraded to v.3.5.3.
+* The alpine base images are upgraded to version alpine:3.13.5. For details, please refer to the [Alpine Linux official documentation](https://alpinelinux.org/posts/Alpine-3.13.5-released.html).
+* The jQuery is upgraded to version 3.6.0 to mitigate the vulnerabilities related to the previous version. For details,
+please refer to the [jQuery official blog](https://blog.jquery.com/2021/03/02/jquery-3-6-0-released/).
+* Kaniko executor is upgraded to version 1.6.0. For details, plese refer to the [Kaniko page](https://github.com/GoogleContainerTools/kaniko/releases/tag/v1.6.0) on GitHub.
+
+### New Functionality and Enhancements
+
+* ECR registry supports multi-tenancy per EDP installation.
+* Baseline Kubernetes applications can be installed with Argo CD.
+* A landscape is created for the current Kubernetes role model in EDP.
+* Keycloak is set for work in multi-tenancy mode with minimal permissions so that a user can work in a set EDP project
+without interrupting the work of other projects.
+* All dependencies are pointed to tags from master branches in go mod for all operators.
+* Jenkins pipeline can be started via Custom Resources.
+* CI pipeline is available for OPA policies. 
+For details, please refer to the [Open Policy Agent](https://www.openpolicyagent.org/) official documentation and the
+[Use Open Policy Agent Library in EDP](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/cicd_customization/opa_stages.md) page.
+* CI pipelines are defined for groovy-pipelines.
+* The Init stage of the CD pipeline can be customized. For details, please refer to the
+[Add CD Pipelines](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/add_CD_pipelines.md) page.
+* CD pipeline provisioner can be triggered periodically.
+* There is an option to enable/disable auto deployment for a specific stage after the stage is created. For details, please
+refer to the [Edit CD Pipeline](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/inspect_CD_pipeline.md#edit-cd-pipeline)
+section of the Admin Console Guide.
+* Initial components are provisioned for the AQA framework.
+* New branches can be added with a slash in the name with default versioning.
+* Default branch value can be defined with dots.
+* It is possible to change the image streams for the pipelines with the “auto” deployment type.
+* All applications in the CD pipeline are deployed in case of changes in one of them (Autodeploy).
+* Keycloak admin credentials are replaced with realm admin credentials.
+* Keycloak Realm can be installed without default roles.
+* Authentication flows for a realm can be managed with separate Custom Resource.
+* Authentication browser flow in Keycloak Realm can be managed using Custom Resource.
+* The roles are deleted when they are removed from KeycloakRealmRolesBatch.
+* Deployment objects can be used in OpenShift instead of DeploymentConfigs.
+* The third-party services provision functionality is removed. 
+* Exposing Service Info block and functionality is removed from Admin Console. 
+* An application can be created with an empty GitHub repository. For details, please refer to
+the [Add Application](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/add_applications.md#add-applications)
+page of the Admin Console user guide.
+* Namespaces can be created with Kiosk API.
+* The codeql scan is added for the GitHub repositories.
+* Gerrit operator adds a user to a group in a reconcile manner if a user is missing in Gerrit itself.
+* Gerrit Administrators are fully reconciled from Gerrit CR.
+* Keycloak realm can be specified to be integrated with Gerrit in the CR specification
+* Users can manage mappers for SSO Realm provider in KeycloakRealm CR.
+* Users can manage Themes and Security Defences in Keycloak Realm using CR. 
+* Keycloak Operator does not reconcile Realm Role from CR if a Role is already presented in the application (Keycloak Server). 
+* The initial structure for a new documentation framework is added to the GitHub to improve the documentation processing
+and navigation.
+Please refer to the [EPAM Delivery Platform documentation](https://epam.github.io/edp-install/) page for details.
+* [EDP Stages](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/edp-stages.md) page is updated
+and moved to GitHub.
+
+
+#### Fixed Issues
+
+* The advanced mapping section is not available for autotests codebase when Jira integration is true.
+* Impossible to delete the Jenkins folder while any codebase branches exist.
+* EDP helmfile, hadolint linters fails with UI components.
+* The user is unable to delete the CD pipeline stage from Admin Console.
+* The validation message is not informative if no application is selected.
+* Codebases, CD pipeline, and CD stages name must be 2 letters length minimum.
+* Empty branches dropdown menus are clickable and show nothing.
+* The validation message is “Invalid URL, log in or password” even when the URL is correct.
+* The validation message in the import application is not informative.
+* The Create button has been removed at the end of the application codebase creation.
+* Incorrect display of codebase data when changing strategy during creation.
+* Clicking the Back button from the update page leads to cd pipeline overview instead of the pipeline details page.
+* Application code contains hardcoded client secrets.
+* False-positive security findings in the Admin Console code are fixed.
+* The name Admin appears in the Admin Console instead of the username after redeploying the environment.
+* Impossible to assign a Sonar administrator role.
+* Fix adding codebase via Admin Console (OpenShift 4.X).
+* Action log message contains % and the repository name is shifted.
+* Build pipeline failed on Sonar stage for Python applications.
+* Inability to create AWS credentials in Jenkins.
+* Auto deploy works only for the first CD pipeline stage.
+* Impossible to create a CD pipeline with a disabled ‘application to promote’ option.
+* The default branch for GitHub/GitLab provisioners.
+* Linters are not created in the Code Review pipeline for applications added with the Import strategy.
+* The Create and Proceed buttons for the Perf Integration are fixed.
+* A branch version overwrites the branch name during the new branch creation for a codebase with EDP versioning. 
+* Impossible to add an autotest using the Import strategy. 
+* Impossible to deploy Go-operator-sdk applications. 
+* Code Review pipeline checkouts from incorrect commit for GitLab integration.
+* Build pipeline failed on the 'compile' stage for DotNet-3.1 libraries.
+* Wrong framework for groovy libraries.
+* Impossible to add an autotest using the Import strategy.
+* A branch version overwrites the branch name during the new branch creation for a codebase with EDP versioning.
+* Empty branches drop-down menus are clickable and show nothing.
+* The validation message is not informative if no application is selected.
+* The validation message is “Invalid URL, log in or password” even if the URL is correct.
+* The validation message is not informative in the Import strategy for applications.
+* Incorrect display of codebase data when changing strategy during creation.
+* Clicking the Back button from the update page leads to the CD pipeline overview page instead of the pipeline details page.
+
+#### Documentation
+
+*	The new [EDP Stages](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/edp-stages.md) documentation describing the stages of EDP CI/CD Framework.
+*	The new [Use Open Policy Agent Library in EDP](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/cicd_customization/opa_stages.md) documentation describing the OPA policy engine.
+*	The new [EDP Glossary](https://github.com/epam/edp-install/blob/release/2.8/documentation/edp_glossary.md) documentation defining the most useful EDP terms.
+*	The new [Inspect CD Pipeline](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/inspect_CD_pipeline.md)
+documentation describing the editing of CD pipelines.
+*	The [EDP Installation on Kubernetes](https://github.com/epam/edp-install/blob/release/2.8/documentation/kubernetes_install_edp.md) page is updated.
+*	The [Keycloak Installation on Kubernetes](https://github.com/epam/edp-install/blob/release/2.8/documentation/install_keycloak.md) page is updated.
+*	The following pages are updated in the EDP Admin Console guide: 
+     *	[Add Applications](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/add_applications.md);
+     *	[Add Autotests](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/add_autotests.md);
+     *	[Add CD Pipelines](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/add_CD_pipelines.md);
+     *	[Add Libraries](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/add_libraries.md);
+     *	[Add Other Code Language](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/add_other_code_language.md);
+     *	[Adjust Integration With Jira Server](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/jira-server.md);
+     *	[Delivery Dashboard Diagram](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/d_d_diagram.md);
+     *  [EDP Admin Console Overview](https://github.com/epam/edp-admin-console#overview); 
+     *	[Inspect Application](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/inspect_application.md);
+     *	[Inspect Autotest](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/inspect_autotest.md);
+     *	[Inspect Library](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/inspect_library.md);
+     *  [Use Lint Stages for Code Review](https://github.com/epam/edp-admin-console/blob/release/2.8/documentation/cicd_customization/code_review_stages.md#use-lint-stages-for-code-review).
+
+
 
 ## Version 2.7.8 <a name="2.7.8"></a> (May 27, 2021)
 
