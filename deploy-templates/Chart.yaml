@@ -31,7 +31,7 @@ dependencies:
 
 - name: edp-component-operator
   repository: "@epamedp"
-  version: "0.7.0"
+  version: "0.8.0"
   tags:
     - edp-component-operator
 
