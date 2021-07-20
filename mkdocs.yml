@@ -51,7 +51,7 @@ extra:
 
 nav:
   - Overview: index.md
-  - glossary.md
+  - features.md
   - getting-started.md
   - Operator Guide:
     - operator-guide/index.md
@@ -100,4 +100,5 @@ nav:
     - developer-guide/rest-api.md
   - RoadMap: roadmap.md
   - Use Cases: use-cases/index.md
+  - glossary.md
   - Releases ⧉: https://github.com/epam/edp-install/releases
