@@ -38,13 +38,14 @@ fixed issues and updated documentation below.
  
  #### Breaking Changes Actions
  
- * Init prerequisite is removed from deployment pipeline and added as a standalone stage.
+ * Init prerequisite is removed from the Deploy pipeline and added as a standalone stage.
  
- Reload *jenkins-operator* pod once EDP is updated to version 2.8.0.
+   Reload *jenkins-operator* pod once EDP is updated to version 2.8.0.
  
- * New Auto deploy functionality requires updating CodebaseImageStream resources.
+ * New Autodeploy functionality requires updating CodebaseImageStream resources.
  
- Update all CodebaseImageStream resources with *spec.codebase: {application-name}* field to which Codebase belongs this resource.
+   Update all CodebaseImageStream resources with *spec.codebase: {application-name}* field to which Codebase belongs this
+ resource.
  ```yaml
  spec:
    codebase: {application-name}
@@ -53,6 +54,30 @@ fixed issues and updated documentation below.
      - created: stub
        name: stub
  ```
+
+ * CDPipeline CRD:
+    * New *deploymentType* field has been added to spec. Available values: Container/Custom
+      
+      Container - default way to deploy applications from the registry.
+      
+      Custom - an empty CD pipeline is created in Jenkins (with the Init stage only).
+
+ * CDStageDeployments CRD:
+    * Spec has been changed. Resource stores only one tag to deploy it automatically on Jenkins.
+ To fix the autodeploy for EDP v.2.8.0, remove all old CDStageDeployment resources from the cluster.
+ 
+ * CDStageJenkinsDeployments CRD:
+    * Spec has been changed. Resource stores only one tag to deploy it automatically on Jenkins.
+ To fix the autodeploy for EDP v.2.8.0, remove all old CDStageDeployment (as CDStageJenkinsDeployment resources have owner
+ refs to CDStageDeployments resources, it is only necessary to remove CDStageDeployments) resources from the cluster.
+ 
+ * Codebase CRD:
+   * New *emptyProject* field has been added to spec. Available values: true/false.
+   
+     True - codebase will be created without template code (Create strategy).
+   
+     False - codebase will be created with template code (Create strategy).
+
 
 ### Upgrades
 
@@ -121,21 +146,21 @@ and moved to GitHub.
 #### Fixed Issues
 
 * The advanced mapping section is not available for autotests codebase when Jira integration is true.
-* Impossible to delete the Jenkins folder while any codebase branches exist.
-* EDP helmfile, hadolint linters fails with UI components.
+* It is impossible to delete the Jenkins folder while any codebase branches exist.
+* EDP helmfile, hadolint linters fail with UI components.
 * The user is unable to delete the CD pipeline stage from Admin Console.
 * The validation message is not informative if no application is selected.
 * Codebases, CD pipeline, and CD stages name must be 2 letters length minimum.
 * Empty branches dropdown menus are clickable and show nothing.
 * The validation message is “Invalid URL, log in or password” even when the URL is correct.
-* The validation message in the import application is not informative.
+* The validation message is not informative in the Import strategy for applications.
 * The Create button has been removed at the end of the application codebase creation.
-* Incorrect display of codebase data when changing strategy during creation.
+* The codebase data is displayed incorrectly when changing strategy during creation.
 * Clicking the Back button from the update page leads to cd pipeline overview instead of the pipeline details page.
 * Application code contains hardcoded client secrets.
 * False-positive security findings in the Admin Console code are fixed.
 * The name Admin appears in the Admin Console instead of the username after redeploying the environment.
-* Impossible to assign a Sonar administrator role.
+* It is impossible to assign a Sonar administrator role.
 * Fix adding codebase via Admin Console (OpenShift 4.X).
 * Action log message contains % and the repository name is shifted.
 * Build pipeline failed on Sonar stage for Python applications.
@@ -146,19 +171,11 @@ and moved to GitHub.
 * Linters are not created in the Code Review pipeline for applications added with the Import strategy.
 * The Create and Proceed buttons for the Perf Integration are fixed.
 * A branch version overwrites the branch name during the new branch creation for a codebase with EDP versioning. 
-* Impossible to add an autotest using the Import strategy. 
-* Impossible to deploy Go-operator-sdk applications. 
-* Code Review pipeline checkouts from incorrect commit for GitLab integration.
-* Build pipeline failed on the 'compile' stage for DotNet-3.1 libraries.
-* Wrong framework for groovy libraries.
-* Impossible to add an autotest using the Import strategy.
-* A branch version overwrites the branch name during the new branch creation for a codebase with EDP versioning.
-* Empty branches drop-down menus are clickable and show nothing.
-* The validation message is not informative if no application is selected.
-* The validation message is “Invalid URL, log in or password” even if the URL is correct.
-* The validation message is not informative in the Import strategy for applications.
-* Incorrect display of codebase data when changing strategy during creation.
-* Clicking the Back button from the update page leads to the CD pipeline overview page instead of the pipeline details page.
+* It is impossible to add an autotest using the Import strategy. 
+* It is impossible to deploy Go-operator-sdk applications. 
+* The Code Review pipeline checkouts from incorrect commit for GitLab integration.
+* The Build pipeline failed on the Compile stage for .NET-3.1 libraries.
+* The framework for groovy libraries is wrong.
 
 #### Documentation
 
