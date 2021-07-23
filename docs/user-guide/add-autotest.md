@@ -1,6 +1,7 @@
 # Add Autotests
 
-Admin Console enables to clone or import an autotest and add it to the environment with its subsequent deployment in Gerrit and building of the Code Review pipeline in Jenkins.
+Admin Console enables to clone or import an autotest and add it to the environment with its subsequent deployment
+in Gerrit and building of the Code Review pipeline in Jenkins.
 
 Navigate to the **Autotests** section on the left-side navigation bar and click the Create button.
 
@@ -15,33 +16,35 @@ Once clicked, the four-step menu will appear:
 
 There are two available strategies: clone and import. The Clone strategy flow is displayed below:
 
-![addtest1](../assets/user-guide/addtest1.png "addtest1")
+![codebase-info](../assets/user-guide/codebase-info-autotest.png "codebase-info")
 
-1. **Clone** - this strategy allows cloning the autotest from the indicated repository into EPAM Delivery Platform. While cloning the existing repository, you have to fill in the additional fields as well.
+1. **Clone** - this strategy allows cloning the autotest from the indicated repository into EPAM Delivery Platform.
+   While cloning the existing repository, you have to fill in the additional fields as well.
 2. In the **Git Repository URL** field, specify the link to the repository with the autotest.
 3. Select the **Codebase Authentication** check box and fill in the requested fields:
 
   * Repository Login – enter your login data.
   * Repository password (or API Token) – enter your password or indicate the API Token.
 
-  If there is a necessity to use the **Import** strategy that allows configuring a replication from the Git server, explore the steps below:
+  If there is a necessity to use the **Import** strategy that allows configuring a replication from the Git server,
+  explore the steps below:
 
-  ![addtest2](../assets/user-guide/addtest2.png "addtest2")
+  ![import-autotest](../assets/user-guide/import-strategy-autotest.png "import-autotest")
 
   a. Import - this strategy allows configuring a replication from the Git server.
 
   !!! note
-        In order to use the import strategy, make sure to adjust it by following the [Adjust Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the import strategy, make sure to adjust it by following the [Adjust Import Strategy](../operator-guide/import-strategy.md) page.
 
-    b. In the **Git Server** field, select the necessary Git server from the drop-down list.
+  b. In the **Git Server** field, select the necessary Git server from the drop-down list.
 
-    c. In the Relative path field, indicate the respective path to the repository, e.g. **/epmd-edp/examples/basic/edp-auto-tests-simple-example**.
+  c. In the Relative path field, indicate the respective path to the repository, e.g. **/epmd-edp/examples/basic/edp-auto-tests-simple-example**.
 
 4. After completing the Codebase Info menu step, click the Proceed button to be switched to the next menu.
 
-## The Autotest Info Menu
+  ## The Autotest Info Menu
 
-![addtest3](../assets/user-guide/addtest3.png "addtest3")
+  ![autotest-info](../assets/user-guide/autotest-info-menu.png "autotest-info")
 
 5. Fill in the **Autotest Name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
 
@@ -61,9 +64,9 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
 10. All the autotest reports will be created in the Allure framework that is available In the **Autotest Report Framework** field by default. Click the Proceed button to be switched to the next menu.
 
-## The Advanced Settings Menu
+  ## The Advanced Settings Menu
 
-![addtest4](../assets/user-guide/add_test_250.png "addtest4")
+  ![advanced-settings](../assets/user-guide/advanced-settings-autotest.png "advanced-settngs")
 
 11. Select CI pipeline provisioner that will be used to handle a codebase. For details, refer to the [Add Job Provision](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md#add-job-provision) instruction and become familiar with the main steps to add an additional job provisioner.
 
@@ -77,7 +80,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
   When selecting the edp versioning type, the extra field will appear:
 
-  ![add-app3_2](../assets/user-guide/addapp3_2.png "add-app3_2")
+  ![edp-versioning](../assets/user-guide/edp-versioning-autotest.png "edp-versioning")
 
   a. Type the version number from which you want the artifacts to be versioned.
 
@@ -90,7 +93,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
   !!! note
       The GitLab CI tool is available only with the Import strategy and makes the **Jira integration** feature unavailable.
 
-  ![add-app3_2](../assets/user-guide/add_test3_ji2.png "add-app3_2")
+  ![jira-server](../assets/user-guide/integrate-jira-server-autotest.png)
 
 15. Select the **Integrate with Jira Server** checkbox in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
 
@@ -105,7 +108,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
 19. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP. Upon clicking the question mark icon, observe the tips on how to indicate and combine variables necessary for identifying the format of values to be displayed.
 
-  ![add-app3_2](../assets/user-guide/adv_map_variables.png "add-app3_2")
+  ![advance-mapping](../assets/user-guide/advance-mapping.png)
 
   a. Select the name of the field in a Jira ticket. The available fields are the following: **Fix Version/s**, **Component/s** and **Labels**.
 
@@ -121,9 +124,9 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
   d. Click the delete icon to remove the Jira field name.
 
-  ![add-app3_2](../assets/user-guide/addtest_integrate_perf.png "add-app3_2")
+  ![integrate-perf-server](../assets/user-guide/integrate-perf-server-autotest.png "integrate-perf-server")
 
-20. Select the **Integrate with Perf Server** checkbox in case it is required to connect to the [PERF Board](https://kb.epam.com/display/EPMDMO/Project+Performance+Board) (_Project Performance Board_).
+20. Select the **Integrate with Perf Server** checkbox in case it is required to connect to the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_).
     Such functionality allows monitoring the overall team performance and setting up necessary metrics.
 
   !!! note
@@ -131,17 +134,17 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
 21. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be performed and click the Proceed button to be switched to the next menu.
 
-  ![add-app3_2](../assets/user-guide/addtest_perf_integr_menu.png "add-app3_2")
+  ![perf-integration](../assets/user-guide/perf-integration-autotest.png "perf-integration")
 
 22. Select the necessary DataSource (_Jenkins/GitLab, Sonar_) from which the data should be transferred to the Project Performance Board.
 
 23. Click the Create button to create an autotest or click the Proceed button to be switched to the next VCS menu that can be predefined.
 
-## The Version Control System Info Menu
+  ## The Version Control System Info Menu
 
-Once navigated to the VCS Info menu, perform the following:
+  Once navigated to the VCS Info menu, perform the following:
 
-![addtest5](../assets/user-guide/addtest5.png "addtest5")
+  ![autotest-vcs](../assets/user-guide/autotest-vcs.png "autotest-vcs")
 
 24. Enter the login credentials into the **VCS Login** field.
 
@@ -149,8 +152,8 @@ Once navigated to the VCS Info menu, perform the following:
 
 26. Click the Create button, check the CONFIRMATION summary, click Continue to add an autotest to the Autotests list.
 
-!!! note
-    After the complete adding of the autotest, inspect the [Autotest Overview](autotest.md) part.
+  !!! note
+      After the complete adding of the autotest, inspect the [Autotest Overview](autotest.md) part.
 
 ### Related Articles
 
