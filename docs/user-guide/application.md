@@ -16,7 +16,7 @@ As soon as the application is successfully provisioned, the following will be cr
 
 The added application will be listed in the Applications list allowing you to do the following:
 
-![inspect-app](../assets/user-guide/inspectapp1.png "inspect-app")
+![inspect-app](../assets/user-guide/inspect-application-menu.png "inspect-app")
 
 1. Create another application by clicking the Create button and performing the same steps as described in [Add Applications](add-application.md) section.
 
@@ -42,7 +42,7 @@ The added application will be listed in the Applications list allowing you to do
   !!! note
       The application that is used in a CD pipeline cannot be removed.
 
-  ![inspect-app](../assets/user-guide/inspectapp2.png "inspect-app")
+  ![inspect-app2](../assets/user-guide/inspect-application-menu2.png "inspect-app2")
 
 5. Select a number of existing applications to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
 
@@ -62,7 +62,7 @@ When adding an application, the default branch is a **master** branch. In order 
 
 2. Fill in the required fields:
 
-  ![addbranch2](../assets/user-guide/addbranch2.png "addbranch2")
+  ![new-branch](../assets/user-guide/create-new-branch.png "new-branch")
 
   a. Release Branch - select the Release Branch check box if you need to create a release branch;
 
@@ -87,15 +87,15 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 1. Perform the editing from one of the following sections on the Admin Console interface:
 
-  ![editcodebase1](../assets/user-guide/edit_codebase_1.png "editcodebase1")
+  ![edit-codebase](../assets/user-guide/edit-codebase-1.png "edit-codebase")
 
   - Navigate to the codebase overview page and click the **pencil** icon, or
 
-  ![editcodebase2](../assets/user-guide/edit_codebase_2.png "editcodebase2")
+  ![edit-codebase2](../assets/user-guide/edit-codebase-2.png "edit-codebase2")
 
   - Navigate to the codebase list page and click the **pencil** icon.
 
-  ![editcodebase3](../assets/user-guide/edit_codebase_3.png "editcodebase3")
+  ![edit-codebase3](../assets/user-guide/edit-codebase-application.png "edit-codebase3")
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
