@@ -16,7 +16,7 @@ As soon as the autotest is successfully provisioned, the following will be creat
 
 The added autotest will be listed in the Autotests list allowing you to do the following:
 
-![inspect-autotest](../assets/user-guide/inspectautotest1.png "inspect-autotest")
+![autotest-page](../assets/user-guide/autotests-page.png "autotest-page")
 
 1. Add another autotest by clicking the Create button and performing the same steps as described [here](add-autotest.md).
 
@@ -40,7 +40,7 @@ The added autotest will be listed in the Autotests list allowing you to do the f
   !!! note
       The autotest that is used in a CD pipeline cannot be removed.
 
-   ![inspect-autotest](../assets/user-guide/inspectautotest2.png "inspect-autotest")
+   ![autotest-page2](../assets/user-guide/autotests-page2.png "autotest-page2")
 
 5. Select a number of existing autotests to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
 
@@ -56,15 +56,15 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 1. Perform the editing from one of the following sections on the Admin Console interface:
 
-    ![editcodebase1](../assets/user-guide/edit_autot_codebase1.png "editcodebase1")
+    ![edit-autotest](../assets/user-guide/edit-autotest.png "edit-autotest")
 
   - Navigate to the codebase overview page and click the **pencil** icon, or
 
-    ![editcodebase2](../assets/user-guide/edit_autot_codebase2.png "editcodebase2")
+    ![edit-autotest2](../assets/user-guide/autotest-pencil-icon.png "edit-autotest2")
 
   - Navigate to the codebase list page and click the **pencil** icon.
 
-    ![editcodebase3](../assets/user-guide/edit_codebase_3.png "editcodebase3")
+    ![edit-autotest3](../assets/user-guide/autotest-edit-codebase.png "edit-autotest3")
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
@@ -90,7 +90,7 @@ When adding an autotest, the default branch is a **master** branch. In order to 
 
 2. Fill in the required fields:
 
-  ![addbranch2](../assets/user-guide/addbranch2.png "addbranch2")
+  ![new-branch](../assets/user-guide/create-new-branch-autotest.png "new-branch")
 
   a. Release Branch - select the Release Branch check box if you need to create a release branch;
 
