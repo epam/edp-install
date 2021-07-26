@@ -9,8 +9,8 @@ Consult [EDP Glossary](./glossary.md) section for definitions mentioned on this 
 
 |Features|Description|
 |-|-|
-|Cloud Agnostic|EDP runs on Kubernetes cluster, so any Public Cloud Provider which provides Kubernetes can be used. Kubernetes clusters deployed On-Premises works as well|
-|CI/CD for Microservices|EDP initially is designed to support CI/CD for [Microservices](https://microservices.io/){target=_blank} running as containerized applications inside Kubernetes Cluster. EDP also supports CI for:<br>- Terraform Modules, <br>- Open Policy Rules,<br>- Workflows for Java11, JavaScript (React), .Net, Python, Groovy Pipelines, Go|
+|Cloud Agnostic|EDP runs on Kubernetes cluster, so any Public Cloud Provider which provides Kubernetes can be used. Kubernetes clusters deployed on-premises work as well|
+|CI/CD for Microservices|EDP is initially designed to support CI/CD for [Microservices](https://microservices.io/){target=_blank} running as containerized applications inside Kubernetes Cluster. EDP also supports CI for:<br>- Terraform Modules, <br>- Open Policy Rules,<br>- Workflows for Java11, JavaScript (React), .Net, Python, Groovy Pipelines, Go|
 |Version Control System (VCS)|EDP installs *Gerrit* as a default Source Code Management (SCM) tool. EDP also supports *GitHub* and *GitLab* integration|
 |Branching Strategy|EDP supports [Trunk-based](https://trunkbaseddevelopment.com/){target=_blank} development as well as [GitHub/GitLab flow](https://guides.github.com/introduction/flow/){target=_blank}. EDP creates two Pipelines per each codebase branch (see [Pipeline Framework](./user-guide/pipeline-framework.md)): *Code Review* and *Build*|
 |Repository Structure|EDP provides separate Git repository per each Codebase and doesn't work with *Monorepo*. However, EDP does support customization and runs *helm-lint*, *dockerfile-lint* steps using *Monorepo* approach.|
