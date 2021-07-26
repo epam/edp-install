@@ -16,9 +16,9 @@ As soon as the library is successfully provisioned, the following will be create
 
 The added library will be listed in the Libraries list allowing you to do the following:
 
-![inspect-lib](../assets/user-guide/inspectlib1.png "inspect-lib")
+![inspect-library](../assets/user-guide/library-page.png "insect-library")
 
-1. Create another library by clicking the Create button and performing the same steps as described [here](add-library.md);
+1. Create another library by clicking the Create button and performing the same steps as described on the [Add Library](add-library.md) page;
 
 2. Open library data by clicking its link name. Once clicked, the following blocks will be displayed:
 
@@ -42,7 +42,7 @@ The added library will be listed in the Libraries list allowing you to do the fo
   !!! note
       The library that is used in a CD pipeline cannot be removed.
 
-  ![inspect-lib](../assets/user-guide/inspectlib2.png "inspect-lib")
+  ![inspect-library2](../assets/user-guide/library-page2.png "inspect-library2")
 
 5. Select a number of existing libraries to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
 
@@ -58,15 +58,15 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 1. Perform the editing from one of the following sections on the Admin Console interface:
 
-    ![editcodebase1](../assets/user-guide/edit_lib_codebase1.png "editcodebase1")
+    ![edit-library-codebase1](../assets/user-guide/edit-library-codebase.png "edit-library-codebase")
 
   - Navigate to the codebase overview page and click the **pencil** icon, or
 
-    ![editcodebase2](../assets/user-guide/edit_lib_codebase2.png "editcodebase2")
+    ![edit-library-codebase2](../assets/user-guide/library-pen-icon.png "edit-library-codebase2")
 
   - Navigate to the codebase list page and click the **pencil** icon.
 
-    ![editcodebase3](../assets/user-guide/edit_codebase_3.png "editcodebase3")
+    ![edit-library-codebase3](../assets/user-guide/edit-codebase-library.png "edit-library-codebase3")
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
@@ -92,7 +92,7 @@ When adding a library, the default branch is a **master** branch. In order to ad
 
 2. Fill in the required fields:
 
-  ![addbranch2](../assets/user-guide/addbranch2.png "addbranch2")
+  ![new-branch](../assets/user-guide/create-new-branch-library.png "new-branch")
 
   a. Release Branch - select the Release Branch check box if you need to create a release branch;
 
@@ -107,7 +107,8 @@ When adding a library, the default branch is a **master** branch. In order to ad
   f. Click the Proceed button and wait until the new branch will be added to the list.
 
 !!! info
-    Adding of a new branch is indicated in the context of the edp versioning type. To get more detailed information on how to add a branch using the default versioning type, please refer [here](https://github.com/epam/edp-admin-console/blob/master/documentation/add_libraries.md#-check-library-availability).
+    Adding of a new branch is indicated in the context of the edp versioning type. To get more detailed information on
+    how to add a branch using the default versioning type, please refer to [Advanced Settings Menu](https://epam.github.io/edp-install/user-guide/add-library/#the-advanced-settings-menu) section of the Admin Console user guide.
 
 The default library repository is cloned and changed to the new indicated version before the build, i.e. the new indicated version will not be committed to the repository; thus, the existing repository will keep the default version.
 
