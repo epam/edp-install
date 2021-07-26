@@ -47,10 +47,11 @@ Make sure the cluster meets the following conditions:
 
 ## Prerequisites for EDP Installation
 ### KIOSK
-* Kiosk is deployed in the cluster. For details, please refer to the [Install kiosk](https://github.com/loft-sh/kiosk#1-install-kiosk) paragraph.
-* A service account is added to the configuration namespace (e.g. 'prerequisite-namespace' namespace).
+* Kiosk version 0.2.9 is deployed in the cluster. For details, please refer to the [Install kiosk](https://github.com/loft-sh/kiosk#1-install-kiosk) paragraph.
+* An EDP tenant name is <edp-project>.
+* A service account is added to the Keycloak namespace.
 ```
-kubectl -n <configuration_namespace> create sa <organization_name>
+kubectl -n security create sa <edp-project>
 ```
 
 * The Account template is applied to the cluster. Please check the sample below:
@@ -58,14 +59,14 @@ kubectl -n <configuration_namespace> create sa <organization_name>
 apiVersion: tenancy.kiosk.sh/v1alpha1
 kind: Account
 metadata:
-  name: <organization_name>
+  name: <edp-project>
 spec:
-  space: 
+  space:
     clusterRole: kiosk-space-admin
   subjects:
   - kind: ServiceAccount
-    name: <organization_name>
-    namespace: <configuration_namespace>
+    name: <edp-project>
+    namespace: security
 ```
 
 * The ClusterRoleBinding is applied to the 'kiosk-edit' cluster role (current role is added during installation of Kiosk). Please check the sample below:
@@ -73,16 +74,17 @@ spec:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: <organization_name>-kiosk-edit
+  name: <edp-project>-kiosk-edit
 subjects:
 - kind: ServiceAccount
-  name: <organization_name>
-  namespace: <configuration_namespace>
+  name: <edp-project>
+  namespace: security
 roleRef:
   kind: ClusterRole
   name: kiosk-edit
   apiGroup: rbac.authorization.k8s.io
 ```
+* To provide access to the EDP tenant, [generate](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengaddingserviceaccttoken.htm) kubeconfig with Service Account <edp-project> permission which is in the security namespace.
 ### IAM Roles With Service Accounts (IRSA)
 The "build-image-kaniko" stage manages ECR through IRSA that should be available on the cluster. For details on how to associate IAM roles with service account, please refer to the [Associate IAM Roles With Service Accounts](https://github.com/epam/edp-admin-console/blob/master/documentation/enable_irsa.md#associate-iam-roles-with-service-accounts) page.
 Follow the steps below to create a required role:
@@ -131,16 +133,16 @@ Follow the steps below to create a required role:
 * Define the resulted **arn** role value into the **kanikoRoleArn** parameter during the installation.
 
 ## EDP Namespace
-Choose an EDP tenant name, e.g. "demo", and create the eponymous <edp-project> space custom resource. As a result, EDP namespace will appear. 
-Before starting the EDP deployment, make sure to have the <edp-project> EDP namespace created in K8S:
+Create custom resource **space** with the name <edp-project>:
 ```yaml
 apiVersion: tenancy.kiosk.sh/v1alpha1
 kind: Space
 metadata:
   name: <edp-project>
 spec:
-  account: <organization_name>
+  account: <edp-project>
 ```
+Check that namespace with name <edp-project> is created.
 
 ## Install EDP
 To store EDP data, use any existing Postgres database or create one during the installation.
