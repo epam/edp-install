@@ -48,7 +48,7 @@ Make sure the cluster meets the following conditions:
 ## Prerequisites for EDP Installation
 ### KIOSK
 * Kiosk version 0.2.9 is deployed in the cluster. For details, please refer to the [Install kiosk](https://github.com/loft-sh/kiosk#1-install-kiosk) paragraph.
-* An EDP tenant name is <edp-project>.
+* An EDP tenant name is &#8249;edp-project&#8250;.
 * A service account is added to the Keycloak namespace.
 ```
 kubectl -n security create sa <edp-project>
@@ -84,7 +84,7 @@ roleRef:
   name: kiosk-edit
   apiGroup: rbac.authorization.k8s.io
 ```
-* To provide access to the EDP tenant, [generate](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengaddingserviceaccttoken.htm) kubeconfig with Service Account <edp-project> permission which is in the security namespace.
+* To provide access to the EDP tenant, [generate](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengaddingserviceaccttoken.htm) kubeconfig with Service Account &#8249;edp-project&#8250; permission which is in the security namespace.
 ### IAM Roles With Service Accounts (IRSA)
 The "build-image-kaniko" stage manages ECR through IRSA that should be available on the cluster. For details on how to associate IAM roles with service account, please refer to the [Associate IAM Roles With Service Accounts](https://github.com/epam/edp-admin-console/blob/master/documentation/enable_irsa.md#associate-iam-roles-with-service-accounts) page.
 Follow the steps below to create a required role:
@@ -133,7 +133,7 @@ Follow the steps below to create a required role:
 * Define the resulted **arn** role value into the **kanikoRoleArn** parameter during the installation.
 
 ## EDP Namespace
-Create custom resource **space** with the name <edp-project>:
+Create custom resource **space** with the name &#8249;edp-project&#8250;:
 ```yaml
 apiVersion: tenancy.kiosk.sh/v1alpha1
 kind: Space
@@ -142,11 +142,11 @@ metadata:
 spec:
   account: <edp-project>
 ```
-Check that namespace with name <edp-project> is created.
+Check that namespace with name &#8249;edp-project&#8250; is created.
 
 ## Install EDP
 To store EDP data, use any existing Postgres database or create one during the installation.
-Additionally, create two secrets in the <edp-project> namespace: one with administrative credentials and another with credentials for the EDP tenant (database schema).
+Additionally, create two secrets in the &#8249;edp-project&#8250; namespace: one with administrative credentials and another with credentials for the EDP tenant (database schema).
 * Create a secret for administrative access to the database:
 ```
 kubectl -n <edp-project> create secret generic super-admin-db --from-literal=username=<super_admin_db_username> --from-literal=password=<super_admin_db_password>
@@ -171,7 +171,7 @@ kubectl -n <edp-project> create secret generic keycloak --from-literal=username=
      ```bash
      helm search repo epamedp/edp-install
      NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-     epamedp/edp-install     2.4.0           1.16.0          A Helm chart for Kubernetes
+     epamedp/edp-install     2.8.0           2.8.0          A Helm chart for EDP Install
      ```
 
      _**NOTE:** It is highly recommended to use the latest released version._
@@ -310,9 +310,9 @@ kubectl -n <edp-project> create secret generic keycloak --from-literal=username=
     - perf-operator.perf.luminate.credentialName                        # Name of secret with Luminate credentials;
  ```
 
-* If the external database is used, set the global.database.host value to the database DNS name accessible from the <edp-project> namespace;
+* If the external database is used, set the global.database.host value to the database DNS name accessible from the &#8249;edp-project&#8250; namespace;
 
-* Install EDP in the <edp-project> namespace with the helm command. Find the installation command example below:
+* Install EDP in the &#8249;edp-project&#8250; namespace with the helm command. Find the installation command example below:
 
 ```bash
 helm install epamedp/edp-install --wait --timeout=900s --namespace <edp-project> --set global.edpName=<edp-project> --set global.dnsWildCard=<k8s_cluster_DNS_wilcdard> --set global.platform=kubernetes
