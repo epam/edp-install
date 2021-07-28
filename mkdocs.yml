@@ -52,15 +52,22 @@ extra:
 nav:
   - Overview: index.md
   - features.md
-  - getting-started.md
+  - Getting Started: getting-started.md
   - Operator Guide:
     - operator-guide/index.md
-    - Enable IRSA (AWS): operator-guide/aws-irsa.md
-    - operator-guide/add-other-code-language.md
+    - Installation:
+      - Prerequisites:
+        - Kiosk: operator-guide/install-kiosk.md
+        - Keycloak: operator-guide/install-keycloak.md
+      - EDP: operator-guide/install-edp.md
+    - Configuration:
+      - operator-guide/add-other-code-language.md
+      - operator-guide/import-strategy.md
+    - AWS integration:
+      - Enable IRSA (AWS): operator-guide/aws-irsa.md
     - Jira Integration:
       - Overview: operator-guide/jira-integration.md
       - operator-guide/jira-gerrit-integration.md
-    - operator-guide/import-strategy.md
     - GitHub Integration:
       - Overview: operator-guide/github-integration.md
     - GitLab Integration:
