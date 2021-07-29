@@ -105,6 +105,7 @@ nav:
     - developer-guide/index.md
     - developer-guide/local-development.md
     - developer-guide/rest-api.md
+    - developer-guide/mk-docs-development.md
   - RoadMap: roadmap.md
   - Use Cases: use-cases/index.md
   - glossary.md
