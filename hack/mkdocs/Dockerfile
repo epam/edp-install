@@ -1,4 +1,4 @@
-FROM squidfunk/mkdocs-material:7.2.0
+FROM squidfunk/mkdocs-material:7.2.2
 
 RUN pip install \
     mdx_truly_sane_lists \
