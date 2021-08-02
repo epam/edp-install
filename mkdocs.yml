@@ -59,6 +59,8 @@ nav:
       - Prerequisites:
         - Kiosk: operator-guide/install-kiosk.md
         - Keycloak: operator-guide/install-keycloak.md
+        - Kubernetes: operator-guide/kubernetes-cluster-settings.md
+        - OpenShift: operator-guide/openshift-cluster-settings.md
       - EDP: operator-guide/install-edp.md
     - Configuration:
       - operator-guide/add-other-code-language.md

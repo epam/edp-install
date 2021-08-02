@@ -131,7 +131,7 @@ To prepare Keycloak for integration with EDP, follow the steps below:
 2. Create a user in "Master" realm.
 
   !!! note
-      This user should be used by EDP to access Keycloak.
+      This user should be used by EDP to access Keycloak. Please refer to the [Install EDP](install-edp.md) section for details.
 
 3. In the "Role Mappings" tab, assign the proper roles to user:
 
