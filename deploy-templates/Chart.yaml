@@ -3,8 +3,8 @@ description: A Helm chart for EDP Install
 home: https://solutionshub.epam.com/solution/epam-delivery-platform
 name: edp-install
 type: application
-version: 2.8.0
-appVersion: 2.8.0
+version: 2.8.1
+appVersion: 2.8.1
 maintainers:
   - name: EPAM EDP Team
 sources:
@@ -19,13 +19,13 @@ dependencies:
 
 - name: codebase-operator
   repository: "@epamedp"
-  version: "2.8.0"
+  version: "2.8.1"
   tags:
     - codebase-operator
 
 - name: jenkins-operator
   repository: "@epamedp"
-  version: "2.8.0"
+  version: "2.8.1"
   tags:
     - jenkins-operator
 
@@ -37,7 +37,7 @@ dependencies:
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.8.0"
+  version: "2.8.1"
   tags:
     - cd-pipeline-operator
 
@@ -55,7 +55,7 @@ dependencies:
 
 - name: admin-console-operator
   repository: "@epamedp"
-  version: "2.8.0"
+  version: "2.8.1"
   tags:
     - admin-console-operator
 
@@ -67,7 +67,7 @@ dependencies:
 
 - name: reconciler
   repository: "@epamedp"
-  version: "2.8.0"
+  version: "2.8.1"
   tags:
     - reconciler
 
