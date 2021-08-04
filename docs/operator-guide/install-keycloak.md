@@ -19,6 +19,9 @@ To install Keycloak, follow the steps below:
 
         kubectl create namespace security
 
+!!! note
+    On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+
 2. Add a chart repository:
 
         helm repo add codecentric https://codecentric.github.io/helm-charts

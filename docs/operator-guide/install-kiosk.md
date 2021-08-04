@@ -25,6 +25,9 @@ To provide access to the EDP tenant, follow the steps below.
 
         kubectl create namespace security
 
+!!! note
+    On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+
 * Add a service account to the security namespace.
 
         kubectl -n security create sa <edp-project>

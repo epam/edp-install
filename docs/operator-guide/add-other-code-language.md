@@ -1,6 +1,6 @@
 # Add Other Code Language
 
-There is an ability to extend the default code languages when creating a codebase with the clone strategy.
+There is an ability to extend the default code languages when creating a codebase with the clone/import strategy.
 
 ![other-language](../assets/operator-guide/ac_other_language.png "other-language")
 
@@ -9,22 +9,40 @@ There is an ability to extend the default code languages when creating a codebas
 
 In order to customize the Build Tool list, perform the following:
 
-* Navigate to OpenShift, and edit the edp-admin-console deployment by adding the necessary code language into
-the BUILD TOOLS field.
+*  Edit the edp-admin-console deployment by adding the necessary code language into the **BUILD TOOLS** field:
+   
+       kubectl edit deployment edp-admin-console -n <edp-project>
 
-  ![build-tools](../assets/operator-guide/other_build_tool.png "build-tools")
+!!! note 
+    On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
 
-  !!! note
-      Use the comma sign to separate the code languages in order to make them available, e.g. maven, gradle.
+!!! info
+    &#8249;edp-project&#8250; is the name of the EDP tenant here and in all the following steps.
 
-* Add the Jenkins slave by following the [Add Jenkins Slave](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave) instruction.
+<details>
+<summary><b>View: edp-admin-console deployment</b></summary>
 
-* As a result, the newly added Jenkins slave will be available in the **Select Jenkins Slave** dropdown list of the
+```yaml
+...
+spec:
+  containers:
+  - env:
+    ...
+    - name: BUILD_TOOLS
+      value: docker # List of custom build tools in Admin Console, e.g. 'docker,helm';
+    ...
+...
+```
+</details>
+
+* Add the Jenkins agent by following the [Add Jenkins Agent](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave) instruction.
+
+* Add the Custom CI pipeline provisioner by following the [Add Custom CI pipeline provisioner](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md) instruction.
+
+* As a result, the newly added Jenkins agent will be available in the **Select Jenkins Slave** dropdown list of the
 Advanced Settings block during the codebase creation:
 
-  ![jenkins-slave](../assets/operator-guide/ac_jenkins_slave.png "jenkins-slave")
-
-* Extend or modify the Jenkins provisioner by following the [Add Job Provisioner](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md) instruction.
+  ![jenkins-agent](../assets/operator-guide/ac_jenkins_agent.png "jenkins-agent")
 
 If it is necessary to create Code Review and Build pipelines, add corresponding entries (e.g. stages[Build-application-docker], [Code-review-application-docker]). See the example below:
 
@@ -43,6 +61,6 @@ stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-versio
 
 ## Related Articles
 
-* [Add Jenkins Slave](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave)
+* [Add Jenkins Agent](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave)
 * [Add Job Provisioner](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md)
 * [Add Library](../user-guide/add-library.md)
