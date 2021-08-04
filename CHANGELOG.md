@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.8.1](#2.8.1)
 *   [Version 2.8.0](#2.8.0)
 *   [Version 2.7.8](#2.7.8)
 *   [Version 2.7.7](#2.7.7)
@@ -18,6 +19,21 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.2](#2.6.2)
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
+
+## Version 2.8.1 <a name="2.8.1"></a> (August 4, 2021)
+
+### New Functionality and Enhancements
+
+* IRSA is optional for EDP deployment process.
+* The codebaseBranch field is removed from cd-pipeline CRD.
+* A new field subresources status is added to cd-pipeline CRD.
+* The inputDockerStreams field is aligned in the cd-pipeline structure with CRD.
+* The site and path parameters are removed from DB.
+
+#### Fixed Issues
+
+* A bug is fixed with a custom default branch for the Create strategy.
+
 
 ## Version 2.8.0 <a name="2.8.0"></a> (July 16, 2021)
 
