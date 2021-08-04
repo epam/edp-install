@@ -3,8 +3,8 @@ description: A Helm chart for EDP Install
 home: https://solutionshub.epam.com/solution/epam-delivery-platform
 name: edp-install
 type: application
-version: 2.8.1
-appVersion: 2.8.1
+version: 2.8.2
+appVersion: 2.8.2
 maintainers:
   - name: EPAM EDP Team
 sources:
@@ -37,7 +37,7 @@ dependencies:
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.8.1"
+  version: "2.8.2"
   tags:
     - cd-pipeline-operator
 
