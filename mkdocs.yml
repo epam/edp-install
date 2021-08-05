@@ -75,6 +75,8 @@ nav:
     - GitLab Integration:
       - Overview: operator-guide/gitlab-integration.md
       - operator-guide/gitlabci-integration.md
+    - Tutorials:
+        - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
   - User Guide:
     - user-guide/index.md
     - Application:
