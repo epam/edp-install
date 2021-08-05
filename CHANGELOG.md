@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.8.2](#2.8.2)
 *   [Version 2.8.1](#2.8.1)
 *   [Version 2.8.0](#2.8.0)
 *   [Version 2.7.8](#2.7.8)
@@ -19,6 +20,14 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.2](#2.6.2)
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
+
+
+## Version 2.8.2 <a name="2.8.2"></a> (August 5, 2021)
+
+### Fixed Issues
+
+* Missing field status is added to cd-pipeline CRD.
+
 
 ## Version 2.8.1 <a name="2.8.1"></a> (August 4, 2021)
 
