@@ -28,14 +28,26 @@ To successfully associate the IAM role with the service account, follow the step
         ]
       }
 
-2. Deploy the [amazon-eks-pod-identity-webhook](https://github.com/aws/amazon-eks-pod-identity-webhook/tree/master) as described below:
+    View cluster's &#8249;OIDC_PROVIDER&#8250 URL.
 
-    2.1. Provide the [stable](https://hub.docker.com/r/amazon/amazon-eks-pod-identity-webhook) version of the Docker image in the _deploy/deployment-base.yaml_ file.
+        aws eks describe-cluster --name <CLUSTER_NAME> --query "cluster.identity.oidc.issuer" --output text
+
+    Example output:
+
+        https://oidc.eks.us-west-2.amazonaws.com/id/EXAMPLED539D4633E53DE1B716D3041E
+
+    &#8249;OIDC_PROVIDER&#8250 in this example will be:
+
+        oidc.eks.us-west-2.amazonaws.com/id/EXAMPLED539D4633E53DE1B716D3041E
+
+2. Deploy the [amazon-eks-pod-identity-webhook](https://github.com/aws/amazon-eks-pod-identity-webhook/tree/master) v0.2.0 as described below:
+
+    2.1. Provide the [stable](https://hub.docker.com/r/amazon/amazon-eks-pod-identity-webhook)(ed8c41f) version of the Docker image in the _deploy/deployment-base.yaml_ file.
 
     2.2. Provide _${CA_BUNDLE}_in the_deploy/mutatingwebhook.yaml_ file:
 
         secret_name=$(kubectl -n default get sa default -o jsonpath='{.secrets[0].name}') \
-          CA_BUNDLE=$(kubectl -n default get secret/$secret_name -o jsonpath='{.data.ca\.crt}' | tr -d '\n')
+        CA_BUNDLE=$(kubectl -n default get secret/$secret_name -o jsonpath='{.data.ca\.crt}' | tr -d '\n')
 
     2.3. Deploy the Webhook:
 
@@ -65,7 +77,7 @@ To successfully associate the IAM role with the service account, follow the step
         apiVersion: v1
         kind: Pod
         metadata:
-          name: <POD_NAME>
+          name: irsa-test
           namespace: <POD_NAMESPACE>
         spec:
           serviceAccountName: <SERVICE_ACCOUNT_NAME>
@@ -73,9 +85,20 @@ To successfully associate the IAM role with the service account, follow the step
             fsGroup: 65534
           containers:
           - name: terraform
-            image: epamedp/edp-jenkins-terraform-agent:2.0.2
-            command: ['sh', '-c', 'echo "Hello, Kubernetes!" && sleep 3600']
+            image: epamedp/edp-jenkins-terraform-agent:2.0.4
+            command: ['sh', '-c', 'awscliv2 sts "get-caller-identity" && sleep 3600']
 
+5. Check the logs of the created pod from the template above.
+   
+    Example output:
+
+        {
+        "UserId": "XXXXXXXXXXXXXXXXXXXXX:botocore-session-XXXXXXXXXX",
+        "Account": "XXXXXXXXXXXX",
+        "Arn": "arn:aws:sts::XXXXXXXXXXXX:assumed-role/AWSIRSATestRole/botocore-session-XXXXXXXXXX"
+        }
+
+   As a result, it is possible to perform actions in AWS under the **AWSIRSATestRole** role.
 ## Related Articles
 
 - [Use Terraform Library in EDP](../user-guide/terraform-stages.md)
