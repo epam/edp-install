@@ -1,3 +1,3 @@
 # Overview
 
-This guide is for developers who want to extend EDP functionality
+The EDP Developer guide is intended for developers and provides details on the necessary actions to extend the EDP functionality.

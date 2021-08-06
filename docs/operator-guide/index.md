@@ -1,3 +1,4 @@
 # Overview
 
-This guide is for DevOps who installs/configure/customize EDP and also support platform
+The EDP Operator guide is intended for DevOps and provides information on EDP installation, configuration and customization, as well as the platform support.
+

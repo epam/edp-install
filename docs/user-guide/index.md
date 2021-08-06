@@ -1,3 +1,4 @@
 # Overview
 
-This guide is for developers who have EDP installed and use for CI/CD configuration.
+The EDP User Guide is intended for developers and provides details on working with EDP Admin Console, different codebase types and EDP CI/CD flow.
+
