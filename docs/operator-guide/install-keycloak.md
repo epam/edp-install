@@ -29,7 +29,9 @@ To install Keycloak, follow the steps below:
 
 3. Create Keycloak admin secret:
 
-        kubectl -n security create secret generic keycloak-admin-creds --from-literal=username=<keycloak_admin_username> --from-literal=password=<keycloak_admin_password>
+        kubectl -n security create secret generic keycloak-admin-creds \
+          --from-literal=username=<keycloak_admin_username> \
+          --from-literal=password=<keycloak_admin_password>
 
 4. Install Keycloak v.13.0.1:
 
