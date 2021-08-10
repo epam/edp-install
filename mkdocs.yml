@@ -63,8 +63,10 @@ nav:
         - OpenShift: operator-guide/openshift-cluster-settings.md
       - EDP: operator-guide/install-edp.md
     - Configuration:
-      - operator-guide/add-other-code-language.md
-      - operator-guide/import-strategy.md
+      - Manage Jenkins Pipelines:
+        - Overview: operator-guide/overview-manage-jenkins-pipelines.md
+        - CI Provision: operator-guide/manage-jenkins-ci-job-provision.md
+        - CD Provision: operator-guide/manage-jenkins-cd-job-provision.md
     - AWS integration:
       - Enable IRSA (AWS): operator-guide/aws-irsa.md
     - Jira Integration:

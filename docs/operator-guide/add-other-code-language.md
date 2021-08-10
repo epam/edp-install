@@ -35,9 +35,9 @@ spec:
 ```
 </details>
 
-* Add the Jenkins agent by following the [Add Jenkins Agent](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave) instruction.
+* Add the Jenkins agent by following the [instruction](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave).
 
-* Add the Custom CI pipeline provisioner by following the [Add Custom CI pipeline provisioner](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md) instruction.
+* Add the Custom CI pipeline provisioner by following the [instruction](./manage-jenkins-job-provision.md#add-custom-ci-pipeline-job-provisioner).
 
 * As a result, the newly added Jenkins agent will be available in the **Select Jenkins Slave** dropdown list of the
 Advanced Settings block during the codebase creation:
@@ -61,6 +61,6 @@ stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-versio
 
 ## Related Articles
 
-* [Add Jenkins Agent](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave)
-* [Add Job Provisioner](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md)
+* [Manage Jenkins Agent](add-jenkins-agent.md)
+* [Add Job Provisioner](manage-jenkins-ci-job-provision.md)
 * [Add Library](../user-guide/add-library.md)
