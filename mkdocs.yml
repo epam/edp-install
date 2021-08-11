@@ -86,6 +86,7 @@ nav:
         - Velero Auto Restart: operator-guide/velero-auto-restart.md
         - Restore EDP Tenant With Velero: operator-guide/restore-edp-with-velero.md
     - Tutorials:
+        - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
         - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
   - User Guide:
     - user-guide/index.md
