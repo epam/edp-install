@@ -1,8 +1,10 @@
 # Associate IAM Roles With Service Accounts
 
-This page contains accurate information on how to associate an IAM role with the service account in EPAM Delivery Platform.
+This page contains accurate information on how to associate an IAM role with the service account (IRSA) in EPAM Delivery Platform.
 
 Get acquainted with the [AWS Official Documentation](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html) on the subject before proceeding.
+
+## Common Configuration of IAM Roles With Service Accounts
 
 To successfully associate the IAM role with the service account, follow the steps below:
 
@@ -89,7 +91,7 @@ To successfully associate the IAM role with the service account, follow the step
             command: ['sh', '-c', 'awscliv2 sts "get-caller-identity" && sleep 3600']
 
 5. Check the logs of the created pod from the template above.
-   
+
     Example output:
 
         {
@@ -99,6 +101,7 @@ To successfully associate the IAM role with the service account, follow the step
         }
 
    As a result, it is possible to perform actions in AWS under the **AWSIRSATestRole** role.
+
 ## Related Articles
 
 - [Use Terraform Library in EDP](../user-guide/terraform-stages.md)

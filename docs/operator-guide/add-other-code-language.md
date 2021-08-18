@@ -37,7 +37,7 @@ spec:
 
 * Add the Jenkins agent by following the [instruction](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave).
 
-* Add the Custom CI pipeline provisioner by following the [instruction](./manage-jenkins-job-provision.md#add-custom-ci-pipeline-job-provisioner).
+* Add the Custom CI pipeline provisioner by following the [instruction](../operator-guide/manage-jenkins-ci-job-provision.md).
 
 * As a result, the newly added Jenkins agent will be available in the **Select Jenkins Slave** dropdown list of the
 Advanced Settings block during the codebase creation:

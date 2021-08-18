@@ -67,8 +67,11 @@ nav:
         - Overview: operator-guide/overview-manage-jenkins-pipelines.md
         - CI Provision: operator-guide/manage-jenkins-ci-job-provision.md
         - CD Provision: operator-guide/manage-jenkins-cd-job-provision.md
-    - AWS integration:
-      - Enable IRSA (AWS): operator-guide/aws-irsa.md
+    - AWS Integration:
+      - Associate IAM Roles With Service Accounts (IRSA):
+        - Enable IRSA: operator-guide/enable-irsa.md
+        - IRSA for Kaniko: operator-guide/kaniko-irsa.md
+        - IRSA for Velero: operator-guide/velero-irsa.md
     - Jira Integration:
       - Overview: operator-guide/jira-integration.md
       - operator-guide/jira-gerrit-integration.md
@@ -77,6 +80,11 @@ nav:
     - GitLab Integration:
       - Overview: operator-guide/gitlab-integration.md
       - operator-guide/gitlabci-integration.md
+    - Velero Configuration:
+      - Back Up EDP Tenant With Velero:
+        - Install Velero: operator-guide/install-velero.md
+        - Velero Auto Restart: operator-guide/velero-auto-restart.md
+        - Restore EDP Tenant With Velero: operator-guide/restore-edp-with-velero.md
     - Tutorials:
         - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
   - User Guide:

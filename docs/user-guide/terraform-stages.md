@@ -103,4 +103,4 @@ Now during the launch of the Build pipeline, it is possible to select the desire
 ## Related Articles
 
 * [EDP Pipeline Framework](pipeline-framework.md)
-* [Associate IAM Roles With Service Accounts](../operator-guide/aws-irsa.md)
+* [Associate IAM Roles With Service Accounts](../operator-guide/enable-irsa.md)
