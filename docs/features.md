@@ -3,7 +3,7 @@ hide:
   - navigation
 ---
 
-# Features
+# Basic Concepts
 
 Consult [EDP Glossary](./glossary.md) section for definitions mentioned on this page and [EDP Toolset](./getting-started/#edp-toolset) to have a full list of tools used with the Platform. The below table contains a full list of features provided by EDP.
 

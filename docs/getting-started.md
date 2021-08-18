@@ -47,3 +47,23 @@ List of Tools used on the Platform:
 ## Install prerequisites
 
 ## Install EDP
+
+Find below the example of the installation command:
+
+        helm install edp epamedp/edp-install --wait --timeout=900s \
+        --version <edp_version> \
+        --set global.edpName=<edp-project> \
+        --set global.dnsWildCard=<cluster_DNS_wilcdard> \
+        --set global.webConsole.url=<kubeconfig.clusters.cluster.server> \
+        --set global.platform=<platform_type> \
+        --set dockerRegistry.url=<aws_account_id>.dkr.ecr.<region>.amazonaws.com \
+        --set keycloak-operator.keycloak.url=<keycloak_endpoint> \
+        --set gerrit-operator.gerrit.sshPort=<gerrit_ssh_port> \
+        --namespace <edp-project>
+
+!!! warning
+    Please be aware that the command above is an example.
+
+To install EDP with the necessary parameters, please refer to the [Install EDP](./operator-guide/install-edp.md) section of the [Operator Guide](https://epam.github.io/edp-install/operator-guide/).
+Mind the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml).
+

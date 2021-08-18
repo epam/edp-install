@@ -5,60 +5,37 @@ hide:
 
 # EPAM Delivery Platform
 
+## What It Is
+
 **EPAM Delivery platform (EDP)** is an **open-source** cloud-agnostic SaaS/PaaS solution for software development, licensed under **Apache License 2.0**. It provides a pre-defined set of CI/CD patterns and tools, which allow a user to start product development quickly with established **code review**, **release**, **versioning**, **branching**, **build** processes. These processes include static code analysis, security checks, linters, validators, dynamic feature environments provisioning. EDP consolidates the top Open-Source CI/CD tools by running them on Kubernetes/OpenShift, which enables web/app development either in isolated (on-prem) or cloud environments.
 
 EPAM Delivery Platform, which is also called **"The Rocket"**, is a platform that allows shortening the time that is passed before an active development can be started from several months to several hours.
 
 EDP consists of the following:
 
-- The platform based on managed infrastructure and container orchestration;
-- Security covering authentication, authorization, and SSO for platform services;
-- Development and testing toolset;
-- Well-established engineering process and EPAM practices (EngX) reflected in CI/CD pipelines, and delivery analytics;
-- Local development with debug capabilities.
+- The platform based on managed infrastructure and container orchestration
+- Security covering authentication, authorization, and SSO for platform services
+- Development and testing toolset
+- Well-established engineering process and EPAM practices (EngX) reflected in CI/CD pipelines, and delivery analytics
+- Local development with debug capabilities
 
 ## Features
 
 - Deployed and configured CI/CD toolset ([Jenkins](https://www.jenkins.io/){target=_blank}, [Gerrit](https://www.gerritcodereview.com/){target=_blank}, [Nexus](https://help.sonatype.com/repomanager3){target=_blank}, [SonarQube](https://www.sonarqube.org/){target=_blank})
-- Gerrit, GitLab or GitHub as a version control system for your code
-- Jenkins is a pipeline orchestrator
-- CI pipelines for Python, Java 8, Java 11, .Net, Go, React, Terraform, Jenkins Groovy Pipelines, Dockerfile, Helm
+- [Gerrit](https://www.gerritcodereview.com/), [GitLab](https://about.gitlab.com/features/) or [GitHub](https://about.gitlab.com/features/) as a version control system for your code
+- [Jenkins](./operator-guide/overview-manage-jenkins-pipelines.md) is a pipeline orchestrator
+- [CI pipelines](./user-guide/pipeline-framework.md) for Python, Java 8, Java 11, .Net, Go, React, Terraform, Jenkins Groovy Pipelines, Dockerfile, Helm
 - Build tools: Go, Apache Maven, Apache Gradle
-- Admin Console UI as a single entry point
-- CD pipeline for Microservice Deployment
+- [Admin Console UI](./user-guide/index.md) as a single entry point
+- [CD pipeline](./user-guide/customize-cd-pipeline.md) for Microservice Deployment
 - Kubernetes native approach ([CRD, CR](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/){target=_blank}) to declare CI/CD pipelines
 
-## Admin Console UI
-
-Admin Console is a central management tool in the EDP ecosystem that provides the ability to define pipelines, project resources and new technologies in a simple way. Using Admin Console enables to manage business entities:
-
-- Create Codebases as Applications, Libraries and Autotests;
-- Create/Update CD Pipelines;
-
-!!! note
-    To interact with Admin Console via REST API, explore the [Create Codebase Entity](developer-guide/rest-api.md) page.
-
-![overview-page](./assets/ac-overview-page.png "overview-page")
-
-- **Navigation bar** – consists of seven sections: Overview, Continuous Delivery, Applications, Autotests, Libraries, and Delivery Dashboard Diagram. Click the necessary section to add an entity, open a home page or check the diagram.
-- **User name** – displays the registered user name.
-- **Main links** – displays the corresponding links to the major adjusted toolset, to the management tool and to the OpenShift cluster.
-
-Admin Console is a complete tool allowing to manage and control added to the environment codebases (applications, autotests, libraries) as well as to create a CD pipeline and check the visualization diagram.
-Inspect the main features available in Admin Console by following the corresponding link:
-
-- [Add Application](user-guide/add-application.md)
-- [Add Autotest](user-guide/add-autotest.md)
-- [Add Library](user-guide/add-library.md)
-- [Add CD Pipeline](user-guide/add-cd-pipeline.md)
-- [Delivery Dashboard Diagram](user-guide/d-d-diagram.md)
-
-## Architecture
+## What's Inside
 
 EPAM Delivery Platform (EDP) is suitable for all aspects of delivery starting from development including the capability to deploy production environment.
 EDP architecture is represented on a diagram below.
 
-![high_level_arch_diagram](./assets/high_level_arch_diagram.png "high_level_arch_diagram")
+![edp-context](./assets/edp-context.png "edp-context")
 
 EDP consists of three cross-cutting concerns:
 
