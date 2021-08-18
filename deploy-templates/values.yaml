@@ -30,6 +30,7 @@ global:
   webConsole:
     # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
     url:
+  kioskEnabled: true
 
 edp:
   adminGroups:
