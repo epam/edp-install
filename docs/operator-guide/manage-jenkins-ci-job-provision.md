@@ -50,6 +50,20 @@ During the EDP deployment, a default provisioner is created for integration with
    <Summary><b>View: Default template</b></Summary>
 
 ```java
+/* Copyright 2021 EPAM Systems.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 import groovy.json.*
 import jenkins.model.Jenkins
 import hudson.model.*
@@ -191,8 +205,7 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
                     stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                     stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
                     stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
-                    if (pipelineName.contains("Build"))
-                        stringParam("BRANCH", "${watchBranch}", "Branch to build artifact from")
+                    stringParam("BRANCH", "${watchBranch}", "Branch to build artifact from")
                 }
             }
         }
@@ -338,6 +351,10 @@ To create a new job provision for work with GitHub, take the following steps:
 
   * JIRA_INTEGRATION_ENABLED;
 
+  * PLATFORM_TYPE;
+
+  * DEFAULT_BRANCH.
+
 5. Check the *Execute concurrent builds if necessary* option.
 
 6. Check the *Restrict where this project can be run* option.
@@ -357,7 +374,7 @@ To create a new job provision for work with GitHub, take the following steps:
    <details>
    <Summary><b>View: Template</b></Summary>
 
-```java
+```
 import groovy.json.*
 import jenkins.model.Jenkins
 import javaposse.jobdsl.plugin.*
@@ -369,34 +386,53 @@ def jiraIntegrationEnabled = Boolean.parseBoolean("${JIRA_INTEGRATION_ENABLED}" 
 def commitValidateStage = jiraIntegrationEnabled ? ',{"name": "commit-validate"}' : ''
 def createJIMStage = jiraIntegrationEnabled ? ',{"name": "create-jira-issue-metadata"}' : ''
 def platformType = "${PLATFORM_TYPE}"
-def buildStage = platformType == "kubernetes" ? ',{"name": "build-image-kaniko"},' : ',{"name": "build-image-from-dockerfile"},'
+def buildStage = platformType == "kubernetes" ? ',{"name": "build-image-kaniko"}' : ',{"name": "build-image-from-dockerfile"}'
 def buildTool = "${BUILD_TOOL}"
 def goBuildStage = buildTool.toString() == "go" ? ',{"name": "build"}' : ',{"name": "compile"}'
 
 stages['Code-review-application'] = '[{"name": "checkout"}' + "${commitValidateStage}" + goBuildStage +
-                                     ',{"name": "tests"},{"name": "sonar"}]'
-stages['Code-review-library'] = '[{"name": "checkout"}' + "${commitValidateStage}" + ',{"name": "compile"},{"name": "tests"},' +
+        ',{"name": "tests"},[{"name": "sonar"},{"name": "dockerfile-lint"},{"name": "helm-lint"}]]'
+stages['Code-review-library'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "compile"},{"name": "tests"},' +
         '{"name": "sonar"}]'
-stages['Code-review-autotests'] = '[{"name": "checkout"}' + "${commitValidateStage}" + ',{"name": "tests"},{"name": "sonar"}]'
+stages['Code-review-autotests'] = '[{"name": "checkout"},{"name": "get-version"}' + "${commitValidateStage}" +
+        ',{"name": "tests"},{"name": "sonar"}' + "${createJIMStage}" + ']'
+stages['Code-review-default'] = '[{"name": "checkout"}' + "${commitValidateStage}" + ']'
+stages['Code-review-library-terraform'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "terraform-lint"}]'
+stages['Code-review-library-opa'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "tests"}]'
+stages['Code-review-library-codenarc'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "sonar"},{"name": "build"}]'
+
 stages['Build-library-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
-        '{"name": "tests"},{"name": "sonar"},{"name": "build"},{"name": "push"},{"name": "git-tag"}]'
+        '{"name": "tests"},{"name": "sonar"},{"name": "build"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-library-npm'] = stages['Build-library-maven']
 stages['Build-library-gradle'] = stages['Build-library-maven']
 stages['Build-library-dotnet'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
+        '{"name": "tests"},{"name": "sonar"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-terraform'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "terraform-lint"}' +
+        ',{"name": "terraform-plan"},{"name": "terraform-apply"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-opa'] = '[{"name": "checkout"},{"name": "get-version"}' +
+        ',{"name": "tests"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-codenarc'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sonar"},{"name": "build"}' +
+        "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
-        '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+        ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-npm'] = stages['Build-application-maven']
 stages['Build-application-gradle'] = stages['Build-application-maven']
 stages['Build-application-dotnet'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"}' + "${buildStage}" +
-        '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+        ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "tests"},{"name": "sonar"},' +
                                     '{"name": "build"}' + "${buildStage}" + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},{"name": "tests"},{"name": "sonar"}' +
-                                    "${buildStage}" + '{"name":"push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+                                    "${buildStage}" + ',{"name":"push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+
 stages['Create-release'] = '[{"name": "checkout"},{"name": "create-branch"},{"name": "trigger-job"}]'
 
 def buildToolsOutOfTheBox = ["maven","npm","gradle","dotnet","none","go","python"]
@@ -408,6 +444,7 @@ def gitServerCrVersion = "${GIT_SERVER_CR_VERSION}"
 def gitCredentialsId = "${GIT_CREDENTIALS_ID ? GIT_CREDENTIALS_ID : 'gerrit-ciuser-sshkey'}"
 def repositoryPath = "${REPOSITORY_PATH.replaceAll(~/:\d+\\//,"/")}"
 def githubRepository = "https://${repositoryPath.split("@")[1]}"
+def defaultBranch = "${DEFAULT_BRANCH}"
 
 def codebaseFolder = jenkins.getItem(codebaseName)
 if (codebaseFolder == null) {
@@ -416,7 +453,7 @@ if (codebaseFolder == null) {
 
 createListView(codebaseName, "Releases")
 createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
-        repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType)
+        repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch)
 
 if (buildTool.toString().equalsIgnoreCase('none')) {
     return true
@@ -431,7 +468,7 @@ if (BRANCH) {
 	def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
     def crKey = "Code-review-${type}".toString()
     createCodeReviewPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "code-review.groovy",
-            repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion, githubRepository)
+            repositoryPath, gitCredentialsId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository)
     registerWebHook(repositoryPath)
 
 
@@ -450,8 +487,8 @@ if (BRANCH) {
     }
 }
 
-def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, watchBranch = "master", gitServerCrName, gitServerCrVersion, githubRepository) {
-    pipelineJob("${codebaseName}/${watchBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}") {
+def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository) {
+    pipelineJob("${codebaseName}/${defaultBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}") {
         logRotator {
             numToKeep(10)
             daysToKeep(7)
@@ -474,7 +511,10 @@ def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelin
                     stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                     stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
                     stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
-                    stringParam("BRANCH", "${watchBranch}", "Branch to build artifact from")
+                    if (pipelineName.contains("Build"))
+                        stringParam("BRANCH", "${defaultBranch}", "Branch to build artifact from")
+                    else
+                        stringParam("BRANCH", "\${ghprbActualCommit}", "Branch to build artifact from")
                 }
             }
         }
@@ -486,7 +526,7 @@ def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelin
                 permitAll(true)
                 autoCloseFailedPullRequests(false)
                 displayBuildErrorsOnDownstreamBuilds(false)
-                whiteListTargetBranches([watchBranch.toString()])
+                whiteListTargetBranches([defaultBranch.toString()])
                 extensions {
                     commitStatus {
                         context('Jenkins Code-Review')
@@ -509,8 +549,8 @@ def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelin
     }
 }
 
-def createBuildPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, watchBranch = "master", gitServerCrName, gitServerCrVersion, githubRepository) {
-    pipelineJob("${codebaseName}/${watchBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}") {
+def createBuildPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository) {
+    pipelineJob("${codebaseName}/${defaultBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}") {
         logRotator {
             numToKeep(10)
             daysToKeep(7)
@@ -523,7 +563,7 @@ def createBuildPipeline(pipelineName, codebaseName, codebaseStages, pipelineScri
                             url(repository)
                             credentials(credId)
                         }
-                        branches("${watchBranch}")
+                        branches("${defaultBranch}")
                         scriptPath("${pipelineScript}")
                     }
                 }
@@ -532,7 +572,7 @@ def createBuildPipeline(pipelineName, codebaseName, codebaseStages, pipelineScri
                     stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                     stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
                     stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
-                    stringParam("BRANCH", "${watchBranch}", "Branch to run from")
+                    stringParam("BRANCH", "${defaultBranch}", "Branch to run from")
                 }
             }
         }
@@ -580,7 +620,7 @@ def createListView(codebaseName, branchName) {
 }
 
 def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId,
- gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType) {
+ gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
             numToKeep(14)
@@ -594,7 +634,7 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
                             url(repository)
                             credentials(credId)
                         }
-                        branches("master")
+                        branches("${defaultBranch}")
                         scriptPath("${pipelineScript}")
                     }
                 }
@@ -609,6 +649,7 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
                         stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                         stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                         stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
+                        stringParam("DEFAULT_BRANCH", "${defaultBranch}", "Default repository branch")
                     }
                 }
             }
@@ -681,6 +722,7 @@ def getSecretValue(name) {
     def secret = creds.find { it.properties['id'] == name }
     return secret != null ? secret['secret'] : null
 }
+
 ```
    </details>
 
@@ -696,7 +738,7 @@ To create a new job provision for work with GitLab, take the following steps:
 
 2. Click *New Item* and type the name of job-provisions - **gitlab**.
 
-3. Select the Freestyle project option and click OK.
+3. Select the *Freestyle project* option and click OK.
 
 4. Select the *This project is parameterized* check box and add a few input parameters as the following strings:
 
@@ -722,7 +764,11 @@ To create a new job provision for work with GitLab, take the following steps:
 
   * REPOSITORY_PATH;
 
-  * JIRA_INTEGRATION_ENABLED.
+  * JIRA_INTEGRATION_ENABLED;
+  
+  * PLATFORM_TYPE;
+
+  * DEFAULT_BRANCH;
 
 5. Check the *Execute concurrent builds if necessary* option.
 
@@ -743,56 +789,73 @@ To create a new job provision for work with GitLab, take the following steps:
    <details>
    <Summary><b>View: Template</b></Summary>
 
-```java
+```
 import groovy.json.*
-import jenkins.model.
+import jenkins.model.Jenkins
+
 Jenkins jenkins = Jenkins.instance
 def stages = [:]
 def jiraIntegrationEnabled = Boolean.parseBoolean("${JIRA_INTEGRATION_ENABLED}" as String)
 def commitValidateStage = jiraIntegrationEnabled ? ',{"name": "commit-validate"}' : ''
 def createJIMStage = jiraIntegrationEnabled ? ',{"name": "create-jira-issue-metadata"}' : ''
 def platformType = "${PLATFORM_TYPE}"
-def buildStage = platformType == "kubernetes" ? ',{"name": "build-image-kaniko"},' : ',{"name": "build-image-from-dockerf
-stages['Code-review-application-maven'] = '[{"name": "checkout"}' + "${commitValidateStage}" + ',{"name": "compile"}' +
-    ',{"name": "tests"}, {"name": "sonar"}]'
-stages['Code-review-application-npm'] = stages['Code-review-application-maven']
-stages['Code-review-application-gradle'] = stages['Code-review-application-maven']
-stages['Code-review-application-dotnet'] = stages['Code-review-application-maven']
-stages['Code-review-application-terraform'] = '[{"name": "checkout"},{"name": "tool-init"},{"name": "lint"}]'
-stages['Code-review-application-helm'] = '[{"name": "checkout"},{"name": "lint"}]'
-stages['Code-review-application-docker'] = '[{"name": "checkout"},{"name": "lint"}]'
-stages['Code-review-application-go'] = '[{"name": "checkout"}' + "${commitValidateStage}" + ',{"name": "build"},' +
-                                      '{"name": "tests"}, {"name": "sonar"}]'
-stages['Code-review-application-python'] = '[{"name": "checkout"},{"name": "compile"},' +
-                                      '{"name": "tests"}, {"name": "sonar"}]'
-stages['Code-review-library'] = '[{"name": "checkout"},{"name": "compile"},{"name": "tests"},' +
+def buildTool = "${BUILD_TOOL}"
+def buildImageStage = platformType == "kubernetes" ? ',{"name": "build-image-kaniko"},' : ',{"name": "build-image-from-dockerfile"},'
+def goBuildImageStage = platformType == "kubernetes" ? ',{"name": "build-image-kaniko"}' : ',{"name": "build-image-from-dockerfile"}'
+def goBuildStage = buildTool.toString() == "go" ? ',{"name": "build"}' : ',{"name": "compile"}'
+
+stages['Code-review-application'] = '[{"name": "checkout"}' + "${commitValidateStage}" + goBuildStage +
+        ',{"name": "tests"},[{"name": "sonar"},{"name": "dockerfile-lint"},{"name": "helm-lint"}]]'
+stages['Code-review-library'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "compile"},{"name": "tests"},' +
         '{"name": "sonar"}]'
-stages['Code-review-autotests-maven'] = '[{"name": "checkout"},{"name": "tests"},{"name": "sonar"}]'
+stages['Code-review-autotests'] = '[{"name": "checkout"},{"name": "get-version"}' + "${commitValidateStage}" +
+        ',{"name": "tests"},{"name": "sonar"}' + "${createJIMStage}" + ']'
+stages['Code-review-default'] = '[{"name": "checkout"}' + "${commitValidateStage}" + ']'
+stages['Code-review-library-terraform'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "terraform-lint"}]'
+stages['Code-review-library-opa'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "tests"}]'
+stages['Code-review-library-codenarc'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "sonar"},{"name": "build"}]'
+
 stages['Build-library-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
-        '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+        '{"name": "tests"},{"name": "sonar"},{"name": "build"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-library-npm'] = stages['Build-library-maven']
 stages['Build-library-gradle'] = stages['Build-library-maven']
 stages['Build-library-dotnet'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
+        '{"name": "tests"},{"name": "sonar"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-terraform'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "terraform-lint"}' +
+        ',{"name": "terraform-plan"},{"name": "terraform-apply"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-opa'] = '[{"name": "checkout"},{"name": "get-version"}' +
+        ',{"name": "tests"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-codenarc'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sonar"},{"name": "build"}' +
+        "${createJIMStage}" + ',{"name": "git-tag"}]'
+
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
-        '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
+        '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildImageStage}" +
         '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},{"name": "tests"},{"name": "sonar"}' +
-"${buildStage}" + '{"name":"push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+        "${buildImageStage}" + '{"name":"push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-npm'] = stages['Build-application-maven']
 stages['Build-application-gradle'] = stages['Build-application-maven']
 stages['Build-application-dotnet'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
-        '{"name": "tests"},{"name": "sonar"}' + "${buildStage}" +
+        '{"name": "tests"},{"name": "sonar"}' + "${buildImageStage}" +
         '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-terraform'] = '[{"name": "checkout"},{"name": "tool-init"},' +
         '{"name": "lint"},{"name": "git-tag"}]'
 stages['Build-application-helm'] = '[{"name": "checkout"},{"name": "lint"}]'
 stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "lint"}]'
 stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "tests"},{"name": "sonar"},' +
-                                '{"name": "build"}' + "${buildStage}" + "${createJIMStage}" + '{"name": "git-tag"}]'
-stages['Create-release'] = '[{"name": "checkout"},{"name": "create-branch"},{"name": "trigger-
+                                '{"name": "build"}' + "${goBuildImageStage}" + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Create-release'] = '[{"name": "checkout"},{"name": "create-branch"},{"name": "trigger-job"}]'
+
+def defaultStages = '[{"name": "checkout"}' + "${createJIMStage}" + ']'
+
+
 def codebaseName = "${NAME}"
-def buildTool = "${BUILD_TOOL}"
 def gitServerCrName = "${GIT_SERVER_CR_NAME}"
 def gitServerCrVersion = "${GIT_SERVER_CR_VERSION}"
 def gitServer = "${GIT_SERVER ? GIT_SERVER : 'gerrit'}"
@@ -800,35 +863,46 @@ def gitSshPort = "${GIT_SSH_PORT ? GIT_SSH_PORT : '29418'}"
 def gitUsername = "${GIT_USERNAME ? GIT_USERNAME : 'jenkins'}"
 def gitCredentialsId = "${GIT_CREDENTIALS_ID ? GIT_CREDENTIALS_ID : 'gerrit-ciuser-sshkey'}"
 def defaultRepoPath = "ssh://${gitUsername}@${gitServer}:${gitSshPort}/${codebaseName}"
-def repositoryPath = "${REPOSITORY_PATH ? REPOSITORY_PATH : defaultRep
+def repositoryPath = "${REPOSITORY_PATH ? REPOSITORY_PATH : defaultRepoPath}"
+def defaultBranch = "${DEFAULT_BRANCH}"
+
 def codebaseFolder = jenkins.getItem(codebaseName)
 if (codebaseFolder == null) {
     folder(codebaseName)
+}
 
 createListView(codebaseName, "Releases")
 createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
-        repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platfo
+        repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch)
+
 if (BRANCH) {
     def branch = "${BRANCH}"
     def formattedBranch = "${branch.toUpperCase().replaceAll(/\\//, "-")}"
-    createListView(codebaseName, formatted
+    createListView(codebaseName, formattedBranch)
+
     def type = "${TYPE}"
-    createCiPipeline("Code-review-${codebaseName}", codebaseName, stages["Code-review-${type}-${buildTool.toLowerCase()}"], "code-review.groovy",
-            repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrV
+    def crKey = "Code-review-${type}".toString()
+    createCiPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "code-review.groovy",
+        repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
+
+    def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
+
     if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
         def jobExists = false
         if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name}) {
-          jobExists = true
+           jobExists = true
         }
-        createCiPipeline("Build-${codebaseName}", codebaseName, stages["Build-${type}-${buildTool.toLowerCase()}"], "build.groovy",
+        createCiPipeline("Build-${codebaseName}", codebaseName, stages.get(buildKey, defaultStages), "build.groovy",
                 repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
-      if(!jobExists) {
-        queue("${codebaseName}/${formattedBranch}-Build-${codebaseName}")
-      }
+       if(!jobExists) {
+         queue("${codebaseName}/${formattedBranch}-Build-${codebaseName}")
+       }
     }
+}
 
-def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, watchBranch = "master", gitServerCrName, gitServerCrVersion) {
-def jobName = "${watchBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}"
+
+def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion) {
+def jobName = "${defaultBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}"
 def existingJob = Jenkins.getInstance().getItemByFullName("${codebaseName}/${jobName}")
 def webhookToken = null
 if (existingJob) {
@@ -848,7 +922,7 @@ pipelineJob("${codebaseName}/${jobName}") {
     }
     properties {
         gitLabConnection {
-            gitLabConnection('git.epam.com')
+            gitLabConnection('gitlab')
         }
     }
     definition {
@@ -859,7 +933,7 @@ pipelineJob("${codebaseName}/${jobName}") {
                         url(repository)
                         credentials(credId)
                     }
-                    branches(pipelineName.contains("Build") ? "${watchBranch}" : "\${gitlabMergeRequestLastCommit}")
+                    branches(pipelineName.contains("Build") ? "${defaultBranch}" : "\${gitlabMergeRequestLastCommit}")
                     scriptPath("${pipelineScript}")
                 }
             }
@@ -869,7 +943,7 @@ pipelineJob("${codebaseName}/${jobName}") {
                 stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
                 stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
                 if (pipelineName.contains("Build"))
-                    stringParam("BRANCH", "${watchBranch}", "Branch to build artifact from")
+                    stringParam("BRANCH", "${defaultBranch}", "Branch to build artifact from")
                 else
                     stringParam("BRANCH", "\${gitlabMergeRequestLastCommit}", "Branch to build artifact from")
             }
@@ -884,7 +958,7 @@ pipelineJob("${codebaseName}/${jobName}") {
             rebuildOpenMergeRequest(pipelineName.contains("Build") ? 'never' : 'source')
             commentTrigger("Build it please")
             skipWorkInProgressMergeRequest(true)
-            targetBranchRegex("${watchBranch}")
+            targetBranchRegex("${defaultBranch}")
         }
     }
     configure {
@@ -894,9 +968,11 @@ pipelineJob("${codebaseName}/${jobName}") {
     }
 }
 registerWebHook(repository, codebaseName, jobName, webhookToken)
+}
+
 
 def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId,
-gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType) {
+gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
             numToKeep(14)
@@ -910,7 +986,7 @@ gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType) {
                             url(repository)
                             credentials(credId)
                         }
-                        branches("master")
+                        branches("${defaultBranch}")
                         scriptPath("${pipelineScript}")
                     }
                 }
@@ -925,11 +1001,13 @@ gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType) {
                         stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                         stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                         stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
+                        stringParam("DEFAULT_BRANCH", "${defaultBranch}", "Default repository branch")
                     }
                 }
             }
         }
     }
+}
 
 def createListView(codebaseName, branchName) {
     listView("${codebaseName}/${branchName}") {
@@ -960,14 +1038,17 @@ def createListView(codebaseName, branchName) {
             buildButton()
         }
     }
+}
 
 def registerWebHook(repositoryPath, codebaseName, jobName, webhookToken) {
     def apiUrl = 'https://' + repositoryPath.replaceAll("ssh://", "").split('@')[1].replace('/', "%2F").replaceAll(~/:\d+%2F/, '/api/v4/projects/') + '/hooks'
     def jobWebhookUrl = "${System.getenv('JENKINS_UI_URL')}/project/${codebaseName}/${jobName}"
-    def gitlabToken = getSecretValue('gitlab-access-
+    def gitlabToken = getSecretValue('gitlab-access-token')
+
     if (checkWebHookExist(apiUrl, jobWebhookUrl, gitlabToken)) {
         println("[JENKINS][DEBUG] Webhook for job ${jobName} is already exist\r\n")
         return
+    }
 
     println("[JENKINS][DEBUG] Creating webhook for job ${jobName}")
     def webhookConfig = [:]
@@ -986,12 +1067,14 @@ def registerWebHook(repositoryPath, codebaseName, jobName, webhookToken) {
     def requestBody = JsonOutput.toJson(webhookConfig)
     def httpConnector = new URL(apiUrl).openConnection() as HttpURLConnection
     httpConnector.setRequestMethod('POST')
-    httpConnector.setDoOutpu
+    httpConnector.setDoOutput(true)
+
     httpConnector.setRequestProperty("Accept", 'application/json')
     httpConnector.setRequestProperty("Content-Type", 'application/json')
     httpConnector.setRequestProperty("PRIVATE-TOKEN", "${gitlabToken}")
     httpConnector.outputStream.write(requestBody.getBytes("UTF-8"))
-    httpConnector.co
+    httpConnector.connect()
+
     if (httpConnector.responseCode == 201)
         println("[JENKINS][DEBUG] Webhook for job ${jobName} has been created\r\n")
     else {
@@ -999,20 +1082,24 @@ def registerWebHook(repositoryPath, codebaseName, jobName, webhookToken) {
         def response = new JsonSlurper().parseText(httpConnector.errorStream.getText('UTF-8'))
         println("[JENKINS][ERROR] Failed to create webhook for job ${jobName}. Response - ${response}")
     }
+}
 
 def checkWebHookExist(apiUrl, jobWebhookUrl, gitlabToken) {
     println("[JENKINS][DEBUG] Checking if webhook ${jobWebhookUrl} exists")
     def httpConnector = new URL(apiUrl).openConnection() as HttpURLConnection
     httpConnector.setRequestMethod('GET')
-    httpConnector.setDoOutpu
+    httpConnector.setDoOutput(true)
+
     httpConnector.setRequestProperty("Accept", 'application/json')
     httpConnector.setRequestProperty("Content-Type", 'application/json')
     httpConnector.setRequestProperty("PRIVATE-TOKEN", "${gitlabToken}")
-    httpConnector.co
+    httpConnector.connect()
+
     if (httpConnector.responseCode == 200) {
         def response = new JsonSlurper().parseText(httpConnector.inputStream.getText('UTF-8'))
         return response.find { it.url == jobWebhookUrl } ? true : false
     }
+}
 
 def getSecretValue(name) {
     def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
@@ -1020,11 +1107,13 @@ def getSecretValue(name) {
             Jenkins.instance,
             null,
             null
+    )
 
     def secret = creds.find { it.properties['id'] == name }
     return secret != null ? secret.getApiToken() : null
 }
 ```
+
    </details>
 
 10. Create Secret, GitServer CR and Jenkins credentials with the "gitlab" ID by following the instruction: [Adjust Import Strategy](../operator-guide/import-strategy.md).
