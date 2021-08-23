@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.8.3](#2.8.3)
 *   [Version 2.8.2](#2.8.2)
 *   [Version 2.8.1](#2.8.1)
 *   [Version 2.8.0](#2.8.0)
@@ -22,11 +23,23 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.0](#2.6.0)
 
 
+## Version 2.8.3 <a name="2.8.3"></a> (August 23, 2021)
+
+### Upgrades
+
+* Nexus is updated to v.3.33.1. Please refer to the [official documentation](https://help.sonatype.com/repomanager3/release-notes#ReleaseNotes-NexusRepositoryManager3.33.1) for details.
+* Jenkins is updated to v.2.289.3. Please refer to the [official documentation](https://www.jenkins.io/changelog-stable/#v2.289.3) for details.
+
+### Fixed Issues
+
+* In CD pipeline deployment, the sorting of the image tags for the Init stage is displayed in the wrong order.
+
+
 ## Version 2.8.2 <a name="2.8.2"></a> (August 5, 2021)
 
 ### Fixed Issues
 
-* Missing field status is added to cd-pipeline CRD.
+* Missing field status is added to the [cdpipeline.crd yaml](https://github.com/epam/edp-cd-pipeline-operator/blob/release/2.8/deploy-templates/crds/edp_v1alpha1_cdpipeline_crd.yaml) file.
 
 
 ## Version 2.8.1 <a name="2.8.1"></a> (August 4, 2021)
@@ -34,14 +47,14 @@ Get acquainted with the latest EDP releases.
 ### New Functionality and Enhancements
 
 * IRSA is optional for EDP deployment process.
-* The codebaseBranch field is removed from cd-pipeline CRD.
-* A new field subresources status is added to cd-pipeline CRD.
+* The codebaseBranch field is removed from the [cdpipeline.crd yaml](https://github.com/epam/edp-cd-pipeline-operator/blob/release/2.8/deploy-templates/crds/edp_v1alpha1_cdpipeline_crd.yaml) file.
+* A new field subresources status is added to the [cdpipeline.crd yaml](https://github.com/epam/edp-cd-pipeline-operator/blob/release/2.8/deploy-templates/crds/edp_v1alpha1_cdpipeline_crd.yaml) file.
 * The inputDockerStreams field is aligned in the cd-pipeline structure with CRD.
-* The site and path parameters are removed from DB.
+* The site and path parameters are removed from database.
 
 #### Fixed Issues
 
-* A bug is fixed with a custom default branch for the Create strategy.
+* User cannot create an application using the Create strategy in a custom default branch.
 
 
 ## Version 2.8.0 <a name="2.8.0"></a> (July 16, 2021)
