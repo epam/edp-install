@@ -8,37 +8,34 @@ The "build-image-kaniko" stage manages [ECR](https://aws.amazon.com/ecr/) throug
 
 1. Create AWS IAM Policy "AWSIRSA&#8249;CLUSTER_NAME&#8250;&#8249;EDP_NAMESPACE&#8250;Kaniko_policy":
 
-
         {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Allow",
-                    "Action": [
-                        "ecr:*",
-                        "cloudtrail:LookupEvents"
-                    ],
-                    "Resource": "arn:aws:ecr:<AWS_REGION>:<AWS_ACCOUNT_ID>:repository/<EDP_NAMESPACE>/*"
-                },
-                {
-                    "Effect": "Allow",
-                    "Action": "ecr:GetAuthorizationToken",
-                    "Resource": "*"
-                },
-                {
-                            "Action": [
-                                "ecr:DescribeRepositories",
-                                "ecr:CreateRepository"
-                            ],
-                            "Effect": "Allow",
-                            "Resource": "arn:aws:ecr:<AWS_REGION>:<AWS_ACCOUNT_ID>:repository/*"
-                }
-            ]
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "ecr:*",
+                    "cloudtrail:LookupEvents"
+                ],
+                "Resource": "arn:aws:ecr:<AWS_REGION>:<AWS_ACCOUNT_ID>:repository/<EDP_NAMESPACE>/*"
+            },
+            {
+                "Effect": "Allow",
+                "Action": "ecr:GetAuthorizationToken",
+                "Resource": "*"
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "ecr:DescribeRepositories",
+                    "ecr:CreateRepository"
+                ],
+                "Resource": "arn:aws:ecr:<AWS_REGION>:<AWS_ACCOUNT_ID>:repository/*"
+            }
+          ]
         }
 
-
 2. Create AWS IAM Role "AWSIRSA&#8249;CLUSTER_NAME&#8250;&#8249;EDP_NAMESPACE&#8250;Kaniko" with trust relationships:
-
 
         {
           "Version": "2012-10-17",
@@ -52,12 +49,11 @@ The "build-image-kaniko" stage manages [ECR](https://aws.amazon.com/ecr/) throug
               "Condition": {
                 "StringEquals": {
                   "<OIDC_PROVIDER>:sub": "system:serviceaccount:<EDP_NAMESPACE>:edp-kaniko"
-               }
-             }
-           }
-         ]
+                }
+              }
+            }
+          ]
         }
-
 
 3. Attach the "AWSIRSA&#8249;CLUSTER_NAME&#8250;&#8249;EDP_NAMESPACE&#8250;Kaniko_policy" policy to the "AWSIRSA&#8249;CLUSTER_NAME&#8250;&#8249;EDP_NAMESPACE&#8250;Kaniko" role.
 
