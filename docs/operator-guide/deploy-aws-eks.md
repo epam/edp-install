@@ -37,15 +37,15 @@ To check the correct tools installation, run the following commands:
 * Create the AWS IAM role: EKSDeployerRole to deploy EKS cluster on the project side.
 The provided resources will allow to use cross-account deployment by assuming created EKSDeployerRole from the root AWS account. Take the following steps:
 
-  1. Clone git repo with ism-deployer project [terraform-aws-platform-template.git](https://github.com/epmd-edp/edp-terraform-aws-platform.git),
+  1. Clone git repo with ism-deployer project [edp-terraform-aws-platform.git](https://github.com/epmd-edp/edp-terraform-aws-platform.git),
   rename it corresponding to the project name.
 
     <details>
     <Summary><b> clone project</b></Summary>
 
         $ git clone https://github.com/epmd-edp/edp-terraform-aws-platform.git
-        $ mv terraform-aws-platform-template terraform-aws-platform-template-<PROJECT_NAME>
-        $ cd terraform-aws-platform-template-<PROJECT_NAME>/iam-deployer
+        $ mv edp-terraform-aws-platform edp-terraform-aws-platform-<PROJECT_NAME>
+        $ cd edp-terraform-aws-platform-<PROJECT_NAME>/iam-deployer
 
     </details>
 
@@ -124,7 +124,7 @@ This backend also supports state locking and consistency checking via Dynamo DB,
 
 In the following configuration a single DynamoDB table can be used to lock multiple remote state files. Terraform generates key names that include the values of the bucket and key variables.
 
-In the [terraform-aws-platform-template.git](https://github.com/epmd-edp/edp-terraform-aws-platform.git) repo an optional project is provided to create initial resources to start using Terraform from the scratch.
+In the [edp-terraform-aws-platform.git](https://github.com/epmd-edp/edp-terraform-aws-platform.git) repo an optional project is provided to create initial resources to start using Terraform from the scratch.
 
 The provided resources will allow to use the following **Terraform options**:
 
@@ -146,16 +146,16 @@ Please, skip this section if you already have the listed resources for further T
 
 To create the required resources, do the following:
 
-1. Clone git repo with s3-backend project [terraform-aws-platform-template.git](https://github.com/epmd-edp/edp-terraform-aws-platform.git), rename it in the correspondence with project name.
+1. Clone git repo with s3-backend project [edp-terraform-aws-platform.git](https://github.com/epmd-edp/edp-terraform-aws-platform.git), rename it in the correspondence with project name.
 
     <details>
     <Summary><b>clone project</b></Summary>
 
         $ git clone https://github.com/epmd-edp/edp-terraform-aws-platform.git
 
-        $ mv terraform-aws-platform-template terraform-aws-platform-template-<PROJECT_NAME>
+        $ mv edp-terraform-aws-platform tedp-terraform-aws-platform-<PROJECT_NAME>
 
-        $ cd terraform-aws-platform-template-<PROJECT_NAME>/s3-backend
+        $ cd edp-terraform-aws-platform-<PROJECT_NAME>/s3-backend
     </details>
 
   where:
@@ -275,14 +275,14 @@ To deploy the EKS cluster, make sure that all the above-mentioned Prerequisites 
 
 #### EKS Cluster Deployment with Terraform
 
-1. Clone git repo with the Terraform project for EKS infrastructure [terraform-aws-platform-template.git](https://github.com/epmd-edp/edp-terraform-aws-platform.git) and rename it in the correspondence with project name if not yet.
+1. Clone git repo with the Terraform project for EKS infrastructure [edp-terraform-aws-platform.git](https://github.com/epmd-edp/edp-terraform-aws-platform.git) and rename it in the correspondence with project name if not yet.
 
     <details>
     <Summary><b>clone project</b></Summary>
 
         $ git clone https://github.com/epmd-edp/edp-terraform-aws-platform.git
-        $ mv terraform-aws-platform-template terraform-aws-platform-template-<PROJECT_NAME>
-        $ cd terraform-aws-platform-template-<PROJECT_NAME>
+        $ mv edp-terraform-aws-platform edp-terraform-aws-platform-<PROJECT_NAME>
+        $ cd edp-terraform-aws-platform-<PROJECT_NAME>
     </details>
 
   where:
