@@ -33,7 +33,7 @@ Discover the steps below to apply the GitLab integration correctly:
 
 4. Configure **Gitlab plugin** by navigating to *Manage Jenkins -> Configure System* and fill in the **GitLab plugin** settings:
 
-  * Connection name - connection name;
+  * Connection name - gitlab;
   * Gitlab host URL - a host URL to GitLab;
   * Credentials - credentials with **Access Token** to GitLab (**gitlab-access-token**);
 
@@ -41,7 +41,7 @@ Discover the steps below to apply the GitLab integration correctly:
 
 5. Create a new **Job Provision** by following the [instruction](manage-jenkins-ci-job-provision.md#gitlab-gitlab).
 
-  !!! note
+  !!! warning
       Using the GitLab integration, a webhook is automatically created. After the removal of the application, the webhook stops working but not deleted. If necessary, it must be deleted manually.*
 
 ### Related Articles
