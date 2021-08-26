@@ -21,8 +21,8 @@ Admin Console is a central management tool in the EDP ecosystem that provides th
 Admin Console is a complete tool allowing to manage and control added to the environment codebases (applications, autotests, libraries) as well as to create a CD pipeline and check the visualization diagram.
 Inspect the main features available in Admin Console by following the corresponding link:
 
-- [Add Application](user-guide/add-application.md)
-- [Add Autotest](user-guide/add-autotest.md)
-- [Add Library](user-guide/add-library.md)
-- [Add CD Pipeline](user-guide/add-cd-pipeline.md)
-- [Delivery Dashboard Diagram](user-guide/d-d-diagram.md)
+- [Add Application](add-application.md)
+- [Add Autotest](add-autotest.md)
+- [Add Library](add-library.md)
+- [Add CD Pipeline](add-cd-pipeline.md)
+- [Delivery Dashboard Diagram](d-d-diagram.md)
