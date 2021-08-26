@@ -2,6 +2,11 @@
 
 Inspect the main steps to set up Kiosk for the proceeding EDP installation.
 
+!!! note
+    Integration with Kiosk is an optional feature. You may not want to use it, so just skip those steps and disable in Helm parameters during deploy.
+
+        # global.kioskEnabled: <true/false>
+
 ## Prerequisites
 
 * Kubectl version 1.18.0 is installed. Please refer to the [Kubernetes official website](https://v1-18.docs.kubernetes.io/docs/setup/release/notes/) for details.

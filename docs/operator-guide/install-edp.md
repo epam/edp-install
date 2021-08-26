@@ -70,6 +70,9 @@ global:
   # DNS wildcard for routing in your K8S cluster;
   dnsWildCard: <DNS_wilcdard>
 
+  # Enable or disable integration with Kiosk (by default value is true)
+  kioskEnabled: <true/false>
+
   # Kubernetes API server;
   webConsole:
     url: <kubeconfig.clusters.cluster.server>
