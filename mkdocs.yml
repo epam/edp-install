@@ -67,7 +67,7 @@ nav:
         - Overview: operator-guide/overview-manage-jenkins-pipelines.md
         - CI Provision: operator-guide/manage-jenkins-ci-job-provision.md
         - CD Provision: operator-guide/manage-jenkins-cd-job-provision.md
-        - Delete Job Provision: operator-guide/delete-jenkins-job-provison.md
+        - Delete Job Provision: operator-guide/delete-jenkins-job-provision.md
     - AWS Integration:
       - Associate IAM Roles With Service Accounts (IRSA):
         - Enable IRSA: operator-guide/enable-irsa.md
