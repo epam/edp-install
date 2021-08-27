@@ -359,7 +359,7 @@ To create a new job provision for work with GitHub, take the following steps:
 
 6. Check the *Restrict where this project can be run* option.
 
-7. Fill in the *Label Expression* field by typing the *master* branch name.
+7. Fill in the *Label Expression* field by typing *master* to ensure job runs on Jenkins Master.
 
 8. In the *Build* section, perform the following:
 
@@ -765,7 +765,7 @@ To create a new job provision for work with GitLab, take the following steps:
   * REPOSITORY_PATH;
 
   * JIRA_INTEGRATION_ENABLED;
-  
+
   * PLATFORM_TYPE;
 
   * DEFAULT_BRANCH;
@@ -774,7 +774,7 @@ To create a new job provision for work with GitLab, take the following steps:
 
 6. Check the *Restrict where this project can be run* option.
 
-7. Fill in the *Label Expression* field by typing the *master* branch name.
+7. Fill in the *Label Expression* field by typing *master* to ensure job runs on Jenkins Master.
 
 8. In the **Build** section, perform the following:
 
