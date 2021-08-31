@@ -1,11 +1,20 @@
 # Kiosk Setup
 
+[Kiosk](https://github.com/loft-sh/kiosk) is a multi-tenancy extension for managing tenants and namespaces in a shared Kubernetes cluster.
+Within EDP, Kiosk is used to separate resources and enables the following options:
+
+* Access to the EDP tenants in a Kubernetes cluster;
+
+* Multi-tenancy access at the service account level for application deploy.
+
 Inspect the main steps to set up Kiosk for the proceeding EDP installation.
 
 !!! note
-    Integration with Kiosk is an optional feature. You may not want to use it, so just skip those steps and disable in Helm parameters during deploy.
+    Kiosk deploy is mandatory for EDP v.2.8.. In earlier versions, Kiosk is not implemented. Since EDP v.2.9.0, integration with Kiosk is an optional feature.
+    You may not want to use it, so just skip those steps and disable in Helm parameters during [EDP deploy](./install-edp.md).
 
         # global.kioskEnabled: <true/false>
+
 
 ## Prerequisites
 
@@ -17,8 +26,11 @@ Inspect the main steps to set up Kiosk for the proceeding EDP installation.
 * Deploy Kiosk version 0.2.9 in the cluster. To install it, run the following command:
 
         # Install kiosk with helm v3
+
+        helm repo add kiosk https://charts.devspace.sh/
         kubectl create namespace kiosk
-        helm install kiosk --version 0.2.9 --repo https://charts.devspace.sh/ kiosk --namespace kiosk --atomic
+        helm install kiosk --version 0.2.9 kiosk/kiosk -n kiosk --atomic
+
 
 For more details, please refer to the [Kiosk page](https://github.com/loft-sh/kiosk#1-install-kiosk) on the GitHub.
 

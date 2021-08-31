@@ -1,54 +1,74 @@
 # Install EDP
 
-Inspect the main steps to install EPAM Delivery Platform.
+Inspect the main steps to install EPAM Delivery Platform. Please check the prerequisites section before starting installation.
 
 !!! note
     The installation process below is given for a Kubernetes cluster. The steps that differ for an OpenShift cluster are
     indicated in the notes.
 
-To store EDP data, use any existing Postgres database or create one during the installation.
-Additionally, create two secrets in the &#8249;edp-project&#8250; namespace: one with administrative credentials and another with credentials for the EDP tenant (database schema).
+!!! note
+    &#8249;edp-project&#8250; is the name of the EDP tenant in all the following steps.
 
-1. Create a secret for administrative access to the database:
+1. Create a &#8249;edp-project&#8250; namespace or a space(Kiosk) depending on whether you use Kiosk or not.
+
+  * If you don't use Kiosk, create a namespace:
+
+        kubectl create namespace <edp-project>
+
+    !!! note
+        For an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+
+  * If you use Kiosk, create a space:
+
+        apiVersion: tenancy.kiosk.sh/v1alpha1
+        kind: Space
+        metadata:
+          name: <edp-project>
+        spec:
+          account: <edp-project>
+
+  !!! note
+      Kiosk is mandatory for EDP v.2.8. It is not implemented for the previous versions, and is optional for EDP since v.2.9.
+
+  To store EDP data, use any existing Postgres database or create one during the installation.
+  Additionally, create two secrets in the &#8249;edp-project&#8250; namespace: one with administrative credentials and another with credentials for the EDP tenant (database schema).
+
+2. Create a secret for administrative access to the database:
 
       kubectl -n <edp-project> create secret generic super-admin-db \
         --from-literal=username=<super_admin_db_username> \
         --from-literal=password=<super_admin_db_password>
 
-  !!! note
-      For installing EDP on an OpenShift cluster, run the `oc` command instead of `kubectl` one.
-
-2. Create a secret for an EDP tenant database user.
+3. Create a secret for an EDP tenant database user.
 
       kubectl -n <edp-project> create secret generic db-admin-console \
         --from-literal=username=<tenant_db_username> \
         --from-literal=password=<tenant_db_password>
 
-3. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 2.
-Please refer to [Keycloak Configuration](./install-keycloak.md#configuration) section for details.
+4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section for details.
 
       kubectl -n <edp-project> create secret generic keycloak \
         --from-literal=username=<username> \
         --from-literal=password=<password>
 
-4. Add the Helm EPAMEDP Charts for local client.
+5. Add the Helm EPAMEDP Charts for local client.
 
       helm repo add epamedp https://chartmuseum.demo.edp-epam.com/
 
-5. Choose available Helm chart version:
+6. Choose the required Helm chart version:
 
       helm search repo epamedp/edp-install
       NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-      epamedp/edp-install     2.8.1           2.8.1          A Helm chart for EDP Install
+      epamedp/edp-install     2.8.3           2.8.3          A Helm chart for EDP Install
 
   !!! note
       It is highly recommended to use the latest released version.
 
-6. Mind the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file.
+7. Mind the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file.
 
-7. If the external database is used, set the global.database.host value to the database DNS name accessible from the &#8249;edp-project&#8250; namespace.
+8. If the external database is used, set the global.database.host value to the database DNS name accessible from the &#8249;edp-project&#8250; namespace.
 
-8. Install EDP in the &#8249;edp-project&#8250; namespace with the helm tool.
+9. Install EDP in the &#8249;edp-project&#8250; namespace with the helm tool.
 
       helm install edp epamedp/edp-install --wait --timeout=900s \
       --version <edp_version> \
