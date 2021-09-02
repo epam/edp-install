@@ -63,6 +63,7 @@ nav:
         - OpenShift: operator-guide/openshift-cluster-settings.md
       - EDP: operator-guide/install-edp.md
     - Configuration:
+      - Add Other Code Language: operator-guide/add-other-code-language.md
       - Manage Jenkins Pipelines:
         - Overview: operator-guide/overview-manage-jenkins-pipelines.md
         - CI Provision: operator-guide/manage-jenkins-ci-job-provision.md
@@ -103,7 +104,7 @@ nav:
       - user-guide/add-library.md
     - Pipelines:
       - Overview: user-guide/pipeline-framework.md
-      - Add custom pipline library: user-guide/add-custom-global-pipeline-lib.md
+      - Add Custom Pipeline Library: user-guide/add-custom-global-pipeline-lib.md
       - CI pipeline:
         - user-guide/customize-ci-pipeline.md
         - Stages:

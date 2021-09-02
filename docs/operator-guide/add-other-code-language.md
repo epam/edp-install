@@ -62,5 +62,5 @@ stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-versio
 ## Related Articles
 
 * [Manage Jenkins Agent](add-jenkins-agent.md)
-* [Add Job Provisioner](manage-jenkins-ci-job-provision.md)
+* [Manage Jenkins CI Pipeline Job Provisioner](manage-jenkins-ci-job-provision.md)
 * [Add Library](../user-guide/add-library.md)
