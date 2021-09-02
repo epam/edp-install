@@ -159,11 +159,24 @@ admin-console-operator:
   adminConsole:
 #    image: epamedp/edp-admin-console
 #    version: 2.8.0
+#    envs:
+#      - name: INTEGRATION_STRATEGIES
+#        value: "Create,Clone,Import"
+#      - name: BUILD_TOOLS
+#        value: "maven"
+#      # DEPLOYMENT_SCRIPT value can be helm-chart or openshift-template or both helm-chart,openshift-template
+#      - name: DEPLOYMENT_SCRIPT
+#        value: "helm-chart"
+#      - name: VERSIONING_TYPES
+#        value: "default,edp"
+#      - name: CI_TOOLS
+#        value: "Jenkins,GitLab CI"
+#      - name: PERF_DATA_SOURCES
+#        value: "Sonar,Jenkins,GitLab"
 #    imagePullSecrets:
 #    basePath: ""
     projectUrlMask: "/console/project/{namespace}/overview"
     imageStreamUrlMask: "/console/project/{namespace}/browse/images/{stream}"
-#    buildTools: "maven"
 
 gerrit-operator:
   image:
