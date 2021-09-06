@@ -4,7 +4,7 @@ groupNames:
   - system:serviceaccounts
 kind: ClusterRoleBinding
 metadata:
-  name: serviceaccounts-registry-viewer
+  name: serviceaccounts-registry-viewer-{{ .Values.global.edpName }}
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
 roleRef:
