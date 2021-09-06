@@ -45,7 +45,7 @@ Inspect the main steps to install EPAM Delivery Platform. Please check the prere
         --from-literal=username=<tenant_db_username> \
         --from-literal=password=<tenant_db_password>
 
-4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section for details.
+4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section.
 
       kubectl -n <edp-project> create secret generic keycloak \
         --from-literal=username=<username> \
