@@ -35,7 +35,7 @@ spec:
 ```
 </details>
 
-* Add the Jenkins agent by following the [instruction](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave).
+* Add the Jenkins agent by following the [instruction](../operator-guide/add-jenkins-agent.md).
 
 * Add the Custom CI pipeline provisioner by following the [instruction](../operator-guide/manage-jenkins-ci-job-provision.md).
 
@@ -61,6 +61,6 @@ stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-versio
 
 ## Related Articles
 
-* [Manage Jenkins Agent](add-jenkins-agent.md)
+* [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Manage Jenkins CI Pipeline Job Provisioner](manage-jenkins-ci-job-provision.md)
 * [Add Library](../user-guide/add-library.md)
