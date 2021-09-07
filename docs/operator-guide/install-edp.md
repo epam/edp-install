@@ -98,13 +98,13 @@ global:
     url: <kubeconfig.clusters.cluster.server>
 
   # set platform type: openshift or kubernetes;
-    platform: <platform_type>
+  platform: <platform_type>
 
   # Administrators of your tenant separated by comma (,) e.g. user@example.com;
-    admins: [user1@example.com,user2@example.com]
+  admins: [user1@example.com,user2@example.com]
 
   # Developers of your tenant separated by comma (,) e.g. user@example.com;
-    developers: [user1@example.com,user2@example.com]
+  developers: [user1@example.com,user2@example.com]
 
 keycloak-operator:
   keycloak:
