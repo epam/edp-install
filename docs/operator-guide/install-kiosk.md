@@ -57,7 +57,7 @@ To provide access to the EDP tenant, follow the steps below.
 apiVersion: tenancy.kiosk.sh/v1alpha1
 kind: Account
 metadata:
-  name: <edp-project>
+  name: <edp-project>-admin
 spec:
   space:
     clusterRole: kiosk-space-admin

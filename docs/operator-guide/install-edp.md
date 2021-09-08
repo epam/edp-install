@@ -25,7 +25,7 @@ Inspect the main steps to install EPAM Delivery Platform. Please check the prere
         metadata:
           name: <edp-project>
         spec:
-          account: <edp-project>
+          account: <edp-project>-admin
 
   !!! note
       Kiosk is mandatory for EDP v.2.8. It is not implemented for the previous versions, and is optional for EDP since v.2.9.
