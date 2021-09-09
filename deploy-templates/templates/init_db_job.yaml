@@ -13,6 +13,18 @@ spec:
         app: {{.Values.global.database.name}}
     spec:
       restartPolicy: Never
+      {{- with .Values.global.database.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.database.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.database.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - image: {{.Values.global.database.image}}
           name: db-init
