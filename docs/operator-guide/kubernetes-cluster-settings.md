@@ -6,7 +6,7 @@ Make sure the cluster meets the following conditions:
 
 2. Machine with [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) is installed with a cluster-admin access to the Kubernetes cluster;
 
-3. Ingress controller is installed in a cluster, for example [ingress-nginx](https://kubernetes.github.io/ingress-nginx/deploy/);
+3. Ingress controller is installed in a cluster, for example [ingress-nginx](./install-ingress-nginx.md);
 
 4. Ingress controller is configured with the disabled HTTP/2 protocol and header size of 64k support;
 

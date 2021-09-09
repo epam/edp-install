@@ -57,6 +57,7 @@ nav:
     - operator-guide/index.md
     - Installation:
       - Prerequisites:
+        - Ingress-nginx: operator-guide/install-ingress-nginx.md
         - Kiosk: operator-guide/install-kiosk.md
         - Keycloak: operator-guide/install-keycloak.md
         - Kubernetes: operator-guide/kubernetes-cluster-settings.md
