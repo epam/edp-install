@@ -21,6 +21,18 @@ spec:
       labels:
         app: {{.Values.global.database.name}}
     spec:
+      {{- with .Values.global.database.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.database.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.global.database.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - env:
             - name: POSTGRES_USER
@@ -76,18 +88,6 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: {{.Values.global.database.name}}
-      {{- with .Values.global.database.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.global.database.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.global.database.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       securityContext:
         runAsUser: 999
         runAsNonRoot: true
