@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.9.0](#2.9.0)
 *   [Version 2.8.4](#2.8.4)
 *   [Version 2.8.3](#2.8.3)
 *   [Version 2.8.2](#2.8.2)
@@ -23,6 +24,97 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
 
+
+## Version 2.9.0 <a name="2.9.0"></a> (September 30, 2021)
+
+### What's New
+
+With v.2.9.0, EPAM Delivery Platform offers more flexibility in deployment and work. Thus, EDP and all the prerequisites can be installed with Terraform tool or Helm.
+IRSA for Kaniko (Kaniko is a tool for building container images from Dockerfile) is an optional step. Alternative is to [use instance profiles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html).
+Kiosk, a respective multi-tenancy extension to manage tenants and namespaces, is optional and can be enabled or disabled during EDP deployment. It is possible to get the list of namespaces owned by a specific edp-tenant with the help of Kubernetes labels.
+
+EPAM Delivery Platform allows to configure authorization for key roles in Jenkins in a declarative way. Now, Jenkins operator reconciles any changes in shared libraries specification. As for the Keycloak, it is possible to make Jenkins Keycloak client confidential and to manage attributes for service account in Keycloak with Keycloak Client Custom Resource.
+In addition, the roles for Keycloak proxy can be set in Nexus.
+
+There are Gerrit operator improvements: each Gerrit repository is presented as a Custom Resource in Kubernetes. Available branches are displayed in Gerrit Project Custom Resource.
+
+See the list of actions required to work with EDP v.2.9.0, new functionality and enhancements, as well as the list of fixed issues and updated documentation below.
+
+#### Breaking Changes Actions
+
+* Before updating EDP from v.2.8.X to v.2.9.X, please update the 'gerrit-is-credentials' secret by adding the new 'clientSecret' key with the value from 'gerrit-is-credentials.client_secret'.
+* After EDP update, please restart the 'sonar-operator' pod to address proper Sonar plugin versioning. After sonar-operator is restarted, check the list of installed plugins in the corresponding SonarQube menu.
+
+### Upgrades
+
+* All alpine based images are updated to version 3.13.6. For details, please refer to [Alpine Official Website](https://alpinelinux.org/posts/Alpine-3.11.12-3.12.8.-3.13.6-released.html).
+
+### New Functionality
+
+* EDP and prerequisites can be installed using Terraform tool.
+* Kiosk is optional and can be enabled or disabled during EDP deployment.
+* IRSA for Kaniko is an optional step.
+
+### Enhancements
+
+* Permissions in Jenkins are configured in a declarative way.
+* Keycloak proxy image can be defined in Nexus spec.
+* It is possible to set roles for Keycloak proxy in Nexus spec.
+* Keycloak Client Scope is managed with Kubernetes Custom Resource.
+* There is an option to provision users in Keycloak and to assign them roles and groups using custom resources.
+* CD pipelines reconciliation can be enabled or disabled.
+* Now Jenkins Keycloak client supports confidential mode.
+* Jenkins operator reconciles any changes in shared libraries specifications.
+* It is possible to manage attributes for Service Account in Keycloak with KeycloakClient Custom Resource.
+* It is possible to set a number of parallel threads for codebase branches reconciliation.
+* Pod duplication on dockerbuild-verify stage is removed.
+* Reconciler is refactored to not save an empty Jenkins agent to the database.
+* GitHub pull-request builder is added to the Jenkins box.
+* Artifact path in Go language is updated in Dockerfile for the build stage.
+* All Gerrit repositories are presented as a Custom Resource in Kubernetes.
+* Available branches are displayed in the GerritProject Custom Resource.
+* Kubernetes labels are now used to get the list of namespaces owned by a specific edp-tenant.
+* The Ingress API version is aligned with Kubernetes version.
+* The image pull policy parameter can be redefined during the EDP installation (default: ifNotPresent).
+* The environment variables are parametrized for admin-console deployment.
+
+
+### Fixed Issues
+
+* Jenkins operator constantly tries to create a Jenkins job.
+* The status field is added to the CD pipeline operator CRD.
+* Fix Gerrit plugin enablement during Jenkins provisioning.
+* Routes are removed from the database and reconciler.
+* It is impossible to create an application with a custom default branch.
+* It is impossible to deploy Go-operator-sdk applications.
+* There is no authentication in the checkout stage when the existing branch is set as a default one (cloned from a private repository).
+* Codebase operator does not work correctly with a non-master branch.
+* The deprecated agents for GitLab CI are listed in the GitlabCI.yaml file.
+* Code-Review pipeline checkouts from an incorrect commit for GitLab integration.
+* Build pipeline fails on the compile stage for .NET-3.1 libraries.
+* The reconciler logger takes the wrong number of arguments.
+
+### Documentation
+
+* The structure of [EPAM Delivery Platform documentation framework](https://epam.github.io/edp-install/) is updated.
+* The Prerequisites section is updated with the following pages:
+   * [Ingress-nginx Installation on Kubernetes](https://epam.github.io/edp-install/operator-guide/install-ingress-nginx/)
+   * [Kiosk Setup](https://epam.github.io/edp-install/operator-guide/install-kiosk/)
+   * [Keycloak Installation on Kubernetes](https://epam.github.io/edp-install/operator-guide/install-keycloak/)
+   * [Kubernetes Settings](https://epam.github.io/edp-install/operator-guide/kubernetes-cluster-settings/)
+   * [OpenShift Settings](https://epam.github.io/edp-install/operator-guide/openshift-cluster-settings/)
+* The [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/) page is updated.
+* New configuration and integration pages are added:
+   * [Add Other Code Language](https://epam.github.io/edp-install/operator-guide/add-other-code-language/)
+   * [Manage Jenkins Pipelines](https://epam.github.io/edp-install/operator-guide/overview-manage-jenkins-pipelines/)
+   * [Associate IAM Roles With Service Accounts (IRSA)](https://epam.github.io/edp-install/operator-guide/enable-irsa/)
+   * [Schedule Pods Restart](https://epam.github.io/edp-install/operator-guide/schedule-pods-restart/)
+   * [IAM Roles For Loki Service Accounts](https://epam.github.io/edp-install/operator-guide/loki-irsa/)
+   * [Install Grafana Loki](https://epam.github.io/edp-install/operator-guide/install-loki/)
+   * [Backup EDP Tenant With Velero](https://epam.github.io/edp-install/operator-guide/install-velero/)
+* New tutorials are added to the documentation:
+   * [Deploy AWS EKS Cluster](https://epam.github.io/edp-install/operator-guide/deploy-aws-eks/#check-eks-cluster-deployment)
+   * [Manage Jenkins Agent](https://epam.github.io/edp-install/operator-guide/add-jenkins-agent/)
 
 ## Version 2.8.4 <a name="2.8.4"></a> (September 10, 2021)
 
