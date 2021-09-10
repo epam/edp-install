@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.8.4](#2.8.4)
 *   [Version 2.8.3](#2.8.3)
 *   [Version 2.8.2](#2.8.2)
 *   [Version 2.8.1](#2.8.1)
@@ -21,6 +22,13 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.2](#2.6.2)
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
+
+
+## Version 2.8.4 <a name="2.8.4"></a> (September 10, 2021)
+
+### Fixed Issues
+
+* Helm chart fields are fixed: the correct indent is set for toleration/affinity/node selector fields.
 
 
 ## Version 2.8.3 <a name="2.8.3"></a> (August 23, 2021)
