@@ -42,7 +42,7 @@ controller:
       memory: "256Mi"
     requests:
       cpu: "50m"
-      memory: "128M
+      memory: "128M"
   config:
     ssl-redirect: 'true'
     client-header-buffer-size: '64k'
@@ -59,7 +59,7 @@ controller:
     type: NodePort
     nodePorts:
       http: 32080
-      https: 324
+      https: 32443
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
