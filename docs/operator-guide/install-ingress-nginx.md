@@ -23,7 +23,7 @@ To install ingress-nginx, follow the steps below:
 3. Install Ingress-nginx:
 
       helm install ingress ingress-nginx/ingress-nginx \
-      --version 4.0.1 \
+      --version 3.23.0 \
       --values values.yaml \
       --namespace ingress-nginx
 
