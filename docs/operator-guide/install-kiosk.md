@@ -1,7 +1,7 @@
 # Kiosk Setup
 
 [Kiosk](https://github.com/loft-sh/kiosk) is a multi-tenancy extension for managing tenants and namespaces in a shared Kubernetes cluster.
-Within EDP, Kiosk is used to separate resources and enables the following options:
+Within EDP, Kiosk is used to separate resources and enables the following options (see more [details](edp-kiosk-usage.md)):
 
 * Access to the EDP tenants in a Kubernetes cluster;
 
