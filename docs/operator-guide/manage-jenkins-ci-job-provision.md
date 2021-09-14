@@ -466,7 +466,7 @@ if (BRANCH) {
 
     def type = "${TYPE}"
 	def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
-    def crKey = "Code-review-${type}".toString()
+    def crKey = getStageKeyName(buildTool)
     createCodeReviewPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "code-review.groovy",
             repositoryPath, gitCredentialsId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository)
     registerWebHook(repositoryPath)
@@ -485,6 +485,21 @@ if (BRANCH) {
 		if(!jobExists)
           queue("${codebaseName}/${formattedBranch}-Build-${codebaseName}")
     }
+}
+
+def getStageKeyName(buildTool) {
+    if (buildTool.toString().equalsIgnoreCase('terraform')) {
+        return "Code-review-library-terraform"
+    }
+    if (buildTool.toString().equalsIgnoreCase('opa')) {
+        return "Code-review-library-opa"
+    }
+    if (buildTool.toString().equalsIgnoreCase('codenarc')) {
+        return "Code-review-library-codenarc"
+    }
+    def buildToolsOutOfTheBox = ["maven","npm","gradle","dotnet","none","go","python"]
+    def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
+    return supBuildTool ? "Code-review-${TYPE}" : "Code-review-default"
 }
 
 def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository) {
@@ -881,7 +896,7 @@ if (BRANCH) {
     createListView(codebaseName, formattedBranch)
 
     def type = "${TYPE}"
-    def crKey = "Code-review-${type}".toString()
+    def crKey = getStageKeyName(buildTool)
     createCiPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "code-review.groovy",
         repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
 
@@ -970,6 +985,20 @@ pipelineJob("${codebaseName}/${jobName}") {
 registerWebHook(repository, codebaseName, jobName, webhookToken)
 }
 
+def getStageKeyName(buildTool) {
+    if (buildTool.toString().equalsIgnoreCase('terraform')) {
+        return "Code-review-library-terraform"
+    }
+    if (buildTool.toString().equalsIgnoreCase('opa')) {
+        return "Code-review-library-opa"
+    }
+    if (buildTool.toString().equalsIgnoreCase('codenarc')) {
+        return "Code-review-library-codenarc"
+    }
+    def buildToolsOutOfTheBox = ["maven","npm","gradle","dotnet","none","go","python"]
+    def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
+    return supBuildTool ? "Code-review-${TYPE}" : "Code-review-default"
+}
 
 def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId,
 gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch) {
