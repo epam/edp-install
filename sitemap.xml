@@ -71,6 +71,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/edp-kiosk-usage/</loc>
+         <lastmod>2021-09-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/enable-irsa/</loc>
          <lastmod>2021-09-15</lastmod>
          <changefreq>daily</changefreq>
