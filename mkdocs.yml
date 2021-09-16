@@ -71,10 +71,11 @@ nav:
         - CD Provision: operator-guide/manage-jenkins-cd-job-provision.md
         - Delete Job Provision: operator-guide/delete-jenkins-job-provision.md
     - AWS Integration:
-      - Associate IAM Roles With Service Accounts (IRSA):
+      - Associate IAM Roles For Service Accounts (IRSA):
         - Enable IRSA: operator-guide/enable-irsa.md
         - IRSA for Kaniko: operator-guide/kaniko-irsa.md
         - IRSA for Velero: operator-guide/velero-irsa.md
+        - IRSA for Loki: operator-guide/loki-irsa.md
     - Jira Integration:
       - Overview: operator-guide/jira-integration.md
       - operator-guide/jira-gerrit-integration.md
@@ -83,10 +84,12 @@ nav:
     - GitLab Integration:
       - Overview: operator-guide/gitlab-integration.md
       - operator-guide/gitlabci-integration.md
+    - Logging Configuration:
+      - Install Loki: operator-guide/install-loki.md
+    - Schedule pods restart: operator-guide/schedule-pods-restart.md
     - Velero Configuration:
       - Back Up EDP Tenant With Velero:
         - Install Velero: operator-guide/install-velero.md
-        - Velero Auto Restart: operator-guide/velero-auto-restart.md
         - Restore EDP Tenant With Velero: operator-guide/restore-edp-with-velero.md
     - Tutorials:
         - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
