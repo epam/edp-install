@@ -14,8 +14,8 @@ metadata:
 users:
   {{ range $.Values.global.admins -}}
   - {{.}}
-      {{end}}
-      {{end}}
+  {{end}}
+{{end}}
 
   {{- range .Values.edp.developerGroups -}}
 ---
@@ -32,6 +32,6 @@ metadata:
 users:
   {{ range $.Values.global.developers -}}
   - {{.}}
-      {{end}}
+  {{end}}
   {{end}}
   {{end}}
