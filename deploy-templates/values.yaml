@@ -11,6 +11,7 @@ global:
   database:
     deploy: true
     image: "postgres:9.6"
+    imagePullPolicy: "IfNotPresent"
     host: "edp-db"
     name: "edp-db"
     port: 5432

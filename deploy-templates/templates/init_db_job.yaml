@@ -27,6 +27,7 @@ spec:
       {{- end }}
       containers:
         - image: {{.Values.global.database.image}}
+          imagePullPolicy: "{{ .Values.global.database.imagePullPolicy }}"
           name: db-init
           command:
             - "/bin/bash"
@@ -68,6 +69,7 @@ spec:
               value: {{.Values.global.database.host}}
       initContainers:
         - image: {{.Values.global.database.image}}
+          imagePullPolicy: "{{ .Values.global.database.imagePullPolicy }}"
           name: db-wait
           command:
             - /bin/bash

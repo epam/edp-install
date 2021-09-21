@@ -55,7 +55,7 @@ spec:
             - name: POSTGRES_DB
               value: {{.Values.global.database.name}}
           image: {{.Values.global.database.image}}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: "{{ .Values.global.database.imagePullPolicy }}"
           livenessProbe:
             exec:
               command:
