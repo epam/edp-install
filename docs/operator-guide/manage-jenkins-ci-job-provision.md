@@ -24,10 +24,19 @@ Take the steps below to add a custom job provision:
     ![copy-provisioner](../assets/operator-guide/copy-provisioner.png "copy-provisioner")
 
 2. Update the required parameters in the new provisioner. For example, if it is necessary to implement a new build tool **docker**, several parameters are to be updated. Add the following stages to the docker
-Code Review and Build pipelines:
+Code Review and Build pipelines for **docker** application:
 
         stages['Code-review-application-docker'] = '[{"name": "checkout"},{"name": "lint"},{"name": "build"}]'
+        ...
         stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "lint"},{"name": "build"},{"name": "push"},{"name": "git-tag"}]'
+        ...
+        def getStageKeyName(buildTool) {
+            ...
+            if (buildTool.toString().equalsIgnoreCase('docker')) {
+            return "Code-review-application-docker"
+            }
+            ...
+        }
 
   Make sure the support for the above mentioned logic is implemented. Please refer to the [How to Redefine or Extend the EDP Pipeline Stages Library](https://epam.github.io/edp-install/user-guide/pipeline-framework/#13-how-to-redefine-or-extend-the-edp-pipeline-stages-library) section of the guide.
   !!! note

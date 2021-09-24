@@ -10,17 +10,17 @@ To install Loki, follow the steps below:
 
         kubectl create namespace logging
 
-   !!! note
-       On the OpenShift cluster, run the `oc` command instead of the `kubectl` command.
+  !!! note
+      On the OpenShift cluster, run the `oc` command instead of the `kubectl` command.
 
 2. Add a chart repository:
 
         helm repo add grafana https://grafana.github.io/helm-charts
         helm repo update
 
-   !!! note
-       It is possible to use Amazon Simple Storage Service [Amazon S3](https://aws.amazon.com/s3/) as an object storage for Loki.
-       To configure access, please refer to the [IRSA for Loki](./loki-irsa.md) documentation.
+  !!! note
+      It is possible to use Amazon Simple Storage Service [Amazon S3](https://aws.amazon.com/s3/) as an object storage for Loki.
+      To configure access, please refer to the [IRSA for Loki](./loki-irsa.md) documentation.
 
 3. Install **Loki v.2.6.0**:
 
