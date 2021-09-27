@@ -1,2 +1,2 @@
 FROM scratch
-ADD version.json /
+COPY version.json /
