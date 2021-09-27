@@ -49,8 +49,10 @@ restic:
     fsGroup: 65534
 serviceAccount:
   server:
-    create: false
+    create: true
     name: edp-velero
+      annotations:
+        eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹VELERO_NAMESPACE›Velero"
 credentials:
   useSecret: false
 configuration:

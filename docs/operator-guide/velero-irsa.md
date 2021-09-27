@@ -74,15 +74,4 @@
 
 4. Make sure that [Amazon S3](https://aws.amazon.com/s3/) bucket with name velero-&#8249;CLUSTER_NAME&#8250; exists.
 
-5. Create a service account:
-
-
-      apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: edp-velero
-        namespace: <VELERO_NAMESPACE>
-        annotations:
-          eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹VELERO_NAMESPACE›Velero"
-
-6. Add the **service account name** role value into the **serviceAccount.server.name** parameter in *values.yaml* during the [Velero Installation](./install-velero.md#installation).
+5. Provide key value **eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹VELERO_NAMESPACE›Velero"** into the **serviceAccount.server.annotations** parameter in *values.yaml* during the [Velero Installation](./install-velero.md#installation).

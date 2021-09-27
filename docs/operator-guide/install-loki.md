@@ -66,8 +66,10 @@ resources:
     cpu: "50m"
     memory: "128Mi"
 serviceAccount:
-  create: false
+  create: true
   name: edp-loki
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹LOKI_NAMESPACE›Loki
 persistence:
   enabled: false
 ```

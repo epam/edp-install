@@ -63,15 +63,4 @@ In this case [Loki](https://grafana.com/docs/loki/latest/configuration/examples/
 
 4. Make sure that [Amazon S3](https://aws.amazon.com/s3/) bucket with name loki-&#8249;CLUSTER_NAME&#8250; exists.
 
-5. Create a service account:
-
-
-      apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: edp-loki
-        namespace: <LOKI_NAMESPACE>
-        annotations:
-          eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹LOKI_NAMESPACE›Loki"
-
-6. Add the **service account name** value into the **serviceAccount.name** parameter in *values.yaml* during the [Loki Installation](./install-loki.md#installation).
+5. Provide key value **eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹LOKI_NAMESPACE›Loki"** into the **serviceAccount.annotations** parameter in *values.yaml* during the [Loki Installation](./install-loki.md#installation).
