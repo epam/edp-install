@@ -196,6 +196,9 @@ after stage deployment.
       If there is a necessity to create another CD pipeline, navigate to the Continuous Delivery section,
       click the Create button and perform the same steps as described above.
 
+  !!! info
+      In OpenShift, if the deployment fails with the ImagePullBackOff error, delete the POD.
+
 ## Related Articles
 
 * [EDP Admin Console](https://github.com/epam/edp-admin-console#edp-admin-console)
