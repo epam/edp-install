@@ -1,5 +1,5 @@
 global:
-  version: "2.9.0-SNAPSHOT"
+  version: "2.10.0-SNAPSHOT"
   edpName: "stub-namespace"
   platform: "openshift"
   dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
@@ -69,14 +69,14 @@ tags:
 keycloak-operator:
   image:
     name: epamedp/keycloak-operator
-    version: 1.8.0
+    version: 1.9.0
   keycloak:
     url: "keycloak.example.com"
 
 codebase-operator:
   image:
     name: epamedp/codebase-operator
-    version: 2.8.0
+    version: 2.9.0
 # jira:
 #   integration: true
 #   name: "epam-jira"
@@ -87,11 +87,11 @@ codebase-operator:
 jenkins-operator:
   image:
     name: epamedp/jenkins-operator
-    version: 2.8.0
+    version: 2.9.0
   jenkins:
 #    deploy: true
 #    image: epamedp/edp-jenkins
-#    version: 2.8.0
+#    version: 2.9.0
 #    storage:
 #      class: gp2
 #      size: 10Gi
@@ -115,12 +115,12 @@ jenkins-operator:
 cd-pipeline-operator:
   image:
     name: epamedp/cd-pipeline-operator
-    version: 2.8.0
+    version: 2.9.0
 
 nexus-operator:
   image:
     name: epamedp/nexus-operator
-    version: 2.8.0
+    version: 2.9.0
 #  nexus:
 #    deploy: true
 #    name: "nexus"
@@ -135,7 +135,7 @@ nexus-operator:
 sonar-operator:
   image:
     name: epamedp/sonar-operator
-    version: 2.8.0
+    version: 2.9.0
 #  sonar:
 #    deploy: true
 #    name: "sonar"
@@ -156,10 +156,10 @@ sonar-operator:
 admin-console-operator:
   image:
     name: epamedp/admin-console-operator
-    version: 2.8.0
+    version: 2.9.0
   adminConsole:
 #    image: epamedp/edp-admin-console
-#    version: 2.8.0
+#    version: 2.9.0
 #    envs:
 #      - name: INTEGRATION_STRATEGIES
 #        value: "Create,Clone,Import"
@@ -182,7 +182,7 @@ admin-console-operator:
 gerrit-operator:
   image:
     name: epamedp/gerrit-operator
-    version: 2.8.0
+    version: 2.9.0
 #  gerrit:
 #    deploy: true
 #    name: "gerrit"
@@ -197,12 +197,12 @@ gerrit-operator:
 reconciler:
   image:
     name: epamedp/reconciler
-    version: 2.8.0
+    version: 2.9.0
 
 perf-operator:
   image:
     name: epamedp/perf-operator
-    version: 2.8.0
+    version: 2.9.0
 #  perf:
 #    integration: true
 #    name: "epam-perf"
