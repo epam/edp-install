@@ -59,7 +59,7 @@ Inspect the main steps to install EPAM Delivery Platform. Please check the prere
 
       helm search repo epamedp/edp-install
       NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-      epamedp/edp-install     2.8.3           2.8.3          A Helm chart for EDP Install
+      epamedp/edp-install     2.9.0           2.9.0          A Helm chart for EDP Install
 
   !!! note
       It is highly recommended to use the latest released version.
