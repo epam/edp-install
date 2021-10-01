@@ -20,8 +20,7 @@ Once clicked, the four-step menu will appear:
 
    ![codebase-menu](../assets/user-guide/codebase-info-menu.png "codebase-menu")
 
-1. In the **Codebase Integration Strategy** field, select the necessary option that is the configuration strategy for
-the replication with Gerrit:
+1. In the **Codebase Integration Strategy** field, select the necessary configuration strategy:
 
    * Create – creates a project on the pattern in accordance with an application language, a build tool, and a framework.
 
@@ -33,6 +32,7 @@ the replication with Gerrit:
 
   !!! note
       In order to use the Import strategy, make sure to adjust it by following the [Adjust Import Strategy](../operator-guide/import-strategy.md) page.
+      The Import strategy is not applicable for Gerrit.
 
 2. In the **Git Repository URL** field, specify the link to the repository that is to be cloned.
   If the Import strategy is selected, specify the following fields:
@@ -43,7 +43,7 @@ the replication with Gerrit:
 
    b. Relative path to the repository on the server.
 
-3. Select the **Codebase Authentication** check box and fill in the requested fields:
+3. If the Clone strategy is used, select the **Codebase Authentication** check box and fill in the requested fields:
 
    * Repository Login – enter your login data.
 
@@ -108,9 +108,8 @@ if the Java code language and the Maven build tool are selected.
 12. Select CI pipeline provisioner that will be handling a codebase. For details, refer to the
 [Add Job Provision](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md#add-job-provision)
 instruction and become familiar with the main steps to add an additional job provisioner.
-13. Select Jenkins slave that will be used to handle a codebase. For details, refer to the
-[Add Jenkins Slave](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave)
-instruction and inspect the steps that should be done to add a new Jenkins slave.
+13. Select Jenkins agent that will be used to handle a codebase. For details, refer to the
+[Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md) instruction and inspect the steps that should be done to add a new Jenkins agent.
 14. Select the necessary codebase versioning type:
 
   * **default** - the previous versioning logic that is realized in EDP Admin Console 2.2.0 and lower versions.
@@ -119,8 +118,9 @@ instruction and inspect the steps that should be done to add a new Jenkins slave
   and change the version **manually**.
 
   * **edp** - the new versioning logic that is available in EDP Admin Console 2.3.0 and subsequent versions.
-  Using the edp versioning type, a developer indicates the version number from which all the artifacts
-  will be versioned and, as a result, **automatically** registered in the corresponding file (e.g. pom.xml).
+  Using the edp versioning type, a developer indicates the version number that will be used for all the artifacts stored
+  in artifactory: binaries, pom.xml, metadata, etc. The version stored in repository (e.g. pom.xml) will not be affected or used.
+  Using this versioning overrides any version stored in the repository files without changing actual file.
 
   When selecting the edp versioning type, the extra field will appear:
 
@@ -130,6 +130,7 @@ instruction and inspect the steps that should be done to add a new Jenkins slave
 
   !!! note
       The Start Version From field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10.
+      Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
 15. In the **Select Deployment Script** field, specify one of the available options:
 helm-chart / openshift-template that are predefined in case it is OpenShift or EKS.
