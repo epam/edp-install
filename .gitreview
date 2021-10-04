@@ -1,4 +1,0 @@
-[gerrit]
-host=gerrit-infra.main.edp.projects.epam.com
-port=30001
-project=edp.git
