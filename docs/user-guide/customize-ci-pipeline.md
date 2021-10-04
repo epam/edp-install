@@ -91,6 +91,9 @@ To add a new stage for a particular application, perform the steps below:
 4. Open Jenkins to check the pipeline; as soon as the checkout stage is passed, the new stage will appear in the pipeline:
   ![check_stage](../assets/user-guide/check_stage.png)
 
+  !!! warning
+      To make this stage permanently present, please modify the [job provisioner](../operator-guide/manage-jenkins-ci-job-provision.md).
+
 ## Redefine a Default Stage Logic via Custom Global Pipeline Libraries
 
 !!! note
@@ -191,3 +194,6 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
 
 4. Open Jenkins to check the pipeline; as soon as the checkout stage is passed, the new stage will appear in the pipeline:
   ![check_stage](../assets/user-guide/check_stage.png)
+
+  !!! warning
+      To make this stage permanently present, please modify the [job provisioner](../operator-guide/manage-jenkins-ci-job-provision.md).

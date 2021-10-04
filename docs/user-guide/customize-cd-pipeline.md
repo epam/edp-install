@@ -36,6 +36,10 @@ Follow the steps below to add a new stage:
 
 * Add a new stage to the STAGES parameter of the Jenkins job of your CD pipeline:
 ![Stages-parameter](../assets/user-guide/stages-json.png "Stages-parameter")
+
+  !!! warning
+      To make this stage permanently present, please modify the [job provisioner](../operator-guide/manage-jenkins-cd-job-provision.md).
+
 * Run the job to check that your new stage has been run during the execution.
 
 ## Redefine Existing Stage

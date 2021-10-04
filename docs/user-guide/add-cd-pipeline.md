@@ -90,17 +90,17 @@ which was selected for the pipeline, will be always used.
   !!! note
       Execution sequence. The image promotion and execution of the pipelines depend on the sequence in which
       the environments are added.
-      
+
   ![adding-stage2](../assets/user-guide/cd-adding-stage2.png "adding-stage2")
-  
+
   g. Select the groovy-pipeline library;
-      
+
   h. Select the job provisioner. In case of working with non container-based applications, there is an option to use
-   a custom job provisioner. Please refer to the [Add Job Provision](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md#add-job-provision)
+   a custom job provisioner. Please refer to the [Add Job Provision](../operator-guide/manage-jenkins-cd-job-provision.md)
    page for details.
-      
+
   i. Click the Add button to display it in the Stages menu.
-  
+
   !!! info
       Perform the same steps as described above if there is a necessity to add one more stage.
 

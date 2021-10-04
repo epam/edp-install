@@ -8,20 +8,22 @@ Depending on the version control system, different job provisioners are used. ED
 - GitLab (gitlab)
 
 By default, the [Jenkins operator](https://github.com/epam/edp-jenkins-operator/tree/master) creates a pipeline for [several types of application and libraries](../features.md).
-There is a special **job-provision/ci** folder in Jenkins for these provisioners.
+There is a special **job-provisions/ci** folder in Jenkins for these provisioners.
 During the EDP deployment, a default provisioner is created for integration with [Gerrit](https://www.gerritcodereview.com/) version control system.
-To configure integration with other version control systems, you need to add the required job-provisioners to **job-provision/ci** folder in Jenkins.
+To configure integration with other version control systems, you need to add the required job provisioners to **job-provisions/ci** folder in Jenkins.
 
 ## Custom (custom-default/github/gitlab)
 
-In some cases it is necessary to modify/update job provisioner logic, for example when an [added other code language](./add-other-code-language.md)
-needs to create a custom job-provisioner on the basis of an existing one out of the box.
+In some cases it is necessary to modify or update the job provisioner logic, for example when an [added other code language](./add-other-code-language.md)
+needs to create a custom job provisioner on the basis of an existing one out of the box.
 Take the steps below to add a custom job provision:
 
-1. Navigate to the Jenkins main page and open the *job-provisions/ci* folder, click **New Item** and type the name of job-provisions, for example - custom-github, scroll down to the **Copy from** field and enter "/job-provisions/ci/github", and click OK:
+1. Navigate to the Jenkins main page and open the *job-provisions/ci* folder, click **New Item** and type the name of job-provisions, for example - custom-github.
 
-    ![provisioner-name](../assets/operator-guide/provisioner-name.png "provisioner-name")
-    ![copy-provisioner](../assets/operator-guide/copy-provisioner.png "copy-provisioner")
+    ![ci-provisioner-name](../assets/operator-guide/ci-provisioner-name.png "ci-provisioner-name")
+    
+    Scroll down to the **Copy from** field and enter "/job-provisions/ci/github", and click OK:
+    ![copy-ci-provisioner](../assets/operator-guide/copy-ci-provisioner.png "copy-ci-provisioner")
 
 2. Update the required parameters in the new provisioner. For example, if it is necessary to implement a new build tool **docker**, several parameters are to be updated. Add the following stages to the docker
 Code Review and Build pipelines for **docker** application:
@@ -38,14 +40,16 @@ Code Review and Build pipelines for **docker** application:
             ...
         }
 
-  Make sure the support for the above mentioned logic is implemented. Please refer to the [How to Redefine or Extend the EDP Pipeline Stages Library](https://epam.github.io/edp-install/user-guide/pipeline-framework/#13-how-to-redefine-or-extend-the-edp-pipeline-stages-library) section of the guide.
+  !!! note
+      Make sure the support for the above mentioned logic is implemented. Please refer to the [How to Redefine or Extend the EDP Pipeline Stages Library](https://epam.github.io/edp-install/user-guide/pipeline-framework/#13-how-to-redefine-or-extend-the-edp-pipeline-stages-library) section of the guide.
+  
   !!! note
       The default template should be changed if there is another creation logic for the Code Review, Build and Create Release pipelines.
       Furthermore, all pipeline types should have the necessary stages as well.
 
-After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
+  After the steps above are performed, the new custom job provision will be available in **Advanced Settings** during the application creation in Admin Console.
 
-![add-custom-provision](../assets/operator-guide/add-custom-provision.png "add-custom-provision")
+  ![add-custom-ci-provision](../assets/operator-guide/add-custom-ci-provision.png "add-custom-ci-provision")
 
 ## Gerrit (default)
 
@@ -750,9 +754,9 @@ def getSecretValue(name) {
 ```
    </details>
 
-After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
+  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
 
-![github-job-provision](../assets/operator-guide/github-job-provision.png "github-job-provision")
+  ![github-job-provision](../assets/operator-guide/github-job-provision.png "github-job-provision")
 
 ## GitLab (gitlab)
 
@@ -1156,6 +1160,6 @@ def getSecretValue(name) {
 
 10. Create Secret, GitServer CR and Jenkins credentials with the "gitlab" ID by following the instruction: [Adjust Import Strategy](../operator-guide/import-strategy.md).
 
-After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
+  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
 
-![gitlab-job-provision](../assets/operator-guide/gitlab-job-provision.png "gitlab-job-provision")
+  ![gitlab-job-provision](../assets/operator-guide/gitlab-job-provision.png "gitlab-job-provision")
