@@ -114,7 +114,7 @@ To add a new Jenkins agent, take the steps below:
                 </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
 
   !!! note
-      The **name** and **label** properties should be unique(In example above **docker**). Insert image name and tag instead of **IMAGE_NAME:IMAGE_TAG**.
+      The **name** and **label** properties should be unique(**docker** in the example above). Insert image name and tag instead of **IMAGE_NAME:IMAGE_TAG**.
 
 2. Open Jenkins to ensure that everything is added correctly. Click the **Manage Jenkins** option, navigate to the **Manage Nodes and Clouds**->**Configure Clouds**->**Kubernetes**->**Pod Templates...**,
 and scroll down to find new Jenkins agent **Pod Template details...**:

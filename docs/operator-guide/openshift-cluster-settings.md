@@ -1,4 +1,4 @@
-# OpenShift Settings
+# Set Up OpenShift
 
 Make sure the cluster meets the following conditions:
 
@@ -22,7 +22,7 @@ Make sure the cluster meets the following conditions:
 
 3. Cluster nodes and pods have access to the cluster via external URLs. For instance, add in AWS the VPC NAT gateway elastic IP to the cluster external load balancers security group);
 
-4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on OpenShift](install-keycloak.md) instruction;
+4. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Install Keycloak](install-keycloak.md) instruction;
 
 5. The installation machine with [oc](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html#cli-installing-cli_cli-developer-commands) is installed with the cluster-admin access to the OpenShift cluster;
 
@@ -41,3 +41,7 @@ Make sure the cluster meets the following conditions:
         type: gp2
       reclaimPolicy: Retain
       volumeBindingMode: WaitForFirstConsumer
+
+## Related Articles
+
+* [Install Keycloak](install-keycloak.md)

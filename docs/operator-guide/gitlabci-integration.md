@@ -33,7 +33,7 @@ Follow the steps below to adjust the GitLab CI tool:
     |K8S_SA_TOKEN| token that can be used to log in to Kubernetes|
 
     !!! note
-        To get the access to ECR, it is required to have an auto IAM user that has rights to push/create a repository.
+        To get the access to [ECR](https://aws.amazon.com/ru/ecr/), it is required to have an auto IAM user that has rights to push/create a repository.
 
 2. In Admin Console, select the CI tool in the **Advanced Settings** menu during the codebase creation:
 

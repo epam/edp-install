@@ -1,4 +1,4 @@
-# IAM Roles For Velero Service Accounts
+# IAM Roles for Velero Service Accounts
 
 !!! note
     Make sure that IRSA is enabled and [amazon-eks-pod-identity-webhook](https://github.com/aws/amazon-eks-pod-identity-webhook/tree/master) is deployed according to the [Associate IAM Roles With Service Accounts](./enable-irsa.md) documentation.
@@ -75,3 +75,8 @@
 4. Make sure that [Amazon S3](https://aws.amazon.com/s3/) bucket with name velero-&#8249;CLUSTER_NAME&#8250; exists.
 
 5. Provide key value **eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹VELERO_NAMESPACE›Velero"** into the **serviceAccount.server.annotations** parameter in *values.yaml* during the [Velero Installation](./install-velero.md#installation).
+
+## Related Articles
+
+* [Associate IAM Roles With Service Accounts](../operator-guide/enable-irsa.md)
+* [Install Velero](../operator-guide/install-velero.md)

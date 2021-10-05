@@ -46,6 +46,6 @@ Discover the steps below to apply the GitHub integration correctly:
 
 ## Related Articles
 
-* [Adjust Import Strategy](import-strategy.md)
-* [Adjust Integration With Jira Server](jira-integration.md)
-* [Manage Jenkins CI Job Provision](manage-jenkins-ci-job-provision.md)
+* [Enable VCS Import Strategy](import-strategy.md)
+* [Adjust Jira Integration](jira-integration.md)
+* [Manage Jenkins CI Pipeline Job Provision](manage-jenkins-ci-job-provision.md)

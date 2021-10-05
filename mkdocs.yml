@@ -57,40 +57,41 @@ nav:
     - operator-guide/index.md
     - Installation:
       - Prerequisites:
-        - Ingress-nginx: operator-guide/install-ingress-nginx.md
-        - Kiosk: operator-guide/install-kiosk.md
-        - Keycloak: operator-guide/install-keycloak.md
-        - Kubernetes: operator-guide/kubernetes-cluster-settings.md
-        - OpenShift: operator-guide/openshift-cluster-settings.md
-      - EDP: operator-guide/install-edp.md
+        - Install Ingress-nginx: operator-guide/install-ingress-nginx.md
+        - Install Keycloak: operator-guide/install-keycloak.md
+        - Kiosk:
+            - EDP Kiosk Usage: operator-guide/edp-kiosk-usage
+            - Set Up Kiosk: operator-guide/install-kiosk.md
+        - Set Up Kubernetes: operator-guide/kubernetes-cluster-settings.md
+        - Set Up OpenShift: operator-guide/openshift-cluster-settings.md
+      - Install EDP: operator-guide/install-edp.md
     - Configuration:
       - Add Other Code Language: operator-guide/add-other-code-language.md
+      - Backup With Velero:
+          - Install Velero: operator-guide/install-velero.md
+          - Restore EDP Tenant With Velero: operator-guide/restore-edp-with-velero.md
+      - Enable VCS Import Strategy: operator-guide/import-strategy.md
       - Manage Jenkins Pipelines:
         - Overview: operator-guide/overview-manage-jenkins-pipelines.md
-        - CI Provision: operator-guide/manage-jenkins-ci-job-provision.md
-        - CD Provision: operator-guide/manage-jenkins-cd-job-provision.md
-        - Delete Job Provision: operator-guide/delete-jenkins-job-provision.md
-    - AWS Integration:
-      - Associate IAM Roles For Service Accounts (IRSA):
-        - Enable IRSA: operator-guide/enable-irsa.md
-        - IRSA for Kaniko: operator-guide/kaniko-irsa.md
-        - IRSA for Velero: operator-guide/velero-irsa.md
-        - IRSA for Loki: operator-guide/loki-irsa.md
-    - Jira Integration:
-      - Overview: operator-guide/jira-integration.md
-      - operator-guide/jira-gerrit-integration.md
-    - GitHub Integration:
-      - Overview: operator-guide/github-integration.md
-    - GitLab Integration:
-      - Overview: operator-guide/gitlab-integration.md
-      - operator-guide/gitlabci-integration.md
-    - Logging Configuration:
-      - Install Loki: operator-guide/install-loki.md
-    - Schedule pods restart: operator-guide/schedule-pods-restart.md
-    - Velero Configuration:
-      - Back Up EDP Tenant With Velero:
-        - Install Velero: operator-guide/install-velero.md
-        - Restore EDP Tenant With Velero: operator-guide/restore-edp-with-velero.md
+        - Manage Jenkins CI Pipeline Job Provisioner: operator-guide/manage-jenkins-ci-job-provision.md
+        - Manage Jenkins CD Pipeline Job Provisioner: operator-guide/manage-jenkins-cd-job-provision.md
+        - Delete Jenkins Job Provision: operator-guide/delete-jenkins-job-provision.md
+      - Logging:
+          - Install Grafana Loki: operator-guide/install-loki.md
+          - Schedule Pods Restart: operator-guide/schedule-pods-restart.md
+    - Integration:
+      - AWS Integration:
+        - Associate IAM Roles With Service Accounts: operator-guide/enable-irsa.md
+        - IAM Roles for Kaniko Service Accounts: operator-guide/kaniko-irsa.md
+        - IAM Roles for Velero Service Accounts: operator-guide/velero-irsa.md
+        - IAM Roles for Loki Service Accounts: operator-guide/loki-irsa.md
+      - Jira Integration:
+          - Adjust Jira Integration: operator-guide/jira-integration.md
+          - Adjust VCS Integration With Jira: operator-guide/jira-gerrit-integration.md
+      - GitHub Integration: operator-guide/github-integration.md
+      - GitLab Integration:
+          - GitLab Integration: operator-guide/gitlab-integration.md
+          - Adjust GitLab CI Tool: operator-guide/gitlabci-integration.md
     - Tutorials:
         - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
         - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md

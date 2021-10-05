@@ -46,6 +46,6 @@ Discover the steps below to apply the GitLab integration correctly:
 
 ### Related Articles
 
-* [Adjust Integration With Jira Server](jira-integration.md)
+* [Adjust Jira Integration](jira-integration.md)
 * [Enable VCS Import Strategy](import-strategy.md)
-* [Manage Jenkins CI Job Provision](manage-jenkins-ci-job-provision.md)
+* [Manage Jenkins CI Pipeline Job Provision](manage-jenkins-ci-job-provision.md)

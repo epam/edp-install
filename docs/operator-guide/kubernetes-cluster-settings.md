@@ -1,4 +1,4 @@
-# Kubernetes Settings
+# Set Up Kubernetes
 
 Make sure the cluster meets the following conditions:
 
@@ -29,7 +29,7 @@ Make sure the cluster meets the following conditions:
 
 6. Cluster nodes and pods have access to the cluster via external URLs. For instance, add in AWS the VPC NAT gateway elastic IP to the cluster external load balancers security group);
 
-7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Keycloak Installation on Kubernetes](install-keycloak.md) instruction;
+7. Keycloak instance is installed. To get accurate information on how to install Keycloak, please refer to the [Install Keycloak](install-keycloak.md) instruction;
 
 8. Helm 3.1 or higher is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction;
 
@@ -47,3 +47,9 @@ Make sure the cluster meets the following conditions:
           type: gp2
         reclaimPolicy: Retain
         volumeBindingMode: WaitForFirstConsumer
+
+
+## Related Articles
+
+* [Install Ingress-nginx](install-ingress-nginx.md)
+* [Install Keycloak](install-keycloak.md)

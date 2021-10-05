@@ -1,4 +1,4 @@
-# Jira Integration
+# Adjust Jira Integration
 
 In order to adjust the Jira server integration, first add JiraServer CR by performing the following:
 

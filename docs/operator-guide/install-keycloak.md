@@ -1,6 +1,10 @@
-# Keycloak Installation on Kubernetes
+# Install Keycloak
 
-Inspect the prerequisites and the main steps to perform for installing Keycloak on Kubernetes.
+Inspect the prerequisites and the main steps to perform for installing Keycloak.
+
+!!! note
+    The installation process below is given for a Kubernetes cluster. The steps that differ for an OpenShift cluster are
+    indicated in the notes.
 
 ## Prerequisites
 

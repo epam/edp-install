@@ -1,4 +1,4 @@
-# Gerrit to Jira Integration
+# Adjust VCS Integration With Jira
 
 In order to adjust the Version Control System integration with Jira Server, first make sure you have the following prerequisites:
 
@@ -37,4 +37,4 @@ Add the repositories links and fill in the *Keep Informed* field as this request
 
 ## Related Articles
 
-* [Adjust Integration With Jira Server](jira-integration.md)
+* [Adjust Jira Integration](jira-integration.md)

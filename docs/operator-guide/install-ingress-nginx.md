@@ -1,6 +1,6 @@
-# Ingress-nginx Installation on Kubernetes
+# Install Ingress-nginx
 
-Inspect the prerequisites and the main steps to perform for installing ingress-nginx on Kubernetes.
+Inspect the prerequisites and the main steps to perform for installing [ingress-nginx](https://docs.nginx.com/nginx-ingress-controller/intro/overview/) on Kubernetes.
 
 ## Prerequisites
 

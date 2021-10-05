@@ -5,11 +5,11 @@ hide:
 
 # EDP Kiosk Usage
 
-There is EDP way of using Kiosk.
+Explore the way [Kiosk, a multi-tenancy extension for Kubernetes](https://github.com/loft-sh/kiosk), is used in EDP.
 
 ## Prerequisites
 
-* Installed Kiosk v0.2.9;
+* Installed Kiosk v.0.2.9.
 
 ## Diagram of using Kiosk by EDP
 
@@ -35,4 +35,4 @@ There is EDP way of using Kiosk.
 ## Related Articles
 
 - [Install EDP](install-edp.md)
-- [Kiosk Setup](install-kiosk.md)
+- [Set Up Kiosk](install-kiosk.md)

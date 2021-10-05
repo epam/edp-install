@@ -1,8 +1,8 @@
-# IAM Roles With Service Accounts for Kaniko
+# IAM Roles for Kaniko Service Accounts
 
 !!! note
     The information below is relevant in case ECR is used as Docker container registry.
-    Make sure that IRSA is enabled and [amazon-eks-pod-identity-webhook](https://github.com/aws/amazon-eks-pod-identity-webhook/tree/master) was deployed according [documentation](./enable-irsa.md).
+    Make sure that IRSA is enabled and [amazon-eks-pod-identity-webhook](https://github.com/aws/amazon-eks-pod-identity-webhook/tree/master) is deployed according to the [Associate IAM Roles With Service Accounts](./enable-irsa.md) documentation.
 
 The "build-image-kaniko" stage manages [ECR](https://aws.amazon.com/ecr/) through IRSA that should be available on the cluster. Follow the steps below to create a required role:
 
@@ -59,3 +59,7 @@ The "build-image-kaniko" stage manages [ECR](https://aws.amazon.com/ecr/) throug
 
 4. Define the resulted **arn** role value into the **kanikoRoleArn** parameter in values.yaml during the [EDP installation](./install-edp.md).
 
+## Related Articles
+
+* [Associate IAM Roles With Service Accounts](../operator-guide/enable-irsa.md)
+* [Install EDP](../operator-guide/install-edp.md)

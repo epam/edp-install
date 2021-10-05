@@ -154,4 +154,6 @@ Consult [VCS integration](./import-strategy.md) section, if you plan to integrat
 * [Enable VCS Import Strategy](./import-strategy.md)
 * [GitHub Integration](http://localhost:8000/edp-install/operator-guide/github-integration/)
 * [GitLab Integration](http://localhost:8000/edp-install/operator-guide/gitlab-integration/)
-* [Keycloak Installation on Kubernetes](http://localhost:8000/edp-install/operator-guide/install-keycloak/)
+* [Install Keycloak](http://localhost:8000/edp-install/operator-guide/install-keycloak/)
+* [Set Up Kubernetes](kubernetes-cluster-settings.md)
+* [Set Up OpenShift](openshift-cluster-settings.md)

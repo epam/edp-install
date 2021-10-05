@@ -1,20 +1,21 @@
 # Add Other Code Language
 
-There is an ability to extend the default code languages when creating a codebase with the clone/import strategy.
+There is an ability to extend the default code languages when creating a codebase with the Clone or Import strategy.
 
 ![other-language](../assets/operator-guide/ac_other_language.png "other-language")
 
 !!! warning
-    The create strategy does not allow to customize the default code language set.
+    The Create strategy does not allow to customize the default code language set.
 
-In order to customize the Build Tool list, perform the following:
+To customize the Build Tool list, perform the following:
 
 *  Edit the edp-admin-console deployment by adding the necessary code language into the **BUILD TOOLS** field:
 
        kubectl edit deployment edp-admin-console -n <edp-project>
 
   !!! note
-      On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+      Using an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+
 
   !!! info
       &#8249;edp-project&#8250; is the name of the EDP tenant here and in all the following steps.
@@ -65,4 +66,3 @@ stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-versio
 * [Add Library](../user-guide/add-library.md)
 * [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Manage Jenkins CI Pipeline Job Provisioner](manage-jenkins-ci-job-provision.md)
-
