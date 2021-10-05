@@ -343,8 +343,16 @@ To create a new job provision for work with GitHub, take the following steps:
 2. Click *New Item* and type the name of job-provisions - **github**.
 
 3. Select the *Freestyle project* option and click OK.
+   
+4. Select the *Discard old builds* check box and configure a few parameters:
+   
+   Strategy: Log Rotation
 
-4. Select the *This project is parameterized* check box and add a few input parameters:
+   Days to keep builds: 10
+
+   Max # of builds to keep: 10
+
+5. Select the *This project is parameterized* check box and add a few input parameters:
 
   * NAME;
 
@@ -767,8 +775,16 @@ To create a new job provision for work with GitLab, take the following steps:
 2. Click *New Item* and type the name of job-provisions - **gitlab**.
 
 3. Select the *Freestyle project* option and click OK.
+   
+4. Select the *Discard old builds* check box and configure a few parameters:
+   
+   Strategy: Log Rotation
 
-4. Select the *This project is parameterized* check box and add a few input parameters as the following strings:
+   Days to keep builds: 10
+   
+   Max # of builds to keep: 10
+
+5. Select the *This project is parameterized* check box and add a few input parameters as the following strings:
 
   * NAME;
 
