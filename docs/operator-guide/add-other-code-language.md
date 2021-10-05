@@ -10,17 +10,17 @@ There is an ability to extend the default code languages when creating a codebas
 In order to customize the Build Tool list, perform the following:
 
 *  Edit the edp-admin-console deployment by adding the necessary code language into the **BUILD TOOLS** field:
-   
+
        kubectl edit deployment edp-admin-console -n <edp-project>
 
-!!! note 
-    On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+  !!! note
+      On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
 
-!!! info
-    &#8249;edp-project&#8250; is the name of the EDP tenant here and in all the following steps.
+  !!! info
+      &#8249;edp-project&#8250; is the name of the EDP tenant here and in all the following steps.
 
-<details>
-<summary><b>View: edp-admin-console deployment</b></summary>
+  <details>
+  <summary><b>View: edp-admin-console deployment</b></summary>
 
 ```yaml
 ...
@@ -33,7 +33,7 @@ spec:
     ...
 ...
 ```
-</details>
+  </details>
 
 * Add the Jenkins agent by following the [instruction](../operator-guide/add-jenkins-agent.md).
 
@@ -50,17 +50,19 @@ If it is necessary to create Code Review and Build pipelines, add corresponding 
 ...
 stages['Code-review-application-docker'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" + ',{"name": "sonar"}]'
 stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sonar"},' +
-                                     '{"name": "build-image-kaniko"}' + "${createJFVStage}" + ',{"name": "git-tag"}]'
+                                     '{"name": "build-image-kaniko"}' + ',{"name": "git-tag"}]'
 ...
 ```
 
-![jenkins-provisioner](../assets/operator-guide/ac_jenkins_provisioner.png "jenkins-provisioner")
+  ![jenkins-provisioner](../assets/operator-guide/ac-jenkins-provisioner.png "jenkins-provisioner")
 
 !!! note
-    Application is one of the available options. Another option might be to add a library. Please refer to the [Add Library](../user-guide/add-library.md) page for details
+    Application is one of the available options. Another option might be to add a library. Please refer to the [Add Library](../user-guide/add-library.md) page for details.
 
 ## Related Articles
 
+* [Add Application](../user-guide/add-application.md)
+* [Add Library](../user-guide/add-library.md)
 * [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Manage Jenkins CI Pipeline Job Provisioner](manage-jenkins-ci-job-provision.md)
-* [Add Library](../user-guide/add-library.md)
+
