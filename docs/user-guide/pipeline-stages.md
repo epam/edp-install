@@ -48,7 +48,6 @@ The table below provides the details on all the stages in the EDP pipeline frame
 | deploy | | Deploys the application | Deploy | + | | | [Deploy.groovy](https://github.com/epam/edp-library-stages/blob/master/src/com/epam/edp/stages/impl/cd/impl/Deploy.groovy) | |
 | manual | | Works with the manual approve to proceed | Deploy | + | | | [ManualApprove.groovy](https://github.com/epam/edp-library-stages/blob/master/src/com/epam/edp/stages/impl/cd/impl/ManualApprove.groovy) | |
 | promote-images | | Promotes docker images to the registry | Deploy | + | | | [PromoteImage.groovy](https://github.com/epam/edp-library-stages/blob/master/src/com/epam/edp/stages/impl/cd/impl/PromoteImages.groovy) | |
-| promote-images-ecr | | Promotes docker images to ECR | Deploy | + | | | [PromoteImagesECR.groovy](https://github.com/epam/edp-library-stages/blob/master/src/com/epam/edp/stages/impl/cd/impl/PromoteImagesECR.groovy) | |
 
 !!! note
     The Create Release pipeline is an internal EDP mechanism for adding, importing or cloning a codebase. It is not a part of the pipeline framework.

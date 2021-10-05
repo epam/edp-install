@@ -50,8 +50,7 @@ By default, the following stages are implemented in EDP pipeline framework:
 * deploy-helm,
 * autotests,
 * manual (Manual approve),
-* promote-images,
-* promote-images-ecr.
+* promote-images.
 
 If you use one of these names for annotation in your own class, it will lead to redefining the default logic with your own.
 
