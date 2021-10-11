@@ -168,8 +168,15 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
 
 To redefine any stage and add custom logic using global pipeline libraries, perform the steps below:
 
-1. In GitHub repository, add a Groovy file with another name to the same stages catalog;
+1. Open the GitHub repository:
+
+  * Create a directory with the name `/src/com/epam/edp/customStages/impl/ci/impl/stageName/` in the library repository, for instance: `/src/com/epam/edp/customStages/impl/ci/impl/email-notify/`;
+  * Add a Groovy file with another name to the same stages catalog, for instance – `EmailNotify.groovy`.
+
 2. Copy the part of a pipeline framework logic that cannot be predefined;
+
+  !!! note
+      Pay attention to the appropriate annotation (EDP versions of all stages can be found on [GitHub](https://github.com/epam/edp-library-stages/tree/master/src/com/epam/edp/stages/impl/ci/impl)).
 
   The stage logic structure is the following:
 

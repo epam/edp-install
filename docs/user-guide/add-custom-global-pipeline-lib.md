@@ -30,7 +30,9 @@ Since these libraries will be globally usable, any Pipeline in the system can ut
 **Pipeline**
 
 ```java
-@Library(['edp-custom-shared-library-name'])_
+@Library(['edp-library-stages', 'edp-library-pipelines', 'edp-custom-shared-library-name'])_
 
 Build()
 ```
+!!! note
+    `edp-custom-shared-library-name` is the name of your Custom Global Pipeline Library that should be added to the Jenkins Global Settings.
