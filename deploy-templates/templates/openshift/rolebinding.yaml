@@ -2,7 +2,7 @@
 apiVersion: authorization.openshift.io/v1
 groupNames:
   - system:serviceaccounts
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: serviceaccounts-registry-viewer-{{ .Values.global.edpName }}
   labels:

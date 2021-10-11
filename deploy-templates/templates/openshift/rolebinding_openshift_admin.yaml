@@ -1,0 +1,20 @@
+{{- if eq .Values.global.platform "openshift"  -}}
+  {{- $name := printf "edp-%s-admin" .Values.global.edpName -}}
+apiVersion: authorization.openshift.io/v1
+kind: RoleBinding
+metadata:
+  name: {{$name}}
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+roleRef:
+  name: admin
+subjects:
+- kind: User
+  name: admin
+- kind: User
+  name: system:serviceaccount:{{ .Values.global.edpName }}:edp
+userNames:
+- admin
+- system:serviceaccount:{{ .Values.global.edpName }}:edp
+groupNames: []
+{{- end -}}
