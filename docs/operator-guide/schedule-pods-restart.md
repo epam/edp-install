@@ -11,39 +11,41 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: <NAMESPACE>
-  name: pod-restart
+  name: apps-restart
 rules:
-  - apiGroups: [""]
+  - apiGroups: ["apps"]
     resources:
-      - pods
+      - deployments
+      - statefulsets
     verbs:
-      - 'delete'
+      - 'get'
       - 'list'
+      - 'patch'
 ---
 kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: pod-restart
+  name: apps-restart
   namespace: <NAMESPACE>
 subjects:
   - kind: ServiceAccount
-    name: pod-watcher
+    name: apps-restart-sa
     namespace: <NAMESPACE>
 roleRef:
   kind: Role
-  name: pod-restart
+  name: apps-restart
   apiGroup: ""
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pod-watcher
+  name: apps-restart-sa
   namespace: <NAMESPACE>
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: remove-pod
+  name: apps-rollout-restart
   namespace: <NAMESPACE>
 spec:
   schedule: "0 9 * * MON-FRI"
@@ -51,17 +53,16 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: pod-watcher
+          serviceAccountName: apps-restart-sa
           containers:
             - name: kubectl-runner
               image: bitnami/kubectl
               command:
                 - /bin/sh
                 - -c
-                - podname=$(kubectl get -n <NAMESPACE> -o name --field-selector status.phase=Running --no-headers=true pods --sort-by=.metadata.name | grep <POD_NAME_PATTERN> | awk -F "/" '{print $2}'); kubectl delete pod ${podname} -n <NAMESPACE>
+                - kubectl get -n <NAMESPACE> -o name deployment,statefulset | grep <NAME_PATTERN>| xargs kubectl -n <NAMESPACE> rollout restart
           restartPolicy: Never
 ```
----
 </details>
 
 Modify the Cron expression in the CronJob manifest if needed.
