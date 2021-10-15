@@ -92,6 +92,7 @@ nav:
       - GitLab Integration:
           - GitLab Integration: operator-guide/gitlab-integration.md
           - Adjust GitLab CI Tool: operator-guide/gitlabci-integration.md
+      - Perf Server Integration: operator-guide/perf-integration.md
     - Tutorials:
         - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
         - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
