@@ -16,7 +16,7 @@ In order to have the ability to customize a stage`s logic, create a CD pipeline 
    Select the required fields to build your library:
   ![Groovy-pipeline](../assets/user-guide/create-library-choose-type2.png "Groovy-pipeline")
 2. Go to the **Continuous Delivery** section of the Admin Console and create a CD pipeline with the library stage`s source and its branch:
-  ![Library-source](../assets/user-guide/cd-pipeline_stage-source.png "Library-source")
+  ![Library-source](../assets/user-guide/cd-pipeline-stage-source.png "Library-source")
 
 ## Add New Stage
 
@@ -142,7 +142,7 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
   !!! note
       Pay attention to the appropriate annotation (EDP versions of all stages can be found on [GitHub](https://github.com/epam/edp-library-stages/tree/master/src/com/epam/edp/stages/impl/ci/impl)).
 
-* Run the job to check that your new stage has been runnig during the execution.
+* Run the job to check that your new stage has been running during the execution.
 
 ## Redefine a Default Stage Logic via Custom Global Pipeline Libraries
 
@@ -197,3 +197,9 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
 
   !!! note
       Pay attention to the appropriate annotation (EDP versions of all stages can be found on [GitHub](https://github.com/epam/edp-library-stages/tree/master/src/com/epam/edp/stages/impl/ci/impl)).
+
+
+## Related Articles
+
+* [Add a New Custom Global Pipeline Library](add-custom-global-pipeline-lib.md)
+* [Manage Jenkins CD Pipeline Job Provisioner](../operator-guide/manage-jenkins-cd-job-provision.md)

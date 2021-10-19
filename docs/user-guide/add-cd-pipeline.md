@@ -19,18 +19,19 @@ part.
 
 ![pipeline-menu](../assets/user-guide/pipeline-menu.png "pipeline-menu")
 
+
 1. Type the name of the pipeline in the **Pipeline Name** field by entering at least two characters and by using
 the lower-case letters, numbers and inner dashes.
 
   !!! note
       The namespace created by the CD pipeline has the following pattern combination: **[cluster name]-[cd pipeline name]-[stage name]**.
       Please be aware that the namespace length should not exceed 63 symbols.
-    
+
 2. Select the deployment type from the drop-down list:
   * Container - the pipeline will be deployed in a Docker container;
   * Custom - this mode allows to deploy non-container applications and customize the Init stage of CD pipeline.
 
-3. Click the Proceed button to be switched to the next menu.
+3. Click the Proceed button to switch to the next menu.
 
   ## The Applications Menu
 
@@ -55,11 +56,11 @@ which was selected for the pipeline, will be always used.
 
   ![cd-stages](../assets/user-guide/cd-pipeline-stages.png "cd-stages")
 
-8. Click the plus sign icon in the **Stages** menu and fill in the necessary fields in the Adding Stage window:
-<a name="adding_stage_window"></a>
 
-  ![adding-stage1](../assets/user-guide/cd-adding-stage1.png)
+8. Click the plus sign icon in the **Stages** menu and fill in the necessary fields in the Adding Stage window <a name="adding_stage_window"></a>:
 
+  ![adding-stage1](../assets/user-guide/cd-adding-stage1.png "adding-stage")
+  
   a. Type the stage name;
 
   !!! note
@@ -76,16 +77,11 @@ which was selected for the pipeline, will be always used.
   that will be launched on the current stage.
 
   d. Type the step name, which will be displayed in Jenkins, for every quality gate type;
-  
+
   e. Add an unlimited number of quality gates by clicking a corresponding plus sign icon and remove them as well
   by clicking the recycle bin icon;
 
-  f. Select the trigger type that allows promoting images to the next environment. The available trigger types are
-  _manual_ and _auto_. By selecting the _auto_ trigger type, the CD pipeline will be launched automatically.
-
-  !!! info
-      Add an unlimited number of quality gates by clicking a corresponding plus sign icon and remove them as well
-      by clicking the recycle bin icon.
+  f. Select the trigger type. The available trigger types are _manual_ and _auto_. By selecting the _auto_ trigger type, the CD pipeline will be launched automatically after the image is built.
 
   !!! note
       Execution sequence. The image promotion and execution of the pipelines depend on the sequence in which
@@ -96,7 +92,7 @@ which was selected for the pipeline, will be always used.
   g. Select the groovy-pipeline library;
 
   h. Select the job provisioner. In case of working with non container-based applications, there is an option to use
-   a custom job provisioner. Please refer to the [Add Job Provision](../operator-guide/manage-jenkins-cd-job-provision.md)
+   a custom job provisioner. Please refer to the [Manage Jenkins CD Job Provision](../operator-guide/manage-jenkins-cd-job-provision.md)
    page for details.
 
   i. Click the Add button to display it in the Stages menu.
@@ -202,4 +198,9 @@ after stage deployment.
 ## Related Articles
 
 * [EDP Admin Console](https://github.com/epam/edp-admin-console#edp-admin-console)
+* [Customize CD Pipeline](customize-cd-pipeline.md)
 * [Delivery Dashboard Diagram](d-d-diagram.md)
+
+---
+
+* [Manage Jenkins CD Pipeline Job Provision](../operator-guide/manage-jenkins-cd-job-provision.md)

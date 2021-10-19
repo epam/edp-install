@@ -23,7 +23,7 @@ The added library will be listed in the Libraries list allowing you to do the fo
 2. Open library data by clicking its link name. Once clicked, the following blocks will be displayed:
 
   * **General Info** - displays common information about the created/cloned/imported library.
-  * **Advanced Settings** - displays the specified job provisioner, Jenkins slave, deployment script, and the versioning type with the start versioning from number (the latter two fields appear in case of edp versioning type).
+  * **Advanced Settings** - displays the specified job provisioner, Jenkins agent, deployment script, and the versioning type with the start versioning from number (the latter two fields appear in case of edp versioning type).
   * **Branches** - displays the status and name of the deployment branch, keeps the additional links to Jenkins and Gerrit. In case of edp versioning type, there are two additional fields:
 
     * **Build Number** - indicates the current build number;
@@ -129,4 +129,4 @@ In order to remove the added branch with the corresponding  record in the Admin 
 
 ## Related Articles
 
-- [Add Library](add-library.md)
+* [Add Library](add-library.md)

@@ -5,15 +5,11 @@ in Gerrit and building of the Code Review and Build pipelines in Jenkins.
 
 Navigate to the **Libraries** section on the left-side navigation bar and click the Create button.
 
-Once clicked, the four-step menu will appear:
+Once clicked, the three-step menu will appear:
 
 * The Codebase Info Menu
 * The Library Info Menu
 * The Advanced Settings Menu
-* The Version Control System Info Menu
-
-!!! note
-    The Version Control System Info menu is available in case this option is predefined.
 
 ## The Codebase Info Menu
 
@@ -22,24 +18,26 @@ Once clicked, the four-step menu will appear:
 1. In the **Codebase Integration Strategy** field, select the necessary option that is the configuration strategy for the replication with Gerrit:
 
   * Create – creates a project on the pattern in accordance with a code language, a build tool, and a framework.
-  * Clone – clones the indicated repository into EPAM Delivery Platform.
 
-  !!! note
-      While cloning the existing repository, it is necesary to fill in the additional fields as well.
+  * Clone – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the additional fields as well.
 
   * Import - allows configuring a replication from the Git server. While importing the existing repository, select the Git server and define the respective path to the repository.
 
   !!! note
-      In order to use the Import strategy, make sure to adjust it by following the [Adjust Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the Import strategy, make sure to adjust it by following the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
 
 2. In the **Git Repository URL** field, specify the link to the repository that is to be cloned.
 
-3. Select the **Codebase Authentication** check box and fill in the requested fields:
+3. With the Clone strategy, select the **Codebase Authentication** check box and fill in the requested fields:
 
   * Repository Login – enter your login data.
   * Repository password (or API Token) – enter your password or indicate the API Token.
 
-4. Click the Proceed button to be switched to the next menu.
+  !!! note
+      The Codebase Authentication check box should be selected only in case you clone the private repository.
+      If you define the public repository, there is no need to enter credentials.
+
+4. Click the Proceed button to switch to the next menu.
 
   ## The Library Info Menu
 
@@ -66,11 +64,11 @@ Once clicked, the four-step menu will appear:
   * JavaScript - selecting JavaScript allows using the NPM tool.
   * DotNet - selecting DotNet allows using the DotNet v.2.1 and DotNet v.3.1.
   * Groovy-pipeline - selecting Groovy-pipeline allows having the ability to customize a stages logic. For details,
-  please refer to the [Customize CD Pipeline](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/customize-deploy-pipeline.md#customize-cd-pipeline) page.
+  please refer to the [Customize CD Pipeline](customize-cd-pipeline.md) page.
   * Python - selecting Python allows using the Python v.3.8.
   * Terraform - selecting Terraform allows using the Terraform different versions via the **Terraform version manager** ([tfenv](https://github.com/tfutils/tfenv#usage)).
   EDP supports all actions available in Terraform, thus providing the ability to modify the virtual infrastructure and launch some checks with the help of linters.
-  For details, please refer to the [Use Terraform Library in EDP](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/terraform_stages.md#use-terraform-library-in-edp) page.
+  For details, please refer to the [Use Terraform Library in EDP](terraform-stages.md) page.
   * Rego - this option allows using Rego code language with an Open Policy Agent (OPA) Library. For details, please
   refer to the [Use Open Policy Agent](../user-guide/opa-stages.md) page.
   * Other - selecting Other allows extending the default code languages when creating a codebase with the Clone/Import strategy.
@@ -81,17 +79,17 @@ Once clicked, the four-step menu will appear:
 
 9. The **Select Build Tool** field disposes of the default tools and can be changed in accordance with the selected code language.
 
-10. Click the Proceed button to be switched to the next menu.
+10. Click the Proceed button to switch to the next menu.
 
   ## The Advanced Settings Menu
 
   ![advanced-settings](../assets/user-guide/library-advanced-settings-menu.png "advanced-settings")
 
-11. Select the CI pipeline provisioner that will be used to handle a codebase. For details, refer to the [Add Job Provision](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md#add-job-provision) instruction
+11. Select the CI pipeline provisioner that will be used to handle a codebase. For details, refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction
 and become familiar with the main steps to add an additional job provisioner.
 
-12. Select Jenkins slave that will be used to handle a codebase. For details, refer to the [Add Jenkins Slave](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave) instruction
-and inspect the steps that should be done to add a new Jenkins slave.
+12. Select Jenkins agent that will be used to handle a codebase. For details, refer to the [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md) instruction
+and inspect the steps that should be done to add a new Jenkins agent.
 
 13. Select the necessary codebase versioning type:
 
@@ -110,7 +108,7 @@ and inspect the steps that should be done to add a new Jenkins slave.
   a. Type the version number from which you want the artifacts to be versioned.
 
   !!! note
-      The Start Version From field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10.
+      The Start Version From field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
 14. In the **Select CI Tool** field, choose the necessary tool: Jenkins or GitLab CI, where Jenkins is the default tool and
     the GitLab CI tool can be additionally adjusted. For details, please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page.
@@ -124,8 +122,8 @@ and inspect the steps that should be done to add a new Jenkins slave.
 and have a respective label in the Fix Version field.
 
   !!! note
-      To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Integration With Jira Server](../operator-guide/jira-integration.md) page,
-      and setup the [VCS Integration With Jira Server](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
+      To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page,
+      and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
 
 16. As soon as the Jira server is set, select it in the **Select Jira Server** field.
 
@@ -153,31 +151,19 @@ Upon clicking the question mark icon, observe the tips on how to indicate and co
 
   ![perf-server](../assets/user-guide/library-perf.png "perf-server")
 
-20. Select the **Integrate with Perf Server** checkbox in case it is required to connect to the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_).
-Such functionality allows monitoring the overall team performance and setting up necessary metrics.
+20. Select the **Integrate with Perf Server** checkbox to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
 
   !!! note
-      To adjust the Perf Server integration functionality, first deploy Perf Operator. To get more information about the Perf Operator installation and architecture,
-      please refer to the [PERF Operator](https://github.com/epam/edp-perf-operator#perf-operator) page.
+      If this option is needed, please refer to the [Perf Server Integration](../operator-guide/perf-integration.md) to adjust the integration. After the integration is adjusted, the **Integrate with Perf Server** checkbox will appear in the **Advanced Settings** menu.
 
 21. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be performed.
-Click the Proceed button to be switched to the next menu.
+Click the Proceed button to switch to the next menu.
 
   ![perf-integration](../assets/user-guide/perf-integration-library.png "perf-integration")
 
 22. Select the necessary DataSource (_Jenkins/GitLab, Sonar_) from which the data should be transferred to the Project Performance Board.
 
-23. Click the Create button to create a library or click the Proceed button to be switched to the next VCS menu that can be predefined.
-
-  ## The Version Control System Info Menu
-
-  ![vcs](../assets/user-guide/library-vsc-menu.png "vcs")
-
-24. Enter the login credentials into the **VCS Login** field.
-
-25. Enter the password into the **VCS Password (or API Token)** field OR add the API Token.
-
-26. Click the Create button, check the CONFIRMATION summary, and click Continue to add the library to the Libraries list.
+23. Click the Create button, check the CONFIRMATION summary, and click Continue to add the library to the Libraries list.
 
   !!! note
       After the complete adding of the library, inspect the [Library Overview](library.md) part.
@@ -190,7 +176,13 @@ Click the Proceed button to be switched to the next menu.
 ---
 
 * [Add CD Pipeline](add-cd-pipeline.md)
-* [Adjust Integration With Jira Server](../operator-guide/jira-integration.md)
-* [Adjust VCS Integration With Jira Server](../operator-guide/jira-gerrit-integration.md)
-* [Use Terraform Library in EDP](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/terraform_stages.md#use-terraform-library-in-edp)
-* [Use Open Policy Agent Library in EDP](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/opa_stages.md)
+* [Add Other Code Language](../operator-guide/add-other-code-language.md)
+* [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md)
+* [Adjust Jira Integration](../operator-guide/jira-integration.md)
+* [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
+* [Enable VCS Import Strategy](../operator-guide/import-strategy.md)
+* [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
+* [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
+* [Perf Server Integration](../operator-guide/perf-integration.md)
+* [Use Terraform Library in EDP](terraform-stages.md)
+* [Use Open Policy Agent Library in EDP](opa-stages.md)

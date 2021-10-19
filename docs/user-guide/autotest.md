@@ -23,7 +23,7 @@ The added autotest will be listed in the Autotests list allowing you to do the f
 2. Open autotest data by clicking its link name. Once clicked, the following blocks will be displayed:
 
   * **General Info** - displays common information about the cloned/imported autotest.
-  * **Advanced Settings** - displays the specified job provisioner, Jenkins slave, deployment script, and the versioning type with the start versioning from number (the latter two fields appear in case of edp versioning type).
+  * **Advanced Settings** - displays the specified job provisioner, Jenkins agent, deployment script, and the versioning type with the start versioning from number (the latter two fields appear in case of edp versioning type).
   * **Branches** - displays the status and name of the deployment branch, keeps the additional links to Jenkins and Gerrit. In case of edp versioning type, there are two additional fields:
     * **Build Number** - indicates the current build number;
     * **Last Successful Build** - indicates the last successful build number.
@@ -105,7 +105,7 @@ When adding an autotest, the default branch is a **master** branch. In order to 
   f. Click the Proceed button and wait until the new branch will be added to the list.
 
 !!! info
-    Adding of a new branch is indicated in the context of the edp versioning type. To get more detailed information on how to add a branch using the default versioning type, please refer [here](https://github.com/epam/edp-admin-console/blob/master/documentation/add_autotests.md#-check-autotest-availability).
+    Adding of a new branch is indicated in the context of the edp versioning type. To get more detailed information on how to add a branch using the default versioning type, please refer to the [Add Autotest](add-autotest.md) instruction.
 
 The default autotest repository is cloned and changed to the new indicated version before the build, i.e. the new indicated version will not be committed to the repository; thus, the existing repository will keep the default version.
 

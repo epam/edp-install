@@ -5,12 +5,11 @@ in Gerrit and building of the Code Review pipeline in Jenkins.
 
 Navigate to the **Autotests** section on the left-side navigation bar and click the Create button.
 
-Once clicked, the four-step menu will appear:
+Once clicked, the three-step menu will appear:
 
 * The Codebase Info Menu
 * The Autotest Info Menu
 * The Advanced Settings Menu
-* The Version Control System Info Menu
 
 ## The Codebase Info Menu
 
@@ -21,10 +20,14 @@ There are two available strategies: clone and import. The Clone strategy flow is
 1. **Clone** - this strategy allows cloning the autotest from the indicated repository into EPAM Delivery Platform.
    While cloning the existing repository, you have to fill in the additional fields as well.
 2. In the **Git Repository URL** field, specify the link to the repository with the autotest.
-3. Select the **Codebase Authentication** check box and fill in the requested fields:
+3. With the Clone strategy, select the **Codebase Authentication** check box and fill in the requested fields:
 
   * Repository Login – enter your login data.
   * Repository password (or API Token) – enter your password or indicate the API Token.
+
+    !!! note
+        The Codebase Authentication check box should be selected only in case you clone the private repository.
+        If you define the public repository, there is no need to enter credentials.
 
   If there is a necessity to use the **Import** strategy that allows configuring a replication from the Git server,
   explore the steps below:
@@ -34,13 +37,13 @@ There are two available strategies: clone and import. The Clone strategy flow is
   a. Import - this strategy allows configuring a replication from the Git server.
 
   !!! note
-      In order to use the import strategy, make sure to adjust it by following the [Adjust Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the import strategy, make sure to adjust it by following the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
 
   b. In the **Git Server** field, select the necessary Git server from the drop-down list.
 
   c. In the Relative path field, indicate the respective path to the repository, e.g. **/epmd-edp/examples/basic/edp-auto-tests-simple-example**.
 
-4. After completing the Codebase Info menu step, click the Proceed button to be switched to the next menu.
+4. After completing the Codebase Info menu step, click the Proceed button to switch to the next menu.
 
   ## The Autotest Info Menu
 
@@ -58,19 +61,23 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
 7. Type the necessary description in the **Description** field.
 
-8. In the **Autotest Code Language** field, select the Java code language (specify Java 8 or Java 11 to be used) and get the default Maven build tool OR add another code language. Selecting **Other** allows extending the default code languages and get the necessary build tool, for details, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
+8. In the **Autotest Code Language** field, select the Java code language (specify Java 8 or Java 11 to be used) and get the default Maven build tool OR add another code language.
+Selecting **Other** allows extending the default code languages and get the necessary build tool, for details, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
+
+  !!! note
+      Using the Create strategy does not allow to customize the default code language set.
 
 9. The **Select Build Tool** field can dispose of the default Maven tool, Gradle or other built tool in accordance with the selected code language.
 
-10. All the autotest reports will be created in the Allure framework that is available In the **Autotest Report Framework** field by default. Click the Proceed button to be switched to the next menu.
+10. All the autotest reports will be created in the Allure framework that is available In the **Autotest Report Framework** field by default. Click the Proceed button to switch to the next menu.
 
   ## The Advanced Settings Menu
 
   ![advanced-settings](../assets/user-guide/advanced-settings-autotest.png "advanced-settngs")
 
-11. Select CI pipeline provisioner that will be used to handle a codebase. For details, refer to the [Add Job Provision](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-job-provision.md#add-job-provision) instruction and become familiar with the main steps to add an additional job provisioner.
+11. Select CI pipeline provisioner that will be used to handle a codebase. For details, refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction and become familiar with the main steps to add an additional job provisioner.
 
-12. Select Jenkins slave that will be used to handle a codebase. For details, refer to the [Add Jenkins Slave](https://github.com/epam/edp-jenkins-operator/blob/master/documentation/add-jenkins-slave.md#add-jenkins-slave) instruction and inspect the steps that should be done to add a new Jenkins slave.
+12. Select Jenkins agent that will be used to handle a codebase. For details, refer to the [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md) instruction and inspect the steps that should be done to add a new Jenkins agent.
 
 13. Select the necessary codebase versioning type:
 
@@ -85,7 +92,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
   a. Type the version number from which you want the artifacts to be versioned.
 
   !!! note
-      The Start Version From field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10.
+      The Start Version From field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
 14. In the **Select CI Tool** field, choose the necessary tool: Jenkins or GitLab CI, where Jenkins is the default tool and
     the GitLab CI tool can be additionally adjusted. For details, please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page.
@@ -98,7 +105,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
 15. Select the **Integrate with Jira Server** checkbox in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
 
   !!! note
-      To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Integration With Jira Server](../operator-guide/jira-integration.md) page, and setup the [VCS Integration With Jira Server](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
+      To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page, and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
 
 16. As soon as the Jira server is set, select it in the **Select Jira Server** field.
 
@@ -126,34 +133,21 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
   ![integrate-perf-server](../assets/user-guide/integrate-perf-server-autotest.png "integrate-perf-server")
 
-20. Select the **Integrate with Perf Server** checkbox in case it is required to connect to the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_).
-    Such functionality allows monitoring the overall team performance and setting up necessary metrics.
+20. Select the **Integrate with Perf Server** checkbox to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
 
   !!! note
-      To adjust the Perf Server integration functionality, first deploy Perf Operator. To get more information about the Perf Operator installation and architecture, please refer to the [PERF Operator](https://github.com/epam/edp-perf-operator#perf-operator) page.
+      If this option is needed, please refer to the [Perf Server Integration](../operator-guide/perf-integration.md) to adjust the integration. After the integration is adjusted, the **Integrate with Perf Server** checkbox will appear in the **Advanced Settings** menu.
 
-21. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be performed and click the Proceed button to be switched to the next menu.
+21. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be performed and click the Proceed button to switch to the next menu.
 
   ![perf-integration](../assets/user-guide/perf-integration-autotest.png "perf-integration")
 
 22. Select the necessary DataSource (_Jenkins/GitLab, Sonar_) from which the data should be transferred to the Project Performance Board.
 
-23. Click the Create button to create an autotest or click the Proceed button to be switched to the next VCS menu that can be predefined.
+23. Click the Create button to create an autotest, check the CONFIRMATION summary, click Continue to add an autotest to the Autotests list.
 
-  ## The Version Control System Info Menu
-
-  Once navigated to the VCS Info menu, perform the following:
-
-  ![autotest-vcs](../assets/user-guide/autotest-vcs.png "autotest-vcs")
-
-24. Enter the login credentials into the **VCS Login** field.
-
-25. Enter the password into the **VCS Password (or API Token)** field OR add the API Token.
-
-26. Click the Create button, check the CONFIRMATION summary, click Continue to add an autotest to the Autotests list.
-
-  !!! note
-      After the complete adding of the autotest, inspect the [Autotest Overview](autotest.md) part.
+!!! note
+    After the complete adding of the autotest, inspect the [Autotest Overview](autotest.md) part.
 
 ### Related Articles
 
@@ -163,5 +157,11 @@ There are two available strategies: clone and import. The Clone strategy flow is
 ---
 
 * [Add CD Pipelines](add-cd-pipeline.md)
-* [Adjust Integration With Jira Server](../operator-guide/jira-integration.md)
-* [Adjust VCS Integration With Jira Server](../operator-guide/jira-gerrit-integration.md)
+* [Add Other Code Language](../operator-guide/add-other-code-language.md)
+* [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md)
+* [Adjust Jira Integration](../operator-guide/jira-integration.md)
+* [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
+* [Enable VCS Import Strategy](../operator-guide/import-strategy.md)
+* [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
+* [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
+* [Perf Server Integration](../operator-guide/perf-integration.md)

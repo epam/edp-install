@@ -1,4 +1,4 @@
-# Use Dockerfile linters for Code Review
+# Use Dockerfile Linters for Code Review
 
 This section contains the description of **dockerbuild-verify**, **dockerfile-lint** stages which one can use in Code-Review pipeline.
 
@@ -16,4 +16,4 @@ Inspect the functions performed by the following stages:
 
 * [Use Terraform Library in EDP](terraform-stages.md)
 * [EDP Pipeline Framework](pipeline-framework.md)
-* [Promote Docker Images from ECR to Docker Hub](ecr-to-docker-stages.md)
+* [Promote Docker Images From ECR to Docker Hub](ecr-to-docker-stages.md)
