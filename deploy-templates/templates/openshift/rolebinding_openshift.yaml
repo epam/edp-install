@@ -6,7 +6,9 @@ metadata:
     {{- include "edp-install.labels" . | nindent 4 }}
   name: edp-{{ .Values.global.edpName }}
 roleRef:
+  kind: Role
   name: edp-{{ .Values.global.edpName }}
+  namespace: {{ .Values.global.edpName }}
 subjects:
 - kind: ServiceAccount
   name: edp
