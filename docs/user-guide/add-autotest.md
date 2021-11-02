@@ -1,7 +1,11 @@
 # Add Autotests
 
-Admin Console enables to clone or import an autotest and add it to the environment with its subsequent deployment
-in Gerrit and building of the Code Review pipeline in Jenkins.
+Admin Console enables to clone or import an autotest, add it to the environment with its subsequent deployment in Gerrit (in case the Clone strategy is used) and building of the Code Review pipeline in Jenkins, as well as to use it for work with an application under development.
+ It is also possible to use autotests as quality gates in a newly created CD pipeline.
+
+!!! info
+    Please refer to the [Add Application](add-application.md) section for the details on how to add an application codebase type.
+    For the details on how to use autotests as quality gates, please refer to the the [Stages Menu](add-cd-pipeline.md#stages-menu) section of the [Add CD Pipeline](add-cd-pipeline.md) documentation.
 
 Navigate to the **Autotests** section on the left-side navigation bar and click the Create button.
 
@@ -156,6 +160,7 @@ Selecting **Other** allows extending the default code languages and get the nece
 
 ---
 
+* [Add Application](add-application.md)
 * [Add CD Pipelines](add-cd-pipeline.md)
 * [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md)

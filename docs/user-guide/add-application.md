@@ -1,7 +1,6 @@
 # Add Application
 
-Admin Console allows to create, clone, import an application and add it to the environment with its subsequent deployment
-in Gerrit and building of the Code Review and Build pipelines in Jenkins.
+Admin Console allows to create, clone, import an application and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins.
 
 To add an application, navigate to the **Applications** section on the left-side navigation bar and click the Create button.
 
@@ -213,4 +212,4 @@ to the Project Performance Board.
 * [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
 * [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Perf Server Integration](../operator-guide/perf-integration.md)
-
+* [Promote Application in CD Pipeline](../use-cases/promotion-procedure.md)

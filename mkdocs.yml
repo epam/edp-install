@@ -111,7 +111,7 @@ nav:
     - Pipelines:
       - Overview: user-guide/pipeline-framework.md
       - Add Custom Pipeline Library: user-guide/add-custom-global-pipeline-lib.md
-      - CI pipeline:
+      - CI Pipeline:
         - user-guide/customize-ci-pipeline.md
         - Stages:
           - Overview: user-guide/pipeline-stages.md
@@ -120,7 +120,7 @@ nav:
           - Helm: user-guide/helm-stages.md
           - Open Policy Agent: user-guide/opa-stages.md
           - Terraform: user-guide/terraform-stages.md
-      - CD pipeline:
+      - CD Pipeline:
         - user-guide/add-cd-pipeline.md
         - user-guide/customize-cd-pipeline.md
     - user-guide/d-d-diagram.md
@@ -130,6 +130,9 @@ nav:
     - developer-guide/rest-api.md
     - developer-guide/mk-docs-development.md
   - RoadMap: roadmap.md
-  - Use Cases: use-cases/index.md
+  - Use Cases:
+    - use-cases/index.md
+    - Autotest as Quality Gate: use-cases/autotest-as-quality-gate.md
+    - Promote Application in CD Pipeline: use-cases/promotion-procedure.md
   - glossary.md
   - Releases ⧉: https://github.com/epam/edp-install/releases

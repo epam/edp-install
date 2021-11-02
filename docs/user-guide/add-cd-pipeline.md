@@ -1,4 +1,4 @@
-# Add CD pipeline
+# Add CD Pipeline
 
 Admin Console provides the ability to deploy an environment on your own and specify the essential components as well.
 
@@ -60,7 +60,7 @@ which was selected for the pipeline, will be always used.
 8. Click the plus sign icon in the **Stages** menu and fill in the necessary fields in the Adding Stage window <a name="adding_stage_window"></a>:
 
   ![adding-stage1](../assets/user-guide/cd-adding-stage1.png "adding-stage")
-  
+
   a. Type the stage name;
 
   !!! note
@@ -75,6 +75,9 @@ which was selected for the pipeline, will be always used.
   * Autotests - means that the promoting process should be confirmed by the successful passing of the autotests.
   In the additional fields, select the previously created autotest name and specify its branch for the autotest
   that will be launched on the current stage.
+
+  !!! note
+      Please be aware that autotests used in the CD pipeline cannot be removed. For the details on how to create an autotest codebase, please refer to the [Add Autotest](add-autotest.md) section.
 
   d. Type the step name, which will be displayed in Jenkins, for every quality gate type;
 
@@ -96,11 +99,6 @@ which was selected for the pipeline, will be always used.
    page for details.
 
   i. Click the Add button to display it in the Stages menu.
-
-  !!! info
-      Perform the same steps as described above if there is a necessity to add one more stage.
-
-9. Click the Add button to display it in the Stages menu:
 
   !!! info
       Perform the same steps as described above if there is a necessity to add one more stage.
@@ -197,10 +195,11 @@ after stage deployment.
 
 ## Related Articles
 
+* [Add Autotest](add-autotest.md)
 * [EDP Admin Console](https://github.com/epam/edp-admin-console#edp-admin-console)
 * [Customize CD Pipeline](customize-cd-pipeline.md)
 * [Delivery Dashboard Diagram](d-d-diagram.md)
-
+* [Promote Application in CD Pipeline](../use-cases/promotion-procedure.md)
 ---
 
 * [Manage Jenkins CD Pipeline Job Provision](../operator-guide/manage-jenkins-cd-job-provision.md)

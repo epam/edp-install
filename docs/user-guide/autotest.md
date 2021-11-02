@@ -72,6 +72,13 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
   - click the **Proceed** button to apply the changes;
   - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code-Review pipeline.
 
+  !!! note
+      Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
+
+
+  !!! note
+      To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md) pages.
+
 3. To disable Jira integration, on the **Edit Codebase** page do the following:
 
   - unmark the **Integrate with Jira server** checkbox;
@@ -124,6 +131,43 @@ In order to remove the added branch with the corresponding  record in the Admin 
   !!! note
       The default **master** branch cannot be removed.
 
+## Add Autotest as a Quality Gate
+
+In order to add an autotest as a quality gate to a newly added CD pipeline, do the following:
+
+1. Create a CD pipeline with the necessary parameters. Please refer to the [Add CD Pipeline](add-cd-pipeline.md) section for the details.
+
+2. In the Stages menu, select the **Autotest** quality gate type. It means the promoting process should be confirmed by the successful passing of the autotests.
+
+3. In the additional fields, select the previously created autotest name and specify its branch.
+
+4. After filling in all the necessary fields, click the Create button to start the provisioning of the pipeline. After the CD pipeline is added, the new namespace containing the stage name will be created in Kubernetes (in OpenShift, a new project will be created) with the following name pattern: _[cluster name]-[cd pipeline name]-[stage name]_
+
+## Configure Autotest Launch at Specific Stage
+
+In order to configure the added autotest launch at the specific stage with necessary parameters, do the following:
+
+1. Add the necessary stage to the CD pipeline. Please refer to the [Add CD Pipeline](add-cd-pipeline.md) documentation for the details.
+
+2. Navigate to the **run.json** file and add the stage name and the specific parameters.
+
+## Launch Autotest Locally
+
+There is an ability to run the autotests locally using the IDEA (Integrated Development Environment Application, such as IntelliJ, NetBeans etc.). To launch the autotest project for the local verification, perform the following steps:
+
+1. Clone the project to the local machine.
+
+2. Open the project in IDEA and find the **run.json** file to copy out the necessary command value.
+
+3. Paste the copied command value into the Command line field and run it with the necessary values and namespace.
+
+4. As a result, all launched tests will be executed.
+
+
 ## Related Articles
 
+- [Add Application](add-application.md)
 - [Add Autotests](add-autotest.md)
+- [Add CD Pipeline](add-cd-pipeline.md)
+* [Adjust Jira Integration](../operator-guide/jira-integration.md)
+* [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)

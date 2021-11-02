@@ -127,4 +127,5 @@ In order to remove the added branch with the corresponding  record in the Admin 
 
 ## Related Articles
 
-- [Add Application](add-application.md)
+* [Add Application](add-application.md)
+* [Promote Application in CD Pipeline](../use-cases/promotion-procedure.md)

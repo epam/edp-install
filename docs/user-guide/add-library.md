@@ -1,7 +1,6 @@
 # Add Library
 
-Admin Console helps to create, clone or import a library and add it to the environment with its subsequent deployment
-in Gerrit and building of the Code Review and Build pipelines in Jenkins.
+Admin Console helps to create, clone or import a library and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins.
 
 Navigate to the **Libraries** section on the left-side navigation bar and click the Create button.
 
