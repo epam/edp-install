@@ -8,7 +8,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
 
       kubectl create secret generic gitlab-sshkey -n <edp-project> \
         --from-file=id_rsa=id_rsa \
-        --from-file id_rsa.pub=id_rsa.pub \
+        --from-file=id_rsa.pub=id_rsa.pub \
         --from-literal=username=user@example.com
 
 2. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **httpsPort**, **sshPort**, **nameSshKeySecret**, and **createCodeReviewPipeline** fields.
