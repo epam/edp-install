@@ -13,7 +13,7 @@ Within EDP, the pipeline framework comprises the following pipelines:
 !!! note
     Please refer to the [EDP Pipeline Framework](pipeline-framework.md) page for details.
 
-The diagram below shows the commit path through these pipelines and the respective stages.
+The diagram below shows the delivery path through these pipelines and the respective stages. Please be aware that stages may differ for different codebase types.
 
 ![stages](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/stages.puml)
 
@@ -52,7 +52,7 @@ The table below provides the details on all the stages in the EDP pipeline frame
 !!! note
     The Create Release pipeline is an internal EDP mechanism for adding, importing or cloning a codebase. It is not a part of the pipeline framework.
 
-## Related Articles
+### Related Articles
 
 * [Manage Jenkins CI Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
 * [GitLab Integration](../operator-guide/gitlab-integration.md)

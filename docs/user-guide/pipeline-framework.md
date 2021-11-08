@@ -1,30 +1,63 @@
 # EDP Pipeline Framework
 
-This chapter provides detailed information about the EDP pipeline framework parts as well as the accurate data about the `Code Review`, `Build` and `Deploy` pipelines with the respective stages.
+This chapter provides detailed information about the EDP pipeline framework concepts and parts, as well as the accurate data about the `Code Review`, `Build` and `Deploy` pipelines with the respective stages.
 
-## Overview
-
-The general EDP Pipeline Framework consists of several parts:
-
-* **Jenkinsfile** - a text file that keeps the definition of a Jenkins Pipeline and is checked into source control. Every Job has its Jenkinsfile that is stored in the specific application repository and in Jenkins as the plain text.
-
-* **Loading Shared Libraries** - a part where every job loads libraries with the help of the shared libraries mechanism for Jenkins that allows to create reproducible pipelines, write them uniformly, and manage the update process. There are two main libraries: [EDP Pipelines](https://github.com/epam/edp-library-pipelines/blob/master/README.md#edp-library-pipelines) with the common logic described for the main pipelines Code Review, Build, Deploy pipelines and [EDP Stages](https://github.com/epam/edp-library-stages#edp-library-stages) library that keeps the description of the stages for every pipeline.
-
-* **Run Stages** - a part where the predefined default stages are launched.
+## EDP Pipeline Framework Overview
 
 !!! note
     The whole logic is applied to **Jenkins** as it is the main tool for the CI/CD processes organization.
 
-## EDP Pipelines and Stages
+![edp-pipeline-framework-basic](../assets/user-guide/edp-pipeline-framework-basic.png "edp-pipeline-framework-basic")
 
-Get acquainted with the sections below to get detailed information about the EDP pipelines and their stages
+The general EDP Pipeline Framework consists of several parts:
 
-## 1. Code Review Pipeline
+* **Jenkinsfile** - a text file that keeps the definition of a Jenkins Pipeline and is checked into source control. Every Job has its Jenkinsfile stored in the specific application repository and in Jenkins as the plain text.
+The behavior logic of the pipelines can be customized easily by modifying a source code which is always copied to the EDP repository after the EDP installation.
+
+![jenkinsfile-example](../assets/user-guide/jenkinsfile-example.png "jenkinsfile-example")
+
+* **Loading Shared Libraries** - a part where every job loads libraries with the help of the shared libraries mechanism for Jenkins that allows to create reproducible pipelines, write them uniformly, and manage the update process.
+There are two main libraries: [EDP Pipelines](https://github.com/epam/edp-library-pipelines/blob/master/README.md#edp-library-pipelines) with the common logic described for the main pipelines Code Review, Build, Deploy pipelines and [EDP Stages](https://github.com/epam/edp-library-stages#edp-library-stages) library that keeps the description of the stages for every pipeline.
+
+* **Run Stages** - a part where the predefined default stages are launched.
+
+![pipeline-script](../assets/user-guide/pipeline-script.png "pipeline-script")
+
+## CI/CD Jobs Comparison
+
+Explore the CI and CD job comparison. Please note that the dynamic stages order can be changed, meanwhile, the predefined stages order in the reference pipeline cannot be changed, i.e. only the predefined stages set can be run.
+
+![ci-cd-jobs-comparison](../assets/user-guide/ci-cd-jobs-comparison.png "ci-cd-jobs-comparison")
+
+## Context
+
+**Context** - a variable that stores and transfers all necessary parameters between stages that are used by pipeline during performing.
+
+1. The context type is "Map".
+2. Each stage has input and output context.
+3. Each stage has a mandatory input context.
+
+!!! note
+    If the input context isn't transferred, the stage will be failed.
+
+## Annotations for CI/CD Stages
+
+Annotation for CI Stages:
+
+* The annotation type is "Map";
+* The annotation consists of the name, buildTool, and codebaseType.
+
+Annotation for CD Stages:
+
+* The annotation type is "Map";
+* The annotation consists of a name.
+
+## Code Review Pipeline
 
 **CodeReview()** – a function that allows using the EDP implementation for the Code Review pipeline.
 
 !!! note
-    All values of different parameters that are used during the pipeline execution are stored in Map "context".
+    All values of different parameters that are used during the pipeline execution are stored in the "Map" context.
 
 The Code Review pipeline consists of several steps:
 
@@ -34,13 +67,13 @@ On the master:
 
 On a particular Jenkins agent that depends on the build tool:
 
-* Creating workdir for application sources
-* Loading build tool implementation for a particular application
-* Run in a loop all stages (From) and run them either in parallel or one by one
+* Creating workdir for application sources;
+* Loading build tool implementation for a particular application;
+* Run in a loop all stages (From) and run them either in parallel or one by one.
 
-### 1.1 Overview
+### Code Review Pipeline Overview
 
-_Using in pipelines - @Library(['edp-library-pipelines@version'])_ _
+_Using in pipelines - @Library(['edp-library-pipelines@version'])_
 
 The corresponding enums, interfaces, classes, and their methods can be used separately from the EDP Pipelines library function
 (please refer to [Table 1](#table1) and [Table 2](#table2)).
@@ -66,16 +99,16 @@ Table 2. <a name="table2"></a> Classes with the respective properties, methods, 
 |**Nexus(Job job, Platform platform, Script script)** - Class that describes the Nexus tool.| **Properties**:<br /><br /><br /><br />Script script - Object with type script, in most cases if class created from Jenkins pipelines it is "this".<br /><br />Platform platform - Object of a class Platform().<br /><br />Job job - Object of a class Job().<br /><br />String autouser - Username of an auto user in Nexus for integration with Jenkins.<br /><br />String credentialsId - Credential Id in Jenkins for Nexus.<br /><br />String host - Nexus host.<br /><br />String port - Nexus http(s) port.<br /><br />String repositoriesUrl - Base URL of repositories in Nexus.<br /><br />String restUrl - URL of Rest API.<br /><br />**Methods**:<br /><br />init(): set all the properties of Nexus object<br /><br />**Example**:<br /><br /> ` context.nexus = new Nexus(context.job, context.platform, this)` <br />`context.nexus.init()`|
 |**Sonar(Job job, Platform platform, Script script)** - Class that describes the Sonar tool.| **Properties**:<br /><br /><br /><br />Script script - Object with type script, in most cases if class created from Jenkins pipelines it is "this".<br /><br />Platform platform - Object of a class Platform().<br /><br />Job job - Object of a class Job().<br /><br />String route - External route of the sonar application.<br /><br />**Methods**:<br /><br />init(): set all the properties of Sonar object<br /><br />**Example**:<br /><br />  `context.sonar = new Sonar(context.job, context.platform, this)` <br />`context.sonar.init()`|
 
-### 1.2 Stages
+### Code Review Pipeline Stages
 
-Each EDP stage implementation has run method that is as input parameter required to pass a context map with different keys. Some stages can implement the logic for several build tools and application types, some of them are specific.
+Each EDP stage implementation has run method that is as input parameter required to pass the "Map" context with different keys. Some stages can implement the logic for several build tools and application types, some of them are specific.
 
 The Code Review pipeline includes the following default stages: **Checkout → Gerrit Checkout → Compile → Tests → Sonar**.
 
 !!! info
     To get the full description of every stage, please refer to the [EDP Stages Framework](#4-edp-stages-framework) section.
 
-### 1.3 How to Redefine or Extend the EDP Pipeline Stages Library
+### How to Redefine or Extend the EDP Pipeline Stages Library
 
 Inspect the points below to redefine or extend the EDP Pipeline Stages Library:
 
@@ -113,11 +146,11 @@ class NewStageMavenApplication {
 return NewStageMavenApplication
 ```
 
-### 1.4 Using EDP Stages Library in the Pipeline
+### Using EDP Stages Library in the Pipeline
 
 In order to use the EDP stages, the created pipeline should fit some requirements, that`s why a developer has to do the following:
 
-* import library - @Library(['edp-library-stages']) _
+* import library - @Library(['edp-library-stages'])
 * import StageFactory class - import com.epam.edp.stages.StageFactory
 * define context Map – context = [:]
 * define stagesFactory instance and load EDP stages:
@@ -225,10 +258,10 @@ pipeline {
 }
 ```
 
-## 2. Build Pipeline
+## Build Pipeline
 
 **Build()** – a function that allows using the EDP implementation for the Build pipeline.
-All values of different parameters that are used during the pipeline execution are stored in Map "context".
+All values of different parameters that are used during the pipeline execution are stored in the "Map" context.
 
 The Build pipeline consists of several steps:
 
@@ -242,9 +275,9 @@ On a particular Jenkins agent that depends on the build tool:
 * Loading build tool implementation for a particular application;
 * Run in a loop all stages (From) and run them either in parallel or one by one.
 
-### 2.1 Overview
+### Build Pipeline Overview
 
-_Using in pipelines - @Library(['edp-library-pipelines@version'])__
+_Using in pipelines - @Library(['edp-library-pipelines@version'])_
 
 The corresponding enums, interfaces, classes, and their methods can be used separately from the EDP Pipelines library
 function (please refer to [Table 3](#table3) and [Table 4](#table4)).
@@ -268,7 +301,7 @@ Table 4. <a name="table4"></a> Classes with the respective properties, methods, 
 |**Nexus(Job job, Platform platform, Script script)** - Class that describes the Nexus tool.| **Properties**:<br /><br />Script script - Object with type script, in most cases if class created from Jenkins pipelines it is "this".<br /><br />Platform platform - Object of a class Platform().<br /><br />Job job - Object of a class Job().<br /><br />String autouser - Username of an auto user in Nexus for integration with Jenkins.<br /><br />String credentialsId - Credentials Id in Jenkins for Nexus.<br /><br />String host - Nexus host.<br /><br />String port - Nexus http(s) port.<br /><br />String repositoriesUrl - Base URL of repositories in Nexus.<br /><br />String restUrl - URL of Rest API.<br /><br />**Methods**:<br /><br />init(): set all the properties of the Nexus object.<br /><br />**Example**:<br /><br />`context.nexus = new Nexus(context.job, context.platform, this) context.nexus.init()`|
 |**Sonar(Job job, Platform platform, Script script)** - Class that describes the Sonar tool.| **Properties**:<br /><br />Script script - Object with type script, in most cases if class created from Jenkins pipelines it is "this".<br /><br />Platform platform - Object of a class Platform().<br /><br />Job job - Object of a class Job().<br /><br />String route - External route of the sonar application.<br /><br />**Methods**:<br /><br />init(): set all the properties of Sonar object.<br /><br />**Example**:<br /><br />`context.sonar = new Sonar(context.job, context.platform, this) context.sonar.init()`|
 
-### 2.2 Stages
+### Build Pipeline Stages
 
 Each EDP stage implementation has run method that is as input parameter required to pass a context map with different keys.
 Some stages can implement the logic for several build tools and application types, some of them are specific.
@@ -278,7 +311,7 @@ The Build pipeline includes the following default stages: **Checkout → Gerrit 
 !!! info
     To get the full description of every stage, please refer to the [EDP Stages Framework](#4-edp-stages-framework) section.
 
-### 2.3 How to Redefine or Extend EDP Pipeline Stages Library
+### How to Redefine or Extend EDP Pipeline Stages Library
 
 Inspect the points below to redefine or extend the EDP Pipeline Stages Library:
 
@@ -316,11 +349,11 @@ class NewStageMavenApplication {
 return NewStageMavenApplication
 ```
 
-### 2.4 Using EDP Stages Library in the Pipeline
+### Using EDP Stages Library in the Pipeline
 
 In order to use the EDP stages, the created pipeline should fit some requirements, that`s why a developer has to do the following:
 
-* import library - @Library(['edp-library-stages']) _
+* import library - @Library(['edp-library-stages'])
 * import StageFactory class - import com.epam.edp.stages.StageFactory
 * define context Map – context = [:]
 * define stagesFactory instance and load EDP stages:
@@ -428,9 +461,9 @@ pipeline {
 }
 ```
 
-## 3. EDP Library Stages Description
+## EDP Library Stages Description
 
-_Using in pipelines - @Library(['edp-library-stages@version'])_ _
+_Using in pipelines - @Library(['edp-library-stages@version'])_
 
 The corresponding enums, classes, interfaces and their methods can be used separately from the EDP Stages library function (please refer to [Table 5](#table5)).
 
@@ -440,7 +473,8 @@ Table 5. <a name="table5"></a> Enums and Classes with the respective properties,
 |---|---|
 |_ProjectType_:<br /><br /> - APPLICATION<br />  - AUTOTESTS<br />  - LIBRARY| _**StageFactory()**_ - Class that contains methods getting an implementation of the particular stage either EDP <br />from shared library or custom from application repository.<br /><br />**Properties**:<br /><br />Script script - Object with type script, in most cases if class created from Jenkins pipelines it is "this".<br /><br />Map stages - Map of stages implementations.<br /><br />**Methods**:<br /><br />loadEdpStages(): return a list of Classes that describes EDP stages implementations.<br /><br />loadCustomStages(String directory): return a list of Classes that describes EDP custom stages from application <br />repository from "directory". The "directory" should have an absolute path to files with classes of custom stages<br /> implementations. Should be run from a Jenkins agent.<br /><br />add(Class clazz): register class for some particular stage in stages map of StageFactory class.<br /><br />getStage(String name, String buildTool, String type): return an object of the class for a particular stage <br />from stages property based on stage name and buildTool, type of application.<br /><br />**Example**:<br /><br />`context.factory = new StageFactory(script: this)`<br />`context.factory.loadEdpStages().each() { context.factory.add(it) }`<br />`context.factory.loadCustomStages("${context.workDir}/stages").each() { context.factory.add(it) }`<br />`context.factory.getStage(stageName.toLowerCase(),context.application.config.build_tool.toLowerCase(),`<br />`context.application.config.type).run(context)`|
 
-## 4. EDP Stages Framework
+
+## EDP Stages Framework
 
 Each EDP stage implementation has run method that is as input parameter required to pass a context map with different keys.
 Some stages can implement the logic for several build tools and application types, some of them are specific.
@@ -460,27 +494,28 @@ Table 7. <a name="table7"></a> The Sonar, Build, Build Docker Image, Push, and G
 |---|---|---|---|---|
 |name = "sonar"<br />buildTool = ["dotnet"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.job.type<br />- String context.application.name<br />- String context.buildTool.sln_filename<br />- String context.sonar.route<br />- String context.gerrit.changeName(Only for codereview pipeline)<br />- String context.gerrit.branch(Only for build pipeline)<br /><br />buildTool = ["gradle"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.job.type<br />- String context.nexus.credentialsId<br />- String context.buildTool.command<br />- String context.application.name<br />- String context.sonarRoute<br />- String context.gerrit.changeName(Only for codereview pipeline)<br />- String context.gerrit.branch(Only for build pipeline)<br /><br />buildTool = ["maven"]<br />type = [ProjectType.APPLICATION, ProjectType.AUTOTESTS, ProjectType.LIBRARY]<br />context required:<br />- String context.workDir<br />- String context.job.type<br />- String context.nexus.credentialsId<br />- String context.application.name<br />- String context.buildTool.command<br />- String context.sonar.route<br />- String context.gerrit.changeName(Only for codereview pipeline)<br />- String context.gerrit.branch(Only for build pipeline)<br />buildTool = ["npm"]<br /><br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.job.type<br />- String context.sonar.route<br />- String context.application.name<br />- String context.gerrit.changeName(Only for codereview pipeline)<br />- String context.gerrit.branch(Only for build pipeline)|name = "build"<br />buildTool = ["gradle"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.buildTool.command<br />- String context.nexus.credentialsId<br /><br />buildTool = ["maven"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.buildTool.command<br />- String context.nexus.credentialsId<br /><br />buildTool = ["npm"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.nexus.credentialsId<br />- String context.buildTool.groupRepository|name = "build-image"<br />buildTool = ["dotnet"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.application.deployableModule<br />- String context.application.deployableModuleDir<br />- String context.application.name<br />- String context.application.config.language<br />- String context.application.buildVersion<br />- Boolean context.job.promoteImages<br />- String context.job.envToPromote<br /><br />buildTool = ["gradle"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.application.deployableModule<br />- String context.application.deployableModuleDir<br />- String context.application.name<br />- String context.application.config.language<br />- String context.application.buildVersion<br />- Boolean context.job.promoteImages<br />- String context.job.envToPromote<br /><br />buildTool = ["maven"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.application.deployableModule<br />- String context.application.deployableModuleDir<br />- String context.application.name<br />- String context.application.config.language<br />- String context.application.buildVersion<br />- Boolean context.job.promoteImages<br />- String context.job.envToPromote<br /><br />buildTool = ["npm"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.application.deployableModule<br />- String context.application.deployableModuleDir<br />- String context.application.name<br />- String context.application.config.language<br />- String context.application.buildVersion<br />- Boolean context.job.promoteImages<br />- String context.job.envToPromote|name = "push"<br />buildTool = ["dotnet"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.gerrit.project<br />- String context.buildTool.sln_filename<br />- String context.buildTool.snugetApiKey<br />- String context.buildTool.hostedRepository<br /><br />buildTool = ["gradle"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.nexus.credentialsId<br />- String context.application.version<br />- String context.buildTool.hostedRepository<br />- String context. buildTool.settings<br /><br />buildTool = ["maven"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.nexus.credentialsId<br />- String context.application.version<br />- String context.buildTool.hostedRepository<br />- String context.buildTool.command<br /><br />buildTool = ["npm"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.nexus.credentialsId<br />- String context.buildTool.hostedRepository<br />- String context.gerrit.autouser|name = "git-tag"<br />buildTool = ["maven", "npm", "dotnet","gradle"]<br />type = [ProjectType.APPLICATION]<br />context required:<br />- String context.workDir<br />- String context.gerrit.credentialsId<br />- String context.gerrit.sshPort<br />- String context.gerrit.host<br />- String context.gerrit.autouser<br />- String context.application.buildVersion|
 
-## 5. Deploy Pipeline
+## Deploy Pipeline
 
 **Deploy()** – a function that allows using the EDP implementation for the deploy pipeline.
-All values of different parameters that are used during the pipeline execution are stored in Map "context".
+All values of different parameters that are used during the pipeline execution are stored in the "Map" context.
 
 The deploy pipeline consists of several steps:
 
 On the master:
-* Initialization of all objects (Platform, Job, Gerrit, Nexus, StageFactory) and loading the default implementations of EDP stages
-* Creating an environment if it doesn`t exist
-* Deploying the last versions of the applications
-* Run predefined manual gates
+
+* Initialization of all objects (Platform, Job, Gerrit, Nexus, StageFactory) and loading the default implementations of EDP stages;
+* Creating an environment if it doesn`t exist;
+* Deploying the last versions of the applications;
+* Run predefined manual gates.
 
 On a particular autotest Jenkins agent that depends on the build tool:
 
-* Creating workdir for autotest sources
-* Run predefined autotests
+* Creating workdir for autotest sources;
+* Run predefined autotests.
 
-### 5.1 EDP Library Pipelines Description
+### EDP Library Pipelines Description
 
-_Using in pipelines - @Library(['edp-library-pipelines@version'])_ _
+_Using in pipelines - @Library(['edp-library-pipelines@version']) _
 
 The corresponding enums and interfaces with their methods can be used separately from the EDP Pipelines library function
 (please refer to [Table 8](#table8) and [Table 9](#table9)).
@@ -504,7 +539,7 @@ Table 9. <a name="table9"></a> Classes with the respective properties, methods, 
 |**Gerrit(Job job, Platform platform, Script script)** - Class that describe the Gerrit tool.| **Properties**:<br /><br />Script script - Object with type script, in most cases if class created from Jenkins pipelines it is "this".<br /><br />Platform platform - Object of a class Platform(). <br /><br />Job job - Object of a class Job().<br /><br />String credentialsId - Credential Id in Jenkins for Gerrit. <br /><br />String autouser - Username of autouser in Gerrit for integration with Jenkins. <br /><br />String host - Gerrit host. <br /><br />String project - project name of built application. <br /><br />String branch - branch to build application from. <br /><br />String changeNumber - change number of Gerrit commit. <br /><br />String changeName - change name of Gerrit commit. <br /><br />String refspecName - refspecName of Gerrit commit. <br /><br />String sshPort - gerrit ssh port number. <br /><br />String patchsetNumber - patchsetNumber of Gerrit commit.<br /><br />**Methods**:<br /><br />init(): set all the properties of Gerrit object. <br /><br />**Example**:<br /><br />`context.gerrit = new Gerrit(context.job, context.platform, this)`<br />`context.gerrit.init()`.
 |**Nexus(Job job, Platform platform, Script script)** - Class that describe the Nexus tool. | **Properties**:<br /><br />Script script - Object with type script, in most cases if class created from Jenkins pipelines it is "this". <br /><br />Platform platform - Object of a class Platform(). <br /><br />Job job - Object of a class Job(). <br /><br />String autouser - Username of autouser in Nexus for integration with Jenkins. <br /><br />String credentialsId - Credential Id in Jenkins for Nexus. <br /><br />String host - Nexus host. <br /><br />String port - Nexus http(s) port. <br /><br />String repositoriesUrl - Base URL of repositories in Nexus. <br /><br />String restUrl - URL of Rest API. <br /><br />**Methods**:<br /><br />init(): set all the properties of Nexus object. <br /><br />**Example**:<br /><br />  `context.nexus = new Nexus(context.job, context.platform, this)`  `context.nexus.init()`.|
 
-### 5.2 EDP Library Stages Description
+### EDP Library Stages Description
 
 _Using in pipelines - @Library(['edp-library-stages@version'])_ _
 
@@ -516,7 +551,7 @@ Table 10. <a name="table10"></a> Classes with the respective properties, methods
 |---|---|
 |**StageFactory()** - Class that contains methods getting implementation of particular stage either EDP from shared library or custom from application repository.|**Properties**:<br /><br />Script script - Object with type script, in most cases if class created from Jenkins pipelines it is "this"<br /><br />Map stages - Map of stages implementations<br /><br />**Methods**:<br /><br />loadEdpStages(): return list of Classes that describes EDP stages implementations<br /><br />loadCustomStages(String directory): return list of Classes that describes EDP custom stages from <br />application repository from "directory". The "directory" should be absolute path to files <br />with classes of custom stages implementations. Should be run from Jenkins agent.<br /><br />add(Class clazz): register class for some particular stage in stages map of StageFactory class<br /><br />getStage(String name, String buildTool, String type): return object of the class for particular stage <br />from stages property based on stage name and buildTool, type of application<br /><br /><br />**Example**:<br /><br />`context.factory = new StageFactory(script: this)`<br />`context.factory.loadEdpStages().each() { context.factory.add(it) }`<br />`context.factory.loadCustomStages("${context.workDir}/stages").each() { context.factory.add(it) }`<br />`context.factory.getStage(stageName.toLowerCase(),context.application.config.build_tool.toLowerCase(),`<br />`context.application.config.type).run(context)`.|
 
-### 5.3 Deploy Pipeline Stages
+### Deploy Pipeline Stages
 
 Each EDP stage implementation has run method that is as input parameter required to pass a context map with different keys.
 Some stages can implement the logic for several build tools and application types, some of them are specific.
@@ -530,12 +565,12 @@ Table 11. <a name="table11"></a> The Deploy, Automated tests, and Promote Images
 |---|---|---|
 |name = "deploy"<br />buildTool = null<br />type = null<br /><br />context required:<br /><br />•	String context.workDir<br />•	StageFactory context.factory<br />•	String context.gerrit.autouser<br />•	String context.gerrit.host<br />•	String context.application.config.cloneUrl<br />•	String context.jenkins.token<br />•	String context.job.edpName<br />•	String context.job.buildUrl<br />•	String context.job.jenkinsUrl<br />•	String context.job.metaProject<br />•	List context.job.applicationsList [['name':'application1_name','version':'application1_version],...]<br />•	String context.job.deployTemplatesDirectory<br />output:<br /><br />•	List context.job.updatedApplicaions [['name':'application1_name','version':'application1_version],...]	<br />|name = "automation-tests", buildTool = null, type = null<br /><br />context required:<br /><br />- String context.workDir<br />- StageFactory context.factory<br />- String context.gerrit.credentialsId<br />- String context.autotest.config.cloneUrl<br />- String context.autotest.name<br />- String context.job.stageWithoutPrefixName<br />- String context.buildTool.settings<br />- String context.autotest.config.report_framework|name = "promote-images"<br />buildTool = null<br />type = null<br /><br />context required:<br /><br />- String context.workDir<br />- String context.buildTool.sln_filename<br />- List context.job.updatedApplicaions [['name':'application1_name','version':'application1_version],...]|
 
-### 5.4 How to Redefine or Extend EDP Pipeline Stages Library
+### How to Redefine or Extend EDP Pipeline Stages Library
 
 !!! info
     Currently, the redefinition of Deploy pipeline stages is prohibited.
 
-### 5.5 Using EDP Library Stages in the Pipeline
+### Using EDP Library Stages in the Pipeline
 
 In order to use the EDP stages, the created pipeline should fit some requirements, that`s why a developer has to do the following:
 
@@ -658,6 +693,17 @@ pipeline {
 }
 ```
 
+
+
 ### Related Articles
+
+* [Add Application](add-application.md)
+* [Add Library](add-library.md)
+* [Add CD Pipeline](add-cd-pipeline.md)
+* [CI Pipeline Details](ci-pipeline-details.md)
+* [CD Pipeline Details](cd-pipeline-details.md)
+* [Customize CI Pipeline](customize-ci-pipeline.md)
+* [Customize CD Pipeline](customize-cd-pipeline.md)
 * [EDP Stages](pipeline-stages.md)
+* [Glossary](../glossary.md)
 * [Use Terraform Library in EDP](terraform-stages.md)

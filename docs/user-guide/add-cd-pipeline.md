@@ -136,7 +136,7 @@ in alphabetical order.
 
   ![edit-cd](../assets/user-guide/edit-cd-pipeline.png "edit-cd")
 
-  * apply the necessary changes and click the Proceed button to confirm the editions:
+  * apply the necessary changes (the list of applications for deploy, image streams, and promotion in the pipeline) and click the Proceed button to confirm the editions:
 
    ![edit-page](../assets/user-guide/edit-cd-pipeline-page.png)
 

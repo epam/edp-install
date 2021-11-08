@@ -23,6 +23,7 @@ package "Build pipeline" as 2 {
 [init] as i1
 [checkout]
 [get-version]
+[compile]
 [tests] as t1
 [sonar] as s1
 [build] as b1
@@ -33,7 +34,8 @@ package "Build pipeline" as 2 {
 
 i1->[checkout]
 [checkout]->[get-version]
-[get-version]->t1
+[get-version]->[compile]
+[compile]->t1
 t1->s1
 s1->b1
 b1->[build-image-kaniko]

@@ -1,0 +1,11 @@
+@startuml
+
+package "Deploy pipeline" as 3 {
+[init] as i2
+i2->[deploy]
+[deploy]->[manual]
+[manual]->[promote-images]
+}
+
+
+@enduml

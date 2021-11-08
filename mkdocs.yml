@@ -60,7 +60,7 @@ nav:
         - Install Ingress-nginx: operator-guide/install-ingress-nginx.md
         - Install Keycloak: operator-guide/install-keycloak.md
         - Kiosk:
-            - EDP Kiosk Usage: operator-guide/edp-kiosk-usage
+            - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
             - Set Up Kiosk: operator-guide/install-kiosk.md
         - Set Up Kubernetes: operator-guide/kubernetes-cluster-settings.md
         - Set Up OpenShift: operator-guide/openshift-cluster-settings.md
@@ -112,9 +112,13 @@ nav:
       - Overview: user-guide/library.md
       - user-guide/add-library.md
     - Pipelines:
-      - Overview: user-guide/pipeline-framework.md
+      - EDP CI/CD Overview: user-guide/cicd-overview.md
+      - EDP Pipeline Framework: user-guide/pipeline-framework.md
       - Add Custom Pipeline Library: user-guide/add-custom-global-pipeline-lib.md
       - CI Pipeline:
+        - user-guide/ci-pipeline-details.md
+        - user-guide/code-review-pipeline.md
+        - user-guide/build-pipeline.md
         - user-guide/customize-ci-pipeline.md
         - Stages:
           - Overview: user-guide/pipeline-stages.md
@@ -124,8 +128,10 @@ nav:
           - Open Policy Agent: user-guide/opa-stages.md
           - Terraform: user-guide/terraform-stages.md
       - CD Pipeline:
+        - user-guide/cd-pipeline-details.md
         - user-guide/add-cd-pipeline.md
         - user-guide/customize-cd-pipeline.md
+        - user-guide/prepare-for-release.md
     - user-guide/d-d-diagram.md
   - Developer Guide:
     - developer-guide/index.md
