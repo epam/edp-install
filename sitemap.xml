@@ -201,6 +201,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/use-cases/autotest-as-quality-gate/</loc>
+         <lastmod>2021-11-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://epam.github.io/edp-install/use-cases/promotion-procedure/</loc>
+         <lastmod>2021-11-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/user-guide/</loc>
          <lastmod>2021-11-09</lastmod>
          <changefreq>daily</changefreq>
