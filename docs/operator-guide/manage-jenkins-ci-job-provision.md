@@ -21,7 +21,7 @@ Take the steps below to add a custom job provision:
 1. Navigate to the Jenkins main page and open the *job-provisions/ci* folder, click **New Item** and type the name of job-provisions, for example - custom-github.
 
     ![ci-provisioner-name](../assets/operator-guide/ci-provisioner-name.png "ci-provisioner-name")
-    
+
     Scroll down to the **Copy from** field and enter "/job-provisions/ci/github", and click OK:
     ![copy-ci-provisioner](../assets/operator-guide/copy-ci-provisioner.png "copy-ci-provisioner")
 
@@ -42,7 +42,7 @@ Code Review and Build pipelines for **docker** application:
 
   !!! note
       Make sure the support for the above mentioned logic is implemented. Please refer to the [How to Redefine or Extend the EDP Pipeline Stages Library](https://epam.github.io/edp-install/user-guide/pipeline-framework/#13-how-to-redefine-or-extend-the-edp-pipeline-stages-library) section of the guide.
-  
+
   !!! note
       The default template should be changed if there is another creation logic for the Code Review, Build and Create Release pipelines.
       Furthermore, all pipeline types should have the necessary stages as well.
@@ -265,7 +265,7 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
                         stringParam("JIRA_INTEGRATION_ENABLED", "${jiraIntegrationEnabled}", "Is Jira integration enabled")
                         stringParam("GERRIT_PROJECT", "${codebaseName}", "")
                         stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
-                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, HEAD of master will be used")
+                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
                         stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                         stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                         stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
@@ -343,9 +343,9 @@ To create a new job provision for work with GitHub, take the following steps:
 2. Click *New Item* and type the name of job-provisions - **github**.
 
 3. Select the *Freestyle project* option and click OK.
-   
+
 4. Select the *Discard old builds* check box and configure a few parameters:
-   
+
    Strategy: Log Rotation
 
    Days to keep builds: 10
@@ -681,7 +681,7 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
                         stringParam("PLATFORM_TYPE", "${platformType}", "Platform type")
                         stringParam("GERRIT_PROJECT", "${codebaseName}", "")
                         stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
-                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, HEAD of master will be used")
+                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
                         stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                         stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                         stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
@@ -775,13 +775,13 @@ To create a new job provision for work with GitLab, take the following steps:
 2. Click *New Item* and type the name of job-provisions - **gitlab**.
 
 3. Select the *Freestyle project* option and click OK.
-   
+
 4. Select the *Discard old builds* check box and configure a few parameters:
-   
+
    Strategy: Log Rotation
 
    Days to keep builds: 10
-   
+
    Max # of builds to keep: 10
 
 5. Select the *This project is parameterized* check box and add a few input parameters as the following strings:
@@ -1055,7 +1055,7 @@ gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defau
                         stringParam("PLATFORM_TYPE", "${platformType}", "Platform type")
                         stringParam("GERRIT_PROJECT", "${codebaseName}", "")
                         stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
-                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, HEAD of master will be used")
+                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
                         stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
                         stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
                         stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
