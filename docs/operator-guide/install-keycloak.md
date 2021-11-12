@@ -19,47 +19,46 @@ Inspect the prerequisites and the main steps to perform for installing Keycloak.
 
 To install Keycloak, follow the steps below:
 
-  1. Check that a security namespace is created. If not, run the following command to create it:
+1. Check that a security namespace is created. If not, run the following command to create it:
 
-        kubectl create namespace security
+      kubectl create namespace security
 
-!!! note
-    On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+  !!! note
+      On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
 
-  2. Add a chart repository:
+2. Add a chart repository:
 
-        helm repo add codecentric https://codecentric.github.io/helm-charts
-        helm repo update
+      helm repo add codecentric https://codecentric.github.io/helm-charts
+      helm repo update
 
-  3. Create Keycloak admin secret:
+3. Create Keycloak admin secret:
 
-        kubectl -n security create secret generic keycloak-admin-creds \
-        --from-literal=username=<keycloak_admin_username> \
-        --from-literal=password=<keycloak_admin_password>
+      kubectl -n security create secret generic keycloak-admin-creds \
+      --from-literal=username=<keycloak_admin_username> \
+      --from-literal=password=<keycloak_admin_password>
 
-  4. Create PostgreSQL admin secret:
+4. Create PostgreSQL admin secret:
 
-        kubectl -n security create secret generic keycloak-postgresql \
-        --from-literal=postgresql-password=<postgresql_password> \
-        --from-literal=postgresql-postgres-password=<postgresql_postpges_password>
+      kubectl -n security create secret generic keycloak-postgresql \
+      --from-literal=postgresql-password=<postgresql_password> \
+      --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
 
-  5. Install Keycloak v.13.0.1:
+5. Install Keycloak v.15.0.2 which is included in the [codecentric/keycloak](https://artifacthub.io/packages/helm/codecentric/keycloak) Helm chart v.15.1.0:
 
-!!! info
-    The Keycloak can be deployed in a production ready mode (e.g. it can include multiple replicas, persistent storage, autoscaling, monitoring, etc.).
-    For details, please refer to the [Official Chart Documentation](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
+  !!! info
+      The Keycloak can be deployed in a production ready mode (e.g. it can include multiple replicas, persistent storage, autoscaling, monitoring, etc.).
+      For details, please refer to the [Official Chart Documentation](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
 
   ---
       helm install keycloak codecentric/keycloak \
-      --version 11.0.1 \
-      --set image.tag=13.0.1 \
+      --version 15.1.0 \
       --values values.yaml \
       --namespace security
 
   Check out the *values.yaml* file sample of the Keycloak customization:
 
-<details>
-<summary><b>View: values.yaml</b></summary>
+  <details>
+  <summary><b>View: values.yaml</b></summary>
 
 ```yaml
 replicas: 1
@@ -110,14 +109,15 @@ ingress:
     kubernetes.io/ingress.class: nginx
     ingress.kubernetes.io/affinity: cookie
   rules:
-    - host: keycloak.<DNS_WILDCARD>
+    - host: keycloak.<ROOT_DOMAIN>
       paths:
-        - /
+        - path: "/"
+          pathType: Prefix
 
 # This block should be uncommented if you set Keycloak to OpenShift and change the host field
 # route:
 #   enabled: true
-#   host: "keycloak.<DNS_WILDCARD>"
+#   host: "keycloak.<ROOT_DOMAIN>"
 
 resources:
   limits:
@@ -132,27 +132,27 @@ persistence:
   dbVendor: postgres
 
 postgresql:
-  postgresqlUsername: username
+  postgresqlUsername: admin
   postgresqlDatabase: keycloak
   existingSecret: keycloak-postgresql
   persistence:
     enabled: true
     size: "3Gi"
-    # If the StorageClass with reclaimPolicy: Retain will be used - install an additional StorageClass before installing Keycloak 
+    # If the StorageClass with reclaimPolicy: Retain is used, install an additional StorageClass before installing Keycloak
     # (the code is given below).
     # If the default StorageClass will be used - change "gp2-retain" to "gp2"
     storageClass: "gp2-retain"
 ```
 
-</details>
+  </details>
 
-  6. Install an additional StorageClass (optional):
+6. Install an additional StorageClass (optional):
 
-!!! note
-    If the Keycloak installation uses a StorageClass with reclaimPolicy: Retain - install additional StorageClass *storageclass.yaml*.
+  !!! note
+      If the Keycloak installation uses a StorageClass with **reclaimPolicy: Retain**, install additional StorageClass *storageclass.yaml*.
 
-<details>
-<summary><b>View: storageclass.yaml</b></summary>
+  <details>
+  <summary><b>View: storageclass.yaml</b></summary>
 
 ```yaml
 kind: StorageClass
@@ -167,15 +167,15 @@ reclaimPolicy: Retain
 volumeBindingMode: WaitForFirstConsumer
 ```
 
-</details>
+  </details>
 
-  7.  Install the custom SecurityContextConstraints (only for OpenShift):
+7.  Install the custom SecurityContextConstraints (only for OpenShift):
 
-!!! note
-    If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
+  !!! note
+      If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
 
-<details>
-<summary><b>View: customsecuritycontextconstraints.yaml</b></summary>
+  <details>
+  <summary><b>View: customsecuritycontextconstraints.yaml</b></summary>
 
 ```yaml
 allowHostDirVolumePlugin: false
@@ -229,7 +229,7 @@ volumes:
 - secret
 ```
 
-</details>
+  </details>
 
 ## Configuration
 
