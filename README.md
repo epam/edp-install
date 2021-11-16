@@ -1,6 +1,7 @@
 # EPAM Delivery Platform :rocket:
 
- :warning: Please refer to [EDP documentation](https://epam.github.io/edp-install/) to get the notion of the main concepts and guidelines.
+ | :heavy_exclamation_mark: Please refer to [EDP documentation](https://epam.github.io/edp-install/) to get the notion of the main concepts and guidelines. |
+ | --- |
 
 **EPAM Delivery platform (EDP)** is out of the box integrated ecosystem for software development connected to a local development environment.
 
