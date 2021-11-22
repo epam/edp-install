@@ -9,16 +9,16 @@ Inspect the main steps to install EPAM Delivery Platform. Please check the prere
 !!! note
     &#8249;edp-project&#8250; is the name of the EDP tenant in all the following steps.
 
-1. Create a &#8249;edp-project&#8250; namespace or a space(Kiosk) depending on whether you use Kiosk or not.
+1. Create an &#8249;edp-project&#8250; namespace or a Kiosk space depending on whether Kiosk is used or not.
 
-  * If you don't use Kiosk, create a namespace:
+  * Without Kiosk, create a namespace:
 
         kubectl create namespace <edp-project>
 
     !!! note
         For an OpenShift cluster, run the `oc` command instead of `kubectl` one.
 
-  * If you use Kiosk, create a space:
+  * With Kiosk, create a relevant space:
 
         apiVersion: tenancy.kiosk.sh/v1alpha1
         kind: Space
@@ -28,7 +28,7 @@ Inspect the main steps to install EPAM Delivery Platform. Please check the prere
           account: <edp-project>-admin
 
   !!! note
-      Kiosk is mandatory for EDP v.2.8. It is not implemented for the previous versions, and is optional for EDP since v.2.9.
+      Kiosk is mandatory for EDP v.2.8.x. It is not implemented for the previous versions, and is optional for EDP since v.2.9.x.
 
   To store EDP data, use any existing Postgres database or create one during the installation.
   Additionally, create two secrets in the &#8249;edp-project&#8250; namespace: one with administrative credentials and another with credentials for the EDP tenant (database schema).
@@ -70,9 +70,9 @@ Inspect the main steps to install EPAM Delivery Platform. Please check the prere
   !!! note
       It is highly recommended to use the latest released version.
 
-7. Mind the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file.
+7. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file.
 
-8. If the external database is used, set the global.database.host value to the database DNS name accessible from the &#8249;edp-project&#8250; namespace.
+8. With the external database, set the global.database.host value to the database DNS name accessible from the &#8249;edp-project&#8250; namespace.
 
 9. Install EDP in the &#8249;edp-project&#8250; namespace with the helm tool.
 
@@ -90,26 +90,26 @@ See the details on parameters below:
 
 global:
 
-  # Name of your <edp-project> EDP namespace that was previously defined;
+  # Name of the <edp-project> EDP namespace that was previously defined;
   edpName: <edp-project>
 
-  # DNS wildcard for routing in your K8S cluster;
+  # DNS wildcard for routing in the Kubernetes cluster;
   dnsWildCard: <DNS_wilcdard>
 
-  # Enable or disable integration with Kiosk (by default value is true)
+  # Enable or disable integration with Kiosk (by default the value is true)
   kioskEnabled: <true/false>
 
   # Kubernetes API server;
   webConsole:
     url: <kubeconfig.clusters.cluster.server>
 
-  # set platform type: openshift or kubernetes;
+  # set platform type: OpenShift or Kubernetes;
   platform: <platform_type>
 
-  # Administrators of your tenant separated by comma (,) e.g. user@example.com;
+  # Administrators of the tenant separated by comma (,) e.g. user@example.com;
   admins: [user1@example.com,user2@example.com]
 
-  # Developers of your tenant separated by comma (,) e.g. user@example.com;
+  # Developers of the tenant separated by comma (,) e.g. user@example.com;
   developers: [user1@example.com,user2@example.com]
 
 keycloak-operator:
@@ -119,7 +119,7 @@ keycloak-operator:
 
 dockerRegistry:
   enabled: true
-  # URL to docker registry e.g. <aws_account_id>.dkr.ecr.<region>.amazonaws.com;
+  # URL to Docker registry e.g. <aws_account_id>.dkr.ecr.<region>.amazonaws.com;
   url: <aws_account_id>.dkr.ecr.<region>.amazonaws.com
 
 gerrit-operator:
@@ -128,10 +128,10 @@ gerrit-operator:
     sshPort: <gerrit_ssh_port>
 
 edp:
-  # Admin groups of your tenant separated by comma (,) e.g. test-admin-group;
+  # Admin groups of the tenant separated by comma (,) e.g. test-admin-group;
   adminGroups:
     - "<edp-project>-edp-admin"
-  # Developer groups of your tenant separated by comma (,) e.g. test-admin-group;
+  # Developer groups of the tenant separated by comma (,) e.g. test-admin-group;
   developerGroups:
     - "<edp-project>-edp-developer"
 
@@ -147,7 +147,7 @@ edp:
 
 ## Next Steps
 
-Consult [VCS integration](./import-strategy.md) section, if you plan to integrate [GitLab](./gitlab-integration.md) or [GitHub](./github-integration.md) with EDP.
+Consult [VCS integration](./import-strategy.md) section, if it is necessary to integrate [GitLab](./gitlab-integration.md) or [GitHub](./github-integration.md) with EDP.
 
 ## Related Articles
 
