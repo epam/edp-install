@@ -196,6 +196,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.7.8-to-2.8.4/</loc>
+         <lastmod>2021-11-23</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.8.4-to-2.9.0/</loc>
+         <lastmod>2021-11-23</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/velero-irsa/</loc>
          <lastmod>2021-11-23</lastmod>
          <changefreq>daily</changefreq>
