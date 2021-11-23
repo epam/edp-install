@@ -31,6 +31,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/developer-guide/edp-workflow/</loc>
+         <lastmod>2021-11-23</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/developer-guide/local-development/</loc>
          <lastmod>2021-11-23</lastmod>
          <changefreq>daily</changefreq>
