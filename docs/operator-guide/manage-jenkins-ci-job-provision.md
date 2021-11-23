@@ -487,7 +487,7 @@ if (BRANCH) {
 
     def type = "${TYPE}"
 	def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
-    def crKey = getStageKeyName(buildTool)
+    def crKey = getStageKeyName(buildTool).toString()
     createCodeReviewPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "code-review.groovy",
             repositoryPath, gitCredentialsId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository)
     registerWebHook(repositoryPath)
@@ -925,7 +925,7 @@ if (BRANCH) {
     createListView(codebaseName, formattedBranch)
 
     def type = "${TYPE}"
-    def crKey = getStageKeyName(buildTool)
+    def crKey = getStageKeyName(buildTool).toString()
     createCiPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "code-review.groovy",
         repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
 
