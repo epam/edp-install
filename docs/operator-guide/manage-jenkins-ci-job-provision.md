@@ -153,7 +153,7 @@ if (codebaseFolder == null) {
 }
 
 createListView(codebaseName, "Releases")
-createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
+createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "CreateRelease",
         repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, defaultBranch)
 
 if (buildTool.toString().equalsIgnoreCase('none')) {
@@ -167,7 +167,7 @@ if (BRANCH) {
 
     def type = "${TYPE}"
     def crKey = getStageKeyName(buildTool)
-    createCiPipeline("Code-review-${codebaseName}", codebaseName, stages[crKey], "code-review.groovy",
+    createCiPipeline("Code-review-${codebaseName}", codebaseName, stages[crKey], "CodeReview",
             repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
 
     def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
@@ -176,7 +176,7 @@ if (BRANCH) {
         if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name})
             jobExists = true
 
-        createCiPipeline("Build-${codebaseName}", codebaseName, stages.get(buildKey, defaultBuild), "build.groovy",
+        createCiPipeline("Build-${codebaseName}", codebaseName, stages.get(buildKey, defaultBuild), "Build",
                 repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
 
         if(!jobExists)
@@ -184,7 +184,7 @@ if (BRANCH) {
     }
 }
 
-def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, watchBranch, gitServerCrName, gitServerCrVersion) {
+def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId, watchBranch, gitServerCrName, gitServerCrVersion) {
     pipelineJob("${codebaseName}/${watchBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}") {
         logRotator {
             numToKeep(10)
@@ -202,24 +202,16 @@ def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript,
             }
         }
         definition {
-            cpsScm {
-                scm {
-                    git {
-                        remote {
-                            url(repository)
-                            credentials(credId)
-                        }
-                        branches("${watchBranch}")
-                        scriptPath("${pipelineScript}")
-                    }
-                }
-                parameters {
-                    stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
-                    stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
-                    stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
-                    stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
-                    stringParam("BRANCH", "${watchBranch}", "Branch to build artifact from")
-                }
+            cps {
+                script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\n${pipelineType}()")
+                sandbox(true)
+            }
+            parameters {
+                stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
+                stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
+                stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
+                stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
+                stringParam("BRANCH", "${watchBranch}", "Branch to build artifact from")
             }
         }
     }
@@ -240,7 +232,7 @@ def getStageKeyName(buildTool) {
     return supBuildTool ? "Code-review-${TYPE}" : "Code-review-default"
 }
 
-def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId,
+def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId,
  gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, defaultBranch) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
@@ -248,29 +240,21 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
             daysToKeep(30)
         }
         definition {
-            cpsScm {
-                scm {
-                    git {
-                        remote {
-                            url(repository)
-                            credentials(credId)
-                        }
-                        branches("${defaultBranch}")
-                        scriptPath("${pipelineScript}")
-                    }
-                }
-                parameters {
-                    stringParam("STAGES", "${codebaseStages}", "")
-                    if (pipelineName.contains("Create-release")) {
-                        stringParam("JIRA_INTEGRATION_ENABLED", "${jiraIntegrationEnabled}", "Is Jira integration enabled")
-                        stringParam("GERRIT_PROJECT", "${codebaseName}", "")
-                        stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
-                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
-                        stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
-                        stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
-                        stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
-                        stringParam("DEFAULT_BRANCH", "${defaultBranch}", "Default repository branch")
-                    }
+            cps {
+                script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\n${pipelineType}()")
+                sandbox(true)
+            }
+            parameters {
+                stringParam("STAGES", "${codebaseStages}", "")
+                if (pipelineName.contains("Create-release")) {
+                    stringParam("JIRA_INTEGRATION_ENABLED", "${jiraIntegrationEnabled}", "Is Jira integration enabled")
+                    stringParam("GERRIT_PROJECT", "${codebaseName}", "")
+                    stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
+                    stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
+                    stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
+                    stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
+                    stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
+                    stringParam("DEFAULT_BRANCH", "${defaultBranch}", "Default repository branch")
                 }
             }
         }
@@ -473,7 +457,7 @@ if (codebaseFolder == null) {
 }
 
 createListView(codebaseName, "Releases")
-createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
+createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "CreateRelease",
         repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch)
 
 if (buildTool.toString().equalsIgnoreCase('none')) {
@@ -488,7 +472,7 @@ if (BRANCH) {
     def type = "${TYPE}"
 	def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
     def crKey = getStageKeyName(buildTool).toString()
-    createCodeReviewPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "code-review.groovy",
+    createCodeReviewPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "CodeReview",
             repositoryPath, gitCredentialsId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository)
     registerWebHook(repositoryPath)
 
@@ -499,7 +483,7 @@ if (BRANCH) {
 		def jobExists = false
 		if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name})
             jobExists = true
-        createBuildPipeline("Build-${codebaseName}", codebaseName, stages.get(buildKey, defaultStages), "build.groovy",
+        createBuildPipeline("Build-${codebaseName}", codebaseName, stages.get(buildKey, defaultStages), "Build",
                 repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion, githubRepository)
         registerWebHook(repositoryPath, 'build')
 
@@ -523,35 +507,26 @@ def getStageKeyName(buildTool) {
     return supBuildTool ? "Code-review-${TYPE}" : "Code-review-default"
 }
 
-def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository) {
+def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository) {
     pipelineJob("${codebaseName}/${defaultBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}") {
         logRotator {
             numToKeep(10)
             daysToKeep(7)
         }
         definition {
-            cpsScm {
-                scm {
-                    git {
-                        remote {
-                            url(repository)
-                            credentials(credId)
-                            refspec("+refs/pull/*:refs/remotes/origin/pr/*")
-                        }
-                        branches("\${ghprbActualCommit}")
-                        scriptPath("${pipelineScript}")
-                    }
-                }
-                parameters {
-                    stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
-                    stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
-                    stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
-                    stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
-                    if (pipelineName.contains("Build"))
-                        stringParam("BRANCH", "${defaultBranch}", "Branch to build artifact from")
-                    else
-                        stringParam("BRANCH", "\${ghprbActualCommit}", "Branch to build artifact from")
-                }
+            cps {
+                script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\n${pipelineType}()")
+                sandbox(true)
+            }
+            parameters {
+                stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
+                stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
+                stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
+                stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
+                if (pipelineName.contains("Build"))
+                    stringParam("BRANCH", "${defaultBranch}", "Branch to build artifact from")
+                else
+                    stringParam("BRANCH", "\${ghprbActualCommit}", "Branch to build artifact from")
             }
         }
         triggers {
@@ -585,31 +560,23 @@ def createCodeReviewPipeline(pipelineName, codebaseName, codebaseStages, pipelin
     }
 }
 
-def createBuildPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository) {
+def createBuildPipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository) {
     pipelineJob("${codebaseName}/${defaultBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}") {
         logRotator {
             numToKeep(10)
             daysToKeep(7)
         }
         definition {
-            cpsScm {
-                scm {
-                    git {
-                        remote {
-                            url(repository)
-                            credentials(credId)
-                        }
-                        branches("${defaultBranch}")
-                        scriptPath("${pipelineScript}")
-                    }
-                }
-                parameters {
-                    stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
-                    stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
-                    stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
-                    stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
-                    stringParam("BRANCH", "${defaultBranch}", "Branch to run from")
-                }
+            cps {
+                script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\n${pipelineType}()")
+                sandbox(true)
+            }
+            parameters {
+                stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
+                stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
+                stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
+                stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
+                stringParam("BRANCH", "${defaultBranch}", "Branch to run from")
             }
         }
         triggers {
@@ -655,7 +622,7 @@ def createListView(codebaseName, branchName) {
     }
 }
 
-def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId,
+def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId,
  gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
@@ -663,30 +630,22 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineSc
             daysToKeep(30)
         }
         definition {
-            cpsScm {
-                scm {
-                    git {
-                        remote {
-                            url(repository)
-                            credentials(credId)
-                        }
-                        branches("${defaultBranch}")
-                        scriptPath("${pipelineScript}")
-                    }
-                }
-                parameters {
-                    stringParam("STAGES", "${codebaseStages}", "")
-                    if (pipelineName.contains("Create-release")) {
-                        stringParam("JIRA_INTEGRATION_ENABLED", "${jiraIntegrationEnabled}", "Is Jira integration enabled")
-                        stringParam("PLATFORM_TYPE", "${platformType}", "Platform type")
-                        stringParam("GERRIT_PROJECT", "${codebaseName}", "")
-                        stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
-                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
-                        stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
-                        stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
-                        stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
-                        stringParam("DEFAULT_BRANCH", "${defaultBranch}", "Default repository branch")
-                    }
+            cps {
+                script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\n${pipelineType}()")
+                sandbox(true)
+            }
+            parameters {
+                stringParam("STAGES", "${codebaseStages}", "")
+                if (pipelineName.contains("Create-release")) {
+                    stringParam("JIRA_INTEGRATION_ENABLED", "${jiraIntegrationEnabled}", "Is Jira integration enabled")
+                    stringParam("PLATFORM_TYPE", "${platformType}", "Platform type")
+                    stringParam("GERRIT_PROJECT", "${codebaseName}", "")
+                    stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
+                    stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
+                    stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
+                    stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
+                    stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
+                    stringParam("DEFAULT_BRANCH", "${defaultBranch}", "Default repository branch")
                 }
             }
         }
@@ -916,7 +875,7 @@ if (codebaseFolder == null) {
 }
 
 createListView(codebaseName, "Releases")
-createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "create-release.groovy",
+createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "CreateRelease",
         repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch)
 
 if (BRANCH) {
@@ -926,7 +885,7 @@ if (BRANCH) {
 
     def type = "${TYPE}"
     def crKey = getStageKeyName(buildTool).toString()
-    createCiPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "code-review.groovy",
+    createCiPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "CodeReview",
         repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
 
     def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
@@ -936,7 +895,7 @@ if (BRANCH) {
         if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name}) {
            jobExists = true
         }
-        createCiPipeline("Build-${codebaseName}", codebaseName, stages.get(buildKey, defaultStages), "build.groovy",
+        createCiPipeline("Build-${codebaseName}", codebaseName, stages.get(buildKey, defaultStages), "Build",
                 repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
        if(!jobExists) {
          queue("${codebaseName}/${formattedBranch}-Build-${codebaseName}")
@@ -945,7 +904,7 @@ if (BRANCH) {
 }
 
 
-def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion) {
+def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId, defaultBranch, gitServerCrName, gitServerCrVersion) {
 def jobName = "${defaultBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}"
 def existingJob = Jenkins.getInstance().getItemByFullName("${codebaseName}/${jobName}")
 def webhookToken = null
@@ -970,27 +929,19 @@ pipelineJob("${codebaseName}/${jobName}") {
         }
     }
     definition {
-        cpsScm {
-            scm {
-                git {
-                    remote {
-                        url(repository)
-                        credentials(credId)
-                    }
-                    branches(pipelineName.contains("Build") ? "${defaultBranch}" : "\${gitlabMergeRequestLastCommit}")
-                    scriptPath("${pipelineScript}")
-                }
-            }
-            parameters {
-                stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
-                stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
-                stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
-                stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
-                if (pipelineName.contains("Build"))
-                    stringParam("BRANCH", "${defaultBranch}", "Branch to build artifact from")
-                else
-                    stringParam("BRANCH", "\${gitlabMergeRequestLastCommit}", "Branch to build artifact from")
-            }
+        cps {
+            script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\n${pipelineType}()")
+            sandbox(true)
+        }
+        parameters {
+            stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
+            stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
+            stringParam("STAGES", "${codebaseStages}", "Consequence of stages in JSON format to be run during execution")
+            stringParam("GERRIT_PROJECT_NAME", "${codebaseName}", "Gerrit project name(Codebase name) to be build")
+            if (pipelineName.contains("Build"))
+                stringParam("BRANCH", "${defaultBranch}", "Branch to build artifact from")
+            else
+                stringParam("BRANCH", "\${gitlabMergeRequestLastCommit}", "Branch to build artifact from")
         }
     }
     triggers {
@@ -1029,7 +980,7 @@ def getStageKeyName(buildTool) {
     return supBuildTool ? "Code-review-${TYPE}" : "Code-review-default"
 }
 
-def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineScript, repository, credId,
+def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId,
 gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
@@ -1037,30 +988,22 @@ gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defau
             daysToKeep(30)
         }
         definition {
-            cpsScm {
-                scm {
-                    git {
-                        remote {
-                            url(repository)
-                            credentials(credId)
-                        }
-                        branches("${defaultBranch}")
-                        scriptPath("${pipelineScript}")
-                    }
-                }
-                parameters {
-                    stringParam("STAGES", "${codebaseStages}", "")
-                    if (pipelineName.contains("Create-release")) {
-                        stringParam("JIRA_INTEGRATION_ENABLED", "${jiraIntegrationEnabled}", "Is Jira integration enabled")
-                        stringParam("PLATFORM_TYPE", "${platformType}", "Platform type")
-                        stringParam("GERRIT_PROJECT", "${codebaseName}", "")
-                        stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
-                        stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
-                        stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
-                        stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
-                        stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
-                        stringParam("DEFAULT_BRANCH", "${defaultBranch}", "Default repository branch")
-                    }
+            cps {
+                script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\n${pipelineType}()")
+                sandbox(true)
+            }
+            parameters {
+                stringParam("STAGES", "${codebaseStages}", "")
+                if (pipelineName.contains("Create-release")) {
+                    stringParam("JIRA_INTEGRATION_ENABLED", "${jiraIntegrationEnabled}", "Is Jira integration enabled")
+                    stringParam("PLATFORM_TYPE", "${platformType}", "Platform type")
+                    stringParam("GERRIT_PROJECT", "${codebaseName}", "")
+                    stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
+                    stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
+                    stringParam("GIT_SERVER_CR_NAME", "${gitServerCrName}", "Name of Git Server CR to generate link to Git server")
+                    stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
+                    stringParam("REPOSITORY_PATH", "${repository}", "Full repository path")
+                    stringParam("DEFAULT_BRANCH", "${defaultBranch}", "Default repository branch")
                 }
             }
         }
