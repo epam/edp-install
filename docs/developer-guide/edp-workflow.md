@@ -55,11 +55,13 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
 
   c. Pay attention to the task Status that differs in different entities, the workflow will help to see the whole task processing:
 
+  ![jira-workflow](../assets/developer-guide/jira-workflow.png "jira-workflow")
+
   d. There are several entities that are used on the EDP project: Story, Improvement, Task, Bug.
 
 2. Implement feature, improvement, fix and check the results on your own. If it is impossible to check the results of your work before the merge, verify all later.
 
-3. Create a Merge Request, for details, please refer to the Code Review Process.
+3. Create a Merge Request, for details, please refer to the [Code Review Process](https://gerrit-documentation.storage.googleapis.com/Documentation/3.4.2/intro-user.html#code-review).
 
 4. When committing, use the pattern: [EPMDEDP-JIRA Task Number]: commit type: Commit message.
 
@@ -83,21 +85,33 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
 
    `chore`: (updating grunt tasks etc; no production code change)
 
-   `!`: (added to other commit types to mark breaking changes, e.g. *[EPMDEDP-7799]: refactor!: Remove deprecated sonar-gerrit plugin*)
+   `!`: (added to other commit types to mark breaking changes) For example:
+
+       [EPMDEDP-0000]: feat!: Job provisioner is responsible for the formation of Jenkinsfile
+
+       *BREAKING CHANGE: Job provisioner creates Jenkinsfile and is configured in Jenkins pipeline as a pipeline script.
 
    d. Commit message:
 
    * brief, for example:
 
-      *[EPMDEDP-0000]: fix: Fix Gerrit plugin for Jenkins provisioning*
+      ``[EPMDEDP-0000]: fix: Fix Gerrit plugin for Jenkins provisioning``
 
     or
 
    * descriptive, for example:
 
-      *[EPMDEDP-0000]: feat: Provide the ability to configure hadolint check*
+         [EPMDEDP-0000]: feat: Provide the ability to configure hadolint check
 
-      _* Add configuration files .hadolint.yaml and .hadolint.yml to stash_
+         * Add configuration files .hadolint.yaml and .hadolint.yml to stash
+
+!!! note
+    Make sure there is a descriptive commit message for a breaking change Merge Request. For example:
+
+     *[EPMDEDP-0000]: feat!: Job provisioner is responsible for the formation of Jenkinsfile*<br>
+
+     **BREAKING CHANGE: Job provisioner creates Jenkinsfile and is configured in Jenkins pipeline as a pipeline script.*
+
 
 ### Related Articles
 
