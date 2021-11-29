@@ -99,7 +99,7 @@
 <span class=p>}</span>
 
 <span class=n>createListView</span><span class=p>(</span><span class=n>codebaseName</span><span class=p>,</span> <span class=s>&quot;Releases&quot;</span><span class=p>)</span>
-<span class=n>createReleasePipeline</span><span class=p>(</span><span class=s>&quot;Create-release-${codebaseName}&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>[</span><span class=s>&quot;Create-release&quot;</span><span class=o>]</span><span class=p>,</span> <span class=s>&quot;create-release.groovy&quot;</span><span class=p>,</span>
+<span class=n>createReleasePipeline</span><span class=p>(</span><span class=s>&quot;Create-release-${codebaseName}&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>[</span><span class=s>&quot;Create-release&quot;</span><span class=o>]</span><span class=p>,</span> <span class=s>&quot;CreateRelease&quot;</span><span class=p>,</span>
         <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>jiraIntegrationEnabled</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>)</span>
 
 <span class=k>if</span> <span class=p>(</span><span class=n>buildTool</span><span class=p>.</span><span class=na>toString</span><span class=p>().</span><span class=na>equalsIgnoreCase</span><span class=p>(</span><span class=err>&#39;</span><span class=n>none</span><span class=err>&#39;</span><span class=p>))</span> <span class=p>{</span>
@@ -113,7 +113,7 @@
 
     <span class=n>def</span> <span class=n>type</span> <span class=o>=</span> <span class=s>&quot;${TYPE}&quot;</span>
     <span class=n>def</span> <span class=n>crKey</span> <span class=o>=</span> <span class=n>getStageKeyName</span><span class=p>(</span><span class=n>buildTool</span><span class=p>)</span>
-    <span class=n>createCiPipeline</span><span class=p>(</span><span class=s>&quot;Code-review-${codebaseName}&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>[</span><span class=n>crKey</span><span class=o>]</span><span class=p>,</span> <span class=s>&quot;code-review.groovy&quot;</span><span class=p>,</span>
+    <span class=n>createCiPipeline</span><span class=p>(</span><span class=s>&quot;Code-review-${codebaseName}&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>[</span><span class=n>crKey</span><span class=o>]</span><span class=p>,</span> <span class=s>&quot;CodeReview&quot;</span><span class=p>,</span>
             <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>branch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>)</span>
 
     <span class=n>def</span> <span class=n>buildKey</span> <span class=o>=</span> <span class=s>&quot;Build-${type}-${buildTool.toLowerCase()}&quot;</span><span class=p>.</span><span class=na>toString</span><span class=p>()</span>
@@ -122,7 +122,7 @@
         <span class=nf>if</span><span class=p>(</span><span class=s>&quot;${formattedBranch}-Build-${codebaseName}&quot;</span><span class=p>.</span><span class=na>toString</span><span class=p>()</span> <span class=n>in</span> <span class=n>Jenkins</span><span class=p>.</span><span class=na>instance</span><span class=p>.</span><span class=na>getAllItems</span><span class=p>().</span><span class=na>collect</span><span class=p>{</span><span class=n>it</span><span class=p>.</span><span class=na>name</span><span class=p>})</span>
             <span class=n>jobExists</span> <span class=o>=</span> <span class=kc>true</span>
 
-        <span class=nf>createCiPipeline</span><span class=p>(</span><span class=s>&quot;Build-${codebaseName}&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=p>.</span><span class=na>get</span><span class=p>(</span><span class=n>buildKey</span><span class=p>,</span> <span class=n>defaultBuild</span><span class=p>),</span> <span class=s>&quot;build.groovy&quot;</span><span class=p>,</span>
+        <span class=nf>createCiPipeline</span><span class=p>(</span><span class=s>&quot;Build-${codebaseName}&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=p>.</span><span class=na>get</span><span class=p>(</span><span class=n>buildKey</span><span class=p>,</span> <span class=n>defaultBuild</span><span class=p>),</span> <span class=s>&quot;Build&quot;</span><span class=p>,</span>
                 <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>branch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>)</span>
 
         <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>jobExists</span><span class=p>)</span>
@@ -130,7 +130,7 @@
     <span class=p>}</span>
 <span class=p>}</span>
 
-<span class=n>def</span> <span class=nf>createCiPipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineScript</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span> <span class=n>watchBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>)</span> <span class=p>{</span>
+<span class=n>def</span> <span class=nf>createCiPipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineType</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span> <span class=n>watchBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>)</span> <span class=p>{</span>
     <span class=n>pipelineJob</span><span class=p>(</span><span class=s>&quot;${codebaseName}/${watchBranch.toUpperCase().replaceAll(/\\//, &quot;</span><span class=o>-</span><span class=s>&quot;)}-${pipelineName}&quot;</span><span class=p>)</span> <span class=p>{</span>
         <span class=n>logRotator</span> <span class=p>{</span>
             <span class=n>numToKeep</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
@@ -148,24 +148,16 @@
             <span class=p>}</span>
         <span class=p>}</span>
         <span class=n>definition</span> <span class=p>{</span>
-            <span class=n>cpsScm</span> <span class=p>{</span>
-                <span class=n>scm</span> <span class=p>{</span>
-                    <span class=n>git</span> <span class=p>{</span>
-                        <span class=n>remote</span> <span class=p>{</span>
-                            <span class=n>url</span><span class=p>(</span><span class=n>repository</span><span class=p>)</span>
-                            <span class=n>credentials</span><span class=p>(</span><span class=n>credId</span><span class=p>)</span>
-                        <span class=p>}</span>
-                        <span class=n>branches</span><span class=p>(</span><span class=s>&quot;${watchBranch}&quot;</span><span class=p>)</span>
-                        <span class=n>scriptPath</span><span class=p>(</span><span class=s>&quot;${pipelineScript}&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
-                <span class=p>}</span>
-                <span class=n>parameters</span> <span class=p>{</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s>&quot;${gitServerCrName}&quot;</span><span class=p>,</span> <span class=s>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s>&quot;${gitServerCrVersion}&quot;</span><span class=p>,</span> <span class=s>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s>&quot;${codebaseStages}&quot;</span><span class=p>,</span> <span class=s>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GERRIT_PROJECT_NAME&quot;</span><span class=p>,</span> <span class=s>&quot;${codebaseName}&quot;</span><span class=p>,</span> <span class=s>&quot;Gerrit project name(Codebase name) to be build&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s>&quot;${watchBranch}&quot;</span><span class=p>,</span> <span class=s>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
-                <span class=p>}</span>
+            <span class=n>cps</span> <span class=p>{</span>
+                <span class=n>script</span><span class=p>(</span><span class=s>&quot;@Library([&#39;edp-library-stages&#39;, &#39;edp-library-pipelines&#39;]) _ \n\n${pipelineType}()&quot;</span><span class=p>)</span>
+                <span class=n>sandbox</span><span class=p>(</span><span class=kc>true</span><span class=p>)</span>
+            <span class=p>}</span>
+            <span class=n>parameters</span> <span class=p>{</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s>&quot;${gitServerCrName}&quot;</span><span class=p>,</span> <span class=s>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s>&quot;${gitServerCrVersion}&quot;</span><span class=p>,</span> <span class=s>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s>&quot;${codebaseStages}&quot;</span><span class=p>,</span> <span class=s>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GERRIT_PROJECT_NAME&quot;</span><span class=p>,</span> <span class=s>&quot;${codebaseName}&quot;</span><span class=p>,</span> <span class=s>&quot;Gerrit project name(Codebase name) to be build&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s>&quot;${watchBranch}&quot;</span><span class=p>,</span> <span class=s>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
             <span class=p>}</span>
         <span class=p>}</span>
     <span class=p>}</span>
@@ -186,7 +178,7 @@
     <span class=k>return</span> <span class=n>supBuildTool</span> <span class=o>?</span> <span class=s>&quot;Code-review-${TYPE}&quot;</span> <span class=p>:</span> <span class=s>&quot;Code-review-default&quot;</span>
 <span class=p>}</span>
 
-<span class=n>def</span> <span class=nf>createReleasePipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineScript</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span>
+<span class=n>def</span> <span class=nf>createReleasePipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineType</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span>
  <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>jiraIntegrationEnabled</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>)</span> <span class=p>{</span>
     <span class=n>pipelineJob</span><span class=p>(</span><span class=s>&quot;${codebaseName}/${pipelineName}&quot;</span><span class=p>)</span> <span class=p>{</span>
         <span class=n>logRotator</span> <span class=p>{</span>
@@ -194,29 +186,21 @@
             <span class=n>daysToKeep</span><span class=p>(</span><span class=mi>30</span><span class=p>)</span>
         <span class=p>}</span>
         <span class=n>definition</span> <span class=p>{</span>
-            <span class=n>cpsScm</span> <span class=p>{</span>
-                <span class=n>scm</span> <span class=p>{</span>
-                    <span class=n>git</span> <span class=p>{</span>
-                        <span class=n>remote</span> <span class=p>{</span>
-                            <span class=n>url</span><span class=p>(</span><span class=n>repository</span><span class=p>)</span>
-                            <span class=n>credentials</span><span class=p>(</span><span class=n>credId</span><span class=p>)</span>
-                        <span class=p>}</span>
-                        <span class=n>branches</span><span class=p>(</span><span class=s>&quot;${defaultBranch}&quot;</span><span class=p>)</span>
-                        <span class=n>scriptPath</span><span class=p>(</span><span class=s>&quot;${pipelineScript}&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
-                <span class=p>}</span>
-                <span class=n>parameters</span> <span class=p>{</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s>&quot;${codebaseStages}&quot;</span><span class=p>,</span> <span class=s>&quot;&quot;</span><span class=p>)</span>
-                    <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=p>.</span><span class=na>contains</span><span class=p>(</span><span class=s>&quot;Create-release&quot;</span><span class=p>))</span> <span class=p>{</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;JIRA_INTEGRATION_ENABLED&quot;</span><span class=p>,</span> <span class=s>&quot;${jiraIntegrationEnabled}&quot;</span><span class=p>,</span> <span class=s>&quot;Is Jira integration enabled&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GERRIT_PROJECT&quot;</span><span class=p>,</span> <span class=s>&quot;${codebaseName}&quot;</span><span class=p>,</span> <span class=s>&quot;&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;RELEASE_NAME&quot;</span><span class=p>,</span> <span class=s>&quot;&quot;</span><span class=p>,</span> <span class=s>&quot;Name of the release(branch to be created)&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;COMMIT_ID&quot;</span><span class=p>,</span> <span class=s>&quot;&quot;</span><span class=p>,</span> <span class=s>&quot;Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s>&quot;${gitServerCrName}&quot;</span><span class=p>,</span> <span class=s>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s>&quot;${gitServerCrVersion}&quot;</span><span class=p>,</span> <span class=s>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;REPOSITORY_PATH&quot;</span><span class=p>,</span> <span class=s>&quot;${repository}&quot;</span><span class=p>,</span> <span class=s>&quot;Full repository path&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;DEFAULT_BRANCH&quot;</span><span class=p>,</span> <span class=s>&quot;${defaultBranch}&quot;</span><span class=p>,</span> <span class=s>&quot;Default repository branch&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
+            <span class=n>cps</span> <span class=p>{</span>
+                <span class=n>script</span><span class=p>(</span><span class=s>&quot;@Library([&#39;edp-library-stages&#39;, &#39;edp-library-pipelines&#39;]) _ \n\n${pipelineType}()&quot;</span><span class=p>)</span>
+                <span class=n>sandbox</span><span class=p>(</span><span class=kc>true</span><span class=p>)</span>
+            <span class=p>}</span>
+            <span class=n>parameters</span> <span class=p>{</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s>&quot;${codebaseStages}&quot;</span><span class=p>,</span> <span class=s>&quot;&quot;</span><span class=p>)</span>
+                <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=p>.</span><span class=na>contains</span><span class=p>(</span><span class=s>&quot;Create-release&quot;</span><span class=p>))</span> <span class=p>{</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;JIRA_INTEGRATION_ENABLED&quot;</span><span class=p>,</span> <span class=s>&quot;${jiraIntegrationEnabled}&quot;</span><span class=p>,</span> <span class=s>&quot;Is Jira integration enabled&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GERRIT_PROJECT&quot;</span><span class=p>,</span> <span class=s>&quot;${codebaseName}&quot;</span><span class=p>,</span> <span class=s>&quot;&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;RELEASE_NAME&quot;</span><span class=p>,</span> <span class=s>&quot;&quot;</span><span class=p>,</span> <span class=s>&quot;Name of the release(branch to be created)&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;COMMIT_ID&quot;</span><span class=p>,</span> <span class=s>&quot;&quot;</span><span class=p>,</span> <span class=s>&quot;Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s>&quot;${gitServerCrName}&quot;</span><span class=p>,</span> <span class=s>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s>&quot;${gitServerCrVersion}&quot;</span><span class=p>,</span> <span class=s>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;REPOSITORY_PATH&quot;</span><span class=p>,</span> <span class=s>&quot;${repository}&quot;</span><span class=p>,</span> <span class=s>&quot;Full repository path&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;DEFAULT_BRANCH&quot;</span><span class=p>,</span> <span class=s>&quot;${defaultBranch}&quot;</span><span class=p>,</span> <span class=s>&quot;Default repository branch&quot;</span><span class=p>)</span>
                 <span class=p>}</span>
             <span class=p>}</span>
         <span class=p>}</span>
@@ -330,7 +314,7 @@
 <span class=p>}</span>
 
 <span class=n>createListView</span><span class=p>(</span><span class=n>codebaseName</span><span class=p>,</span> <span class=s2>&quot;Releases&quot;</span><span class=p>)</span>
-<span class=n>createReleasePipeline</span><span class=p>(</span><span class=s2>&quot;Create-release-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=p>[</span><span class=s2>&quot;Create-release&quot;</span><span class=p>],</span> <span class=s2>&quot;create-release.groovy&quot;</span><span class=p>,</span>
+<span class=n>createReleasePipeline</span><span class=p>(</span><span class=s2>&quot;Create-release-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=p>[</span><span class=s2>&quot;Create-release&quot;</span><span class=p>],</span> <span class=s2>&quot;CreateRelease&quot;</span><span class=p>,</span>
         <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>jiraIntegrationEnabled</span><span class=p>,</span> <span class=n>platformType</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>)</span>
 
 <span class=k>if</span> <span class=p>(</span><span class=n>buildTool</span><span class=o>.</span><span class=n>toString</span><span class=p>()</span><span class=o>.</span><span class=n>equalsIgnoreCase</span><span class=p>(</span><span class=s1>&#39;none&#39;</span><span class=p>))</span> <span class=p>{</span>
@@ -345,7 +329,7 @@
     <span class=k>def</span> <span class=nf>type</span> <span class=o>=</span> <span class=s2>&quot;$</span><span class=si>{TYPE}</span><span class=s2>&quot;</span>
     <span class=k>def</span> <span class=nf>supBuildTool</span> <span class=o>=</span> <span class=n>buildToolsOutOfTheBox</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=n>buildTool</span><span class=o>.</span><span class=n>toString</span><span class=p>())</span>
     <span class=k>def</span> <span class=nf>crKey</span> <span class=o>=</span> <span class=n>getStageKeyName</span><span class=p>(</span><span class=n>buildTool</span><span class=p>)</span><span class=o>.</span><span class=n>toString</span><span class=p>()</span>
-    <span class=n>createCodeReviewPipeline</span><span class=p>(</span><span class=s2>&quot;Code-review-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>crKey</span><span class=p>,</span> <span class=n>defaultStages</span><span class=p>),</span> <span class=s2>&quot;code-review.groovy&quot;</span><span class=p>,</span>
+    <span class=n>createCodeReviewPipeline</span><span class=p>(</span><span class=s2>&quot;Code-review-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>crKey</span><span class=p>,</span> <span class=n>defaultStages</span><span class=p>),</span> <span class=s2>&quot;CodeReview&quot;</span><span class=p>,</span>
             <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>githubRepository</span><span class=p>)</span>
     <span class=n>registerWebHook</span><span class=p>(</span><span class=n>repositoryPath</span><span class=p>)</span>
 
@@ -356,7 +340,7 @@
         <span class=k>def</span> <span class=nf>jobExists</span> <span class=o>=</span> <span class=n>false</span>
         <span class=k>if</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{formattedBranch}</span><span class=s2>-Build-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=o>.</span><span class=n>toString</span><span class=p>()</span> <span class=ow>in</span> <span class=n>Jenkins</span><span class=o>.</span><span class=n>instance</span><span class=o>.</span><span class=n>getAllItems</span><span class=p>()</span><span class=o>.</span><span class=n>collect</span><span class=p>{</span><span class=n>it</span><span class=o>.</span><span class=n>name</span><span class=p>})</span>
             <span class=n>jobExists</span> <span class=o>=</span> <span class=n>true</span>
-        <span class=n>createBuildPipeline</span><span class=p>(</span><span class=s2>&quot;Build-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>buildKey</span><span class=p>,</span> <span class=n>defaultStages</span><span class=p>),</span> <span class=s2>&quot;build.groovy&quot;</span><span class=p>,</span>
+        <span class=n>createBuildPipeline</span><span class=p>(</span><span class=s2>&quot;Build-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>buildKey</span><span class=p>,</span> <span class=n>defaultStages</span><span class=p>),</span> <span class=s2>&quot;Build&quot;</span><span class=p>,</span>
                 <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>branch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>githubRepository</span><span class=p>)</span>
         <span class=n>registerWebHook</span><span class=p>(</span><span class=n>repositoryPath</span><span class=p>,</span> <span class=s1>&#39;build&#39;</span><span class=p>)</span>
 
@@ -380,35 +364,26 @@
     <span class=k>return</span> <span class=n>supBuildTool</span> <span class=err>?</span> <span class=s2>&quot;Code-review-$</span><span class=si>{TYPE}</span><span class=s2>&quot;</span> <span class=p>:</span> <span class=s2>&quot;Code-review-default&quot;</span>
 <span class=p>}</span>
 
-<span class=k>def</span> <span class=nf>createCodeReviewPipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineScript</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>githubRepository</span><span class=p>)</span> <span class=p>{</span>
+<span class=k>def</span> <span class=nf>createCodeReviewPipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineType</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>githubRepository</span><span class=p>)</span> <span class=p>{</span>
     <span class=n>pipelineJob</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>/${defaultBranch.toUpperCase().replaceAll(/</span><span class=se>\\</span><span class=s2>//, &quot;</span><span class=o>-</span><span class=s2>&quot;)}-$</span><span class=si>{pipelineName}</span><span class=s2>&quot;</span><span class=p>)</span> <span class=p>{</span>
         <span class=n>logRotator</span> <span class=p>{</span>
             <span class=n>numToKeep</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
             <span class=n>daysToKeep</span><span class=p>(</span><span class=mi>7</span><span class=p>)</span>
         <span class=p>}</span>
         <span class=n>definition</span> <span class=p>{</span>
-            <span class=n>cpsScm</span> <span class=p>{</span>
-                <span class=n>scm</span> <span class=p>{</span>
-                    <span class=n>git</span> <span class=p>{</span>
-                        <span class=n>remote</span> <span class=p>{</span>
-                            <span class=n>url</span><span class=p>(</span><span class=n>repository</span><span class=p>)</span>
-                            <span class=n>credentials</span><span class=p>(</span><span class=n>credId</span><span class=p>)</span>
-                            <span class=n>refspec</span><span class=p>(</span><span class=s2>&quot;+refs/pull/*:refs/remotes/origin/pr/*&quot;</span><span class=p>)</span>
-                        <span class=p>}</span>
-                        <span class=n>branches</span><span class=p>(</span><span class=s2>&quot;\$</span><span class=si>{ghprbActualCommit}</span><span class=s2>&quot;</span><span class=p>)</span>
-                        <span class=n>scriptPath</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{pipelineScript}</span><span class=s2>&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
-                <span class=p>}</span>
-                <span class=n>parameters</span> <span class=p>{</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Gerrit project name(Codebase name) to be build&quot;</span><span class=p>)</span>
-                    <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Build&quot;</span><span class=p>))</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
-                    <span class=k>else</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;\$</span><span class=si>{ghprbActualCommit}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
-                <span class=p>}</span>
+            <span class=n>cps</span> <span class=p>{</span>
+                <span class=n>script</span><span class=p>(</span><span class=s2>&quot;@Library([&#39;edp-library-stages&#39;, &#39;edp-library-pipelines&#39;]) _ </span><span class=se>\n\n</span><span class=s2>$</span><span class=si>{pipelineType}</span><span class=s2>()&quot;</span><span class=p>)</span>
+                <span class=n>sandbox</span><span class=p>(</span><span class=n>true</span><span class=p>)</span>
+            <span class=p>}</span>
+            <span class=n>parameters</span> <span class=p>{</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Gerrit project name(Codebase name) to be build&quot;</span><span class=p>)</span>
+                <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Build&quot;</span><span class=p>))</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
+                <span class=k>else</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;\$</span><span class=si>{ghprbActualCommit}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
             <span class=p>}</span>
         <span class=p>}</span>
         <span class=n>triggers</span> <span class=p>{</span>
@@ -442,31 +417,23 @@
     <span class=p>}</span>
 <span class=p>}</span>
 
-<span class=k>def</span> <span class=nf>createBuildPipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineScript</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>githubRepository</span><span class=p>)</span> <span class=p>{</span>
+<span class=k>def</span> <span class=nf>createBuildPipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineType</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>githubRepository</span><span class=p>)</span> <span class=p>{</span>
     <span class=n>pipelineJob</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>/${defaultBranch.toUpperCase().replaceAll(/</span><span class=se>\\</span><span class=s2>//, &quot;</span><span class=o>-</span><span class=s2>&quot;)}-$</span><span class=si>{pipelineName}</span><span class=s2>&quot;</span><span class=p>)</span> <span class=p>{</span>
         <span class=n>logRotator</span> <span class=p>{</span>
             <span class=n>numToKeep</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
             <span class=n>daysToKeep</span><span class=p>(</span><span class=mi>7</span><span class=p>)</span>
         <span class=p>}</span>
         <span class=n>definition</span> <span class=p>{</span>
-            <span class=n>cpsScm</span> <span class=p>{</span>
-                <span class=n>scm</span> <span class=p>{</span>
-                    <span class=n>git</span> <span class=p>{</span>
-                        <span class=n>remote</span> <span class=p>{</span>
-                            <span class=n>url</span><span class=p>(</span><span class=n>repository</span><span class=p>)</span>
-                            <span class=n>credentials</span><span class=p>(</span><span class=n>credId</span><span class=p>)</span>
-                        <span class=p>}</span>
-                        <span class=n>branches</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>)</span>
-                        <span class=n>scriptPath</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{pipelineScript}</span><span class=s2>&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
-                <span class=p>}</span>
-                <span class=n>parameters</span> <span class=p>{</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Gerrit project name(Codebase name) to be build&quot;</span><span class=p>)</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to run from&quot;</span><span class=p>)</span>
-                <span class=p>}</span>
+            <span class=n>cps</span> <span class=p>{</span>
+                <span class=n>script</span><span class=p>(</span><span class=s2>&quot;@Library([&#39;edp-library-stages&#39;, &#39;edp-library-pipelines&#39;]) _ </span><span class=se>\n\n</span><span class=s2>$</span><span class=si>{pipelineType}</span><span class=s2>()&quot;</span><span class=p>)</span>
+                <span class=n>sandbox</span><span class=p>(</span><span class=n>true</span><span class=p>)</span>
+            <span class=p>}</span>
+            <span class=n>parameters</span> <span class=p>{</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Gerrit project name(Codebase name) to be build&quot;</span><span class=p>)</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to run from&quot;</span><span class=p>)</span>
             <span class=p>}</span>
         <span class=p>}</span>
         <span class=n>triggers</span> <span class=p>{</span>
@@ -512,7 +479,7 @@
     <span class=p>}</span>
 <span class=p>}</span>
 
-<span class=k>def</span> <span class=nf>createReleasePipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineScript</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span>
+<span class=k>def</span> <span class=nf>createReleasePipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineType</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span>
  <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>jiraIntegrationEnabled</span><span class=p>,</span> <span class=n>platformType</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>)</span> <span class=p>{</span>
     <span class=n>pipelineJob</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>/$</span><span class=si>{pipelineName}</span><span class=s2>&quot;</span><span class=p>)</span> <span class=p>{</span>
         <span class=n>logRotator</span> <span class=p>{</span>
@@ -520,30 +487,22 @@
             <span class=n>daysToKeep</span><span class=p>(</span><span class=mi>30</span><span class=p>)</span>
         <span class=p>}</span>
         <span class=n>definition</span> <span class=p>{</span>
-            <span class=n>cpsScm</span> <span class=p>{</span>
-                <span class=n>scm</span> <span class=p>{</span>
-                    <span class=n>git</span> <span class=p>{</span>
-                        <span class=n>remote</span> <span class=p>{</span>
-                            <span class=n>url</span><span class=p>(</span><span class=n>repository</span><span class=p>)</span>
-                            <span class=n>credentials</span><span class=p>(</span><span class=n>credId</span><span class=p>)</span>
-                        <span class=p>}</span>
-                        <span class=n>branches</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>)</span>
-                        <span class=n>scriptPath</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{pipelineScript}</span><span class=s2>&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
-                <span class=p>}</span>
-                <span class=n>parameters</span> <span class=p>{</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>)</span>
-                    <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Create-release&quot;</span><span class=p>))</span> <span class=p>{</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;JIRA_INTEGRATION_ENABLED&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{jiraIntegrationEnabled}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Is Jira integration enabled&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;PLATFORM_TYPE&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{platformType}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Platform type&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;RELEASE_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of the release(branch to be created)&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;COMMIT_ID&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>,</span> <span class=s2>&quot;Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;REPOSITORY_PATH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{repository}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Full repository path&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;DEFAULT_BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Default repository branch&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
+            <span class=n>cps</span> <span class=p>{</span>
+                <span class=n>script</span><span class=p>(</span><span class=s2>&quot;@Library([&#39;edp-library-stages&#39;, &#39;edp-library-pipelines&#39;]) _ </span><span class=se>\n\n</span><span class=s2>$</span><span class=si>{pipelineType}</span><span class=s2>()&quot;</span><span class=p>)</span>
+                <span class=n>sandbox</span><span class=p>(</span><span class=n>true</span><span class=p>)</span>
+            <span class=p>}</span>
+            <span class=n>parameters</span> <span class=p>{</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>)</span>
+                <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Create-release&quot;</span><span class=p>))</span> <span class=p>{</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;JIRA_INTEGRATION_ENABLED&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{jiraIntegrationEnabled}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Is Jira integration enabled&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;PLATFORM_TYPE&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{platformType}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Platform type&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;RELEASE_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of the release(branch to be created)&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;COMMIT_ID&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>,</span> <span class=s2>&quot;Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;REPOSITORY_PATH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{repository}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Full repository path&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;DEFAULT_BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Default repository branch&quot;</span><span class=p>)</span>
                 <span class=p>}</span>
             <span class=p>}</span>
         <span class=p>}</span>
@@ -697,7 +656,7 @@
 <span class=p>}</span>
 
 <span class=n>createListView</span><span class=p>(</span><span class=n>codebaseName</span><span class=p>,</span> <span class=s2>&quot;Releases&quot;</span><span class=p>)</span>
-<span class=n>createReleasePipeline</span><span class=p>(</span><span class=s2>&quot;Create-release-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=p>[</span><span class=s2>&quot;Create-release&quot;</span><span class=p>],</span> <span class=s2>&quot;create-release.groovy&quot;</span><span class=p>,</span>
+<span class=n>createReleasePipeline</span><span class=p>(</span><span class=s2>&quot;Create-release-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=p>[</span><span class=s2>&quot;Create-release&quot;</span><span class=p>],</span> <span class=s2>&quot;CreateRelease&quot;</span><span class=p>,</span>
         <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>jiraIntegrationEnabled</span><span class=p>,</span> <span class=n>platformType</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>)</span>
 
 <span class=k>if</span> <span class=p>(</span><span class=n>BRANCH</span><span class=p>)</span> <span class=p>{</span>
@@ -707,7 +666,7 @@
 
     <span class=k>def</span> <span class=nf>type</span> <span class=o>=</span> <span class=s2>&quot;$</span><span class=si>{TYPE}</span><span class=s2>&quot;</span>
     <span class=k>def</span> <span class=nf>crKey</span> <span class=o>=</span> <span class=n>getStageKeyName</span><span class=p>(</span><span class=n>buildTool</span><span class=p>)</span><span class=o>.</span><span class=n>toString</span><span class=p>()</span>
-    <span class=n>createCiPipeline</span><span class=p>(</span><span class=s2>&quot;Code-review-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>crKey</span><span class=p>,</span> <span class=n>defaultStages</span><span class=p>),</span> <span class=s2>&quot;code-review.groovy&quot;</span><span class=p>,</span>
+    <span class=n>createCiPipeline</span><span class=p>(</span><span class=s2>&quot;Code-review-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>crKey</span><span class=p>,</span> <span class=n>defaultStages</span><span class=p>),</span> <span class=s2>&quot;CodeReview&quot;</span><span class=p>,</span>
         <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>branch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>)</span>
 
     <span class=k>def</span> <span class=nf>buildKey</span> <span class=o>=</span> <span class=s2>&quot;Build-$</span><span class=si>{type}</span><span class=s2>-${buildTool.toLowerCase()}&quot;</span><span class=o>.</span><span class=n>toString</span><span class=p>()</span>
@@ -717,7 +676,7 @@
         <span class=k>if</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{formattedBranch}</span><span class=s2>-Build-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=o>.</span><span class=n>toString</span><span class=p>()</span> <span class=ow>in</span> <span class=n>Jenkins</span><span class=o>.</span><span class=n>instance</span><span class=o>.</span><span class=n>getAllItems</span><span class=p>()</span><span class=o>.</span><span class=n>collect</span><span class=p>{</span><span class=n>it</span><span class=o>.</span><span class=n>name</span><span class=p>})</span> <span class=p>{</span>
            <span class=n>jobExists</span> <span class=o>=</span> <span class=n>true</span>
         <span class=p>}</span>
-        <span class=n>createCiPipeline</span><span class=p>(</span><span class=s2>&quot;Build-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>buildKey</span><span class=p>,</span> <span class=n>defaultStages</span><span class=p>),</span> <span class=s2>&quot;build.groovy&quot;</span><span class=p>,</span>
+        <span class=n>createCiPipeline</span><span class=p>(</span><span class=s2>&quot;Build-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>stages</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>buildKey</span><span class=p>,</span> <span class=n>defaultStages</span><span class=p>),</span> <span class=s2>&quot;Build&quot;</span><span class=p>,</span>
                 <span class=n>repositoryPath</span><span class=p>,</span> <span class=n>gitCredentialsId</span><span class=p>,</span> <span class=n>branch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>)</span>
        <span class=k>if</span><span class=p>(</span><span class=err>!</span><span class=n>jobExists</span><span class=p>)</span> <span class=p>{</span>
          <span class=n>queue</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>/$</span><span class=si>{formattedBranch}</span><span class=s2>-Build-$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>)</span>
@@ -726,7 +685,7 @@
 <span class=p>}</span>
 
 
-<span class=k>def</span> <span class=nf>createCiPipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineScript</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>)</span> <span class=p>{</span>
+<span class=k>def</span> <span class=nf>createCiPipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineType</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>,</span> <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>)</span> <span class=p>{</span>
 <span class=k>def</span> <span class=nf>jobName</span> <span class=o>=</span> <span class=s2>&quot;${defaultBranch.toUpperCase().replaceAll(/</span><span class=se>\\</span><span class=s2>//, &quot;</span><span class=o>-</span><span class=s2>&quot;)}-$</span><span class=si>{pipelineName}</span><span class=s2>&quot;</span>
 <span class=k>def</span> <span class=nf>existingJob</span> <span class=o>=</span> <span class=n>Jenkins</span><span class=o>.</span><span class=n>getInstance</span><span class=p>()</span><span class=o>.</span><span class=n>getItemByFullName</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>/$</span><span class=si>{jobName}</span><span class=s2>&quot;</span><span class=p>)</span>
 <span class=k>def</span> <span class=nf>webhookToken</span> <span class=o>=</span> <span class=n>null</span>
@@ -751,27 +710,19 @@
         <span class=p>}</span>
     <span class=p>}</span>
     <span class=n>definition</span> <span class=p>{</span>
-        <span class=n>cpsScm</span> <span class=p>{</span>
-            <span class=n>scm</span> <span class=p>{</span>
-                <span class=n>git</span> <span class=p>{</span>
-                    <span class=n>remote</span> <span class=p>{</span>
-                        <span class=n>url</span><span class=p>(</span><span class=n>repository</span><span class=p>)</span>
-                        <span class=n>credentials</span><span class=p>(</span><span class=n>credId</span><span class=p>)</span>
-                    <span class=p>}</span>
-                    <span class=n>branches</span><span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Build&quot;</span><span class=p>)</span> <span class=err>?</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span> <span class=p>:</span> <span class=s2>&quot;\$</span><span class=si>{gitlabMergeRequestLastCommit}</span><span class=s2>&quot;</span><span class=p>)</span>
-                    <span class=n>scriptPath</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{pipelineScript}</span><span class=s2>&quot;</span><span class=p>)</span>
-                <span class=p>}</span>
-            <span class=p>}</span>
-            <span class=n>parameters</span> <span class=p>{</span>
-                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
-                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
-                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
-                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Gerrit project name(Codebase name) to be build&quot;</span><span class=p>)</span>
-                <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Build&quot;</span><span class=p>))</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
-                <span class=k>else</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;\$</span><span class=si>{gitlabMergeRequestLastCommit}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
-            <span class=p>}</span>
+        <span class=n>cps</span> <span class=p>{</span>
+            <span class=n>script</span><span class=p>(</span><span class=s2>&quot;@Library([&#39;edp-library-stages&#39;, &#39;edp-library-pipelines&#39;]) _ </span><span class=se>\n\n</span><span class=s2>$</span><span class=si>{pipelineType}</span><span class=s2>()&quot;</span><span class=p>)</span>
+            <span class=n>sandbox</span><span class=p>(</span><span class=n>true</span><span class=p>)</span>
+        <span class=p>}</span>
+        <span class=n>parameters</span> <span class=p>{</span>
+            <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
+            <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
+            <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
+            <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Gerrit project name(Codebase name) to be build&quot;</span><span class=p>)</span>
+            <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Build&quot;</span><span class=p>))</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
+            <span class=k>else</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;\$</span><span class=si>{gitlabMergeRequestLastCommit}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Branch to build artifact from&quot;</span><span class=p>)</span>
         <span class=p>}</span>
     <span class=p>}</span>
     <span class=n>triggers</span> <span class=p>{</span>
@@ -810,7 +761,7 @@
     <span class=k>return</span> <span class=n>supBuildTool</span> <span class=err>?</span> <span class=s2>&quot;Code-review-$</span><span class=si>{TYPE}</span><span class=s2>&quot;</span> <span class=p>:</span> <span class=s2>&quot;Code-review-default&quot;</span>
 <span class=p>}</span>
 
-<span class=k>def</span> <span class=nf>createReleasePipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineScript</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span>
+<span class=k>def</span> <span class=nf>createReleasePipeline</span><span class=p>(</span><span class=n>pipelineName</span><span class=p>,</span> <span class=n>codebaseName</span><span class=p>,</span> <span class=n>codebaseStages</span><span class=p>,</span> <span class=n>pipelineType</span><span class=p>,</span> <span class=n>repository</span><span class=p>,</span> <span class=n>credId</span><span class=p>,</span>
 <span class=n>gitServerCrName</span><span class=p>,</span> <span class=n>gitServerCrVersion</span><span class=p>,</span> <span class=n>jiraIntegrationEnabled</span><span class=p>,</span> <span class=n>platformType</span><span class=p>,</span> <span class=n>defaultBranch</span><span class=p>)</span> <span class=p>{</span>
     <span class=n>pipelineJob</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>/$</span><span class=si>{pipelineName}</span><span class=s2>&quot;</span><span class=p>)</span> <span class=p>{</span>
         <span class=n>logRotator</span> <span class=p>{</span>
@@ -818,30 +769,22 @@
             <span class=n>daysToKeep</span><span class=p>(</span><span class=mi>30</span><span class=p>)</span>
         <span class=p>}</span>
         <span class=n>definition</span> <span class=p>{</span>
-            <span class=n>cpsScm</span> <span class=p>{</span>
-                <span class=n>scm</span> <span class=p>{</span>
-                    <span class=n>git</span> <span class=p>{</span>
-                        <span class=n>remote</span> <span class=p>{</span>
-                            <span class=n>url</span><span class=p>(</span><span class=n>repository</span><span class=p>)</span>
-                            <span class=n>credentials</span><span class=p>(</span><span class=n>credId</span><span class=p>)</span>
-                        <span class=p>}</span>
-                        <span class=n>branches</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>)</span>
-                        <span class=n>scriptPath</span><span class=p>(</span><span class=s2>&quot;$</span><span class=si>{pipelineScript}</span><span class=s2>&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
-                <span class=p>}</span>
-                <span class=n>parameters</span> <span class=p>{</span>
-                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>)</span>
-                    <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Create-release&quot;</span><span class=p>))</span> <span class=p>{</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;JIRA_INTEGRATION_ENABLED&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{jiraIntegrationEnabled}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Is Jira integration enabled&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;PLATFORM_TYPE&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{platformType}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Platform type&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;RELEASE_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of the release(branch to be created)&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;COMMIT_ID&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>,</span> <span class=s2>&quot;Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;REPOSITORY_PATH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{repository}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Full repository path&quot;</span><span class=p>)</span>
-                        <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;DEFAULT_BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Default repository branch&quot;</span><span class=p>)</span>
-                    <span class=p>}</span>
+            <span class=n>cps</span> <span class=p>{</span>
+                <span class=n>script</span><span class=p>(</span><span class=s2>&quot;@Library([&#39;edp-library-stages&#39;, &#39;edp-library-pipelines&#39;]) _ </span><span class=se>\n\n</span><span class=s2>$</span><span class=si>{pipelineType}</span><span class=s2>()&quot;</span><span class=p>)</span>
+                <span class=n>sandbox</span><span class=p>(</span><span class=n>true</span><span class=p>)</span>
+            <span class=p>}</span>
+            <span class=n>parameters</span> <span class=p>{</span>
+                <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseStages}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>)</span>
+                <span class=k>if</span> <span class=p>(</span><span class=n>pipelineName</span><span class=o>.</span><span class=n>contains</span><span class=p>(</span><span class=s2>&quot;Create-release&quot;</span><span class=p>))</span> <span class=p>{</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;JIRA_INTEGRATION_ENABLED&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{jiraIntegrationEnabled}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Is Jira integration enabled&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;PLATFORM_TYPE&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{platformType}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Platform type&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GERRIT_PROJECT&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{codebaseName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;RELEASE_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of the release(branch to be created)&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;COMMIT_ID&quot;</span><span class=p>,</span> <span class=s2>&quot;&quot;</span><span class=p>,</span> <span class=s2>&quot;Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_NAME&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrName}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Name of Git Server CR to generate link to Git server&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;GIT_SERVER_CR_VERSION&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{gitServerCrVersion}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Version of GitServer CR Resource&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;REPOSITORY_PATH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{repository}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Full repository path&quot;</span><span class=p>)</span>
+                    <span class=n>stringParam</span><span class=p>(</span><span class=s2>&quot;DEFAULT_BRANCH&quot;</span><span class=p>,</span> <span class=s2>&quot;$</span><span class=si>{defaultBranch}</span><span class=s2>&quot;</span><span class=p>,</span> <span class=s2>&quot;Default repository branch&quot;</span><span class=p>)</span>
                 <span class=p>}</span>
             <span class=p>}</span>
         <span class=p>}</span>
