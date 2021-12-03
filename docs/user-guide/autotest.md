@@ -12,13 +12,13 @@ As soon as the autotest is successfully provisioned, the following will be creat
 - Nexus Repository Manager will be available after the Build pipeline in Jenkins is passed as well.
 
 !!! info
-    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the Overview section on the navigation bar and hit the necessary link.
+    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
 
 The added autotest will be listed in the Autotests list allowing you to do the following:
 
 ![autotest-page](../assets/user-guide/autotests-page.png "autotest-page")
 
-1. Add another autotest by clicking the Create button and performing the same steps as described [here](add-autotest.md).
+1. Add another autotest by clicking the Create button and performing the same steps as described at the [Add Autotest](add-autotest.md) page.
 
 2. Open autotest data by clicking its link name. Once clicked, the following blocks will be displayed:
 
@@ -26,7 +26,7 @@ The added autotest will be listed in the Autotests list allowing you to do the f
   * **Advanced Settings** - displays the specified job provisioner, Jenkins agent, deployment script, and the versioning type with the start versioning from number (the latter two fields appear in case of edp versioning type).
   * **Branches** - displays the status and name of the deployment branch, keeps the additional links to Jenkins and Gerrit. In case of edp versioning type, there are two additional fields:
     * **Build Number** - indicates the current build number;
-    * **Last Successful Build** - indicates the last successful build number.
+    * **Last Successful Build** - indicates the number of the last successful build.
   * **Status Info** - displays all the actions that were performed during the cloning/importing process.
 
 3. Edit the autotest codebase by clicking the pencil icon. For details see the [Edit Existing Codebase](#edit-existing-codebase) section.
@@ -68,8 +68,8 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
-  - mark the **Integrate with Jira server** checkbox and fill in the necessary fields;
-  - click the **Proceed** button to apply the changes;
+  - mark the **Integrate with Jira server** check box and fill in the necessary fields;
+  - click the Proceed button to apply the changes;
   - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code-Review pipeline.
 
   !!! note
@@ -81,9 +81,9 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 3. To disable Jira integration, on the **Edit Codebase** page do the following:
 
-  - unmark the **Integrate with Jira server** checkbox;
+  - unmark the **Integrate with Jira server** check box;
   - click the **Proceed** button to apply the changes;
-  - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code-Review pipeline.
+  - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
 As a result, the necessary changes will be applied.
 
@@ -101,9 +101,9 @@ When adding an autotest, the default branch is a **master** branch. In order to 
 
   a. Release Branch - select the Release Branch check box if you need to create a release branch;
 
-  b. Branch Name - type the branch name. Pay attention that this field remain static if you create a release branch.
+  b. Branch Name - type the branch name. Pay attention that this field remains static if you create a release branch.
 
-  c. From Commit Hash - paste the commit hash from which the new branch will be created. Note that if the From Commit Hash field is empty, the latest commit from the branch name will be used.
+  c. From Commit Hash - paste the commit hash from which the new branch will be created. Note that if the **From Commit Hash** field is empty, the latest commit from the branch name will be used.
 
   d. Branch Version - enter the necessary branch version for the artifact. The Release Candidate (RC) postfix is concatenated to the branch version number.
 
@@ -137,7 +137,7 @@ In order to add an autotest as a quality gate to a newly added CD pipeline, do t
 
 1. Create a CD pipeline with the necessary parameters. Please refer to the [Add CD Pipeline](add-cd-pipeline.md) section for the details.
 
-2. In the Stages menu, select the **Autotest** quality gate type. It means the promoting process should be confirmed by the successful passing of the autotests.
+2. In the **Stages** menu, select the **Autotest** quality gate type. It means the promoting process should be confirmed by the successful passing of the autotests.
 
 3. In the additional fields, select the previously created autotest name and specify its branch.
 
@@ -164,7 +164,7 @@ There is an ability to run the autotests locally using the IDEA (Integrated Deve
 4. As a result, all launched tests will be executed.
 
 
-## Related Articles
+### Related Articles
 
 - [Add Application](add-application.md)
 - [Add Autotests](add-autotest.md)

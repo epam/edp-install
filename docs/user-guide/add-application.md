@@ -16,12 +16,12 @@ Once clicked, the three-step menu will appear:
 
 1. In the **Codebase Integration Strategy** field, select the necessary configuration strategy:
 
-   * Create – creates a project on the pattern in accordance with an application language, a build tool, and a framework.
+   * **Create** – creates a project on the pattern in accordance with an application language, a build tool, and a framework.
 
-   * Clone – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository,
+   * **Clone** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository,
   it is required to fill in the additional fields as well.
 
-   * Import - allows configuring a replication from the Git server. While importing the existing repository,
+   * **Import** - allows configuring a replication from the Git server. While importing the existing repository,
   you have to select the Git server and define the respective path to the repository.
 
   !!! note
@@ -29,7 +29,7 @@ Once clicked, the three-step menu will appear:
       The Import strategy is not applicable for Gerrit.
 
 2. In the **Git Repository URL** field, specify the link to the repository that is to be cloned.
-  If the Import strategy is selected, specify the following fields:
+  If the **Import** strategy is selected, specify the following fields:
 
    ![!import-strategy](../assets/user-guide/import-strategy-app.png "import-strategy")
 
@@ -37,14 +37,14 @@ Once clicked, the three-step menu will appear:
 
    b. Relative path to the repository on the server.
 
-3. With the Clone strategy, select the **Codebase Authentication** check box and fill in the requested fields:
+3. With the **Clone** strategy, select the **Codebase Authentication** check box and fill in the requested fields:
 
    * Repository Login – enter your login data.
 
    * Repository password (or API Token) – enter your password or indicate the API Token.
 
   !!! note
-      The Codebase Authentication check box should be selected only in case you clone the private repository.
+      The **Codebase Authentication** check box should be selected only in case you clone the private repository.
       If you define the public repository, there is no need to enter credentials.
 
 4. Click the Proceed button to switch to the next menu.
@@ -61,7 +61,7 @@ and by using the lower-case letters, numbers and inner dashes.
   !!! note
       The default branch cannot be deleted.
 
-7. To create an application with an empty repository in Gerrit, select the **Empty project** checkbox.
+7. To create an application with an empty repository in Gerrit, select the **Empty project** check box.
 
   !!! note
       The empty repository option is available only for the **Create** strategy.
@@ -79,21 +79,21 @@ in the **Application Code Language/framework** field:
   inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
 
   !!! note
-      The Create strategy does not allow to customize the default code language set.
+      The **Create** strategy does not allow to customize the default code language set.
 
-9. Choose the necessary build tool in the Select Build Tool field:
+9. Choose the necessary build tool in the **Select Build Tool** field:
 
   * Java - selecting Java allows using the Gradle or Maven tool.
   * JavaScript - selecting JavaScript allows using the NPM tool.
   * .Net - selecting .Net allows using the .Net tool.
 
   !!! note
-      The Select Build Tool field disposes of the default tools and can be changed in accordance with the selected code language.
+      The **Select Build Tool** field disposes of the default tools and can be changed in accordance with the selected code language.
 
 10. Select the **Multi-Module Project** check box that becomes available
 if the Java code language and the Maven build tool are selected.
 
-11. Click the Proceed button to be switched to the next menu.
+11. Click the Proceed button to switch to the next menu.
 
   ## The Advanced Settings Menu
 
@@ -123,7 +123,7 @@ instruction and become familiar with the main steps to add an additional job pro
   a. Type the version number from which you want the artifacts to be versioned.
 
   !!! note
-      The Start Version From field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10.
+      The **Start Version From** field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10.
       Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
 15. In the **Select Deployment Script** field, specify one of the available options:
@@ -135,11 +135,11 @@ the GitLab CI tool can be additionally adjusted. For details,
 please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page.
 
   !!! note
-      The GitLab CI tool is available only with the Import strategy and makes the **Jira integration** feature unavailable.
+      The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
 
   ![!integrate-jira-server](../assets/user-guide/integrate-jira-server.png "integrate-jira-server")
 
-17. Select the **Integrate with Jira Server** checkbox in case it is required to connect Jira tickets with the commits
+17. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits
 and have a respective label in the Fix Version field.
 
   !!! note
@@ -178,10 +178,10 @@ for identifying the format of values to be displayed.
 
   ![!perf-server](../assets/user-guide/integrate-perf-server.png "perf-server")
 
-22. Select the **Integrate with Perf Server** checkbox to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
+22. Select the **Integrate with Perf Server** check box to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
 
   !!! note
-      If this option is needed, please refer to the [Perf Server Integration](../operator-guide/perf-integration.md) to adjust the integration. After the integration is adjusted, the **Integrate with Perf Server** checkbox will appear in the **Advanced Settings** menu.
+      If this option is needed, please refer to the [Perf Server Integration](../operator-guide/perf-integration.md) to adjust the integration. After the integration is adjusted, the **Integrate with Perf Server** check box will appear in the **Advanced Settings** menu.
 
 23. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be
 performed. Click the Proceed button to switch to the next menu.
@@ -196,7 +196,7 @@ to the Project Performance Board.
 !!! note
     After the complete adding of the application, inspect the [Application Overview](application.md) part.
 
-## Related Articles
+### Related Articles
 
 * [Application Overview](application.md)
 * [Delivery Dashboard Diagram](d-d-diagram.md)

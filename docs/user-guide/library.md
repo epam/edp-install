@@ -12,9 +12,9 @@ As soon as the library is successfully provisioned, the following will be create
 - Nexus Repository Manager will be available after the Build pipeline in Jenkins is passed as well.
 
 !!! info
-    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the Overview section on the navigation bar and hit the necessary link.
+    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
 
-The added library will be listed in the Libraries list allowing you to do the following:
+The added library will be listed in the Libraries list allowing to do the following:
 
 ![inspect-library](../assets/user-guide/library-page.png "insect-library")
 
@@ -70,15 +70,15 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
-  - mark the **Integrate with Jira server** checkbox and fill in the necessary fields;
+  - mark the **Integrate with Jira server** check box and fill in the necessary fields;
   - click the **Proceed** button to apply the changes;
-  - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code-Review pipeline.
+  - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
 
 3. To disable Jira integration, on the **Edit Codebase** page do the following:
 
-  - unmark the **Integrate with Jira server** checkbox;
+  - unmark the **Integrate with Jira server** check box;
   - click the **Proceed** button to apply the changes;
-  - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code-Review pipeline.
+  - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
 As a result, the necessary changes will be applied.
 
@@ -127,6 +127,6 @@ In order to remove the added branch with the corresponding  record in the Admin 
 !!! note
     The default **master** branch cannot be removed.
 
-## Related Articles
+### Related Articles
 
 * [Add Library](add-library.md)

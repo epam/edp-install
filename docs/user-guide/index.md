@@ -1,12 +1,12 @@
 # Overview
 
-The EDP User Guide is intended for developers and provides details on working with EDP Admin Console, different codebase types and EDP CI/CD flow.
+The EDP User guide is intended for developers and provides details on working with EDP Admin Console, different codebase types and EDP CI/CD flow.
 
 ## Admin Console
 
 Admin Console is a central management tool in the EDP ecosystem that provides the ability to define pipelines, project resources and new technologies in a simple way. Using Admin Console enables to manage business entities:
 
-- Create Codebases as Applications, Libraries and Autotests;
+- Create such codebase types as Applications, Libraries and Autotests;
 - Create/Update CD Pipelines;
 
 !!! note
@@ -14,7 +14,7 @@ Admin Console is a central management tool in the EDP ecosystem that provides th
 
 ![overview-page](../assets/user-guide/ac-overview-page.png "overview-page")
 
-- **Navigation bar** – consists of seven sections: Overview, Continuous Delivery, Applications, Autotests, Libraries, and Delivery Dashboard Diagram. Click the necessary section to add an entity, open a home page or check the diagram.
+- **Navigation bar** – consists of six sections: Overview, Continuous Delivery, Applications, Autotests, Libraries, and Delivery Dashboard Diagram. Click the necessary section to add an entity, open a home page or check the diagram.
 - **User name** – displays the registered user name.
 - **Main links** – displays the corresponding links to the major adjusted toolset, to the management tool and to the OpenShift cluster.
 

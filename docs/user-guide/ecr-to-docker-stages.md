@@ -7,7 +7,7 @@ The **ecr-to-docker** stage is intended to perform the push of Docker images col
 This stage is optional and is designed for working with various EDP components.
 
 !!! note
-    When pushing the image from ECR to Docker Hub using [crane](https://michaelsauter.github.io/crane/docs.html), the SHA-256 value remains unchanged.
+    When pushing the image from ECR to Docker Hub using [crane](https://michaelsauter.github.io/crane/docs.html), the **SHA-256** value remains unchanged.
 
 ![add_custom_lib2](../assets/user-guide/ecr_t_d1.png)
 
@@ -24,17 +24,17 @@ EDP expects authorization credentials to be added in Jenkins under the following
 
 ## Create Credentials for ECR-to-Docker Stage
 
-The **dockerCredentialsId** and **repoCredentialsID** credentials are expected to be set in Jenkins in order to use the **ecr-to-docker** stage. Inspect the instructions below on how to create the required credentials.
+The **dockerCredentialsId** and **repoCredentialsID** credentials are expected to be set in Jenkins in order to use the **ecr-to-docker** stage. Inspect below the instructions on how to create the required credentials.
 
 ### dockerCredentialsId
 
 In order to create the **dockerCredentialsId** value, perform the following steps:
 
 1. Go to **Jenkins** -> **Manage Jenkins** –> **Manage Credentials** section.
-2. Click the **Add Credentials** button and select **Username with password** in the **Kind** field.
+2. Click the Add Credentials button and select **Username with password** in the **Kind** field.
 3. In the **Username** field, enter the login of the account from which the push will be made and add the password field.
 4. Specify the **ID** and **description** fields. Pay attention to add the **dockerCredentialsId** value in both fields.
-5. Click the **Save** button.
+5. Click the Save button.
   ![add_custom_lib2](../assets/user-guide/ecr_t_d2.png)
 
 ### repoCredentialsId
@@ -45,16 +45,16 @@ Due to the fact that the repository can be an Enterprise solution and, according
 To create the **repoCredentialsID** value, follow the steps below:
 
 1. Go to **Jenkins** -> **Manage Jenkins** –> **Manage Credentials** section.
-2. Click the **Add Credentials** button and select **Secret text** in the **Kind** field.
+2. Click the Add Credentials button and select **Secret text** in the **Kind** field.
 3. Enter the text that will be encrypted by Jenkins, in the **Secret** field.
 4. Specify the **ID** and **description** fields. Pay attention to add the **repoCredentialsID** value in both fields.
-5. Click the **Save** button.
+5. Click the Save button.
   ![add_custom_lib2](../assets/user-guide/ecr_t_d3.png)
 
 As a result, the created credentials will appear in Jenkins in the **Global credentials** section.
 
 ![add_custom_lib2](../assets/user-guide/ecr_t_d4.png)
 
-## Related Articles
+### Related Articles
 
 - [EDP Pipeline Framework](pipeline-framework.md)

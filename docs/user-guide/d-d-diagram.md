@@ -18,6 +18,6 @@ Possible actions when using dashboard:
 - To see the relations for one element, click this element.
 - To see the whole diagram, click the empty space.
 
-## Related Articles
+### Related Articles
 
-- [EDP Admin Console](https://github.com/epam/edp-admin-console#edp-admin-console)
+- [EDP Admin Console](index.md)

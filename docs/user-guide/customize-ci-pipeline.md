@@ -60,13 +60,13 @@ To redefine any stage and add custom logic, perform the steps below:
   * Void the "run" method with the "context input parameter" value;
   * Bring the custom class back to the end of the file: return CustomSonar.
 
-3. Open Jenkins and make sure that all your changes are correct after the completion of the customized pipeline.
+3. Open Jenkins and make sure that all the changes are correct after the completion of the customized pipeline.
 
 ## Add a New Stage for a Particular Application
 
 To add a new stage for a particular application, perform the steps below:
 
-1. In GitHub repository, add a Groovy file with another name to the same **stages** catalog.
+1. In the GitHub repository, add a Groovy file with another name to the same **stages** catalog.
 2. Copy the part of a pipeline framework logic that cannot be predefined;
 
     The stage logic structure is the following:
@@ -85,7 +85,7 @@ To add a new stage for a particular application, perform the steps below:
       }
       return EmailNotify
 
-3. Open the default set of stages and add a new one into the _Default Value_ field by saving the respective type {"name": "email-notify"}, save the changes:
+3. Open the default set of stages and add a new one into the **Default Value** field by saving the respective type {"name": "email-notify"}, save the changes:
   ![add_stage](../assets/user-guide/add_stage.png)
 
 4. Open Jenkins to check the pipeline; as soon as the checkout stage is passed, the new stage will appear in the pipeline:
@@ -159,7 +159,7 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
   * Void the "run" method with the "context input parameter" value;
   * Bring the custom class back to the end of the file: return CustomSonar.
 
-3.Open Jenkins and make sure that all your changes are correct after the completion of the customized pipeline.
+3.Open Jenkins and make sure that all the changes are correct after the completion of the customized pipeline.
 
 ## Add a New Stage Using Shared Library via Custom Global Pipeline Libraries
 
@@ -205,7 +205,7 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
   !!! warning
       To make this stage permanently present, please modify the [job provisioner](../operator-guide/manage-jenkins-ci-job-provision.md).
 
-## Related Articles
+### Related Articles
 
 * [Add a New Custom Global Pipeline Library](add-custom-global-pipeline-lib.md)
 * [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)

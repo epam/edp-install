@@ -16,24 +16,24 @@ Once clicked, the three-step menu will appear:
 
 1. In the **Codebase Integration Strategy** field, select the necessary option that is the configuration strategy for the replication with Gerrit:
 
-  * Create – creates a project on the pattern in accordance with a code language, a build tool, and a framework.
+  * **Create** – creates a project on the pattern in accordance with a code language, a build tool, and a framework.
 
-  * Clone – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the additional fields as well.
+  * **Clone** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the additional fields as well.
 
-  * Import - allows configuring a replication from the Git server. While importing the existing repository, select the Git server and define the respective path to the repository.
+  * **Import** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server and define the respective path to the repository.
 
   !!! note
-      In order to use the Import strategy, make sure to adjust it by following the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the **Import** strategy, make sure to adjust it by following the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
 
 2. In the **Git Repository URL** field, specify the link to the repository that is to be cloned.
 
-3. With the Clone strategy, select the **Codebase Authentication** check box and fill in the requested fields:
+3. With the **Clone** strategy, select the **Codebase Authentication** check box and fill in the requested fields:
 
   * Repository Login – enter your login data.
   * Repository password (or API Token) – enter your password or indicate the API Token.
 
   !!! note
-      The Codebase Authentication check box should be selected only in case you clone the private repository.
+      The **Codebase Authentication** check box should be selected only in case you clone the private repository.
       If you define the public repository, there is no need to enter credentials.
 
 4. Click the Proceed button to switch to the next menu.
@@ -45,14 +45,14 @@ Once clicked, the three-step menu will appear:
 5. Type the name of the library in the **Library Name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
 
   !!! info
-      If the Import strategy is used, the Library Name field will not be displayed.
+      If the **Import** strategy is used, the **Library Name** field will not be displayed.
 
 6. Specify the name of the default branch where you want the development to be performed.
 
   !!! note
       The default branch cannot be deleted.
 
-7. To create a library with an empty repository in Gerrit, select the **Empty project** checkbox.
+7. To create a library with an empty repository in Gerrit, select the **Empty project** check box.
 
   !!! note
       The empty repository option is available only for the **Create** strategy.
@@ -74,7 +74,7 @@ Once clicked, the three-step menu will appear:
   To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) page.
 
   !!! note
-      The Create strategy does not allow to customize the default code language set.
+      The **Create** strategy does not allow to customize the default code language set.
 
 9. The **Select Build Tool** field disposes of the default tools and can be changed in accordance with the selected code language.
 
@@ -107,17 +107,17 @@ and inspect the steps that should be done to add a new Jenkins agent.
   a. Type the version number from which you want the artifacts to be versioned.
 
   !!! note
-      The Start Version From field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
+      The **Start Version From** field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
 14. In the **Select CI Tool** field, choose the necessary tool: Jenkins or GitLab CI, where Jenkins is the default tool and
     the GitLab CI tool can be additionally adjusted. For details, please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page.
 
   !!! note
-      The GitLab CI tool is available only with the Import strategy and makes the **Jira integration** feature unavailable.
+      The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
 
   ![jira-server](../assets/user-guide/library-jira-server.png "jira-server")
 
-15. Select the **Integrate with Jira Server** checkbox in case it is required to connect Jira tickets with the commits
+15. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits
 and have a respective label in the Fix Version field.
 
   !!! note
@@ -150,10 +150,10 @@ Upon clicking the question mark icon, observe the tips on how to indicate and co
 
   ![perf-server](../assets/user-guide/library-perf.png "perf-server")
 
-20. Select the **Integrate with Perf Server** checkbox to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
+20. Select the **Integrate with Perf Server** check box to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
 
   !!! note
-      If this option is needed, please refer to the [Perf Server Integration](../operator-guide/perf-integration.md) to adjust the integration. After the integration is adjusted, the **Integrate with Perf Server** checkbox will appear in the **Advanced Settings** menu.
+      If this option is needed, please refer to the [Perf Server Integration](../operator-guide/perf-integration.md) to adjust the integration. After the integration is adjusted, the **Integrate with Perf Server** check box will appear in the **Advanced Settings** menu.
 
 21. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be performed.
 Click the Proceed button to switch to the next menu.
@@ -167,7 +167,7 @@ Click the Proceed button to switch to the next menu.
   !!! note
       After the complete adding of the library, inspect the [Library Overview](library.md) part.
 
-## Related Articles
+### Related Articles
 
 * [Library Overview](library.md)
 * [Delivery Dashboard Diagram](d-d-diagram.md)

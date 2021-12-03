@@ -30,7 +30,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
   * Repository password (or API Token) – enter your password or indicate the API Token.
 
     !!! note
-        The Codebase Authentication check box should be selected only in case you clone the private repository.
+        The **Codebase Authentication** check box should be selected only in case you clone the private repository.
         If you define the public repository, there is no need to enter credentials.
 
   If there is a necessity to use the **Import** strategy that allows configuring a replication from the Git server,
@@ -38,10 +38,10 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
   ![import-autotest](../assets/user-guide/import-strategy-autotest.png "import-autotest")
 
-  a. Import - this strategy allows configuring a replication from the Git server.
+  a. **Import** - this strategy allows configuring a replication from the Git server.
 
   !!! note
-      In order to use the import strategy, make sure to adjust it by following the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the **Import** strategy, make sure to adjust it by following the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
 
   b. In the **Git Server** field, select the necessary Git server from the drop-down list.
 
@@ -56,7 +56,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
 5. Fill in the **Autotest Name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
 
   !!! info
-      The Import strategy does not have an Autotest Name field.
+      The **Import** strategy does not have an **Autotest Name** field.
 
 6. Specify the name of the default branch where you want the development to be performed.
 
@@ -69,11 +69,11 @@ There are two available strategies: clone and import. The Clone strategy flow is
 Selecting **Other** allows extending the default code languages and get the necessary build tool, for details, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
 
   !!! note
-      Using the Create strategy does not allow to customize the default code language set.
+      Using the **Create** strategy does not allow to customize the default code language set.
 
 9. The **Select Build Tool** field can dispose of the default Maven tool, Gradle or other built tool in accordance with the selected code language.
 
-10. All the autotest reports will be created in the Allure framework that is available In the **Autotest Report Framework** field by default. Click the Proceed button to switch to the next menu.
+10. All the autotest reports will be created in the Allure framework that is available in the **Autotest Report Framework** field by default. Click the Proceed button to switch to the next menu.
 
   ## The Advanced Settings Menu
 
@@ -96,17 +96,17 @@ Selecting **Other** allows extending the default code languages and get the nece
   a. Type the version number from which you want the artifacts to be versioned.
 
   !!! note
-      The Start Version From field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
+      The **Start Version From** field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
 14. In the **Select CI Tool** field, choose the necessary tool: Jenkins or GitLab CI, where Jenkins is the default tool and
     the GitLab CI tool can be additionally adjusted. For details, please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page.
 
   !!! note
-      The GitLab CI tool is available only with the Import strategy and makes the **Jira integration** feature unavailable.
+      The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
 
   ![jira-server](../assets/user-guide/integrate-jira-server-autotest.png)
 
-15. Select the **Integrate with Jira Server** checkbox in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
+15. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
 
   !!! note
       To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page, and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
@@ -137,10 +137,10 @@ Selecting **Other** allows extending the default code languages and get the nece
 
   ![integrate-perf-server](../assets/user-guide/integrate-perf-server-autotest.png "integrate-perf-server")
 
-20. Select the **Integrate with Perf Server** checkbox to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
+20. Select the **Integrate with Perf Server** check box to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
 
   !!! note
-      If this option is needed, please refer to the [Perf Server Integration](../operator-guide/perf-integration.md) to adjust the integration. After the integration is adjusted, the **Integrate with Perf Server** checkbox will appear in the **Advanced Settings** menu.
+      If this option is needed, please refer to the [Perf Server Integration](../operator-guide/perf-integration.md) to adjust the integration. After the integration is adjusted, the **Integrate with Perf Server** check box will appear in the **Advanced Settings** menu.
 
 21. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be performed and click the Proceed button to switch to the next menu.
 

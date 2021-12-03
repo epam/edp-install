@@ -12,13 +12,13 @@ As soon as the application is successfully provisioned, the following will be cr
 - Nexus Repository Manager will be available after the Build pipeline in Jenkins is passed as well.
 
 !!! info
-    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the Overview section on the navigation bar and hit the necessary link.
+    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
 
 The added application will be listed in the Applications list allowing you to do the following:
 
 ![inspect-app](../assets/user-guide/inspect-application-menu.png "inspect-app")
 
-1. Create another application by clicking the Create button and performing the same steps as described in [Add Applications](add-application.md) section.
+1. Create another application by clicking the Create button and performing the same steps as described in the [Add Applications](add-application.md) section.
 
 2. Open application data by clicking its link name. Once clicked, the following blocks will be displayed:
 
@@ -56,7 +56,7 @@ The added application will be listed in the Applications list allowing you to do
 
 When adding an application, the default branch is a **master** branch. In order to add a new branch, follow the steps below:
 
-1. Navigate to the **Branches** block and click the Create button:
+1. Navigate to the **Branches** block and click the Create button:]
 
   ![addbranch1](../assets/user-guide/addbranch1.png "addbranch1")
 
@@ -64,11 +64,11 @@ When adding an application, the default branch is a **master** branch. In order 
 
   ![new-branch](../assets/user-guide/create-new-branch.png "new-branch")
 
-  a. Release Branch - select the Release Branch check box if you need to create a release branch;
+  a. Release Branch - select the **Release Branch** check box if you need to create a release branch;
 
-  b. Branch Name - type the branch name. Pay attention that this field remain static if you create a release branch.
+  b. Branch Name - type the branch name. Pay attention that this field remains static if you create a release branch.
 
-  c. From Commit Hash - paste the commit hash from which the new branch will be created. Note that if the From Commit Hash field is empty, the latest commit from the branch name will be used.
+  c. From Commit Hash - paste the commit hash from which the new branch will be created. Note that if the **From Commit Hash** field is empty, the latest commit from the branch name will be used.
 
   d. Branch Version - enter the necessary branch version for the artifact. The Release Candidate (RC) postfix is concatenated to the branch version number.
 
@@ -99,21 +99,21 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
-   - mark the **Integrate with Jira server** checkbox and fill in the necessary fields;
+   - mark the **Integrate with Jira server** check box and fill in the necessary fields;
    - click the **Proceed** button to apply the changes;
-   - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code-Review pipeline.
+   - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
 
 3. To disable Jira integration, on the **Edit Codebase** page do the following:
 
-   - unmark the **Integrate with Jira server** checkbox;
-   - click the **Proceed** button to apply the changes;
-   - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code-Review pipeline.
+   - unmark the **Integrate with Jira server** check box;
+   - click the Proceed button to apply the changes;
+   - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
 As a result, the necessary changes will be applied.
 
 ## Remove Branch
 
-In order to remove the added branch with the corresponding  record in the Admin Console database, do the following:
+In order to remove the added branch with the corresponding record in the Admin Console database, do the following:
 
 1. Navigate to the Branches block by clicking the application name link in the Applications list;
 2. Click the delete icon related to the necessary branch:
@@ -125,7 +125,7 @@ In order to remove the added branch with the corresponding  record in the Admin 
 !!! note
     The default **master** branch cannot be removed.
 
-## Related Articles
+### Related Articles
 
 * [Add Application](add-application.md)
 * [Promote Application in CD Pipeline](../use-cases/promotion-procedure.md)

@@ -3,7 +3,7 @@
 Admin Console provides the ability to deploy an environment on your own and specify the essential components as well.
 
 Navigate to the **Continuous Delivery** section on the left-side navigation bar and click the Create button.
-Once clicked, the four-step menu will appear:
+Once clicked, the three-step menu will appear:
 
 * The Pipeline Menu
 * The Applications Menu
@@ -50,7 +50,7 @@ which was selected for the pipeline, will be always used.
       If there is another deployed CD pipeline stage with the respective codebase Docker stream (= image stream as an OpenShift term),
       the pattern combination will be as follows: [pipeline name]-[stage name]-[application name]-[verified].
 
-7. Click the Proceed button to be switched to the next menu.
+7. Click the Proceed button to switch to the next menu.
 
   ## The Stages Menu
 
@@ -146,7 +146,7 @@ in alphabetical order.
    ![add-stages3](../assets/user-guide/cd-adding-stage3.png "add-stages3")
 
   !!! note
-      The added stage will appear in the Stages menu allowing to review its details or delete.
+      The added stage will appear in the **Stages** menu allowing to review its details or delete.
 
 * Check the CD pipeline data and details by clicking the CD pipeline name in the CD Pipelines list:
 
@@ -158,11 +158,11 @@ in alphabetical order.
 
   * the pen icon refers to the same **Edit CD Pipeline** page as mentioned above and allows to apply the necessary changes;
 
-  * the Applications menu has the main information about the applications with the respective codebase Docker streams
+  * the **Applications** menu has the main information about the applications with the respective codebase Docker streams
 and links to Jenkins and Gerrit as well as the signification of the promotion in CD pipeline;
 
-  * the Stages menu includes the stages data that was previously mentioned, the direct links to the respective to every
-stage OpenShift page, and the link to the Autotest details page in case there are added autotests. To enable or disable
+  * the **Stages** menu includes the stages data that was previously mentioned, the direct links to the respective to every
+stage Kubernetes/OpenShift page, and the link to the Autotest details page in case there are added autotests. To enable or disable
 auto deployment of a specific stage, click the pen icon and select the necessary trigger type from the drop-down list.
 
   ![edit-autodeploy](../assets/user-guide/edit-autodeploy.png "edit-autodeploy")
@@ -173,12 +173,12 @@ auto deployment of a specific stage, click the pen icon and select the necessary
       the deletion by clicking the Delete button. If you remove the last stage, the whole CD pipeline will be removed
       as the CD pipeline does not exist without stages.
 
-  * the Deployed Version menu indicates the applications and stages with the appropriate status. The status will be changed
+  * the **Deployed Version** menu indicates the applications and stages with the appropriate status. The status will be changed
 after stage deployment.
 
   ![addcdpip10](../assets/user-guide/addcdpipe10.png "addcdpipe10")
 
-  * the Status Info menu displays all the actions that were performed during the deployment process:
+  * the **Status Info** menu displays all the actions that were performed during the deployment process:
 
   ![addcdpip11](../assets/user-guide/addcdpipe11.png "addcdpipe11")
 
@@ -187,13 +187,13 @@ after stage deployment.
   ![remove-cd-pipe](../assets/user-guide/remove-cd-pipeline.png "remove-cd-pipe")
 
   !!! info
-      If there is a necessity to create another CD pipeline, navigate to the Continuous Delivery section,
+      If there is a necessity to create another CD pipeline, navigate to the **Continuous Delivery** section,
       click the Create button and perform the same steps as described above.
 
   !!! info
       In OpenShift, if the deployment fails with the ImagePullBackOff error, delete the POD.
 
-## Related Articles
+### Related Articles
 
 * [Add Autotest](add-autotest.md)
 * [EDP Admin Console](https://github.com/epam/edp-admin-console#edp-admin-console)

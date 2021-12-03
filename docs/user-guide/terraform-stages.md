@@ -2,9 +2,9 @@
 
 EPAM Delivery Platform ensures the implemented Terraform support allowing to work with Terraform code that is processed by means of stages in the **Code-Review** and **Build** pipelines. These pipelines are expected to be created after the Terraform Library is added.
 
-## Code-Review Pipeline Stages
+## Code Review Pipeline Stages
 
-In the **Code-Review** pipeline, the following stages are available:
+In the **Code Review** pipeline, the following stages are available:
 
 1. **checkout** stage, a standard step during which all files are checked out from a selected branch of the Git repository.
 
@@ -29,9 +29,9 @@ In the **Build** pipeline, the following stages are available:
 1. **checkout** stage is a standard step during which all files are checked out from a master branch of Git repository.
 
   !!! note
-      With the Default versioning, in the base directory of the project, create a file named 'VERSION' with a proper Terraform version (e.g.1.0.0).
+      With the default versioning, in the base directory of the project, create a file named 'VERSION' with a proper Terraform version (e.g.1.0.0).
 
-2. **terraform-lint** stage containing a script that performs the same actions as in the Code-Review pipeline, namely:
+2. **terraform-lint** stage containing a script that performs the same actions as in the Code Review pipeline, namely:
 
   2.1. Checks whether the repository contains the _.terraform-version_ file, where the information about the Terraform version is stored. If there is no _.terraform-version_ file, the default Terraform version (0.14.5) will be used on this stage. In order to install different versions of Terraform, use the [Terraform version manager](https://github.com/tfutils/tfenv#tfenv).
 
@@ -100,7 +100,7 @@ To use other existing credentials (e.g. from other accounts) instead of the expe
 
 Now during the launch of the Build pipeline, it is possible to select the desired credentials, added in Jenkins, in the _AWS_CREDENTIALS_ field of the Build pipeline settings.
 
-## Related Articles
+### Related Articles
 
 * [EDP Pipeline Framework](pipeline-framework.md)
 * [Associate IAM Roles With Service Accounts](../operator-guide/enable-irsa.md)
