@@ -1,8 +1,8 @@
 global:
   version: "2.10.0-SNAPSHOT"
   edpName: "stub-namespace"
-  platform: "openshift"
-  dnsWildCard: "delivery.aws.main.edp.projects.epam.com"
+  platform: "kubernetes"
+  dnsWildCard: "stub.com"
   admins:
     - "stub_user_one@example.com"
   developers:
@@ -49,98 +49,91 @@ vcs:
 kanikoRoleArn:
 
 dockerRegistry:
-  url: "093899590031.dkr.ecr.eu-central-1.amazonaws.com"
+  url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
 annotations: {}
 
-tags:
-  keycloak-operator: false
-  codebase-operator: false
-  jenkins-operator: false
-  edp-component-operator: false
-  cd-pipeline-operator: false
-  nexus-operator: false
-  sonar-operator: false
-  admin-console-operator: false
-  gerrit-operator: false
-  reconciler: false
-  perf-operator: false
-
 keycloak-operator:
-  image:
-    name: epamedp/keycloak-operator
-    version: 1.9.0
+  enabled: true
+  # image:
+  #   name: epamedp/keycloak-operator
+  #   version:
   keycloak:
     url: "keycloak.example.com"
 
-codebase-operator:
-  image:
-    name: epamedp/codebase-operator
-    version: 2.9.0
-# jira:
-#   integration: true
-#   name: "epam-jira"
-#   apiUrl: "https://jiraeu-api.epam.com"
-#   rootUrl: "https://jiraeu.epam.com"
-#   credentialName: "epam-jira-user"
+codebase-operator: 
+  enabled: true
+  # image:
+  #   name: epamedp/codebase-operator
+  #   version:
+  # jira:
+  #   integration: false
+  #   name: "jira"
+  #   apiUrl: "https://jiraeu-api.example.com"
+  #   rootUrl: "https://jiraeu.example.com"
+  #   credentialName: "jira-user"
 
 jenkins-operator:
-  image:
-    name: epamedp/jenkins-operator
-    version: 2.9.0
-  jenkins:
-#    deploy: true
-#    image: epamedp/edp-jenkins
-#    version: 2.9.0
-#    storage:
-#      class: gp2
-#      size: 10Gi
-#    initImage:
-#    sharedLibraries:
-#      - name: "edp-library-stages"
-#        url: "https://github.com/epam/edp-library-stages.git"
-#        tag: "master"
-#      - name: "edp-library-pipelines"
-#        url: "https://github.com/epam/edp-library-pipelines.git"
-#        tag: "master"
-# Example of using private repository:
-#      - name: "stub-name"
-#        url: "stub-url"
-#        tag: "stub-tag"
-#        secret: "stub-secret-name"
-#        type: "ssh" # can be "ssh", "password" or "token"
-#    pullSecrets:
-#    basePath: ""
+  enabled: true
+  # image:
+  #   name: epamedp/jenkins-operator
+  #   version:
+  # jenkins:
+  #   deploy: true
+  #   image: epamedp/edp-jenkins
+  #   version:
+  #   storage:
+  #     class: gp2
+  #     size: 10Gi
+  #   initImage:
+  #   sharedLibraries:
+  #     - name: "edp-library-stages"
+  #       url: "https://github.com/epam/edp-library-stages.git"
+  #       tag: "master"
+  #     - name: "edp-library-pipelines"
+  #       url: "https://github.com/epam/edp-library-pipelines.git"
+  #       tag: "master"
+  # xample of using private repository:
+  #     - name: "stub-name"
+  #       url: "stub-url"
+  #       tag: "stub-tag"
+  #       secret: "stub-secret-name"
+  #       type: "ssh" # can be "ssh", "password" or "token"
+  #   pullSecrets:
+  #   basePath: ""
 
 cd-pipeline-operator:
-  image:
-    name: epamedp/cd-pipeline-operator
-    version: 2.9.0
+  enabled: true
+  # image:
+  #   name: epamedp/cd-pipeline-operator
+  #   version:
 
 nexus-operator:
-  image:
-    name: epamedp/nexus-operator
-    version: 2.9.0
-#  nexus:
-#    deploy: true
-#    name: "nexus"
-#    image: "sonatype/nexus3"
-#    version: "3.29.0"
-#    basePath: ""
-#    imagePullSecrets:
-#    storage:
-#      class: gp2
-#      size: 10Gi
+  enabled: true
+  # image:
+  #   name: epamedp/nexus-operator
+  #   version:
+  # nexus:
+  #   deploy: true
+  #   name: "nexus"
+  #   image: "sonatype/nexus3"
+  #   version:
+  #   basePath: ""
+  #   imagePullSecrets:
+  #   storage:
+  #     class: gp2
+  #     size: 10Gi
 
 sonar-operator:
-  image:
-    name: epamedp/sonar-operator
-    version: 2.9.0
+  enabled: true
+#  image:
+#    name: epamedp/sonar-operator
+#    version:
 #  sonar:
 #    deploy: true
 #    name: "sonar"
 #    image: "sonarqube"
-#    version: "7.9-community"
+#    version:
 #    initImage: "busybox"
 #    dbImage: "postgres:9.6"
 #    storage:
@@ -150,70 +143,74 @@ sonar-operator:
 #      database:
 #        class: gp2
 #        size: 1Gi
-    imagePullSecrets:
-    basePath: ""
+#     imagePullSecrets:
+#     basePath: ""
 
 admin-console-operator:
-  image:
-    name: epamedp/admin-console-operator
-    version: 2.9.0
-  adminConsole:
-#    image: epamedp/edp-admin-console
-#    version: 2.9.0
-#    envs:
-#      - name: INTEGRATION_STRATEGIES
-#        value: "Create,Clone,Import"
-#      - name: BUILD_TOOLS
-#        value: "maven"
-#      # DEPLOYMENT_SCRIPT value can be helm-chart or openshift-template or both helm-chart,openshift-template
-#      - name: DEPLOYMENT_SCRIPT
-#        value: "helm-chart"
-#      - name: VERSIONING_TYPES
-#        value: "default,edp"
-#      - name: CI_TOOLS
-#        value: "Jenkins,GitLab CI"
-#      - name: PERF_DATA_SOURCES
-#        value: "Sonar,Jenkins,GitLab"
-#    imagePullSecrets:
-#    basePath: ""
-    projectUrlMask: "/console/project/{namespace}/overview"
-    imageStreamUrlMask: "/console/project/{namespace}/browse/images/{stream}"
+  enabled: true
+  # image:
+  #   name: epamedp/admin-console-operator
+  #   version:
+  # adminConsole:
+  #   image: epamedp/edp-admin-console
+  #   version:
+  #   envs:
+  #     - name: INTEGRATION_STRATEGIES
+  #       value: "Create,Clone,Import"
+  #     - name: BUILD_TOOLS
+  #       value: "maven"
+  #     # DEPLOYMENT_SCRIPT value can be helm-chart or openshift-template or both helm-chart,openshift-template
+  #     - name: DEPLOYMENT_SCRIPT
+  #       value: "helm-chart"
+  #     - name: VERSIONING_TYPES
+  #       value: "default,edp"
+  #     - name: CI_TOOLS
+  #       value: "Jenkins,GitLab CI"
+  #     - name: PERF_DATA_SOURCES
+  #       value: "Sonar,Jenkins,GitLab"
+  #   imagePullSecrets:
+  #   basePath: ""
+  #    projectUrlMask: "/console/project/{namespace}/overview"
+  #    imageStreamUrlMask: "/console/project/{namespace}/browse/images/{stream}"
 
 gerrit-operator:
-  image:
-    name: epamedp/gerrit-operator
-    version: 2.9.0
-#  gerrit:
-#    deploy: true
-#    name: "gerrit"
-#    image: "openfrontier/gerrit"
-#    sshPort: "22"
-#    version: "3.2.3"
-#    imagePullSecrets:
-#    storage:
-#      size: 1Gi
-#      class: gp2
+  enabled: true
+  # image:
+  #   name: epamedp/gerrit-operator
+  #   version:
+  # gerrit:
+  #   deploy: true
+  #   name: "gerrit"
+  #   image: "openfrontier/gerrit"
+  #   sshPort: "22"
+  #   version:
+  #   imagePullSecrets:
+  #   storage:
+  #     size: 1Gi
+  #     class: gp2
 
 reconciler:
-  image:
-    name: epamedp/reconciler
-    version: 2.9.0
+  enabled: true
+  # image:
+  #   name: epamedp/reconciler
+  #   version:
 
 perf-operator:
-  image:
-    name: epamedp/perf-operator
-    version: 2.9.0
-#  perf:
-#    integration: true
-#    name: "epam-perf"
-#    apiUrl: "https://perf.delivery.epam.com"
-#    rootUrl: "https://perf.delivery.epam.com"
-#    credentialName: "epam-perf-user"
-#    projectName: "EPMD-EDP"
-#    luminate:
-#      enabled: true
-#      apiUrl: "https://api.epam.luminatesec.com"
-#      credentialName: "luminate-secret"
+  enabled: true
+  # image:
+  #   name: epamedp/perf-operator
+  #   version:
+  # perf:
+  #   integration: false
+  #   name: "perf"
+  #   apiUrl: "https://perf.delivery.example.com"
+  #   rootUrl: "https://perf.delivery.example.com"
+  #   credentialName: "perf-user"
+  #   projectName: "PROJECT-NAME"
+  #   luminate:
+  #     enabled: false
+  #     apiUrl: "https://api.example.luminatesec.com"
+  #     credentialName: "luminate-secret"
 
 # define EDPComponents, more details: https://github.com/epam/edp-component-operator/
 EDPComponents: {}
