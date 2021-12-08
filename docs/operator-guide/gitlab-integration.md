@@ -2,6 +2,9 @@
 
 Discover the steps below to apply the GitLab integration correctly:
 
+!!! note
+    Before applying the GitLab integration, make sure to enable VCS Import strategy. For details, please refer to the [Enable VCS Import Strategy](import-strategy.md) section.
+
 1. Create access token in **Gitlab**:
 
   * Log in to **GitLab**;

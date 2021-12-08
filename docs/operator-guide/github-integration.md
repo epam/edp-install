@@ -2,6 +2,9 @@
 
 Discover the steps below to apply the GitHub integration correctly:
 
+!!! note
+    Before applying the GitHub integration, make sure to enable VCS Import strategy. For details, please refer to the [Enable VCS Import Strategy](import-strategy.md) section.
+
 1. Create access token for GitHub:
 
   * Click the profile account and navigate to Settings;
@@ -27,24 +30,20 @@ Discover the steps below to apply the GitHub integration correctly:
   !!! note
       Use the same SSH key that was added to the GitServer definition.
 
-5. Add a private part of the SSH key to Jenkins by navigating to *Jenkins -> Credentials -> System -> Global credentials -> Add credentials*; and create new credentials with the *SSH username with private key* kind:
-
-  ![github_ssh_key](../assets/operator-guide/github_ssh_key.png "github_ssh_key")
-
-6.	Navigate to *Jenkins -> Manage Jenkins -> Configure system -> GitHub* part, and configure the GitHub server:
+5.	Navigate to *Jenkins -> Manage Jenkins -> Configure system -> GitHub* part, and configure the GitHub server:
 
   ![github_plugin_config](../assets/operator-guide/github_int.png "github_plugin_config")
 
-7.	Configure the GitHub Pull Request Builder plugin:
+6.	Configure the GitHub Pull Request Builder plugin:
 
   !!! note
       The **Secret** field is optional, for details, please refer to the official [GitHub pull request builder plugin documentation](https://wiki.jenkins.io/display/JENKINS/GitHub+pull+request+builder+plugin).
 
   ![github_pull_plugin_config](../assets/operator-guide/pull_request.png "github_pull_plugin_config")
 
-8. Create a new **Job Provision** by following the [instruction](manage-jenkins-ci-job-provision.md#github-github).
+7. Create a new **Job Provision** by following the [instruction](manage-jenkins-ci-job-provision.md#github-github).
 
-## Related Articles
+### Related Articles
 
 * [Enable VCS Import Strategy](import-strategy.md)
 * [Adjust Jira Integration](jira-integration.md)
