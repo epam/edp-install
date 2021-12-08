@@ -86,10 +86,11 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
    `chore`: (updating grunt tasks etc; no production code change)
 
    `!`: (added to other commit types to mark breaking changes) For example:
+    
+      [EPMDEDP-0000]: feat!: Job provisioner is responsible for the formation of Jenkinsfile
 
-       [EPMDEDP-0000]: feat!: Job provisioner is responsible for the formation of Jenkinsfile
+      BREAKING CHANGE: Job provisioner creates Jenkinsfile and is configured in Jenkins pipeline as a pipeline script.
 
-       *BREAKING CHANGE: Job provisioner creates Jenkinsfile and is configured in Jenkins pipeline as a pipeline script.
 
    d. Commit message:
 
@@ -101,16 +102,16 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
 
    * descriptive, for example:
 
-         [EPMDEDP-0000]: feat: Provide the ability to configure hadolint check
+        [EPMDEDP-0000]: feat: Provide the ability to configure hadolint check
 
-         * Add configuration files .hadolint.yaml and .hadolint.yml to stash
+        *Add configuration files .hadolint.yaml and .hadolint.yml to stash
 
 !!! note
     Make sure there is a descriptive commit message for a breaking change Merge Request. For example:
 
-     *[EPMDEDP-0000]: feat!: Job provisioner is responsible for the formation of Jenkinsfile*<br>
+    [EPMDEDP-0000]: feat!: Job provisioner is responsible for the formation of Jenkinsfile<br>
 
-     **BREAKING CHANGE: Job provisioner creates Jenkinsfile and is configured in Jenkins pipeline as a pipeline script.*
+    BREAKING CHANGE: Job provisioner creates Jenkinsfile and is configured in Jenkins pipeline as a pipeline script.
 
 
 ### Related Articles
