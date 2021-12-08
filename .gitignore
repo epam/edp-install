@@ -11,6 +11,7 @@ npm-debug.log
 /bin/
 *.retry
 .gitkeep
+charts
 
 /backend/target/*
 /database/target/*
