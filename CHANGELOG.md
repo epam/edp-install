@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.10.0](#2.10.0)
 *   [Version 2.9.0](#2.9.0)
 *   [Version 2.8.4](#2.8.4)
 *   [Version 2.8.3](#2.8.3)
@@ -23,6 +24,103 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.2](#2.6.2)
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
+
+
+
+## Version 2.10.0 <a name="2.10.0"></a> (December 22, 2021)
+
+### What's New
+
+EDP 2.10.0 version provides the CI/CD improvements. For instance, each operator now exposes metadata information during start up, like: build tag/date, commit hash from which the operator was built. There are updates in Keycloak operator.
+Now Keycloak Custom Resources allows configuring realm identity providers settings, managing the user federation, controlling the roles and groups, reconciling Keycloak Clients in Custom Resource with several strategies, setting user attributes, and managing events in Keycloak.
+In addition, login attempts are optimized by synchronizing the access token cache.
+General configuration for Ingress controller is provided in Helm charts, which simplifies logic for deployment to different environments. Since this release, EDP supports large Git repositories. As for the EDP components, each of them contains a CHANGELOG file providing the release information.
+
+Explore the updates, new functionality, breaking changes and improvements below.
+
+### Upgrades
+
+* All Alpine based images are upgraded to the 3.13.7 version. For details, please refer to the [official website](https://git.alpinelinux.org/aports/log/?h=v3.13.7).
+* Go is upgraded to the 1.17 version. For details, please refer to the [official website](https://go.dev/doc/go1.17).
+* Helm is upgraded to the 3.7.1 version on Jenkins agents. For details, please refer to the [official website](https://newreleases.io/project/github/helm/helm/release/v3.7.1).
+* Jenkins is upgraded to the LTS 2.303.3 version. For details, please refer to the [official website](https://www.jenkins.io/doc/upgrade-guide/2.303/).
+* Keycloak is upgraded to the 15.0.2 version. For details, please refer to the [official website](https://www.keycloak.org/2021/08/keycloak-1502-released).
+* Kubectl is upgraded to the 1.20.0 version on Jenkins agents. For details, please refer to the [official website](https://kubernetes.io/blog/2020/12/08/kubernetes-1-20-release-announcement/).
+* Nexus is upgraded to the LTS 3.36.0 version. For details, please refer to the [official website](https://help.sonatype.com/repomanager3/product-information/release-notes/2021-release-notes/nexus-repository-3.36.0-release-notes).
+* SonarQube is upgraded to the LTS 8.9.3 Community Edition. For details, please refer to the [official website](https://jira.sonarsource.com/secure/ReleaseNote.jspa?projectId=10930&version=16979).
+
+### New Functionality
+
+* Now EDP supports large Git repositories.
+* Each operator/component provides meta information in logs, for example, the date of build, the build branch, tag, etc.
+* The performance issue is addressed by defining history depth (up to 10) for job provisioner run.
+* A new Custom Resource Definition KeycloakRealmIdentityProvider allows configuring realm identity providers settings.
+* A new KeycloakRealmComponent Custom Resource allows managing the user federation in Keycloak.
+* Several strategies are available for Keycloak Client reconciliation in Custom Resource.
+* The token in the kc-token-main secret is updated immediately after the creation of a new realm.
+* To ensure the desired and actual states are identical, a Custom Resource is reconciled in a configured period of time.
+* Using a service account in Keycloak allows getting the admin realm token.
+* KeycloakClient Custom Resource allows setting Front Channel Logout parameter in SAML clients.
+* Keycloak Custom Resource allows recreating already existing Keycloak client scopes.
+* When using the Import strategy of adding a codebase, Jenkins secrets can be created through the JenkinsServiceAccount Custom Resource.
+* A new Jenkins agent is added with [Java SE 14](https://jdk.java.net/java-se-ri/14) and [Apache Maven 3.8.4](https://maven.apache.org/docs/3.8.4/release-notes.html).
+* [GCC](https://gcc.gnu.org/) and [Make](https://www.gnu.org/software/make/) tools are added to the Jenkins agent image.
+* Dynamic parameters are implemented for a codebase branch trigger release.
+* A shared Golang library is created. For details, please refer to the [GitHub page](https://github.com/vladimirvivien/go-cshared-examples).
+
+#### Breaking Changes
+
+* With v.2.10.0, EDP provides breaking changes and improvements in CI/CD process. For instance, the Jenkins job provisioner creates a Jenkinsfile (that contains the definition of the Jenkins pipeline) and configures it in the Jenkins pipeline as a pipeline script.
+* From the Continuous Integration part, Jenkins pipelines are provisioned by a pipeline provisioner instead of a codebase operator. Please refer to the [Manage Jenkins CI Pipeline Job Provisioner](https://epam.github.io/edp-install/operator-guide/manage-jenkins-ci-job-provision/) page for the details.
+
+### Enhancements
+
+* Work with Ingress becomes intuitively clear, and the default Ingress creation process is improved.
+* Golang tests are excluded from the sonar stage in the Code Review pipeline.
+* The edp-codebase operator work is improved during Jenkins and Gerrit initialization.
+* Login attempts are optimized by implementing synchronization on the access token cache for Keycloak.
+* Stashing the hadolint files allows configuring the hadolint check.
+* EDP allows to deploy and manage an application with the third-party dependency.
+* In Keycloak, the id for a newly created realm is identical to the realm name.
+* Events in Keycloak can be managed with a corresponding Custom Resource.
+* In Keycloak, user attributes can be set using a corresponding Custom Resource.
+
+### Fixed Issues
+
+* Jenkins and Nexus deployments are fixed on the OKD cluster.
+* A new branch can be created from an undefined commit.
+* Empty 'Deployment Script' field in Admin Console by default.
+* Jenkins is unable to create Jenkins agents.
+* Code Review and Build pipelines fail on the sonar stage for .Net applications.
+* The edp-cd-pipeline operator can not create a CD stage.
+* Panic issue in case GetCodebaseImages doesn't exist.
+* The unknown apiGroup field is removed in OpenShift RB.
+* A user is unable to clone a codebase from a public repository.
+* A Custom Resource is not deleted from a namespace after the codebase deletion from the EDP Admin Console.
+* The whitespace in the git-tag stage is removed.
+* Duplication of the key value in Keycloak during repeated reconciliation of KeycloakRealm Custom Resource is fixed.
+
+
+### Documentation
+
+* The [EDP Project Rules. Working Process](https://epam.github.io/edp-install/developer-guide/edp-workflow/) page is added to the [Developer Guide](https://epam.github.io/edp-install/developer-guide/).
+* The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+   * The **Upgrade** section is added including the [Upgrade EDP v.2.7.8 to v.2.8.4](https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.7.8-to-2.8.4/) and [Upgrade EDP v.2.8.4 to v.2.9.0](https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.8.4-to-2.9.0/) pages:
+   * The [Enable VCS Import Strategy](https://epam.github.io/edp-install/operator-guide/import-strategy/) page is updated.
+   * The [Schedule Pods Restart](https://epam.github.io/edp-install/operator-guide/schedule-pods-restart/) page is updated.
+* The following pages are added to the [Use Cases](https://epam.github.io/edp-install/use-cases/) section:
+   * [Autotest as Quality Gate](https://epam.github.io/edp-install/use-cases/autotest-as-quality-gate/)
+   * [Promote Application in CD Pipeline](https://epam.github.io/edp-install/use-cases/promotion-procedure/)
+* The [User Guide](https://epam.github.io/edp-install/user-guide/) is updated with the following:
+   * [EDP CI/CD Overview](https://epam.github.io/edp-install/user-guide/cicd-overview/) is added.
+   * [CI Pipeline Details](https://epam.github.io/edp-install/user-guide/ci-pipeline-details/) is added.
+   * [Code Review Pipeline](https://epam.github.io/edp-install/user-guide/code-review-pipeline/) is added.
+   * [Build Pipeline](https://epam.github.io/edp-install/user-guide/build-pipeline/) is added.
+   * [CD Pipeline Details](https://epam.github.io/edp-install/user-guide/cd-pipeline-details/) is added.
+   * [Prepare for Release](https://epam.github.io/edp-install/user-guide/prepare-for-release/) is added.
+   * The [EDP Pipeline Framework](https://epam.github.io/edp-install/user-guide/pipeline-framework/) page is updated.
+   * The [Autotest](https://epam.github.io/edp-install/user-guide/autotest/) section is updated.
+* The [FAQ](https://epam.github.io/edp-install/faq/) section is added to the EDP documentation.
 
 
 ## Version 2.9.0 <a name="2.9.0"></a> (September 30, 2021)
