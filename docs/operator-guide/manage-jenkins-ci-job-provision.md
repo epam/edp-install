@@ -28,17 +28,17 @@ Take the steps below to add a custom job provision:
 2. Update the required parameters in the new provisioner. For example, if it is necessary to implement a new build tool **docker**, several parameters are to be updated. Add the following stages to the docker
 Code Review and Build pipelines for **docker** application:
 
-        stages['Code-review-application-docker'] = '[{"name": "checkout"},{"name": "lint"},{"name": "build"}]'
-        ...
-        stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "lint"},{"name": "build"},{"name": "push"},{"name": "git-tag"}]'
-        ...
-        def getStageKeyName(buildTool) {
-            ...
-            if (buildTool.toString().equalsIgnoreCase('docker')) {
-            return "Code-review-application-docker"
-            }
-            ...
-        }
+      stages['Code-review-application-docker'] = '[{"name": "checkout"},{"name": "lint"},{"name": "build"}]'
+      ...
+      stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "lint"},{"name": "build"},{"name": "push"},{"name": "git-tag"}]'
+      ...
+      def getStageKeyName(buildTool) {
+          ...
+          if (buildTool.toString().equalsIgnoreCase('docker')) {
+          return "Code-review-application-docker"
+          }
+          ...
+      }
 
   !!! note
       Make sure the support for the above mentioned logic is implemented. Please refer to the [How to Redefine or Extend the EDP Pipeline Stages Library](https://epam.github.io/edp-install/user-guide/pipeline-framework/#13-how-to-redefine-or-extend-the-edp-pipeline-stages-library) section of the guide.
@@ -62,7 +62,7 @@ During the EDP deployment, a default provisioner is created for integration with
    <details>
    <Summary><b>View: Default template</b></Summary>
 
-```java
+```groovy
 /* Copyright 2021 EPAM Systems.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -379,7 +379,7 @@ To create a new job provision for work with GitHub, take the following steps:
    <details>
    <Summary><b>View: Template</b></Summary>
 
-```
+```groovy
 import groovy.json.*
 import jenkins.model.Jenkins
 import javaposse.jobdsl.plugin.*
@@ -470,24 +470,24 @@ if (BRANCH) {
     createListView(codebaseName, formattedBranch)
 
     def type = "${TYPE}"
-	def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
+    def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
     def crKey = getStageKeyName(buildTool).toString()
     createCodeReviewPipeline("Code-review-${codebaseName}", codebaseName, stages.get(crKey, defaultStages), "CodeReview",
-            repositoryPath, gitCredentialsId, defaultBranch, gitServerCrName, gitServerCrVersion, githubRepository)
+            repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion, githubRepository)
     registerWebHook(repositoryPath)
 
 
-	def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
+    def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
 
     if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
-		def jobExists = false
-		if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name})
+        def jobExists = false
+        if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name})
             jobExists = true
         createBuildPipeline("Build-${codebaseName}", codebaseName, stages.get(buildKey, defaultStages), "Build",
                 repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion, githubRepository)
         registerWebHook(repositoryPath, 'build')
 
-		if(!jobExists)
+        if(!jobExists)
           queue("${codebaseName}/${formattedBranch}-Build-${codebaseName}")
     }
 }
@@ -568,7 +568,7 @@ def createBuildPipeline(pipelineName, codebaseName, codebaseStages, pipelineType
         }
         definition {
             cps {
-                script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\n${pipelineType}()")
+                script("@Library(['edp-library-stages', 'edp-library-pipelines']) _ \n\nnode {\n    git credentialsId: \'${credId}\', url: \'${repository}\', branch: \'${BRANCH}\'\n}\n\n${pipelineType}()")
                 sandbox(true)
             }
             parameters {
@@ -718,6 +718,7 @@ def getSecretValue(name) {
     return secret != null ? secret['secret'] : null
 }
 
+
 ```
    </details>
 
@@ -792,7 +793,7 @@ To create a new job provision for work with GitLab, take the following steps:
    <details>
    <Summary><b>View: Template</b></Summary>
 
-```
+```groovy
 import groovy.json.*
 import jenkins.model.Jenkins
 
