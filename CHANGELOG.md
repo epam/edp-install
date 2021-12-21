@@ -66,7 +66,7 @@ Explore the updates, new functionality, breaking changes and improvements below.
 * A new Jenkins agent is added with [Java SE 14](https://jdk.java.net/java-se-ri/14) and [Apache Maven 3.8.4](https://maven.apache.org/docs/3.8.4/release-notes.html).
 * [GCC](https://gcc.gnu.org/) and [Make](https://www.gnu.org/software/make/) tools are added to the Jenkins agent image.
 * Dynamic parameters are implemented for a codebase branch trigger release.
-* A shared Golang library is created. For details, please refer to the [GitHub page](https://github.com/vladimirvivien/go-cshared-examples).
+* A shared Golang library is created. For details, please refer to the [GitHub page](https://github.com/epam/edp-common).
 
 #### Breaking Changes
 
