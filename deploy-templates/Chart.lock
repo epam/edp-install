@@ -19,7 +19,7 @@ dependencies:
   version: 2.10.0
 - name: sonar-operator
   repository: https://chartmuseum.demo.edp-epam.com
-  version: 2.10.0
+  version: 2.10.2
 - name: admin-console-operator
   repository: https://chartmuseum.demo.edp-epam.com
   version: 2.10.0
@@ -32,5 +32,5 @@ dependencies:
 - name: perf-operator
   repository: https://chartmuseum.demo.edp-epam.com
   version: 2.10.0
-digest: sha256:daf5d3eb1ab78d2491acb5cc54c814c7ffcb999638eef1c0b7025a4178a734ef
-generated: "2021-12-08T11:13:06.125463+02:00"
+digest: sha256:0d625be255a157f35f377bbc34e68f3bc7197245c0b952dc3302039d99880863
+generated: "2022-01-04T12:01:46.282575+02:00"

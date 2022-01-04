@@ -43,7 +43,7 @@ dependencies:
 
 - name: sonar-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.10.2"
   condition: sonar-operator.enabled
 
 - name: admin-console-operator
