@@ -1111,7 +1111,7 @@ def getSecretValue(name) {
     )
 
     def secret = creds.find { it.properties['id'] == name }
-    return secret != null ? secret.getApiToken() : null
+    return secret != null ? secret['secret'] : null
 }
 ```
 
