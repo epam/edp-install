@@ -78,6 +78,7 @@ nav:
         - Delete Jenkins Job Provision: operator-guide/delete-jenkins-job-provision.md
       - Logging:
           - Install Grafana Loki: operator-guide/install-loki.md
+          - Multitenant Logging: operator-guide/multitenant-logging.md
           - Schedule Pods Restart: operator-guide/schedule-pods-restart.md
     - Integration:
       - AWS Integration:
