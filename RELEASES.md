@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.10.1](#2.10.1)
 *   [Version 2.10.0](#2.10.0)
 *   [Version 2.9.0](#2.9.0)
 *   [Version 2.8.4](#2.8.4)
@@ -26,6 +27,17 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.0](#2.6.0)
 
 
+## Version 2.10.1 <a name="2.10.1"></a> (January 4, 2022)
+
+### Upgrades
+
+* SonarQube is upgraded to the 8.9.6 version. For details, please refer to the [official website](https://jira.sonarsource.com/secure/ReleaseNote.jspa?projectId=10930&version=17136).
+* The EDP Sonar operator is upgraded to the 2.10.2 version. For details, please refer to the [edp-sonar-operator](https://github.com/epam/edp-sonar-operator/tree/release/2.10) repository.
+
+### Enhancements
+
+* A new [CHANGELOG.md](https://github.com/epam/edp-install/blob/master/CHANGELOG.md#changelog) file is added providing the information regarding the changes in the edp-install repository.
+* The [RELEASES.md](https://github.com/epam/edp-install/blob/master/RELEASES.md#edp-releases) file is updated providing the information regarding overall platform changes.
 
 ## Version 2.10.0 <a name="2.10.0"></a> (December 22, 2021)
 
