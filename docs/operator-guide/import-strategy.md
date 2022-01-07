@@ -1,17 +1,24 @@
 # Enable VCS Import Strategy
 
+!!! note
+    Enabling the VCS Import strategy is a prerequisite to integrate EDP with GitLab or GitHub.
+
 In order to use the **Import** strategy, it is required to add a Secret with SSH key, GitServer Custom Resource, and Jenkins credentials by taking the steps below.
 
-1. Create a `Secret` in the &#8249;edp-project&#8250; namespace for the Git account with the **id_rsa**, **id_rsa.pub**, and **username** fields.
+1. Generate an SSH key pair and add a public key to [GitLab](https://docs.gitlab.com/ee/ssh/) or [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) account.
 
-  As a sample, it is possible to use the following command:
+      ssh-keygen -t ed25519 -C "email@example.com"
+
+2. Create a `Secret` in the &#8249;edp-project&#8250; namespace for the Git account with the **id_rsa**, **id_rsa.pub**, and **username** fields.
+
+  As a sample, it is possible to use the following command (use *github-sshkey* instead of *gitlab-sshkey* for GitHub):
 
       kubectl create secret generic gitlab-sshkey -n <edp-project> \
         --from-file=id_rsa=id_rsa \
         --from-file=id_rsa.pub=id_rsa.pub \
         --from-literal=username=user@example.com
 
-2. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **httpsPort**, **sshPort**, **nameSshKeySecret**, and **createCodeReviewPipeline** fields.
+3. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **httpsPort**, **sshPort**, **nameSshKeySecret**, and **createCodeReviewPipeline** fields.
 
   As a sample, it is possible to use the following template:
 
@@ -31,7 +38,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
   !!! note
       The value of the **nameSshKeySecret** property is the name of the Secret that is indicated in the first point above.
 
-3. Create `Jenkinsserviceaccount` Custom Resource with the **credentials** field that corresponds to the **nameSshKeySecret** property above.
+4. Create `Jenkinsserviceaccount` Custom Resource with the **credentials** field that corresponds to the **nameSshKeySecret** property above.
 
       apiVersion: v2.edp.epam.com/v1alpha1
       kind: JenkinsServiceAccount
@@ -47,7 +54,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
 
   ![credential](../assets/operator-guide/add-credentials.png "credential")
 
-4. Make sure that the value of **INTEGRATION_STRATEGIES** variable is set to **Import** in the edp-admin-console deployment (should be by default). You can check it here:
+5. Make sure that the value of **INTEGRATION_STRATEGIES** variable is set to **Import** in the edp-admin-console deployment (should be by default). You can check it here:
 
       spec:
         containers:
@@ -60,4 +67,13 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
   !!! note
       The default values can be found in the deployment templates for `edp-admin-console-operator` in [edp-install umbrella chart](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml)
 
-5. The **Import** strategy can be found on the **Applications** page of the Admin Console. For details, please refer to the [Add Applications](../user-guide/add-application.md) page.
+!!! note
+    The **Import** strategy can be found on the **Applications** page of the Admin Console. For details, please refer to the [Add Applications](../user-guide/add-application.md) page.
+
+The next step is to integrate Jenkins with [GitHub](github-integration.md) or [GitLab](gitlab-integration.md).
+
+### Related Articles
+
+* [Add Application](../user-guide/add-application.md)
+* [GitHub Integration](github-integration.md)
+* [GitLab Integration](gitlab-integration.md)
