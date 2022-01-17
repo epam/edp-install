@@ -127,14 +127,6 @@ gerrit-operator:
     # Gerrit SSH node port;
     sshPort: <gerrit_ssh_port>
 
-edp:
-  # Admin groups of the tenant separated by comma (,) e.g. test-admin-group;
-  adminGroups:
-    - "<edp-project>-edp-admin"
-  # Developer groups of the tenant separated by comma (,) e.g. test-admin-group;
-  developerGroups:
-    - "<edp-project>-edp-developer"
-
 ```
 
 </details>

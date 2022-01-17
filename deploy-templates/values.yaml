@@ -33,12 +33,6 @@ global:
     url:
   kioskEnabled: true
 
-edp:
-  adminGroups:
-    - "stub-group-admin"
-  developerGroups:
-    - "stub-group-developer"
-
 perf:
   enabled: "false"
 
