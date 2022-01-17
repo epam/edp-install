@@ -88,10 +88,13 @@ nav:
       - Jira Integration:
           - Adjust Jira Integration: operator-guide/jira-integration.md
           - Adjust VCS Integration With Jira: operator-guide/jira-gerrit-integration.md
-      - GitHub Integration: operator-guide/github-integration.md
+      - GitHub Integration:
+          - GitHub Integration: operator-guide/github-integration.md
+          - Debug GitHub Webhooks in Jenkins: operator-guide/github-debug-webhooks.md
       - GitLab Integration:
           - GitLab Integration: operator-guide/gitlab-integration.md
           - Adjust GitLab CI Tool: operator-guide/gitlabci-integration.md
+          - Debug GitLab Webhooks in Jenkins: operator-guide/gitlab-debug-webhooks.md
       - Perf Server Integration: operator-guide/perf-integration.md
     - Upgrade:
       - EDP on Kubernetes:
