@@ -91,7 +91,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/github-debug-webhooks/</loc>
+         <lastmod>2022-01-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/github-integration/</loc>
+         <lastmod>2022-01-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/gitlab-debug-webhooks/</loc>
          <lastmod>2022-01-18</lastmod>
          <changefreq>daily</changefreq>
     </url>
