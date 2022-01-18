@@ -147,4 +147,4 @@ nav:
     - Promote Application in CD Pipeline: use-cases/promotion-procedure.md
   - FAQ: faq.md
   - glossary.md
-  - Releases ⧉: https://github.com/epam/edp-install/releases
+  - Releases ⧉: https://github.com/epam/edp-install/blob/master/RELEASES.md
