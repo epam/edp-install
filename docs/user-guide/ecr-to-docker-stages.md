@@ -20,41 +20,21 @@ The **ecr-to-docker** stage contains a specific script that launches the followi
   - If a similar image exists in the Docker Hub, the script will return the message about it and stop the execution. The **ecr-to-docker** stage in the Build pipeline will be marked in red.
   - If there is no similar image, the script will proceed to promote the image using [crane](https://michaelsauter.github.io/crane/docs.html).
 
-EDP expects authorization credentials to be added in Jenkins under the following names **dockerCredentialsId** and **repoCredentialsID**. To get more information on how to create credentials, see the section **Create Credentials for ECR-to-Docker Stage** below.
+## Create Secret for ECR-to-Docker Stage
 
-## Create Credentials for ECR-to-Docker Stage
+The **ecr-to-docker** stage expects the authorization credentials to be added as Kubernetes secret into EDP-installed namespace. To create the **dockerhub-credentials** secret, run the following command:
 
-The **dockerCredentialsId** and **repoCredentialsID** credentials are expected to be set in Jenkins in order to use the **ecr-to-docker** stage. Inspect below the instructions on how to create the required credentials.
+      kubectl -n <edp-project> create secret generic dockerhub-credentials \
+      --from-literal=accesstoken=<dockerhub_access_token> \
+      --from-literal=account=<dockerhub_account_name> \
+      --from-literal=username=<dockerhub_user_name>
 
-### dockerCredentialsId
-
-In order to create the **dockerCredentialsId** value, perform the following steps:
-
-1. Go to **Jenkins** -> **Manage Jenkins** –> **Manage Credentials** section.
-2. Click the Add Credentials button and select **Username with password** in the **Kind** field.
-3. In the **Username** field, enter the login of the account from which the push will be made and add the password field.
-4. Specify the **ID** and **description** fields. Pay attention to add the **dockerCredentialsId** value in both fields.
-5. Click the Save button.
-  ![add_custom_lib2](../assets/user-guide/ecr_t_d2.png)
-
-### repoCredentialsId
-
-The **repoCredentialsId** value is created in order to indicate the name of the repository that does not match the login of the Docker account.
-Due to the fact that the repository can be an Enterprise solution and, accordingly, users can push images to the repository from other accounts connected within the Docker Hub Organization.
-
-To create the **repoCredentialsID** value, follow the steps below:
-
-1. Go to **Jenkins** -> **Manage Jenkins** –> **Manage Credentials** section.
-2. Click the Add Credentials button and select **Secret text** in the **Kind** field.
-3. Enter the text that will be encrypted by Jenkins, in the **Secret** field.
-4. Specify the **ID** and **description** fields. Pay attention to add the **repoCredentialsID** value in both fields.
-5. Click the Save button.
-  ![add_custom_lib2](../assets/user-guide/ecr_t_d3.png)
-
-As a result, the created credentials will appear in Jenkins in the **Global credentials** section.
-
-![add_custom_lib2](../assets/user-guide/ecr_t_d4.png)
+!!! note
+    - The &#8249;**dockerhub_access_token**&#8250; should be created beforehand and in accordance with the [official Docker Hub instruction](https://docs.docker.com/docker-hub/access-tokens/).
+    - The &#8249;**dockerhub_account_name**&#8250; and &#8249;**dockerhub_user_name**&#8250; for the organization account repository will differ and be identical for the personal account repository.
+    - Pay attention that the Docker Hub repository for images uploading should be created beforehand and named by the following pattern: *&#8249;dockerhub_account_name&#8250;/&#8249;Application Name&#8250;*, where the &#8249;Application Name&#8250; should match the application name in the EDP Admin Console.
 
 ### Related Articles
 
 - [EDP Pipeline Framework](pipeline-framework.md)
+- [Manage Access Token](https://docs.docker.com/docker-hub/access-tokens/)
