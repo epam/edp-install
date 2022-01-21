@@ -32,7 +32,7 @@ jobs:
             # dowload git-chglog
             go get -u github.com/git-chglog/git-chglog/cmd/git-chglog
 
-            git-chglog --template .chglog/release.tpl.md -o release.md {RELEASE_TAG}
+            git-chglog --template .chglog/release.tpl.md -o release.md ${RELEASE_TAG}
 
             echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
 
