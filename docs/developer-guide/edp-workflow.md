@@ -113,6 +113,16 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
 
     BREAKING CHANGE: Job provisioner creates Jenkinsfile and configures it in Jenkins pipeline as a pipeline script.
 
+!!! note
+    If a Merge Request contains both new functionality and breaking changes, make sure the functionality description is placed before the breaking changes. For example:
+
+    [EPMDEDP-0000]: feat!: Update Gerrit to improve access
+
+    * Implement Developers group creation process
+    * Align group permissions
+
+    BREAKING CHANGES: Update Gerrit config according to groups
+
 
 ### Related Articles
 
