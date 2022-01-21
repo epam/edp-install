@@ -1,0 +1,3 @@
+validate-maintainers: false
+chart-repos:
+  - epamedp=https://chartmuseum.demo.edp-epam.com
