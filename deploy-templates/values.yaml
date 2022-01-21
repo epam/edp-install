@@ -55,7 +55,7 @@ keycloak-operator:
   keycloak:
     url: "keycloak.example.com"
 
-codebase-operator: 
+codebase-operator:
   enabled: true
   # image:
   #   name: epamedp/codebase-operator
