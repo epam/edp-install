@@ -10,9 +10,19 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Bug Fixes
+
+- Fix release flow script in GH Actions [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
+
+
+<a name="v2.10.2"></a>
+## [v2.10.2] - 2022-01-21
 ### Routine
 
 - Add changelog generator options [EPMDEDP-8084](https://jiraeu.epam.com/browse/EPMDEDP-8084)
+- Add ct.yaml config [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
+- Bump jenkins-operator version [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
+- Update release flow [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
 
 
 <a name="v2.10.1"></a>
@@ -81,7 +91,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v2.10.1...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v2.10.2...HEAD
+[v2.10.2]: https://github.com/epam/edp-install/compare/v2.10.1...v2.10.2
 [v2.10.1]: https://github.com/epam/edp-install/compare/v2.10.0...v2.10.1
 [v2.10.0]: https://github.com/epam/edp-install/compare/v2.9.0...v2.10.0
 [v2.9.0]: https://github.com/epam/edp-install/compare/v2.8.4...v2.9.0
