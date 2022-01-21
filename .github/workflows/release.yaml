@@ -36,12 +36,6 @@ jobs:
 
             echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
 
-      - name: Read release notes file
-        id: release-notes
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: release.md
-
       - name: Create GitHub release
         uses: actions/create-release@v1
         env:
@@ -50,4 +44,4 @@ jobs:
         with:
           tag_name: ${{ env.RELEASE_TAG }}
           release_name: ${{ env.RELEASE_TAG }}
-          body: ${{ steps.release-notes.outputs.content }}
+          body_path: release.md
