@@ -1,5 +1,5 @@
 global:
-  version: "2.10.1"
+  version: "2.10.2"
   edpName: "stub-namespace"
   platform: "kubernetes"
   dnsWildCard: "stub.com"

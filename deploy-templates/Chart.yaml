@@ -23,7 +23,7 @@ dependencies:
 
 - name: jenkins-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.10.1"
   condition: jenkins-operator.enabled
 
 - name: edp-component-operator

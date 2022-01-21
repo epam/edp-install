@@ -7,7 +7,7 @@ dependencies:
   version: 2.10.0
 - name: jenkins-operator
   repository: https://chartmuseum.demo.edp-epam.com
-  version: 2.10.0
+  version: 2.10.1
 - name: edp-component-operator
   repository: https://chartmuseum.demo.edp-epam.com
   version: 0.10.0
@@ -32,5 +32,5 @@ dependencies:
 - name: perf-operator
   repository: https://chartmuseum.demo.edp-epam.com
   version: 2.10.0
-digest: sha256:0d625be255a157f35f377bbc34e68f3bc7197245c0b952dc3302039d99880863
-generated: "2022-01-04T12:01:46.282575+02:00"
+digest: sha256:0917aea1a9e31366fd24da0dc233120aa26412202e678a42674fff19d060681d
+generated: "2022-01-21T20:51:42.552926+02:00"
