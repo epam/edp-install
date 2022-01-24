@@ -5,7 +5,7 @@
 
 This section provides details on edp-install release lifecycle.
 
-_**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELEASES.md)_
+_**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELEASES.md) page._
 
 
 <a name="unreleased"></a>

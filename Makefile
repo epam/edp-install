@@ -1,4 +1,4 @@
-.PHONY: help docs build-docs
+.PHONY: help docs build-docs changelog
 
 help:
 	@echo "Run make docs or make build-docs"
@@ -19,3 +19,7 @@ build-docs: edp-docs-image
 
 edp-docs-image:
 	@docker build -t edp-docs hack/mkdocs
+
+# use https://github.com/git-chglog/git-chglog/
+changelog:
+	@git-chglog -o CHANGELOG.md v2.7.0..
