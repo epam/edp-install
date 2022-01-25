@@ -1,6 +1,7 @@
 {{- if not (lookup "v1" "ConfigMap" ".Values.global.edpName" "edp-config").metadata }}
 apiVersion: v1
 data:
+  aws_region: {{ required "A valid .Values.awsRegion entry is required!" .Values.awsRegion }}
   edp_name: {{ .Values.global.edpName }}
   edp_version: {{.Values.global.version}}
   dns_wildcard: {{ .Values.global.dnsWildCard }}
