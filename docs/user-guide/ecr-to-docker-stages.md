@@ -3,13 +3,17 @@
 This section contains the description of the **ecr-to-docker** stage, available in the **Build** pipeline.
 
 The **ecr-to-docker** stage is intended to perform the push of Docker images collected from the Amazon ECR cluster storage to Docker Hub repositories, where the image becomes accessible to everyone who wants to use it.
-
 This stage is optional and is designed for working with various EDP components.
 
 !!! note
     When pushing the image from ECR to Docker Hub using [crane](https://michaelsauter.github.io/crane/docs.html), the **SHA-256** value remains unchanged.
 
-![add_custom_lib2](../assets/user-guide/ecr_t_d1.png)
+To run the **ecr-to-docker** stage just for once, navigate to the **Build with Parameters** option, add this stage to the stages list, and click Build. 
+To add the **ecr-to-docker** stage to the pipeline, modify the [job provisioner](../operator-guide/manage-jenkins-ci-job-provision.md).
+
+!!! note
+    To push properly the Docker image from the ECR storage, the **ecr-to-docker** stage should follow the **build-image-kaniko** stage.
+    ![add_custom_lib2](../assets/user-guide/ecr_t_d1.png)
 
 The **ecr-to-docker** stage contains a specific script that launches the following actions:
 
@@ -38,3 +42,4 @@ The **ecr-to-docker** stage expects the authorization credentials to be added as
 
 - [EDP Pipeline Framework](pipeline-framework.md)
 - [Manage Access Token](https://docs.docker.com/docker-hub/access-tokens/)
+- [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)

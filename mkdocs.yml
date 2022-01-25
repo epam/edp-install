@@ -127,7 +127,7 @@ nav:
         - Stages:
           - Overview: user-guide/pipeline-stages.md
           - Dockerfile: user-guide/dockerfile-stages.md
-          - ECR-to-DockerHub: user-guide/ecr-to-docker-stages.md
+          - Promote Docker Images From ECR to Docker Hub: user-guide/ecr-to-docker-stages.md
           - Helm: user-guide/helm-stages.md
           - Open Policy Agent: user-guide/opa-stages.md
           - Terraform: user-guide/terraform-stages.md
