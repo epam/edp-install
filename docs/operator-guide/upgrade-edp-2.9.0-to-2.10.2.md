@@ -45,8 +45,9 @@ This section provides the details on the EDP upgrade from the v.2.9.0 to the v.2
 
 5. Remove the resources related to the deprecated [Sonar Gerrit Plugin](https://plugins.jenkins.io/sonar-gerrit/) that is deleted in EDP 2.10.2:
 
-  * Remove Sonar Gerrit Plugin from Jenkins(go to **Manage Jenkins** -> **Manage Plugins** -> **Installed** -> **Uninstall Sonar Gerrit Plugin**).
-  * In Gerrit, edit the project.config file in All-Project view and remove the Sonar-Verified label declaration:
+  * Remove Sonar Gerrit Plugin from Jenkins (go to **Manage Jenkins** -> **Manage Plugins** -> **Installed** -> **Uninstall Sonar Gerrit Plugin**).
+  * In Gerrit, clone the **All-Projects** repository.
+  * Edit the project.config file in the **All-Projects** repository and remove the Sonar-Verified label declaration:
 
         [label "Sonar-Verified"]
             function = MaxWithBlock
@@ -55,14 +56,15 @@ This section provides the details on the EDP upgrade from the v.2.9.0 to the v.2
             value = +1 Verified
             defaultValue = 0
 
-   * Save the project.config file.
-   * In Gerrit, edit the project.config file in All-Project view and remove the permissions for the Sonar-Verified label:
+   * Also, remove the following permissions for the Sonar-Verified label in the project.config file:
 
         label-Sonar-Verified = -1..+1 group Administrators
         label-Sonar-Verified = -1..+1 group Project Owners
         label-Sonar-Verified = -1..+1 group Service Users
 
-   * Save the project.config file.
+   * Save the changes, and commit and push the repository to **HEAD:refs/meta/config** bypassing the Gerrit code review:
+
+        git push origin HEAD:refs/meta/config
 
 6. Update image versions for the Jenkins agents in the *ConfigMap*:
 
