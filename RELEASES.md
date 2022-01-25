@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+*   [Version 2.10.2](#2.10.2)
 *   [Version 2.10.1](#2.10.1)
 *   [Version 2.10.0](#2.10.0)
 *   [Version 2.9.0](#2.9.0)
@@ -26,6 +27,15 @@ Get acquainted with the latest EDP releases.
 *   [Version 2.6.1](#2.6.1)
 *   [Version 2.6.0](#2.6.0)
 
+
+## Version 2.10.2 <a name="2.10.2"></a> (January 21, 2022)
+
+### Enhancements
+
+* It is possible to use the custom ct.yaml config defined per repository. For details, please refer to the [Use Chart Testing Tool for Code Review Pipeline](https://epam.github.io/edp-install/user-guide/helm-stages/#use-chart-testing-tool-for-code-review-pipeline) page.
+* Jenkins pipelines use SSH Agent Jenkins Plugin instead of "eval ssh-agent" approach.
+* Make possible to use oc and kubectl tools on Jenkins master, go and helm agents.
+* Jenkins [ecr-to-docker](https://epam.github.io/edp-install/user-guide/ecr-to-docker-stages/#promote-docker-images-from-ecr-to-docker-hub) stage now supports EDP and default versioning.
 
 ## Version 2.10.1 <a name="2.10.1"></a> (January 4, 2022)
 
