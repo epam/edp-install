@@ -11,14 +11,16 @@ The Jenkins setup in EDP uses two following plugins responsible for listening on
 
 In case of any sort of issues with webhooks, make sure that:
 
-1. The job ran at least once before the hook will work (once an application is created in EDP, the build job should be run automatically in Jenkins).
+1. Firewalls are configured to accept incoming traffic from the IP address range that is described [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-githubs-ip-addresses).
 
-2. Both webhooks (_Push_ and _issue comment_ and _Pull Request_) are created on the GitHub side (GitHub does not need separate webhooks for each branch unlike GitLab):
+2. The job ran at least once before the hook will work (once an application is created in EDP, the build job should be run automatically in Jenkins).
+
+3. Both webhooks (_Push_ and _issue comment_ and _Pull Request_) are created on the GitHub side (GitHub does not need separate webhooks for each branch unlike GitLab):
   * Go to the GitHub repository - > Settings -> Webhooks.
 
   ![webhook](../assets/operator-guide/github-webhooks1.png "webhook")
 
-3. Click each webhook and check if the event delivery is successful.
+4. Click each webhook and check if the event delivery is successful.
   * The URL payload should be as follows:<br>
   https://jenkins-the-host.com/github-webhook/ is for the GitHub plugin and https://jenkins-the-host.com/ghprbhook/ is for the GitHub Pull Request Builder.
   * The content type should be **application/json** for Push events and **application/x-www-form-urlencoded** for Pull Request events.
@@ -43,17 +45,17 @@ In case of any sort of issues with webhooks, make sure that:
      `Jan 17, 2022 8:17:53 AM FINE org.jenkinsci.plugins.ghprb.GhprbRootAction`<br>
      `Got payload event: ping`<br>
 
-4. The repo pushing to Jenkins, the GitHub project URL in the project configuration, and the repo(s) in the pipeline Job have to line up.
+5. The repo pushing to Jenkins, the GitHub project URL in the project configuration, and the repo(s) in the pipeline Job have to line up.
 
-5. **GitHub hook trigger for GITScm polling** is enabled for the Build job.
+6. **GitHub hook trigger for GITScm polling** is enabled for the Build job.
 
   ![webhook](../assets/operator-guide/github-webhooks3.png "webhook")
 
-6. **GitHub Pull Request Builder** is enabled for the Code Review job.
+7. **GitHub Pull Request Builder** is enabled for the Code Review job.
 
   ![webhook](../assets/operator-guide/github-webhooks4.png "webhook")
 
-7. It is convenient to filter through Jenkins log by using Jenkins custom **Log Recorder**.
+8. It is convenient to filter through Jenkins log by using Jenkins custom **Log Recorder**.
   * Go to Manage Jenkins -> System Log -> Add new log recorder
   * The Push events for the GitHub:
 

@@ -7,14 +7,16 @@ The Jenkins setup in EDP uses the [GitLab](https://plugins.jenkins.io/gitlab-plu
 
 In case of any sort of issues with webhooks, make sure that:
 
-1. The job ran at least once before the hook will work (once an application is created in EDP, the build job should be run automatically in Jenkins).
+1. Firewalls are configured to accept incoming traffic from the IP address range that is described [here](https://docs.gitlab.com/ee/user/gitlab_com/#ip-range).
 
-2. Both webhooks (_Push Events, Note Events_ and _Merge Requests Events, Note Events_) are created on the GitLab side for each branch (GitLab should have separate webhooks for each branch unlike GitHub).
+2. The job ran at least once before the hook will work (once an application is created in EDP, the build job should be run automatically in Jenkins).
+
+3. Both webhooks (_Push Events, Note Events_ and _Merge Requests Events, Note Events_) are created on the GitLab side for each branch (GitLab should have separate webhooks for each branch unlike GitHub).
   * Go to the GitLab repository - > Settings -> Webhooks
 
   ![webhook](../assets/operator-guide/gitlab-webhooks1.png "webhook")
 
-3. Click **Edit** next to each webhook and check if the event delivery is successful. If the webhook is sent, the **Recent Deliveries** list becomes available. Click **View details**.
+4. Click **Edit** next to each webhook and check if the event delivery is successful. If the webhook is sent, the **Recent Deliveries** list becomes available. Click **View details**.
 
   ![webhook](../assets/operator-guide/gitlab-webhooks2.png "webhook")
 
@@ -44,17 +46,17 @@ In case of any sort of issues with webhooks, make sure that:
      `Jan 17, 2022 11:14:58 AM INFO com.dabsquared.gitlabjenkins.webhook.GitLabWebHook getDynamic`<br>
      `WebHook called with url: /project/the-project-name/MAIN-Code-review-the-job`
 
-4. The repository pushing to Jenkins and the repository(ies) in the pipeline Job have to line up. **GitLab Connection** should be present in the job settings.
+5. The repository pushing to Jenkins and the repository(ies) in the pipeline Job have to line up. **GitLab Connection** should be present in the job settings.
 
-5. The settings in **Build Triggers** for the Build job should be as follows:
+6. The settings in **Build Triggers** for the Build job should be as follows:
 
   ![webhook](../assets/operator-guide/gitlab-webhooks3.png "webhook")
 
-6. The settings in **Build Triggers** for the Code Review job should be as follows:
+7. The settings in **Build Triggers** for the Code Review job should be as follows:
 
   ![webhook](../assets/operator-guide/gitlab-webhooks4.png "webhook")
 
-7. It will be convenient to filter through Jenkins log by using Jenkins custom **Log Recorder**.
+8. It will be convenient to filter through Jenkins log by using Jenkins custom **Log Recorder**.
   * Go to Manage Jenkins -> System Log -> Add new log recorder.
   * The Push and Merge Request events for the GitLab:
 
