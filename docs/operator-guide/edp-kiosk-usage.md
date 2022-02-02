@@ -9,7 +9,7 @@ Explore the way [Kiosk, a multi-tenancy extension for Kubernetes](https://github
 
 ## Prerequisites
 
-* Installed Kiosk v.0.2.9.
+* Installed Kiosk 0.2.11.
 
 ## Diagram of using Kiosk by EDP
 

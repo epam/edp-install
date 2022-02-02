@@ -23,13 +23,13 @@ Inspect the main steps to set up Kiosk for the proceeding EDP installation.
 
 ## Installation
 
-* Deploy Kiosk version 0.2.9 in the cluster. To install it, run the following command:
+* Deploy Kiosk version 0.2.11 in the cluster. To install it, run the following command:
 
         # Install kiosk with helm v3
 
         helm repo add kiosk https://charts.devspace.sh/
         kubectl create namespace kiosk
-        helm install kiosk --version 0.2.9 kiosk/kiosk -n kiosk --atomic
+        helm install kiosk --version 0.2.11 kiosk/kiosk -n kiosk --atomic
 
 
 For more details, please refer to the [Kiosk page](https://github.com/loft-sh/kiosk#1-install-kiosk) on the GitHub.
