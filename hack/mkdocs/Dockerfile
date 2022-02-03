@@ -1,5 +1,5 @@
-FROM squidfunk/mkdocs-material:7.3.4
+FROM squidfunk/mkdocs-material:8.1.9
 
 RUN pip install \
-    mdx_truly_sane_lists \
-    mkdocs-awesome-pages-plugin
+    mdx-truly-sane-lists==1.2 \
+    mkdocs-awesome-pages-plugin==2.6.1
