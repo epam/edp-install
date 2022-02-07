@@ -63,6 +63,12 @@ codebase-operator:
   # image:
   #   name: epamedp/codebase-operator
   #   version:
+  # envs:
+  #   - name: RECONCILATION_PERIOD
+  #     value: "360"  # The value should be typed in minutes
+  #   # Maximum number of parallel reconciliation codebasebranches
+  #   - name: CODEBASE_BRANCH_MAX_CONCURRENT_RECONCILES
+  #     value: 3
   # jira:
   #   integration: false
   #   name: "jira"
