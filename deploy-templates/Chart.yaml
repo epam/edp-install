@@ -1,12 +1,22 @@
 apiVersion: v2
 description: A Helm chart for EDP Install
-home: https://solutionshub.epam.com/solution/epam-delivery-platform
+home: https://epam.github.io/edp-install/
 name: edp-install
 type: application
 version: 2.10.0-SNAPSHOT
 appVersion: 2.10.0-SNAPSHOT
+icon: https://epam.github.io/edp-install/assets/logo.png
+keywords:
+  - edp
+  - install
+  - application
+  - pipelines
 maintainers:
-  - name: EPAM EDP Team
+  - name: epmd-edp
+    email: SupportEPMD-EDP@epam.com
+    url: https://solutionshub.epam.com/solution/epam-delivery-platform
+  - name: sergk
+    url: https://github.com/SergK
 sources:
   - https://github.com/epam/edp-install
 
@@ -65,3 +75,36 @@ dependencies:
   repository: "@epamedp"
   version: "2.10.0"
   condition: perf-operator.enabled
+
+annotations:
+  artifacthub.io/license: Apache-2.0
+  artifacthub.io/operator: "true"
+  artifacthub.io/images: |
+    - name: keycloak-operator:1.10.0
+      image: epamedp/keycloak-operator:1.10.0
+    - name: codebase-operator:2.10.0
+      image: epamedp/codebase-operator:2.10.0
+    - name: jenkins-operator:2.10.0
+      image: epamedp/jenkins-operator:2.10.0
+    - name: edp-component-operator:0.10.0
+      image: epamedp/edp-component-operator:0.10.0
+    - name: cd-pipeline-operator:2.10.0
+      image: epamedp/cd-pipeline-operator:2.10.0
+    - name: nexus-operator:2.10.0
+      image: epamedp/nexus-operator:2.10.0
+    - name: sonar-operator:2.10.0
+      image: epamedp/sonar-operator:2.10.0
+    - name: admin-console-operator:2.10.0
+      image: epamedp/admin-console-operator:2.10.0
+    - name: gerrit-operator:2.10.0
+      image: epamedp/gerrit-operator:2.10.0
+    - name: reconciler:2.10.0
+      image: epamedp/reconciler:2.10.0
+    - name: perf-operator:2.10.0
+      image: epamedp/perf-operator:2.10.0
+  artifacthub.io/operatorCapabilities: Full Lifecycle
+  artifacthub.io/links: |
+    - name: EDP Documentation
+      url: https://epam.github.io/edp-install/
+    - name: EPAM SolutionHub
+      url: https://solutionshub.epam.com/solution/epam-delivery-platform
