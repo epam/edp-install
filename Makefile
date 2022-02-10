@@ -21,5 +21,10 @@ edp-docs-image:
 	@docker build -t edp-docs hack/mkdocs
 
 # use https://github.com/git-chglog/git-chglog/
-changelog:
+.PHONY: changelog
+changelog: ## generate changelog
+ifneq (${NEXT_RELEASE_TAG},)
+	@git-chglog --next-tag v${NEXT_RELEASE_TAG} -o CHANGELOG.md v2.7.0..
+else
 	@git-chglog -o CHANGELOG.md v2.7.0..
+endif
