@@ -28,3 +28,11 @@ ifneq (${NEXT_RELEASE_TAG},)
 else
 	@git-chglog -o CHANGELOG.md v2.7.0..
 endif
+
+.PHONY: validate-docs
+validate-docs: helm-docs  ## Validate helm docs
+	@git diff -s --exit-code deploy-templates/README.md || (echo "Run 'make helm-docs' to address the issue." && git diff && exit 1)
+
+.PHONY: helm-docs
+helm-docs: ## generate helm docs
+	helm-docs
