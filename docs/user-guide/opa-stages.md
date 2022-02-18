@@ -28,7 +28,9 @@ In the **Build** pipeline, the following stages are available:
 1. **checkout** stage, a standard step during which all files are checked out from a selected branch of the Git repository.
 
 2. **get-version** optional stage, a step where library version is determined either via:
+
   2.1. Standard EDP versioning functionality.
+
   2.2. Manually specified version. In this case *.manifest* file in a root directory **MUST** be provided. File must contain a JSON document with revision field. Minimal example: `{ "revision": "1.0.0" }"`.
 
 3. **tests** stage containing a script that performs the following actions:

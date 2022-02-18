@@ -133,6 +133,7 @@ nav:
           - Helm: user-guide/helm-stages.md
           - Open Policy Agent: user-guide/opa-stages.md
           - Terraform: user-guide/terraform-stages.md
+          - Container: user-guide/container-stages.md
       - CD Pipeline:
         - user-guide/cd-pipeline-details.md
         - user-guide/add-cd-pipeline.md

@@ -17,3 +17,4 @@ Inspect the functions performed by the following stages:
 * [Use Terraform Library in EDP](terraform-stages.md)
 * [EDP Pipeline Framework](pipeline-framework.md)
 * [Promote Docker Images From ECR to Docker Hub](ecr-to-docker-stages.md)
+* [CI Pipeline for Container](container-stages.md)
