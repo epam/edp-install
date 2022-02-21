@@ -321,6 +321,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/user-guide/container-stages/</loc>
+         <lastmod>2022-02-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/user-guide/customize-cd-pipeline/</loc>
          <lastmod>2022-02-21</lastmod>
          <changefreq>daily</changefreq>
