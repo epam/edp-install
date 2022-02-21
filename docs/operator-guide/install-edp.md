@@ -59,13 +59,13 @@ Inspect the main steps to install EPAM Delivery Platform. Please check the prere
 
 5. Add the Helm EPAMEDP Charts for local client.
 
-      helm repo add epamedp https://chartmuseum.demo.edp-epam.com/
+      helm repo add epamedp https://epam.github.io/edp-helm-charts
 
 6. Choose the required Helm chart version:
 
       helm search repo epamedp/edp-install
       NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-      epamedp/edp-install     2.9.0           2.9.0          A Helm chart for EDP Install
+      epamedp/edp-install     2.10.2           2.10.2          A Helm chart for EDP Install
 
   !!! note
       It is highly recommended to use the latest released version.

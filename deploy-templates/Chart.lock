@@ -1,36 +1,36 @@
 dependencies:
 - name: keycloak-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 1.10.0
 - name: codebase-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
 - name: jenkins-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
 - name: edp-component-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 0.10.0
 - name: cd-pipeline-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
 - name: nexus-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
 - name: sonar-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
 - name: admin-console-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
 - name: gerrit-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
 - name: reconciler
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
 - name: perf-operator
-  repository: https://chartmuseum.demo.edp-epam.com
+  repository: https://epam.github.io/edp-helm-charts
   version: 2.10.0
-digest: sha256:daf5d3eb1ab78d2491acb5cc54c814c7ffcb999638eef1c0b7025a4178a734ef
-generated: "2021-12-08T11:13:06.125463+02:00"
+digest: sha256:a309801edd0a0f7c058d0ca235abf4e9e8a2a387cef1c714bcd5d312e379fdf7
+generated: "2022-02-21T13:27:43.54061+02:00"
