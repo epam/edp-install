@@ -139,6 +139,7 @@ nav:
         - user-guide/add-cd-pipeline.md
         - user-guide/customize-cd-pipeline.md
         - user-guide/prepare-for-release.md
+        - user-guide/copy-shared-secrets.md
     - user-guide/d-d-diagram.md
   - Developer Guide:
     - developer-guide/index.md
