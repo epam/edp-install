@@ -2,387 +2,387 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://epam.github.io/edp-install/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/faq/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/features/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/getting-started/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/glossary/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/roadmap/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/developer-guide/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/developer-guide/edp-workflow/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/developer-guide/local-development/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/developer-guide/mk-docs-development/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/developer-guide/rest-api/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/add-jenkins-agent/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/add-other-code-language/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/delete-jenkins-job-provision/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/deploy-aws-eks/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/edp-kiosk-usage/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/enable-irsa/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/github-debug-webhooks/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/github-integration/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/gitlab-debug-webhooks/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/gitlab-integration/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/gitlabci-integration/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/import-strategy/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/install-edp/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/install-ingress-nginx/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/install-keycloak/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/install-kiosk/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/install-loki/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/install-velero/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/jira-gerrit-integration/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/jira-integration/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/kaniko-irsa/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/kubernetes-cluster-settings/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/loki-irsa/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/manage-jenkins-cd-job-provision/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/manage-jenkins-ci-job-provision/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/multitenant-logging/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/openshift-cluster-settings/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/overview-manage-jenkins-pipelines/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/perf-integration/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/restore-edp-with-velero/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/schedule-pods-restart/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.7.8-to-2.8.4/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.8.4-to-2.9.0/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.9.0-to-2.10.2/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/upgrade-edp-unreleased/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/operator-guide/velero-irsa/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/use-cases/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/use-cases/autotest-as-quality-gate/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/use-cases/promotion-procedure/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/add-application/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/add-autotest/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/add-cd-pipeline/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/add-custom-global-pipeline-lib/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/add-library/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/application/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/autotest/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/build-pipeline/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/cd-pipeline-details/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/ci-pipeline-details/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/cicd-overview/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/code-review-pipeline/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/container-stages/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/customize-cd-pipeline/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/customize-ci-pipeline/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/d-d-diagram/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/dockerfile-stages/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/ecr-to-docker-stages/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/helm-stages/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/library/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/opa-stages/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/pipeline-framework/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/pipeline-stages/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/prepare-for-release/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/terraform-stages/</loc>
-         <lastmod>2022-02-21</lastmod>
+         <lastmod>2022-02-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
