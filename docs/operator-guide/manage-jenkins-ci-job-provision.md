@@ -103,6 +103,8 @@ stages['Code-review-library-opa'] = '[{"name": "gerrit-checkout"}' + "${commitVa
  ',{"name": "tests"}]'
 stages['Code-review-library-codenarc'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
  ',{"name": "sonar"},{"name": "build"}]'
+stages['Code-review-library-kaniko'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
+ ',{"name": "dockerfile-lint"},{"name": "dockerbuild-verify"}]'
 
 stages['Build-library-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
@@ -118,6 +120,8 @@ stages['Build-library-opa'] = '[{"name": "checkout"},{"name": "get-version"}' +
  ',{"name": "tests"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-library-codenarc'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sonar"},{"name": "build"}' +
     "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-kaniko'] = '[{"name": "checkout"},{"name": "get-version"}' +
+ ',{"name": "dockerfile-lint"},{"name": "build-image-kaniko"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
@@ -226,6 +230,9 @@ def getStageKeyName(buildTool) {
     }
     if (buildTool.toString().equalsIgnoreCase('codenarc')) {
         return "Code-review-library-codenarc"
+    }
+    if (buildTool.toString().equalsIgnoreCase('kaniko')) {
+        return "Code-review-library-kaniko"
     }
     def buildToolsOutOfTheBox = ["maven","npm","gradle","dotnet","none","go","python"]
     def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
@@ -409,6 +416,8 @@ stages['Code-review-library-opa'] = '[{"name": "checkout"}' + "${commitValidateS
         ',{"name": "tests"}]'
 stages['Code-review-library-codenarc'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
         ',{"name": "sonar"},{"name": "build"}]'
+stages['Code-review-library-kaniko'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
+ ',{"name": "dockerfile-lint"},{"name": "dockerbuild-verify"}]'
 
 stages['Build-library-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
@@ -424,6 +433,8 @@ stages['Build-library-opa'] = '[{"name": "checkout"},{"name": "get-version"}' +
         ',{"name": "tests"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-library-codenarc'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sonar"},{"name": "build"}' +
         "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-kaniko'] = '[{"name": "checkout"},{"name": "get-version"}' +
+ ',{"name": "dockerfile-lint"},{"name": "build-image-kaniko"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
@@ -501,6 +512,9 @@ def getStageKeyName(buildTool) {
     }
     if (buildTool.toString().equalsIgnoreCase('codenarc')) {
         return "Code-review-library-codenarc"
+    }
+    if (buildTool.toString().equalsIgnoreCase('kaniko')) {
+        return "Code-review-library-kaniko"
     }
     def buildToolsOutOfTheBox = ["maven","npm","gradle","dotnet","none","go","python"]
     def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
@@ -822,6 +836,8 @@ stages['Code-review-library-opa'] = '[{"name": "checkout"}' + "${commitValidateS
         ',{"name": "tests"}]'
 stages['Code-review-library-codenarc'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
         ',{"name": "sonar"},{"name": "build"}]'
+stages['Code-review-library-kaniko'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
+ ',{"name": "dockerfile-lint"},{"name": "dockerbuild-verify"}]'
 
 stages['Build-library-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"},{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
@@ -837,6 +853,8 @@ stages['Build-library-opa'] = '[{"name": "checkout"},{"name": "get-version"}' +
         ',{"name": "tests"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-library-codenarc'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sonar"},{"name": "build"}' +
         "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-library-kaniko'] = '[{"name": "checkout"},{"name": "get-version"}' +
+ ',{"name": "dockerfile-lint"},{"name": "build-image-kaniko"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildImageStage}" +
@@ -975,6 +993,9 @@ def getStageKeyName(buildTool) {
     }
     if (buildTool.toString().equalsIgnoreCase('codenarc')) {
         return "Code-review-library-codenarc"
+    }
+    if (buildTool.toString().equalsIgnoreCase('kaniko')) {
+        return "Code-review-library-kaniko"
     }
     def buildToolsOutOfTheBox = ["maven","npm","gradle","dotnet","none","go","python"]
     def supBuildTool = buildToolsOutOfTheBox.contains(buildTool.toString())
