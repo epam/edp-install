@@ -57,7 +57,7 @@ The "build-image-kaniko" stage manages [ECR](https://aws.amazon.com/ecr/) throug
 
 3. Attach the "AWSIRSA&#8249;CLUSTER_NAME&#8250;&#8249;EDP_NAMESPACE&#8250;Kaniko_policy" policy to the "AWSIRSA&#8249;CLUSTER_NAME&#8250;&#8249;EDP_NAMESPACE&#8250;Kaniko" role.
 
-4. Define the resulted **arn** role value into the **kanikoRoleArn** parameter in values.yaml during the [EDP installation](./install-edp.md).
+4. Define the resulted **arn** role value into the **kaniko.roleArn** parameter in values.yaml during the [EDP installation](./install-edp.md).
 
 ## Related Articles
 

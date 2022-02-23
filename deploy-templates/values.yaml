@@ -1,3 +1,7 @@
+## edp-install configuration
+## Ref: https://github.com/epam/edp-install
+##
+
 global:
   version: "2.10.0-SNAPSHOT"
   edpName: "stub-namespace"
@@ -43,7 +47,18 @@ vcs:
   enabled: "false"
 
 # AWS IAM role with push access to ECR e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
-kanikoRoleArn:
+kaniko:
+  # -- AWS IAM role to be used for kaniko pod servce account (IRSA)
+  roleArn:
+  # -- kaniko image
+  image: gcr.io/kaniko-project/executor:v1.6.0
+  # -- init container image which waits for Dockerfile before starting actual build
+  initImage: busybox:1.35.0
+  # -- aws-cli image is used to provision non-existing AWS ECR repository
+  awsCliImage: amazon/aws-cli:2.2.5
+  # -- Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created
+  # with default value: { "credStore": "ecr-login"}
+  existingDockerConfig:
 
 dockerRegistry:
   url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"

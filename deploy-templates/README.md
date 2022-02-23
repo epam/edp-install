@@ -70,7 +70,11 @@ A Helm chart for EDP Install
 | global.version | string | `"2.10.0-SNAPSHOT"` |  |
 | global.webConsole.url | string | `nil` |  |
 | jenkins-operator.enabled | bool | `true` |  |
-| kanikoRoleArn | string | `nil` |  |
+| kaniko.awsCliImage | string | `"amazon/aws-cli:2.2.5"` | aws-cli image is used to provision non-existing AWS ECR repository |
+| kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
+| kaniko.image | string | `"gcr.io/kaniko-project/executor:v1.6.0"` | kaniko image |
+| kaniko.initImage | string | `"busybox:1.35.0"` | init container image which waits for Dockerfile before starting actual build |
+| kaniko.roleArn | string | `nil` | AWS IAM role to be used for kaniko pod servce account (IRSA) |
 | keycloak-operator.enabled | bool | `true` |  |
 | keycloak-operator.keycloak.url | string | `"keycloak.example.com"` |  |
 | nexus-operator.enabled | bool | `true` |  |
