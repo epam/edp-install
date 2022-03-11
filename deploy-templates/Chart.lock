@@ -1,36 +1,36 @@
 dependencies:
 - name: keycloak-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 1.10.0
 - name: codebase-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
 - name: jenkins-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
 - name: edp-component-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.10.0
 - name: cd-pipeline-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
 - name: nexus-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
 - name: sonar-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
 - name: admin-console-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
 - name: gerrit-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
 - name: reconciler
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
 - name: perf-operator
-  repository: https://epam.github.io/edp-helm-charts
+  repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.10.0
-digest: sha256:a309801edd0a0f7c058d0ca235abf4e9e8a2a387cef1c714bcd5d312e379fdf7
-generated: "2022-02-21T13:27:43.54061+02:00"
+digest: sha256:220046b5039254e119347a2f4355d334785445bdca7aa16464f0ecede4ea5cc4
+generated: "2022-03-11T19:08:30.1376+02:00"
