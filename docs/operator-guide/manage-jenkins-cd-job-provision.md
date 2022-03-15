@@ -15,7 +15,7 @@ During the EDP deployment, a default provisioner is created to deploy applicatio
    <Summary><b>View: Default template</b></Summary>
 
 ```java
-/* Copyright 2021 EPAM Systems.
+/* Copyright 2022 EPAM Systems.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,14 +42,18 @@ def gitCredentialsId = "${GIT_CREDENTIALS_ID}"
 def sourceType = "${SOURCE_TYPE}"
 def libraryURL = "${LIBRARY_URL}"
 def libraryBranch = "${LIBRARY_BRANCH}"
-def autodeploy = "${AUTODEPLOY}"
+def isAutoDeploy = "${AUTODEPLOY}"
 def scriptPath = "Jenkinsfile"
 def containerDeploymentType = "container"
 def deploymentType = "${DEPLOYMENT_TYPE}"
-
-def stages = buildStages(deploymentType, containerDeploymentType, qgStages)
-
 def codebaseFolder = jenkins.getItem(pipelineName)
+
+def autoDeploy = '{"name":"auto-deploy-input","step_name":"auto-deploy-input"}'
+def manualDeploy = '{"name":"manual-deploy-input","step_name":"manual-deploy-input"}'
+def runType = isAutoDeploy.toBoolean() ? autoDeploy : manualDeploy
+
+def stages = buildStages(deploymentType, containerDeploymentType, qgStages, runType)
+
 if (codebaseFolder == null) {
     folder(pipelineName)
 }
@@ -57,18 +61,18 @@ if (codebaseFolder == null) {
 if (deploymentType == containerDeploymentType) {
     createContainerizedCdPipeline(pipelineName, stageName, stages, scriptPath, sourceType,
             libraryURL, libraryBranch, gitCredentialsId, gitServerCrVersion,
-            autodeploy)
+            isAutoDeploy)
 } else {
     createCustomCdPipeline(pipelineName, stageName)
 }
 
-def buildStages(deploymentType, containerDeploymentType, qgStages) {
+def buildStages(deploymentType, containerDeploymentType, qgStages, runType) {
     return deploymentType == containerDeploymentType
-    ? '[{"name":"init","step_name":"init"},{"name":"deploy","step_name":"deploy"},' + qgStages + ',{"name":"promote-images-ecr","step_name":"promote-images"}]'
-    : ''
+            ? '[{"name":"init","step_name":"init"},' + runType + ',{"name":"deploy","step_name":"deploy"},' + qgStages + ',{"name":"promote-images","step_name":"promote-images"}]'
+            : ''
 }
 
-def createContainerizedCdPipeline(pipelineName, stageName, stages, pipelineScript, sourceType, libraryURL, libraryBranch, libraryCredId, gitServerCrVersion, autodeploy) {
+def createContainerizedCdPipeline(pipelineName, stageName, stages, pipelineScript, sourceType, libraryURL, libraryBranch, libraryCredId, gitServerCrVersion, isAutoDeploy) {
     pipelineJob("${pipelineName}/${stageName}") {
         if (sourceType == "library") {
             definition {
@@ -94,14 +98,18 @@ def createContainerizedCdPipeline(pipelineName, stageName, stages, pipelineScrip
             }
         }
         properties {
-          disableConcurrentBuilds()
+            disableConcurrentBuilds()
+            logRotator {
+                numToKeep(10)
+                daysToKeep(7)
+            }
         }
         parameters {
             stringParam("GIT_SERVER_CR_VERSION", "${gitServerCrVersion}", "Version of GitServer CR Resource")
             stringParam("STAGES", "${stages}", "Consequence of stages in JSON format to be run during execution")
 
-            if (autodeploy?.trim() && autodeploy.toBoolean()) {
-                stringParam("AUTODEPLOY", "${autodeploy}", "Is autodeploy enabled?")
+            if (isAutoDeploy?.trim() && isAutoDeploy.toBoolean()) {
+                stringParam("AUTODEPLOY", "${isAutoDeploy}", "Is autodeploy enabled?")
                 stringParam("CODEBASE_VERSION", null, "Codebase versions to deploy.")
             }
         }
@@ -111,7 +119,11 @@ def createContainerizedCdPipeline(pipelineName, stageName, stages, pipelineScrip
 def createCustomCdPipeline(pipelineName, stageName) {
     pipelineJob("${pipelineName}/${stageName}") {
         properties {
-          disableConcurrentBuilds()
+            disableConcurrentBuilds()
+            logRotator {
+                numToKeep(10)
+                daysToKeep(7)
+            }
         }
     }
 }
