@@ -4,7 +4,7 @@ This section contains the description of **dockerbuild-verify**, **dockerfile-li
 
 These stages help to obtain a quick response on the validity of the code in the Code Review pipeline in Kubernetes for all types of applications supported by EDP out of the box.
 
-  ![add_custom_lib2](../assets/user-guide/stages1.png)
+  !![Add stages](../assets/user-guide/dockerfile-stages.png)
 
 Inspect the functions performed by the following stages:
 

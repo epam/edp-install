@@ -5,7 +5,7 @@ To delete the job provisioner, take the following steps:
 1. Delete the job provisioner from Jenkins. Navigate to Admin Console->Jenkins->jobs->job-provisions folder, select the necessary provisioner and click the drop-down right to the provisioner name.
 Select **Delete project**.
 
-  ![delete-job](../assets/operator-guide/delete-job-from-jenkins.png "delete-job")
+  !![Delete job provisioner](../assets/operator-guide/delete-job-from-jenkins.png "Delete job provisioner")
 
 2. Run the commands below in the 'edp-db' pod:
 

@@ -86,10 +86,10 @@ To add a new stage for a particular application, perform the steps below:
       return EmailNotify
 
 3. Open the default set of stages and add a new one into the **Default Value** field by saving the respective type {"name": "email-notify"}, save the changes:
-  ![add_stage](../assets/user-guide/add_stage.png)
+  !![Add stage](../assets/user-guide/add_stage.png)
 
 4. Open Jenkins to check the pipeline; as soon as the checkout stage is passed, the new stage will appear in the pipeline:
-  ![check_stage](../assets/user-guide/check_stage.png)
+  !![Check stage](../assets/user-guide/check_stage.png)
 
   !!! warning
       To make this stage permanently present, please modify the [job provisioner](../operator-guide/manage-jenkins-ci-job-provision.md).
@@ -197,10 +197,10 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
       return EmailNotify
 
 3. Open the default set of stages and add a new one into the _Default Value_ field by saving the respective type {"name": "email-notify"}, save the changes:
-  ![add_stage](../assets/user-guide/add_stage.png)
+  !![Add stage](../assets/user-guide/add_stage.png)
 
 4. Open Jenkins to check the pipeline; as soon as the checkout stage is passed, the new stage will appear in the pipeline:
-  ![check_stage](../assets/user-guide/check_stage.png)
+  !![Check stage](../assets/user-guide/check_stage.png)
 
   !!! warning
       To make this stage permanently present, please modify the [job provisioner](../operator-guide/manage-jenkins-ci-job-provision.md).

@@ -19,7 +19,7 @@ In order to run the operator, follow the steps below:
 
 2. Open folder in GoLand Intellij IDEA, click the ![add_config_button](../assets/developer-guide/add_config_button.png "add_config_button") button and select the **Go Build** option:
 
-  ![add_configuration](../assets/developer-guide/add_configuration.png "add_configuration")
+  !![Add configuration](../assets/developer-guide/add_configuration.png "Add configuration")
 
 3. In Configuration tab, fill in the following:
 
@@ -29,7 +29,7 @@ In order to run the operator, follow the steps below:
 
   3.3. In the Environment field, specify the platform name (OpenShift/Kubernetes);
 
-    ![build-config](../assets/developer-guide/build_config.png "build-config")
+    !![Build config](../assets/developer-guide/build_config.png "Build config")
 
 4. Create the PostgreSQL database, schema, and a user for the EDP Admin Console operator:
 
@@ -60,7 +60,7 @@ In order to run the operator, follow the steps below:
 
 6. After the successful setup, follow the [http://localhost:8080](http://localhost:8080) URL address to check the result:
 
-  ![check-deploy](../assets/developer-guide/check_deploy.png "check-deploy")
+  !![Admin console UI](../assets/developer-guide/check_deploy.png "Admin console UI")
 
 ## Exceptional Cases
 

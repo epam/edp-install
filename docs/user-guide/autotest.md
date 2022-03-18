@@ -16,7 +16,7 @@ As soon as the autotest is successfully provisioned, the following will be creat
 
 The added autotest will be listed in the Autotests list allowing you to do the following:
 
-![autotest-page](../assets/user-guide/autotests-page.png "autotest-page")
+!![Autotests page](../assets/user-guide/autotests-page.png "Autotests page")
 
 1. Add another autotest by clicking the Create button and performing the same steps as described at the [Add Autotest](add-autotest.md) page.
 
@@ -40,7 +40,7 @@ The added autotest will be listed in the Autotests list allowing you to do the f
   !!! note
       The autotest that is used in a CD pipeline cannot be removed.
 
-   ![autotest-page2](../assets/user-guide/autotests-page2.png "autotest-page2")
+   !![Autotests page](../assets/user-guide/autotests-page2.png "Autotests page")
 
 5. Select a number of existing autotests to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
 
@@ -56,15 +56,15 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 1. Perform the editing from one of the following sections on the Admin Console interface:
 
-    ![edit-autotest](../assets/user-guide/edit-autotest.png "edit-autotest")
+    !![Edit autotest](../assets/user-guide/edit-autotest.png "Edit autotest")
 
   - Navigate to the codebase overview page and click the **pencil** icon, or
 
-    ![edit-autotest2](../assets/user-guide/autotest-pencil-icon.png "edit-autotest2")
+    !![Edit autotest](../assets/user-guide/autotest-pencil-icon.png "Edit autotest")
 
   - Navigate to the codebase list page and click the **pencil** icon.
 
-    ![edit-autotest3](../assets/user-guide/autotest-edit-codebase.png "edit-autotest3")
+    !![Edit autotest](../assets/user-guide/autotest-edit-codebase.png "Edit autotest")
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
@@ -93,11 +93,11 @@ When adding an autotest, the default branch is a **master** branch. In order to 
 
 1. Navigate to the **Branches** block and click the Create button:
 
-  ![addbranch1](../assets/user-guide/addbranch1.png "addbranch1")
+  !![Add branch](../assets/user-guide/addbranch1.png "Add branch")
 
 2. Fill in the required fields:
 
-  ![new-branch](../assets/user-guide/create-new-branch-autotest.png "new-branch")
+  !![New branch](../assets/user-guide/create-new-branch-autotest.png "New branch")
 
   a. Release Branch - select the Release Branch check box if you need to create a release branch;
 
@@ -124,7 +124,7 @@ In order to remove the added branch with the corresponding  record in the Admin 
 
 2. Click the delete icon related to the necessary branch:
 
-  ![remove-branch](../assets/user-guide/removebranch.png "removebranch")
+  !![Remove branch](../assets/user-guide/removebranch.png "Remove branch")
 
 3. Enter the branch name and click the Delete button;
 

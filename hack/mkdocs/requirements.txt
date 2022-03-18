@@ -6,3 +6,4 @@ mkdocs-minify-plugin==0.5.0
 mkdocs-redirects==1.0.3
 mkdocs==1.2.3
 pygments==2.11.2
+fancyboxmd==1.0.1

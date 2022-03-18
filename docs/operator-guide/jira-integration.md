@@ -32,4 +32,4 @@ In order to adjust the Jira server integration, first add JiraServer CR by perfo
 
 3. Being in Admin Console, navigate to the Advanced Settings menu to check that the Integrate with Jira Server check box appeared:
 
-    ![jira-server-integration](../assets/operator-guide/jira_integration_ac.png "jira-server-integration")
+    !![Advanced settings](../assets/operator-guide/jira_integration_ac.png "Advanced settings")

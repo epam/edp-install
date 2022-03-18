@@ -12,7 +12,7 @@ Once clicked, the three-step menu will appear:
 
 ## The Codebase Info Menu
 
-![codebase-info](../assets/user-guide/library-codebase-info.png "codebase-info")
+!![Create library](../assets/user-guide/library-codebase-info.png "Create library")
 
 1. In the **Codebase Integration Strategy** field, select the necessary option that is the configuration strategy for the replication with Gerrit:
 
@@ -40,7 +40,7 @@ Once clicked, the three-step menu will appear:
 
   ## The Library Info Menu
 
-  ![library-info](../assets/user-guide/library-info-menu.png "library-info")
+  !![Library info](../assets/user-guide/library-info-menu.png "Library info")
 
 5. Type the name of the library in the **Library Name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
 
@@ -82,7 +82,7 @@ Once clicked, the three-step menu will appear:
 
   ## The Advanced Settings Menu
 
-  ![advanced-settings](../assets/user-guide/library-advanced-settings-menu.png "advanced-settings")
+  !![Advanced settings](../assets/user-guide/library-advanced-settings-menu.png "Advanced settings")
 
 11. Select the CI pipeline provisioner that will be used to handle a codebase. For details, refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction
 and become familiar with the main steps to add an additional job provisioner.
@@ -102,7 +102,7 @@ and inspect the steps that should be done to add a new Jenkins agent.
 
   When selecting the edp versioning type, the extra field will appear:
 
-  ![edp-versioning](../assets/user-guide/edp-versioning.png "edp-versioning")
+  !![EDP versioning](../assets/user-guide/edp-versioning.png "EDP versioning")
 
   a. Type the version number from which you want the artifacts to be versioned.
 
@@ -115,7 +115,7 @@ and inspect the steps that should be done to add a new Jenkins agent.
   !!! note
       The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
 
-  ![jira-server](../assets/user-guide/library-jira-server.png "jira-server")
+  !![Integrate with Jira server](../assets/user-guide/library-jira-server.png "Integrate with Jira server")
 
 15. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits
 and have a respective label in the Fix Version field.
@@ -133,7 +133,7 @@ and have a respective label in the Fix Version field.
 19. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP.
 Upon clicking the question mark icon, observe the tips on how to indicate and combine variables necessary for identifying the format of values to be displayed.
 
-  ![advanced-mapping](../assets/user-guide/advance-mapping.png)
+  !![Advanced mapping](../assets/user-guide/advance-mapping.png)
 
   a. Select the name of the field in a Jira ticket. The available fields are the following: **Fix Version/s**, **Component/s** and **Labels**.
 
@@ -148,7 +148,7 @@ Upon clicking the question mark icon, observe the tips on how to indicate and co
 
   d. Click the delete icon to remove the Jira field name.
 
-  ![perf-server](../assets/user-guide/library-perf.png "perf-server")
+  !![Integrate with Perf server](../assets/user-guide/library-perf.png "Integrate with Perf server")
 
 20. Select the **Integrate with Perf Server** check box to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
 
@@ -158,7 +158,7 @@ Upon clicking the question mark icon, observe the tips on how to indicate and co
 21. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be performed.
 Click the Proceed button to switch to the next menu.
 
-  ![perf-integration](../assets/user-guide/perf-integration-library.png "perf-integration")
+  !![Perf integration](../assets/user-guide/perf-integration-library.png "Perf integration")
 
 22. Select the necessary DataSource (_Jenkins/GitLab, Sonar_) from which the data should be transferred to the Project Performance Board.
 

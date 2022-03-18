@@ -55,7 +55,7 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
 
   c. Pay attention to the task Status that differs in different entities, the workflow will help to see the whole task processing:
 
-  ![jira-workflow](../assets/developer-guide/jira-workflow.png "jira-workflow")
+  !![View Jira workflow](../assets/developer-guide/jira-workflow.png "View Jira workflow")
 
   d. There are several entities that are used on the EDP project: Story, Improvement, Task, Bug.
 

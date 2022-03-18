@@ -262,4 +262,4 @@ To prepare Keycloak for integration with EDP, follow the steps below:
 
   * manage-users
 
-![keycloak-roles](../assets/operator-guide/keycloak-roles.png "keycloak-roles")
+!![Role mappings](../assets/operator-guide/keycloak-roles.png "Role mappings")

@@ -20,10 +20,10 @@ Take the steps below to add a custom job provision:
 
 1. Navigate to the Jenkins main page and open the *job-provisions/ci* folder, click **New Item** and type the name of job-provisions, for example - custom-github.
 
-    ![ci-provisioner-name](../assets/operator-guide/ci-provisioner-name.png "ci-provisioner-name")
+    !![CI provisioner name](../assets/operator-guide/ci-provisioner-name.png "CI provisioner name")
 
     Scroll down to the **Copy from** field and enter "/job-provisions/ci/github", and click OK:
-    ![copy-ci-provisioner](../assets/operator-guide/copy-ci-provisioner.png "copy-ci-provisioner")
+    !![Copy ci provisioner](../assets/operator-guide/copy-ci-provisioner.png "Copy ci provisioner")
 
 2. Update the required parameters in the new provisioner. For example, if it is necessary to implement a new build tool **docker**, several parameters are to be updated. Add the following stages to the docker
 Code Review and Build pipelines for **docker** application:
@@ -49,7 +49,7 @@ Code Review and Build pipelines for **docker** application:
 
   After the steps above are performed, the new custom job provision will be available in **Advanced Settings** during the application creation in Admin Console.
 
-  ![add-custom-ci-provision](../assets/operator-guide/add-custom-ci-provision.png "add-custom-ci-provision")
+  !![Custom ci provision](../assets/operator-guide/add-custom-ci-provision.png "Custom ci provision")
 
 ## Gerrit (default)
 
@@ -379,7 +379,7 @@ To create a new job provision for work with GitHub, take the following steps:
 
   * Select the *Use the provided DSL script* check box:
 
-  ![dsl_script](../assets/operator-guide/dsl_script.png "dsl_script")
+  !![DSL script check box](../assets/operator-guide/dsl_script.png "DSL script check box")
 
 9. As soon as all the steps above are performed, insert the code:
 
@@ -738,7 +738,7 @@ def getSecretValue(name) {
 
   After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
 
-  ![github-job-provision](../assets/operator-guide/github-job-provision.png "github-job-provision")
+  !![Github job provision](../assets/operator-guide/github-job-provision.png "Github job provision")
 
 ## GitLab (gitlab)
 
@@ -800,7 +800,7 @@ To create a new job provision for work with GitLab, take the following steps:
 
   * Select the *Use the provided DSL script* check box:
 
-  ![dsl_script](../assets/operator-guide/dsl_script.png "dsl_script")
+  !![DSL script check box](../assets/operator-guide/dsl_script.png "DSL script check box")
 
 9. As soon as all the steps above are performed, insert the code:
 
@@ -1143,4 +1143,4 @@ def getSecretValue(name) {
 
   After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
 
-  ![gitlab-job-provision](../assets/operator-guide/gitlab-job-provision.png "gitlab-job-provision")
+  !![Gitlab job provision](../assets/operator-guide/gitlab-job-provision.png "Gitlab job provision")

@@ -11,7 +11,7 @@ When checked the prerequisites, follow the steps below to proceed with the integ
 1. Integrate every project in VCS Server with every project in [Crucible](https://crucible.epam.com/) by creating a corresponding request in [EPAM Support Portal](https://support.epam.com/esp/ess.do?orderitem=caConsultancyinFisheyeCruciblefunctionality).
 Add the repositories links and fill in the *Keep Informed* field as this request must be approved.
 
-  ![request_example](../assets/operator-guide/crucible_integration_request_1.png "request_example")
+  !![Request example](../assets/operator-guide/crucible_integration_request_1.png "Request example")
 
 2. Provide additional details to the support team. If the VCS is Gerrit, inspect the sample below of its integration:
 
@@ -21,9 +21,9 @@ Add the repositories links and fill in the *Keep Informed* field as this request
 
   2.3 Provide access to All-Projects for the "crucible-watcher-group" group:
 
-  ![gerrit_config](../assets/operator-guide/gerrit_access_crucible_1.png "gerrit_config")
+  !![Gerrit All-Projects configuration](../assets/operator-guide/gerrit_access_crucible_1.png "Gerrit All-Projects configuration")
 
-  ![gerrit_config](../assets/operator-guide/gerrit_access_crucible_2.png "gerrit_config")
+  !![Gerrit All-Projects configuration](../assets/operator-guide/gerrit_access_crucible_2.png "Gerrit All-Projects configuration")
 
 3. To link commits with Jira ticket, being in Gerrit, enter a Jira ticket ID in a commit message using the specific format:
 
@@ -33,7 +33,7 @@ Add the repositories links and fill in the *Keep Informed* field as this request
 
 4. As a result, all Gerrit commits will be displayed on [Crucible](https://crucible.epam.com/):
 
-  ![crucible_project](../assets/operator-guide/crucible_project_1.png "crucible_project")
+  !![Crucible project](../assets/operator-guide/crucible_project_1.png "Crucible project")
 
 ## Related Articles
 

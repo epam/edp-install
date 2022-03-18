@@ -16,7 +16,7 @@ As soon as the application is successfully provisioned, the following will be cr
 
 The added application will be listed in the Applications list allowing you to do the following:
 
-![inspect-app](../assets/user-guide/inspect-application-menu.png "inspect-app")
+!![Applications menu](../assets/user-guide/inspect-application-menu.png "Applications menu")
 
 1. Create another application by clicking the Create button and performing the same steps as described in the [Add Applications](add-application.md) section.
 
@@ -42,7 +42,7 @@ The added application will be listed in the Applications list allowing you to do
   !!! note
       The application that is used in a CD pipeline cannot be removed.
 
-  ![inspect-app2](../assets/user-guide/inspect-application-menu2.png "inspect-app2")
+  !![Applications menu](../assets/user-guide/inspect-application-menu2.png "Applications menu")
 
 5. Select a number of existing applications to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
 
@@ -58,11 +58,11 @@ When adding an application, the default branch is a **master** branch. In order 
 
 1. Navigate to the **Branches** block and click the Create button:]
 
-  ![addbranch1](../assets/user-guide/addbranch1.png "addbranch1")
+  !![Add branch](../assets/user-guide/addbranch1.png "Add branch")
 
 2. Fill in the required fields:
 
-  ![new-branch](../assets/user-guide/create-new-branch.png "new-branch")
+  !![New branch](../assets/user-guide/create-new-branch.png "New branch")
 
   a. Release Branch - select the **Release Branch** check box if you need to create a release branch;
 
@@ -87,15 +87,15 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 1. Perform the editing from one of the following sections on the Admin Console interface:
 
-  ![edit-codebase](../assets/user-guide/edit-codebase-1.png "edit-codebase")
+  !![Edit codebase](../assets/user-guide/edit-codebase-1.png "Edit codebase")
 
   - Navigate to the codebase overview page and click the **pencil** icon, or
 
-  ![edit-codebase2](../assets/user-guide/edit-codebase-2.png "edit-codebase2")
+  !![Edit codebase](../assets/user-guide/edit-codebase-2.png "Edit codebase")
 
   - Navigate to the codebase list page and click the **pencil** icon.
 
-  ![edit-codebase3](../assets/user-guide/edit-codebase-application.png "edit-codebase3")
+  !![Edit codebase](../assets/user-guide/edit-codebase-application.png "Edit codebase")
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
@@ -118,7 +118,7 @@ In order to remove the added branch with the corresponding record in the Admin C
 1. Navigate to the Branches block by clicking the application name link in the Applications list;
 2. Click the delete icon related to the necessary branch:
 
-  ![remove-branch](../assets/user-guide/removebranch.png "removebranch")
+  !![Remove branch](../assets/user-guide/removebranch.png "Remove branch")
 
 3. Enter the branch name and click the Delete button;
 

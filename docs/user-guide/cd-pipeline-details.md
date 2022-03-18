@@ -18,7 +18,7 @@ Every codebase has a branch that has its own codebase stream - a Docker containe
 !!! note
     For more information on the main terms used in EPAM Delivery Platform, please refer to the [EDP Glossary](../glossary.md)
 
-![edp-cd-pipeline](../assets/user-guide/edp-cd-pipeline.png "edp-cd-pipeline")
+!![EDP CD pipeline](../assets/user-guide/edp-cd-pipeline.png "EDP CD pipeline")
 
 Explore the details of the CD pipeline below.
 
@@ -33,7 +33,7 @@ The Deploy pipeline is used by default on any stage of the Continuous Delivery p
 
 Find below the functional diagram of the Deploy pipeline with the default stages:
 
-![deploy-pipeline](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/deploy-pipeline.puml)
+!![Deploy pipeline stages](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/deploy-pipeline.puml)
 
 ### Related Articles
 

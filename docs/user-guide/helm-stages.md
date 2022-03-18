@@ -8,7 +8,7 @@ Inspect the functions performed by the following stages:
 
 1. [**helm-lint**](https://github.com/helm/chart-testing#chart-testing) stage launches the _ct lint --charts-deploy-templates/_ command in order to validate the chart.
 
-  ![helm-lint](../assets/user-guide/helm-lint.png)
+  !![Helm lint](../assets/user-guide/helm-lint.png)
 
    * [chart_schema.yaml](https://github.com/helm/chart-testing/blob/main/etc/chart_schema.yaml) - this file contains some rules by which the chart validity is checked. These rules are necessary for the YAML scheme validation.
 
@@ -64,7 +64,7 @@ dependency:
 
 2. [**helm-docs**](https://github.com/norwoodj/helm-docs#helm-docs) stage helps to validate the generated documentation for the Helm deployment templates in the Code Review pipeline for all types of applications supported by EDP.
 
-  ![helm-docs](../assets/user-guide/helm-docs.png)
+  !![Helm docs](../assets/user-guide/helm-docs.png)
 
 **Requirements**: [helm-docs v1.7.0](https://github.com/norwoodj/helm-docs/releases/tag/v1.7.0)
 

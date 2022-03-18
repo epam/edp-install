@@ -16,7 +16,7 @@ As soon as the library is successfully provisioned, the following will be create
 
 The added library will be listed in the Libraries list allowing to do the following:
 
-![inspect-library](../assets/user-guide/library-page.png "insect-library")
+!![Library menu](../assets/user-guide/library-page.png "Library menu")
 
 1. Create another library by clicking the Create button and performing the same steps as described on the [Add Library](add-library.md) page;
 
@@ -42,7 +42,7 @@ The added library will be listed in the Libraries list allowing to do the follow
   !!! note
       The library that is used in a CD pipeline cannot be removed.
 
-  ![inspect-library2](../assets/user-guide/library-page2.png "inspect-library2")
+  !![Library menu](../assets/user-guide/library-page2.png "Library menu")
 
 5. Select a number of existing libraries to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
 
@@ -58,15 +58,15 @@ The EDP Admin Console provides the ability to enable, disable or edit the Jira I
 
 1. Perform the editing from one of the following sections on the Admin Console interface:
 
-    ![edit-library-codebase1](../assets/user-guide/edit-library-codebase.png "edit-library-codebase")
+    !![Edit library](../assets/user-guide/edit-library-codebase.png "Edit library")
 
   - Navigate to the codebase overview page and click the **pencil** icon, or
 
-    ![edit-library-codebase2](../assets/user-guide/library-pen-icon.png "edit-library-codebase2")
+    !![Edit library](../assets/user-guide/library-pen-icon.png "Edit library")
 
   - Navigate to the codebase list page and click the **pencil** icon.
 
-    ![edit-library-codebase3](../assets/user-guide/edit-codebase-library.png "edit-library-codebase3")
+    !![Edit library](../assets/user-guide/edit-codebase-library.png "Edit library")
 
 2. To enable Jira integration, on the **Edit Codebase** page do the following:
 
@@ -88,11 +88,11 @@ When adding a library, the default branch is a **master** branch. In order to ad
 
 1. Navigate to the **Branches** block and click the Create button:
 
-  ![addbranch1](../assets/user-guide/addbranch1.png "addbranch1")
+  !![Add branch](../assets/user-guide/addbranch1.png "Add branch")
 
 2. Fill in the required fields:
 
-  ![new-branch](../assets/user-guide/create-new-branch-library.png "new-branch")
+  !![New branch](../assets/user-guide/create-new-branch-library.png "New branch")
 
   a. Release Branch - select the Release Branch check box if you need to create a release branch;
 
@@ -120,7 +120,7 @@ In order to remove the added branch with the corresponding  record in the Admin 
 
 2. Click the delete icon related to the necessary branch:
 
-  ![remove-branch](../assets/user-guide/removebranch.png "removebranch")
+  !![Remove branch](../assets/user-guide/removebranch.png "Remove branch")
 
 3. Enter the branch name and click the Delete button;
 

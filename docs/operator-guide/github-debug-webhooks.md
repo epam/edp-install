@@ -18,7 +18,7 @@ In case of any sort of issues with webhooks, make sure that:
 3. Both webhooks (_Push_ and _issue comment_ and _Pull Request_) are created on the GitHub side (GitHub does not need separate webhooks for each branch unlike GitLab):
   * Go to the GitHub repository - > Settings -> Webhooks.
 
-  ![webhook](../assets/operator-guide/github-webhooks1.png "webhook")
+  !![Webhooks settings](../assets/operator-guide/github-webhooks1.png "Webhooks settings")
 
 4. Click each webhook and check if the event delivery is successful.
   * The URL payload should be as follows:<br>
@@ -27,7 +27,7 @@ In case of any sort of issues with webhooks, make sure that:
   * The *html_url* in the **Payload** request should match the repository URL.
   * The event can also be redelivered by clicking the **Redeliver** button.
 
-  ![webhook](../assets/operator-guide/github-webhooks2.png "webhook")
+  !![Manage webhook](../assets/operator-guide/github-webhooks2.png "Manage webhook")
 
   !!! Note
       It may be convenient to debug webhooks with tools like Postman.<br>
@@ -35,12 +35,12 @@ In case of any sort of issues with webhooks, make sure that:
 
   **Examples for Push and Pull Request events**:
 
-  ![webhook](../assets/operator-guide/github-webhooks-postman1.png "webhook")
+  !![GitHub plugin push events](../assets/operator-guide/github-webhooks-postman1.png "GitHub plugin push events")
    The response in the Jenkins log:<br>
      `Jan 17, 2022 8:51:14 AM INFO org.jenkinsci.plugins.github.webhook.subscriber.PingGHEventSubscriber onEvent`<br>
      `PING webhook received from repo <https://github.com/user-profile/user-repo>!`<br>
 
-  ![webhook](../assets/operator-guide/github-webhooks-postman2.png "webhook")
+  !![Github pull request builder](../assets/operator-guide/github-webhooks-postman2.png "Github pull request builder")
    The response in the Jenkins log:<br>
      `Jan 17, 2022 8:17:53 AM FINE org.jenkinsci.plugins.ghprb.GhprbRootAction`<br>
      `Got payload event: ping`<br>
@@ -49,11 +49,11 @@ In case of any sort of issues with webhooks, make sure that:
 
 6. **GitHub hook trigger for GITScm polling** is enabled for the Build job.
 
-  ![webhook](../assets/operator-guide/github-webhooks3.png "webhook")
+  !![GitHub hook trigger](../assets/operator-guide/github-webhooks3.png "GitHub hook trigger")
 
 7. **GitHub Pull Request Builder** is enabled for the Code Review job.
 
-  ![webhook](../assets/operator-guide/github-webhooks4.png "webhook")
+  !![GitHub pull request builder](../assets/operator-guide/github-webhooks4.png "GitHub pull request builder")
 
 8. It is convenient to filter through Jenkins log by using Jenkins custom **Log Recorder**.
   * Go to Manage Jenkins -> System Log -> Add new log recorder

@@ -12,7 +12,7 @@ There are three codebase types in EPAM Delivery Platform:
 !!! note
     For more information on the above mentioned codebase types, please refer to the [Add Application](add-application.md), [Add Library](add-library.md), [Add Autotests](add-autotest.md) and [Autotest as Quality Gate](../use-cases/autotest-as-quality-gate.md) pages.
 
-![edp-ci-pipeline](../assets/user-guide/edp-ci-pipeline.png "edp-ci-pipeline")
+!![EDP CI pipeline](../assets/user-guide/edp-ci-pipeline.png "EDP CI pipeline")
 
 ### Related Articles
 

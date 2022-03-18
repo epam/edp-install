@@ -52,7 +52,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
 
     Double-check if the credentials are created in Jenkins correctly. Navigate to **Jenkins -> Credentials -> System -> Global Credentials -> Add Credentials**:
 
-  ![credential](../assets/operator-guide/add-credentials.png "credential")
+  !![Jenkins credential](../assets/operator-guide/add-credentials.png "Jenkins credential")
 
 5. Make sure that the value of **INTEGRATION_STRATEGIES** variable is set to **Import** in the edp-admin-console deployment (should be by default). You can check it here:
 

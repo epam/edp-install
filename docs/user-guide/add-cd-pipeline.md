@@ -17,7 +17,7 @@ part.
 
 ## The Pipeline Menu
 
-![pipeline-menu](../assets/user-guide/pipeline-menu.png "pipeline-menu")
+!![Create CD pipeline](../assets/user-guide/pipeline-menu.png "Create CD pipeline")
 
 
 1. Type the name of the pipeline in the **Pipeline Name** field by entering at least two characters and by using
@@ -35,7 +35,7 @@ the lower-case letters, numbers and inner dashes.
 
   ## The Applications Menu
 
-  ![cd-pipeline-applications](../assets/user-guide/cd-pipeline-applications.png "cd-pipeline-applications")
+  !![CD pipeline applications](../assets/user-guide/cd-pipeline-applications.png "CD pipeline applications")
 
 4. Select the check box of the necessary application in the **Applications** menu.
 5. Specify the necessary codebase Docker stream (the output for the branch and other stages from other CD pipelines)
@@ -54,12 +54,12 @@ which was selected for the pipeline, will be always used.
 
   ## The Stages Menu
 
-  ![cd-stages](../assets/user-guide/cd-pipeline-stages.png "cd-stages")
+  !![CD stages](../assets/user-guide/cd-pipeline-stages.png "CD stages")
 
 
 8. Click the plus sign icon in the **Stages** menu and fill in the necessary fields in the Adding Stage window <a name="adding_stage_window"></a>:
 
-  ![adding-stage1](../assets/user-guide/cd-adding-stage1.png "adding-stage")
+  !![Adding stage](../assets/user-guide/cd-adding-stage1.png "Adding stage")
 
   a. Type the stage name;
 
@@ -90,7 +90,7 @@ which was selected for the pipeline, will be always used.
       Execution sequence. The image promotion and execution of the pipelines depend on the sequence in which
       the environments are added.
 
-  ![adding-stage2](../assets/user-guide/cd-adding-stage2.png "adding-stage2")
+  !![Adding stage](../assets/user-guide/cd-adding-stage2.png "Adding stage")
 
   g. Select the groovy-pipeline library;
 
@@ -103,7 +103,7 @@ which was selected for the pipeline, will be always used.
   !!! info
       Perform the same steps as described above if there is a necessity to add one more stage.
 
-  ![stages-menu](../assets/user-guide/cd-pipeline-stages-menu.png "stages-menu")
+  !![Continuous delivery menu](../assets/user-guide/cd-pipeline-stages-menu.png "Continuous delivery menu")
 
 9. Edit the stage by clicking its name and applying changes, and remove the added stage by clicking the recycle bin icon
 next to its name.
@@ -115,7 +115,7 @@ with the stage name will be created in OpenShift.
 
 As soon as the CD pipeline is provisioned and added to the CD Pipelines list, there is an ability to:
 
-  ![cd-page](../assets/user-guide/cd-pipeline-page.png "cd-page")
+  !![CD page](../assets/user-guide/cd-pipeline-page.png "CD page")
 
 1. Create another application by clicking the Create button and performing the same steps as described
 in the [Add CD Pipeline](#add-cd-pipeline) section.
@@ -134,27 +134,27 @@ in alphabetical order.
 
 * Edit the CD pipeline by clicking the pen icon next to its name in the CD Pipelines list:
 
-  ![edit-cd](../assets/user-guide/edit-cd-pipeline.png "edit-cd")
+  !![Edit CD pipeline](../assets/user-guide/edit-cd-pipeline.png "Edit CD pipeline")
 
   * apply the necessary changes (the list of applications for deploy, image streams, and promotion in the pipeline) and click the Proceed button to confirm the editions:
 
-   ![edit-page](../assets/user-guide/edit-cd-pipeline-page.png)
+   !![Edit CD pipeline page](../assets/user-guide/edit-cd-pipeline-page.png)
 
   * add new extra stages steps by clicking the plus sign icon and filling in the necessary fields
   in the [Adding Stage](#adding_stage_window) window.
 
-   ![add-stages3](../assets/user-guide/cd-adding-stage3.png "add-stages3")
+   !![Add stages](../assets/user-guide/cd-adding-stage3.png "Add stages")
 
   !!! note
       The added stage will appear in the **Stages** menu allowing to review its details or delete.
 
 * Check the CD pipeline data and details by clicking the CD pipeline name in the CD Pipelines list:
 
-  ![cd-link-to-jenkins](../assets/user-guide/cd-link-to-jenkins.png "cd-link-to-jenkins")
+  !![Link to Jenkins](../assets/user-guide/cd-link-to-jenkins.png "Link to Jenkins")
 
   * the main link on the top of the details page refers to Jenkins;
 
-  ![pen-icon](../assets/user-guide/cd-pen-icon.png "pen-icon")
+  !![Edit icon](../assets/user-guide/cd-pen-icon.png "Edit icon")
 
   * the pen icon refers to the same **Edit CD Pipeline** page as mentioned above and allows to apply the necessary changes;
 
@@ -165,7 +165,7 @@ and links to Jenkins and Gerrit as well as the signification of the promotion in
 stage Kubernetes/OpenShift page, and the link to the Autotest details page in case there are added autotests. To enable or disable
 auto deployment of a specific stage, click the pen icon and select the necessary trigger type from the drop-down list.
 
-  ![edit-autodeploy](../assets/user-guide/edit-autodeploy.png "edit-autodeploy")
+  !![Edit trigger type](../assets/user-guide/edit-autodeploy.png "Edit trigger type")
 
   !!! note
       The deletion of stages is performed sequentially, starting from the latest created stage.
@@ -176,15 +176,15 @@ auto deployment of a specific stage, click the pen icon and select the necessary
   * the **Deployed Version** menu indicates the applications and stages with the appropriate status. The status will be changed
 after stage deployment.
 
-  ![addcdpip10](../assets/user-guide/addcdpipe10.png "addcdpipe10")
+  !![Deployed versions](../assets/user-guide/addcdpipe10.png "Deployed versions")
 
   * the **Status Info** menu displays all the actions that were performed during the deployment process:
 
-  ![addcdpip11](../assets/user-guide/addcdpipe11.png "addcdpipe11")
+  !![Status info](../assets/user-guide/addcdpipe11.png "Status info")
 
 * Remove the added CD pipeline:
 
-  ![remove-cd-pipe](../assets/user-guide/remove-cd-pipeline.png "remove-cd-pipe")
+  !![Remove CD pipeline](../assets/user-guide/remove-cd-pipeline.png "Remove CD pipeline")
 
   !!! info
       If there is a necessity to create another CD pipeline, navigate to the **Continuous Delivery** section,

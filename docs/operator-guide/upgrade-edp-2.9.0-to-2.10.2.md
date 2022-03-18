@@ -39,7 +39,7 @@ This section provides the details on the EDP upgrade from the v.2.9.0 to the v.2
 
   * Navigate to the project http://SonarQubeServerURL/setup link and follow the setup instructions:
 
-    ![migrate-sonar-database](../assets/operator-guide/migrate-sonar-database.png "migrate-sonar-database")
+    !![Migrate SonarQube database](../assets/operator-guide/migrate-sonar-database.png "Migrate SonarQube database")
 
   * Click the **Upgrade** button and wait for the end of the migration process.
 
@@ -91,10 +91,10 @@ This section provides the details on the EDP upgrade from the v.2.9.0 to the v.2
 7. Since EDP version v.2.10.x, the create-release.groovy, code-review.groovy, and build.groovy files are deprecated (`pipeline script from SCM` is replaced with `pipeline script`, see below).
 
    * Pipeline script from SCM:
-     ![pipeline-script-from-scm-example](../assets/operator-guide/pipeline-script-from-scm-example.png "pipeline-script-from-scm-example")
+     !![Pipeline script from scm example](../assets/operator-guide/pipeline-script-from-scm-example.png "Pipeline script from scm example")
 
    * Pipeline script:
-      ![pipeline-script-example](../assets/operator-guide/pipeline-script-example.png "pipeline-script-example")
+      !![Pipeline script example](../assets/operator-guide/pipeline-script-example.png "Pipeline script example")
 
    * Update the job-provisioner code and restart the codebase-operator pod. Consult the [default job-provisioners code](manage-jenkins-ci-job-provision.md) section.
 

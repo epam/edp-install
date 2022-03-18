@@ -2,7 +2,7 @@
 
 There is an ability to extend the default code languages when creating a codebase with the Clone or Import strategy.
 
-![other-language](../assets/operator-guide/ac_other_language.png "other-language")
+!![Other code language](../assets/operator-guide/ac_other_language.png "Other code language")
 
 !!! warning
     The Create strategy does not allow to customize the default code language set.
@@ -43,7 +43,7 @@ spec:
 * As a result, the newly added Jenkins agent will be available in the **Select Jenkins Slave** dropdown list of the
 Advanced Settings block during the codebase creation:
 
-  ![jenkins-agent](../assets/operator-guide/ac_jenkins_agent.png "jenkins-agent")
+  !![Advanced settings](../assets/operator-guide/ac_jenkins_agent.png "Advanced settings")
 
 If it is necessary to create Code Review and Build pipelines, add corresponding entries (e.g. stages[Build-application-docker], [Code-review-application-docker]). See the example below:
 
@@ -55,7 +55,7 @@ stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "get-versio
 ...
 ```
 
-  ![jenkins-provisioner](../assets/operator-guide/ac-jenkins-provisioner.png "jenkins-provisioner")
+  !![Jenkins job provisioner](../assets/operator-guide/ac-jenkins-provisioner.png "Jenkins job provisioner")
 
 !!! note
     Application is one of the available options. Another option might be to add a library. Please refer to the [Add Library](../user-guide/add-library.md) page for details.

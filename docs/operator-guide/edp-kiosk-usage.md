@@ -13,7 +13,7 @@ Explore the way [Kiosk, a multi-tenancy extension for Kubernetes](https://github
 
 ## Diagram of using Kiosk by EDP
 
-![edp-kiosk-usage](../assets/edp-kiosk-usage.png "edp-kiosk-usage")
+!![Kiosk usage](../assets/edp-kiosk-usage.png "Kiosk usage")
 
 !!! Agenda
     * blue - created by Helm chart;

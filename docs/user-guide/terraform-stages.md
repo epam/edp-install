@@ -75,10 +75,10 @@ In the **Build** pipeline, the following stages are available:
 To create credentials that will be used in _terraform-plan_ and _terraform-apply_ stages, perform the following steps:
 
   1. Go to **Jenkins** -> **Manage Jenkins** -> **Manage Credentials**. In the **Store scoped to Jenkins** section select _global_ as **Domains**.
-    ![add_custom_lib2](../assets/user-guide/tflib1.png)
+    !![Jenkins credential](../assets/user-guide/tflib1.png)
 
   2. Click the **Add Credentials** tab and select _AWS Credentials_ in the **Kind** dropdown.
-    ![add_custom_lib2](../assets/user-guide/tflib2.png)
+    !![Jenkins credential](../assets/user-guide/tflib2.png)
 
   3. Enter the ID name. By default, EDP expects AWS credentials to be under the ID _aws.user_.
 
@@ -93,10 +93,10 @@ To use other existing credentials (e.g. from other accounts) instead of the expe
 1. Navigate to the Build pipeline and select the **Configure** tab.
 
 2. Click the **Add Parameter** button and select the **String Parameter** option.
-  ![add_custom_lib2](../assets/user-guide/tflib3.png)
+  !![Add string parameter](../assets/user-guide/tflib3.png)
 
 3. Fill in the respective fields with the variable name _AWS_CREDENTIALS_, description, and the default value (e.g.,_aws.user_, used previously in pipelines).
-  ![add_custom_lib2](../assets/user-guide/tflib4.png)
+  !![Set value](../assets/user-guide/tflib4.png)
 
 Now during the launch of the Build pipeline, it is possible to select the desired credentials, added in Jenkins, in the _AWS_CREDENTIALS_ field of the Build pipeline settings.
 

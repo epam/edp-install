@@ -35,7 +35,7 @@ EDP consists of the following:
 EPAM Delivery Platform (EDP) is suitable for all aspects of delivery starting from development including the capability to deploy production environment.
 EDP architecture is represented on a diagram below.
 
-![edp-context](./assets/edp-context.png "edp-context")
+!![Architecture](./assets/edp-context.png "Architecture")
 
 EDP consists of three cross-cutting concerns:
 
@@ -57,7 +57,7 @@ On the top of these indicated concerns, EDP adds several blocks that include:
 
 Explore the EDP technology stack diagram
 
-![edp_technology_stack](./assets/edp_technology_stack.png "edp_technology_stack")
+!![Technology stack](./assets/edp_technology_stack.png "Technology stack")
 
 The EDP IaaS layer supports most popular public clouds AWS, Azure and GCP keeping the capability to be deployed on private/hybrid clouds based on OpenStack.
 EDP containers are based on [Docker technology](https://www.docker.com/){target=_blank}, orchestrated by Kubernetes compatible solutions.

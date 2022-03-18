@@ -119,11 +119,11 @@ To add a new Jenkins agent, take the steps below:
 2. Open Jenkins to ensure that everything is added correctly. Click the **Manage Jenkins** option, navigate to the **Manage Nodes and Clouds**->**Configure Clouds**->**Kubernetes**->**Pod Templates...**,
 and scroll down to find new Jenkins agent **Pod Template details...**:
 
-  ![jenkins-agent](../assets/operator-guide/jenkins-k8s-pod-template.png "jenkins-agent")
+  !![Jenkins pod template](../assets/operator-guide/jenkins-k8s-pod-template.png "Jenkins pod template")
 
   As a result, the newly added Jenkins agent will be available in the **Advanced Settings** block of the Admin Console tool during the codebase creation:
 
-  ![advanced-settings](../assets/operator-guide/newly-added-jenkins-agent.png "advanced-settings")
+  !![Advanced settings](../assets/operator-guide/newly-added-jenkins-agent.png "Advanced settings")
 
 
 ## Modify Existing Agent Configuration

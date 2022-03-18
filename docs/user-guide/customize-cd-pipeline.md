@@ -12,15 +12,15 @@ In order to have the ability to customize a stage logic, create a CD pipeline st
   !!! note
       If you clone the library, make sure that the correct source branch is selected.
 
-  ![Groovy-pipeline](../assets/user-guide/create-library-choose-type1.png "Groovy-pipeline")
+  !![Create library](../assets/user-guide/create-library-choose-type1.png "Create library")
 
    Select the required fields to build your library:
 
-  ![Groovy-pipeline](../assets/user-guide/create-library-choose-type2.png "Groovy-pipeline")
+  !![Advanced settings](../assets/user-guide/create-library-choose-type2.png "Advanced settings")
 
 2. Go to the **Continuous Delivery** section of the Admin Console and create a CD pipeline with the library stage source and its branch:
 
-  ![Library-source](../assets/user-guide/cd-pipeline-stage-source.png "Library-source")
+  !![Library source](../assets/user-guide/cd-pipeline-stage-source.png "Library source")
 
 ## Add New Stage
 
@@ -52,7 +52,7 @@ Follow the steps below to add a new stage:
 
 * Add a new stage to the STAGES parameter of the Jenkins job of your CD pipeline:
 
-  ![Stages-parameter](../assets/user-guide/stages-json.png "Stages-parameter")
+  !![Stages parameter](../assets/user-guide/stages-json.png "Stages parameter")
 
   !!! warning
       To make this stage permanently present, please modify the [job provisioner](../operator-guide/manage-jenkins-cd-job-provision.md).
@@ -107,11 +107,11 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
 
 * Navigate to the **Libraries** section of the Admin Console and create a library with the **Groovy-pipeline** code language:
 
-  ![Groovy-pipeline](../assets/user-guide/create-library-choose-type1.png "Groovy-pipeline")
+  !![Create library](../assets/user-guide/create-library-choose-type1.png "Create library")
 
    Select the required fields to build your library:
 
-  ![Groovy-pipeline](../assets/user-guide/create-library-choose-type2.png "Groovy-pipeline")
+  !![Advanced settings](../assets/user-guide/create-library-choose-type2.png "Advanced settings")
 
 * Clone the repository with the added library;
 * Create a directory with the name `src/com/epam/edp/customStages/impl/cd/impl/` in the library repository, for instance: `src/com/epam/edp/customStages/impl/cd/impl/EmailNotify.groovy`;
@@ -142,7 +142,7 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
 
 * Add a new stage to the STAGES parameter of the Jenkins job of your CD pipeline:
 
-  ![Stages-parameter](../assets/user-guide/stages-json.png "Stages-parameter")
+  !![Stages parameter](../assets/user-guide/stages-json.png "Stages parameter")
 
   !!! warning
       To make this stage permanently present, please modify the [job provisioner](../operator-guide/manage-jenkins-cd-job-provision.md).
@@ -171,11 +171,11 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
 
 * Navigate to the **Libraries** section of the Admin Console and create a library with the **Groovy-pipeline** code language:
 
-  ![Groovy-pipeline](../assets/user-guide/create-library-choose-type1.png "Groovy-pipeline")
+  !![Create library](../assets/user-guide/create-library-choose-type1.png "Create library")
 
    Select the required fields to build your library:
 
-  ![Groovy-pipeline](../assets/user-guide/create-library-choose-type2.png "Groovy-pipeline")
+  !![Advanced settings](../assets/user-guide/create-library-choose-type2.png "Advanced settings")
 
 * Clone the repository with the added library;
 * Create a directory with the name `src/com/epam/edp/customStages/impl/cd/impl/` in the library repository, for instance: `src/com/epam/edp/customStages/impl/cd/impl/CustomDeployStage.groovy;`;

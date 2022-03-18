@@ -5,7 +5,7 @@ You can use the Velero tool to restore a EDP tenant. Explore the main steps for 
 1. Delete all related entities in **Keycloak**: realm and clients from **master/openshift** realms. Navigate to the entitities list in the Keycloak, select the necessary ones, and click the deletion icon on the entitiy overview page.
    If there are customized configs in Keycloak, save them before making backup.
 
-  ![realms](../assets/operator-guide/delete-keycloak-realm.png "realms")
+  !![Remove keycloak realm](../assets/operator-guide/delete-keycloak-realm.png "Remove keycloak realm")
 
 2. To restore EDP, install and configure the Velero tool. Please refer to the [Install Velero](install-velero.md) documentation for details.
 

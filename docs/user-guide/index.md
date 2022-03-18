@@ -12,7 +12,7 @@ Admin Console is a central management tool in the EDP ecosystem that provides th
 !!! note
     To interact with Admin Console via REST API, explore the [Create Codebase Entity](../developer-guide/rest-api.md) page.
 
-![overview-page](../assets/user-guide/ac-overview-page.png "overview-page")
+!![Overview page](../assets/user-guide/ac-overview-page.png "Overview page")
 
 - **Navigation bar** – consists of six sections: Overview, Continuous Delivery, Applications, Autotests, Libraries, and Delivery Dashboard Diagram. Click the necessary section to add an entity, open a home page or check the diagram.
 - **User name** – displays the registered user name.

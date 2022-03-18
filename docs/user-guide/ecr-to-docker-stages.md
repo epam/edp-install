@@ -13,7 +13,7 @@ To add the **ecr-to-docker** stage to the pipeline, modify the [job provisioner]
 
 !!! note
     To push properly the Docker image from the ECR storage, the **ecr-to-docker** stage should follow the **build-image-kaniko** stage.
-    ![add_custom_lib2](../assets/user-guide/ecr_t_d1.png)
+    !![Add custom lib2](../assets/user-guide/ecr_t_d1.png)
 
 The **ecr-to-docker** stage contains a specific script that launches the following actions:
 

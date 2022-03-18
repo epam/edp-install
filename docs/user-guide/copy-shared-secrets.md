@@ -2,7 +2,7 @@
 
 The **Copy Shared Secrets** stage provides the ability to copy secrets from the current Kubernetes namespace into a namespace created during CD pipeline.
 
-![shared-secrets](../assets/user-guide/copy-shared-secrets.png)
+!![Shared secrets](../assets/user-guide/copy-shared-secrets.png)
 
 Please follow the steps described below to copy the secrets:
 

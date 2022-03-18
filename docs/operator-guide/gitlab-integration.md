@@ -18,7 +18,7 @@ Discover the steps below to apply the GitLab integration correctly.
   * Choose a name and an optional expiry date for the token;
   * In the Scopes block, select the *api* scope for the token;
 
-  ![scopes](../assets/operator-guide/scopes.png "scopes")
+  !![Personal access tokens](../assets/operator-guide/scopes.png "Personal access tokens")
 
   * Click the **Create personal access token** button.
 
@@ -33,7 +33,7 @@ Discover the steps below to apply the GitLab integration correctly.
   * ID - the **gitlab-access-token** ID;
   * Description - the description of the current Credential ID;
 
-  ![jenkins-cred](../assets/operator-guide/jenkins-cred.png "jenkins-cred")
+  !![Jenkins credential](../assets/operator-guide/jenkins-cred.png "Jenkins credential")
 
   !!! warning
       Using the GitLab integration, a webhook is automatically created. After the removal of the application, the webhook stops working but not deleted. If necessary, it must be deleted manually.
@@ -47,11 +47,11 @@ Discover the steps below to apply the GitLab integration correctly.
   * Gitlab host URL - a host URL to GitLab;
   * Credentials - credentials with **Access Token** to GitLab (**gitlab-access-token**);
 
-  ![gitlab-plugin-configuration](../assets/operator-guide/gitlab-plugin-configuration.png "gitlab-plugin-configuration")
+  !![Gitlab plugin configuration](../assets/operator-guide/gitlab-plugin-configuration.png "Gitlab plugin configuration")
 
   This is how the Merge Requests build statuses look like in the GitLab CI/CD Pipelines section:
 
-  ![gitlab-mr-statuses](../assets/operator-guide/gitlab-pipeline-stats.png "gitlab-mr-statuses")
+  !![Gitlab pipelines statuses](../assets/operator-guide/gitlab-pipeline-stats.png "Gitlab pipelines statuses")
 
 ### Related Articles
 

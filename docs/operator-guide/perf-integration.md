@@ -27,7 +27,7 @@ For integration, take the following steps:
 
 3. Being in Admin Console, navigate to the Advanced Settings menu to check that the **Integrate with Perf Server** check box appeared:
 
-  ![perf-server](../assets/operator-guide/perf-server-integration.png "perf-server")
+  !![Advanced settings](../assets/operator-guide/perf-server-integration.png "Advanced settings")
 
 
 ## Related Articles

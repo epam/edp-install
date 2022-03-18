@@ -138,10 +138,10 @@ Take the steps below to add a custom job provision.
 
 1. Navigate to the Jenkins main page and open the *job-provisions/cd* folder, click **New Item** and type the name of job provisions, for example - custom.
 
-    ![cd-provisioner-name](../assets/operator-guide/cd-provisioner-name.png "cd-provisioner-name")
+    !![CD provisioner name](../assets/operator-guide/cd-provisioner-name.png "CD provisioner name")
 
   Scroll down to the **Copy from** field, enter "/job-provisions/cd/default", and click OK:
-    ![copy-cd-provisioner](../assets/operator-guide/copy-cd-provisioner.png "copy-cd-provisioner")
+    !![Copy CD provisioner](../assets/operator-guide/copy-cd-provisioner.png "Copy CD provisioner")
 
 2. Update the required parameters in the new provisioner. For example, if it is necessary to implement a new stage **clean**, add the following code to the provisioner:
 
@@ -156,4 +156,4 @@ Take the steps below to add a custom job provision.
 
   After the steps above are performed, the new custom job-provision will be available in **Adding Stage** during the CD pipeline creation in Admin Console.
 
-  ![add-custom-cd-provision](../assets/operator-guide/add-custom-cd-provision.png "add-custom-cd-provision")
+  !![Custom CD provision](../assets/operator-guide/add-custom-cd-provision.png "Custom CD provision")

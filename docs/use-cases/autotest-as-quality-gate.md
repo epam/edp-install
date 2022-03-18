@@ -4,23 +4,23 @@ This use case describes the flow of adding an autotest as a quality gate to a ne
 
 1. Make sure an application is created. Please refer to the [Add Application](../user-guide/add-application.md) section for details.
 
-  ![applications](../assets/use-cases/applications.png "applications")
+  !![Applications](../assets/use-cases/applications.png "Applications")
 
 2. Create an autotest with the necessary parameters. Please refer to the [Add Autotest](../user-guide/add-autotest.md) section for details.
 
-  ![autotests](../assets/use-cases/autotests.png "autotests")
+  !![Autotests](../assets/use-cases/autotests.png "Autotests")
 
 3. Create a CD pipeline where the necessary application build version will be promoted and the autotest will be used as a quality gate. Please refer to the [Add CD Pipeline](../user-guide/add-cd-pipeline.md) section for details.
 
-  ![continuous-delivery](../assets/use-cases/continuous-delivery.png)
+  !![Continuous delivery](../assets/use-cases/continuous-delivery.png)
 
 4. In the Application menu, select the application to be promoted in the CD pipeline.
 
-  ![application-to-promote](../assets/use-cases/app-to-promote.png "application-to-promote")
+  !![Application to promote](../assets/use-cases/app-to-promote.png "Application to promote")
 
 5. In the Stages menu, add the necessary stage and indicate the _Autotests_ quality gate.
 
-   ![quality-gate](../assets/use-cases/quality-gate.png)
+   !![Quality gate type](../assets/use-cases/quality-gate.png)
 
   !!! note
       Please be aware that once created, the CD pipeline remains with the chosen quality gate type without possibility to edit it.

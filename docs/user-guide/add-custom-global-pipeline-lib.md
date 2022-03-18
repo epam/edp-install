@@ -9,7 +9,7 @@ In order to add a new custom global pipeline library, perform the steps below:
 
 2. Specify the following values:
 
-  ![add_custom_lib](../assets/user-guide/add_custom_lib.png)
+  !![Add custom library](../assets/user-guide/add_custom_lib.png)
 
   a - The name of a custom library;
 
@@ -24,7 +24,7 @@ In order to add a new custom global pipeline library, perform the steps below:
   !!! note
       If the **Default version** check box is **not defined**, the pipeline must specify a version, for example, `@Library('my-shared-library@master')`. If the **Allow default version to be overridden** check box is enabled in the Shared Library’s configuration, a @Library annotation may also override the default version defined for the library. This also enables the library with the selected **Load implicitly** check box to be loaded from a different version if necessary.
 
-  ![add_custom_lib2](../assets/user-guide/add_custom_lib2.png)
+  !![Source code management](../assets/user-guide/add_custom_lib2.png)
 
   f - The URL of the repository;
 

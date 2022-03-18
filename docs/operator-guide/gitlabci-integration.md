@@ -9,7 +9,7 @@ Follow the steps below to adjust the GitLab CI tool:
 
   * To add variables, navigate to *Settings -> CI/CD -> Expand Variables -> Add Variable*:
 
-    ![gitlab-ci-env-variable](../assets/operator-guide/gitlab-ci-env-variable.png "gitlab-ci-env-variable")
+    !![Gitlab ci environment variables](../assets/operator-guide/gitlab-ci-env-variable.png "Gitlab ci environment variables")
 
   * Apply the necessary variables as they differ in accordance with the cluster OpenShift / Kubernetes, see below:
 
@@ -23,7 +23,7 @@ Follow the steps below to adjust the GitLab CI tool:
     !!! info
         In order to get access to the Docker registry and OpenShift, use the **gitlab-ci** ServiceAccount; pay attention that SA description contains the credentials and secrets:
 
-    ![secrets-sa](../assets/operator-guide/secrets-sa.png "secrets-sa")
+    !![Service account](../assets/operator-guide/secrets-sa.png "Service account")
 
     |Kubernetes Environment Variables | Description|
     |---|---|
@@ -37,7 +37,7 @@ Follow the steps below to adjust the GitLab CI tool:
 
 2. In Admin Console, select the CI tool in the **Advanced Settings** menu during the codebase creation:
 
-  ![ci-type](../assets/operator-guide/ci-type.png "ci_type")
+  !![Advanced settings](../assets/operator-guide/ci-type.png "Advanced settings")
 
   !!! note
       The selection of the CI tool is available only with the **Import** strategy.
@@ -45,4 +45,4 @@ Follow the steps below to adjust the GitLab CI tool:
 3. As soon as the codebase is provisioned, the **.gitlab-ci.yml** file will be created in the repository that describes the
 pipeline's stages and logic:
 
-  ![gitlab-ci-file](../assets/operator-guide/gitlab-ci-file.png "gitlab-ci-file")
+  !![.gitlab-ci.yml file presented in repository](../assets/operator-guide/gitlab-ci-file.png ".gitlab-ci.yml file presented in repository")

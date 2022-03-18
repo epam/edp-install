@@ -13,7 +13,7 @@ The purpose of the Code Review pipeline contains the following points:
 
 Find below the functional diagram of the Code Review pipeline with the default stages:
 
-![code-review-pipeline](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/code-review-pipeline.puml)
+!![Code review pipeline stages](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/code-review-pipeline.puml)
 
 ## Code Review Pipeline for Applications and Libraries
 
@@ -24,13 +24,13 @@ To discover the Code Review pipeline, apply changes that will trigger the Code R
 
 1. Navigate to Jenkins. In Admin Console, go to the **Overview** section on the left-side navigation bar and click the link to Jenkins.
 
-  ![link to jenkins](../assets/user-guide/link-to-jenkins.png "link to jenkins")
+  !![Link to Jenkins](../assets/user-guide/link-to-jenkins.png "Link to Jenkins")
 
   or
 
   In Gerrit, go to the Patch Set page and click the CI Jenkins link in the Change Log section
 
-  ![link from Gerrit](../assets/user-guide/link-from-gerrit.png "link from Gerrit")
+  !![Link from Gerrit](../assets/user-guide/link-from-gerrit.png "Link from Gerrit")
 
   !!! Note
       The Code Review pipeline starts automatically for every codebase type (Application, Autotests, Library).

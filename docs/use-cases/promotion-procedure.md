@@ -6,24 +6,24 @@ This use case describes the promotion of the selected build versions of an appli
 
 2. Navigate to the **Continuous Delivery** section on the left-side navigation bar and click the Create button. Please refer to the [Add CD Pipeline](../user-guide/add-cd-pipeline.md) section for the details.
 
-  ![create-cd-pipeline](../assets/use-cases/create-cd-pipeline.png "create-cd-pipeline")
+  !![Create cd pipeline](../assets/use-cases/create-cd-pipeline.png "Create cd pipeline")
 
 3. In the **Application** menu, select the applications to be deployed and promoted in the pipeline.
 
   * If the application is selected without the promotion option, a new build version will be available for deploy at all the stages of the CD pipeline;
 
-  ![select-application](../assets/use-cases/select-application.png "select-application")
+  !![Select application to deploy](../assets/use-cases/select-application.png "Select application to deploy")
 
   * If the promotion is selected, the build version will pass through the environments one by one through the quality gates.
 
-  ![select-promotion](../assets/use-cases/select-promotion.png "select-promotion")
+  !![Select application to promote](../assets/use-cases/select-promotion.png "Select application to promote")
 
   !!! info
       If there are several applications to be promoted, and some changes are made to one of them, only the application with the changes will be promoted to the next environments.
 
 4. In the **Stages** menu, set the _manual_ trigger type to select an application for promotion.
 
-  ![manual-trigger-type](../assets/use-cases/manual-trigger-type.png "manual-trigger-type")
+  !![Select trigger type](../assets/use-cases/manual-trigger-type.png "Select trigger type")
 
 5. Navigate to Jenkins and start the CD pipeline.
 

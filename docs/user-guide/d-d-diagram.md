@@ -5,7 +5,7 @@ branches, and image streams that are elements with the specific icon.
 To open the current project diagram, navigate to the **Delivery Dashboard Diagram** section on the navigation
 bar:
 
-![dashboard](../assets/user-guide/dashboard.png "dashboard")
+!![Delivery dashboard](../assets/user-guide/dashboard.png "Delivery dashboard")
 
 !!! info
     All the requested changes (deletion, creation, adding) are displayed immediately on the Delivery Dashboard Diagram.

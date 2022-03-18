@@ -7,27 +7,27 @@ This chapter provides detailed information about the EDP pipeline framework conc
 !!! note
     The whole logic is applied to **Jenkins** as it is the main tool for the CI/CD processes organization.
 
-![edp-pipeline-framework-basic](../assets/user-guide/edp-pipeline-framework-basic.png "edp-pipeline-framework-basic")
+!![EDP pipeline framework basic](../assets/user-guide/edp-pipeline-framework-basic.png "EDP pipeline framework basic")
 
 The general EDP Pipeline Framework consists of several parts:
 
 * **Jenkinsfile** - a text file that keeps the definition of a Jenkins Pipeline and is checked into source control. Every Job has its Jenkinsfile stored in the specific application repository and in Jenkins as the plain text.
 The behavior logic of the pipelines can be customized easily by modifying a source code which is always copied to the EDP repository after the EDP installation.
 
-![jenkinsfile-example](../assets/user-guide/jenkinsfile-example.png "jenkinsfile-example")
+!![Jenkinsfile example](../assets/user-guide/jenkinsfile-example.png "Jenkinsfile example")
 
 * **Loading Shared Libraries** - a part where every job loads libraries with the help of the shared libraries mechanism for Jenkins that allows to create reproducible pipelines, write them uniformly, and manage the update process.
 There are two main libraries: [EDP Pipelines](https://github.com/epam/edp-library-pipelines/blob/master/README.md#edp-library-pipelines) with the common logic described for the main pipelines Code Review, Build, Deploy pipelines and [EDP Stages](https://github.com/epam/edp-library-stages#edp-library-stages) library that keeps the description of the stages for every pipeline.
 
 * **Run Stages** - a part where the predefined default stages are launched.
 
-![pipeline-script](../assets/user-guide/pipeline-script.png "pipeline-script")
+!![Pipeline script](../assets/user-guide/pipeline-script.png "Pipeline script")
 
 ## CI/CD Jobs Comparison
 
 Explore the CI and CD job comparison. Please note that the dynamic stages order can be changed, meanwhile, the predefined stages order in the reference pipeline cannot be changed, i.e. only the predefined stages set can be run.
 
-![ci-cd-jobs-comparison](../assets/user-guide/ci-cd-jobs-comparison.png "ci-cd-jobs-comparison")
+!![CI/CD jobs comparison](../assets/user-guide/ci-cd-jobs-comparison.png "CI/CD jobs comparison")
 
 ## Context
 

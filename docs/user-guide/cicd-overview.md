@@ -34,7 +34,7 @@ The release process is divided into cycles and provides regular delivery of comp
 
 Explore the main flow that is displayed on the diagram below:
 
-![edp-ci-cd](../assets/user-guide/edp-ci-cd-process.png "edp-ci-cd")
+!![EDP CI/CD pipeline](../assets/user-guide/edp-ci-cd-process.png "EDP CI/CD pipeline")
 
 
 ### Related Articles

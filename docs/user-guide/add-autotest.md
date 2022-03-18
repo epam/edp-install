@@ -19,7 +19,7 @@ Once clicked, the three-step menu will appear:
 
 There are two available strategies: clone and import. The Clone strategy flow is displayed below:
 
-![codebase-info](../assets/user-guide/codebase-info-autotest.png "codebase-info")
+!![Clone autotest](../assets/user-guide/codebase-info-autotest.png "Clone autotest")
 
 1. **Clone** - this strategy allows cloning the autotest from the indicated repository into EPAM Delivery Platform.
    While cloning the existing repository, you have to fill in the additional fields as well.
@@ -36,7 +36,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
   If there is a necessity to use the **Import** strategy that allows configuring a replication from the Git server,
   explore the steps below:
 
-  ![import-autotest](../assets/user-guide/import-strategy-autotest.png "import-autotest")
+  !![Import autotest](../assets/user-guide/import-strategy-autotest.png "Import autotest")
 
   a. **Import** - this strategy allows configuring a replication from the Git server.
 
@@ -51,7 +51,7 @@ There are two available strategies: clone and import. The Clone strategy flow is
 
   ## The Autotest Info Menu
 
-  ![autotest-info](../assets/user-guide/autotest-info-menu.png "autotest-info")
+  !![Autotest info](../assets/user-guide/autotest-info-menu.png "Autotest info")
 
 5. Fill in the **Autotest Name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
 
@@ -77,7 +77,7 @@ Selecting **Other** allows extending the default code languages and get the nece
 
   ## The Advanced Settings Menu
 
-  ![advanced-settings](../assets/user-guide/advanced-settings-autotest.png "advanced-settngs")
+  !![Advanced settings](../assets/user-guide/advanced-settings-autotest.png "Advanced settings")
 
 11. Select CI pipeline provisioner that will be used to handle a codebase. For details, refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction and become familiar with the main steps to add an additional job provisioner.
 
@@ -91,7 +91,7 @@ Selecting **Other** allows extending the default code languages and get the nece
 
   When selecting the edp versioning type, the extra field will appear:
 
-  ![edp-versioning](../assets/user-guide/edp-versioning-autotest.png "edp-versioning")
+  !![Edp versioning](../assets/user-guide/edp-versioning-autotest.png "Edp versioning")
 
   a. Type the version number from which you want the artifacts to be versioned.
 
@@ -104,7 +104,7 @@ Selecting **Other** allows extending the default code languages and get the nece
   !!! note
       The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
 
-  ![jira-server](../assets/user-guide/integrate-jira-server-autotest.png)
+  !![Jira integration](../assets/user-guide/integrate-jira-server-autotest.png)
 
 15. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
 
@@ -119,7 +119,7 @@ Selecting **Other** allows extending the default code languages and get the nece
 
 19. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP. Upon clicking the question mark icon, observe the tips on how to indicate and combine variables necessary for identifying the format of values to be displayed.
 
-  ![advance-mapping](../assets/user-guide/advance-mapping.png)
+  !![Advance mapping](../assets/user-guide/advance-mapping.png)
 
   a. Select the name of the field in a Jira ticket. The available fields are the following: **Fix Version/s**, **Component/s** and **Labels**.
 
@@ -135,7 +135,7 @@ Selecting **Other** allows extending the default code languages and get the nece
 
   d. Click the delete icon to remove the Jira field name.
 
-  ![integrate-perf-server](../assets/user-guide/integrate-perf-server-autotest.png "integrate-perf-server")
+  !![Integrate with perf server](../assets/user-guide/integrate-perf-server-autotest.png "Integrate with perf server")
 
 20. Select the **Integrate with Perf Server** check box to enable the integration with the [PERF Board](https://www.epam.com/telescopeai) (_Project Performance Board_) for monitoring the overall team performance and setting up necessary metrics.
 
@@ -144,7 +144,7 @@ Selecting **Other** allows extending the default code languages and get the nece
 
 21. In the **Select Perf Server** field, select the name of the Perf server with which the integration should be performed and click the Proceed button to switch to the next menu.
 
-  ![perf-integration](../assets/user-guide/perf-integration-autotest.png "perf-integration")
+  !![Perf integration](../assets/user-guide/perf-integration-autotest.png "Perf integration")
 
 22. Select the necessary DataSource (_Jenkins/GitLab, Sonar_) from which the data should be transferred to the Project Performance Board.
 
