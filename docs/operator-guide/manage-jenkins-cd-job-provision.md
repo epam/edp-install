@@ -109,7 +109,6 @@ def createContainerizedCdPipeline(pipelineName, stageName, stages, pipelineScrip
             stringParam("STAGES", "${stages}", "Consequence of stages in JSON format to be run during execution")
 
             if (isAutoDeploy?.trim() && isAutoDeploy.toBoolean()) {
-                stringParam("AUTODEPLOY", "${isAutoDeploy}", "Is autodeploy enabled?")
                 stringParam("CODEBASE_VERSION", null, "Codebase versions to deploy.")
             }
         }
