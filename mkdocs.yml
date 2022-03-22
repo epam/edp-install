@@ -147,7 +147,9 @@ nav:
         - user-guide/add-cd-pipeline.md
         - user-guide/customize-cd-pipeline.md
         - user-guide/prepare-for-release.md
-        - user-guide/copy-shared-secrets.md
+        - Stages:
+          - Copy Shared Secrets: user-guide/copy-shared-secrets.md
+          - Helm release deletion: user-guide/helm-release-deletion.md
     - user-guide/d-d-diagram.md
   - Developer Guide:
     - developer-guide/index.md
