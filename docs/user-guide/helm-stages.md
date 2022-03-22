@@ -1,8 +1,8 @@
-# Chart Testing and Helm Documentation Tools
+# Helm Chart Testing and Documentation Tools
 
-This section contains the description of **helm-lint** and **helm-docs** stages which one can use in the Code Review pipeline.
+This section contains the description of the **helm-lint** and **helm-docs** stages that can be used in the Code Review pipeline.
 
-This stage helps to obtain a quick response on the validity of the helm chart code and documentation in the Code Review pipeline.
+The stages help to obtain a quick response on the validity of the helm chart code and documentation in the Code Review pipeline.
 
 Inspect the functions performed by the following stages:
 
@@ -62,17 +62,17 @@ dependency:
 
    To get more information about the chart testing lint, please refer to the [ct_lint](https://github.com/helm/chart-testing/blob/main/doc/ct_lint.md) documentation.
 
-2. [**helm-docs**](https://github.com/norwoodj/helm-docs#helm-docs) stage helps to validate the generated documentation for the Helm deployment templates in the Code Review pipeline for all types of applications supported by EDP.
+2. [**helm-docs**](https://github.com/norwoodj/helm-docs#helm-docs) stage helps to validate the generated documentation for the Helm deployment templates in the Code Review pipeline for all types of applications supported by EDP. This stage launches the _helm-docs_ command in order to validate the chart documentation file existence and verify its relevance.
+
+  **Requirements**: [helm-docs v1.7.0](https://github.com/norwoodj/helm-docs/releases/tag/v1.7.0)
+
+  !!! Note
+      The **helm-docs** stage is optional. To extend the pipeline with an additional stage, please refer to the [Configure Code Review Pipeline](../code-review-pipeline/#configure-code-review-pipeline) page.
 
   !![Helm docs](../assets/user-guide/helm-docs.png)
 
-**Requirements**: [helm-docs v1.7.0](https://github.com/norwoodj/helm-docs/releases/tag/v1.7.0)
-
-Inspect the functions performed by the following stage:
-
-* [**helm-docs**](https://github.com/norwoodj/helm-docs#helm-docs) stage launches the _helm-docs_ command in order to validate the chart documentation file against an empty or already created one.
-
-Example of the generated documentation can be found [here](https://github.com/epam/edp-install/blob/master/deploy-templates/README.md)
+  !!! Note
+      The example of the generated [documentation](https://github.com/epam/edp-install/blob/master/deploy-templates/README.md).
 
 ### Related Articles
 
