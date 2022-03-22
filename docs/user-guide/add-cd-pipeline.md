@@ -85,8 +85,13 @@ which was selected for the pipeline, will be always used.
   by clicking the recycle bin icon;
 
   f. Select the trigger type. The available trigger types are _manual_ and _auto_. By selecting the _auto_ trigger type, the CD pipeline will be launched automatically after the image is built.
+  Every trigger type has a set of default stages that differ by the input stage (auto-deploy-input or manual-deploy-input).
 
-  !!! note
+!!! note
+      When changing the Trigger Type, the job-provision automatically will change the set of stages to the corresponding stages set for the CD pipeline.
+
+
+!!! note
       Execution sequence. The image promotion and execution of the pipelines depend on the sequence in which
       the environments are added.
 
@@ -100,15 +105,15 @@ which was selected for the pipeline, will be always used.
 
   i. Click the Add button to display it in the Stages menu.
 
-  !!! info
-      Perform the same steps as described above if there is a necessity to add one more stage.
+!!! info
+       Perform the same steps as described above if there is a necessity to add one more stage.
 
   !![Continuous delivery menu](../assets/user-guide/cd-pipeline-stages-menu.png "Continuous delivery menu")
 
-9. Edit the stage by clicking its name and applying changes, and remove the added stage by clicking the recycle bin icon
+9.Edit the stage by clicking its name and applying changes, and remove the added stage by clicking the recycle bin icon
 next to its name.
 
-10. Click the Create button to start the provisioning of the pipeline. After the CD pipeline is added, the new project
+10.Click the Create button to start the provisioning of the pipeline. After the CD pipeline is added, the new project
 with the stage name will be created in OpenShift.
 
 ## Check CD Pipeline Availability

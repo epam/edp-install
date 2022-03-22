@@ -30,8 +30,12 @@ The Deploy pipeline is used by default on any stage of the Continuous Delivery p
 * Deploying the application(s) to a custom STAGE environment in order to run autotests and check manually that everything is ok with the application.
 * Deploying the latest or a stable and some particular numeric version of an image build that exists in Docker registry.
 * Promoting the image build versions from the main STAGE (SIT, QA, UAT) environment.
+* Auto deploying the application(s) version from the passed payload (using the CODEBASE_VERSION job parameter).
 
 Find below the functional diagram of the Deploy pipeline with the default stages:
+
+!!! note
+    The input for a CD pipeline depends on the Trigger Type for a deploy stage and can be either Manual or Auto.
 
 !![Deploy pipeline stages](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/deploy-pipeline.puml)
 
