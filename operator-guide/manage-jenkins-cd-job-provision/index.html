@@ -92,7 +92,6 @@
             <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;STAGES&quot;</span><span class=p>,</span> <span class=s>&quot;${stages}&quot;</span><span class=p>,</span> <span class=s>&quot;Consequence of stages in JSON format to be run during execution&quot;</span><span class=p>)</span>
 
             <span class=k>if</span> <span class=p>(</span><span class=n>isAutoDeploy</span><span class=o>?</span><span class=p>.</span><span class=na>trim</span><span class=p>()</span> <span class=o>&amp;&amp;</span> <span class=n>isAutoDeploy</span><span class=p>.</span><span class=na>toBoolean</span><span class=p>())</span> <span class=p>{</span>
-                <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;AUTODEPLOY&quot;</span><span class=p>,</span> <span class=s>&quot;${isAutoDeploy}&quot;</span><span class=p>,</span> <span class=s>&quot;Is autodeploy enabled?&quot;</span><span class=p>)</span>
                 <span class=n>stringParam</span><span class=p>(</span><span class=s>&quot;CODEBASE_VERSION&quot;</span><span class=p>,</span> <span class=kc>null</span><span class=p>,</span> <span class=s>&quot;Codebase versions to deploy.&quot;</span><span class=p>)</span>
             <span class=p>}</span>
         <span class=p>}</span>
