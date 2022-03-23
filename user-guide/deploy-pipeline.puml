@@ -1,11 +1,11 @@
 @startuml
 
-package "Deploy pipeline" as 3 {
+package "Deploy Pipeline" as 3 {
 [init] as i2
-i2->[deploy]
-[deploy]->[manual]
-[manual]->[promote-images]
+[auto-deploy-input \nOR\nmanual-deploy-input] as deployInput
+i2->deployInput
+deployInput->[deploy]
+[deploy]->[approve]
+[approve]->[promote-images]
 }
-
-
 @enduml
