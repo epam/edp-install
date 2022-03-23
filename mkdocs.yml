@@ -150,6 +150,7 @@ nav:
         - Stages:
           - Copy Shared Secrets: user-guide/copy-shared-secrets.md
           - Helm release deletion: user-guide/helm-release-deletion.md
+          - Semi Auto Deploy: user-guide/semi-auto-deploy.md
     - user-guide/d-d-diagram.md
   - Developer Guide:
     - developer-guide/index.md
