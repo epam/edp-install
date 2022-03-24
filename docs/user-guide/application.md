@@ -54,6 +54,9 @@ The added application will be listed in the Applications list allowing you to do
 
 ## Add a New Branch
 
+!!! note
+    Pay attention when specifying the branch name: the branch name is involved in the formation of the application version, so it must comply with the [versioning semantic rules](https://semver.org/) for the application.
+
 When adding an application, the default branch is a **master** branch. In order to add a new branch, follow the steps below:
 
 1. Navigate to the **Branches** block and click the Create button:]
