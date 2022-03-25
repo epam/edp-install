@@ -391,6 +391,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/user-guide/semi-auto-deploy/</loc>
+         <lastmod>2022-03-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/user-guide/terraform-stages/</loc>
          <lastmod>2022-03-25</lastmod>
          <changefreq>daily</changefreq>
