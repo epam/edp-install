@@ -86,8 +86,6 @@ annotations:
       image: epamedp/codebase-operator:2.10.0
     - name: jenkins-operator:2.10.0
       image: epamedp/jenkins-operator:2.10.0
-    - name: edp-component-operator:0.10.0
-      image: epamedp/edp-component-operator:0.10.0
     - name: cd-pipeline-operator:2.10.0
       image: epamedp/cd-pipeline-operator:2.10.0
     - name: nexus-operator:2.10.0
