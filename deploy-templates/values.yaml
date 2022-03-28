@@ -50,15 +50,40 @@ vcs:
 kaniko:
   # -- AWS IAM role to be used for kaniko pod servce account (IRSA)
   roleArn:
-  # -- kaniko image
-  image: gcr.io/kaniko-project/executor:v1.6.0
-  # -- init container image which waits for Dockerfile before starting actual build
-  initImage: busybox:1.35.0
-  # -- aws-cli image is used to provision non-existing AWS ECR repository
-  awsCliImage: amazon/aws-cli:2.2.5
   # -- Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created
   # with default value: { "credStore": "ecr-login"}
   existingDockerConfig:
+  # -- nodeSelector Node labels for pod assignment
+  nodeSelector: {}
+  # -- tolerations Tolerations for pod assignment
+  tolerations: []
+
+  initKanikoContainer:
+    # -- init container image which waits for Dockerfile before starting actual build
+    image: busybox:1.35.0
+    # -- Array with extra environment variables to add to the init-kaniko container
+    extraEnvVars: []
+
+  initRepositoryContainer:
+    # -- aws-cli image is used to provision non-existing AWS ECR repository
+    image: amazon/aws-cli:2.2.5
+    # -- Configure extra options for command 'aws ecr create-repository'
+    extraCommandOptions: ""
+    # extraCommandOptions: "--tags Key=user:tag,Value=TENANT_NAME"
+    # -- Array with extra environment variables to add to the init-repository container
+    extraEnvVars: []
+
+  kanikoContainer:
+    # -- kaniko image
+    image: gcr.io/kaniko-project/executor:v1.6.0
+    # Kaniko resource requests and limits
+    # -- Array with extra environment variables to add to the Kaniko container
+    extraEnvVars: []
+    resources:
+      # -- The resources limits for the Kaniko containers
+      limits: {}
+      # -- The requested resources for the Kaniko containers
+      requests: {}
 
 dockerRegistry:
   url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"

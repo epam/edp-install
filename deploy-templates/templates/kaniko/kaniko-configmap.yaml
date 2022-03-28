@@ -6,85 +6,77 @@ metadata:
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
 data:
-  kaniko.json: |
-    {
-      "apiVersion": "v1",
-      "kind": "Pod",
-      "metadata": {
-        "name": "kaniko"
-      },
-      "spec": {
-        "serviceAccountName": "edp-kaniko",
-        "securityContext": {
-          "fsGroup": 65534
-        },
-        "initContainers": [
-          {
-            "name": "init-kaniko",
-            "image": "{{ .Values.kaniko.initImage }}",
-            "command": [
-              "/bin/sh",
-              "-c",
-              "for i in 1 2 3 4 5 6; do echo \"Waiting for Dockerfile...\"; sleep 10; if [ -f /tmp/workspace/Dockerfile ]; then exit 0; fi; done; exit 1"
-            ],
-            "volumeMounts": [
-              {
-                "name": "shared-volume",
-                "mountPath": "/tmp/workspace"
-              }
-            ]
-          },
-          {
-            "name": "init-repository",
-            "image": "{{ .Values.kaniko.awsCliImage }}",
-            "command": [
-              "/bin/sh",
-              "-c",
-              "aws ecr describe-repositories --repository-names ${REPO_NAME} || aws ecr create-repository --repository-name ${REPO_NAME} || true"
-            ],
-            "env": [
-              {
-                "name": "REPO_NAME",
-                "value": "REPLACE_REPO_VALUE"
-              }
-            ]
-          }
-        ],
-        "containers": [
-          {
-            "name": "kaniko",
-            "image": "{{ .Values.kaniko.image }}",
-            "args": [
-              "--destination=REPLACE_DESTINATION_IMAGE"
-            ],
-            "volumeMounts": [
-              {
-                "name": "shared-volume",
-                "mountPath": "/workspace"
-              },
-              {
-                "name": "docker-registry-config",
-                "mountPath": "/kaniko/.docker/"
-              }
-            ]
-          }
-        ],
-        "restartPolicy": "Never",
-        "volumes": [
-          {
-            "name": "shared-volume",
-            "emptyDir": {}
-          },
-          {
-            "name": "docker-registry-config",
-            "secret": {
-              {{- if .Values.kaniko.existingDockerConfig }}
-              "secretName": "{{ .Values.kaniko.existingDockerConfig }}"
-              {{- else }}
-              "secretName": "kaniko-docker-config"
-              {{- end }}
-            }
-          }
-        ]
-      }
-    }
+  kaniko.yaml: |
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: kaniko
+    spec:
+      serviceAccountName: edp-kaniko
+      securityContext:
+        fsGroup: 65534
+      initContainers:
+      - name: init-kaniko
+        image: {{ .Values.kaniko.initKanikoContainer.image }}
+        command:
+        - "/bin/sh"
+        - "-c"
+        - "for i in 1 2 3 4 5 6; do echo 'Waiting for Dockerfile...'; sleep 10; if [ -f /tmp/workspace/Dockerfile ]; then exit 0; fi; done; exit 1"
+        volumeMounts:
+        - name: shared-volume
+          mountPath: "/tmp/workspace"
+        env:
+        {{- range .Values.kaniko.initKanikoContainer.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value }}
+        {{- end }}
+      - name: init-repository
+        image: {{ .Values.kaniko.initRepositoryContainer.image }}
+        command:
+        - "/bin/sh"
+        - "-c"
+        - "aws ecr describe-repositories --repository-names ${REPO_NAME} || aws ecr create-repository --repository-name ${REPO_NAME} {{ .Values.kaniko.initRepositoryContainer.extraCommandOptions}} || true"
+        env:
+        - name: REPO_NAME
+          value: REPLACE_REPO_VALUE
+        {{- range .Values.kaniko.initRepositoryContainer.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value }}
+        {{- end }}
+      containers:
+      - name: kaniko
+        image: {{ .Values.kaniko.kanikoContainer.image }}
+        args:
+        - "--destination=REPLACE_DESTINATION_IMAGE"
+        {{- if .Values.kaniko.kanikoContainer.resources }}
+        resources: {{- toYaml .Values.kaniko.kanikoContainer.resources | nindent 10 }}
+        {{- end }}
+        env:
+        {{- range .Values.kaniko.kanikoContainer.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value }}
+        {{- end }}
+        volumeMounts:
+        - name: shared-volume
+          mountPath: "/workspace"
+        - name: docker-registry-config
+          mountPath: "/kaniko/.docker/"
+      restartPolicy: Never
+      {{- with .Values.kaniko.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.kaniko.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - name: shared-volume
+        emptyDir: {}
+      - name: docker-registry-config
+        secret:
+        {{- if .Values.kaniko.existingDockerConfig }}
+          secretName: {{ .Values.kaniko.existingDockerConfig }}
+        {{- else }}
+          secretName: kaniko-docker-config
+        {{- end }}
