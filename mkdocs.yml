@@ -14,6 +14,12 @@ markdown_extensions:
   - meta
   - toc:
       permalink: ⚓︎
+  - pymdownx.superfences:
+      preserve_tabs: true
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 extra_css:
   - https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css
@@ -21,6 +27,7 @@ extra_css:
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js
   - https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js
+  - https://unpkg.com/mermaid@8.14.0/dist/mermaid.min.js
 
 theme:
   logo: assets/logo.png

@@ -54,15 +54,20 @@ To work with MkDocs without Docker, take the following steps:
 
 2. Run the following command:
 
-    ``
+    ```
     pip install -r  hack/mkdocs/requirements.txt
-    ``
+    ```
 
 3. Run the local development command:
 
-    ``
+    ```
     mkdocs serve --dev-addr 0.0.0.0:8000
-    ``
+    ```
+  !!! Note
+      This command may not work on Windows, so a quick solution is:
+      ```
+      python -m mkdocs serve --dev-addr 0.0.0.0:8000
+      ```
 
 4. Enter the localhost:8000 address in the browser and check that documentation pages are available.
 
