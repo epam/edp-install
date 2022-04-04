@@ -7,3 +7,4 @@ mkdocs-redirects==1.0.3
 mkdocs==1.3.0
 pygments==2.11.2
 fancyboxmd==1.0.1
+mkdocs-charts-plugin==0.0.8
