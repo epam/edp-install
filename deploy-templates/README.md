@@ -70,11 +70,19 @@ A Helm chart for EDP Install
 | global.version | string | `"2.10.0-SNAPSHOT"` |  |
 | global.webConsole.url | string | `nil` |  |
 | jenkins-operator.enabled | bool | `true` |  |
-| kaniko.awsCliImage | string | `"amazon/aws-cli:2.5.2"` | aws-cli image is used to provision non-existing AWS ECR repository |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
-| kaniko.image | string | `"gcr.io/kaniko-project/executor:v1.8.0"` | kaniko image |
-| kaniko.initImage | string | `"busybox:1.35.0"` | init container image which waits for Dockerfile before starting actual build |
+| kaniko.initKanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-kaniko container |
+| kaniko.initKanikoContainer.image | string | `"busybox:1.35.0"` | init container image which waits for Dockerfile before starting actual build |
+| kaniko.initRepositoryContainer.extraCommandOptions | string | `""` | Configure extra options for command 'aws ecr create-repository' |
+| kaniko.initRepositoryContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-repository container |
+| kaniko.initRepositoryContainer.image | string | `"amazon/aws-cli:2.5.2"` | aws-cli image is used to provision non-existing AWS ECR repository |
+| kaniko.kanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the Kaniko container |
+| kaniko.kanikoContainer.image | string | `"gcr.io/kaniko-project/executor:v1.8.0"` | kaniko image |
+| kaniko.kanikoContainer.resources.limits | object | `{}` | The resources limits for the Kaniko containers |
+| kaniko.kanikoContainer.resources.requests | object | `{}` | The requested resources for the Kaniko containers |
+| kaniko.nodeSelector | object | `{}` | nodeSelector Node labels for pod assignment |
 | kaniko.roleArn | string | `nil` | AWS IAM role to be used for kaniko pod servce account (IRSA) |
+| kaniko.tolerations | list | `[]` | tolerations Tolerations for pod assignment |
 | keycloak-operator.enabled | bool | `true` |  |
 | keycloak-operator.keycloak.url | string | `"keycloak.example.com"` |  |
 | nexus-operator.enabled | bool | `true` |  |

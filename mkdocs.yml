@@ -12,6 +12,8 @@ markdown_extensions:
   - codehilite
   - mdx_truly_sane_lists
   - meta
+  - plantuml_markdown:
+      server: http://www.plantuml.com/plantuml
   - toc:
       permalink: ⚓︎
   - pymdownx.superfences:
