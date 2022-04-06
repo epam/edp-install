@@ -110,6 +110,7 @@ nav:
         - IAM Roles for Kaniko Service Accounts: operator-guide/kaniko-irsa.md
         - IAM Roles for Velero Service Accounts: operator-guide/velero-irsa.md
         - IAM Roles for Loki Service Accounts: operator-guide/loki-irsa.md
+        - EKS OIDC With Keycloak: operator-guide/configure-keycloak-oidc-eks.md
       - Jira Integration:
           - Adjust Jira Integration: operator-guide/jira-integration.md
           - Adjust VCS Integration With Jira: operator-guide/jira-gerrit-integration.md
