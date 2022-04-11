@@ -3,7 +3,7 @@
  | :heavy_exclamation_mark: Please refer to [EDP documentation](https://epam.github.io/edp-install/) to get the notion of the main concepts and guidelines. |
  | --- |
 
-**EPAM Delivery platform (EDP)** is out of the box integrated ecosystem for software development connected to a local development environment.
+**EPAM Delivery Platform (EDP)** is out of the box integrated ecosystem for software development connected to a local development environment.
 
 EPAM Delivery Platform, which is also called **"The Rocket"**, is a platform that allows shortening the time that is passed before an active development can be started from several months to several hours.
 

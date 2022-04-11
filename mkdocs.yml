@@ -106,6 +106,7 @@ nav:
           - Schedule Pods Restart: operator-guide/schedule-pods-restart.md
     - Integration:
       - AWS Integration:
+        - Configure AWS WAF With Terraform: operator-guide/waf-tf-configuration.md
         - Associate IAM Roles With Service Accounts: operator-guide/enable-irsa.md
         - IAM Roles for Kaniko Service Accounts: operator-guide/kaniko-irsa.md
         - IAM Roles for Velero Service Accounts: operator-guide/velero-irsa.md
@@ -166,7 +167,7 @@ nav:
         - user-guide/prepare-for-release.md
         - Stages:
           - Copy Shared Secrets: user-guide/copy-shared-secrets.md
-          - Helm release deletion: user-guide/helm-release-deletion.md
+          - Helm Release Deletion: user-guide/helm-release-deletion.md
           - Semi Auto Deploy: user-guide/semi-auto-deploy.md
     - user-guide/d-d-diagram.md
   - Developer Guide:
