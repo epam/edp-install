@@ -42,7 +42,10 @@ To successfully associate the IAM role with the service account, follow the step
 
         oidc.eks.us-west-2.amazonaws.com/id/EXAMPLED539D4633E53DE1B716D3041E
 
-2. Deploy the [amazon-eks-pod-identity-webhook](https://github.com/aws/amazon-eks-pod-identity-webhook/tree/master) v0.2.0 as described below:
+2. Deploy the [amazon-eks-pod-identity-webhook](https://github.com/aws/amazon-eks-pod-identity-webhook/tree/master) v0.2.0.
+
+  !!! note
+      The [amazon-eks-pod-identity-webhook](https://github.com/aws/amazon-eks-pod-identity-webhook/tree/master) functionality is provided out of the box in EKS v1.21 and higher. This does not apply if the cluster has been upgraded from older versions. Therefore, skip step 2 and continue from step 3 in this documentation.
 
     2.1. Provide the [stable](https://hub.docker.com/r/amazon/amazon-eks-pod-identity-webhook)(ed8c41f) version of the Docker image in the _deploy/deployment-base.yaml_ file.
 
