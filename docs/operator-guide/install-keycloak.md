@@ -43,7 +43,7 @@ To install Keycloak, follow the steps below:
       --from-literal=postgresql-password=<postgresql_password> \
       --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
 
-5. Install Keycloak v.15.0.2 which is included in the [codecentric/keycloak](https://artifacthub.io/packages/helm/codecentric/keycloak) Helm chart v.15.1.0:
+5. Install Keycloak v.17.0.1 which is included in the [codecentric/keycloak](https://artifacthub.io/packages/helm/codecentric/keycloak) Helm chart v.18.0.0:
 
   !!! info
       The Keycloak can be deployed in a production ready mode (e.g. it can include multiple replicas, persistent storage, autoscaling, monitoring, etc.).
@@ -51,7 +51,7 @@ To install Keycloak, follow the steps below:
 
   ---
       helm install keycloak codecentric/keycloak \
-      --version 15.1.0 \
+      --version 18.0.0 \
       --values values.yaml \
       --namespace security
 
@@ -212,7 +212,7 @@ requiredDropCapabilities:
 runAsUser:
   type: MustRunAsRange
   uidRangeMin: 1
-  uidRangeMax: 65543  
+  uidRangeMax: 65543
 seLinuxContext:
   type: MustRunAs
 supplementalGroups:
