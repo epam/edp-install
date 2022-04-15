@@ -63,7 +63,7 @@ During the EDP deployment, a default provisioner is created for integration with
    <Summary><b>View: Default template</b></Summary>
 
 ```groovy
-/* Copyright 2021 EPAM Systems.
+/* Copyright 2022 EPAM Systems.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -94,8 +94,8 @@ stages['Code-review-application'] = '[{"name": "gerrit-checkout"}' + "${commitVa
 stages['Code-review-library'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
  ',{"name": "compile"},{"name": "tests"},' +
         '{"name": "sonar"}]'
-stages['Code-review-autotests'] = '[{"name": "gerrit-checkout"},{"name": "get-version"}' + "${commitValidateStage}" +
- ',{"name": "tests"},{"name": "sonar"}' + "${createJIMStage}" + ']'
+stages['Code-review-autotests'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
+ ',{"name": "tests"},{"name": "sonar"}' + ']'
 stages['Code-review-default'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" + ']'
 stages['Code-review-library-terraform'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
  ',{"name": "terraform-lint"}]'
@@ -123,6 +123,8 @@ stages['Build-library-codenarc'] = '[{"name": "checkout"},{"name": "get-version"
 stages['Build-library-kaniko'] = '[{"name": "checkout"},{"name": "get-version"}' +
  ',{"name": "dockerfile-lint"},{"name": "build-image-kaniko"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
+stages['Build-autotests-maven'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-autotests-gradle'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},[{"name": "sonar"}],{"name": "build"},{"name": "build-image-kaniko"},' +
@@ -166,7 +168,7 @@ if (buildTool.toString().equalsIgnoreCase('none')) {
 
 if (BRANCH) {
     def branch = "${BRANCH}"
-    def formattedBranch = "${branch.toUpperCase().replaceAll(/\\//, "-")}"
+    def formattedBranch = "${branch.toUpperCase().replaceAll(/\//, "-")}"
     createListView(codebaseName, formattedBranch)
 
     def type = "${TYPE}"
@@ -175,7 +177,7 @@ if (BRANCH) {
             repositoryPath, gitCredentialsId, branch, gitServerCrName, gitServerCrVersion)
 
     def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
-    if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
+    if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library') || type.equalsIgnoreCase('autotests')) {
         def jobExists = false
         if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name})
             jobExists = true
@@ -189,7 +191,7 @@ if (BRANCH) {
 }
 
 def createCiPipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId, watchBranch, gitServerCrName, gitServerCrVersion) {
-    pipelineJob("${codebaseName}/${watchBranch.toUpperCase().replaceAll(/\\//, "-")}-${pipelineName}") {
+    pipelineJob("${codebaseName}/${watchBranch.toUpperCase().replaceAll(/\//, "-")}-${pipelineName}") {
         logRotator {
             numToKeep(10)
             daysToKeep(7)

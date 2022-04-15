@@ -129,7 +129,7 @@ nav:
           - Upgrade EDP v.2.7.8 to v.2.8.4: operator-guide/upgrade-edp-2.7.8-to-2.8.4.md
           - Upgrade EDP v.2.8.4 to v.2.9.0: operator-guide/upgrade-edp-2.8.4-to-2.9.0.md
           - Upgrade EDP v.2.9.0 to v.2.10.2: operator-guide/upgrade-edp-2.9.0-to-2.10.2.md
-          - Unreleased: operator-guide/upgrade-edp-unreleased.md
+          - Upgrade EDP v.2.10.2 to v.2.11.0: operator-guide/upgrade-edp-2.10.2-to-2.11.0.md
       - Tutorials:
         - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
         - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
