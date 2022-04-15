@@ -3,7 +3,6 @@ FROM squidfunk/mkdocs-material:8.2.9
 RUN pip install \
     mdx-truly-sane-lists==1.2 \
     mkdocs-awesome-pages-plugin==2.6.1 \
-    pymdown-extensions==9.3 \
     fancyboxmd==1.0.1 \
     mkdocs-charts-plugin==0.0.8 \
     plantuml-markdown==3.5.2
