@@ -416,7 +416,7 @@ stages['Code-review-library-opa'] = '[{"name": "checkout"}' + "${commitValidateS
         ',{"name": "tests"}]'
 stages['Code-review-library-codenarc'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
         ',{"name": "sonar"},{"name": "build"}]'
-stages['Code-review-library-kaniko'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
+stages['Code-review-library-kaniko'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
  ',{"name": "dockerfile-lint"},{"name": "dockerbuild-verify"}]'
 
 stages['Build-library-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
@@ -836,7 +836,7 @@ stages['Code-review-library-opa'] = '[{"name": "checkout"}' + "${commitValidateS
         ',{"name": "tests"}]'
 stages['Code-review-library-codenarc'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
         ',{"name": "sonar"},{"name": "build"}]'
-stages['Code-review-library-kaniko'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
+stages['Code-review-library-kaniko'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
  ',{"name": "dockerfile-lint"},{"name": "dockerbuild-verify"}]'
 
 stages['Build-library-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
