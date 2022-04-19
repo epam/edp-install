@@ -273,7 +273,7 @@
         <span class=s1>&#39;,{&quot;name&quot;: &quot;tests&quot;}]&#39;</span>
 <span class=n>stages</span><span class=o>[</span><span class=s1>&#39;Code-review-library-codenarc&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;[{&quot;name&quot;: &quot;checkout&quot;}&#39;</span> <span class=o>+</span> <span class=s2>&quot;${commitValidateStage}&quot;</span> <span class=o>+</span>
         <span class=s1>&#39;,{&quot;name&quot;: &quot;sonar&quot;},{&quot;name&quot;: &quot;build&quot;}]&#39;</span>
-<span class=n>stages</span><span class=o>[</span><span class=s1>&#39;Code-review-library-kaniko&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;[{&quot;name&quot;: &quot;gerrit-checkout&quot;}&#39;</span> <span class=o>+</span> <span class=s2>&quot;${commitValidateStage}&quot;</span> <span class=o>+</span>
+<span class=n>stages</span><span class=o>[</span><span class=s1>&#39;Code-review-library-kaniko&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;[{&quot;name&quot;: &quot;checkout&quot;}&#39;</span> <span class=o>+</span> <span class=s2>&quot;${commitValidateStage}&quot;</span> <span class=o>+</span>
  <span class=s1>&#39;,{&quot;name&quot;: &quot;dockerfile-lint&quot;},{&quot;name&quot;: &quot;dockerbuild-verify&quot;}]&#39;</span>
 
 <span class=n>stages</span><span class=o>[</span><span class=s1>&#39;Build-library-maven&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;[{&quot;name&quot;: &quot;checkout&quot;},{&quot;name&quot;: &quot;get-version&quot;},{&quot;name&quot;: &quot;compile&quot;},&#39;</span> <span class=o>+</span>
@@ -616,7 +616,7 @@
         <span class=s1>&#39;,{&quot;name&quot;: &quot;tests&quot;}]&#39;</span>
 <span class=n>stages</span><span class=o>[</span><span class=s1>&#39;Code-review-library-codenarc&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;[{&quot;name&quot;: &quot;checkout&quot;}&#39;</span> <span class=o>+</span> <span class=s2>&quot;${commitValidateStage}&quot;</span> <span class=o>+</span>
         <span class=s1>&#39;,{&quot;name&quot;: &quot;sonar&quot;},{&quot;name&quot;: &quot;build&quot;}]&#39;</span>
-<span class=n>stages</span><span class=o>[</span><span class=s1>&#39;Code-review-library-kaniko&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;[{&quot;name&quot;: &quot;gerrit-checkout&quot;}&#39;</span> <span class=o>+</span> <span class=s2>&quot;${commitValidateStage}&quot;</span> <span class=o>+</span>
+<span class=n>stages</span><span class=o>[</span><span class=s1>&#39;Code-review-library-kaniko&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;[{&quot;name&quot;: &quot;checkout&quot;}&#39;</span> <span class=o>+</span> <span class=s2>&quot;${commitValidateStage}&quot;</span> <span class=o>+</span>
  <span class=s1>&#39;,{&quot;name&quot;: &quot;dockerfile-lint&quot;},{&quot;name&quot;: &quot;dockerbuild-verify&quot;}]&#39;</span>
 
 <span class=n>stages</span><span class=o>[</span><span class=s1>&#39;Build-library-maven&#39;</span><span class=o>]</span> <span class=o>=</span> <span class=s1>&#39;[{&quot;name&quot;: &quot;checkout&quot;},{&quot;name&quot;: &quot;get-version&quot;},{&quot;name&quot;: &quot;compile&quot;},&#39;</span> <span class=o>+</span>
