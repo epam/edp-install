@@ -246,6 +246,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/waf-tf-configuration/</loc>
+         <lastmod>2022-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/use-cases/</loc>
          <lastmod>2022-04-19</lastmod>
          <changefreq>daily</changefreq>
