@@ -21,7 +21,7 @@ data:
         command:
         - "/bin/sh"
         - "-c"
-        - "for i in 1 2 3 4 5 6; do echo 'Waiting for Dockerfile...'; sleep 10; if [ -f /tmp/workspace/Dockerfile ]; then exit 0; fi; done; exit 1"
+        - "while ! [[ -f /tmp/workspace/Dockerfile ]]; do echo 'Waiting for Dockerfile...'; sleep 10;done"
         volumeMounts:
         - name: shared-volume
           mountPath: "/tmp/workspace"
