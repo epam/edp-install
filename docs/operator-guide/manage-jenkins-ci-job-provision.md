@@ -407,8 +407,8 @@ stages['Code-review-application'] = '[{"name": "checkout"}' + "${commitValidateS
 stages['Code-review-library'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
         ',{"name": "compile"},{"name": "tests"},' +
         '{"name": "sonar"}]'
-stages['Code-review-autotests'] = '[{"name": "checkout"},{"name": "get-version"}' + "${commitValidateStage}" +
-        ',{"name": "tests"},{"name": "sonar"}' + "${createJIMStage}" + ']'
+stages['Code-review-autotests'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "tests"},{"name": "sonar"}' + ']'
 stages['Code-review-default'] = '[{"name": "checkout"}' + "${commitValidateStage}" + ']'
 stages['Code-review-library-terraform'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
         ',{"name": "terraform-lint"}]'
@@ -435,6 +435,9 @@ stages['Build-library-codenarc'] = '[{"name": "checkout"},{"name": "get-version"
         "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-library-kaniko'] = '[{"name": "checkout"},{"name": "get-version"}' +
  ',{"name": "dockerfile-lint"},{"name": "build-image-kaniko"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+
+stages['Build-autotests-maven'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-autotests-gradle'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
@@ -490,7 +493,7 @@ if (BRANCH) {
 
     def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
 
-    if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
+      if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library') || type.equalsIgnoreCase('autotests')) {
         def jobExists = false
         if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name})
             jobExists = true
@@ -732,7 +735,6 @@ def getSecretValue(name) {
     return secret != null ? secret['secret'] : null
 }
 
-
 ```
    </details>
 
@@ -827,8 +829,8 @@ stages['Code-review-application'] = '[{"name": "checkout"}' + "${commitValidateS
 stages['Code-review-library'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
         ',{"name": "compile"},{"name": "tests"},' +
         '{"name": "sonar"}]'
-stages['Code-review-autotests'] = '[{"name": "checkout"},{"name": "get-version"}' + "${commitValidateStage}" +
-        ',{"name": "tests"},{"name": "sonar"}' + "${createJIMStage}" + ']'
+stages['Code-review-autotests'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
+        ',{"name": "tests"},{"name": "sonar"}' + ']'
 stages['Code-review-default'] = '[{"name": "checkout"}' + "${commitValidateStage}" + ']'
 stages['Code-review-library-terraform'] = '[{"name": "checkout"}' + "${commitValidateStage}" +
         ',{"name": "terraform-lint"}]'
@@ -855,6 +857,9 @@ stages['Build-library-codenarc'] = '[{"name": "checkout"},{"name": "get-version"
         "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-library-kaniko'] = '[{"name": "checkout"},{"name": "get-version"}' +
  ',{"name": "dockerfile-lint"},{"name": "build-image-kaniko"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+
+stages['Build-autotests-maven'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-autotests-gradle'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildImageStage}" +
@@ -909,7 +914,7 @@ if (BRANCH) {
 
     def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
 
-    if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library')) {
+    if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library') || type.equalsIgnoreCase('autotests')) {
         def jobExists = false
         if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name}) {
            jobExists = true
@@ -1135,6 +1140,7 @@ def getSecretValue(name) {
     def secret = creds.find { it.properties['id'] == name }
     return secret != null ? secret['secret'] : null
 }
+
 ```
 
    </details>
