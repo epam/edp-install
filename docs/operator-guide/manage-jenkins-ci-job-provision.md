@@ -493,7 +493,7 @@ if (BRANCH) {
 
     def buildKey = "Build-${type}-${buildTool.toLowerCase()}".toString()
 
-      if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library') || type.equalsIgnoreCase('autotests')) {
+    if (type.equalsIgnoreCase('application') || type.equalsIgnoreCase('library') || type.equalsIgnoreCase('autotests')) {
         def jobExists = false
         if("${formattedBranch}-Build-${codebaseName}".toString() in Jenkins.instance.getAllItems().collect{it.name})
             jobExists = true
@@ -734,6 +734,7 @@ def getSecretValue(name) {
     def secret = creds.find { it.properties['id'] == name }
     return secret != null ? secret['secret'] : null
 }
+
 
 ```
    </details>
@@ -1140,7 +1141,6 @@ def getSecretValue(name) {
     def secret = creds.find { it.properties['id'] == name }
     return secret != null ? secret['secret'] : null
 }
-
 ```
 
    </details>
