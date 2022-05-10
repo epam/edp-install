@@ -40,6 +40,13 @@ global:
 # AWS Region, e.g. "eu-central-1"
 awsRegion:
 
+argocd:
+  # -- Enable ArgoCD integration
+  enabled: false
+  # -- ArgoCD URL in format schema://URI
+  # @default -- `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }})
+  url: ""
+
 perf:
   enabled: "false"
 

@@ -89,6 +89,7 @@ nav:
         - Set Up Kubernetes: operator-guide/kubernetes-cluster-settings.md
         - Set Up OpenShift: operator-guide/openshift-cluster-settings.md
       - Install EDP: operator-guide/install-edp.md
+      - Install Argo CD: operator-guide/install-argocd.md
     - Configuration:
       - Add Other Code Language: operator-guide/add-other-code-language.md
       - Backup With Velero:
