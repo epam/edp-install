@@ -64,7 +64,7 @@ dependency:
 
 2. [**helm-docs**](https://github.com/norwoodj/helm-docs#helm-docs) stage helps to validate the generated documentation for the Helm deployment templates in the Code Review pipeline for all types of applications supported by EDP. This stage launches the _helm-docs_ command in order to validate the chart documentation file existence and verify its relevance.
 
-  **Requirements**: [helm-docs v1.7.0](https://github.com/norwoodj/helm-docs/releases/tag/v1.7.0)
+  **Requirements**: [helm-docs v1.10.0](https://github.com/norwoodj/helm-docs/releases/tag/v1.10.0)
 
   !!! Note
       The **helm-docs** stage is optional. To extend the pipeline with an additional stage, please refer to the [Configure Code Review Pipeline](../code-review-pipeline/#configure-code-review-pipeline) page.
