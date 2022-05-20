@@ -100,6 +100,14 @@ annotations:
       image: epamedp/reconciler:2.11.0
     - name: perf-operator:2.11.0
       image: epamedp/perf-operator:2.11.0
+    - name: postgres:9.6
+      image: postgres:9.6
+    - name: executor:v1.8.0
+      image: gcr.io/kaniko-project/executor:v1.8.0
+    - name: busybox:1.35.0
+      image: busybox:1.35.0
+    - name: aws-cli:2.5.2
+      image: amazon/aws-cli:2.5.2
   artifacthub.io/operatorCapabilities: Full Lifecycle
   artifacthub.io/links: |
     - name: EDP Documentation
