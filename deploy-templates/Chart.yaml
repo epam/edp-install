@@ -80,26 +80,34 @@ annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/operator: "true"
   artifacthub.io/images: |
-    - name: keycloak-operator:1.10.0
-      image: epamedp/keycloak-operator:1.10.0
-    - name: codebase-operator:2.10.0
-      image: epamedp/codebase-operator:2.10.0
-    - name: jenkins-operator:2.10.0
-      image: epamedp/jenkins-operator:2.10.0
-    - name: cd-pipeline-operator:2.10.0
-      image: epamedp/cd-pipeline-operator:2.10.0
-    - name: nexus-operator:2.10.0
-      image: epamedp/nexus-operator:2.10.0
-    - name: sonar-operator:2.10.0
-      image: epamedp/sonar-operator:2.10.0
-    - name: admin-console-operator:2.10.0
-      image: epamedp/admin-console-operator:2.10.0
-    - name: gerrit-operator:2.10.0
-      image: epamedp/gerrit-operator:2.10.0
-    - name: reconciler:2.10.0
-      image: epamedp/reconciler:2.10.0
-    - name: perf-operator:2.10.0
-      image: epamedp/perf-operator:2.10.0
+    - name: keycloak-operator:1.11.0
+      image: epamedp/keycloak-operator:1.11.0
+    - name: codebase-operator:2.12.0
+      image: epamedp/codebase-operator:2.12.0
+    - name: jenkins-operator:2.11.0
+      image: epamedp/jenkins-operator:2.11.0
+    - name: cd-pipeline-operator:2.11.0
+      image: epamedp/cd-pipeline-operator:2.11.0
+    - name: nexus-operator:2.11.0
+      image: epamedp/nexus-operator:2.11.0
+    - name: sonar-operator:2.11.0
+      image: epamedp/sonar-operator:2.11.0
+    - name: admin-console-operator:2.11.0
+      image: epamedp/admin-console-operator:2.11.0
+    - name: gerrit-operator:2.11.0
+      image: epamedp/gerrit-operator:2.11.0
+    - name: reconciler:2.11.0
+      image: epamedp/reconciler:2.11.0
+    - name: perf-operator:2.11.0
+      image: epamedp/perf-operator:2.11.0
+    - name: postgres:9.6
+      image: postgres:9.6
+    - name: executor:v1.8.0
+      image: gcr.io/kaniko-project/executor:v1.8.0
+    - name: busybox:1.35.0
+      image: busybox:1.35.0
+    - name: aws-cli:2.5.2
+      image: amazon/aws-cli:2.5.2
   artifacthub.io/operatorCapabilities: Full Lifecycle
   artifacthub.io/links: |
     - name: EDP Documentation
