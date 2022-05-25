@@ -23,83 +23,83 @@ sources:
 dependencies:
 - name: keycloak-operator
   repository: "@epamedp"
-  version: "1.10.0"
+  version: "1.11.0"
   condition: keycloak-operator.enabled
 
 - name: codebase-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.12.0"
   condition: codebase-operator.enabled
 
 - name: jenkins-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.11.0"
   condition: jenkins-operator.enabled
 
 - name: edp-component-operator
   repository: "@epamedp"
-  version: "0.10.0"
+  version: "0.11.0"
   condition: edp-component-operator.enabled
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.11.0"
   condition: cd-pipeline-operator.enabled
 
 - name: nexus-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.11.0"
   condition: nexus-operator.enabled
 
 - name: sonar-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.11.0"
   condition: sonar-operator.enabled
 
 - name: admin-console-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.11.0"
   condition: admin-console-operator.enabled
 
 - name: gerrit-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.11.0"
   condition: gerrit-operator.enabled
 
 - name: reconciler
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.11.0"
   condition: reconciler.enabled
 
 - name: perf-operator
   repository: "@epamedp"
-  version: "2.10.0"
+  version: "2.11.0"
   condition: perf-operator.enabled
 
 annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/operator: "true"
   artifacthub.io/images: |
-    - name: keycloak-operator:1.10.0
-      image: epamedp/keycloak-operator:1.10.0
-    - name: codebase-operator:2.10.0
-      image: epamedp/codebase-operator:2.10.0
-    - name: jenkins-operator:2.10.0
-      image: epamedp/jenkins-operator:2.10.0
-    - name: cd-pipeline-operator:2.10.0
-      image: epamedp/cd-pipeline-operator:2.10.0
-    - name: nexus-operator:2.10.0
-      image: epamedp/nexus-operator:2.10.0
-    - name: sonar-operator:2.10.0
-      image: epamedp/sonar-operator:2.10.0
-    - name: admin-console-operator:2.10.0
-      image: epamedp/admin-console-operator:2.10.0
-    - name: gerrit-operator:2.10.0
-      image: epamedp/gerrit-operator:2.10.0
-    - name: reconciler:2.10.0
-      image: epamedp/reconciler:2.10.0
-    - name: perf-operator:2.10.0
-      image: epamedp/perf-operator:2.10.0
+    - name: keycloak-operator:1.11.0
+      image: epamedp/keycloak-operator:1.11.0
+    - name: codebase-operator:2.12.0
+      image: epamedp/codebase-operator:2.12.0
+    - name: jenkins-operator:2.11.0
+      image: epamedp/jenkins-operator:2.11.0
+    - name: cd-pipeline-operator:2.11.0
+      image: epamedp/cd-pipeline-operator:2.11.0
+    - name: nexus-operator:2.11.0
+      image: epamedp/nexus-operator:2.11.0
+    - name: sonar-operator:2.11.0
+      image: epamedp/sonar-operator:2.11.0
+    - name: admin-console-operator:2.11.0
+      image: epamedp/admin-console-operator:2.11.0
+    - name: gerrit-operator:2.11.0
+      image: epamedp/gerrit-operator:2.11.0
+    - name: reconciler:2.11.0
+      image: epamedp/reconciler:2.11.0
+    - name: perf-operator:2.11.0
+      image: epamedp/perf-operator:2.11.0
   artifacthub.io/operatorCapabilities: Full Lifecycle
   artifacthub.io/links: |
     - name: EDP Documentation
