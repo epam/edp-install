@@ -4,29 +4,150 @@
 
 Get acquainted with the latest EDP releases.
 
-*   [Version 2.10.2](#2.10.2)
-*   [Version 2.10.1](#2.10.1)
-*   [Version 2.10.0](#2.10.0)
-*   [Version 2.9.0](#2.9.0)
-*   [Version 2.8.4](#2.8.4)
-*   [Version 2.8.3](#2.8.3)
-*   [Version 2.8.2](#2.8.2)
-*   [Version 2.8.1](#2.8.1)
-*   [Version 2.8.0](#2.8.0)
-*   [Version 2.7.8](#2.7.8)
-*   [Version 2.7.7](#2.7.7)
-*   [Version 2.7.6](#2.7.6)
-*   [Version 2.7.5](#2.7.5)
-*   [Version 2.7.4](#2.7.4)
-*   [Version 2.7.2](#2.7.2)
-*   [Version 2.7.1](#2.7.1)
-*   [Version 2.7.0](#2.7.0)
-*   [Version 2.6.4](#2.6.4)
-*   [Version 2.6.3](#2.6.3)
-*   [Version 2.6.2](#2.6.2)
-*   [Version 2.6.1](#2.6.1)
-*   [Version 2.6.0](#2.6.0)
+* [Version 2.11.0](#2.11.0)
+* [Version 2.10.2](#2.10.2)
+* [Version 2.10.1](#2.10.1)
+* [Version 2.10.0](#2.10.0)
+* [Version 2.9.0](#2.9.0)
+<details>
+  <summary>Earlier Versions</summary>
 
+* [Version 2.8.4](#2.8.4)
+* [Version 2.8.3](#2.8.3)
+* [Version 2.8.2](#2.8.2)
+* [Version 2.8.1](#2.8.1)
+* [Version 2.8.0](#2.8.0)
+* [Version 2.7.8](#2.7.8)
+* [Version 2.7.7](#2.7.7)
+* [Version 2.7.6](#2.7.6)
+* [Version 2.7.5](#2.7.5)
+* [Version 2.7.4](#2.7.4)
+* [Version 2.7.2](#2.7.2)
+* [Version 2.7.1](#2.7.1)
+* [Version 2.7.0](#2.7.0)
+* [Version 2.6.4](#2.6.4)
+* [Version 2.6.3](#2.6.3)
+* [Version 2.6.2](#2.6.2)
+* [Version 2.6.1](#2.6.1)
+* [Version 2.6.0](#2.6.0)
+</details>
+
+## Version 2.11.0 <a name="2.11.0"></a> (May 27, 2022)
+
+### What's New
+
+EDP 2.11.0 version presents the CD pipeline customizations, namely, now it is possible to populate secrets to different environments and stages; to remove Helm releases from a namespace, thus allowing to redeploy the application from scratch.
+CD pipeline flexible optimizations providing the ability to define custom logic of the application deployment. In addition to the automation deployment proceeding with the latest versions and manual selection of the necessary version, there is a possibility to build your own custom deployment logic.
+From the side of operators, there is a bulk of Gerrit improvements for the merge requests: tracking MR statuses, creating MRs directly from a custom resource and with the data specified in a config map. In Keycloak, now it is possible to configure Keycloak Realm Password Policy, to make the Keycloak Realm role mappers
+optional, to set the full reconciliation for the Keycloak Realm user, and to configure and create the Authentication flows via the KeycloakAuthflow custom resource. Also, there are extensions of Jenkins Shared Libraries allowing to add any shared library using custom resource.
+In addition, the Docker support is available.
+
+Explore the upgrades, new functionality, breaking changes and improvements below.
+
+### Upgrades
+
+* SonarQube is updated to the LTS 8.9.8 Community Edition. For details, please refer to the [official website](https://jira.sonarsource.com/secure/ReleaseNote.jspa?version=17249&styleName=&projectId=10930&Create=Create&atl_token=BSPV-9NYM-JVTI-0WKN_447990944a5e476cea519acf4a65a799d7a41e01_lout).
+* Jenkins is updated to the LTS 2.332.2 version. For details, please refer to the [official website](https://www.jenkins.io/doc/upgrade-guide/2.332/).
+* All Alpine-based images are updated to the 3.15.4 version. For details, please refer to the [official website](https://git.alpinelinux.org/aports/log/?h=v3.15.4).
+* Go language is updated to the 1.17.8 version. For details, please refer to the [official website](https://go.dev/doc/devel/release#go1.17.minor).
+* Helm is updated to the 3.8.1 version on Jenkins agents. For details, please refer to the [official website](https://github.com/helm/helm/releases/tag/v3.8.1).
+* Keycloak is updated to the 17.0.1 version. For details, please refer to the [official website](https://www.keycloak.org/docs/latest/release_notes/index.html).
+* Kubectl is updated to the 1.23.5 version on Jenkins agents. For details, please refer to the [official website](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1235).
+* Nexus is updated to the LTS 3.38.1 version. For details, please refer to the [official website](https://help.sonatype.com/repomanager3/product-information/release-notes/2022-release-notes/nexus-repository-3.38.0---3.38.1-release-notes).
+
+### New Functionality
+
+* Now it is possible to add a library for Dockerfile, thus having CI pipelines for Docker.
+* The copy-secret pipeline stage is added providing the ability to populate Kubernetes secrets across deployed environments/stages.
+* The ability to remove Helm releases from a namespace, thus allowing to redeploy the application from scratch.
+* Validation of the generated documentation for the Helm deployment templates.
+* Use pre-defined deployment logic or your own: either keep the automation deploy proceeding with the latest versions or select manually the necessary version for deploy.
+* EDP versioning supports the arbitrary artifacts version name for branches, i.e. tags can be of any value besides the RC / SNAPSHOT that are specified by default.
+* The newly created CD pipeline includes the enabled _Discard old builds_ option with the configured rules.
+* Extension of Kaniko template flexibility allowing to set extra arguments, environments, and resource requests for every container.
+* Extension of Jenkins shared libraries allowing to add any shared library using custom resource.
+* Ability to manage environment variables, namely, adding and configuring of a new environment variable for components.
+* Configuration and creation of Authentication flows via the KeycloakAuthflow custom resource.
+* Ability to configure Keycloak Realm Password Policy.
+* Making the Keycloak Realm role mappers optional.
+* Set the full reconciliation for the Keycloak Realm user.
+* Configurable reconciliation time in Gerrit is added into environment variable.
+* Ability to track the Gerrit merge request status in the custom resource status.
+* Creating a merge request directly from the custom resource of the Gerrit operator.
+* Defining additional parameters for Gerrit merge request using the custom resource.
+* Creating a Gerrit merge request with contents specified in a config map.
+* The ability to provide read-only repositories via the ReadOnly group in the Gerrit operator.
+* Managing Sonar permission templates and groups using the Kubernetes custom resource.
+* Defining Sonar default permissions template using the Sonar custom resource.
+* Managing Nexus users via custom resource.
+
+#### Breaking Changes
+
+* Custom resource will have two keys: 'tag' for a single tag and 'tags' for the list of tags.
+* Use gorilla's csrf implementation instead of beego's xsrf.
+* Switch to use v2 admin console API for build, code review and deploy pipelines.
+* Respective GerritGroupMember Custom Resources must be created to replace existing users[] mapping. Consult the release upgrade instruction.
+* Update Gerrit config according to groups.
+  * Implement Developers group creation;
+  * Assign users to admins and developers groups using the GerritGroupMember CR;
+  * Align permission for groups.
+
+### Enhancements
+
+* The TLS certificate option is added when using Ingress controller for SSL certificates.
+* CI job provisioner now runs on the specific Jenkins label.
+* There is a namespace defined for a Service Account in the Role Binding.
+* The Kaniko build step has a timeout.
+* The Kaniko provision logic is moved to the edp-install helm chart, thus providing the ability to deliver updates.
+* Gerrit members are managed from GerritGroups and GerritGroupMembers, providing the successful upgrade from older versions.
+* The creation of users within the EDP installation is removed.
+* The images within the main EDP documentation are scalable.
+* Disabled access to Gerrit for users without admin/developer roles in Keycloak.
+* The replacing of the default branch option is added to specification in codebase operator.
+* Postponed reconciliation for the Import strategy for the codebase operator.
+* Disable of putting deploy configs by a flag for the codebase operator.
+
+### Fixed Issues
+
+* Fixed the changelog generation in GH Release Action.
+* Codebase operator does not repeat the GitServer custom resource reconciliation.
+* Sonar proxy error in helm template file.
+* Failed to get the CodebaseImageStream CR when branch name contains the slash character.
+* CD pipeline fails if image is not promoted.
+* Fixed build issue for operator Docker images.
+* Jenkins role mapping CR controller does not return an error if a group does not exist.
+* The Fix Version field does not contain data for the container libraries.
+* An error occurs when deleting the KeycloakAuthFlow CR.
+* Keycloak realm user does not synchronize roles correctly.
+* The SonarGroup and SonarPermissionTemplate controllers do not remove failed custom resource.
+* It is impossible to set any branch as a default existing in a repository using the Import strategy.
+* Nexus operator does not disable anonymous access to Admin Console UI.
+
+### Documentation
+
+* The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following pages:
+   * [Associate IAM Roles With Service Accounts](https://epam.github.io/edp-install/operator-guide/enable-irsa/)
+   * [Configure AWS WAF With Terraform](https://epam.github.io/edp-install/operator-guide/waf-tf-configuration/)
+   * [Debug GitLab Webhooks in Jenkins](https://epam.github.io/edp-install/operator-guide/gitlab-debug-webhooks/)
+   * [Debug GitHub Webhooks in Jenkins](https://epam.github.io/edp-install/operator-guide/github-debug-webhooks/)
+   * [EKS OIDC With Keycloak](https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/)
+   * [Enable VCS Import Strategy](https://epam.github.io/edp-install/operator-guide/import-strategy/)
+   * [GitHub Integration](https://epam.github.io/edp-install/operator-guide/github-integration/)
+   * [GitLab Integration](https://epam.github.io/edp-install/operator-guide/gitlab-integration/)
+   * [Manage Jenkins CI Pipeline Job Provisioner](https://epam.github.io/edp-install/operator-guide/manage-jenkins-ci-job-provision/)
+   * [Multitenant Logging](https://epam.github.io/edp-install/operator-guide/multitenant-logging/)
+   * [Upgrade EDP v.2.10.2 to v.2.11.0](https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.10.2-to-2.11.0/)
+
+* The [User Guide](https://epam.github.io/edp-install/user-guide/) is updated with the following pages:
+   * [CI Pipeline for Container](https://epam.github.io/edp-install/user-guide/container-stages/)
+   * [Copy Shared Secrets](https://epam.github.io/edp-install/user-guide/copy-shared-secrets/)
+   * [Helm Chart Testing and Documentation Tools](https://epam.github.io/edp-install/user-guide/helm-stages/)
+   * [Helm Release Deletion](https://epam.github.io/edp-install/user-guide/helm-release-deletion/)
+   * [Pipeline Stages](https://epam.github.io/edp-install/user-guide/pipeline-stages/)
+   * [Promote Docker Images From ECR to Docker Hub](https://epam.github.io/edp-install/user-guide/ecr-to-docker-stages/)
+   * [Semi Auto Deploy](https://epam.github.io/edp-install/user-guide/semi-auto-deploy/)
+   * [Use Dockerfile Linters for Code Review Pipeline](https://epam.github.io/edp-install/user-guide/dockerfile-stages/)
+   * [Use Open Policy Agent](https://epam.github.io/edp-install/user-guide/opa-stages/)
 
 ## Version 2.10.2 <a name="2.10.2"></a> (January 21, 2022)
 
