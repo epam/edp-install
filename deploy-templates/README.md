@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 2.10.0-SNAPSHOT](https://img.shields.io/badge/Version-2.10.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.10.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-2.10.0--SNAPSHOT-informational?style=flat-square)
+![Version: 2.12.0-SNAPSHOT](https://img.shields.io/badge/Version-2.12.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-2.12.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for EDP Install
 
@@ -21,17 +21,17 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | admin-console-operator | 2.10.0 |
-| @epamedp | cd-pipeline-operator | 2.10.0 |
-| @epamedp | codebase-operator | 2.10.0 |
-| @epamedp | edp-component-operator | 0.10.0 |
-| @epamedp | gerrit-operator | 2.10.0 |
-| @epamedp | jenkins-operator | 2.10.0 |
-| @epamedp | keycloak-operator | 1.10.0 |
-| @epamedp | nexus-operator | 2.10.0 |
-| @epamedp | perf-operator | 2.10.0 |
-| @epamedp | reconciler | 2.10.0 |
-| @epamedp | sonar-operator | 2.10.0 |
+| @epamedp | admin-console-operator | 2.11.0 |
+| @epamedp | cd-pipeline-operator | 2.11.0 |
+| @epamedp | codebase-operator | 2.12.0 |
+| @epamedp | edp-component-operator | 0.11.0 |
+| @epamedp | gerrit-operator | 2.11.0 |
+| @epamedp | jenkins-operator | 2.11.0 |
+| @epamedp | keycloak-operator | 1.11.0 |
+| @epamedp | nexus-operator | 2.11.0 |
+| @epamedp | perf-operator | 2.11.0 |
+| @epamedp | reconciler | 2.11.0 |
+| @epamedp | sonar-operator | 2.11.0 |
 
 ## Values
 
@@ -69,7 +69,7 @@ A Helm chart for EDP Install
 | global.edpName | string | `"stub-namespace"` |  |
 | global.kioskEnabled | bool | `true` |  |
 | global.platform | string | `"kubernetes"` |  |
-| global.version | string | `"2.10.0-SNAPSHOT"` |  |
+| global.version | string | `"2.12.0-SNAPSHOT"` |  |
 | global.webConsole.url | string | `nil` |  |
 | jenkins-operator.enabled | bool | `true` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
