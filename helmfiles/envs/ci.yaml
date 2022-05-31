@@ -1,0 +1,9 @@
+global:
+  # Keycloak endpoint e.g. keycloak.example.com
+  keycloakEndpoint: keycloak.example.com
+  # DNS wildcard for routing in the Kubernetes cluster e.g. example.com
+  dnsWildCard: example.com
+  # EDP namespace
+  edpName: example
+  # Gerrit SSH node port
+  gerritSSHPort: 30022

@@ -1,6 +1,7 @@
 # Install EDP
 
-Inspect the main steps to install EPAM Delivery Platform. Please check the prerequisites section before starting installation.
+Inspect the main steps to install EPAM Delivery Platform. Please check the prerequisites section before starting the installation.
+There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and using [Helmfile](./install-via-helmfile.md#deploy-epam-delivery-platform).
 
 !!! note
     The installation process below is given for a Kubernetes cluster. The steps that differ for an OpenShift cluster are
@@ -129,6 +130,9 @@ gerrit-operator:
   gerrit:
     # Gerrit SSH node port;
     sshPort: <gerrit_ssh_port>
+kaniko:
+  # AWS IAM role with push access to ECR, e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
+  roleArn:
 
 ```
 

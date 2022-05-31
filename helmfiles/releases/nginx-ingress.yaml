@@ -1,0 +1,75 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## NGINX Ingress Controller ####################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/kubernetes/ingress-nginx/tree/master/charts/ingress-nginx
+#
+- name: "ingress"
+  namespace: "ingress-nginx"
+  labels:
+    chart: "ingress-nginx"
+    repo: "ingress-nginx"
+    component: "ingress"
+    namespace: "ingress-nginx"
+    vendor: "kubernetes"
+    default: "true"
+  chart: "ingress-nginx/ingress-nginx"
+  version: "3.23.0"
+  wait: true
+  installed: true
+  values:
+    - controller:
+        addHeaders:
+          X-Content-Type-Options: nosniff
+          X-Frame-Options: SAMEORIGIN
+        # apply custom fluent-bit parser
+        podAnnotations:
+          fluentbit.io/parser: "k8s-nginx-ingress"
+
+        resources:
+          limits:
+            memory: "256Mi"
+          requests:
+            cpu: "50m"
+            memory: "128Mi"
+
+        config:
+          ssl-redirect: 'true'
+          client-header-buffer-size: '64k'
+          http2-max-field-size: '64k'
+          http2-max-header-size: '64k'
+          large-client-header-buffers: '4 64k'
+          upstream-keepalive-timeout: '120'
+          keep-alive: '10'
+          use-forwarded-headers: 'true'
+          # align value with AWS VPC CIDR
+          proxy-real-ip-cidr: '172.31.0.0/16'
+          proxy-buffer-size: '8k'
+
+        service:
+          type: NodePort
+          nodePorts:
+            http: 32080
+            https: 32443
+
+        updateStrategy:
+          rollingUpdate:
+            maxUnavailable: 1
+          type: RollingUpdate
+        metrics:
+          enabled: true
+
+      defaultBackend:
+        enabled: true
+
+      serviceAccount:
+        create: true
+        name: nginx-ingress-service-account

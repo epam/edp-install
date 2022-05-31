@@ -17,6 +17,9 @@ Inspect the prerequisites and the main steps to perform for installing Keycloak.
 
 ## Installation
 
+!!! info
+    It is also possible to install Keycloak using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md#deploy-keycloak) page.
+
 To install Keycloak, follow the steps below:
 
 1. Check that a security namespace is created. If not, run the following command to create it:

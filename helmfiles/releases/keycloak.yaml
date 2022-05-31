@@ -1,0 +1,111 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+#######################################################################################
+## keycloak                                                                          ##
+## Keycloak is an open source identity and access management system                  ##
+#######################################################################################
+
+#
+# References:
+#   - https://github.com/codecentric/helm-charts/tree/master/charts/keycloak
+#   - https://www.keycloak.org/
+#
+- name: "keycloak"
+  namespace: "security"
+  labels:
+    chart: "keycloak"
+    repo: "codecentric"
+    component: "sso"
+    namespace: "security"
+    vendor: "keycloak"
+    default: "false"
+  chart: "codecentric/keycloak"
+  version: "18.1.1" # Keycloak app version 17.0.1-legacy
+  wait: true
+  installed: true
+  values:
+    - replicas: 1
+
+      # start: create OpenShift realm which is required by EDP
+      extraInitContainers: |
+        - name: realm-provider
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+          args:
+            - -c
+            - |
+              echo '{"realm": "openshift","enabled": true}' > /realm/openshift.json
+          volumeMounts:
+            - name: realm
+              mountPath: /realm
+
+      extraVolumeMounts: |
+        - name: realm
+          mountPath: /realm
+
+      extraVolumes: |
+        - name: realm
+          emptyDir: {}
+
+      extraEnv: |
+        - name: PROXY_ADDRESS_FORWARDING
+          value: "true"
+        - name: KEYCLOAK_USER
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-admin-creds
+              key: username
+        - name: KEYCLOAK_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-admin-creds
+              key: password
+        - name: KEYCLOAK_IMPORT
+          value: /realm/openshift.json
+
+      # This block should be uncommented if you install Keycloak on Kubernetes
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          ingress.kubernetes.io/affinity: cookie
+        rules:
+          - host: keycloak.{{ .Values.global.dnsWildCard }}
+            paths:
+              - path: "/"
+                pathType: Prefix
+
+      # This block should be uncommented if you set Keycloak to OpenShift and change the host field
+      # route:
+      #   enabled: true
+      #   host: "keycloak.{{ .Values.global.dnsWildCard }}"
+
+      resources:
+        limits:
+          memory: "2048Mi"
+        requests:
+          cpu: "50m"
+          memory: "512Mi"
+
+      # Use PostgreSQL deployed in a container
+      persistence:
+        deployPostgres: true
+        dbVendor: postgres
+
+      postgresql:
+        postgresqlUsername: admin
+        postgresqlDatabase: keycloak
+        existingSecret: keycloak-postgresql
+        persistence:
+          enabled: true
+          size: "3Gi"
+          # If the StorageClass with reclaimPolicy: Retain is used, install an additional StorageClass before installing Keycloak
+          # (the code is given below).
+          # If the default StorageClass will be used - change "gp2-retain" to "gp2"
+          storageClass: "gp2"

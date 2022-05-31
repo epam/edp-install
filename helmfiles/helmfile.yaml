@@ -1,0 +1,10 @@
+---
+bases:
+  - envs/common.yaml
+---
+# Default installation. Please keep order
+helmfiles:
+  - releases/nginx-ingress.yaml
+  - releases/keycloak.yaml
+  - releases/edp-install.yaml
+  - releases/argocd.yaml

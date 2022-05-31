@@ -1,6 +1,6 @@
-# Install Ingress-nginx
+# Install NGINX Ingress Controller
 
-Inspect the prerequisites and the main steps to perform for installing [ingress-nginx](https://docs.nginx.com/nginx-ingress-controller/intro/overview/) on Kubernetes.
+Inspect the prerequisites and the main steps to perform for installing [Install NGINX Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/intro/overview/) on Kubernetes.
 
 ## Prerequisites
 
@@ -9,9 +9,12 @@ Inspect the prerequisites and the main steps to perform for installing [ingress-
 
 ## Installation
 
-To install ingress-nginx, follow the steps below:
+!!! info
+    It is also possible to install NGINX Ingress Controller using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md#deploy-nginx-ingress-controller) page.
 
-1. Create ingress-nginx namespace:
+To install the ingress-nginx chart, follow the steps below:
+
+1. Create an ingress-nginx namespace:
 
       kubectl create namespace ingress-nginx
 
@@ -20,14 +23,14 @@ To install ingress-nginx, follow the steps below:
       helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
       helm repo update
 
-3. Install Ingress-nginx:
+3. Install the ingress-nginx chart:
 
       helm install ingress ingress-nginx/ingress-nginx \
       --version 3.23.0 \
       --values values.yaml \
       --namespace ingress-nginx
 
-   Check out the *values.yaml* file sample of the Ingress-nginx customization:
+   Check out the *values.yaml* file sample of the ingress-nginx chart customization:
 
 <details>
 <summary><b>View: values.yaml</b></summary>

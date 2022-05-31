@@ -1,0 +1,24 @@
+---
+environments:
+  {{ .Environment.Name }}:
+    values:
+    - envs/{{ .Environment.Name }}.yaml
+---
+repositories:
+- name: "ingress-nginx"
+  url: "https://kubernetes.github.io/ingress-nginx"
+
+- name: "codecentric"
+  url: "https://codecentric.github.io/helm-charts"
+
+- name: "epamedp"
+  url: "https://epam.github.io/edp-helm-charts/stable"
+
+- name: "argo"
+  url: "https://argoproj.github.io/argo-helm"
+
+---
+helmDefaults:
+  createNamespace: true
+  timeout: 500
+  atomic: true

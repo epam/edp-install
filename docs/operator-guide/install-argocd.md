@@ -16,6 +16,9 @@ Argo CD enablement for EDP consists of two major steps:
 * Argo CD integration with EDP (SSO enablement, codebase onboarding, etc.)
 * Argo CD installation
 
+!!! info
+    It is also possible to install Argo CD using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md#deploy-argo-cd) page.
+
 ### Integrate With EDP
 
 To enable Argo CD integration, ensure that the `argocd.enabled` flag [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) is set to `true`

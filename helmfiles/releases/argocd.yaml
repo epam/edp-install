@@ -1,0 +1,84 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## ArgoCD ######################################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd
+#
+- name: "argo"
+  namespace: "argocd"
+  labels:
+    chart: "argocd"
+    repo: "argo"
+    component: "argocd"
+    namespace: "argocd"
+    vendor: "argoproj"
+    default: "true"
+  chart: "argo/argo-cd"
+  disableValidation: true
+  version: "4.8.0"
+  wait: true
+  installed: true
+  values:
+    - redis-ha:
+        enabled: true
+
+      controller:
+        enableStatefulSet: true
+
+      server:
+        replicas: 2
+        extraArgs:
+          - "--insecure"
+        env:
+          - name: ARGOCD_API_SERVER_REPLICAS
+            value: '2'
+        ingress:
+          enabled: true
+          hosts:
+            - "argocd.{{ .Values.global.dnsWildCard }}"
+        config:
+          # required when SSO is enabled
+          url: "https://argocd.{{ .Values.global.dnsWildCard }}"
+          application.instanceLabelKey: argocd.argoproj.io/instance-edp
+          oidc.config: |
+            name: Keycloak
+            issuer: https://{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main
+            clientID: argocd
+            clientSecret: $oidc.keycloak.clientSecret
+            requestedScopes:
+              - openid
+              - profile
+              - email
+              - groups
+        rbacConfig:
+          # users may be still be able to login,
+          # but will see no apps, projects, etc...
+          policy.default: ''
+          scopes: '[groups]'
+          policy.csv: |
+            # default global admins
+            g, Argo CDAdmins, role:admin
+
+      configs:
+        secret:
+          extra:
+            oidc.keycloak.clientSecret: "REPLACE"
+
+      repoServer:
+        replicas: 2
+
+      # we use Keycloak so no DEX is required
+      dex:
+        enabled: false
+
+      # Disabled for multitenancy env with single instance deployment
+      applicationSet:
+        enabled: false

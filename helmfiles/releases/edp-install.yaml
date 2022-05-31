@@ -1,0 +1,63 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## EDP Installation ############################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/epmd-edp/edp-install/tree/master/deploy-templates
+#
+- name: "edp-install"
+  namespace: {{ .Values.global.edpName }}
+  labels:
+    chart: "edp-install"
+    repo: "epamedp"
+    component: "edp"
+    namespace: {{ .Values.global.edpName }}
+    vendor: "kubernetes"
+    default: "false"
+  chart: "epamedp/edp-install"
+  disableValidation: true
+  version: 2.11.0
+  wait: true
+  installed: true
+  values:
+    - global:
+        edpName: {{ .Values.global.edpName }}
+        dnsWildCard: {{ .Values.global.dnsWildCard }}
+        # Enable or disable integration with Kiosk (by default the value is true)
+        kioskEnabled: false
+        webConsole:
+          # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com can get from kubeconfig.clusters.cluster.server
+          url:
+        # Set platform type: OpenShift or Kubernetes
+        platform: kubernetes
+        # Administrators of the tenant separated by comma (,) e.g. user@example.com
+        admins: [user1@example.com,user2@example.com]
+        # Developers of the tenant separated by comma (,) e.g. user@example.com
+        developers: [user1@example.com,user2@example.com]
+      keycloak-operator:
+        keycloak:
+          url: https://{{ .Values.global.keycloakEndpoint }}
+      dockerRegistry:
+        enabled: true
+        # Docker Registry endpoint e.g. <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com
+        url:
+      gerrit-operator:
+        gerrit:
+          sshPort: {{ .Values.global.gerritSSHPort }}
+        gitServer:
+          sshPort: {{ .Values.global.gerritSSHPort }}
+      kaniko:
+        # AWS IAM role with push access to ECR e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
+        roleArn:
+      # AWS Region, e.g. "eu-central-1"
+      awsRegion:
+      argocd:
+        # Enable ArgoCD integration
+        enabled: true
