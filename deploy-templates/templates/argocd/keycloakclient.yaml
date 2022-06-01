@@ -6,7 +6,7 @@ metadata:
   name: argocd
 spec:
   advancedProtocolMappers: true
-  clientId: agocd
+  clientId: argocd
   directAccess: true
   public: false
   targetRealm: {{ .Values.global.edpName }}-main
