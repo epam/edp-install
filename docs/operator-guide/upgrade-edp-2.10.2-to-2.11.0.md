@@ -19,7 +19,7 @@ This section provides the details on the EDP upgrade from the v.2.10.2 to the v.
 
 2. Backup kaniko-template config-map and then remove it. This component will be delivered during upgrade.
 
-3. Set required awsRegion parameter. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/2.11/deploy-templates/values.yaml) file.
+3. Set required awsRegion parameter. Pay attention that the nesting of the kanikoRoleArn parameter has been changed to the kaniko.roleArn parameter. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/2.11/deploy-templates/values.yaml) file.
 To upgrade EDP to the v.2.11.0, run the following command:
 
       helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=2.11.0
@@ -128,7 +128,7 @@ To upgrade EDP to the v.2.11.0, run the following command:
 
    * Restart the Jenkins pod.
 
-6. Update the Jenkins plugins with the 'pipelines' name.
+6. Update the Jenkins plugins with the 'pipeline' name and 'HTTP Request Plugin'.
 7. Update Jenkins provisioners according to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) and [Manage Jenkins CD Pipeline Job Provisioner](../operator-guide/manage-jenkins-cd-job-provision.md) documentation.
 
 8. Restart the codebase-operator to recreate the Code-review and Build pipelines for codebases.
