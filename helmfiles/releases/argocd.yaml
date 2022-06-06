@@ -65,7 +65,7 @@ releases:
           scopes: '[groups]'
           policy.csv: |
             # default global admins
-            g, Argo CDAdmins, role:admin
+            g, ArgoCDAdmins, role:admin
 
       configs:
         secret:

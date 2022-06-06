@@ -73,7 +73,7 @@ Follow the steps below to install Argo CD using Helm:
       scopes: '[groups]'
       policy.csv: |
         # default global admins
-        g, Argo CDAdmins, role:admin
+        g, ArgoCDAdmins, role:admin
 
   configs:
     secret:
