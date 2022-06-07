@@ -10,10 +10,32 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Bug Fixes
+
+- Fix oidc group name for ArgoCD admins [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
+- Fix ArgoCD client name [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
+
+### Routine
+
+- Update development version [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
+- Introduce helmfile as an approach for EDP ecosystem deployment [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
+- Update chart annotation [EPMDEDP-9515](https://jiraeu.epam.com/browse/EPMDEDP-9515)
+
+### Documentation
+
+- Describe EDP upgrade procedure [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
+- Update the Releases.md file [EPMDEDP-8838](https://jiraeu.epam.com/browse/EPMDEDP-8838)
+- Add plugin which need to update during update procedure [EPMDEDP-8923](https://jiraeu.epam.com/browse/EPMDEDP-8923)
+- Add Readme file for helmfile [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
+
+
+<a name="v2.11.0"></a>
+## [v2.11.0] - 2022-05-26
 ### Features
 
 - Make image scaling on I/O pages [EPMDEDP-7726](https://jiraeu.epam.com/browse/EPMDEDP-7726)
 - Update Makefile changelog target [EPMDEDP-8218](https://jiraeu.epam.com/browse/EPMDEDP-8218)
+- Provision argocd client in Keycloak Enable [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
 - Parametrize ENV variables for codebase-operator deployment [EPMDEDP-8268](https://jiraeu.epam.com/browse/EPMDEDP-8268)
 - Implement Mermaid diagrams integration with MKDocs [EPMDEDP-8303](https://jiraeu.epam.com/browse/EPMDEDP-8303)
 - Implement PlantUML integration [EPMDEDP-8303](https://jiraeu.epam.com/browse/EPMDEDP-8303)
@@ -42,15 +64,18 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### Routine
 
 - Populate chart with Artifacthub annotations [EPMDEDP-8049](https://jiraeu.epam.com/browse/EPMDEDP-8049)
-- Add automatic release GH Action [EPMDEDP-8084](https://jiraeu.epam.com/browse/EPMDEDP-8084)
 - Add changelog generator options [EPMDEDP-8084](https://jiraeu.epam.com/browse/EPMDEDP-8084)
-- Update release flow [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
+- Add automatic release GH Action [EPMDEDP-8084](https://jiraeu.epam.com/browse/EPMDEDP-8084)
 - Add ct.yaml config [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
+- Update release flow [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
 - Update changelog [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
 - Update mkdocs to the latest version [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
+- Update helm-docs version to 1.10.0 [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
 - Use stable EDP helm repo [EPMDEDP-8475](https://jiraeu.epam.com/browse/EPMDEDP-8475)
+- Align helm charts versions [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
 - Upgrade kaniko images [EPMDEDP-8850](https://jiraeu.epam.com/browse/EPMDEDP-8850)
 - Replace the loop with a while block in the init-kaniko container [EPMDEDP-8918](https://jiraeu.epam.com/browse/EPMDEDP-8918)
+- Update changelog [EPMDEDP-9185](https://jiraeu.epam.com/browse/EPMDEDP-9185)
 
 ### Documentation
 
@@ -102,6 +127,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Update mkdocs extensions [EPMDEDP-8920](https://jiraeu.epam.com/browse/EPMDEDP-8920)
 - Upgrade Keycloak version [EPMDEDP-8939](https://jiraeu.epam.com/browse/EPMDEDP-8939)
 - Code review pipeline for kaniko must contain checkout step instead gerrit-checkout [EPMDEDP-8984](https://jiraeu.epam.com/browse/EPMDEDP-8984)
+
+### BREAKING CHANGE:
+
+
+existing config-maps with names kaniko-template and
+docker-config must be backed-up and removed before applying
+helm chart
 
 
 <a name="v2.10.2"></a>
@@ -180,7 +212,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v2.10.2...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v2.11.0...HEAD
+[v2.11.0]: https://github.com/epam/edp-install/compare/v2.10.2...v2.11.0
 [v2.10.2]: https://github.com/epam/edp-install/compare/v2.10.1...v2.10.2
 [v2.10.1]: https://github.com/epam/edp-install/compare/v2.10.0...v2.10.1
 [v2.10.0]: https://github.com/epam/edp-install/compare/v2.9.0...v2.10.0
