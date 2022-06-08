@@ -8,11 +8,15 @@ The example is written on Terraform (HCL).
 To follow the instruction, check the following prerequisites:
 
 1. terraform 0.14.10
-2. hishicorp/aws = 4.8.0
+2. hashicorp/aws = 4.8.0
 3. mrparkers/keycloak >= 3.0.0
 4. hashicorp/kubernetes ~> 2.9.0
-5. kubelogin  >= v1.25.1
-6. Ensure that Keycloak has network availability for AWS (not in a private network).
+5. kubectl = 1.22
+6. kubelogin  >= v1.25.1
+7. Ensure that Keycloak has network availability for AWS (not in a private network).
+
+!!! note
+    To connect OIDC with a cluster, install and configure the [kubelogin](https://github.com/int128/kubelogin) plugin. For Windows, it is recommended to download the kubelogin as a binary and move it to your PATH.
 
 
 ## Solution Overview
@@ -299,3 +303,13 @@ The default location for the login cache:
 ```shell
 rm -rf ~/.kube/cache
 ```
+
+## Access Cluster via Lens
+
+To access the Kubernetes cluster via [Lens](https://k8slens.dev/), follow the steps below to configure it: 
+
+* Add a new kubeconfig to the location where Lens has access. The default location of the kubeconfig is **~/.kube/config** but it can be changed by navigating to **File** -> **Preferences** -> **Kubernetes** -> **Kubeconfig Syncs**;
+* Authenticate on the Keycloak login page to be able to access the cluster;
+
+!!! note
+    Lens does not add namespaces of the project automatically, so it is necessary to add them manually, simply go to **Settings** -> **Namespaces** and add the namespaces of a project.
