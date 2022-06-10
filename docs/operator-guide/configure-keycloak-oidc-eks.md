@@ -16,7 +16,7 @@ To follow the instruction, check the following prerequisites:
 7. Ensure that Keycloak has network availability for AWS (not in a private network).
 
 !!! note
-    To connect OIDC with a cluster, install and configure the [kubelogin](https://github.com/int128/kubelogin) plugin. For Windows, it is recommended to download the kubelogin as a binary and move it to your PATH.
+    To connect OIDC with a cluster, install and configure the [kubelogin](https://github.com/int128/kubelogin) plugin. For Windows, it is recommended to download the kubelogin as a binary and add it to your PATH.
 
 
 ## Solution Overview
@@ -306,9 +306,10 @@ rm -rf ~/.kube/cache
 
 ## Access Cluster via Lens
 
-To access the Kubernetes cluster via [Lens](https://k8slens.dev/), follow the steps below to configure it: 
+To access the Kubernetes cluster via [Lens](https://k8slens.dev/), follow the steps below to configure it:
 
 * Add a new kubeconfig to the location where Lens has access. The default location of the kubeconfig is **~/.kube/config** but it can be changed by navigating to **File** -> **Preferences** -> **Kubernetes** -> **Kubeconfig Syncs**;
+* (Optional) Using Windows, it is recommended to reboot the system after adding a new kubeconfig.
 * Authenticate on the Keycloak login page to be able to access the cluster;
 
 !!! note
