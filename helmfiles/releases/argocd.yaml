@@ -23,7 +23,7 @@ releases:
     default: "true"
   chart: "argo/argo-cd"
   disableValidation: true
-  version: "4.8.0"
+  version: "4.9.2"
   wait: true
   installed: true
   values:
