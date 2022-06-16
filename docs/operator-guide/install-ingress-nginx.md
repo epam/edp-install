@@ -26,7 +26,7 @@ To install the ingress-nginx chart, follow the steps below:
 3. Install the ingress-nginx chart:
 
       helm install ingress ingress-nginx/ingress-nginx \
-      --version 3.23.0 \
+      --version 4.1.4 \
       --values values.yaml \
       --namespace ingress-nginx
 
@@ -57,6 +57,8 @@ controller:
     use-forwarded-headers: 'true'
     proxy-real-ip-cidr: '172.32.0.0/16'
     proxy-buffer-size: '8k'
+
+  watchIngressWithoutClass: true
 
   service:
     type: NodePort

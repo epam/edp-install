@@ -22,7 +22,7 @@ releases:
     vendor: "kubernetes"
     default: "true"
   chart: "ingress-nginx/ingress-nginx"
-  version: "3.23.0"
+  version: "4.1.4"
   wait: true
   installed: true
   values:
@@ -53,6 +53,8 @@ releases:
           # align value with AWS VPC CIDR
           proxy-real-ip-cidr: '172.31.0.0/16'
           proxy-buffer-size: '8k'
+
+        watchIngressWithoutClass: true
 
         service:
           type: NodePort
