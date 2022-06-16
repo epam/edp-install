@@ -1,6 +1,6 @@
 {{- $argocdDefaultURL := printf "https://argocd.%s" .Values.global.dnsWildCard -}}
 {{- if .Values.argocd.enabled }}
-apiVersion: v1.edp.epam.com/v1alpha1
+apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
 metadata:
   name: argocd
@@ -9,6 +9,8 @@ spec:
   clientId: argocd
   directAccess: true
   public: false
+  defaultClientScopes:
+    - groups
   targetRealm: {{ .Values.global.edpName }}-main
   webUrl: "{{ .Values.argocd.url | default $argocdDefaultURL }}"
 {{- end }}
