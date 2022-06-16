@@ -2,7 +2,7 @@
 </code></pre></div> </li> <li> <p>Add a chart repository:</p> <div class=codehilite><pre><span></span><code>helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 </code></pre></div> </li> <li> <p>Install the ingress-nginx chart:</p> <div class=codehilite><pre><span></span><code>helm install ingress ingress-nginx/ingress-nginx \
---version 3.23.0 \
+--version 4.1.4 \
 --values values.yaml \
 --namespace ingress-nginx
 </code></pre></div> <p>Check out the <em>values.yaml</em> file sample of the ingress-nginx chart customization:</p> </li> </ol> <details> <summary><b>View: values.yaml</b></summary> <div class=highlight><pre><span></span><code><span class=nt>controller</span><span class=p>:</span><span class=w></span>
@@ -26,6 +26,8 @@ helm repo update
 <span class=w>    </span><span class=nt>use-forwarded-headers</span><span class=p>:</span><span class=w> </span><span class=s>&#39;true&#39;</span><span class=w></span>
 <span class=w>    </span><span class=nt>proxy-real-ip-cidr</span><span class=p>:</span><span class=w> </span><span class=s>&#39;172.32.0.0/16&#39;</span><span class=w></span>
 <span class=w>    </span><span class=nt>proxy-buffer-size</span><span class=p>:</span><span class=w> </span><span class=s>&#39;8k&#39;</span><span class=w></span>
+
+<span class=w>  </span><span class=nt>watchIngressWithoutClass</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class=w></span>
 
 <span class=w>  </span><span class=nt>service</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">NodePort</span><span class=w></span>
