@@ -18,14 +18,18 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### Routine
 
 - Update development version [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
+- Update changelog [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
 - Introduce helmfile as an approach for EDP ecosystem deployment [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
 - Update chart annotation [EPMDEDP-9515](https://jiraeu.epam.com/browse/EPMDEDP-9515)
 
 ### Documentation
 
+- Add Kubernetes and GitOps library stages to job provisioners [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
 - Describe EDP upgrade procedure [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
 - Update the Releases.md file [EPMDEDP-8838](https://jiraeu.epam.com/browse/EPMDEDP-8838)
 - Add plugin which need to update during update procedure [EPMDEDP-8923](https://jiraeu.epam.com/browse/EPMDEDP-8923)
+- Update OIDC Lens integration section [EPMDEDP-9211](https://jiraeu.epam.com/browse/EPMDEDP-9211)
+- Add OIDC Lens integration section, update prerequisites [EPMDEDP-9211](https://jiraeu.epam.com/browse/EPMDEDP-9211)
 - Add Readme file for helmfile [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
 
 
