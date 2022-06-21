@@ -7,8 +7,8 @@ helm repo update
 </code></pre></div> </li> <li> <p>Create PostgreSQL admin secret:</p> <div class=codehilite><pre><span></span><code>kubectl -n security create secret generic keycloak-postgresql \
 --from-literal=postgresql-password=&lt;postgresql_password&gt; \
 --from-literal=postgresql-postgres-password=&lt;postgresql_postgres_password&gt;
-</code></pre></div> </li> <li> <p>Install Keycloak v.17.0.1 which is included in the <a href=https://artifacthub.io/packages/helm/codecentric/keycloak>codecentric/keycloak</a> Helm chart v.18.0.0:</p> <div class="admonition info"> <p class=admonition-title>Info</p> <p>The Keycloak can be deployed in a production ready mode (e.g. it can include multiple replicas, persistent storage, autoscaling, monitoring, etc.). For details, please refer to the <a href=https://github.com/codecentric/helm-charts/tree/master/charts/keycloak>Official Chart Documentation</a>.</p> </div> <hr> <div class=codehilite><pre><span></span><code>helm install keycloak codecentric/keycloak \
---version 18.0.0 \
+</code></pre></div> </li> <li> <p>Install Keycloak v.17.0.1-legacy which is included in the <a href=https://artifacthub.io/packages/helm/codecentric/keycloak>codecentric/keycloak</a> Helm chart v.18.1.1:</p> <div class="admonition info"> <p class=admonition-title>Info</p> <p>The Keycloak can be deployed in a production ready mode (e.g. it can include multiple replicas, persistent storage, autoscaling, monitoring, etc.). For details, please refer to the <a href=https://github.com/codecentric/helm-charts/tree/master/charts/keycloak>Official Chart Documentation</a>.</p> </div> <hr> <div class=codehilite><pre><span></span><code>helm install keycloak codecentric/keycloak \
+--version 18.1.1 \
 --values values.yaml \
 --namespace security
 </code></pre></div> <p>Check out the <em>values.yaml</em> file sample of the Keycloak customization:</p> <details> <summary><b>View: values.yaml</b></summary> <div class=highlight><pre><span></span><code><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class=w></span>
