@@ -3,7 +3,7 @@
 {{- range $key, $value := index .Values.EDPComponents }}
 ---
 {{- range $elem, $elemVal := $value }}
-apiVersion: v1.edp.epam.com/v1alpha1
+apiVersion: v1.edp.epam.com/v1
 kind: EDPComponent
 metadata:
   labels:
