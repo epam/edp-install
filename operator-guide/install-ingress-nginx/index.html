@@ -27,6 +27,8 @@ helm repo update
 <span class=w>    </span><span class=nt>proxy-real-ip-cidr</span><span class=p>:</span><span class=w> </span><span class=s>&#39;172.32.0.0/16&#39;</span><span class=w></span>
 <span class=w>    </span><span class=nt>proxy-buffer-size</span><span class=p>:</span><span class=w> </span><span class=s>&#39;8k&#39;</span><span class=w></span>
 
+<span class=w>  </span><span class=c1># To watch Ingress objects without the ingressClassName field set parameter value to true.</span><span class=w></span>
+<span class=w>  </span><span class=c1># https://kubernetes.github.io/ingress-nginx/#i-have-only-one-ingress-controller-in-my-cluster-what-should-i-do</span><span class=w></span>
 <span class=w>  </span><span class=nt>watchIngressWithoutClass</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class=w></span>
 
 <span class=w>  </span><span class=nt>service</span><span class=p>:</span><span class=w></span>
