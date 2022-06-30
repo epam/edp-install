@@ -7,7 +7,7 @@ dependencies:
   version: 2.12.0
 - name: jenkins-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.11.0
+  version: 2.11.1
 - name: edp-component-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.11.0
@@ -32,5 +32,5 @@ dependencies:
 - name: perf-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.11.0
-digest: sha256:4df12a0ad93986cbca5be7fd9fcba3e552efeae2336a28dd30078f6a0fb0e536
-generated: "2022-05-25T22:12:54.280135+03:00"
+digest: sha256:c593540c085581b3728c22422adf4af3f9cf5358b8193686842a429bd3905050
+generated: "2022-06-30T22:29:39.292806+03:00"
