@@ -58,6 +58,8 @@ controller:
     proxy-real-ip-cidr: '172.32.0.0/16'
     proxy-buffer-size: '8k'
 
+  # To watch Ingress objects without the ingressClassName field set parameter value to true.
+  # https://kubernetes.github.io/ingress-nginx/#i-have-only-one-ingress-controller-in-my-cluster-what-should-i-do
   watchIngressWithoutClass: true
 
   service:
