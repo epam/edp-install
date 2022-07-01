@@ -11,8 +11,23 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v2.11.1"></a>
+## [v2.11.1] - 2022-07-01
+### Routine
+
+- Align helm charts versions [EPMDEDP-10158](https://jiraeu.epam.com/browse/EPMDEDP-10158)
+- Backport Makefile from master branch [EPMDEDP-10158](https://jiraeu.epam.com/browse/EPMDEDP-10158)
+- Fix Jira Ticket pattern for changelog generator [EPMDEDP-10159](https://jiraeu.epam.com/browse/EPMDEDP-10159)
+- Update changelog [EPMDEDP-9469](https://jiraeu.epam.com/browse/EPMDEDP-9469)
+- Update chart annotation [EPMDEDP-9515](https://jiraeu.epam.com/browse/EPMDEDP-9515)
+
+### Documentation
+
+- Update the Releases.md file [EPMDEDP-8838](https://jiraeu.epam.com/browse/EPMDEDP-8838)
+
+
 <a name="v2.11.0"></a>
-## [v2.11.0] - 2022-05-20
+## [v2.11.0] - 2022-05-26
 ### Features
 
 - Make image scaling on I/O pages [EPMDEDP-7726](https://jiraeu.epam.com/browse/EPMDEDP-7726)
@@ -46,19 +61,18 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### Routine
 
 - Populate chart with Artifacthub annotations [EPMDEDP-8049](https://jiraeu.epam.com/browse/EPMDEDP-8049)
-- Add automatic release GH Action [EPMDEDP-8084](https://jiraeu.epam.com/browse/EPMDEDP-8084)
 - Add changelog generator options [EPMDEDP-8084](https://jiraeu.epam.com/browse/EPMDEDP-8084)
+- Add automatic release GH Action [EPMDEDP-8084](https://jiraeu.epam.com/browse/EPMDEDP-8084)
 - Add ct.yaml config [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
 - Update release flow [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
 - Update changelog [EPMDEDP-8227](https://jiraeu.epam.com/browse/EPMDEDP-8227)
-- Update helm-docs version to 1.10.0 [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
 - Update mkdocs to the latest version [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
+- Update helm-docs version to 1.10.0 [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
 - Use stable EDP helm repo [EPMDEDP-8475](https://jiraeu.epam.com/browse/EPMDEDP-8475)
 - Align helm charts versions [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
 - Upgrade kaniko images [EPMDEDP-8850](https://jiraeu.epam.com/browse/EPMDEDP-8850)
 - Replace the loop with a while block in the init-kaniko container [EPMDEDP-8918](https://jiraeu.epam.com/browse/EPMDEDP-8918)
 - Update changelog [EPMDEDP-9185](https://jiraeu.epam.com/browse/EPMDEDP-9185)
-- Update chart annotation [EPMDEDP-9515](https://jiraeu.epam.com/browse/EPMDEDP-9515)
 
 ### Documentation
 
@@ -94,17 +108,16 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Add information about new input stages [EPMDEDP-8313](https://jiraeu.epam.com/browse/EPMDEDP-8313)
 - Describe helm-docs stage [EPMDEDP-8329](https://jiraeu.epam.com/browse/EPMDEDP-8329)
 - Add clarification for helm-docs usage [EPMDEDP-8329](https://jiraeu.epam.com/browse/EPMDEDP-8329)
-- Describe Container kaniko library stages [EPMDEDP-8341](https://jiraeu.epam.com/browse/EPMDEDP-8341)
 - Add Kaniko library stages to job provisioners [EPMDEDP-8341](https://jiraeu.epam.com/browse/EPMDEDP-8341)
+- Describe Container kaniko library stages [EPMDEDP-8341](https://jiraeu.epam.com/browse/EPMDEDP-8341)
 - Use gh-pages instead Chartmuseum [EPMDEDP-8386](https://jiraeu.epam.com/browse/EPMDEDP-8386)
 - Describe branch naming convention [EPMDEDP-8422](https://jiraeu.epam.com/browse/EPMDEDP-8422)
 - Describe copy shared secrets stage [EPMDEDP-8469](https://jiraeu.epam.com/browse/EPMDEDP-8469)
 - Update helm chart repository link [EPMDEDP-8500](https://jiraeu.epam.com/browse/EPMDEDP-8500)
 - Describe helm-uninstall step usage [EPMDEDP-8532](https://jiraeu.epam.com/browse/EPMDEDP-8532)
-- Describe semi-auto-deploy-input step usage [EPMDEDP-8584](https://jiraeu.epam.com/browse/EPMDEDP-8584)
 - Remove unused parameter from cd provisioner [EPMDEDP-8584](https://jiraeu.epam.com/browse/EPMDEDP-8584)
+- Describe semi-auto-deploy-input step usage [EPMDEDP-8584](https://jiraeu.epam.com/browse/EPMDEDP-8584)
 - Describe WAF implementation [EPMDEDP-8787](https://jiraeu.epam.com/browse/EPMDEDP-8787)
-- Update the Releases.md file [EPMDEDP-8838](https://jiraeu.epam.com/browse/EPMDEDP-8838)
 - Webhook identity already present on EKS cluster [EPMDEDP-8900](https://jiraeu.epam.com/browse/EPMDEDP-8900)
 - Add build pipeline for autotests [EPMDEDP-8920](https://jiraeu.epam.com/browse/EPMDEDP-8920)
 - Fix identations for github and gitlab provisioners [EPMDEDP-8920](https://jiraeu.epam.com/browse/EPMDEDP-8920)
@@ -196,7 +209,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v2.11.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v2.11.1...HEAD
+[v2.11.1]: https://github.com/epam/edp-install/compare/v2.11.0...v2.11.1
 [v2.11.0]: https://github.com/epam/edp-install/compare/v2.10.2...v2.11.0
 [v2.10.2]: https://github.com/epam/edp-install/compare/v2.10.1...v2.10.2
 [v2.10.1]: https://github.com/epam/edp-install/compare/v2.10.0...v2.10.1

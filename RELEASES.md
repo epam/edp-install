@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 2.11.1](#2.11.1)
 * [Version 2.11.0](#2.11.0)
 * [Version 2.10.2](#2.10.2)
 * [Version 2.10.1](#2.10.1)
@@ -31,6 +32,12 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 2.11.1 <a name="2.11.1"></a> (June 30, 2022)
+
+### Fixed Issues
+
+* Fixed git checkout for the Autotest step in a CD Pipeline.
 
 ## Version 2.11.0 <a name="2.11.0"></a> (May 27, 2022)
 
