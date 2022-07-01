@@ -10,13 +10,24 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+
+- Download required tools for Makefile targets [EPMDEDP-10105](https://jiraeu.epam.com/browse/EPMDEDP-10105)
+
 ### Bug Fixes
 
 - Fix oidc group name for ArgoCD admins [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
 - Fix ArgoCD client name [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
 
+### Code Refactoring
+
+- Use edp-component with v1 [EPMDEDP-10155](https://jiraeu.epam.com/browse/EPMDEDP-10155)
+
 ### Routine
 
+- Align keycloak CRs to the latest changes [EPMDEDP-10090](https://jiraeu.epam.com/browse/EPMDEDP-10090)
+- Update ArgoCD to version v2.4.0 [EPMDEDP-10090](https://jiraeu.epam.com/browse/EPMDEDP-10090)
+- Fix Jira Ticket pattern for changelog generator [EPMDEDP-10159](https://jiraeu.epam.com/browse/EPMDEDP-10159)
 - Update development version [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
 - Update changelog [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
 - Introduce helmfile as an approach for EDP ecosystem deployment [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
@@ -24,6 +35,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Changed the version of Ingress-nginx to 4.1.4 [EPMDEDP-10039](https://jiraeu.epam.com/browse/EPMDEDP-10039)
+- Upgrade Keycloak version [EPMDEDP-10050](https://jiraeu.epam.com/browse/EPMDEDP-10050)
+- Add link to helmfile template, describe watchIngressWithoutClass parameter [EPMDEDP-10153](https://jiraeu.epam.com/browse/EPMDEDP-10153)
 - Add Kubernetes and GitOps library stages to job provisioners [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
 - Describe EDP upgrade procedure [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
 - Update the Releases.md file [EPMDEDP-8838](https://jiraeu.epam.com/browse/EPMDEDP-8838)
@@ -31,6 +45,20 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Update OIDC Lens integration section [EPMDEDP-9211](https://jiraeu.epam.com/browse/EPMDEDP-9211)
 - Add OIDC Lens integration section, update prerequisites [EPMDEDP-9211](https://jiraeu.epam.com/browse/EPMDEDP-9211)
 - Add Readme file for helmfile [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
+
+
+<a name="v2.11.1"></a>
+## [v2.11.1] - 2022-06-30
+### Routine
+
+- Align helm charts versions [EPMDEDP-10158](https://jiraeu.epam.com/browse/EPMDEDP-10158)
+- Backport Makefile from master branch [EPMDEDP-10158](https://jiraeu.epam.com/browse/EPMDEDP-10158)
+- Update changelog [EPMDEDP-9469](https://jiraeu.epam.com/browse/EPMDEDP-9469)
+- Update chart annotation [EPMDEDP-9515](https://jiraeu.epam.com/browse/EPMDEDP-9515)
+
+### Documentation
+
+- Update the Releases.md file [EPMDEDP-8838](https://jiraeu.epam.com/browse/EPMDEDP-8838)
 
 
 <a name="v2.11.0"></a>
@@ -216,7 +244,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v2.11.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v2.11.1...HEAD
+[v2.11.1]: https://github.com/epam/edp-install/compare/v2.11.0...v2.11.1
 [v2.11.0]: https://github.com/epam/edp-install/compare/v2.10.2...v2.11.0
 [v2.10.2]: https://github.com/epam/edp-install/compare/v2.10.1...v2.10.2
 [v2.10.1]: https://github.com/epam/edp-install/compare/v2.10.0...v2.10.1
