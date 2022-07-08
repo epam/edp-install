@@ -12,6 +12,6 @@ according to your business needs:
 
 * The **Integration** section comprises the [AWS](enable-irsa.md), [GitHub](github-integration.md), [GitLab](gitlab-integration.md), and [Jira](jira-integration.md) integration options.
 
-* The **Tutorials** section provides information on working with various aspects, for example, [deploying AWS EKS cluster](deploy-aws-eks.md), [managing Jenkins agent](add-jenkins-agent.md), etc.
+* The **Tutorials** section provides information on working with various aspects, for example, [deploying AWS EKS cluster](deploy-aws-eks.md), [deploying OKD 4.9 cluster](deploy-okd.md), [managing Jenkins agent](add-jenkins-agent.md), etc.
 
 

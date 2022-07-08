@@ -137,6 +137,7 @@ nav:
           - Upgrade EDP v.2.10.x to v.2.11.x: operator-guide/upgrade-edp-2.10.x-to-2.11.x.md
     - Tutorials:
       - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
+      - Deploy OKD 4.9 Cluster: operator-guide/deploy-okd.md
       - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
   - User Guide:
     - user-guide/index.md
