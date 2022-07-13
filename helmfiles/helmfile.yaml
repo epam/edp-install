@@ -8,3 +8,4 @@ helmfiles:
   - releases/keycloak.yaml
   - releases/edp-install.yaml
   - releases/argocd.yaml
+  - releases/external-secrets-operator.yaml
