@@ -1,6 +1,6 @@
 # Install External Secrets Operator
 
-Inspect the prerequisites and the main steps to perform for enabling [External Secrets](https://external-secrets.io/) in EDP.
+Inspect the prerequisites and the main steps to perform for enabling [External Secrets Operator](https://external-secrets.io/) in EDP.
 
 ## Prerequisites
 
@@ -9,7 +9,7 @@ Inspect the prerequisites and the main steps to perform for enabling [External S
 
 ## Installation
 
-To install External Secrets Operator with helm run the below commands:
+To install External Secrets Operator with Helm, run the following commands:
 
 ```bash
 helm repo add external-secrets https://charts.external-secrets.io
@@ -22,6 +22,7 @@ helm install external-secrets \
 ```
 
 !!! info
-    It is also possible to install External Secrets Operator using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md#deploy-nginx-ingress-controller) page.
+    It is also possible to install External Secrets Operator using the [Helmfile](./install-via-helmfile.md#deploy-external-secrets-operator) or [Operator Lifecycle Manager (OLM)](https://operatorhub.io/operator/external-secrets-operator).
 
-Install by Operator Lifecycle Manager (OLM) is also possible, consult [official documentation](https://operatorhub.io/operator/external-secrets-operator)
+## Related Articles
+* [External Secrets Operator Integration](external-secrets-operator-integration.md)

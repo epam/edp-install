@@ -122,6 +122,7 @@ nav:
         - Install Argo CD: operator-guide/install-argocd.md
       - Secrets Management:
         - Install External Secrets Operator: operator-guide/install-external-secrets-operator.md
+        - External Secrets Operator Integration: operator-guide/external-secrets-operator-integration.md
       - Backup With Velero:
           - Install Velero: operator-guide/install-velero.md
           - Restore EDP Tenant With Velero: operator-guide/restore-edp-with-velero.md
