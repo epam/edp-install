@@ -1,4 +1,3 @@
-{{- if not (lookup "v1" "ConfigMap" ".Values.global.edpName" "gt-template").metadata }}
 apiVersion: v1
 data:
   gt.json: |
@@ -19,4 +18,3 @@ metadata:
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
   name: gt-template
-{{end}}
