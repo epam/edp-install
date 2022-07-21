@@ -1,0 +1,32 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## DefectDojo ####################################################
+################################################################################
+
+#
+# References:
+#   - - https://github.com/DefectDojo/django-DefectDojo/blob/master/helm/defectdojo/values.yaml
+#
+- name: "defectdojo"
+  namespace: "defectdojo"
+  labels:
+    chart: "defectdojo"
+    repo: "defectdojo"
+    component: "defectdojo"
+    namespace: "defectdojo"
+    vendor: "defectdojo"
+    default: "true"
+  chart: "defectdojo/defectdojo"
+  version: "1.6.35"
+  wait: true
+  installed: true
+  values:
+    - fullnameOverride: defectdojo
+      host: defectdojo.{{ .Values.global.dnsWildCard }}
+      alternativeHosts:
+        - defectdojo-django.defectdojo

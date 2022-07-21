@@ -20,6 +20,9 @@ repositories:
 - name: "external-secrets"
   url: "https://charts.external-secrets.io"
 
+- name: "defectdojo"
+  url: "https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts"
+
 ---
 helmDefaults:
   createNamespace: true

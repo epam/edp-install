@@ -10,13 +10,13 @@ This article provides the instruction on how to deploy EDP and components in Kub
 
 ## Helmfile Structure
 
-* The `envs/common.yaml` file contains the specification for environments pattern, list of helm repositories from which it is necessary to fetch the helm charts and additional Helm parameters
-* The `envs/platform.yaml` file contains global parameters that are used in various Helmfiles
-* The `releases/envs/` contains symbol links to environments files
-* The `releases/*.yaml` file contains description of parameters that is used when deploying a Helm chart
-* The `helmfile.yaml` file defines components to be installed by defining a path to Helm releases files
-* The `envs/ci.yaml` file contains stub parameters for CI linter
-* The `test/lint-ci.sh` script for running CI linter with debug loglevel and stub parameters
+* The `envs/common.yaml` file contains the specification for environments pattern, list of helm repositories from which it is necessary to fetch the helm charts and additional Helm parameters.
+* The `envs/platform.yaml` file contains global parameters that are used in various Helmfiles.
+* The `releases/envs/` contains symbol links to environments files.
+* The `releases/*.yaml` file contains description of parameters that is used when deploying a Helm chart.
+* The `helmfile.yaml` file defines components to be installed by defining a path to Helm releases files.
+* The `envs/ci.yaml` file contains stub parameters for CI linter.
+* The `test/lint-ci.sh` script for running CI linter with debug loglevel and stub parameters.
 
 ## Deploy Components
 
@@ -27,12 +27,13 @@ Using the Helmfile, the following components can be installed:
 * [EPAM Delivery Platform](https://github.com/epam/edp-install/tree/master/deploy-templates)
 * [Argo CD](https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd)
 * [External Secrets Operator](https://github.com/external-secrets/external-secrets/tree/main/deploy/charts/external-secrets)
+* [DefectDojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo)
 
 ### Deploy NGINX Ingress Controller
 
 To install NGINX Ingress controller, follow the steps below:
 
-1. In the releases/nginx-ingress.yaml file, set the *proxy-real-ip-cidr* parameter according to the value with AWS VPC IPv4 CIDR.
+1. In the `releases/nginx-ingress.yaml` file, set the `proxy-real-ip-cidr` parameter according to the value with AWS VPC IPv4 CIDR.
 
 2. Install NGINX Ingress controller:
 
@@ -58,7 +59,7 @@ To install Keycloak, follow the steps below:
       --from-literal=postgresql-password=<postgresql_password> \
       --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
 
-4. In the envs/platform.yaml file, set the *dnsWildCard* parameter.
+4. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
 
 5. Install Keycloak:
 
@@ -96,9 +97,9 @@ To install EDP, follow the steps below:
         --from-literal=username=<username> \
         --from-literal=password=<password>
 
-5. In the envs/platform.yaml file, set the *edpName* and *keycloakEndpoint* parameters.
+5. In the `envs/platform.yaml` file, set the `edpName` and `keycloakEndpoint` parameters.
 
-6. In the releases/edp-install.yaml file, check and fill in all values.
+6. In the `releases/edp-install.yaml` file, check and fill in all values.
 
 7. Install EDP:
 
@@ -126,6 +127,67 @@ To install External Secrets Operator, follow the steps below:
 
   ```bash
   helmfile  --selector component=secrets --environment platform -f helmfile.yaml apply
+  ```
+
+### Deploy DefectDojo
+
+To install DefectDojo, follow the steps below:
+
+1. Create a DefectDojo namespace:
+
+  ```bash
+  kubectl create namespace defectdojo
+  ```
+
+2. Create a PostgreSQL admin secret:
+
+  ```bash
+  kubectl -n defectdojo create secret generic defectdojo-postgresql-specific \
+  --from-literal=postgresql-password=<postgresql_password> \
+  --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
+  ```
+
+  !!! note
+      The `postgresql_password` and `postgresql_postgres_password` passwords must be 16 characters long.
+
+3. Create a RabbitMQ admin secret:
+
+  ```bash
+  kubectl -n defectdojo create secret generic defectdojo-rabbitmq-specific \
+  --from-literal=rabbitmq-password=<rabbitmq_password> \
+  --from-literal=rabbitmq-erlang-cookie=<rabbitmq_erlang_cookie>
+  ```
+
+  !!! note
+      The `rabbitmq_password` password must be 10 characters long.
+
+      The `rabbitmq_erlang_cookie` password must be 32 characters long.
+
+4. Create a DefectDojo admin secret:
+
+  ```bash
+  kubectl -n defectdojo create secret generic defectdojo \
+  --from-literal=DD_ADMIN_PASSWORD=<dd_admin_password> \
+  --from-literal=DD_SECRET_KEY=<dd_secret_key> \
+  --from-literal=DD_CREDENTIAL_AES_256_KEY=<dd_credential_aes_256_key> \
+  --from-literal=METRICS_HTTP_AUTH_PASSWORD=<metric_http_auth_password>
+  ```
+
+  !!! note
+      The `dd_admin_password` password must be 22 characters long.
+
+      The `dd_secret_key` password must be 128 characters long.
+
+      The `dd_credential_aes_256_key` password must be 128 characters long.
+
+      The `metric_http_auth_password` password must be 32 characters long.
+
+5. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
+
+6. Install DefectDojo:
+
+  ```bash
+  helmfile  --selector component=defectdojo --environment platform -f helmfile.yaml apply
   ```
 
 ## Operate Helmfile

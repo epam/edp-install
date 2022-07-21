@@ -9,3 +9,4 @@ helmfiles:
   - releases/edp-install.yaml
   - releases/argocd.yaml
   - releases/external-secrets-operator.yaml
+  - releases/defectdojo.yaml
