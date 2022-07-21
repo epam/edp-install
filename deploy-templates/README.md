@@ -46,6 +46,12 @@ A Helm chart for EDP Install
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | codebase-operator.enabled | bool | `true` |  |
 | dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` |  |
+| externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore |
+| externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for EDP installation, using External Secret Operator |
+| externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |
+| externalSecrets.secretProvider.aws.region | string | `"eu-central-1"` | AWS Region where secrets are stored, e.g. eu-central-1 |
+| externalSecrets.secretProvider.aws.role | string | `nil` | IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::093899590031:role/rolename |
+| externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
 | gerrit-operator.enabled | bool | `true` |  |
 | global.admins[0] | string | `"stub_user_one@example.com"` |  |
 | global.database.affinity | object | `{}` |  |
@@ -83,7 +89,7 @@ A Helm chart for EDP Install
 | kaniko.kanikoContainer.resources.limits | object | `{}` | The resources limits for the Kaniko containers |
 | kaniko.kanikoContainer.resources.requests | object | `{}` | The requested resources for the Kaniko containers |
 | kaniko.nodeSelector | object | `{}` | nodeSelector Node labels for pod assignment |
-| kaniko.roleArn | string | `nil` | AWS IAM role to be used for kaniko pod servce account (IRSA) |
+| kaniko.roleArn | string | `nil` | AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME> |
 | kaniko.tolerations | list | `[]` | tolerations Tolerations for pod assignment |
 | keycloak-operator.enabled | bool | `true` |  |
 | keycloak-operator.keycloak.url | string | `"keycloak.example.com"` |  |

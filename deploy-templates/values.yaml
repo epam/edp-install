@@ -53,9 +53,9 @@ perf:
 vcs:
   enabled: "false"
 
-# AWS IAM role with push access to ECR e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
+# Kaniko configuration section
 kaniko:
-  # -- AWS IAM role to be used for kaniko pod servce account (IRSA)
+  # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
   roleArn:
   # -- Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created
   # with default value: { "credStore": "ecr-login"}
@@ -91,6 +91,29 @@ kaniko:
       limits: {}
       # -- The requested resources for the Kaniko containers
       requests: {}
+
+# Configure External Secrets Operator to provision secrets for Platform and/or EDP
+# https://external-secrets.io/latest/provider-aws-secrets-manager/
+externalSecrets:
+  # -- Configure External Secrets for EDP platform. Deploy SecretStore
+  enabled: false
+  secretProvider:
+    aws:
+      # -- Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager
+      service: ParameterStore
+      # -- IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::093899590031:role/rolename
+      role:
+      # -- AWS Region where secrets are stored, e.g. eu-central-1
+      region: eu-central-1
+
+  # When installing EDP, three secrets must be created: super-admin-db, db-admin-console, keycloak
+  # see https://epam.github.io/edp-install/operator-guide/install-edp/
+  # manageEDPInstallSecrets creates required secrets using ExternalSecretOperator
+  # Ensure external secret source is configured properly
+  # -- Create necessary secrets for EDP installation, using External Secret Operator
+  manageEDPInstallSecrets: true
+  # -- Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true
+  manageEDPInstallSecretsName: /edp/deploy-secrets
 
 dockerRegistry:
   url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
@@ -143,7 +166,7 @@ jenkins-operator:
   #     - name: "edp-library-pipelines"
   #       url: "https://github.com/epam/edp-library-pipelines.git"
   #       tag: "master"
-  # xample of using private repository:
+  # example of using private repository:
   #     - name: "stub-name"
   #       url: "stub-url"
   #       tag: "stub-tag"

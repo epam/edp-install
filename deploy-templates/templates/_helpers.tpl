@@ -60,3 +60,12 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the secretstore to use
+*/}}
+{{- define "edp-install.secretStoreName" -}}
+{{- if .Values.externalSecrets.enabled }}
+{{- printf "%s-%s" "aws" .Values.externalSecrets.secretProvider.aws.service | lower }}
+{{- end }}
+{{- end }}
