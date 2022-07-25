@@ -134,15 +134,17 @@ stages['Build-library-flux'] = '[{"name": "checkout"},{"name": "get-version"}' +
 stages['Build-autotests-maven'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-autotests-gradle'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
-stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
+stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "compile"},' +
         '{"name": "tests"},[{"name": "sonar"}],{"name": "build"},{"name": "build-image-kaniko"},' +
         '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
-stages['Build-application-npm'] = stages['Build-application-maven']
+stages['Build-application-npm'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
+        '{"name": "tests"},[{"name": "sonar"}],{"name": "build"},{"name": "build-image-kaniko"},' +
+        '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-gradle'] = stages['Build-application-maven']
 stages['Build-application-dotnet'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},[{"name": "sonar"}],{"name": "build-image-kaniko"},' +
         '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
-stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "tests"},{"name": "sonar"},' +
+stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "tests"},{"name": "sonar"},' +
                                 '{"name": "build"},{"name": "build-image-kaniko"}' +
                                 "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
@@ -469,15 +471,17 @@ stages['Build-library-flux'] = '[{"name": "checkout"},{"name": "get-version"}' +
 stages['Build-autotests-maven'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-autotests-gradle'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
-stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
+stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
         ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
-stages['Build-application-npm'] = stages['Build-application-maven']
+stages['Build-application-npm'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
+        '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
+        ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-gradle'] = stages['Build-application-maven']
 stages['Build-application-dotnet'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"}' + "${buildStage}" +
         ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
-stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "tests"},{"name": "sonar"},' +
+stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "tests"},{"name": "sonar"},' +
                                     '{"name": "build"}' + "${buildStage}" + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},{"name": "tests"},{"name": "sonar"}' +
                                     "${buildStage}" + ',{"name":"push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
@@ -912,12 +916,14 @@ stages['Build-library-flux'] = '[{"name": "checkout"},{"name": "get-version"}' +
 stages['Build-autotests-maven'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-autotests-gradle'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
-stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
+stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildImageStage}" +
         '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},{"name": "tests"},{"name": "sonar"}' +
         "${buildImageStage}" + '{"name":"push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
-stages['Build-application-npm'] = stages['Build-application-maven']
+stages['Build-application-npm'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
+        '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildImageStage}" +
+        '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-gradle'] = stages['Build-application-maven']
 stages['Build-application-dotnet'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
         '{"name": "tests"},{"name": "sonar"}' + "${buildImageStage}" +
@@ -926,7 +932,7 @@ stages['Build-application-terraform'] = '[{"name": "checkout"},{"name": "tool-in
         '{"name": "lint"},{"name": "git-tag"}]'
 stages['Build-application-helm'] = '[{"name": "checkout"},{"name": "lint"}]'
 stages['Build-application-docker'] = '[{"name": "checkout"},{"name": "lint"}]'
-stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "tests"},{"name": "sonar"},' +
+stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "tests"},{"name": "sonar"},' +
                                 '{"name": "build"}' + "${goBuildImageStage}" + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Create-release'] = '[{"name": "checkout"},{"name": "create-branch"},{"name": "trigger-job"}]'
 

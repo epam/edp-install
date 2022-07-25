@@ -21,10 +21,11 @@ The diagram below shows the delivery path through these pipelines and the respec
 
 The table below provides the details on all the stages in the EDP pipeline framework:
 
-| Name  | Dependency  | Description  | Pipeline  | Application | Library | Autotest | Source code | Documentation |
+| Name | Dependency  | Description  | Pipeline  | Application | Library | Autotest | Source code | Documentation |
 |---|---|---|---|---|---|---|---|---|
 | init |   | Initiates information gathering | Create Release, Code Review, Build | + | + |  | [Build.groovy](https://github.com/epam/edp-library-pipelines/blob/master/vars/Build.groovy)  | |
 | checkout |  | Performs for all files the checkout from a selected branch of the Git repository. For the main branch - from HEAD, for code review - from the commit | Create Release, Build | + |+ | | [Checkout.groovy](https://github.com/epam/edp-library-stages/blob/master/src/com/epam/edp/stages/impl/ci/impl/checkout/Checkout.groovy) | |
+| sast | | Launches vulnerability testing via Semgrep scanner. Pushes a vulnerability report to the DefectDojo. | Build | + | | | [Security](https://github.com/epam/edp-library-stages/tree/master/src/com/epam/edp/stages/impl/ci/impl/security) | |
 | compile| | Compiles the code, includes individual groovy files for each type of app or lib (NPM, DotNet, Python, Maven, Gradle) | Code Review, Build | + | + | | [Compile](https://github.com/epam/edp-library-stages/tree/master/src/com/epam/edp/stages/impl/ci/impl/compile) | |
 | tests | | Launches testing procedure, includes individual groovy files for each type of app or lib | Code Review, Build | + | + | + | [Tests](https://github.com/epam/edp-library-stages/tree/master/src/com/epam/edp/stages/impl/ci/impl/tests) | |
 | sonar | | Launches testing via SonarQube scanner and includes individual groovy files for each type of app or lib | Code Review, Build | + | + | | [Sonar](https://github.com/epam/edp-library-stages/tree/master/src/com/epam/edp/stages/impl/ci/impl/sonar) | |

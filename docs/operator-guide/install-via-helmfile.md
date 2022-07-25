@@ -131,7 +131,10 @@ To install External Secrets Operator, follow the steps below:
 
 ### Deploy DefectDojo
 
-To install DefectDojo, follow the steps below:
+!!! info
+    It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](./install-defectdojo.md) page.
+
+To install DefectDojo via Helmfile, follow the steps below:
 
 1. Create a DefectDojo namespace:
 
@@ -213,3 +216,7 @@ Pay attention to the following recommendations while working with the Helmfile:
 * To destroy the release, run the command:
 
       helmfile  --selector component=ingress --environment platform -f helmfile.yaml destroy
+
+## Related Articles
+
+* [Install DefectDojo](install-defectdojo.md)
