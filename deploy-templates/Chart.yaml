@@ -41,6 +41,11 @@ dependencies:
   version: "0.11.0"
   condition: edp-component-operator.enabled
 
+- name: edp-headlamp
+  repository: "@epamedp"
+  version: "0.1.0"
+  condition: edp-headlamp.enabled
+
 - name: cd-pipeline-operator
   repository: "@epamedp"
   version: "2.11.0"
@@ -98,6 +103,8 @@ annotations:
       image: epamedp/gerrit-operator:2.11.0
     - name: reconciler:2.11.0
       image: epamedp/reconciler:2.11.0
+    - name: edp-headlamp:0.1.0
+      image: epamedp/edp-headlamp:0.1.0
     - name: perf-operator:2.11.0
       image: epamedp/perf-operator:2.11.0
     - name: postgres:9.6

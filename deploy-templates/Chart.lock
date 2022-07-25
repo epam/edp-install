@@ -11,6 +11,9 @@ dependencies:
 - name: edp-component-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.11.0
+- name: edp-headlamp
+  repository: https://epam.github.io/edp-helm-charts/stable
+  version: 0.1.0
 - name: cd-pipeline-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.11.0
@@ -32,5 +35,5 @@ dependencies:
 - name: perf-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.11.0
-digest: sha256:c593540c085581b3728c22422adf4af3f9cf5358b8193686842a429bd3905050
-generated: "2022-07-01T12:45:27.616863+03:00"
+digest: sha256:1fff3886caec8b3bb79e56e1e954ac53ce4e21887f013b9bf554b3bb0b5592ab
+generated: "2022-07-27T22:47:32.4494392+03:00"
