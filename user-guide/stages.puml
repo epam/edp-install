@@ -34,7 +34,8 @@ package "Build pipeline" as 2 {
 
 i1->[checkout]
 [checkout]->[get-version]
-[get-version]->[compile]
+[get-version]->[sast]
+[sast]->[compile]
 [compile]->t1
 t1->s1
 s1->b1
