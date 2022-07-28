@@ -23,6 +23,9 @@ repositories:
 - name: "defectdojo"
   url: "https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts"
 
+- name: "bitnami"
+  url: "https://charts.bitnami.com/bitnami"
+
 ---
 helmDefaults:
   createNamespace: true

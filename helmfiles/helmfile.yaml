@@ -5,6 +5,7 @@ bases:
 # Default installation. Please keep order
 helmfiles:
   - releases/nginx-ingress.yaml
+  - releases/postgresql-keycloak.yaml
   - releases/keycloak.yaml
   - releases/edp-install.yaml
   - releases/argocd.yaml

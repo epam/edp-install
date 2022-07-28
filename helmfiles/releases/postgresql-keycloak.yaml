@@ -1,0 +1,50 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+#######################################################################################
+## postgresql                                                                        ##
+## PostgreSQL is a powerful, open source object-relational database system           ##
+#######################################################################################
+
+#
+# References:
+#   - https://github.com/bitnami/charts/tree/master/bitnami/postgresql
+#   - https://www.postgresql.org/
+#
+- name: "postgresql-keycloak"
+  namespace: "security"
+  labels:
+    chart: "postgresql"
+    repo: "bitnami"
+    component: "sso"
+    namespace: "security"
+    vendor: "bitnami"
+    default: "false"
+  chart: "bitnami/postgresql"
+  version: "11.6.19" # Postgresql app version 14.4.0-debian-11-r13
+  wait: true
+  installed: true
+  values:
+  - readReplicas:
+      # Number of PostgreSQL read only replicas
+      replicaCount: 1
+
+    global:
+      postgresql:
+        auth:
+          username: admin
+          existingSecret: keycloak-postgresql
+          database: keycloak
+
+    primary:
+      persistence:
+        enabled: true
+        size: 3Gi
+        # If the StorageClass with reclaimPolicy: Retain is used, install an additional StorageClass before installing PostgreSQL
+        # (the code is given below).
+        # If the default StorageClass will be used - change "gp2-retain" to "gp2"
+        storageClass: "gp2"
+

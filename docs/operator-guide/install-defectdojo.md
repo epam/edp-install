@@ -79,7 +79,7 @@ To install DefectDojo, follow the steps below:
       The `metric_http_auth_password` password must be 32 characters long.
 
 
-6. Install DefectDojo v.2.12.0 which is included in the [defectdojo/defectdojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo) Helm chart v.1.6.35:
+6. Install DefectDojo v.2.12.0 using [defectdojo/defectdojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo) Helm chart v.1.6.35:
 
    ```bash
    helm upgrade --install \

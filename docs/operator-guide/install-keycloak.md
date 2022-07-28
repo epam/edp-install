@@ -12,15 +12,15 @@ Inspect the prerequisites and the main steps to perform for installing Keycloak.
 * [Helm](https://helm.sh) version 3.6.0 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.6.0) on GitHub for details.
 
 !!! note
-    EDP team is using a helm chart from the [codecentric](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak)
-    repository, but other repositories can be used as well (e.g. [bitnami](https://github.com/bitnami/charts/tree/master/bitnami/keycloak/)).
-
-## Installation
+    EDP team is using a helm chart from the [codecentric](https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx) repository, but other repositories can be used as well (e.g. [Bitnami](https://github.com/bitnami/charts/tree/master/bitnami/keycloak/)).
+    Before installing Keycloak, it is necessary to install a [PostgreSQL database](https://www.postgresql.org/download/).
 
 !!! info
     It is also possible to install Keycloak using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md#deploy-keycloak) page.
 
-To install Keycloak, follow the steps below:
+## PostgreSQL Installation
+
+To install PostgreSQL, follow the steps below:
 
 1. Check that a security namespace is created. If not, run the following command to create it:
 
@@ -31,117 +31,50 @@ To install Keycloak, follow the steps below:
 
 2. Add a chart repository:
 
-      helm repo add codecentric https://codecentric.github.io/helm-charts
+      helm repo add bitnami https://charts.bitnami.com/bitnami
       helm repo update
 
-3. Create Keycloak admin secret:
-
-      kubectl -n security create secret generic keycloak-admin-creds \
-      --from-literal=username=<keycloak_admin_username> \
-      --from-literal=password=<keycloak_admin_password>
-
-4. Create PostgreSQL admin secret:
+3. Create PostgreSQL admin secret:
 
       kubectl -n security create secret generic keycloak-postgresql \
-      --from-literal=postgresql-password=<postgresql_password> \
-      --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
+      --from-literal=password=<postgresql_password> \
+      --from-literal=postgres-password=<postgresql_postgres_password>
 
-5. Install Keycloak v.17.0.1-legacy which is included in the [codecentric/keycloak](https://artifacthub.io/packages/helm/codecentric/keycloak) Helm chart v.18.1.1:
+4. Install PostgreSQL v.14.4.0 using [bitnami/postgresql](https://artifacthub.io/packages/helm/bitnami/postgresql) Helm chart v.11.6.19:
 
   !!! info
-      The Keycloak can be deployed in a production ready mode (e.g. it can include multiple replicas, persistent storage, autoscaling, monitoring, etc.).
-      For details, please refer to the [Official Chart Documentation](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
+      The PostgreSQL can be deployed in production ready mode. For example, it may include multiple replicas, persistent storage, autoscaling, and monitoring.
+      For details, please refer to the [official Chart documentation](https://github.com/bitnami/charts/tree/master/bitnami/postgresql).
 
   ---
-      helm install keycloak codecentric/keycloak \
-      --version 18.1.1 \
+      helm install postgresql bitnami/postgresql \
+      --version 11.6.19 \
       --values values.yaml \
       --namespace security
 
-  Check out the *values.yaml* file sample of the Keycloak customization:
+  Check out the *values.yaml* file sample of the PostgreSQL customization:
 
   <details>
   <summary><b>View: values.yaml</b></summary>
 
 ```yaml
-replicas: 1
+# PostgreSQL read only replica parameters
+readReplicas:
+  # Number of PostgreSQL read only replicas
+  replicaCount: 1
 
-# start: create OpenShift realm which is required by EDP
-extraInitContainers: |
-  - name: realm-provider
-    image: busybox
-    imagePullPolicy: IfNotPresent
-    command:
-      - sh
-    args:
-      - -c
-      - |
-        echo '{"realm": "openshift","enabled": true}' > /realm/openshift.json
-    volumeMounts:
-      - name: realm
-        mountPath: /realm
+global:
+  postgresql:
+    auth:
+      username: admin
+      existingSecret: keycloak-postgresql
+      database: keycloak
 
-extraVolumeMounts: |
-  - name: realm
-    mountPath: /realm
-
-extraVolumes: |
-  - name: realm
-    emptyDir: {}
-
-extraEnv: |
-  - name: PROXY_ADDRESS_FORWARDING
-    value: "true"
-  - name: KEYCLOAK_USER
-    valueFrom:
-      secretKeyRef:
-        name: keycloak-admin-creds
-        key: username
-  - name: KEYCLOAK_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: keycloak-admin-creds
-        key: password
-  - name: KEYCLOAK_IMPORT
-    value: /realm/openshift.json
-
-# This block should be uncommented if you install Keycloak on Kubernetes
-ingress:
-  enabled: true
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    ingress.kubernetes.io/affinity: cookie
-  rules:
-    - host: keycloak.<ROOT_DOMAIN>
-      paths:
-        - path: "/"
-          pathType: Prefix
-
-# This block should be uncommented if you set Keycloak to OpenShift and change the host field
-# route:
-#   enabled: true
-#   host: "keycloak.<ROOT_DOMAIN>"
-
-resources:
-  limits:
-    memory: "2048Mi"
-  requests:
-    cpu: "50m"
-    memory: "512Mi"
-
-# Use PostgreSQL deployed in a container
-persistence:
-  deployPostgres: true
-  dbVendor: postgres
-
-postgresql:
-  postgresqlUsername: admin
-  postgresqlDatabase: keycloak
-  existingSecret: keycloak-postgresql
+primary:
   persistence:
     enabled: true
-    size: "3Gi"
-    # If the StorageClass with reclaimPolicy: Retain is used, install an additional StorageClass before installing Keycloak
+    size: 3Gi
+    # If the StorageClass with reclaimPolicy: Retain is used, install an additional StorageClass before installing PostgreSQL
     # (the code is given below).
     # If the default StorageClass will be used - change "gp2-retain" to "gp2"
     storageClass: "gp2-retain"
@@ -149,10 +82,10 @@ postgresql:
 
   </details>
 
-6. Install an additional StorageClass (optional):
+5. Install an additional StorageClass (optional):
 
   !!! note
-      If the Keycloak installation uses a StorageClass with **reclaimPolicy: Retain**, install additional StorageClass *storageclass.yaml*.
+      If the PostgreSQL installation uses a StorageClass with **reclaimPolicy: Retain**, install additional StorageClass *storageclass.yaml*.
 
   <details>
   <summary><b>View: storageclass.yaml</b></summary>
@@ -172,7 +105,7 @@ volumeBindingMode: WaitForFirstConsumer
 
   </details>
 
-7.  Install the custom SecurityContextConstraints (only for OpenShift):
+6.  Install the custom SecurityContextConstraints (only for OpenShift):
 
   !!! note
       If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
@@ -234,18 +167,160 @@ volumes:
 
   </details>
 
+## Keycloak Installation
+
+To install Keycloak, follow the steps below:
+
+1. Use `security` namespace from the PostgreSQL installation.
+
+2. Add a chart repository:
+
+      helm repo add codecentric https://codecentric.github.io/helm-charts
+      helm repo update
+
+3. Create Keycloak admin secret:
+
+      kubectl -n security create secret generic keycloak-admin-creds \
+      --from-literal=username=<keycloak_admin_username> \
+      --from-literal=password=<keycloak_admin_password>
+
+4. Install Keycloak 19.0.1 using [codecentric/keycloakx](https://artifacthub.io/packages/helm/codecentric/keycloakx) Helm chart:
+
+  !!! info
+      Keycloak can be deployed in production ready mode. For example, it may include multiple replicas, persistent storage, autoscaling, and monitoring.
+      For details, please refer to the [official Chart documentation](https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx).
+
+  ---
+      helm install keycloakx codecentric/keycloakx \
+      --version 1.4.2 \
+      --values values.yaml \
+      --namespace security
+
+  Check out the *values.yaml* file sample of the Keycloak customization:
+
+  <details>
+  <summary><b>View: values.yaml</b></summary>
+
+```yaml
+replicas: 1
+
+# Deploy the latest verion
+image:
+  tag: "19.0.1"
+
+# start: create OpenShift realm which is required by EDP
+extraInitContainers: |
+  - name: realm-provider
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command:
+      - sh
+    args:
+      - -c
+      - |
+        echo '{"realm": "openshift","enabled": true}' > /opt/keycloak/data/import/openshift.json
+    volumeMounts:
+      - name: realm
+        mountPath: /opt/keycloak/data/import
+
+extraVolumeMounts: |
+  - name: realm
+    mountPath: /opt/keycloak/data/import
+
+extraVolumes: |
+  - name: realm
+    emptyDir: {}
+
+command:
+  - "/opt/keycloak/bin/kc.sh"
+  - "--verbose"
+  - "start"
+  - "--auto-build"
+  - "--http-enabled=true"
+  - "--http-port=8080"
+  - "--hostname-strict=false"
+  - "--hostname-strict-https=false"
+  - "--spi-events-listener-jboss-logging-success-level=info"
+  - "--spi-events-listener-jboss-logging-error-level=warn"
+  - "--import-realm"
+
+extraEnv: |
+  - name: KC_PROXY
+    value: "passthrough"
+  - name: KEYCLOAK_ADMIN
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-admin-creds
+        key: username
+  - name: KEYCLOAK_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-admin-creds
+        key: password
+  - name: JAVA_OPTS_APPEND
+    value: >-
+      -XX:+UseContainerSupport
+      -XX:MaxRAMPercentage=50.0
+      -Djava.awt.headless=true
+      -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+
+# This block should be uncommented if you install Keycloak on Kubernetes
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/affinity: cookie
+  rules:
+    - host: keycloak.<ROOT_DOMAIN>
+      paths:
+        - path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+          pathType: Prefix
+
+# This block should be uncommented if you set Keycloak to OpenShift and change the host field
+# route:
+#   enabled: false
+#   # Path for the Route
+#   path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+#   # Host name for the Route
+#   host: "keycloak.<ROOT_DOMAIN>"
+#   # TLS configuration
+#   tls:
+#     enabled: true
+
+resources:
+  limits:
+    memory: "2048Mi"
+  requests:
+    cpu: "50m"
+    memory: "512Mi"
+
+# Check database readiness at startup
+dbchecker:
+  enabled: true
+
+database:
+  vendor: postgres
+  existingSecret: keycloak-postgresql
+  hostname: postgresql
+  port: 5432
+  username: admin
+  database: keycloak
+```
+
+  </details>
+
 ## Configuration
 
 To prepare Keycloak for integration with EDP, follow the steps below:
 
-1. Ensure that the "openshift" realm is created.
+1. Ensure that the `openshift` realm is created.
 
-2. Create a user edp_&#8249;EDP_PROJECT&#8250; in "Master" realm.
+2. Create a user `edp_<EDP_PROJECT>` in `Master` realm.
 
   !!! note
       This user should be used by EDP to access Keycloak. Please refer to the [Install EDP](install-edp.md) section for details.
 
-3. In the "Role Mappings" tab, assign the proper roles to user:
+3. In the `Role Mapping` tab, assign the proper roles to user:
 
 * Realm Roles:
 
@@ -255,7 +330,7 @@ To prepare Keycloak for integration with EDP, follow the steps below:
 
   * uma_authorization
 
-* Client Roles "openshift-realm":
+* Client Roles `openshift-realm`:
 
   * impersonation,
 

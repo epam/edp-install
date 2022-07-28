@@ -47,19 +47,19 @@ To install Keycloak, follow the steps below:
 
       kubectl create namespace security
 
-2. Create the Keycloak admin secret:
+2. Create PostgreSQL admin secret:
+
+      kubectl -n security create secret generic keycloak-postgresql \
+      --from-literal=password=<postgresql_password> \
+      --from-literal=postgres-password=<postgresql_postgres_password>
+
+3. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
+
+4. Create Keycloak admin secret:
 
       kubectl -n security create secret generic keycloak-admin-creds \
       --from-literal=username=<keycloak_admin_username> \
       --from-literal=password=<keycloak_admin_password>
-
-3. Create the PostgreSQL admin secret:
-
-      kubectl -n security create secret generic keycloak-postgresql \
-      --from-literal=postgresql-password=<postgresql_password> \
-      --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
-
-4. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
 
 5. Install Keycloak:
 
@@ -218,5 +218,8 @@ Pay attention to the following recommendations while working with the Helmfile:
       helmfile  --selector component=ingress --environment platform -f helmfile.yaml destroy
 
 ## Related Articles
-
+* [Install EDP](install-edp.md)
+* [Install NGINX Ingress Controller](install-ingress-nginx.md)
+* [Install Keycloak](install-keycloak.md)
 * [Install DefectDojo](install-defectdojo.md)
+* [Install Argo CD](install-argocd.md)
