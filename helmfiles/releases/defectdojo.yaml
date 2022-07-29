@@ -51,8 +51,19 @@ releases:
         DD_SOCIAL_AUTH_KEYCLOAK_ACCESS_TOKEN_URL: 'https://{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main/protocol/openid-connect/token'
 
       django:
+        ingress:
+          activateTLS: false
         uwsgi:
           livenessProbe:
             # Enable liveness checks on uwsgi container. Those values are use on nginx readiness checks as well.
             # default value is 120, so in our case 20 is just fine
             initialDelaySeconds: 20
+
+      postgresql:
+        primary:
+          persistence:
+            size: 2Gi
+
+      rabbitmq:
+        persistence:
+          size: 2Gi
