@@ -42,7 +42,7 @@
     containers:
     - name: terraform
       image: epamedp/edp-jenkins-terraform-agent:2.0.4
-      command: [&#39;sh&#39;, &#39;-c&#39;, &#39;awscliv2 sts &quot;get-caller-identity&quot; &amp;&amp; sleep 3600&#39;]
+      command: [&#39;sh&#39;, &#39;-c&#39;, &#39;aws sts &quot;get-caller-identity&quot; &amp;&amp; sleep 3600&#39;]
 </code></pre></div> </li> <li> <p>Check the logs of the created pod from the template above.</p> <p>Example output:</p> <div class=codehilite><pre><span></span><code>  {
   &quot;UserId&quot;: &quot;XXXXXXXXXXXXXXXXXXXXX:botocore-session-XXXXXXXXXX&quot;,
   &quot;Account&quot;: &quot;XXXXXXXXXXXX&quot;,
