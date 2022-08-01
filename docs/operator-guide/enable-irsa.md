@@ -91,7 +91,7 @@ To successfully associate the IAM role with the service account, follow the step
           containers:
           - name: terraform
             image: epamedp/edp-jenkins-terraform-agent:2.0.4
-            command: ['sh', '-c', 'awscliv2 sts "get-caller-identity" && sleep 3600']
+            command: ['sh', '-c', 'aws sts "get-caller-identity" && sleep 3600']
 
 5. Check the logs of the created pod from the template above.
 

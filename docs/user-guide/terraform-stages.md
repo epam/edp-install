@@ -51,7 +51,7 @@ In the **Build** pipeline, the following stages are available:
 
   3.2. Launches the [_terraform init_](https://www.terraform.io/docs/cli/commands/init.html) command that initializes backend.
 
-  3.3. Returns the name of the user, on behalf of whom the actions will be performed, with the help of [_awscliv2_](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html).
+  3.3. Returns the name of the user, on behalf of whom the actions will be performed, with the help of [_aws_](https://docs.aws.amazon.com/cli/latest/reference/index.html).
 
   3.4. Launches the _terraform-plan_ command saving the results in the _.tfplan_ file.
 
