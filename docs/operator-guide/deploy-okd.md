@@ -1,6 +1,6 @@
 # Deploy OKD 4.9 Cluster
 
-This instruction provides detailed information on the OKD cluster deployment in the AWS Cloud and contains the additional setup necessary for the managed infrastructure.
+This instruction provides detailed information on the OKD 4.9 cluster deployment in the AWS Cloud and contains the additional setup necessary for the managed infrastructure.
 
 A full description of the cluster deployment can be found in the [official documentation](https://docs.okd.io/4.9/installing/installing_aws/installing-aws-customizations.html).
 
@@ -8,7 +8,7 @@ A full description of the cluster deployment can be found in the [official docum
 
 Before the OKD cluster deployment and configuration, make sure to check the prerequisites.
 
-#### Required Tools
+### Required Tools
 
 1. Install the following tools listed below:
 
@@ -16,7 +16,7 @@ Before the OKD cluster deployment and configuration, make sure to check the prer
    * [OpenShift CLI](https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/getting-started-cli.html)
    * [Lens](https://k8slens.dev/) (optional)
 
-2. Create the AWS IAM user with [the required permissions](https://docs.okd.io/4.9/installing/installing_aws/installing-aws-account.html#installation-aws-permissions_installing-aws-account). Make sure the AWS account is active, and the user doesn't have a permission boundary. Remove any SCP restrictions from the AWS account.
+2. Create the AWS IAM user with [the required permissions](https://docs.okd.io/4.9/installing/installing_aws/installing-aws-account.html#installation-aws-permissions_installing-aws-account). Make sure the AWS account is active, and the user doesn't have a permission boundary. Remove any Service Control Policy (SCP) restrictions from the AWS account.
 
 3. Generate a key pair for cluster node SSH access. Please perform the steps below:
    * Generate the SSH key. Specify the path and file name, such as ~/.ssh/id_ed25519, of the new SSH key. If there is an existing key pair, ensure that the public key is in the ~/.ssh directory.
@@ -26,7 +26,7 @@ Before the OKD cluster deployment and configuration, make sure to check the prer
    * Add the SSH private key identity to the SSH agent for a local user if it has not already been added.
 
          eval "$(ssh-agent -s)"
-   
+
    * Add the SSH private key to the ssh-agent:
 
          ssh-add <path>/<file_name>
@@ -124,7 +124,7 @@ To initialize the cluster deployment, run the following command:
 !!! note
     If the cloud provider account configured on the host does not have sufficient permissions to deploy the cluster, the installation process stops, and the missing permissions are displayed.
 
-When the cluster deployment is completed, directions for accessing the cluster are displayed in the terminal, including a link to the web console and credentials for the **kubeadmin** user. The kubeconfig for the cluster will be located in **okd-deployment/auth/kubeconfig**.
+When the cluster deployment is completed, directions for accessing the cluster are displayed in the terminal, including a link to the web console and credentials for the **kubeadmin** user. The `kubeconfig` for the cluster will be located in **okd-deployment/auth/kubeconfig**.
 
   <details>
   <Summary><b>Example output</b></Summary>
@@ -139,11 +139,11 @@ INFO Time elapsed: 36m22s:
   </details>
 
 !!! warning
-    The Ignition config files contain certificates that expire after 24 hours, which are then renewed at that time. Do not turn off the cluster for this time or you will have to update the certificates manually. See [OpenShift Container Platform documentation](https://docs.openshift.com/container-platform/4.9/installing/installing_aws/installing-aws-customizations.html#installation-launching-installer_installing-aws-customizations) for more information.
+    The Ignition config files contain certificates that expire after 24 hours, which are then renewed at that time. Do not turn off the cluster for this time, or you will have to update the certificates manually. See [OpenShift Container Platform documentation](https://docs.openshift.com/container-platform/4.9/installing/installing_aws/installing-aws-customizations.html#installation-launching-installer_installing-aws-customizations) for more information.
 
 ## Log Into the Cluster
 
-To log into the cluster, export the kubeconfig:
+To log into the cluster, export the `kubeconfig`:
 
       export KUBECONFIG=<installation_directory>/auth/kubeconfig
 
@@ -156,3 +156,4 @@ Optionally, use the [Lens](https://k8slens.dev/) tool for further work with the 
 
 * [Deploy AWS EKS Cluster](deploy-aws-eks.md)
 * [Manage Jenkins Agent](add-jenkins-agent.md)
+* [Deploy OKD 4.10 Cluster](deploy-okd-4.10.md)

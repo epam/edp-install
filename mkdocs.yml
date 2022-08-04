@@ -141,6 +141,7 @@ nav:
     - Tutorials:
       - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
       - Deploy OKD 4.9 Cluster: operator-guide/deploy-okd.md
+      - Deploy OKD 4.10 Cluster: operator-guide/deploy-okd-4.10.md
       - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
   - User Guide:
     - user-guide/index.md
