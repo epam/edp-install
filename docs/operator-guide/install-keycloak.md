@@ -40,7 +40,67 @@ To install PostgreSQL, follow the steps below:
       --from-literal=password=<postgresql_password> \
       --from-literal=postgres-password=<postgresql_postgres_password>
 
-4. Install PostgreSQL v.14.4.0 using [bitnami/postgresql](https://artifacthub.io/packages/helm/bitnami/postgresql) Helm chart v.11.6.19:
+4.  Install the custom SecurityContextConstraints (only for OpenShift):
+
+  !!! note
+      If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
+
+  <details>
+  <summary><b>View: customsecuritycontextconstraints.yaml</b></summary>
+
+```yaml
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: false
+allowedCapabilities: null
+apiVersion: security.openshift.io/v1
+allowedFlexVolumes: []
+defaultAddCapabilities: []
+fsGroup:
+  type: MustRunAs
+  ranges:
+    - min: 999
+      max: 65543
+groups: []
+kind: SecurityContextConstraints
+metadata:
+  annotations:
+      "helm.sh/hook": "pre-install"
+  name: keycloak
+priority: 1
+readOnlyRootFilesystem: false
+requiredDropCapabilities:
+- KILL
+- MKNOD
+- SETUID
+- SETGID
+runAsUser:
+  type: MustRunAsRange
+  uidRangeMin: 1
+  uidRangeMax: 65543
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:security:keycloakx
+- system:serviceaccount:security:default
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
+```
+
+  </details>
+
+5. Install PostgreSQL v.14.4.0 using [bitnami/postgresql](https://artifacthub.io/packages/helm/bitnami/postgresql) Helm chart v.11.6.19:
 
   !!! info
       The PostgreSQL can be deployed in production ready mode. For example, it may include multiple replicas, persistent storage, autoscaling, and monitoring.
@@ -82,7 +142,7 @@ primary:
 
   </details>
 
-5. Install an additional StorageClass (optional):
+6. Install an additional StorageClass (optional):
 
   !!! note
       If the PostgreSQL installation uses a StorageClass with **reclaimPolicy: Retain**, install additional StorageClass *storageclass.yaml*.
@@ -105,67 +165,6 @@ volumeBindingMode: WaitForFirstConsumer
 
   </details>
 
-6.  Install the custom SecurityContextConstraints (only for OpenShift):
-
-  !!! note
-      If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
-
-  <details>
-  <summary><b>View: customsecuritycontextconstraints.yaml</b></summary>
-
-```yaml
-allowHostDirVolumePlugin: false
-allowHostIPC: false
-allowHostNetwork: false
-allowHostPID: false
-allowHostPorts: false
-allowPrivilegeEscalation: true
-allowPrivilegedContainer: false
-allowedCapabilities: null
-apiVersion: security.openshift.io/v1
-defaultAddCapabilities: null
-allowedCapabilities: []
-allowedFlexVolumes: []
-defaultAddCapabilities: []
-fsGroup:
-  type: MustRunAs
-  ranges:
-    - min: 999
-      max: 65543
-groups: []
-kind: SecurityContextConstraints
-metadata:
-  annotations:
-      "helm.sh/hook": "pre-install"
-  name: customscc
-priority: 1
-readOnlyRootFilesystem: false
-requiredDropCapabilities:
-- KILL
-- MKNOD
-- SETUID
-- SETGID
-runAsUser:
-  type: MustRunAsRange
-  uidRangeMin: 1
-  uidRangeMax: 65543
-seLinuxContext:
-  type: MustRunAs
-supplementalGroups:
-  type: RunAsAny
-users:
-- system:serviceaccount:security:keycloak
-- system:serviceaccount:security:default
-volumes:
-- configMap
-- downwardAPI
-- emptyDir
-- persistentVolumeClaim
-- projected
-- secret
-```
-
-  </details>
 
 ## Keycloak Installation
 
@@ -280,7 +279,7 @@ ingress:
 # route:
 #   enabled: false
 #   # Path for the Route
-#   path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/'
+#   path: '/'
 #   # Host name for the Route
 #   host: "keycloak.<ROOT_DOMAIN>"
 #   # TLS configuration

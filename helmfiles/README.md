@@ -54,65 +54,142 @@ To install NGINX Ingress controller, follow the steps below:
 
 2. Install NGINX Ingress controller:
 
+   ```bash
    helmfile  --selector component=ingress --environment platform -f helmfile.yaml apply
-
+   ```
 ### Deploy Keycloak
 
 To install Keycloak, follow the steps below:
 
-1. Create a security namespace:
+1. Create a `security` namespace:
 
+   ```bash
    kubectl create namespace security
+   ```
 
 2. Create PostgreSQL admin secret:
 
+   ```bash
    kubectl -n security create secret generic keycloak-postgresql \
    --from-literal=password=<postgresql_password> \
    --from-literal=postgres-password=<postgresql_postgres_password>
+   ```
 
 3. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
 
 4. Create Keycloak admin secret:
 
+   ```bash
    kubectl -n security create secret generic keycloak-admin-creds \
    --from-literal=username=<keycloak_admin_username> \
    --from-literal=password=<keycloak_admin_password>
+   ```
 
-5. Install Keycloak:
+5. Install the custom SecurityContextConstraints (only for OpenShift):
 
+  !!! note
+      If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
+
+  <details>
+  <summary><b>View: customsecuritycontextconstraints.yaml</b></summary>
+
+```yaml
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: false
+allowedCapabilities: null
+apiVersion: security.openshift.io/v1
+allowedFlexVolumes: []
+defaultAddCapabilities: []
+fsGroup:
+  type: MustRunAs
+  ranges:
+    - min: 999
+      max: 65543
+groups: []
+kind: SecurityContextConstraints
+metadata:
+  annotations:
+      "helm.sh/hook": "pre-install"
+  name: keycloak
+priority: 1
+readOnlyRootFilesystem: false
+requiredDropCapabilities:
+- KILL
+- MKNOD
+- SETUID
+- SETGID
+runAsUser:
+  type: MustRunAsRange
+  uidRangeMin: 1
+  uidRangeMax: 65543
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:security:keycloakx
+- system:serviceaccount:security:default
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
+```
+
+  </details>
+
+6. Install Keycloak:
+
+   ```bash
    helmfile  --selector component=sso --environment platform -f helmfile.yaml apply
+   ```
 
 ### Deploy EPAM Delivery Platform
 
 To install EDP, follow the steps below:
 
-1. Create a platform namespace:
+1. Create a `platform` namespace:
 
+   ```bash
    kubectl create namespace platform
+   ```
 
 2. Create a secret for administrative access to the database:
 
+   ```bash
    kubectl -n platform create secret generic super-admin-db \
    --from-literal=username=<super_admin_db_username> \
    --from-literal=password=<super_admin_db_password>
+   ```
 
-!!! warning
-Do not use the **admin** username here since the **admin** is a reserved name.
+  !!! warning
+      Do not use the **admin** username here since the **admin** is a reserved name.
 
 3. Create a secret for an EDP tenant database user:
 
+   ```bash
    kubectl -n platform create secret generic db-admin-console \
    --from-literal=username=<tenant_db_username> \
    --from-literal=password=<tenant_db_password>
+   ```
 
-!!! warning
-Do not use the **admin** username here since the **admin** is a reserved name.
+  !!! warning
+      Do not use the `admin` username here since the `admin` is a reserved name.
 
 4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section.
 
+   ```bash
    kubectl -n platform create secret generic keycloak \
    --from-literal=username=<username> \
    --from-literal=password=<password>
+   ```
 
 5. In the `envs/platform.yaml` file, set the `edpName` and `keycloakEndpoint` parameters.
 
@@ -120,7 +197,9 @@ Do not use the **admin** username here since the **admin** is a reserved name.
 
 7. Install EDP:
 
+   ```bash
    helmfile  --selector component=edp --environment platform -f helmfile.yaml apply
+   ```
 
 ### Deploy Argo CD
 
@@ -128,7 +207,9 @@ To install Argo CD, follow the steps below:
 
 1. Install Argo CD:
 
+   ```bash
    helmfile  --selector component=argocd --environment platform -f helmfile.yaml apply
+   ```
 
 2. Update the `argocd-secret` secret (in the Argo CD namespace) by providing the correct Keycloak client secret (`oidc.keycloak.clientSecret`) with the value from the `keycloak-client-argocd-secret` secret in EDP namespace, and restart the deployment:
 
@@ -149,7 +230,7 @@ To install External Secrets Operator, follow the steps below:
 ### Deploy DefectDojo
 
 !!! info
-It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](./install-defectdojo.md) page.
+    It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](./install-defectdojo.md) page.
 
 To install DefectDojo via Helmfile, follow the steps below:
 
@@ -167,8 +248,8 @@ To install DefectDojo via Helmfile, follow the steps below:
   --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
   ```
 
-!!! note
-The `postgresql_password` and `postgresql_postgres_password` passwords must be 16 characters long.
+  !!! note
+      The `postgresql_password` and `postgresql_postgres_password` passwords must be 16 characters long.
 
 3. Create a RabbitMQ admin secret:
 
@@ -178,8 +259,8 @@ The `postgresql_password` and `postgresql_postgres_password` passwords must be 1
   --from-literal=rabbitmq-erlang-cookie=<rabbitmq_erlang_cookie>
   ```
 
-!!! note
-The `rabbitmq_password` password must be 10 characters long.
+  !!! note
+      The `rabbitmq_password` password must be 10 characters long.
 
       The `rabbitmq_erlang_cookie` password must be 32 characters long.
 
@@ -193,8 +274,8 @@ The `rabbitmq_password` password must be 10 characters long.
   --from-literal=METRICS_HTTP_AUTH_PASSWORD=<metric_http_auth_password>
   ```
 
-!!! note
-The `dd_admin_password` password must be 22 characters long.
+  !!! note
+      The `dd_admin_password` password must be 22 characters long.
 
       The `dd_secret_key` password must be 128 characters long.
 

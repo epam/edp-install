@@ -43,7 +43,7 @@ To install NGINX Ingress controller, follow the steps below:
 
 To install Keycloak, follow the steps below:
 
-1. Create a security namespace:
+1. Create a `security` namespace:
 
       kubectl create namespace security
 
@@ -61,7 +61,67 @@ To install Keycloak, follow the steps below:
       --from-literal=username=<keycloak_admin_username> \
       --from-literal=password=<keycloak_admin_password>
 
-5. Install Keycloak:
+5. Install the custom SecurityContextConstraints (only for OpenShift):
+
+  !!! note
+      If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
+
+  <details>
+  <summary><b>View: customsecuritycontextconstraints.yaml</b></summary>
+
+```yaml
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: false
+allowedCapabilities: null
+apiVersion: security.openshift.io/v1
+allowedFlexVolumes: []
+defaultAddCapabilities: []
+fsGroup:
+  type: MustRunAs
+  ranges:
+    - min: 999
+      max: 65543
+groups: []
+kind: SecurityContextConstraints
+metadata:
+  annotations:
+      "helm.sh/hook": "pre-install"
+  name: keycloak
+priority: 1
+readOnlyRootFilesystem: false
+requiredDropCapabilities:
+- KILL
+- MKNOD
+- SETUID
+- SETGID
+runAsUser:
+  type: MustRunAsRange
+  uidRangeMin: 1
+  uidRangeMax: 65543
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:security:keycloakx
+- system:serviceaccount:security:default
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
+```
+
+  </details>
+
+6. Install Keycloak:
 
       helmfile  --selector component=sso --environment platform -f helmfile.yaml apply
 
@@ -69,7 +129,7 @@ To install Keycloak, follow the steps below:
 
 To install EDP, follow the steps below:
 
-1. Create a platform namespace:
+1. Create a `platform` namespace:
 
       kubectl create namespace platform
 
@@ -89,7 +149,7 @@ To install EDP, follow the steps below:
         --from-literal=password=<tenant_db_password>
 
   !!! warning
-      Do not use the **admin** username here since the **admin** is a reserved name.
+      Do not use the `admin` username here since the `admin` is a reserved name.
 
 4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section.
 
