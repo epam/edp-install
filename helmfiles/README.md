@@ -87,8 +87,7 @@ To install Keycloak, follow the steps below:
 
 5. Install the custom SecurityContextConstraints (only for OpenShift):
 
-  !!! note
-      If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
+  > **NOTE**: If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
 
   <details>
   <summary><b>View: customsecuritycontextconstraints.yaml</b></summary>
@@ -169,8 +168,7 @@ To install EDP, follow the steps below:
    --from-literal=password=<super_admin_db_password>
    ```
 
-  !!! warning
-      Do not use the **admin** username here since the **admin** is a reserved name.
+  > **WARNING**: Do not use the `admin` username here since the `admin` is a reserved name.
 
 3. Create a secret for an EDP tenant database user:
 
@@ -180,8 +178,7 @@ To install EDP, follow the steps below:
    --from-literal=password=<tenant_db_password>
    ```
 
-  !!! warning
-      Do not use the `admin` username here since the `admin` is a reserved name.
+> **WARNING**: Do not use the `admin` username here since the `admin` is a reserved name.
 
 4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section.
 
@@ -229,8 +226,7 @@ To install External Secrets Operator, follow the steps below:
 
 ### Deploy DefectDojo
 
-!!! info
-    It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](./install-defectdojo.md) page.
+> **NOTE**: It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](./install-defectdojo.md) page.
 
 To install DefectDojo via Helmfile, follow the steps below:
 
@@ -248,8 +244,7 @@ To install DefectDojo via Helmfile, follow the steps below:
   --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
   ```
 
-  !!! note
-      The `postgresql_password` and `postgresql_postgres_password` passwords must be 16 characters long.
+  > **NOTE**: The `postgresql_password` and `postgresql_postgres_password` passwords must be 16 characters long.
 
 3. Create a RabbitMQ admin secret:
 
@@ -259,10 +254,7 @@ To install DefectDojo via Helmfile, follow the steps below:
   --from-literal=rabbitmq-erlang-cookie=<rabbitmq_erlang_cookie>
   ```
 
-  !!! note
-      The `rabbitmq_password` password must be 10 characters long.
-
-      The `rabbitmq_erlang_cookie` password must be 32 characters long.
+  > **NOTE**: The `rabbitmq_password` password must be 10 characters long, and the `rabbitmq_erlang_cookie` password must be 32 characters long.
 
 4. Create a DefectDojo admin secret:
 
@@ -274,14 +266,15 @@ To install DefectDojo via Helmfile, follow the steps below:
   --from-literal=METRICS_HTTP_AUTH_PASSWORD=<metric_http_auth_password>
   ```
 
-  !!! note
-      The `dd_admin_password` password must be 22 characters long.
-
-      The `dd_secret_key` password must be 128 characters long.
-
-      The `dd_credential_aes_256_key` password must be 128 characters long.
-
-      The `metric_http_auth_password` password must be 32 characters long.
+  > **NOTES**:
+  > 
+  > The `dd_admin_password` password must be 22 characters long. 
+  > 
+  > The `dd_secret_key` password must be 128 characters long.
+  > 
+  > The `dd_credential_aes_256_key` password must be 128 characters long. 
+  > 
+  > The `metric_http_auth_password` password must be 32 characters long.
 
 5. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
 
