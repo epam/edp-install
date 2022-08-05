@@ -4,7 +4,54 @@ helm repo update
 </code></pre></div> </li> <li> <p>Create PostgreSQL admin secret:</p> <div class=codehilite><pre><span></span><code>kubectl -n security create secret generic keycloak-postgresql \
 --from-literal=password=&lt;postgresql_password&gt; \
 --from-literal=postgres-password=&lt;postgresql_postgres_password&gt;
-</code></pre></div> </li> <li> <p>Install PostgreSQL v.14.4.0 using <a href=https://artifacthub.io/packages/helm/bitnami/postgresql>bitnami/postgresql</a> Helm chart v.11.6.19:</p> <div class="admonition info"> <p class=admonition-title>Info</p> <p>The PostgreSQL can be deployed in production ready mode. For example, it may include multiple replicas, persistent storage, autoscaling, and monitoring. For details, please refer to the <a href=https://github.com/bitnami/charts/tree/master/bitnami/postgresql>official Chart documentation</a>.</p> </div> <hr> <div class=codehilite><pre><span></span><code>helm install postgresql bitnami/postgresql \
+</code></pre></div> </li> <li> <p>Install the custom SecurityContextConstraints (only for OpenShift):</p> <div class="admonition note"> <p class=admonition-title>Note</p> <p>If you use OpenShift as your deployment platform, add <em>customsecuritycontextconstraints.yaml</em>.</p> </div> <details> <summary><b>View: customsecuritycontextconstraints.yaml</b></summary> <div class=highlight><pre><span></span><code><span class=nt>allowHostDirVolumePlugin</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
+<span class=nt>allowHostIPC</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
+<span class=nt>allowHostNetwork</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
+<span class=nt>allowHostPID</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
+<span class=nt>allowHostPorts</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
+<span class=nt>allowPrivilegeEscalation</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class=w></span>
+<span class=nt>allowPrivilegedContainer</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
+<span class=nt>allowedCapabilities</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class=w></span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">security.openshift.io/v1</span><span class=w></span>
+<span class=nt>allowedFlexVolumes</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">[]</span><span class=w></span>
+<span class=nt>defaultAddCapabilities</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">[]</span><span class=w></span>
+<span class=nt>fsGroup</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">MustRunAs</span><span class=w></span>
+<span class=w>  </span><span class=nt>ranges</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>min</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">999</span><span class=w></span>
+<span class=w>      </span><span class=nt>max</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">65543</span><span class=w></span>
+<span class=nt>groups</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">[]</span><span class=w></span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">SecurityContextConstraints</span><span class=w></span>
+<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w></span>
+<span class=w>      </span><span class=s>&quot;helm.sh/hook&quot;</span><span class="p p-Indicator">:</span><span class=w> </span><span class=s>&quot;pre-install&quot;</span><span class=w></span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">keycloak</span><span class=w></span>
+<span class=nt>priority</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class=w></span>
+<span class=nt>readOnlyRootFilesystem</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
+<span class=nt>requiredDropCapabilities</span><span class=p>:</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">KILL</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">MKNOD</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">SETUID</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">SETGID</span><span class=w></span>
+<span class=nt>runAsUser</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">MustRunAsRange</span><span class=w></span>
+<span class=w>  </span><span class=nt>uidRangeMin</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class=w></span>
+<span class=w>  </span><span class=nt>uidRangeMax</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">65543</span><span class=w></span>
+<span class=nt>seLinuxContext</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">MustRunAs</span><span class=w></span>
+<span class=nt>supplementalGroups</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">RunAsAny</span><span class=w></span>
+<span class=nt>users</span><span class=p>:</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">system:serviceaccount:security:keycloakx</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">system:serviceaccount:security:default</span><span class=w></span>
+<span class=nt>volumes</span><span class=p>:</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">configMap</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">downwardAPI</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">emptyDir</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">persistentVolumeClaim</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">projected</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">secret</span><span class=w></span>
+</code></pre></div> </details> </li> <li> <p>Install PostgreSQL v.14.4.0 using <a href=https://artifacthub.io/packages/helm/bitnami/postgresql>bitnami/postgresql</a> Helm chart v.11.6.19:</p> <div class="admonition info"> <p class=admonition-title>Info</p> <p>The PostgreSQL can be deployed in production ready mode. For example, it may include multiple replicas, persistent storage, autoscaling, and monitoring. For details, please refer to the <a href=https://github.com/bitnami/charts/tree/master/bitnami/postgresql>official Chart documentation</a>.</p> </div> <hr> <div class=codehilite><pre><span></span><code>helm install postgresql bitnami/postgresql \
 --version 11.6.19 \
 --values values.yaml \
 --namespace security
@@ -38,55 +85,6 @@ helm repo update
 <span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gp2</span><span class=w></span>
 <span class=nt>reclaimPolicy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Retain</span><span class=w></span>
 <span class=nt>volumeBindingMode</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">WaitForFirstConsumer</span><span class=w></span>
-</code></pre></div> </details> </li> <li> <p>Install the custom SecurityContextConstraints (only for OpenShift):</p> <div class="admonition note"> <p class=admonition-title>Note</p> <p>If you use OpenShift as your deployment platform, add <em>customsecuritycontextconstraints.yaml</em>.</p> </div> <details> <summary><b>View: customsecuritycontextconstraints.yaml</b></summary> <div class=highlight><pre><span></span><code><span class=nt>allowHostDirVolumePlugin</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
-<span class=nt>allowHostIPC</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
-<span class=nt>allowHostNetwork</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
-<span class=nt>allowHostPID</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
-<span class=nt>allowHostPorts</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
-<span class=nt>allowPrivilegeEscalation</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class=w></span>
-<span class=nt>allowPrivilegedContainer</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
-<span class=nt>allowedCapabilities</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">security.openshift.io/v1</span><span class=w></span>
-<span class=nt>defaultAddCapabilities</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class=w></span>
-<span class=nt>allowedCapabilities</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">[]</span><span class=w></span>
-<span class=nt>allowedFlexVolumes</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">[]</span><span class=w></span>
-<span class=nt>defaultAddCapabilities</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">[]</span><span class=w></span>
-<span class=nt>fsGroup</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">MustRunAs</span><span class=w></span>
-<span class=w>  </span><span class=nt>ranges</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>min</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">999</span><span class=w></span>
-<span class=w>      </span><span class=nt>max</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">65543</span><span class=w></span>
-<span class=nt>groups</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">[]</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">SecurityContextConstraints</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class=s>&quot;helm.sh/hook&quot;</span><span class="p p-Indicator">:</span><span class=w> </span><span class=s>&quot;pre-install&quot;</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">customscc</span><span class=w></span>
-<span class=nt>priority</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class=w></span>
-<span class=nt>readOnlyRootFilesystem</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
-<span class=nt>requiredDropCapabilities</span><span class=p>:</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">KILL</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">MKNOD</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">SETUID</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">SETGID</span><span class=w></span>
-<span class=nt>runAsUser</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">MustRunAsRange</span><span class=w></span>
-<span class=w>  </span><span class=nt>uidRangeMin</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class=w></span>
-<span class=w>  </span><span class=nt>uidRangeMax</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">65543</span><span class=w></span>
-<span class=nt>seLinuxContext</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">MustRunAs</span><span class=w></span>
-<span class=nt>supplementalGroups</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">RunAsAny</span><span class=w></span>
-<span class=nt>users</span><span class=p>:</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">system:serviceaccount:security:keycloak</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">system:serviceaccount:security:default</span><span class=w></span>
-<span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">configMap</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">downwardAPI</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">emptyDir</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">persistentVolumeClaim</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">projected</span><span class=w></span>
-<span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">secret</span><span class=w></span>
 </code></pre></div> </details> </li> </ol> <h2 id=keycloak-installation>Keycloak Installation<a class=headerlink href=#keycloak-installation title="Permanent link">⚓︎</a></h2> <p>To install Keycloak, follow the steps below:</p> <ol> <li> <p>Use <code>security</code> namespace from the PostgreSQL installation.</p> </li> <li> <p>Add a chart repository:</p> <div class=codehilite><pre><span></span><code>helm repo add codecentric https://codecentric.github.io/helm-charts
 helm repo update
 </code></pre></div> </li> <li> <p>Create Keycloak admin secret:</p> <div class=codehilite><pre><span></span><code>kubectl -n security create secret generic keycloak-admin-creds \
@@ -174,7 +172,7 @@ helm repo update
 <span class=c1># route:</span><span class=w></span>
 <span class=c1>#   enabled: false</span><span class=w></span>
 <span class=c1>#   # Path for the Route</span><span class=w></span>
-<span class=c1>#   path: &#39;{{ tpl .Values.http.relativePath $ | trimSuffix &quot;/&quot; }}/&#39;</span><span class=w></span>
+<span class=c1>#   path: &#39;/&#39;</span><span class=w></span>
 <span class=c1>#   # Host name for the Route</span><span class=w></span>
 <span class=c1>#   host: &quot;keycloak.&lt;ROOT_DOMAIN&gt;&quot;</span><span class=w></span>
 <span class=c1>#   # TLS configuration</span><span class=w></span>
