@@ -180,7 +180,7 @@ To install EDP, follow the steps below:
 
 > **WARNING**: Do not use the `admin` username here since the `admin` is a reserved name.
 
-4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section.
+4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](https://epam.github.io/edp-install/operator-guide/install-keycloak/#configuration) section.
 
    ```bash
    kubectl -n platform create secret generic keycloak \
@@ -226,7 +226,7 @@ To install External Secrets Operator, follow the steps below:
 
 ### Deploy DefectDojo
 
-> **NOTE**: It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](./install-defectdojo.md) page.
+> **NOTE**: It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](https://epam.github.io/edp-install/operator-guide/install-defectdojo) page.
 
 To install DefectDojo via Helmfile, follow the steps below:
 
