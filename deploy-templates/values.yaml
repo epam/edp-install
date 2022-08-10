@@ -123,16 +123,16 @@ annotations: {}
 keycloak-operator:
   enabled: true
   # image:
-  #   name: epamedp/keycloak-operator
-  #   version:
+  #   repository: epamedp/keycloak-operator
+  #   tag:
   keycloak:
     url: "keycloak.example.com"
 
 codebase-operator:
   enabled: true
   # image:
-  #   name: epamedp/codebase-operator
-  #   version:
+  #   repository: epamedp/codebase-operator
+  #   tag:
   # envs:
   #   - name: RECONCILATION_PERIOD
   #     value: "360"  # The value should be typed in minutes
@@ -149,8 +149,8 @@ codebase-operator:
 jenkins-operator:
   enabled: true
   # image:
-  #   name: epamedp/jenkins-operator
-  #   version:
+  #   repository: epamedp/jenkins-operator
+  #   tag:
   # jenkins:
   #   deploy: true
   #   image: epamedp/edp-jenkins
@@ -178,14 +178,14 @@ jenkins-operator:
 cd-pipeline-operator:
   enabled: true
   # image:
-  #   name: epamedp/cd-pipeline-operator
-  #   version:
+  #   repository: epamedp/cd-pipeline-operator
+  #   tag:
 
 nexus-operator:
   enabled: true
   # image:
-  #   name: epamedp/nexus-operator
-  #   version:
+  #   repository: epamedp/nexus-operator
+  #   tag:
   # nexus:
   #   deploy: true
   #   name: "nexus"
@@ -200,8 +200,8 @@ nexus-operator:
 sonar-operator:
   enabled: true
 #  image:
-#    name: epamedp/sonar-operator
-#    version:
+#    repository: epamedp/sonar-operator
+#    tag:
 #  sonar:
 #    deploy: true
 #    name: "sonar"
@@ -222,8 +222,8 @@ sonar-operator:
 admin-console-operator:
   enabled: true
   # image:
-  #   name: epamedp/admin-console-operator
-  #   version:
+  #   repository: epamedp/admin-console-operator
+  #   tag:
   # adminConsole:
   #   image: epamedp/edp-admin-console
   #   version:
@@ -249,8 +249,8 @@ admin-console-operator:
 gerrit-operator:
   enabled: true
   # image:
-  #   name: epamedp/gerrit-operator
-  #   version:
+  #   repository: epamedp/gerrit-operator
+  #   tag:
   # gerrit:
   #   deploy: true
   #   name: "gerrit"
@@ -265,20 +265,20 @@ gerrit-operator:
 reconciler:
   enabled: true
   # image:
-  #   name: epamedp/reconciler
-  #   version:
+  #   repository: epamedp/reconciler
+  #   tag:
 
 edp-headlamp:
   enabled: true
   # image:
-  #   name: epamedp/edp-headlamp
-  #   version:
+  #   repository: epamedp/edp-headlamp
+  #   tag:
 
 perf-operator:
   enabled: true
   # image:
-  #   name: epamedp/perf-operator
-  #   version:
+  #   repository: epamedp/perf-operator
+  #   tag:
   # perf:
   #   integration: false
   #   name: "perf"
