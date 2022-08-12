@@ -70,6 +70,7 @@ Once clicked, the three-step menu will appear:
   For details, please refer to the [Use Terraform Library in EDP](terraform-stages.md) page.
   * Rego - this option allows using Rego code language with an Open Policy Agent (OPA) Library. For details, please
   refer to the [Use Open Policy Agent](../user-guide/opa-stages.md) page.
+  * Container - this option allows using the Kaniko tool for building the container images from a Dockerfile. For details, please refer to the [CI Pipeline for Container](./container-stages.md) page.
   * Other - selecting Other allows extending the default code languages when creating a codebase with the Clone/Import strategy.
   To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) page.
 

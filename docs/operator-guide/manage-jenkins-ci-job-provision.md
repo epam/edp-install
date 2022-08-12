@@ -1160,3 +1160,7 @@ def getSecretValue(name) {
   After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
 
   !![Gitlab job provision](../assets/operator-guide/gitlab-job-provision.png "Gitlab job provision")
+
+### Related Articles
+
+* [CI Pipeline for Container](../../user-guide/container-stages)
