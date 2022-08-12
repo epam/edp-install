@@ -106,7 +106,7 @@ externalSecrets:
       # -- AWS Region where secrets are stored, e.g. eu-central-1
       region: eu-central-1
 
-  # When installing EDP, three secrets must be created: super-admin-db, db-admin-console, keycloak
+  # When installing EDP, three secrets must be created: super-admin-db, db-admin-console, keycloak and kaniko-docker-config
   # see https://epam.github.io/edp-install/operator-guide/install-edp/
   # manageEDPInstallSecrets creates required secrets using ExternalSecretOperator
   # Ensure external secret source is configured properly
