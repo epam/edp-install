@@ -38,6 +38,7 @@ extra_javascript:
   - https://unpkg.com/mermaid@8.14.0/dist/mermaid.min.js
 
 theme:
+  custom_dir: docs/overrides
   logo: assets/logo.png
   favicon: assets/favicon.png
   name: material
@@ -57,6 +58,7 @@ theme:
     - navigation.sections
     - navigation.tabs
     - navigation.top
+    - announce.dismiss
 
 plugins:
   - search
@@ -72,6 +74,17 @@ extra:
   social:
     - icon: fontawesome/brands/docker
       link: https://hub.docker.com/u/epamedp
+
+  consent:
+    actions:
+      - accept
+      - reject
+    title: Cookie consent
+    description: >-
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
 
 nav:
   - Overview: index.md
