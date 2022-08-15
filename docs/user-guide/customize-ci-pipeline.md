@@ -209,3 +209,4 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
 
 * [Add a New Custom Global Pipeline Library](add-custom-global-pipeline-lib.md)
 * [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
+* [Add Security Scanner](../operator-guide/add-security-scanner.md)
