@@ -43,10 +43,10 @@ A Helm chart for EDP Install
 | annotations | object | `{}` |  |
 | argocd.enabled | bool | `false` | Enable ArgoCD integration |
 | argocd.url | string | `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }}) | ArgoCD URL in format schema://URI |
-| awsRegion | string | `nil` |  |
+| awsRegion | string | `nil` | AWS Region, e.g. "eu-central-1" |
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | codebase-operator.enabled | bool | `true` |  |
-| dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` |  |
+| dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
 | edp-headlamp.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for EDP installation, using External Secret Operator |
@@ -55,30 +55,29 @@ A Helm chart for EDP Install
 | externalSecrets.secretProvider.aws.role | string | `nil` | IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::093899590031:role/rolename |
 | externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
 | gerrit-operator.enabled | bool | `true` |  |
-| global.admins[0] | string | `"stub_user_one@example.com"` |  |
+| global.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
 | global.database.affinity | object | `{}` |  |
 | global.database.annotations | object | `{}` |  |
-| global.database.deploy | bool | `true` |  |
-| global.database.host | string | `"edp-db"` |  |
-| global.database.image | string | `"postgres:9.6"` |  |
+| global.database.deploy | bool | `true` | flag to deploy database |
+| global.database.host | string | `"edp-db"` | database host |
+| global.database.image | string | `"postgres:9.6"` | image for database |
 | global.database.imagePullPolicy | string | `"IfNotPresent"` |  |
-| global.database.name | string | `"edp-db"` |  |
+| global.database.name | string | `"edp-db"` | database name |
 | global.database.nodeSelector | object | `{}` |  |
-| global.database.port | int | `5432` |  |
+| global.database.port | int | `5432` | database port |
 | global.database.resources.limits.memory | string | `"512Mi"` |  |
 | global.database.resources.requests.cpu | string | `"50m"` |  |
 | global.database.resources.requests.memory | string | `"64Mi"` |  |
-| global.database.storage.class | string | `"gp2"` |  |
-| global.database.storage.size | string | `"2Gi"` |  |
+| global.database.storage.class | string | `"gp2"` | database storage class |
+| global.database.storage.size | string | `"2Gi"` | database storage size |
 | global.database.tolerations | list | `[]` |  |
-| global.developers[0] | string | `"stub_user_one@example.com"` |  |
-| global.developers[1] | string | `"stub_user_two@example.com"` |  |
-| global.dnsWildCard | string | `"stub.com"` |  |
-| global.edpName | string | `"stub-namespace"` |  |
+| global.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
+| global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
+| global.edpName | string | `"stub-namespace"` | namespace or a project name (in case of OpenShift) |
 | global.kioskEnabled | bool | `true` |  |
-| global.platform | string | `"kubernetes"` |  |
-| global.version | string | `"2.12.0-SNAPSHOT"` |  |
-| global.webConsole.url | string | `nil` |  |
+| global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
+| global.version | string | `"2.12.0-SNAPSHOT"` | EDP version |
+| global.webConsole.url | string | `nil` | URL to OpenShift/Kubernetes Web console |
 | jenkins-operator.enabled | bool | `true` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
 | kaniko.initKanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-kaniko container |
@@ -97,7 +96,7 @@ A Helm chart for EDP Install
 | keycloak-operator.keycloak.url | string | `"keycloak.example.com"` |  |
 | nexus-operator.enabled | bool | `true` |  |
 | perf-operator.enabled | bool | `true` |  |
-| perf.enabled | string | `"false"` |  |
+| perf.enabled | string | `"false"` | Enable PERF integration |
 | reconciler.enabled | bool | `true` |  |
 | sonar-operator.enabled | bool | `true` |  |
 | vcs.enabled | string | `"false"` |  |

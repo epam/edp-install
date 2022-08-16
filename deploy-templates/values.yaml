@@ -3,24 +3,37 @@
 ##
 
 global:
+  # -- EDP version
   version: "2.12.0-SNAPSHOT"
+  # -- namespace or a project name (in case of OpenShift)
   edpName: "stub-namespace"
+   # -- platform type that can be "kubernetes" or "openshift"
   platform: "kubernetes"
-  dnsWildCard: "stub.com"
+  # -- a cluster DNS wildcard name
+  dnsWildCard:
+  # -- Administrators of your tenant
   admins:
     - "stub_user_one@example.com"
+  # -- Developers of your tenant
   developers:
     - "stub_user_one@example.com"
     - "stub_user_two@example.com"
   database:
+    # -- flag to deploy database
     deploy: true
+    # -- image for database
     image: "postgres:9.6"
     imagePullPolicy: "IfNotPresent"
+    # -- database host
     host: "edp-db"
+    # -- database name
     name: "edp-db"
+    # -- database port
     port: 5432
     storage:
+      # -- database storage class
       class: gp2
+      # -- database storage size
       size: 2Gi
     resources:
       limits:
@@ -34,10 +47,11 @@ global:
     affinity: {}
   webConsole:
     # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
+    # -- URL to OpenShift/Kubernetes Web console
     url:
   kioskEnabled: true
 
-# AWS Region, e.g. "eu-central-1"
+# -- AWS Region, e.g. "eu-central-1"
 awsRegion:
 
 argocd:
@@ -48,6 +62,7 @@ argocd:
   url: ""
 
 perf:
+  # -- Enable PERF integration
   enabled: "false"
 
 vcs:
@@ -116,6 +131,7 @@ externalSecrets:
   manageEDPInstallSecretsName: /edp/deploy-secrets
 
 dockerRegistry:
+  # -- Docker Registry endpoint
   url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
 annotations: {}
