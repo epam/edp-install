@@ -79,21 +79,21 @@ limitations under the License. */
 
 import groovy.json.*
 import jenkins.model.Jenkins
-import hudson.model.*
 
 Jenkins jenkins = Jenkins.instance
 def stages = [:]
 def jiraIntegrationEnabled = Boolean.parseBoolean("${JIRA_INTEGRATION_ENABLED}" as String)
 def commitValidateStage = jiraIntegrationEnabled ? ',{"name": "commit-validate"}' : ''
 def createJIMStage = jiraIntegrationEnabled ? ',{"name": "create-jira-issue-metadata"}' : ''
+def platformType = "${PLATFORM_TYPE}"
+def buildStage = platformType.toString() == "kubernetes" ? ',{"name": "build-image-kaniko"}' : ',{"name": "build-image-from-dockerfile"}'
 def buildTool = "${BUILD_TOOL}"
 def goBuildStage = buildTool.toString() == "go" ? ',{"name": "build"}' : ',{"name": "compile"}'
 
 stages['Code-review-application'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" + goBuildStage +
  ',{"name": "tests"},[{"name": "sonar"},{"name": "dockerfile-lint"},{"name": "helm-lint"}]]'
 stages['Code-review-library'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
- ',{"name": "compile"},{"name": "tests"},' +
-        '{"name": "sonar"}]'
+ ',{"name": "compile"},{"name": "tests"},{"name": "sonar"}]'
 stages['Code-review-autotests'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" +
  ',{"name": "tests"},{"name": "sonar"}' + ']'
 stages['Code-review-default'] = '[{"name": "gerrit-checkout"}' + "${commitValidateStage}" + ']'
@@ -127,22 +127,21 @@ stages['Build-autotests-maven'] = '[{"name": "checkout"},{"name": "get-version"}
 stages['Build-autotests-gradle'] = '[{"name": "checkout"},{"name": "get-version"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Build-application-maven'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "compile"},' +
-        '{"name": "tests"},[{"name": "sonar"}],{"name": "build"},{"name": "build-image-kaniko"},' +
-        '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+        '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
+        ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-npm'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
-        '{"name": "tests"},[{"name": "sonar"}],{"name": "build"},{"name": "build-image-kaniko"},' +
-        '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+        '{"name": "tests"},{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
+        ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-gradle'] = stages['Build-application-maven']
 stages['Build-application-dotnet'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
-        '{"name": "tests"},[{"name": "sonar"}],{"name": "build-image-kaniko"},' +
-        '{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
-stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "tests"},{"name": "sonar"},' +
-                                '{"name": "build"},{"name": "build-image-kaniko"}' +
-                                "${createJIMStage}" + ',{"name": "git-tag"}]'
+        '{"name": "tests"},{"name": "sonar"}' + "${buildStage}" +
+        ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
+stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "sast"},{"name": "tests"}' +
+        ',{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
+        "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
-                                '{"name": "tests"},{"name": "sonar"},' +
-                                '{"name": "build-image-kaniko"},{"name": "push"}' + "${createJIMStage}" +
-                                ',{"name": "git-tag"}]'
+        '{"name": "tests"},{"name": "sonar"},' +
+        "${buildStage}" + ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Create-release'] = '[{"name": "checkout"},{"name": "create-branch"},{"name": "trigger-job"}]'
 
@@ -162,7 +161,7 @@ if (codebaseFolder == null) {
 
 createListView(codebaseName, "Releases")
 createReleasePipeline("Create-release-${codebaseName}", codebaseName, stages["Create-release"], "CreateRelease",
-        repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, defaultBranch)
+        repositoryPath, gitCredentialsId, gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch)
 
 if (buildTool.toString().equalsIgnoreCase('none')) {
     return true
@@ -244,7 +243,7 @@ def getStageKeyName(buildTool) {
 }
 
 def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineType, repository, credId,
- gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, defaultBranch) {
+ gitServerCrName, gitServerCrVersion, jiraIntegrationEnabled, platformType, defaultBranch) {
     pipelineJob("${codebaseName}/${pipelineName}") {
         logRotator {
             numToKeep(14)
@@ -259,6 +258,7 @@ def createReleasePipeline(pipelineName, codebaseName, codebaseStages, pipelineTy
                 stringParam("STAGES", "${codebaseStages}", "")
                 if (pipelineName.contains("Create-release")) {
                     stringParam("JIRA_INTEGRATION_ENABLED", "${jiraIntegrationEnabled}", "Is Jira integration enabled")
+                    stringParam("PLATFORM_TYPE", "${platformType}", "Platform type")
                     stringParam("GERRIT_PROJECT", "${codebaseName}", "")
                     stringParam("RELEASE_NAME", "", "Name of the release(branch to be created)")
                     stringParam("COMMIT_ID", "", "Commit ID that will be used to create branch from for new release. If empty, DEFAULT_BRANCH will be used")
@@ -326,6 +326,8 @@ def createListView(codebaseName, branchName) {
 * REPOSITORY_PATH - the full repository path;
 
 * JIRA_INTEGRATION_ENABLED - the Jira integration is enabled or not;
+
+* PLATFORM_TYPE - the type of platform (kubernetes or openshift);
 
 * DEFAULT_BRANCH - the default repository branch.
 
