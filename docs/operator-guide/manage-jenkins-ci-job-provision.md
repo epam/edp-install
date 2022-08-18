@@ -140,7 +140,7 @@ stages['Build-application-go'] = '[{"name": "checkout"},{"name": "get-version"},
         ',{"name": "sonar"},{"name": "build"}' + "${buildStage}" +
         "${createJIMStage}" + ',{"name": "git-tag"}]'
 stages['Build-application-python'] = '[{"name": "checkout"},{"name": "get-version"},{"name": "compile"},' +
-        '{"name": "tests"},{"name": "sonar"},' +
+        '{"name": "tests"},{"name": "sonar"}' +
         "${buildStage}" + ',{"name": "push"}' + "${createJIMStage}" + ',{"name": "git-tag"}]'
 
 stages['Create-release'] = '[{"name": "checkout"},{"name": "create-branch"},{"name": "trigger-job"}]'
