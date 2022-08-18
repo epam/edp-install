@@ -134,6 +134,7 @@ nav:
     - Platform Capabilities:
       - GitOps:
         - Install Argo CD: operator-guide/install-argocd.md
+        - Argo CD Integration: operator-guide/argocd-integration.md
       - Secrets Management:
         - Install External Secrets Operator: operator-guide/install-external-secrets-operator.md
         - External Secrets Operator Integration: operator-guide/external-secrets-operator-integration.md
