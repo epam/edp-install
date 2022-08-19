@@ -196,7 +196,7 @@ resource "aws_wafv2_web_acl_association" "waf_alb" {
 }
 ```
 
-!!!note
+!!! note
     AWS ALB can be created in the scope of this Terraform code or created previously. When creating ALB to expose links, the ALB should have a security group that allows some external traffic.
 
 When ALB is associated with the WAF ACL, direct the traffic to the ALB by the Route53 CNAME record:

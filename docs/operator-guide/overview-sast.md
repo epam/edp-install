@@ -1,12 +1,12 @@
-# Static Application Security Testing (SAST)
+# Static Application Security Testing Overview
 
-EPAM Delivery Platform provides the implemented Static Application Security Testing support allowing to work with a security scanner (Semgrep) and a vulnerability management system (DefectDojo) to check your source code for known vulnerabilities.
+EPAM Delivery Platform provides the implemented Static Application Security Testing support allowing to work with the [Semgrep security scanner](https://semgrep.dev/) and the [DefectDojo vulnerability management system](https://www.defectdojo.com/) to check the source code for known vulnerabilities.
 
 ## Supported Languages
 
 EDP SAST supports a number of languages and package managers.
 
-|Language (package managers)|Scan tool|Build Tool|
+|Language (Package Managers)|Scan Tool|Build Tool|
 |:-:|-|-|
 | Java | [Semgrep](./sast-scaner-semgrep.md) |Maven, Gradle|
 | Go | [Semgrep](./sast-scaner-semgrep.md) |Go|
@@ -14,7 +14,7 @@ EDP SAST supports a number of languages and package managers.
 
 ## Supported Vulnerability Management System
 
-If it is necessary to get and manage a SAST report after scanning, you need to deploy a vulnerability management system, for instance, DefectDojo.
+To get and then manage a SAST report after scanning, it is necessary to deploy the vulnerability management system, for instance, DefectDojo.
 
 ### DefectDojo
 

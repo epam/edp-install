@@ -117,5 +117,5 @@ In order to add a new security scanner, perform the steps below:
 # Related Articles
 
 * [Customize CI Pipeline](../user-guide/customize-ci-pipeline.md)
-* [Static Application Security Testing (SAST)](overview-sast.md)
+* [Static Application Security Testing Overview](overview-sast.md)
 * [Semgrep](sast-scaner-semgrep.md)

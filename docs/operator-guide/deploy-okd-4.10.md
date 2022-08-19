@@ -62,18 +62,18 @@ Create the AWS resources with the Cloud Credential Operator utility (the `ccoctl
 
 1. Generate the public and private RSA key files that are used to set up the OpenID Connect identity provider for the cluster:
 
-      ```bash
-      ./ccoctl aws create-key-pair
-      ```
+    ```bash
+    ./ccoctl aws create-key-pair
+    ```
 
 2. Create an OpenID Connect identity provider and an S3 bucket on AWS:
 
-      ```bash
-      ./ccoctl aws create-identity-provider \
-      --name=<NAME> \
-      --region=<AWS_REGION> \
-      --public-key-file=./serviceaccount-signer.public
-      ```
+    ```bash
+    ./ccoctl aws create-identity-provider \
+    --name=<NAME> \
+    --region=<AWS_REGION> \
+    --public-key-file=./serviceaccount-signer.public
+    ```
 
    where:
 

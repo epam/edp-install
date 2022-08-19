@@ -14,7 +14,7 @@ RoadMap consists of three streams:
 
 ## I. Architecture
 
-_Goals:_
+*Goals:*
 
 * Improve reusability for EDP components
 * Integrate Kubernetes Native Deployment solutions
@@ -39,6 +39,9 @@ EDP uses [Open Policy Agent](https://www.openpolicyagent.org/){target=_blank} (f
 
 EDP should provide secrets management as a part of platform. There are multiple tools providing secrets management capabilities. The aim is to be aligned with GitOps and [Operator Pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/){target=_blank} approaches so [HashiCorp Vault](https://www.vaultproject.io/docs/platform/k8s){target=_blank}, [Banzaicloud Bank Vaults](https://github.com/banzaicloud/bank-vaults){target=_blank}, [Bitnami Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets){target=_blank} are currently used for internal projects and some of them should be made publicly available - as a part of EDP Deployment.
 
+!!! done "EDP Release 2.12.x"
+    [External Secret Operator](./operator-guide/external-secrets-operator-integration.md) is a recommended secret management tool for the EDP components.
+
 ### Release Management
 
 [Conventional Commits](https://www.conventionalcommits.org){target=_blank} and [Conventional Changelog](https://github.com/conventional-changelog){target=_blank} are two approaches to be used as part of release process. Today EDP provides only capabilities to manage *Release Branches*. This activity should address this gap by formalizing and implementing *Release Process* as a part of EDP. Topics to be covered: Versioning, Tagging, Artifacts Promotion.
@@ -47,7 +50,7 @@ EDP should provide secrets management as a part of platform. There are multiple 
 
 EDP uses [Jenkins](https://www.jenkins.io/) as Pipeline Orchestrator. Jenkins runs workload for CI and CD parts. There is also basic support for [GitLab CI](https://docs.gitlab.com/ee/ci/){target=_blank}, but it provides Docker image build functionality only. EDP works on providing an alternative to Jenkins and use Kubernetes Native Approach for pipeline management. There are a number of tools, which provides such capability:
 
-* [ArgoCD](https://argo-cd.readthedocs.io/en/stable/){target=_blank}
+* [Argo CD](https://argo-cd.readthedocs.io/en/stable/){target=_blank}
 * [Argo Workflows](https://argoproj.github.io/argo-workflows/){target=_blank}
 * [Argo Rollouts](https://argoproj.github.io/argo-rollouts/){target=_blank}
 * [Tekton](https://tekton.dev/){target=_blank}
@@ -56,8 +59,11 @@ EDP uses [Jenkins](https://www.jenkins.io/) as Pipeline Orchestrator. Jenkins ru
 
 This list is under investigation and solution is going to be implemented in two steps:
 
-1. Introduce tool that provide *Continues Deployment* approach. ArgoCD is one of the best to go with.
+1. Introduce tool that provide *Continues Delivery/Deployment* approach. Argo CD is one of the best to go with.
 2. Integrate EDP with tool that provides *Continues Integration* capabilities.
+
+!!! done "EDP Release 2.12.x"
+    [Argo CD](./operator-guide/argocd-integration.md) is suggested as a solution providing the `Continuous Delivery` capabilities. A new EDP operator called [edp-argocd-operator](https://github.com/epam/edp-argocd-operator/) has been developed, which runs as an adapter layer between the EDP Platform and Argo CD.
 
 ### Advanced EDP Role-based Model
 
@@ -73,11 +79,14 @@ Persistent layer, which is based on [edp-db](https://github.com/epam/edp-install
 
 ## II. Building Blocks
 
-_Goals:_
+*Goals:*
 
 * Introduce best practices from Microservice Reference Architecture deployment and observability using Kubernetes Native Tools
 * Enable integration with the Centralized Test Reporting Frameworks
 * Onboard SAST/DAST tool as a part of CI pipelines and Non-Functional Testing activities
+
+!!! done "EDP Release 2.12.x"
+    [SAST](./operator-guide/overview-sast.md) is introduced as a mandatory part of the [CI Pipelines](./user-guide/ci-pipeline-details.md). The [list of currently supported SAST scanners](https://epam.github.io/edp-install/operator-guide/overview-sast/#supported-languages) and the [instruction on how to add them](./operator-guide/add-security-scanner.md) are also available.
 
 ### Infrastructure as Code
 
@@ -119,13 +128,19 @@ EDP supports two LTS versions of Java: 8 and 11. The goal is to provide [Java 17
 
 [OpenShift 4.6](https://docs.openshift.com/container-platform/4.6/welcome/index.html) is a platform that EDP supports.
 
+!!! done "EDP Release 2.12.x"
+    EDP Platform runs on the latest OKD versions: [4.9](./operator-guide/deploy-okd.md) and [4.10](./operator-guide/deploy-okd-4.10.md). [Creating the IAM Roles for Service Account](https://docs.openshift.com/container-platform/4.10/authentication/managing_cloud_provider_credentials/cco-mode-sts.html#sts-mode-installing-manual-run-installer_cco-mode-sts) is a recommended way to work with AWS Resources from the OKD cluster.
+
 ## III. Admin Console (UI)
 
-_Goals:_
+*Goals:*
 
 * Improve UХ for different user types to address their concerns in the delivery model
 * Introduce user management capabilities
 * Enrich with traceability metrics for products
+
+!!! done "EDP Release 2.12.x"
+    EDP Team has introduced a new UI component called [EDP Headlamp](https://github.com/epam/edp-headlamp), which will replace the [EDP Admin Console](./user-guide/index.md) in future releases. EDP Headlamp is based on the [Kinvolk Headlamp UI Client](https://github.com/kinvolk/headlamp).
 
 ### Users Management
 
@@ -141,7 +156,7 @@ EDP [CD Pipeline section](./user-guide/add-cd-pipeline.md) in Admin Console prov
 
 ## IV. Documentation as Code
 
-_Goal:_
+*Goal:*
 
 * Transparent documentation and clear development guidelines for EDP customization.
 
