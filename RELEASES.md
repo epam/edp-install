@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 2.12.0](#2.12.0)
 * [Version 2.11.0](#2.11.0)
 * [Version 2.10.2](#2.10.2)
 * [Version 2.10.1](#2.10.1)
@@ -31,6 +32,96 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 2.12.0 <a name="2.12.0"></a> (August 30, 2022)
+
+## What's New
+
+EDP 2.12.0 version presents EDP Argo CD Operator that runs as an adapter layer between the EDP Platform and Argo CD and manages the EDP Argo CD Tenants. Argo CD is suggested as a solution providing the Continuous Delivery capabilities.
+
+Another new EDP subcomponent is EDP Headlamp that is a new UI on React.js that will replace the EDP Admin Console in future releases. EDP Headlamp, based on the Kinvolk Headlamp UI Client, provides the ability to define pipelines and project resources in a simple way.
+
+Now EDP also provides the implemented Static Application Security Testing (SAST) support allowing to work with the Semgrep security scanner and the DefectDojo vulnerability management system to check the source code for known vulnerabilities. SAST is introduced as a mandatory part of the CI Pipelines.
+
+Since this release, External Secret Operator is a recommended secret management tool for the EDP components.
+
+EDP operator manifests have been updated to the latest v1 API version. Now EDP Platform supports Kubernetes versions 1.22+ and runs on the 4.9 and 4.10 OKD versions.
+
+Creating the IAM Roles for Service Account is a recommended way to work with AWS Resources from the OKD cluster.
+
+Explore the upgrades, new functionality, breaking changes and improvements below.
+
+### Upgrades
+
+* Gerrit is updated to the 3.6.1 version, please refer to the [official website](https://www.gerritcodereview.com/3.6.html#361).
+* Keycloak is updated to the 19.0.1 version, please refer to the [official website](https://www.keycloak.org/2022/07/keycloak-1901-released.html).
+* EDP Custom resource definitions now use the stable `apiextensions.k8s.io/v1` API version, please refer to the [official website](https://kubernetes.io/docs/reference/using-api/deprecation-guide/#v1-22).
+* SonarQube is updated to the 8.9.9 version, please refer to the [official website](https://jira-legacy-sonarsource.valiantys.net/secure/ReleaseNote.jspa?version=17361&styleName=Html&projectId=10930&Create=Create&atl_token=BSPV-9NYM-JVTI-0WKN_db90422a2bfe60333c54cb36582a6312179301f5_lout).
+* Nexus is updated to the 3.41.0 version, please refer to the [official website](https://help.sonatype.com/repomanager3/product-information/release-notes/2022-release-notes/nexus-repository-3.41.0---3.41.1-release-notes).
+* The Alpine Operators Base Image is updated to the 3.16.2 version, please refer to the [official website](https://alpinelinux.org/posts/Alpine-3.13.12-3.14.8-3.15.6-3.16.2-released.html).
+* Jenkins is updated to the 2.346.3 version, please refer to the [official website](https://www.jenkins.io/changelog-stable/#v2.346.3).
+* All components in the Jenkins agents are updated to the latest stable versions.
+* Go version in all EDP operators are updated to the 1.18.4 version, please refer to the [official website](https://go.dev/doc/devel/release#go1.18).
+* Kaniko images are updated to the 1.8.1 version, please refer to the [official website](https://newreleases.io/project/github/GoogleContainerTools/kaniko/release/v1.8.1).
+
+### New Functionality
+
+* Now it is possible to use External Secrets Operator.
+* The SAST Static security analysis testing, namely the DefectDojo component, is installed as a part of the EDP ecosystem.
+* [EDP Headlamp](https://github.com/epam/edp-headlamp) is added as a new EDP subcomponent that will replace the EDP Admin Console in future releases.
+* [EDP Argo CD Operator](https://github.com/epam/edp-argocd-operator) is a new EDP subcomponent that manages the EDP Argo CD Tenants.
+* The Helmfile is introduced as an approach for the EDP ecosystem deployment.
+* The Logsight integration is implemented as an optional step into the CD pipeline on the `edp-delivery`.
+* The Keycloak-X is now used on the EDP platform.
+* For the Keycloak Operator, a user can manage the assignment of the default scope mapper for the `keycloakclient` custom resource.
+
+#### Breaking Changes
+
+* Starting from this release, it is expected that a `CodebaseBranches` custom resource definition uses a `status` field as a subresource.
+
+### Enhancements
+
+* The OKD 4.10 cluster is deployed in the AWS cloud. Please refer to the [Deploy OKD 4.10 Cluster](https://epam.github.io/edp-install/operator-guide/deploy-okd-4.10/) page for the details.
+* The RBAC schema for the `cd-pipeline-operator` and `jenkins-operator` is refactored.
+* The Keycloak custom resources are aligned with the Argo CD integration.
+* The EDP Helm charts are populated with the metadata to be exposed on the Artifact Hub.
+* The `previous-stage-name` is removed from the Jenkins deployed versions view.
+* The `deployments` is now a default deployment type for the OpenShift cluster.
+
+### Fixed Issues
+
+* The exponential back-off is used when retrying the `GerritGroupMemeber` reconciliation.
+* The `Chart.yaml` content is aligned throughout the EDP.
+* Git checkout is fixed for an Autotest step of the CD Pipeline.
+* The EDP deploy on the OKD 4.9 cluster works as expected after a typo has been fixed in the CI job-provisioner for the OpenShift cluster, and user creation process for the OpenShift cluster has been refactored.
+* A `status` field is now ignored during the update of a Stage custom resource, and a CD Stage is successfully created.
+* The password policy can be successfully created in the Keycloak realm using a custom resource.
+* A status for the `GerritGroupMember` custom resource is updated as expected.
+* The deprecated Custom Resource Definition fields are removed from the EDP `codebase-operator`.
+* The `mdx_truly_sane_lists` issue when building MkDocs is fixed.
+* The `sonar-operator` API is updated to be compliant with SonarQube 8.9.9.
+
+### Documentation
+
+* The [EDP RoadMap](https://epam.github.io/edp-install/roadmap/#roadmap) is updated.
+
+* The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+    * The [Upgrade EDP v.2.11.0 to v.2.12.0](https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.11.x-to-2.12.x/) page is added.
+    * The [Install via Helmfile](https://epam.github.io/edp-install/operator-guide/install-via-helmfile/) page is updated.
+    * The [Deploy OKD 4.10 Cluster](https://epam.github.io/edp-install/operator-guide/deploy-okd-4.10/) page is added.
+    * The [Install DefectDojo](https://epam.github.io/edp-install/operator-guide/install-defectdojo/) page is added.
+    * The **Secrets Management** section is added including the [Install External Secrets Operator](https://epam.github.io/edp-install/operator-guide/install-external-secrets-operator/) and [External Secrets Operator Integration](https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration/) pages.
+    * The [Install Keycloak](https://epam.github.io/edp-install/operator-guide/install-keycloak/) page is added.
+    * The [Argo CD Integration](https://epam.github.io/edp-install/operator-guide/argocd-integration/) page is added.
+    * The **Static Application Security Testing** section is added including the [Static Application Security Testing Overview](https://epam.github.io/edp-install/operator-guide/overview-sast/), [Add Security Scanner](https://epam.github.io/edp-install/operator-guide/add-security-scanner/), and [Semgrep](https://epam.github.io/edp-install/operator-guide/sast-scaner-semgrep/) pages.
+    * The [Manage Jenkins CI Pipeline Job Provisioner](https://epam.github.io/edp-install/operator-guide/manage-jenkins-ci-job-provision/) page is updated.
+    * The [Associate IAM Roles With Service Accounts](https://epam.github.io/edp-install/operator-guide/enable-irsa/) page is updated.
+    * The [Install NGINX Ingress Controller](https://epam.github.io/edp-install/operator-guide/install-ingress-nginx/) page is updated.
+    * The [EKS OIDC With Keycloak](https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/) page is updated.
+    * The [Upgrade EDP v.2.10.x to v.2.11.x](https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.10.x-to-2.11.x/) page is updated.
+
+* The [User Guide](https://epam.github.io/edp-install/user-guide/) is updated with the following:
+    * The [CI Pipeline for Terraform](https://epam.github.io/edp-install/user-guide/terraform-stages/) page is updated.
 
 ## Version 2.11.0 <a name="2.11.0"></a> (May 27, 2022)
 
