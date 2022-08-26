@@ -35,8 +35,8 @@ releases:
         webConsole:
           # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com can get from kubeconfig.clusters.cluster.server
           url:
-        # Set platform type: OpenShift or Kubernetes
-        platform: kubernetes
+        # Platform type: 'openshift' or 'kubernetes'
+        platform: {{ .Values.global.platform }}
         # Administrators of the tenant separated by comma (,) e.g. user@example.com
         admins: [user1@example.com,user2@example.com]
         # Developers of the tenant separated by comma (,) e.g. user@example.com
@@ -62,6 +62,5 @@ releases:
         # Enable ArgoCD integration
         enabled: true
       externalSecrets:
-        enabled: false
-      argocd:
+        # Enable External Secrets integration
         enabled: false

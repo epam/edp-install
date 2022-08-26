@@ -17,6 +17,35 @@ This article provides the instruction on how to deploy EDP and components in Kub
 * The `helmfile.yaml` file defines components to be installed by defining a path to Helm releases files.
 * The `envs/ci.yaml` file contains stub parameters for CI linter.
 * The `test/lint-ci.sh` script for running CI linter with debug loglevel and stub parameters.
+* The `resources/*.yaml` file contains additional resources for the OpenShift platform.
+
+## Operate Helmfile
+
+Before applying the Helmfile, please fill in the global parameters in the `envs/platform.yaml` (check the examples in the `envs/ci.yaml`) and `releases/*.yaml` files for every Helm deploy.
+
+Pay attention to the following recommendations while working with the Helmfile:
+
+* To launch Lint, run the `test/lint-ci.sh` script.
+
+* Display the difference between the deployed and environment state (`helm diff`):
+
+      helmfile --environment platform -f helmfile.yaml diff
+
+* Apply the deployment:
+
+      helmfile  --selector component=ingress --environment platform -f helmfile.yaml apply
+
+* Modify the deployment and apply the changes:
+
+      helmfile  --selector component=ingress --environment platform -f helmfile.yaml sync
+
+* To deploy the components according to the label, use the selector to target a subset of releases when running the Helmfile. It can be useful for large Helmfiles with the releases that are logically grouped together. For example, to display the difference only for the `nginx-ingress` file, use the following command:
+
+      helmfile  --selector component=ingress --environment platform -f helmfile.yaml diff
+
+* To destroy the release, run the following command:
+
+      helmfile  --selector component=ingress --environment platform -f helmfile.yaml destroy
 
 ## Deploy Components
 
@@ -31,6 +60,9 @@ Using the Helmfile, the following components can be installed:
 
 ### Deploy NGINX Ingress Controller
 
+!!! Info
+    Skip this step for the OpenShift platform, because it has its own Ingress Controller.
+
 To install NGINX Ingress controller, follow the steps below:
 
 1. In the `releases/nginx-ingress.yaml` file, set the `proxy-real-ip-cidr` parameter according to the value with AWS VPC IPv4 CIDR.
@@ -41,11 +73,19 @@ To install NGINX Ingress controller, follow the steps below:
 
 ### Deploy Keycloak
 
+Keycloak requires a database deployment, so it has two charts: `releases/keycloak.yaml` and `releases/postgresql-keycloak.yaml`.
+
 To install Keycloak, follow the steps below:
 
 1. Create a `security` namespace:
 
-      kubectl create namespace security
+  !!! Note
+      **For the OpenShift users:**<br>
+      This namespace is also indicated as `users` in the following custom `SecurityContextConstraints` resources: `resources/keycloak-scc.yaml` and `resources/postgresql-keycloak-scc.yaml`. Change the namespace name when using a custom namespace.
+
+    ```
+    kubectl create namespace security
+    ```
 
 2. Create PostgreSQL admin secret:
 
@@ -61,67 +101,7 @@ To install Keycloak, follow the steps below:
       --from-literal=username=<keycloak_admin_username> \
       --from-literal=password=<keycloak_admin_password>
 
-5. Install the custom SecurityContextConstraints (only for OpenShift):
-
-  !!! note
-      If you use OpenShift as your deployment platform, add *customsecuritycontextconstraints.yaml*.
-
-  <details>
-  <summary><b>View: customsecuritycontextconstraints.yaml</b></summary>
-
-```yaml
-allowHostDirVolumePlugin: false
-allowHostIPC: false
-allowHostNetwork: false
-allowHostPID: false
-allowHostPorts: false
-allowPrivilegeEscalation: true
-allowPrivilegedContainer: false
-allowedCapabilities: null
-apiVersion: security.openshift.io/v1
-allowedFlexVolumes: []
-defaultAddCapabilities: []
-fsGroup:
-  type: MustRunAs
-  ranges:
-    - min: 999
-      max: 65543
-groups: []
-kind: SecurityContextConstraints
-metadata:
-  annotations:
-      "helm.sh/hook": "pre-install"
-  name: keycloak
-priority: 1
-readOnlyRootFilesystem: false
-requiredDropCapabilities:
-- KILL
-- MKNOD
-- SETUID
-- SETGID
-runAsUser:
-  type: MustRunAsRange
-  uidRangeMin: 1
-  uidRangeMax: 65543
-seLinuxContext:
-  type: MustRunAs
-supplementalGroups:
-  type: RunAsAny
-users:
-- system:serviceaccount:security:keycloakx
-- system:serviceaccount:security:default
-volumes:
-- configMap
-- downwardAPI
-- emptyDir
-- persistentVolumeClaim
-- projected
-- secret
-```
-
-  </details>
-
-6. Install Keycloak:
+5. Install Keycloak:
 
       helmfile  --selector component=sso --environment platform -f helmfile.yaml apply
 
@@ -171,7 +151,13 @@ To install Argo CD, follow the steps below:
 
 1. Install Argo CD:
 
-      helmfile  --selector component=argocd --environment platform -f helmfile.yaml apply
+  !!! Note
+      **For the OpenShift users:**<br>
+      When using a custom namespace for ArgoCD, the `argocd` namespace is also indicated as `users` in the `resources/argocd-scc.yaml` custom `SecurityContextConstraints` resource. Change it there as well.
+
+    ```bash
+    helmfile  --selector component=argocd --environment platform -f helmfile.yaml apply
+    ```
 
 2. Update the `argocd-secret` secret (in the Argo CD namespace) by providing the correct Keycloak client secret (`oidc.keycloak.clientSecret`) with the value from the `keycloak-client-argocd-secret` secret in EDP namespace, and restart the deployment:
 
@@ -198,11 +184,17 @@ To install DefectDojo via Helmfile, follow the steps below:
 
 1. Create a DefectDojo namespace:
 
+  !!! Note
+      **For the OpenShift users:**<br>
+      This namespace is also indicated as `users` in the `resources/defectdojo-route.yaml` custom `SecurityContextConstraints` resource. Change it when using a custom namespace. Also, change the namespace in the `resources/defectdojo-route.yaml` file.
+
   ```bash
   kubectl create namespace defectdojo
   ```
 
-2. Create a PostgreSQL admin secret:
+2. Modify the `host` in `resources/defectdojo-route.yaml` (only for OpenShift).
+
+3. Create a PostgreSQL admin secret:
 
   ```bash
   kubectl -n defectdojo create secret generic defectdojo-postgresql-specific \
@@ -213,7 +205,7 @@ To install DefectDojo via Helmfile, follow the steps below:
   !!! note
       The `postgresql_password` and `postgresql_postgres_password` passwords must be 16 characters long.
 
-3. Create a RabbitMQ admin secret:
+4. Create a RabbitMQ admin secret:
 
   ```bash
   kubectl -n defectdojo create secret generic defectdojo-rabbitmq-specific \
@@ -226,7 +218,7 @@ To install DefectDojo via Helmfile, follow the steps below:
 
       The `rabbitmq_erlang_cookie` password must be 32 characters long.
 
-4. Create a DefectDojo admin secret:
+5. Create a DefectDojo admin secret:
 
   ```bash
   kubectl -n defectdojo create secret generic defectdojo \
@@ -245,37 +237,13 @@ To install DefectDojo via Helmfile, follow the steps below:
 
       The `metric_http_auth_password` password must be 32 characters long.
 
-5. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
+6. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
 
-6. Install DefectDojo:
+7. Install DefectDojo:
 
   ```bash
   helmfile  --selector component=defectdojo --environment platform -f helmfile.yaml apply
   ```
-
-## Operate Helmfile
-
-Before applying the Helmfile, please fill in the global parameters in the `envs/platform.yaml` and `releases/*.yaml` files for every Helm deploy.
-
-Pay attention to the following recommendations while working with the Helmfile:
-
-* To launch Lint, run the `test/lint-ci.sh` script.
-
-* To show the difference between the deployed and environment state (helm diff), run the command:
-
-      helmfile --environment platform -f helmfile.yaml diff
-
-* To apply the deploy, run the command:
-
-      helmfile  --selector component=ingress --environment platform -f helmfile.yaml apply
-
-* To deploy components according to the label, use the selector to target a subset of releases when running the Helmfile. It can be useful when using large Helmfiles with releases that are logically grouped together. For example, to dispay the difference only for the nginx-ingress file, use the command:
-
-      helmfile  --selector component=ingress --environment platform -f helmfile.yaml diff
-
-* To destroy the release, run the command:
-
-      helmfile  --selector component=ingress --environment platform -f helmfile.yaml destroy
 
 ## Related Articles
 * [Install EDP](install-edp.md)

@@ -24,7 +24,18 @@ releases:
     vendor: "bitnami"
     default: "false"
   chart: "bitnami/postgresql"
-  version: "11.6.19" # Postgresql app version 14.4.0-debian-11-r13
+  {{- if eq .Values.global.platform "openshift" }}
+  hooks:
+  - events: ["prepare"]
+    showlogs: true
+    command: "kubectl"
+    args: ["apply", "-f", "../resources/postgresql-keycloak-scc.yaml"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: "kubectl"
+    args: ["delete", "-f", "../resources/postgresql-keycloak-scc.yaml"]
+  {{- end }}
+  version: "11.8.1" # Postgresql app version 14.5.0-debian-11-r6
   wait: true
   installed: true
   values:

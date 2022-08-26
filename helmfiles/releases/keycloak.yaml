@@ -24,7 +24,18 @@ releases:
     vendor: "keycloakx"
     default: "false"
   chart: "codecentric/keycloakx"
-  version: "1.4.2" # Keycloak app version 19.0.1
+  {{- if eq .Values.global.platform "openshift" }}
+  hooks:
+  - events: ["prepare"]
+    showlogs: true
+    command: "kubectl"
+    args: ["apply", "-f", "../resources/keycloak-scc.yaml"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: "kubectl"
+    args: ["delete", "-f", "../resources/keycloak-scc.yaml"]
+  {{- end }}
+  version: "1.6.0" # Keycloak app version 19.0.1
   wait: true
   installed: true
   values:
@@ -61,7 +72,6 @@ releases:
         - "/opt/keycloak/bin/kc.sh"
         - "--verbose"
         - "start"
-        - "--auto-build"
         - "--http-enabled=true"
         - "--http-port=8080"
         - "--hostname-strict=false"
@@ -90,7 +100,7 @@ releases:
             -Djava.awt.headless=true
             -Djgroups.dns.query=keycloakx-headless
 
-      # This block should be uncommented if you install Keycloak on Kubernetes
+      # This block is for Keycloak on Kubernetes.
       ingress:
         enabled: true
         annotations:
@@ -102,16 +112,17 @@ releases:
               - path: "/auth/"
                 pathType: Prefix
 
-      # This block should be uncommented if you set Keycloak to OpenShift and change the host field
-      # route:
-      #   enabled: false
-      #   # Path for the Route
-      #   path: "/"
-      #   # Host name for the Route
-      #   host: "keycloak.<ROOT_DOMAIN>"
-      #   # TLS configuration
-      #   tls:
-      #     enabled: true
+      {{- if eq .Values.global.platform "openshift" }}
+      route:
+        enabled: true
+        # Path for the Route
+        path: "/auth/"
+        # Host name for the Route
+        host: keycloak.{{ .Values.global.dnsWildCard }}
+        # TLS configuration
+        tls:
+          enabled: true
+      {{- end }} 
 
       resources:
         limits:

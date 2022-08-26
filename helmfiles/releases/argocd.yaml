@@ -22,6 +22,17 @@ releases:
     vendor: "argoproj"
     default: "true"
   chart: "argo/argo-cd"
+  {{- if eq .Values.global.platform "openshift" }}
+  hooks:
+  - events: ["prepare"]
+    showlogs: true
+    command: "kubectl"
+    args: ["apply", "-f", "../resources/argocd-scc.yaml"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: "kubectl"
+    args: ["delete", "-f", "../resources/argocd-scc.yaml"]
+  {{- end }}
   disableValidation: true
   version: "4.9.2"
   wait: true

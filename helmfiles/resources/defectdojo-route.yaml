@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: defectdojo
+  namespace: defectdojo
+spec:
+  host: defectdojo.<CLUSTER_DOMAIN>
+  path: /
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: defectdojo-django
+  port:
+    targetPort: http
+  wildcardPolicy: None

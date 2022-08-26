@@ -22,6 +22,25 @@ releases:
     vendor: "defectdojo"
     default: "true"
   chart: "defectdojo/defectdojo"
+  {{- if eq .Values.global.platform "openshift" }}
+  hooks:
+  - events: ["prepare"]
+    showlogs: true
+    command: "kubectl"
+    args: ["apply", "-f", "../resources/defectdojo-scc.yaml"]
+  - events: ["prepare"]
+    showlogs: true
+    command: "kubectl"
+    args: ["apply", "-f", "../resources/defectdojo-route.yaml"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: "kubectl"
+    args: ["delete", "-f", "../resources/defectdojo-scc.yaml"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: "kubectl"
+    args: ["delete", "-f", "../resources/defectdojo-route.yaml"]
+  {{- end }}
   version: "1.6.35"
   wait: true
   installed: true
@@ -52,6 +71,9 @@ releases:
 
       django:
         ingress:
+          {{- if eq .Values.global.platform "openshift" }}
+          enabled: false
+          {{- end }}
           activateTLS: false
         uwsgi:
           livenessProbe:

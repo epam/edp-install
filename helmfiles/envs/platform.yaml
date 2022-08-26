@@ -1,4 +1,6 @@
 global:
+  # The orchestration platform. Change to "openshift" if you use OpenShift/OKD.
+  platform: "kubernetes"
   # Keycloak endpoint e.g. keycloak.example.com
   keycloakEndpoint:
   # DNS wildcard for routing in the Kubernetes cluster e.g. example.com
