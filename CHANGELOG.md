@@ -10,9 +10,20 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Routine
+
+- Enable edp-argocd-operator as subcomponent [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+
+
+<a name="v2.12.0"></a>
+## [v2.12.0] - 2022-08-26
 ### Features
 
 - Download required tools for Makefile targets [EPMDEDP-10105](https://jiraeu.epam.com/browse/EPMDEDP-10105)
+- Enable Keycloak SSO for DefectDojo [EPMDEDP-10234](https://jiraeu.epam.com/browse/EPMDEDP-10234)
+- Provision DefectDojo CI token with ExternalSecrets [EPMDEDP-10234](https://jiraeu.epam.com/browse/EPMDEDP-10234)
+- Add edp-headlamp as subcomponent [EPMDEDP-10336](https://jiraeu.epam.com/browse/EPMDEDP-10336)
+- Add capability to use ExternalSecrets [EPMDEDP-8314](https://jiraeu.epam.com/browse/EPMDEDP-8314)
 
 ### Bug Fixes
 
@@ -22,12 +33,25 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### Code Refactoring
 
 - Use edp-component with v1 [EPMDEDP-10155](https://jiraeu.epam.com/browse/EPMDEDP-10155)
+- Remove unnecessary resource check [EPMDEDP-10228](https://jiraeu.epam.com/browse/EPMDEDP-10228)
+- Use repository and tag for image reference in chart [EPMDEDP-10389](https://jiraeu.epam.com/browse/EPMDEDP-10389)
 
 ### Routine
 
-- Align keycloak CRs to the latest changes [EPMDEDP-10090](https://jiraeu.epam.com/browse/EPMDEDP-10090)
 - Update ArgoCD to version v2.4.0 [EPMDEDP-10090](https://jiraeu.epam.com/browse/EPMDEDP-10090)
+- Align keycloak CRs to the latest changes [EPMDEDP-10090](https://jiraeu.epam.com/browse/EPMDEDP-10090)
 - Fix Jira Ticket pattern for changelog generator [EPMDEDP-10159](https://jiraeu.epam.com/browse/EPMDEDP-10159)
+- Disable a TLS secret and change a volume size in the Defectdojo [EPMDEDP-10234](https://jiraeu.epam.com/browse/EPMDEDP-10234)
+- Align helm charts versions [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Update kaniko images [EPMDEDP-10275](https://jiraeu.epam.com/browse/EPMDEDP-10275)
+- Upgrade mkdocs to v8.4.0 [EPMDEDP-10283](https://jiraeu.epam.com/browse/EPMDEDP-10283)
+- Fix mdx_truly_sane_lists issue when build mkdocs [EPMDEDP-10309](https://jiraeu.epam.com/browse/EPMDEDP-10309)
+- Change 'go get' to 'go install' for git-chglog [EPMDEDP-10337](https://jiraeu.epam.com/browse/EPMDEDP-10337)
+- Remove VERSION file [EPMDEDP-10387](https://jiraeu.epam.com/browse/EPMDEDP-10387)
+- Add SecurityContextConstraints for kaniko service account [EPMDEDP-10393](https://jiraeu.epam.com/browse/EPMDEDP-10393)
+- Remove extra comma from list of stages [EPMDEDP-10394](https://jiraeu.epam.com/browse/EPMDEDP-10394)
+- Add ExternalSecret for Kaniko docker config [EPMDEDP-10394](https://jiraeu.epam.com/browse/EPMDEDP-10394)
+- Remove Kubernetes and GitOps libraries stages from job provisioners [EPMDEDP-10397](https://jiraeu.epam.com/browse/EPMDEDP-10397)
 - Update development version [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
 - Update changelog [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
 - Introduce helmfile as an approach for EDP ecosystem deployment [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
@@ -37,8 +61,29 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 - Changed the version of Ingress-nginx to 4.1.4 [EPMDEDP-10039](https://jiraeu.epam.com/browse/EPMDEDP-10039)
 - Upgrade Keycloak version [EPMDEDP-10050](https://jiraeu.epam.com/browse/EPMDEDP-10050)
+- Add Document on Deploying OKD Cluster [EPMDEDP-10097](https://jiraeu.epam.com/browse/EPMDEDP-10097)
 - Add link to helmfile template, describe watchIngressWithoutClass parameter [EPMDEDP-10153](https://jiraeu.epam.com/browse/EPMDEDP-10153)
+- Update release version [EPMDEDP-10158](https://jiraeu.epam.com/browse/EPMDEDP-10158)
+- Add installation of DefectDojo [EPMDEDP-10234](https://jiraeu.epam.com/browse/EPMDEDP-10234)
+- Add SAST stage into maven, gradle, and go builds of all CI provisioners [EPMDEDP-10234](https://jiraeu.epam.com/browse/EPMDEDP-10234)
+- Align README.md [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Update link [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Update Roadmap section [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Use aws instead of awscliv2 [EPMDEDP-10276](https://jiraeu.epam.com/browse/EPMDEDP-10276)
+- Update the list of components [EPMDEDP-10319](https://jiraeu.epam.com/browse/EPMDEDP-10319)
+- EDP integration with ArgoCD [EPMDEDP-10325](https://jiraeu.epam.com/browse/EPMDEDP-10325)
+- How to deploy OKD 4.10 cluster [EPMDEDP-10330](https://jiraeu.epam.com/browse/EPMDEDP-10330)
+- Add information related to Gerrit upgrade flow [EPMDEDP-10335](https://jiraeu.epam.com/browse/EPMDEDP-10335)
+- Fixing links in the Helmfiles README [EPMDEDP-10358](https://jiraeu.epam.com/browse/EPMDEDP-10358)
+- Upgrade Keycloak to 19.0.1 version [EPMDEDP-10358](https://jiraeu.epam.com/browse/EPMDEDP-10358)
+- Fixing formatting for Enable Keycloak deploy on OpenShift cluster [EPMDEDP-10358](https://jiraeu.epam.com/browse/EPMDEDP-10358)
+- Fixing links in the Helmfiles README [EPMDEDP-10358](https://jiraeu.epam.com/browse/EPMDEDP-10358)
+- Enable Keycloak deploy on OpenShift cluster [EPMDEDP-10358](https://jiraeu.epam.com/browse/EPMDEDP-10358)
+- Add overview SAST, Semgrep, and manage scanner pages [EPMDEDP-10383](https://jiraeu.epam.com/browse/EPMDEDP-10383)
+- Add support 'platform type' in the default CI job provisioner [EPMDEDP-10393](https://jiraeu.epam.com/browse/EPMDEDP-10393)
 - Add Kubernetes and GitOps library stages to job provisioners [EPMDEDP-8257](https://jiraeu.epam.com/browse/EPMDEDP-8257)
+- Add external-secrets operator installation doc [EPMDEDP-8314](https://jiraeu.epam.com/browse/EPMDEDP-8314)
+- How to work with External Secret Operator in EDP [EPMDEDP-8314](https://jiraeu.epam.com/browse/EPMDEDP-8314)
 - Describe EDP upgrade procedure [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
 - Update the Releases.md file [EPMDEDP-8838](https://jiraeu.epam.com/browse/EPMDEDP-8838)
 - Add plugin which need to update during update procedure [EPMDEDP-8923](https://jiraeu.epam.com/browse/EPMDEDP-8923)
@@ -244,7 +289,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v2.11.1...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v2.12.0...HEAD
+[v2.12.0]: https://github.com/epam/edp-install/compare/v2.11.1...v2.12.0
 [v2.11.1]: https://github.com/epam/edp-install/compare/v2.11.0...v2.11.1
 [v2.11.0]: https://github.com/epam/edp-install/compare/v2.10.2...v2.11.0
 [v2.10.2]: https://github.com/epam/edp-install/compare/v2.10.1...v2.10.2
