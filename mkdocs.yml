@@ -156,7 +156,7 @@ nav:
           - Upgrade EDP v.2.8.4 to v.2.9.0: operator-guide/upgrade-edp-2.8.4-to-2.9.0.md
           - Upgrade EDP v.2.9.0 to v.2.10.2: operator-guide/upgrade-edp-2.9.0-to-2.10.2.md
           - Upgrade EDP v.2.10.x to v.2.11.x: operator-guide/upgrade-edp-2.10.x-to-2.11.x.md
-          #- Upgrade EDP v.2.11.x to v.2.12.x: operator-guide/upgrade-edp-2.11.x-to-2.12.x.md
+          - Upgrade EDP v.2.11.x to v.2.12.x: operator-guide/upgrade-edp-2.11.x-to-2.12.x.md
     - Tutorials:
       - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
       - Deploy OKD 4.9 Cluster: operator-guide/deploy-okd.md

@@ -140,9 +140,9 @@ To prepare DefectDojo for integration with EDP, follow the steps below:
 3. Create a DefectDojo secret in your edp namespace:
 
    ```bash
-   kubectl -n <edp_namespace> create secret generic defectdojo \
+   kubectl -n <edp_namespace> create secret generic defectdojo-ciuser-token \
    --from-literal=token=<dd_token_of_dd_user> \
-   --from-literal=url="http://defectdojo-django.defectdojo"
+   --from-literal=url="<defectdojo_url>"
    ```
 
 ## Related Articles
