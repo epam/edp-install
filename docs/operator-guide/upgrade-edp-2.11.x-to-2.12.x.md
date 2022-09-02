@@ -93,7 +93,32 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
 
       </details>
 
-4. To upgrade EDP to the v.2.12.x, run the following command:
+4. The `edp-jenkins-role` is renamed to the `jenkins-resources-role`. Delete the `edp-jenkins-role` with the following command:
+
+        kubectl delete role edp-jenkins-role -n <edp-namespace>
+
+  The `jenkins-resources-role` role will be created automatically while EDP upgrade.
+
+5. Recreate the `edp-jenkins-resources-permissions` RoleBinding according to the following template:
+    <details>
+    <summary><b>View: jenkins-resources-role</b></summary>
+
+      ```yaml
+         apiVersion: rbac.authorization.k8s.io/v1
+         kind: RoleBinding
+         metadata:
+          name: edp-jenkins-resources-permissions
+          namespace: <edp-namespace>
+         roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: Role
+          name: jenkins-resources-role
+
+      ```
+
+      </details>
+
+6. To upgrade EDP to the v.2.12.x, run the following command:
 
       helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=2.12.x
 
@@ -215,6 +240,11 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
 
    * Restart the Jenkins pod.
 
-7. Update Jenkins provisioners according to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instructions.
+7. Update Jenkins provisioners according to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction.
 
 8. Restart the `codebase-operator`, to recreate the Code Review and Build pipelines for the codebases.
+
+!!! Warning
+    In case there are different EDP versions on one cluster, the following error may occur on the `init` stage of Jenkins Groovy pipeline: `java.lang.NumberFormatException: For input string: ""`. To fix this issue, please run the following command using [`kubectl` v1.24.4+](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md):
+
+        kubectl patch codebasebranches.v2.edp.epam.com <codebase-branch-name>  -n <edp-namespace>  '--subresource=status' '--type=merge' -p '{"status": {"build": "0"}}'
