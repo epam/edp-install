@@ -27,7 +27,63 @@ To install PostgreSQL, follow the steps below:
       kubectl create namespace security
 
   !!! note
-      On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+      If you use OpenShift, apply the `SecurityContextConstraints` resource. Change the namespace under `users`, if required.
+
+  <details>
+  <summary><b>View: keycloak-scc.yaml</b></summary>
+
+  ```yaml
+  allowHostDirVolumePlugin: false
+  allowHostIPC: false
+  allowHostNetwork: false
+  allowHostPID: false
+  allowHostPorts: false
+  allowPrivilegeEscalation: true
+  allowPrivilegedContainer: false
+  allowedCapabilities: null
+  apiVersion: security.openshift.io/v1
+  allowedFlexVolumes: []
+  defaultAddCapabilities: []
+  fsGroup:
+    type: MustRunAs
+    ranges:
+      - min: 999
+        max: 65543
+  groups: []
+  kind: SecurityContextConstraints
+  metadata:
+    annotations:
+        "helm.sh/hook": "pre-install"
+    name: keycloak
+  priority: 1
+  readOnlyRootFilesystem: false
+  requiredDropCapabilities:
+  - KILL
+  - MKNOD
+  - SETUID
+  - SETGID
+  runAsUser:
+    type: MustRunAsRange
+    uidRangeMin: 1
+    uidRangeMax: 65543
+  seLinuxContext:
+    type: MustRunAs
+  supplementalGroups:
+    type: RunAsAny
+  users:
+  - system:serviceaccount:security:keycloakx
+  - system:serviceaccount:security:default
+  volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - persistentVolumeClaim
+  - projected
+  - secret
+
+  ```
+  </details>
+  
 
 2. Add a chart repository:
 

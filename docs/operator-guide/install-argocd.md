@@ -29,6 +29,63 @@ Argo CD can be installed in many ways, please follow the [official documentation
 
 Follow the steps below to install Argo CD using Helm:
 
+!!! Note
+    If you use OpenShift, apply the `SecurityContextConstraints` resource. Change the namespace under `users`, if required.
+
+  <details>
+  <summary><b>View: argocd-scc.yaml</b></summary>
+
+  ```yaml
+  allowHostDirVolumePlugin: false
+  allowHostIPC: false
+  allowHostNetwork: false
+  allowHostPID: false
+  allowHostPorts: false
+  allowPrivilegeEscalation: true
+  allowPrivilegedContainer: false
+  allowedCapabilities: null
+  apiVersion: security.openshift.io/v1
+  allowedFlexVolumes: []
+  defaultAddCapabilities: []
+  fsGroup:
+    type: MustRunAs
+    ranges:
+      - min: 999
+        max: 65543
+  groups: []
+  kind: SecurityContextConstraints
+  metadata:
+    annotations:
+        "helm.sh/hook": "pre-install"
+    name: argo-redis-ha
+  priority: 1
+  readOnlyRootFilesystem: false
+  requiredDropCapabilities:
+  - KILL
+  - MKNOD
+  - SETUID
+  - SETGID
+  runAsUser:
+    type: MustRunAsRange
+    uidRangeMin: 1
+    uidRangeMax: 65543
+  seLinuxContext:
+    type: MustRunAs
+  supplementalGroups:
+    type: RunAsAny
+  users:
+  - system:serviceaccount:argocd:argo-redis-ha
+  - system:serviceaccount:argocd:argo-redis-ha-haproxy
+  volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - persistentVolumeClaim
+  - projected
+  - secret
+  ```
+  </details>
+
 * Check out the *values.yaml* file sample of the Argo CD customization, which is based on `HA mode without autoscaling`:
 
   <details>
