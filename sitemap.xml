@@ -301,6 +301,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/upgrade-keycloak-17.0.x-legacy-to-19.0.x/</loc>
+         <lastmod>2022-09-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/velero-irsa/</loc>
          <lastmod>2022-09-05</lastmod>
          <changefreq>daily</changefreq>
