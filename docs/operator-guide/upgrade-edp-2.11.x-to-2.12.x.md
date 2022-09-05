@@ -100,23 +100,25 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
   The `jenkins-resources-role` role will be created automatically while EDP upgrade.
 
 5. Recreate the `edp-jenkins-resources-permissions` RoleBinding according to the following template:
+
     <details>
     <summary><b>View: jenkins-resources-role</b></summary>
 
-      ```yaml
-         apiVersion: rbac.authorization.k8s.io/v1
-         kind: RoleBinding
-         metadata:
-          name: edp-jenkins-resources-permissions
-          namespace: <edp-namespace>
-         roleRef:
-          apiGroup: rbac.authorization.k8s.io
-          kind: Role
-          name: jenkins-resources-role
+    ```yaml
+   
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+     name: edp-jenkins-resources-permissions
+     namespace: <edp-namespace>
+    roleRef:
+     apiGroup: rbac.authorization.k8s.io
+     kind: Role
+     name: jenkins-resources-role
 
-      ```
+    ```
 
-      </details>
+    </details>
 
 6. To upgrade EDP to the v.2.12.x, run the following command:
 
