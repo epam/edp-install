@@ -57,21 +57,16 @@ kubectl apply -f https://raw.githubusercontent.com/epam/edp-cd-pipeline-operator
 <span class=nt>argocd</span><span class=p>:</span><span class=w></span>
 <span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class=w></span>
 </code></pre></div> </details> </li> </ul> </li> <li> <p>The <code>edp-jenkins-role</code> is renamed to the <code>jenkins-resources-role</code>. Delete the <code>edp-jenkins-role</code> with the following command:</p> <div class=codehilite><pre><span></span><code>  kubectl delete role edp-jenkins-role -n &lt;edp-namespace&gt;
-</code></pre></div> <p>The <code>jenkins-resources-role</code> role will be created automatically while EDP upgrade.</p> </li> <li> <p>Recreate the <code>edp-jenkins-resources-permissions</code> RoleBinding according to the following template: <details> <summary><b>View: jenkins-resources-role</b></summary></p> <div class=codehilite><pre><span></span><code>```yaml
-   apiVersion: rbac.authorization.k8s.io/v1
-   kind: RoleBinding
-   metadata:
-    name: edp-jenkins-resources-permissions
-    namespace: <span class=nt>&lt;edp-namespace&gt;</span>
-   roleRef:
-    apiGroup: rbac.authorization.k8s.io
-    kind: Role
-    name: jenkins-resources-role
-
-```
-
-<span class=nt>&lt;/details&gt;</span>
-</code></pre></div> </li> <li> <p>To upgrade EDP to the v.2.12.x, run the following command:</p> <div class=codehilite><pre><span></span><code>helm upgrade edp epamedp/edp-install -n &lt;edp-namespace&gt; --values values.yaml --version=2.12.x
+</code></pre></div> <p>The <code>jenkins-resources-role</code> role will be created automatically while EDP upgrade.</p> </li> <li> <p>Recreate the <code>edp-jenkins-resources-permissions</code> RoleBinding according to the following template:</p> <p><details> <summary><b>View: jenkins-resources-role</b></summary></p> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span><span class=w></span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">RoleBinding</span><span class=w></span>
+<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
+<span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">edp-jenkins-resources-permissions</span><span class=w></span>
+<span class=w> </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;edp-namespace&gt;</span><span class=w></span>
+<span class=nt>roleRef</span><span class=p>:</span><span class=w></span>
+<span class=w> </span><span class=nt>apiGroup</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span><span class=w></span>
+<span class=w> </span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Role</span><span class=w></span>
+<span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">jenkins-resources-role</span><span class=w></span>
+</code></pre></div> </details> </li> <li> <p>To upgrade EDP to the v.2.12.x, run the following command:</p> <div class=codehilite><pre><span></span><code>helm upgrade edp epamedp/edp-install -n &lt;edp-namespace&gt; --values values.yaml --version=2.12.x
 </code></pre></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>To verify the installation, it is possible to test the deployment before applying it to the cluster with the following command:<br> <code>helm upgrade edp epamedp/edp-install -n &lt;edp-namespace&gt; --values values.yaml --version=2.12.x --dry-run</code></p> </div> </li> <li> <p>After the update, please remove the <code>gerrit-operator.gerrit.version</code> value. In this case, the default value will be used, and Gerrit will be updated to the <code>v3.6.1</code> version. Run the following command:</p> <div class=codehilite><pre><span></span><code>  helm upgrade edp epamedp/edp-install -n &lt;edp-namespace&gt; --values values.yaml --version=2.12.x
 </code></pre></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>To verify the installation, it is possible to test the deployment before applying it to the cluster with the following command:<br> <code>helm upgrade edp epamedp/edp-install -n &lt;edp-namespace&gt; --values values.yaml --version=2.12.x --dry-run</code></p> </div> </li> <li> <p>Update image versions for the Jenkins agents in the <em>ConfigMap</em>:</p> <div class=codehilite><pre><span></span><code>  kubectl edit configmap jenkins-slaves -n &lt;edp-namespace&gt;
 </code></pre></div> <ul> <li>The versions of the images must be the following:<div class=codehilite><pre><span></span><code><span class=n>epamedp</span><span class=o>/</span><span class=n>edp</span><span class=o>-</span><span class=n>jenkins</span><span class=o>-</span><span class=n>codenarc</span><span class=o>-</span><span class=nl>agent</span><span class=p>:</span><span class=mf>3.0.8</span><span class=w></span>
