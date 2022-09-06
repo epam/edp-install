@@ -131,6 +131,7 @@ nav:
           - Adjust GitLab CI Tool: operator-guide/gitlabci-integration.md
           - Debug GitLab Webhooks in Jenkins: operator-guide/gitlab-debug-webhooks.md
       - Perf Server Integration: operator-guide/perf-integration.md
+      - Logsight Integration: operator-guide/logsight-integration.md
     - Platform Capabilities:
       - GitOps:
         - Install Argo CD: operator-guide/install-argocd.md

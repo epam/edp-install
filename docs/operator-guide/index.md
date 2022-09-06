@@ -9,6 +9,6 @@ according to your business needs:
 * The **Configuration** section indicates the options to set the project with [adding a code language](add-other-code-language.md), [backup](restore-edp-with-velero.md), [VCS import strategy](import-strategy.md),
 [managing Jenkins pipelines](overview-manage-jenkins-pipelines.md), and [logging](install-loki.md).
 
-* The **Integration** section comprises the [AWS](enable-irsa.md), [GitHub](github-integration.md), [GitLab](gitlab-integration.md), and [Jira](jira-integration.md) integration options.
+* The **Integration** section comprises the [AWS](enable-irsa.md), [GitHub](github-integration.md), [GitLab](gitlab-integration.md), [Jira](jira-integration.md), and [Logsight](logsight-integration.md) integration options.
 
   * The **Tutorials** section provides information on working with various aspects, for example, [deploying AWS EKS cluster](deploy-aws-eks.md), [deploying OKD 4.9 cluster](deploy-okd.md), [deploying OKD 4.10 cluster](deploy-okd-4.10.md), [managing Jenkins agent](add-jenkins-agent.md), and [upgrading Keycloak v.17.0.x-legacy to v.19.0.x on Kubernetes](upgrade-keycloak-17.0.x-legacy-to-19.0.x.md).
