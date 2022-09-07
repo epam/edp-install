@@ -26,8 +26,8 @@ To install PostgreSQL, follow the steps below:
 
       kubectl create namespace security
 
-  !!! note
-      If you use OpenShift, apply the `SecurityContextConstraints` resource. Change the namespace under `users`, if required.
+  !!! Note
+      On the OpenShift platform, apply the `SecurityContextConstraints` resource. Change the namespace in the `users` section if required.
 
   <details>
   <summary><b>View: keycloak-scc.yaml</b></summary>

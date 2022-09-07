@@ -26,7 +26,7 @@ To install DefectDojo, follow the steps below:
    ```
 
   !!! Note
-      For OpenShift users: install the `SecurityContextConstraints` resource. If you use a custom namespace for `defectdojo`, change the namespace under `users`.<br>
+      When using the OpenShift platform, install the `SecurityContextConstraints` resource. In case of using a custom namespace for `defectdojo`, change the namespace in the `users` section.<br>
 
   <details>
   <summary><b>View: defectdojo-scc.yaml</b></summary>
@@ -173,7 +173,7 @@ django:
 
   </details>
 
-7. For OpenShift, install a Route:
+7. For the OpenShift platform, install a Route:
 
   <details>
   <summary><b>View: defectdojo-route.yaml</b></summary>
@@ -204,7 +204,7 @@ django:
 
 To prepare DefectDojo for integration with EDP, follow the steps below:
 
-1. Get credentials of the DefectDojo admin.
+1. Get credentials of the DefectDojo admin:
 
    ```bash
    echo "DefectDojo admin password: $(kubectl \

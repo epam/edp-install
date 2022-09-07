@@ -30,7 +30,7 @@ Argo CD can be installed in many ways, please follow the [official documentation
 Follow the steps below to install Argo CD using Helm:
 
 !!! Note
-    If you use OpenShift, apply the `SecurityContextConstraints` resource. Change the namespace under `users`, if required.
+    When using the OpenShift platform, apply the `SecurityContextConstraints` resource. Change the namespace in the `users` section if required.
 
   <details>
   <summary><b>View: argocd-scc.yaml</b></summary>
