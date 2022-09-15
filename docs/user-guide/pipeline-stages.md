@@ -15,7 +15,7 @@ Within EDP, the pipeline framework comprises the following pipelines:
 
 The diagram below shows the delivery path through these pipelines and the respective stages. Please be aware that stages may differ for different codebase types.
 
-![stages](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/stages.puml)
+!![stages](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/stages.puml)
 
 ## Stages Description
 

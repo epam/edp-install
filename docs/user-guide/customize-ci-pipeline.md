@@ -127,7 +127,6 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
               script.sh "echo 'Your custom logic of the stage'"
           }
       }
-      return CustomSonar
 
   !!! info
       There is the ability to redefine the predefined EDP stage as well as to create it from scratch, it depends on the name that is used in the _@Stage_ annotation. For example, using **name = "sonar"** will redefine an existing **sonar** stage with the same name, but using **name="new-sonar"** will create a new stage.
@@ -156,8 +155,7 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
   * Importing classes com.epam.edp.stages.impl.ci.ProjectType and com.epam.edp.stages.impl.ci.Stage;
   * Annotating "Stage" for class - @Stage(name = "sonar", buildTool = ["maven"], type = [ProjectType.APPLICATION, ProjectType.AUTOTESTS, ProjectType.LIBRARY]);
   * Property with the type "Script";
-  * Void the "run" method with the "context input parameter" value;
-  * Bring the custom class back to the end of the file: return CustomSonar.
+  * Void the "run" method with the "context input parameter" value.
 
 3.Open Jenkins and make sure that all the changes are correct after the completion of the customized pipeline.
 
@@ -170,7 +168,7 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
 
 1. Open the GitHub repository:
 
-  * Create a directory with the name `/src/com/epam/edp/customStages/impl/ci/impl/stageName/` in the library repository, for instance: `/src/com/epam/edp/customStages/impl/ci/impl/email-notify/`;
+  * Create a directory with the name `/src/com/epam/edp/customStages/impl/ci/impl/stageName/` in the library repository, for instance: `/src/com/epam/edp/customStages/impl/ci/impl/emailNotify/`;
   * Add a Groovy file with another name to the same stages catalog, for instance – `EmailNotify.groovy`.
 
 2. Copy the part of a pipeline framework logic that cannot be predefined;
@@ -194,7 +192,6 @@ To redefine any stage and add custom logic using global pipeline libraries, perf
               -------------------'Your custom logic here'
           }
       }
-      return EmailNotify
 
 3. Open the default set of stages and add a new one into the _Default Value_ field by saving the respective type {"name": "email-notify"}, save the changes:
   !![Add stage](../assets/user-guide/add_stage.png)

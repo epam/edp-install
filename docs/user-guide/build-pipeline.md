@@ -13,7 +13,7 @@ The purpose of the Build pipeline contains the following points:
 
 Find below the functional diagram of the Build pipeline with the default stages:
 
-![build-pipeline](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/build-pipeline.puml)
+!![build-pipeline](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/build-pipeline.puml)
 
 ## Build Pipeline for Application and Library
 
