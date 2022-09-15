@@ -3,10 +3,10 @@ $ tfenv --version
 $ aws --version
 $ kubectl version
 $ helm version
-</code></pre></div> <h4 id=aws-account-and-iam-roles>AWS Account and IAM Roles<a class=headerlink href=#aws-account-and-iam-roles title="Permanent link">⚓︎</a></h4> <ul> <li>Make sure the AWS account is active.</li> </ul> <ul> <li> <p>Create the AWS IAM role: EKSDeployerRole to deploy EKS cluster on the project side. The provided resources will allow to use cross-account deployment by assuming created EKSDeployerRole from the root AWS account. Take the following steps:</p> <ol> <li> <p>Clone git repo with ism-deployer project <a href=https://github.com/epmd-edp/edp-terraform-aws-platform.git>edp-terraform-aws-platform.git</a>, rename it corresponding to the project name.</p> <p><details> <summary><b> clone project</b></summary></p> <div class=codehilite><pre><span></span><code>$ git clone https://github.com/epmd-edp/edp-terraform-aws-platform.git
+</code></pre></div> <h4 id=aws-account-and-iam-roles>AWS Account and IAM Roles<a class=headerlink href=#aws-account-and-iam-roles title="Permanent link">⚓︎</a></h4> <ul> <li>Make sure the AWS account is active.</li> </ul> <ul> <li> <p>Create the AWS IAM role: EKSDeployerRole to deploy EKS cluster on the project side. The provided resources will allow to use cross-account deployment by assuming the created EKSDeployerRole from the root AWS account. Take the following steps:</p> <ol> <li> <p>Clone git repo with the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform.git>edp-terraform-aws-platform.git</a> ism-deployer project, and rename it according to the project name.</p> <p><details> <summary><b> clone project</b></summary></p> <div class=codehilite><pre><span></span><code>$ git clone https://github.com/epmd-edp/edp-terraform-aws-platform.git
 $ mv edp-terraform-aws-platform edp-terraform-aws-platform-&lt;PROJECT_NAME&gt;
 $ <span class=nb>cd</span> edp-terraform-aws-platform-&lt;PROJECT_NAME&gt;/iam-deployer
-</code></pre></div> </details> <p>where:</p> <ul> <li>&#8249;PROJECT_NAME&#8250; - is a project name, a unique platform identifier, e.g. shared, test-eks etc.</li> </ul> </li> <li> <p>Fill the input variables for Terraform run in the &#8249;iam-deployer/terraform.tfvars&#8250; file, refer to the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam-deployer/template.tfvars>iam-deployer/template.tfvars</a> as an example.</p> <p><details> <summary><b>terraform.tfvars file example</b></summary></p> <div class=codehilite><pre><span></span><code><span class=n>aws_profile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;aws_user&quot;</span><span class=w></span>
+</code></pre></div> </details> <p>where:</p> <ul> <li>&#8249;PROJECT_NAME&#8250; - is a project name or a unique platform identifier, for example, <code>shared</code> or <code>test-eks</code>.</li> </ul> </li> <li> <p>Fill in the input variables for Terraform run in the &#8249;iam-deployer/terraform.tfvars&#8250; file. Use the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam-deployer/template.tfvars>iam-deployer/template.tfvars</a> as an example. Please find the detailed description of the variables in the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam-deployer/variables.tf>iam-deployer/variables.tf</a> file.</p> <p><details> <summary><b>terraform.tfvars file example</b></summary></p> <div class=codehilite><pre><span></span><code><span class=n>aws_profile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;aws_user&quot;</span><span class=w></span>
 
 <span class=n>region</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;eu-central-1&quot;</span><span class=w></span>
 
@@ -18,7 +18,7 @@ $ <span class=nb>cd</span> edp-terraform-aws-platform-&lt;PROJECT_NAME&gt;/iam-d
 <span class=w>  </span><span class=ss>&quot;BusinessUnit&quot;</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;BU&quot;</span><span class=w></span>
 <span class=w>  </span><span class=ss>&quot;Department&quot;</span><span class=w>   </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;DEPARTMENT&quot;</span><span class=w></span>
 <span class=err>}</span><span class=w></span>
-</code></pre></div> </details> <p>Find the detailed description of the variables in the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam-deployer/variables.tf>iam-deployer/variables.tf</a> file.</p> </li> <li> <p>Run Terraform apply. Initialize the backend and apply the changes.</p> <p><details> <summary><b>apply the changes</b></summary></p> <div class=codehilite><pre><span></span><code>$ terraform init
+</code></pre></div> </details> </li> <li> <p>Run the <code>terraform apply</code> command. Then initialize the backend and apply the changes.</p> <p><details> <summary><b>apply the changes</b></summary></p> <div class=codehilite><pre><span></span><code>$ terraform init
 $ terraform apply
 ...
 Do you want to perform these actions?
@@ -37,16 +37,39 @@ Outputs:
 <span class=nv>deployer_iam_role_arn</span> <span class=o>=</span> <span class=s2>&quot;arn:aws:iam::012345678910:role/EKSDeployerRole&quot;</span>
 <span class=nv>deployer_iam_role_id</span> <span class=o>=</span> <span class=s2>&quot;EKSDeployerRole&quot;</span>
 <span class=nv>deployer_iam_role_name</span> <span class=o>=</span> <span class=s2>&quot;EKSDeployerRole&quot;</span>
-</code></pre></div> </details> </li> <li> <p>Commit the local state. At this run Terraform will use the <a href=https://www.terraform.io/docs/language/settings/backends/local.html>local backend</a> to store state on the local filesystem, locks that state using system APIs, and performs operations locally. There is no strong requirements to store the resulted state file in the git, but it's possible at will since there is no sensitive data. On your choice, commit the state of the s3-backend project or not.</p> <div class=codehilite><pre><span></span><code>$ git add iam-deployer/terraform.tfstate iam-deployer/terraform.tfvars
+</code></pre></div> </details> </li> <li> <p>Commit the local state. At this run, Terraform will use the <a href=https://www.terraform.io/docs/language/settings/backends/local.html>local backend</a> to store the state on the local filesystem. Terraform locks that state using system APIs and performs operations locally. It is not mandatory to store the resulted state file in Git, but this option can be used since the file data is not sensitive. Optionally, commit the state of the s3-backend project.</p> <div class=codehilite><pre><span></span><code>$ git add iam-deployer/terraform.tfstate iam-deployer/terraform.tfvars
 $ git commit -m <span class=s2>&quot;Terraform state for IAM deployer role&quot;</span>
-</code></pre></div> </li> </ol> </li> </ul> <ul> <li>Configure AWS profile for deployment from the local node. Please, refer to the AWS documentation for <a href=https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials_profiles.html>detailed guide</a> to configure profiles.</li> </ul> <ul> <li>Create AWS Key pair for EKS cluster nodes access. Please refer to the AWS documentation for <a href=https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair>detailed guide</a> to create a Key pair.</li> </ul> <ul> <li>Create a public Hosted Zone if there is no any to provide for EKS cluster deployment. Please, refer to the AWS documentation for <a href=https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html>detailed guide</a> to create a Hosted zone.</li> </ul> <h4 id=terraform-backend>Terraform Backend<a class=headerlink href=#terraform-backend title="Permanent link">⚓︎</a></h4> <p>Configure Terraform backend. The Terraform configuration for EKS cluster deployment has a backend block, which defines where and how operations are performed, where state snapshots are stored, etc. Currently, the best practice is to store the state as a given key in a given bucket on Amazon S3. This backend also supports state locking and consistency checking via Dynamo DB, which can be enabled by setting the dynamodb_table field to an existing DynamoDB table name.</p> <p>In the following configuration a single DynamoDB table can be used to lock multiple remote state files. Terraform generates key names that include the values of the bucket and key variables.</p> <p>In the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform.git>edp-terraform-aws-platform.git</a> repo an optional project is provided to create initial resources to start using Terraform from the scratch.</p> <p>The provided resources will allow to use the following <strong>Terraform options</strong>:</p> <ul> <li>to store Terraform states remotely in the Amazon S3 bucket;</li> </ul> <ul> <li>to manage remote state access with S3 bucket policy;</li> </ul> <ul> <li>to support state locking and consistency checking via DynamoDB.</li> </ul> <p>After Terraform run the following <strong>AWS resources</strong> will be created:</p> <ul> <li>S3 bucket: terraform-states-&#8249;AWS_ACCOUNT_ID&#8250;</li> </ul> <ul> <li>S3 bucket policy: terraform-states-&#8249;AWS_ACCOUNT_ID&#8250;</li> </ul> <ul> <li>DynamoDB lock table: terraform_locks</li> </ul> <p>Please, skip this section if you already have the listed resources for further Terraform remote backend usage.</p> <p>To create the required resources, do the following:</p> <ol> <li> <p>Clone git repo with s3-backend project <a href=https://github.com/epmd-edp/edp-terraform-aws-platform.git>edp-terraform-aws-platform.git</a>, rename it in the correspondence with project name.</p> <p><details> <summary><b>clone project</b></summary></p> <div class=codehilite><pre><span></span><code>  $ git clone https://github.com/epmd-edp/edp-terraform-aws-platform.git
+</code></pre></div> </li> </ol> </li> </ul> <ul> <li> <p>Create the AWS IAM role: ServiceRoleForEKS<project_name>WorkerNode to connect to the EKS cluster. Take the following steps:</p> <ol> <li> <p>Use the local state file or the AWS S3 bucket for saving the state file. The AWS S3 bucket creation is described in the <a href=https://epam.github.io/edp-install/operator-guide/deploy-aws-eks/#terraform-backend>Terraform Backend</a> section.</p> </li> <li> <p>Go to the folder with the <code>iam-workernode</code> role <a href=https://github.com/epmd-edp/edp-terraform-aws-platform.git>edp-terraform-aws-platform.git</a>, and rename it according to the project name.</p> <p><details> <summary><b> go to the iam-workernode folder</b></summary></p> <div class=codehilite><pre><span></span><code>$ <span class=nb>cd</span> edp-terraform-aws-platform-&lt;PROJECT_NAME&gt;/iam-workernode
+</code></pre></div> </details> <p>where:</p> <ul> <li>&#8249;PROJECT_NAME&#8250; - is a project name or a unique platform identifier, for example, <code>shared</code> or <code>test-eks</code>.</li> </ul> </li> <li> <p>Fill in the input variables for Terraform run in the &#8249;iam-workernode/terraform.tfvars&#8250; file, use the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam-workernode/template.tfvars>iam-workernode/template.tfvars</a> as an example. Please find the detailed description of the variables in the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam-workernode/variables.tf>iam-workernode/variables.tf</a> file.</p> <p><details> <summary><b>terraform.tfvars file example</b></summary></p> <div class=codehilite><pre><span></span><code><span class=n>role_arn</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;arn:aws:iam::012345678910:role/EKSDeployerRole&quot;</span><span class=w></span>
+
+<span class=n>platform_name</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;&lt;PROJECT_NAME&gt;&quot;</span><span class=w></span>
+
+<span class=n>iam_permissions_boundary_policy_arn</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;arn:aws:iam::012345678910:policy/some_role_boundary&quot;</span><span class=w></span>
+
+<span class=n>region</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;eu-central-1&quot;</span><span class=w></span>
+
+<span class=n>tags</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=err>{</span><span class=w></span>
+<span class=w>  </span><span class=ss>&quot;SysName&quot;</span><span class=w>      </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;EKS&quot;</span><span class=w></span>
+<span class=w>  </span><span class=ss>&quot;SysOwner&quot;</span><span class=w>     </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;owner@example.com&quot;</span><span class=w></span>
+<span class=w>  </span><span class=ss>&quot;Environment&quot;</span><span class=w>  </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;EKS-TEST-CLUSTER&quot;</span><span class=w></span>
+<span class=w>  </span><span class=ss>&quot;CostCenter&quot;</span><span class=w>   </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;0000&quot;</span><span class=w></span>
+<span class=w>  </span><span class=ss>&quot;BusinessUnit&quot;</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;BU&quot;</span><span class=w></span>
+<span class=w>  </span><span class=ss>&quot;Department&quot;</span><span class=w>   </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;DEPARTMENT&quot;</span><span class=w></span>
+<span class=err>}</span><span class=w></span>
+</code></pre></div> </details> </li> <li> <p>Run the <code>terraform apply</code> command. Then initialize the backend and apply the changes.</p> <p><details> <summary><b>apply the changes</b></summary></p> <div class=codehilite><pre><span></span><code>$ terraform init
+$ terraform apply
+...
+Do you want to perform these actions?
+Terraform will perform the actions described above.
+Only <span class=s1>&#39;yes&#39;</span> will be accepted to approve.
+
+Enter a value: yes
+</code></pre></div> </details> </li> </ol> </li> </ul> <ul> <li> <p>Create the AWS IAM role: ServiceRoleForEKSShared for the EKS cluster. Take the following steps:</p> <ol> <li> <p>Create the AWS IAM role: ServiceRoleForEKSShared</p> </li> <li> <p>Attach the following policies: "AmazonEKSClusterPolicy" and "AmazonEKSServicePolicy"</p> </li> </ol> </li> </ul> <ul> <li>Configure AWS profile for deployment from the local node. Please, refer to the AWS documentation for <a href=https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials_profiles.html>detailed guide</a> to configure profiles.</li> </ul> <ul> <li>Create AWS Key pair for EKS cluster nodes access. Please refer to the AWS documentation for <a href=https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair>detailed guide</a> to create a Key pair.</li> </ul> <ul> <li>Create a public Hosted Zone if there is no any to provide for EKS cluster deployment. Please, refer to the AWS documentation for <a href=https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html>detailed guide</a> to create a Hosted zone.</li> </ul> <h4 id=terraform-backend>Terraform Backend<a class=headerlink href=#terraform-backend title="Permanent link">⚓︎</a></h4> <p>The Terraform configuration for EKS cluster deployment has a backend block, which defines where and how the operations are performed, and where the state snapshots are stored. Currently, the best practice is to store the state as a given key in a given bucket on Amazon S3.</p> <p>This backend also supports state locking and consistency checking via Dynamo DB, which can be enabled by setting the <code>dynamodb_table</code> field to an existing DynamoDB table name.</p> <p>In the following configuration a single DynamoDB table can be used to lock multiple remote state files. Terraform generates key names that include the values of the bucket and key variables.</p> <p>In the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform.git>edp-terraform-aws-platform.git</a> repo an optional project is provided to create initial resources to start using Terraform from the scratch.</p> <p>The provided resources will allow to use the following <strong>Terraform options</strong>:</p> <ul> <li>to store Terraform states remotely in the Amazon S3 bucket;</li> </ul> <ul> <li>to manage remote state access with S3 bucket policy;</li> </ul> <ul> <li>to support state locking and consistency checking via DynamoDB.</li> </ul> <p>After Terraform run the following <strong>AWS resources</strong> will be created:</p> <ul> <li>S3 bucket: terraform-states-&#8249;AWS_ACCOUNT_ID&#8250;</li> </ul> <ul> <li>S3 bucket policy: terraform-states-&#8249;AWS_ACCOUNT_ID&#8250;</li> </ul> <ul> <li>DynamoDB lock table: terraform_locks</li> </ul> <p>Please, skip this section if you already have the listed resources for further Terraform remote backend usage.</p> <p>To create the required resources, do the following:</p> <ol> <li> <p>Clone git repo with s3-backend project <a href=https://github.com/epmd-edp/edp-terraform-aws-platform.git>edp-terraform-aws-platform.git</a>, rename it in the correspondence with project name.</p> <p><details> <summary><b>clone project</b></summary></p> <div class=codehilite><pre><span></span><code>  $ git clone https://github.com/epmd-edp/edp-terraform-aws-platform.git
 
   $ mv edp-terraform-aws-platform tedp-terraform-aws-platform-&lt;PROJECT_NAME&gt;
 
   $ cd edp-terraform-aws-platform-&lt;PROJECT_NAME&gt;/s3-backend
-</code></pre></div> </details> <p>where:</p> <p>&#8249;PROJECT_NAME&#8250; - is a project name, a unique platform identifier, e.g. shared, test-eks etc.</p> </li> <li> <p>Fill the input variables for Terraform run in the &#8249;s3-backend/terraform.tfvars&#8250; file, refer to the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/s3-backend/template.tfvars>s3-backend/template.tfvars</a> as an example.</p> <p><details> <summary><b>terraform.tfvars file example</b></summary></p> <div class=codehilite><pre><span></span><code><span class=w>  </span><span class=n>aws_profile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;aws_user&quot;</span><span class=w></span>
-
-<span class=w>  </span><span class=n>region</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;eu-central-1&quot;</span><span class=w></span>
+</code></pre></div> </details> <p>where:</p> <p>&#8249;PROJECT_NAME&#8250; - is a project name, a unique platform identifier, e.g. shared, test-eks etc.</p> </li> <li> <p>Fill the input variables for Terraform run in the &#8249;s3-backend/terraform.tfvars&#8250; file, refer to the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/s3-backend/template.tfvars>s3-backend/template.tfvars</a> as an example.</p> <p><details> <summary><b>terraform.tfvars file example</b></summary></p> <div class=codehilite><pre><span></span><code><span class=w>  </span><span class=n>region</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;eu-central-1&quot;</span><span class=w></span>
 
 <span class=w>  </span><span class=n>s3_states_bucket_name</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=ss>&quot;terraform-states&quot;</span><span class=w></span>
 
@@ -111,17 +134,13 @@ $ git commit -m <span class=s2>&quot;Terraform state for IAM deployer role&quot;
 </code></pre></div> </details> <p>where:</p> <ul> <li>&#8249;PROJECT_NAME&#8250; - is a project name, a unique platform identifier, e.g. shared, test-eks etc.</li> </ul> </li> <li> <p>Configure <a href=https://www.terraform.io/docs/language/settings/backends/configuration.html>Terraform backend</a> according to your project needs or use instructions from the Configure Terraform backend section.</p> </li> <li> <p>Fill the input variables for Terraform run in the &#8249;terraform.tfvars&#8250; file, refer to the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/template.tfvars>template.tfvars</a> file and apply the changes. See details below. Be sure to put the correct values of the variables created in the Prerequisites section. Find the detailed description of the variables in the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/variables.tf>variables.tf</a> file.</p> <div class="admonition warning"> <p class=admonition-title>Warning</p> <p>Please, do not use upper case in the input variables. It can lead to unexpected issues.</p> </div> <details> <summary><b>template.tfvars file template</b></summary> <div class=highlight><pre><span></span><code># Check out all the inputs based on the comments below and fill the gaps instead &lt;...&gt;
   # More details on each variable can be found in the variables.tf file
 
-  create_vpc     = true # set to true if you&#39;d like to create a new VPC or false if use existing
-  create_cluster = true # set to false if there are any additional manual steps required between VPC and EKS cluster deployment
-  create_elb     = true # set to true if you&#39;d like to create ELB for Gerrit usage
+  create_elb = true # set to true if you&#39;d like to create ELB for Gerrit usage
 
   region   = &quot;&lt;REGION&gt;&quot;
-  profile  = &quot;&lt;AWS_PROFILE&gt;&quot;
   role_arn = &quot;&lt;ROLE_ARN&gt;&quot;
 
   platform_name        = &quot;&lt;PLATFORM_NAME&gt;&quot;        # the name of the cluster and AWS resources
   platform_domain_name = &quot;&lt;PLATFORM_DOMAIN_NAME&gt;&quot; # must be created as a prerequisite
-  wait_for_validation  = true                     # set to false for use in an automated pipeline to avoid waiting for validation to complete or error after a 45 minute timeout.
 
   # The following will be created or used existing depending on the create_vpc value
   subnet_azs    = [&quot;&lt;SUBNET_AZS1&gt;&quot;, &quot;&lt;SUBNET_AZS2&gt;&quot;]
@@ -129,58 +148,30 @@ $ git commit -m <span class=s2>&quot;Terraform state for IAM deployer role&quot;
   private_cidrs = [&quot;&lt;PRIVATE_CIDRS1&gt;&quot;, &quot;&lt;PRIVATE_CIDRS2&gt;&quot;]
   public_cidrs  = [&quot;&lt;PUBLIC_CIDRS1&gt;&quot;, &quot;&lt;PUBLIC_CIDRS2&gt;&quot;]
 
-  # Define the following only if you&#39;re going to use existing VPC and create_vpc is set to false
-  vpc_id             = &quot;&lt;VPC_ID&gt;&quot;
-  private_subnets_id = [&quot;&lt;PRIVATE_SUBNETS_ID1&gt;&quot;, &quot;&lt;PRIVATE_SUBNETS_ID2&gt;&quot;] # &quot;&lt;SUBNET_AZS1&gt;&quot;, &quot;&lt;SUBNET_AZS2&gt;&quot;
-  public_subnets_id  = [&quot;&lt;PUBLIC_SUBNETS_ID1&gt;&quot;, &quot;&lt;PUBLIC_SUBNETS_ID2&gt;&quot;]   # &quot;&lt;SUBNET_AZS1&gt;&quot;, &quot;&lt;SUBNET_AZS2&gt;&quot;
-  nat_public_ips     = [&quot;&lt;NAT_PUBLIC_IP&gt;&quot;]
-
-  # Define CIDR blocks and/or prefix lists if any to whitelist for public access on LBs
-  ingress_cidr_blocks = [&quot;&lt;PUBLIC_CIDR&gt;&quot;]
-  ingress_prefix_list_ids = [
-    {
-      description      = &quot;&lt;SHORT_DESCRIPTION1&quot;
-      public_prefix_id = &quot;&lt;PREFIX_LIST_ID1&gt;&quot;
-    },
-    {
-      description      = &quot;&lt;SHORT_DESCRIPTION2&quot;
-      public_prefix_id = &quot;&lt;PREFIX_LIST_ID2&gt;&quot;
-    },
+  infrastructure_public_security_group_ids = [
+    &quot;&lt;INFRASTRUCTURE_PUBLIC_SECURITY_GROUP_IDS1&gt;&quot;,
+    &quot;&lt;INFRASTRUCTURE_PUBLIC_SECURITY_GROUP_IDS2&gt;&quot;,
   ]
 
-  # Define existing security groups ids if any in order to whitelist for public access on LBs. Makes sense with create_vpc = true only.
-  public_security_group_ids = [
-    &quot;&lt;PUBLIC_SECURITY_GROUP_IDS1&gt;&quot;,
-    &quot;&lt;PUBLIC_SECURITY_GROUP_IDS2&gt;&quot;,
-  ]
+  ssl_policy = &quot;&lt;SSL_POLICY&gt;&quot;
 
   # EKS cluster configuration
-  cluster_version = &quot;1.18&quot;
+  cluster_version = &quot;1.22&quot;
   key_name        = &quot;&lt;AWS_KEY_PAIR_NAME&gt;&quot; # must be created as a prerequisite
   enable_irsa     = true
 
-  manage_cluster_iam_resources     = false # if set to false, cluster_iam_role_name must be specified
-  manage_worker_iam_resources      = false # if set to false, worker_iam_instance_profile_name must be specified for workers
   cluster_iam_role_name            = &quot;&lt;SERVICE_ROLE_FOR_EKS&gt;&quot;
   worker_iam_instance_profile_name = &quot;&lt;SERVICE_ROLE_FOR_EKS_WORKER_NODE&quot;
 
-  # Uncomment if your AWS CLI version is 1.16.156 or later
-  kubeconfig_aws_authenticator_command = &quot;aws&quot;
-
-  # Environment varibles to put into kubeconfig file to use when executing the authentication, such as AWS profile of IAM user for authentication
-  kubeconfig_aws_authenticator_env_variables = {
-  AWS_PROFILE = &quot;&lt;AWS_PROFILE&gt;&quot;
-  }
-
   add_userdata = &lt;&lt;EOF
-  export TOKEN=$(aws ssm get-parameter --name edprobot --query &#39;Parameter.Value&#39; --region eu-central-1 --output text)
+  export TOKEN=$(aws ssm get-parameter --name &lt;PARAMETER_NAME&gt; --query &#39;Parameter.Value&#39; --region &lt;REGION&gt; --output text)
   cat &lt;&lt;DATA &gt; /var/lib/kubelet/config.json
   {
-  &quot;auths&quot;:{
-  &quot;https://index.docker.io/v1/&quot;:{
-  &quot;auth&quot;:&quot;$TOKEN&quot;
+    &quot;auths&quot;:{
+      &quot;https://index.docker.io/v1/&quot;:{
+        &quot;auth&quot;:&quot;$TOKEN&quot;
       }
-     }
+    }
   }
   DATA
   EOF
@@ -207,28 +198,33 @@ $ git commit -m <span class=s2>&quot;Terraform state for IAM deployer role&quot;
   ]
 
   tags = {
-   &quot;SysName&quot;      = &quot;&lt;SYS_NAME&gt;&quot;
-   &quot;SysOwner&quot;     = &quot;&lt;SYSTEM_OWNER&gt;&quot;
-   &quot;Environment&quot;  = &quot;&lt;ENVIRONMENT&gt;&quot;
-   &quot;CostCenter&quot;   = &quot;&lt;COST_CENTER&gt;&quot;
-   &quot;BusinessUnit&quot; = &quot;&lt;BUSINESS_UNIT&gt;&quot;
-   &quot;Department&quot;   = &quot;&lt;DEPARTMENT&gt;&quot;
-   &quot;user:tag&quot;     = &quot;&lt;PLATFORM_NAME&gt;&quot;
+    &quot;SysName&quot;      = &quot;&lt;SYS_NAME&gt;&quot;
+    &quot;SysOwner&quot;     = &quot;&lt;SYSTEM_OWNER&gt;&quot;
+    &quot;Environment&quot;  = &quot;&lt;ENVIRONMENT&gt;&quot;
+    &quot;CostCenter&quot;   = &quot;&lt;COST_CENTER&gt;&quot;
+    &quot;BusinessUnit&quot; = &quot;&lt;BUSINESS_UNIT&gt;&quot;
+    &quot;Department&quot;   = &quot;&lt;DEPARTMENT&gt;&quot;
+    &quot;user:tag&quot;     = &quot;&lt;PLATFORM_NAME&gt;&quot;
   }
 
-  demand_instance_types = [&quot;r5.large&quot;]
-  spot_instance_types   = [&quot;r5.large&quot;, &quot;r4.large&quot;] # need to ensure we use nodes with more memory
-</code></pre></div> </details> <div class="admonition note"> <p class=admonition-title>Note</p> <p>The file above is an example. Please find the latest version in the project repo in the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/template.tfvars>terraform.tfvars</a> file.</p> </div> <p><strong>There are the following possible scenarios to deploy the EKS cluster:</strong></p> <details> <summary><b>Case 1: Create new VPC and deploy the EKS cluster, terraform.tfvars file example</b></summary> <div class=highlight><pre><span></span><code>create_vpc     = true # set to true if you&#39;d like to create a new VPC or false if use existing
-create_cluster = true # set to false if there are any additional manual steps required between VPC and EKS cluster deployment
-create_elb     = true # set to true if you&#39;d like to create ELB for Gerrit usage
+  # Variables for demand pool
+  demand_instance_types      = [&quot;r5.large&quot;]
+  demand_max_nodes_count     = 0
+  demand_min_nodes_count     = 0
+  demand_desired_nodes_count = 0
+
+  // Variables for spot pool
+  spot_instance_types      = [&quot;r5.xlarge&quot;, &quot;r5.large&quot;, &quot;r4.large&quot;] # need to ensure we use nodes with more memory
+  spot_max_nodes_count     = 2
+  spot_desired_nodes_count = 2
+  spot_min_nodes_count     = 2
+</code></pre></div> </details> <div class="admonition note"> <p class=admonition-title>Note</p> <p>The file above is an example. Please find the latest version in the project repo in the <a href=https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/template.tfvars>terraform.tfvars</a> file.</p> </div> <p><strong>There are the following possible scenarios to deploy the EKS cluster:</strong></p> <details> <summary><b>Case 1: Create new VPC and deploy the EKS cluster, terraform.tfvars file example</b></summary> <div class=highlight><pre><span></span><code>create_elb     = true # set to true if you&#39;d like to create ELB for Gerrit usage
 
 region   = &quot;eu-central-1&quot;
-profile  = &quot;aws_user&quot;
 role_arn = &quot;arn:aws:iam::012345678910:role/EKSDeployerRole&quot;
 
 platform_name        = &quot;test-eks&quot;
 platform_domain_name = &quot;example.com&quot; # must be created as a prerequisite
-wait_for_validation  = false          # set to false for use in an automated pipeline to avoid waiting for validation to complete or error after a 45 minute timeout.
 
 # The following will be created or used existing depending on the create_vpc value
 subnet_azs    = [&quot;eu-central-1a&quot;, &quot;eu-central-1b&quot;]
@@ -236,37 +232,20 @@ platform_cidr = &quot;172.31.0.0/16&quot;
 private_cidrs = [&quot;172.31.0.0/20&quot;, &quot;172.31.16.0/20&quot;]
 public_cidrs  = [&quot;172.31.32.0/20&quot;, &quot;172.31.48.0/20&quot;]
 
-# Define CIDR blocks and/or prefix lists if any to whitelist for public access on LBs. Use short description
-ingress_cidr_blocks = [&quot;192.168.64.0/24&quot;]
-ingress_prefix_list_ids = [
-  {
-    description      = &quot;europe&quot;
-    public_prefix_id = &quot;pl-00000000000000002&quot;
-  },
-  {
-    description      = &quot;world&quot;
-    public_prefix_id = &quot;pl-00000000000000003&quot;
-  }
+# Use this parameter the second time you apply the code to specify new AWS Security Groups
+infrastructure_public_security_group_ids = [
+  #  &quot;sg-00000000000000000&quot;,
+  #  &quot;sg-00000000000000000&quot;,
 ]
 
 # EKS cluster configuration
-cluster_version = &quot;1.18&quot;
+cluster_version = &quot;1.22&quot;
 key_name        = &quot;test-kn&quot; # must be created as a prerequisite
 enable_irsa     = true
 
 # Define if IAM roles should be created during the deployment or used existing ones
-manage_cluster_iam_resources     = false # if set to false, cluster_iam_role_name must be specified
-manage_worker_iam_resources      = false # if set to false, worker_iam_instance_profile_name must be specified for workers
 cluster_iam_role_name            = &quot;ServiceRoleForEKSShared&quot;
-worker_iam_instance_profile_name = &quot;ServiceRoleForEksSharedWorkerNode&quot;
-
-# Uncomment if your AWS CLI version is 1.16.156 or later
-kubeconfig_aws_authenticator_command = &quot;aws&quot;
-
-# Environment varibles to put into kubeconfig file to use when executing the authentication, such as AWS profile of IAM user for authentication
-kubeconfig_aws_authenticator_env_variables = {
-  AWS_PROFILE = &quot;aws_user&quot;
-}
+worker_iam_instance_profile_name = &quot;ServiceRoleForEksSharedWorkerNode0000000000000000000000&quot;
 
 add_userdata = &lt;&lt;EOF
 export TOKEN=$(aws ssm get-parameter --name edprobot --query &#39;Parameter.Value&#39; --region eu-central-1 --output text)
@@ -312,116 +291,11 @@ tags = {
   &quot;user:tag&quot;     = &quot;test-eks&quot;
 }
 
-demand_instance_types = [&quot;r5.large&quot;]
-spot_instance_types   = [&quot;r5.large&quot;, &quot;r4.large&quot;] # need to ensure we use nodes with more memory
-</code></pre></div> </details> <details> <summary><b>Case 2: Use existing VPC to deploy EKS cluster, terraform.tfvars file example</b></summary> <div class=highlight><pre><span></span><code>create_vpc     = false # set to true if you&#39;d like to create a new VPC or false if use existing
-  create_cluster = true # set to false if there are any additional manual steps required between VPC and EKS cluster deployment
-  create_elb     = true # set to true if you&#39;d like to create ELB for Gerrit usage
-
-  region   = &quot;eu-central-1&quot;
-  profile  = &quot;aws_user&quot;
-  role_arn = &quot;arn:aws:iam::012345678910:role/EKSDeployerRole&quot;
-
-  platform_name        = &quot;test-eks&quot;
-  platform_domain_name = &quot;example.com&quot; # must be created as a prerequisite
-  wait_for_validation  = false          # set to false for use in an automated pipeline to avoid waiting for validation to complete or error after a 45 minute timeout.
-
-  # The following will be created or used existing depending on the create_vpc value
-  subnet_azs    = [&quot;eu-central-1a&quot;, &quot;eu-central-1b&quot;]
-  platform_cidr = &quot;172.31.0.0/16&quot;
-  private_cidrs = [&quot;172.31.0.0/20&quot;, &quot;172.31.16.0/20&quot;]
-  public_cidrs  = [&quot;172.31.32.0/20&quot;, &quot;172.31.48.0/20&quot;]
-
-  # Define the following only if you&#39;re going to use existing VPC and create_vpc is set to false
-  vpc_id             = &quot;vpc-00000000000000000&quot;
-  private_subnets_id = [&quot;subnet-00000000000000001&quot;, &quot;subnet-00000000000000002&quot;] # eu-central-1a, eu-central-1b
-  public_subnets_id  = [&quot;subnet-00000000000000003&quot;, &quot;subnet-00000000000000004&quot;] # eu-central-1a, eu-central-1b
-  nat_public_cidrs   = [&quot;10.11.12.13/32&quot;]
-
-  # Define CIDR blocks and/or prefix lists if any to whitelist for public access on LBs. Use short description
-  ingress_cidr_blocks = [&quot;192.168.64.0/24&quot;]
-  ingress_prefix_list_ids = [
-    {
-      description      = &quot;europe&quot;
-      public_prefix_id = &quot;pl-00000000000000002&quot;
-    },
-    {
-      description      = &quot;world&quot;
-      public_prefix_id = &quot;pl-00000000000000003&quot;
-    }
-  ]
-
-  # Define existing security groups ids if any in order to whitelist for public access on LBs. Makes sense with create_vpc = false only.
-  public_security_group_ids = [
-    &quot;sg-00000000000000001&quot;, # Europe
-    &quot;sg-00000000000000002&quot;, # Global
-  ]
-
-  # EKS cluster configuration
-  cluster_version = &quot;1.18&quot;
-  key_name        = &quot;test-kn&quot; # must be created as a prerequisite
-  enable_irsa     = true
-
-  # Define if IAM roles should be created during the deployment or used existing ones
-  manage_cluster_iam_resources     = false # if set to false, cluster_iam_role_name must be specified
-  manage_worker_iam_resources      = false # if set to false, worker_iam_instance_profile_name must be specified for workers
-  cluster_iam_role_name            = &quot;ServiceRoleForEKSShared&quot;
-  worke
-
-  # Uncomment if your AWS CLI version is 1.16.156 or later
-  kubeconfig_aws_authenticator_command = &quot;aws&quot;
-
-  # Environment varibles to put into kubeconfig file to use when executing the authentication, such as AWS profile of IAM user for authentication
-  kubeconfig_aws_authenticator_env_variables = {
-    AWS_PROFILE = &quot;aws_user&quot;
-  }
-
-  add_userdata = &lt;&lt;EOF
-  export TOKEN=$(aws ssm get-parameter --name edprobot --query &#39;Parameter.Value&#39; --region eu-central-1 --output text)
-  cat &lt;&lt;DATA &gt; /var/lib/kubelet/config.json
-  {
-    &quot;auths&quot;:{
-      &quot;https://index.docker.io/v1/&quot;:{
-        &quot;auth&quot;:&quot;$TOKEN&quot;
-      }
-    }
-  }
-  DATA
-  EOF
-
-  map_users = [
-    {
-      &quot;userarn&quot; : &quot;arn:aws:iam::012345678910:user/user_name1@example.com&quot;,
-      &quot;username&quot; : &quot;user_name1@example.com&quot;,
-      &quot;groups&quot; : [&quot;system:masters&quot;]
-    },
-    {
-      &quot;userarn&quot; : &quot;arn:aws:iam::012345678910:user/user_name2@example.com&quot;,
-      &quot;username&quot; : &quot;user_name2@example.com&quot;,
-      &quot;groups&quot; : [&quot;system:masters&quot;]
-    }
-  ]
-
-  map_roles = [
-    {
-      &quot;rolearn&quot; : &quot;arn:aws:iam::012345678910:role/EKSClusterAdminRole&quot;,
-      &quot;username&quot; : &quot;eksadminrole&quot;,
-      &quot;groups&quot; : [&quot;system:masters&quot;]
-    },
-  ]
-
-  tags = {
-    &quot;SysName&quot;      = &quot;EKS&quot;
-    &quot;SysOwner&quot;     = &quot;owner@example.com&quot;
-    &quot;Environment&quot;  = &quot;EKS-TEST-CLUSTER&quot;
-    &quot;CostCenter&quot;   = &quot;2020&quot;
-    &quot;BusinessUnit&quot; = &quot;BU&quot;
-    &quot;Department&quot;   = &quot;DEPARTMENT&quot;
-    &quot;user:tag&quot;     = &quot;test-eks&quot;
-  }
-
-  demand_instance_types = [&quot;r5.large&quot;]
-  spot_instance_types   = [&quot;r5.large&quot;, &quot;r4.large&quot;] # need to ensure we use nodes with more memory
+# Variables for spot pool
+spot_instance_types      = [&quot;r5.large&quot;, &quot;r4.large&quot;] # need to ensure we use nodes with more memory
+spot_max_nodes_count     = 1
+spot_desired_nodes_count = 1
+spot_min_nodes_count     = 1
 </code></pre></div> </details> </li> <li> <p>Run Terraform apply. Initialize the backend and apply the changes.</p> <details> <summary><b>apply the changes</b></summary> <div class=highlight><pre><span></span><code>   $ terraform init
    $ terraform apply
    ...
