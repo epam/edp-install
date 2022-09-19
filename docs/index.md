@@ -68,7 +68,3 @@ There are two main options for Kubernetes provided by EDP:
 - OpenShift that is a Platform as a Service on the top of Kubernetes from Red Hat. OpenShift is the default option for on-premise installation and it can be considered whether the _solution built on the top of EDP_ should be **cloud-agnostic** or require **enterprise support**;
 
 There is no limitation to run EDP on vanilla Kubernetes.
-
-!!! note
-    To get accurate information about EDP architecture, please refer to the
-    [EDP Architecture](https://github.com/epam/edp-architecture#edp-architecture) page.

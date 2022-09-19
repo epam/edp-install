@@ -1006,7 +1006,6 @@ Please refer to the [Application Info](https://github.com/epam/edp-admin-console
 
 #### Documentation
 
-* The [EDP Components List](https://github.com/epam/edp-architecture/blob/master/documentation/edp_components.md#edp-components-list) page is added.
 * The [EDP Installation on Kubernetes](https://github.com/epam/edp-install/blob/master/documentation/kubernetes_install_edp.md) page is updated.
 * The [EDP Installation on OpenShift](https://github.com/epam/edp-install/blob/master/documentation/openshift_install_edp.md) page is updated.
 * The [EDP Overview](https://github.com/epam/edp-install/tree/master#epam-delivery-platform-rocket) page is updated.
