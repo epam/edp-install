@@ -61,6 +61,7 @@ A Helm chart for EDP Install
 | global.database.affinity | object | `{}` |  |
 | global.database.annotations | object | `{}` |  |
 | global.database.deploy | bool | `true` | flag to deploy database |
+| global.database.enabled | bool | `true` | flag to use database |
 | global.database.host | string | `"edp-db"` | database host |
 | global.database.image | string | `"postgres:9.6"` | image for database |
 | global.database.imagePullPolicy | string | `"IfNotPresent"` |  |

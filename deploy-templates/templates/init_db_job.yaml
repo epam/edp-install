@@ -1,3 +1,4 @@
+{{- if .Values.global.database.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -101,3 +102,4 @@ spec:
               value: {{.Values.global.database.name}}
             - name: PGHOST
               value: {{.Values.global.database.host}}
+{{end}}

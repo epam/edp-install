@@ -21,6 +21,8 @@ global:
   database:
     # -- flag to deploy database
     deploy: true
+    # -- flag to use database
+    enabled: true
     # -- image for database
     image: "postgres:9.6"
     imagePullPolicy: "IfNotPresent"
