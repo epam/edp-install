@@ -22,7 +22,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
 
   As a sample, it is possible to use the following template:
 
-      apiVersion: v2.edp.epam.com/v1alpha1
+      apiVersion: v2.edp.epam.com/v1
       kind: GitServer
       metadata:
         name: <git-server-name>
@@ -40,7 +40,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
 
 4. Create `Jenkinsserviceaccount` Custom Resource with the **credentials** field that corresponds to the **nameSshKeySecret** property above.
 
-      apiVersion: v2.edp.epam.com/v1alpha1
+      apiVersion: v2.edp.epam.com/v1
       kind: JenkinsServiceAccount
       metadata:
         name: gitlab-sshkey

@@ -15,7 +15,7 @@ In order to adjust the Jira server integration, first add JiraServer CR by perfo
 
 2. Create JiraServer CR in the OpenShift/Kubernetes namespace with the **apiUrl**, **credentialName** and **rootUrl** fields:
 
-      apiVersion: v2.edp.epam.com/v1alpha1
+      apiVersion: v2.edp.epam.com/v1
       kind: JiraServer
       metadata:
         name: epam-jira
