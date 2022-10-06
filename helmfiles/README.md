@@ -10,6 +10,7 @@
     - [Deploy Argo CD](#deploy-argo-cd)
     - [Deploy External Secrets Operator](#deploy-external-secrets-operator)
     - [Deploy DefectDojo](#deploy-defectdojo)
+    - [Deploy ReportPortal](#deploy-reportportal)
   - [Operate Helmfile](#operate-helmfile)
     - [Related Articles](#related-articles)
 
@@ -24,6 +25,7 @@ This article provides the instruction on how to deploy EDP and components in Kub
 * [Helm](https://helm.sh) version 3.6.0+ is installed. Please refer to the [Helm](https://github.com/helm/helm/releases/tag/v3.6.0) page on GitHub for details.
 * Helmfile version 0.142.0 is installed. Please refer to the [GitHub](https://github.com/helmfile/helmfile) page for details.
 * Helm diff plugin version 3.5.0 is installed. Please refer to the [GitHub](https://github.com/databus23/helm-diff) page for details.
+* Helm-git plugin version 0.11.4 is installed. Please refer to the [GitHub](https://github.com/aslafy-z/helm-git) page for details.
 
 ## Helmfile Structure
 
@@ -45,6 +47,7 @@ Using the Helmfile, the following components can be installed:
 * [Argo CD](https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd)
 * [External Secrets Operator](https://github.com/external-secrets/external-secrets/tree/main/deploy/charts/external-secrets)
 * [DefectDojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo)
+* [ReportPortal](https://github.com/reportportal/kubernetes/tree/develop/reportportal)
 
 ### Deploy NGINX Ingress Controller
 
@@ -284,6 +287,70 @@ To install DefectDojo via Helmfile, follow the steps below:
   helmfile  --selector component=defectdojo --environment platform -f helmfile.yaml apply
   ```
 
+### Deploy ReportPortal
+
+> **NOTE**: It is also possible to install ReportPortal via Helm Chart. For details, please refer to the [Install ReportPortal](https://epam.github.io/edp-install/operator-guide/install-reportportal/) page.
+
+ReportPortal requires third-party deployments: RabbitMQ, ElasticSearch, PostgreSQL, MinIO.
+
+To install third-party resources, follow the steps below:
+
+1. Create a RabbitMQ admin secret:
+
+  ```bash
+  kubectl -n platform create secret generic reportportal-rabbitmq-creds \
+  --from-literal=rabbitmq-password=<rabbitmq_password> \
+  --from-literal=rabbitmq-erlang-cookie=<rabbitmq_erlang_cookie>
+  ```
+
+  > **WARNING**: The `rabbitmq_password` password must be 10 characters long, and the `rabbitmq_erlang_cookie` password must be 32 characters long.
+
+2. Create a PostgreSQL admin secret:
+
+  ```bash
+  kubectl -n platform create secret generic reportportal-postgresql-creds \
+  --from-literal=postgresql-password=<postgresql_password> \
+  --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
+  ```
+
+  > **WARNING**: The `postgresql_password` and `postgresql_postgres_password` passwords must be 16 characters long.
+
+3. Create a MinIO admin secret:
+
+  ```bash
+  kubectl -n platform create secret generic reportportal-minio-creds \
+  --from-literal=root-password=<root_password> \
+  --from-literal=root-user=<root_user>
+  ```
+
+4. In the `envs/platform.yaml` file, set the `dnsWildCard` and `edpName` parameters.
+
+5. Install third-party resources:
+
+  ```bash
+  helmfile --selector component=report-portal-third-party-resources --environment platform -f helmfile.yaml apply
+  ```
+
+6. After the rabbitmq pod gets the status Running, you need to configure the RabbitMQ memory threshold
+
+  ```bash
+  kubectl -n platform exec -it rabbitmq-0 -- rabbitmqctl set_vm_memory_high_watermark 0.8
+  ```
+
+To install ReportPortal via Helmfile, follow the steps below:
+
+  ```bash
+  helmfile --selector component=report-portal --environment platform -f helmfile.yaml apply
+  ```
+
+> **NOTES**:
+>
+> For user access: default/1q2w3e
+>
+> For admin access: superadmin/erebus
+>
+> Please refer to the [ReportPortal.io](https://reportportal.io/installation) page for details.
+
 ## Operate Helmfile
 
 Before applying the Helmfile, please fill in the global parameters in the `envs/platform.yaml` and `releases/*.yaml` files for every Helm deploy.
@@ -315,3 +382,5 @@ Pay attention to the following recommendations while working with the Helmfile:
 - [Install Keycloak](https://epam.github.io/edp-install/operator-guide/install-keycloak/)
 - [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/)
 - [Install Argo CD](https://epam.github.io/edp-install/operator-guide/install-argocd/)
+- [Install DefectDojo](https://epam.github.io/edp-install/operator-guide/install-defectdojo/)
+- [Install ReportPortal](https://epam.github.io/edp-install/operator-guide/install-reportportal/)

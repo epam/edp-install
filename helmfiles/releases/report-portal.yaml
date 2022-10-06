@@ -1,0 +1,177 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## Report-Portal ###############################################################
+################################################################################
+
+#
+# References:
+#   - - https://github.com/reportportal/kubernetes/tree/develop/reportportal
+#
+- name: "minio"
+  namespace: {{ .Values.global.edpName }}
+  labels:
+    chart: "minio"
+    repo: "minio"
+    component: "report-portal-third-party-resources"
+    namespace: {{ .Values.global.edpName }}
+    vendor: "minio"
+    default: "true"
+  chart: "bitnami/minio"
+  version: "11.10.3"
+  wait: true
+  installed: true
+  values:
+    - auth:
+        existingSecret: reportportal-minio-creds
+      persistence:
+        size: 1Gi
+
+- name: "rabbitmq"
+  namespace: {{ .Values.global.edpName }}
+  labels:
+    chart: "rabbitmq"
+    repo: "rabbitmq"
+    component: "report-portal-third-party-resources"
+    namespace: {{ .Values.global.edpName }}
+    vendor: "rabbitmq"
+    default: "true"
+  chart: "bitnami/rabbitmq"
+  version: "10.3.8"
+  wait: true
+  installed: true
+  values:
+    - auth:
+        existingPasswordSecret: reportportal-rabbitmq-creds
+        existingErlangSecret: reportportal-rabbitmq-creds
+      persistence:
+        size: 1Gi
+
+- name: "elasticsearch"
+  namespace: {{ .Values.global.edpName }}
+  labels:
+    chart: "elasticsearch"
+    repo: "elasticsearch"
+    component: "report-portal-third-party-resources"
+    namespace: {{ .Values.global.edpName }}
+    vendor: "elasticsearch"
+    default: "true"
+  chart: "elastic/elasticsearch"
+  version: "7.17.3"
+  wait: true
+  installed: true
+  values:
+    - replicas: 1
+
+      extraEnvs:
+        - name: discovery.type
+          value: single-node
+        - name: cluster.initial_master_nodes
+          value: ""
+
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "3Gi"
+
+      volumeClaimTemplate:
+        resources:
+          requests:
+            storage: 3Gi
+
+- name: "postgresql"
+  namespace: {{ .Values.global.edpName }}
+  labels:
+    chart: "postgresql"
+    repo: "postgresql"
+    component: "report-portal-third-party-resources"
+    namespace: {{ .Values.global.edpName }}
+    vendor: "postgresql"
+    default: "true"
+  chart: "bitnami-archive/postgresql"
+  version: "10.9.4"
+  wait: true
+  installed: true
+  values:
+    - persistence:
+        size: 1Gi
+      resources:
+        requests:
+          cpu: "100m"
+      postgresqlUsername: "rpuser"
+      postgresqlDatabase: "reportportal"
+      existingSecret: "reportportal-postgresql-creds"
+      initdbScripts:
+        init_postgres.sh: |
+          #!/bin/sh
+          /opt/bitnami/postgresql/bin/psql -U postgres -d ${POSTGRES_DB} -c 'CREATE EXTENSION IF NOT EXISTS ltree; CREATE EXTENSION IF NOT EXISTS pgcrypto; CREATE EXTENSION IF NOT EXISTS pg_trgm;'
+
+- name: "report-portal"
+  namespace: {{ .Values.global.edpName }}
+  labels:
+    chart: "report-portal"
+    repo: "report-portal"
+    component: "report-portal"
+    namespace: {{ .Values.global.edpName }}
+    vendor: "report-portal"
+    default: "true"
+  chart: "report-portal/reportportal"
+  wait: true
+  installed: true
+  values:
+    - serviceindex:
+        resources:
+          requests:
+            cpu: 50m
+      uat:
+        resources:
+          requests:
+            cpu: 50m
+      serviceui:
+        resources:
+          requests:
+            cpu: 50m
+      serviceapi:
+        resources:
+          requests:
+            cpu: 50m
+      serviceanalyzer:
+        resources:
+          requests:
+            cpu: 50m
+      serviceanalyzertrain:
+        resources:
+          requests:
+            cpu: 50m
+
+      rabbitmq:
+        SecretName: "reportportal-rabbitmq-creds"
+        endpoint:
+          address: rabbitmq.{{ .Values.global.edpName }}.svc.cluster.local
+          user: user
+          apiuser: user
+
+      postgresql:
+        SecretName: "reportportal-postgresql-creds"
+        endpoint:
+          address: postgresql.{{ .Values.global.edpName }}.svc.cluster.local
+
+      elasticsearch:
+        endpoint: http://elasticsearch-master.{{ .Values.global.edpName }}.svc.cluster.local:9200
+
+      minio:
+        secretName: "reportportal-minio-creds"
+        endpoint: http://minio.{{ .Values.global.edpName }}.svc.cluster.local:9000
+        endpointshort: minio.{{ .Values.global.edpName }}.svc.cluster.local:9000
+        accesskeyName: "root-user"
+        secretkeyName: "root-password"
+
+      ingress:
+        # IF YOU HAVE SOME DOMAIN NAME SET INGRESS.USEDOMAINNAME to true
+        usedomainname: true
+        hosts:
+          - report-portal-{{ .Values.global.edpName }}.{{ .Values.global.dnsWildCard }}

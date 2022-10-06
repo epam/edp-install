@@ -23,8 +23,28 @@ repositories:
 - name: "defectdojo"
   url: "https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts"
 
+# ReportPortal helm charts:
+# - "minio"
+# - "rabbitmq"
+# Keycloak helm chart:
+# - "postgresql"
 - name: "bitnami"
   url: "https://charts.bitnami.com/bitnami"
+
+# ReportPortal helm chart:
+# - "postgresql"
+- name: "bitnami-archive"
+  url: "https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami"
+
+# ReportPortal helm chart:
+# - "elasticsearch"
+- name: "elastic"
+  url: "https://helm.elastic.co"
+
+# ReportPortal helm chart:
+# - "reportportal"
+- name: "report-portal"
+  url: "git+https://github.com/reportportal/kubernetes@reportportal?ref=master"
 
 ---
 helmDefaults:

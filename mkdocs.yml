@@ -97,6 +97,7 @@ nav:
         - Install NGINX Ingress Controller: operator-guide/install-ingress-nginx.md
         - Install Keycloak: operator-guide/install-keycloak.md
         - Install DefectDojo: operator-guide/install-defectdojo.md
+        - Install ReportPortal: operator-guide/install-reportportal.md
         - Kiosk:
             - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
             - Set Up Kiosk: operator-guide/install-kiosk.md

@@ -11,3 +11,4 @@ helmfiles:
   - releases/argocd.yaml
   - releases/external-secrets-operator.yaml
   - releases/defectdojo.yaml
+  - releases/report-portal.yaml
