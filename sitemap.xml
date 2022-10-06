@@ -191,6 +191,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/install-reportportal/</loc>
+         <lastmod>2022-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/install-velero/</loc>
          <lastmod>2022-10-06</lastmod>
          <changefreq>daily</changefreq>
