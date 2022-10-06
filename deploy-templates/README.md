@@ -27,6 +27,7 @@ A Helm chart for EDP Install
 | @epamedp | edp-argocd-operator | 0.2.0 |
 | @epamedp | edp-component-operator | 0.12.0 |
 | @epamedp | edp-headlamp | 0.2.0 |
+| @epamedp | edp-tekton | 0.1.1 |
 | @epamedp | gerrit-operator | 2.12.0 |
 | @epamedp | jenkins-operator | 2.12.0 |
 | @epamedp | keycloak-operator | 1.12.0 |
@@ -50,6 +51,7 @@ A Helm chart for EDP Install
 | dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
 | edp-argocd-operator.enabled | bool | `false` |  |
 | edp-headlamp.enabled | bool | `true` |  |
+| edp-tekton.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for EDP installation, using External Secret Operator |
 | externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |

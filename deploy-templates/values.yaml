@@ -298,6 +298,9 @@ edp-argocd-operator:
   #   repository: epamedp/edp-headlamp
   #   tag:
 
+edp-tekton:
+  enabled: true
+
 perf-operator:
   enabled: true
   # image:

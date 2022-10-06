@@ -51,6 +51,11 @@ dependencies:
   version: "0.2.0"
   condition: edp-argocd-operator.enabled
 
+- name: edp-tekton
+  repository: "@epamedp"
+  version: "0.1.1"
+  condition: edp-tekton.enabled
+
 - name: cd-pipeline-operator
   repository: "@epamedp"
   version: "2.12.0"
