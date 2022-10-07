@@ -60,22 +60,6 @@ A Helm chart for EDP Install
 | externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
 | gerrit-operator.enabled | bool | `true` |  |
 | global.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
-| global.database.affinity | object | `{}` |  |
-| global.database.annotations | object | `{}` |  |
-| global.database.deploy | bool | `true` | flag to deploy database |
-| global.database.enabled | bool | `true` | flag to use database |
-| global.database.host | string | `"edp-db"` | database host |
-| global.database.image | string | `"postgres:9.6"` | image for database |
-| global.database.imagePullPolicy | string | `"IfNotPresent"` |  |
-| global.database.name | string | `"edp-db"` | database name |
-| global.database.nodeSelector | object | `{}` |  |
-| global.database.port | int | `5432` | database port |
-| global.database.resources.limits.memory | string | `"512Mi"` |  |
-| global.database.resources.requests.cpu | string | `"50m"` |  |
-| global.database.resources.requests.memory | string | `"64Mi"` |  |
-| global.database.storage.class | string | `"gp2"` | database storage class |
-| global.database.storage.size | string | `"2Gi"` | database storage size |
-| global.database.tolerations | list | `[]` |  |
 | global.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.edpName | string | `"stub-namespace"` | namespace or a project name (in case of OpenShift) |

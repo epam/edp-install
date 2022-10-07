@@ -18,35 +18,6 @@ global:
   developers:
     - "stub_user_one@example.com"
     - "stub_user_two@example.com"
-  database:
-    # -- flag to deploy database
-    deploy: true
-    # -- flag to use database
-    enabled: true
-    # -- image for database
-    image: "postgres:9.6"
-    imagePullPolicy: "IfNotPresent"
-    # -- database host
-    host: "edp-db"
-    # -- database name
-    name: "edp-db"
-    # -- database port
-    port: 5432
-    storage:
-      # -- database storage class
-      class: gp2
-      # -- database storage size
-      size: 2Gi
-    resources:
-      limits:
-        memory: 512Mi
-      requests:
-        cpu: 50m
-        memory: 64Mi
-    annotations: {}
-    nodeSelector: {}
-    tolerations: []
-    affinity: {}
   webConsole:
     # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
     # -- URL to OpenShift/Kubernetes Web console
