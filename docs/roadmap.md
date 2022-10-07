@@ -7,12 +7,30 @@ hide:
 
 RoadMap consists of three streams:
 
-* [Architecture](#i-architecture)
-* [Building Blocks](#ii-building-blocks)
-* [Admin Console](#iii-admin-console-ui)
-* [Documentation](#iv-documentation-as-code)
+* [Community](#i-community)
+* [Architecture](#ii-architecture)
+* [Building Blocks](#iii-building-blocks)
+* [Admin Console](#iv-admin-console-ui)
+* [Documentation](#v-documentation-as-code)
 
-## I. Architecture
+## I. Community
+
+*Goals:*
+
+* Innovation Through Collaboration
+* Improve OpenSource Adoption
+* Build Community around technology solutions EDP is built on
+
+## Deliver Operators on OperatorHub
+
+[OperatorHub](https://operatorhub.io/){target=_blank} is a defacto leading solution which consolidates Kubernetes Community around Operators. EDP follows the best practices of delivering Operators in a quick and reliable way. We want to improve Deployment and Management experience for our Customers by publishing [all EDP operators](https://operatorhub.io/?keyword=edp){target=_blank} on this HUB.
+
+Another artifact aggregator which is used by EDP - [ArtifactHub](https://artifacthub.io/packages/search?ts_query_web=edp&sort=relevance&page=1){target=_blank}, that holds description for both components: [stable](https://artifacthub.io/packages/search?repo=epmdedp){target=_blank} and [under-development](https://artifacthub.io/packages/search?repo=epmdedp-dev){target=_blank}.
+
+!!! done "OperatorHub. Keycloak Operator"
+    [EDP Keycloak Operator](https://operatorhub.io/operator/edp-keycloak-operator) is now available from OperatorHub both for Upstream (Kubernetes) and OpenShift deployments.
+
+## II. Architecture
 
 *Goals:*
 
@@ -77,7 +95,7 @@ EDP has a number of components which need to report their statuses: Build/Code R
 
 Persistent layer, which is based on [edp-db](https://github.com/epam/edp-install/tree/master/deploy-templates/templates/db) (PostgreSQL) and [reconciler](https://github.com/epam/edp-reconciler/) component should be retired in favour of [Kubernetes Custom Resource (CR)](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/){target=_blank}. The latest features in EDP are implemented using CR approach.
 
-## II. Building Blocks
+## III. Building Blocks
 
 *Goals:*
 
@@ -131,7 +149,7 @@ EDP supports two LTS versions of Java: 8 and 11. The goal is to provide [Java 17
 !!! done "EDP Release 2.12.x"
     EDP Platform runs on the latest OKD versions: [4.9](./operator-guide/deploy-okd.md) and [4.10](./operator-guide/deploy-okd-4.10.md). [Creating the IAM Roles for Service Account](https://docs.openshift.com/container-platform/4.10/authentication/managing_cloud_provider_credentials/cco-mode-sts.html#sts-mode-installing-manual-run-installer_cco-mode-sts) is a recommended way to work with AWS Resources from the OKD cluster.
 
-## III. Admin Console (UI)
+## IV. Admin Console (UI)
 
 *Goals:*
 
@@ -154,7 +172,7 @@ EDP [CD Pipeline section](./user-guide/add-cd-pipeline.md) in Admin Console prov
 
 [Commit Validate step](../user-guide/pipeline-stages/#stages-description) was initially designed to be aligned with [Jira Integration](./operator-guide/jira-integration.md) and cannot be used as single feature. Target state is to ensure features *CommitMessage Validation* and *Jira Integration* both can be used independently. We also want to add support for [Conventional Commits](https://www.conventionalcommits.org){target=_blank}.
 
-## IV. Documentation as Code
+## V. Documentation as Code
 
 *Goal:*
 
