@@ -9,16 +9,19 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
 
       ssh-keygen -t ed25519 -C "email@example.com"
 
-2. Create a `Secret` in the &#8249;edp-project&#8250; namespace for the Git account with the **id_rsa**, **id_rsa.pub**, and **username** fields.
+2. Generate access token for [GitLab](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) or [GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) account with read/write access to the API.
 
-  As a sample, it is possible to use the following command (use *github-sshkey* instead of *gitlab-sshkey* for GitHub):
+3. Create a `Secret` in the &#8249;edp-project&#8250; namespace for the Git account with the **id_rsa**, **id_rsa.pub**, **username** and **token** fields.
 
-      kubectl create secret generic gitlab-sshkey -n <edp-project> \
+  As a sample, it is possible to use the following command (use *github-configuration* instead of *gitlab-configuration* for GitHub):
+
+      kubectl create secret generic gitlab-configuration -n <edp-project> \
         --from-file=id_rsa=id_rsa \
         --from-file=id_rsa.pub=id_rsa.pub \
         --from-literal=username=user@example.com
+        --from-literal=your_gitlab_access_token
 
-3. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **httpsPort**, **sshPort**, **nameSshKeySecret**, and **createCodeReviewPipeline** fields.
+4. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **httpsPort**, **sshPort**, **nameSshKeySecret**, and **createCodeReviewPipeline** fields.
 
   As a sample, it is possible to use the following template:
 
@@ -32,21 +35,21 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
         gitHost: git.sample.com
         gitUser: git
         httpsPort: 443
-        nameSshKeySecret: gitlab-sshkey
+        nameSshKeySecret: gitlab-configuration
         sshPort: 22
 
   !!! note
       The value of the **nameSshKeySecret** property is the name of the Secret that is indicated in the first point above.
 
-4. Create `Jenkinsserviceaccount` Custom Resource with the **credentials** field that corresponds to the **nameSshKeySecret** property above.
+5. Create `Jenkinsserviceaccount` Custom Resource with the **credentials** field that corresponds to the **nameSshKeySecret** property above.
 
       apiVersion: v2.edp.epam.com/v1
       kind: JenkinsServiceAccount
       metadata:
-        name: gitlab-sshkey
+        name: gitlab-configuration
         namespace: <edp-project>
       spec:
-        credentials: gitlab-sshkey
+        credentials: gitlab-configuration
         ownerName: ''
         type: ssh
 
@@ -54,7 +57,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
 
   !![Jenkins credential](../assets/operator-guide/add-credentials.png "Jenkins credential")
 
-5. Make sure that the value of **INTEGRATION_STRATEGIES** variable is set to **Import** in the edp-admin-console deployment (should be by default). You can check it here:
+6. Make sure that the value of **INTEGRATION_STRATEGIES** variable is set to **Import** in the edp-admin-console deployment (should be by default). You can check it here:
 
       spec:
         containers:
