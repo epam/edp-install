@@ -186,9 +186,9 @@ To install DefectDojo via Helmfile, follow the steps below:
 
 1. Create a DefectDojo namespace:
 
-  !!! Note
-      **For the OpenShift users:**<br>
-      This namespace is also indicated as `users` in the `resources/defectdojo-route.yaml` custom `SecurityContextConstraints` resource. Change it when using a custom namespace. Also, change the namespace in the `resources/defectdojo-route.yaml` file.
+  !!! warning "For the OpenShift users:"
+      This namespace is also indicated as `users` in the `resources/defectdojo-scc.yaml` custom `SecurityContextConstraints` resource.
+      Change it when using a custom namespace. Also, change the namespace in the `resources/defectdojo-route.yaml` file.
 
   ```bash
   kubectl create namespace defectdojo
@@ -290,6 +290,11 @@ To install third-party resources, follow the steps below:
 
 4. In the `envs/platform.yaml` file, set the `dnsWildCard` and `edpName` parameters.
 
+  !!! warning "For the OpenShift users:"
+      The namespace is also indicated as `users` in the following custom `SecurityContextConstraints`
+      resources: `resources/report-portal-elasticsearch-scc.yaml` and `resources/report-portal-third-party-resources-scc.yaml`.
+      Change the namespace name when using a custom namespace.
+
 5. Install third-party resources:
 
   ```bash
@@ -303,6 +308,14 @@ To install third-party resources, follow the steps below:
   ```
 
 To install ReportPortal via Helmfile, follow the steps below:
+
+!!! warning "For the OpenShift users:"
+    1. The namespace is also indicated as `users` in the `resources/report-portal-reportportal-scc.yaml` custom `SecurityContextConstraints` resource.
+    Change it when using a custom namespace.<br>
+    2. Change the namespace in the following files: `resources/report-portal-gateway/gateway-config-cm`,
+    `resources/report-portal-gateway/gateway-deployment`, `resources/report-portal-gateway/gateway-route`, and
+    `resources/report-portal-gateway/gateway-service`.<br>
+    3. Modify the `host` in `resources/report-portal-gateway/gateway-route`
 
   ```bash
   helmfile --selector component=report-portal --environment platform -f helmfile.yaml apply

@@ -24,6 +24,113 @@ To install MinIO, follow the steps below:
   kubectl create namespace <edp-project>
   ```
 
+  !!! warning "For the OpenShift users:"
+      When using the OpenShift platform, install the `SecurityContextConstraints` resources.<br>
+      In case of using a custom namespace for the `reportportal`, change the namespace in the `users` section.
+
+  <details>
+  <summary><b>View: report-portal-third-party-resources-scc.yaml</b></summary>
+
+  ```yaml
+  apiVersion: security.openshift.io/v1
+  kind: SecurityContextConstraints
+  metadata:
+    annotations:
+      "helm.sh/hook": "pre-install"
+    name: report-portal-minio-rabbitmq-postgresql
+  allowHostDirVolumePlugin: false
+  allowHostIPC: false
+  allowHostNetwork: false
+  allowHostPID: false
+  allowHostPorts: false
+  allowPrivilegeEscalation: true
+  allowPrivilegedContainer: false
+  allowedCapabilities: null
+  allowedFlexVolumes: []
+  defaultAddCapabilities: []
+  fsGroup:
+    type: MustRunAs
+    ranges:
+      - min: 999
+        max: 65543
+  groups: []
+  priority: 1
+  readOnlyRootFilesystem: false
+  requiredDropCapabilities:
+    - KILL
+    - MKNOD
+    - SETUID
+    - SETGID
+  runAsUser:
+    type: MustRunAsRange
+    uidRangeMin: 1
+    uidRangeMax: 65543
+  seLinuxContext:
+    type: MustRunAs
+  supplementalGroups:
+    type: RunAsAny
+  users:
+    - system:serviceaccount:report-portal:minio
+    - system:serviceaccount:report-portal:rabbitmq
+    - system:serviceaccount:report-portal:postgresql
+  volumes:
+    - configMap
+    - downwardAPI
+    - emptyDir
+    - persistentVolumeClaim
+    - projected
+    - secret
+  ```
+  </details>
+
+  <details>
+  <summary><b>View: report-portal-elasticsearch-scc.yaml</b></summary>
+
+  ```yaml
+  apiVersion: security.openshift.io/v1
+  kind: SecurityContextConstraints
+  metadata:
+    annotations:
+      "helm.sh/hook": "pre-install"
+    name: report-portal-elasticsearch
+  allowHostDirVolumePlugin: false
+  allowHostIPC: false
+  allowHostNetwork: false
+  allowHostPID: false
+  allowHostPorts: false
+  allowPrivilegedContainer: true
+  allowedCapabilities: []
+  allowedFlexVolumes: []
+  defaultAddCapabilities: []
+  fsGroup:
+    type: MustRunAs
+    ranges:
+      - max: 1000
+        min: 1000
+  groups: []
+  priority: 0
+  readOnlyRootFilesystem: false
+  requiredDropCapabilities: []
+  runAsUser:
+    type: MustRunAsRange
+    uidRangeMax: 1000
+    uidRangeMin: 0
+  seLinuxContext:
+    type: MustRunAs
+  supplementalGroups:
+    type: RunAsAny
+  users:
+    - system:serviceaccount:report-portal:elasticsearch-master
+  volumes:
+    - configMap
+    - downwardAPI
+    - emptyDir
+    - persistentVolumeClaim
+    - projected
+    - secret
+  ```
+  </details>
+
 2. Add a chart repository:
 
   ```bash
@@ -148,6 +255,9 @@ extraEnvs:
   - name: cluster.initial_master_nodes
     value: ""
 
+rbac:
+  create: true
+
 resources:
   requests:
     cpu: "100m"
@@ -205,6 +315,8 @@ persistence:
 resources:
   requests:
     cpu: "100m"
+serviceAccount:
+  enabled: true
 postgresqlUsername: "rpuser"
 postgresqlDatabase: "reportportal"
 existingSecret: "reportportal-postgresql-creds"
@@ -221,6 +333,58 @@ initdbScripts:
 To install ReportPortal, follow the steps below:
 
 1. Use `<edp-project>` namespace from the MinIO installation.
+
+  !!! warning "For the OpenShift users:"
+      When using the OpenShift platform, install the `SecurityContextConstraints` resource.<br>
+      In case of using a custom namespace for the `reportportal`, change the namespace in the `users` section.
+
+  <details>
+  <summary><b>View: report-portal-reportportal-scc.yaml</b></summary>
+
+```yaml
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  annotations:
+    "helm.sh/hook": "pre-install"
+  name: report-portal
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegedContainer: true
+allowedCapabilities: []
+allowedFlexVolumes: []
+defaultAddCapabilities: []
+fsGroup:
+  type: MustRunAs
+  ranges:
+    - max: 1000
+      min: 1000
+groups: []
+priority: 0
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: MustRunAsRange
+  uidRangeMax: 1000
+  uidRangeMin: 0
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+users:
+  - system:serviceaccount:report-portal:reportportal
+volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - persistentVolumeClaim
+  - projected
+  - secret
+```
+  </details>
 
 2. Add a chart repository:
 
@@ -255,6 +419,9 @@ serviceui:
   resources:
     requests:
       cpu: 50m
+  serviceAccountName: "reportportal"
+  securityContext:
+    runAsUser: 0
 serviceapi:
   resources:
     requests:
@@ -295,9 +462,194 @@ ingress:
   usedomainname: true
   hosts:
     - report-portal-<EDP_PROJECT>.<ROOT_DOMAIN>
-
 ```
+  </details>
 
+4. For the OpenShift platform, install a Gateway with Route:
+
+  <details>
+  <summary><b>View: gateway-config-cm.yaml</b></summary>
+
+```yaml
+kind: ConfigMap
+metadata:
+  name: gateway-config
+  namespace: report-portal
+apiVersion: v1
+data:
+  traefik-dynamic-config.yml: |
+    http:
+        middlewares:
+          strip-ui:
+            stripPrefix:
+              prefixes:
+                - "/ui"
+              forceSlash: false
+          strip-api:
+            stripPrefix:
+              prefixes:
+                - "/api"
+              forceSlash: false
+          strip-uat:
+            stripPrefix:
+              prefixes:
+                - "/uat"
+              forceSlash: false
+
+        routers:
+          index-router:
+            rule: "Path(`/`)"
+            service: "index"
+          ui-router:
+            rule: "PathPrefix(`/ui`)"
+            middlewares:
+            - strip-ui
+            service: "ui"
+          uat-router:
+            rule: "PathPrefix(`/uat`)"
+            middlewares:
+            - strip-uat
+            service: "uat"
+          api-router:
+            rule: "PathPrefix(`/api`)"
+            middlewares:
+            - strip-api
+            service: "api"
+
+        services:
+          uat:
+            loadBalancer:
+              servers:
+              - url: "http://report-portal-reportportal-uat:9999/"
+
+          index:
+            loadBalancer:
+              servers:
+              - url: "http://report-portal-reportportal-index:8080/"
+
+          api:
+            loadBalancer:
+              servers:
+              - url: "http://report-portal-reportportal-api:8585/"
+
+          ui:
+            loadBalancer:
+              servers:
+              - url: "http://report-portal-reportportal-ui:8080/"
+  traefik.yml: |
+    entryPoints:
+      http:
+       address: ":8081"
+      metrics:
+       address: ":8082"
+
+    metrics:
+      prometheus:
+        entryPoint: metrics
+        addEntryPointsLabels: true
+        addServicesLabels: true
+        buckets:
+          - 0.1
+          - 0.3
+          - 1.2
+          - 5.0
+
+    providers:
+      file:
+        filename: /etc/traefik/traefik-dynamic-config.yml
+```
+  </details>
+
+  <details>
+  <summary><b>View: gateway-deployment.yaml</b></summary>
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: reportportal
+  name: gateway
+  namespace: report-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: gateway
+  template:
+    metadata:
+      labels:
+        component: gateway
+    spec:
+      containers:
+        - image: quay.io/waynesun09/traefik:2.3.6
+          name: traefik
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/traefik/
+              name: config
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            defaultMode: 420
+            name: gateway-config
+```
+  </details>
+
+  <details>
+  <summary><b>View: gateway-route.yaml</b></summary>
+
+```yaml
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  labels:
+    app: reportportal
+  name: reportportal
+  namespace: report-portal
+spec:
+  host: report-portal.<CLUSTER_DOMAIN>
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: gateway
+    weight: 100
+  wildcardPolicy: None
+```
+  </details>
+
+  <details>
+  <summary><b>View: gateway-service.yaml</b></summary>
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: reportportal
+    component: gateway
+  name: gateway
+  namespace: report-portal
+spec:
+  ports:
+    # use 8081 to allow for usage of the dashboard which is on port 8080
+    - name: http
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    component:  gateway
+  sessionAffinity: None
+  type: ClusterIP
+```
   </details>
 
 ## Related Articles
