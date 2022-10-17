@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: reportportal
+  name: gateway
+  namespace: report-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: gateway
+  template:
+    metadata:
+      labels:
+        component: gateway
+    spec:
+      containers:
+        - image: quay.io/waynesun09/traefik:2.3.6
+          name: traefik
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/traefik/
+              name: config
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            defaultMode: 420
+            name: gateway-config

@@ -23,6 +23,17 @@ releases:
     default: "true"
   chart: "bitnami/minio"
   version: "11.10.3"
+  {{- if eq .Values.global.platform "openshift" }}
+  hooks:
+    - events: ["prepare"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-third-party-resources-scc.yaml"]
+    - events: ["postuninstall"]
+      showlogs: true
+      command: "kubectl"
+      args: ["delete", "-f", "../resources/report-portal-third-party-resources-scc.yaml"]
+  {{- end }}
   wait: true
   installed: true
   values:
@@ -62,10 +73,24 @@ releases:
     default: "true"
   chart: "elastic/elasticsearch"
   version: "7.17.3"
+  {{- if eq .Values.global.platform "openshift" }}
+  hooks:
+    - events: ["prepare"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-elasticsearch-scc.yaml"]
+    - events: ["postuninstall"]
+      showlogs: true
+      command: "kubectl"
+      args: ["delete", "-f", "../resources/report-portal-elasticsearch-scc.yaml"]
+  {{- end }}
   wait: true
   installed: true
   values:
     - replicas: 1
+
+      rbac:
+        create: true
 
       extraEnvs:
         - name: discovery.type
@@ -102,6 +127,8 @@ releases:
       resources:
         requests:
           cpu: "100m"
+      serviceAccount:
+        enabled: true
       postgresqlUsername: "rpuser"
       postgresqlDatabase: "reportportal"
       existingSecret: "reportportal-postgresql-creds"
@@ -120,6 +147,53 @@ releases:
     vendor: "report-portal"
     default: "true"
   chart: "report-portal/reportportal"
+  {{- if eq .Values.global.platform "openshift" }}
+  hooks:
+    - events: ["prepare"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-reportportal-scc.yaml"]
+    - events: ["postuninstall"]
+      showlogs: true
+      command: "kubectl"
+      args: ["delete", "-f", "../resources/report-portal-reportportal-scc.yaml"]
+
+    - events: ["prepare"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-gateway/gateway-config-cm.yaml"]
+    - events: ["postuninstall"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-gateway/gateway-config-cm.yaml"]
+
+    - events: ["prepare"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-gateway/gateway-deployment.yaml"]
+    - events: ["postuninstall"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-gateway/gateway-deployment.yaml"]
+
+    - events: ["prepare"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-gateway/gateway-service.yaml"]
+    - events: ["postuninstall"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-gateway/gateway-service.yaml"]
+
+    - events: ["prepare"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-gateway/gateway-route.yaml"]
+    - events: ["postuninstall"]
+      showlogs: true
+      command: "kubectl"
+      args: ["apply", "-f", "../resources/report-portal-gateway/gateway-route.yaml"]
+  {{- end }}
   wait: true
   installed: true
   values:
@@ -135,6 +209,9 @@ releases:
         resources:
           requests:
             cpu: 50m
+        serviceAccountName: "reportportal"
+        securityContext:
+          runAsUser: 0
       serviceapi:
         resources:
           requests:

@@ -1,0 +1,86 @@
+kind: ConfigMap
+metadata:
+  name: gateway-config
+  namespace: report-portal
+apiVersion: v1
+data:
+  traefik-dynamic-config.yml: |
+    http:
+        middlewares:
+          strip-ui:
+            stripPrefix:
+              prefixes:
+                - "/ui"
+              forceSlash: false
+          strip-api:
+            stripPrefix:
+              prefixes:
+                - "/api"
+              forceSlash: false
+          strip-uat:
+            stripPrefix:
+              prefixes:
+                - "/uat"
+              forceSlash: false
+
+        routers:
+          index-router:
+            rule: "Path(`/`)"
+            service: "index"
+          ui-router:
+            rule: "PathPrefix(`/ui`)"
+            middlewares:
+            - strip-ui
+            service: "ui"
+          uat-router:
+            rule: "PathPrefix(`/uat`)"
+            middlewares:
+            - strip-uat
+            service: "uat"
+          api-router:
+            rule: "PathPrefix(`/api`)"
+            middlewares:
+            - strip-api
+            service: "api"
+
+        services:
+          uat:
+            loadBalancer:
+              servers:
+              - url: "http://report-portal-reportportal-uat:9999/"
+
+          index:
+            loadBalancer:
+              servers:
+              - url: "http://report-portal-reportportal-index:8080/"
+
+          api:
+            loadBalancer:
+              servers:
+              - url: "http://report-portal-reportportal-api:8585/"
+
+          ui:
+            loadBalancer:
+              servers:
+              - url: "http://report-portal-reportportal-ui:8080/"
+  traefik.yml: |
+    entryPoints:
+      http:
+       address: ":8081"
+      metrics:
+       address: ":8082"
+
+    metrics:
+      prometheus:
+        entryPoint: metrics
+        addEntryPointsLabels: true
+        addServicesLabels: true
+        buckets:
+          - 0.1
+          - 0.3
+          - 1.2
+          - 5.0
+
+    providers:
+      file:
+        filename: /etc/traefik/traefik-dynamic-config.yml

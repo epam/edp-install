@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: reportportal
+    component: gateway
+  name: gateway
+  namespace: report-portal
+spec:
+  ports:
+    # use 8081 to allow for usage of the dashboard which is on port 8080
+    - name: http
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    component:  gateway
+  sessionAffinity: None
+  type: ClusterIP
