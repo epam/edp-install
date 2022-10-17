@@ -18,10 +18,10 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
       kubectl create secret generic gitlab-configuration -n <edp-project> \
         --from-file=id_rsa=id_rsa \
         --from-file=id_rsa.pub=id_rsa.pub \
-        --from-literal=username=user@example.com
-        --from-literal=your_gitlab_access_token
+        --from-literal=username=user@example.com \
+        --from-literal=token=your_gitlab_access_token
 
-4. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **httpsPort**, **sshPort**, **nameSshKeySecret**, and **createCodeReviewPipeline** fields.
+4. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **httpsPort**, **sshPort** and **nameSshKeySecret** fields.
 
   As a sample, it is possible to use the following template:
 
@@ -31,7 +31,6 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
         name: <git-server-name>
         namespace: <edp-project>
       spec:
-        createCodeReviewPipeline: false
         gitHost: git.sample.com
         gitUser: git
         httpsPort: 443
