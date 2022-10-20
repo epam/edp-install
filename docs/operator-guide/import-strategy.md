@@ -1,7 +1,7 @@
 # Enable VCS Import Strategy
 
 !!! note
-    Enabling the VCS Import strategy is a prerequisite to integrate EDP with GitLab or GitHub.
+    Enabling the VCS Import strategy is a prerequisite to integrate EDP with GitLab or GitHub. A Git server and a corresponding secret can be also created [in the EDP Headlamp](../headlamp-user-guide/add-git-server.md).
 
 In order to use the **Import** strategy, it is required to add a Secret with SSH key, GitServer Custom Resource, and Jenkins credentials by taking the steps below.
 
@@ -76,6 +76,7 @@ The next step is to integrate Jenkins with [GitHub](github-integration.md) or [G
 
 ### Related Articles
 
+* [Add Git Server](../headlamp-user-guide/add-git-server.md)
 * [Add Application](../user-guide/add-application.md)
 * [GitHub Integration](github-integration.md)
 * [GitLab Integration](gitlab-integration.md)
