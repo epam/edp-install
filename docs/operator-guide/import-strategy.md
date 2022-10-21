@@ -21,7 +21,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
         --from-literal=username=user@example.com \
         --from-literal=token=your_gitlab_access_token
 
-4. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **httpsPort**, **sshPort** and **nameSshKeySecret** fields.
+4. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **gitProvider**, **httpsPort**, **sshPort** and **nameSshKeySecret** fields. The **gitProvider** field can be either *gitlab*, *github*, or *gerrit*.
 
   As a sample, it is possible to use the following template:
 
@@ -33,6 +33,7 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
       spec:
         gitHost: git.sample.com
         gitUser: git
+        gitProvider: gitlab
         httpsPort: 443
         nameSshKeySecret: gitlab-configuration
         sshPort: 22
