@@ -28,12 +28,12 @@ dependencies:
 
 - name: codebase-operator
   repository: "@epamedp"
-  version: "2.13.0"
+  version: "2.13.1"
   condition: codebase-operator.enabled
 
 - name: jenkins-operator
   repository: "@epamedp"
-  version: "2.12.0"
+  version: "2.12.1"
   condition: jenkins-operator.enabled
 
 - name: edp-component-operator
@@ -58,12 +58,12 @@ dependencies:
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.12.0"
+  version: "2.12.1"
   condition: cd-pipeline-operator.enabled
 
 - name: nexus-operator
   repository: "@epamedp"
-  version: "2.12.0"
+  version: "2.12.1"
   condition: nexus-operator.enabled
 
 - name: sonar-operator
@@ -97,14 +97,14 @@ annotations:
   artifacthub.io/images: |
     - name: keycloak-operator:1.12.0
       image: epamedp/keycloak-operator:1.12.0
-    - name: codebase-operator:2.13.0
-      image: epamedp/codebase-operator:2.13.0
-    - name: jenkins-operator:2.12.0
-      image: epamedp/jenkins-operator:2.12.0
-    - name: cd-pipeline-operator:2.12.0
-      image: epamedp/cd-pipeline-operator:2.12.0
-    - name: nexus-operator:2.12.0
-      image: epamedp/nexus-operator:2.12.0
+    - name: codebase-operator:2.13.1
+      image: epamedp/codebase-operator:2.13.1
+    - name: jenkins-operator:2.12.1
+      image: epamedp/jenkins-operator:2.12.1
+    - name: cd-pipeline-operator:2.12.1
+      image: epamedp/cd-pipeline-operator:2.12.1
+    - name: nexus-operator:2.12.1
+      image: epamedp/nexus-operator:2.12.1
     - name: sonar-operator:2.12.0
       image: epamedp/sonar-operator:2.12.0
     - name: admin-console-operator:2.12.0

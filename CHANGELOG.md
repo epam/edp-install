@@ -10,9 +10,60 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+
+- Use external-secrets to create clientSecret for edp-headlamp [EPMDEDP-10539](https://jiraeu.epam.com/browse/EPMDEDP-10539)
+- Add ReportPortal deployment into the Helmfile [EPMDEDP-10663](https://jiraeu.epam.com/browse/EPMDEDP-10663)
+- Add access token to Import strategy [EPMDEDP-10708](https://jiraeu.epam.com/browse/EPMDEDP-10708)
+
+### Bug Fixes
+
+- Change memory request to 2Gi for elasticsearch of report-portal [EPMDEDP-10663](https://jiraeu.epam.com/browse/EPMDEDP-10663)
+
+### Code Refactoring
+
+- Remove database related resources [EPMDEDP-10751](https://jiraeu.epam.com/browse/EPMDEDP-10751)
+
+### Routine
+
+- Update current development version [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Enable edp-argocd-operator as subcomponent [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Remove all records with edp-architecture github repo [EPMDEDP-10520](https://jiraeu.epam.com/browse/EPMDEDP-10520)
+- Disable init-db job if not using database [EPMDEDP-10621](https://jiraeu.epam.com/browse/EPMDEDP-10621)
+- Enable edp-tekton as subcomponent [EPMDEDP-10660](https://jiraeu.epam.com/browse/EPMDEDP-10660)
+- Add SCC and gateway for Report-Portal [EPMDEDP-10663](https://jiraeu.epam.com/browse/EPMDEDP-10663)
+
+### Documentation
+
+- Describe SSL automation with cert-manager on OKD [EPMDEDP-10089](https://jiraeu.epam.com/browse/EPMDEDP-10089)
+- Create documentation describing the Logsight implementation [EPMDEDP-10254](https://jiraeu.epam.com/browse/EPMDEDP-10254)
+- Update EDP version in documentation [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Update the Releases.md file with the 2.12.0 version [EPMDEDP-10304](https://jiraeu.epam.com/browse/EPMDEDP-10304)
+- Add documentation on Keycloak upgrade to 19.0.1 [EPMDEDP-10382](https://jiraeu.epam.com/browse/EPMDEDP-10382)
+- Add OpenShift resources for EDP installation [EPMDEDP-10390](https://jiraeu.epam.com/browse/EPMDEDP-10390)
+- Improve Helmfile documentation [EPMDEDP-10390](https://jiraeu.epam.com/browse/EPMDEDP-10390)
+- How to change the build tool for Container Library [EPMDEDP-10393](https://jiraeu.epam.com/browse/EPMDEDP-10393)
+- Add recreating RoleBinding and warning for older versions for Update EDP to 2.12.x [EPMDEDP-10398](https://jiraeu.epam.com/browse/EPMDEDP-10398)
+- Fix formatting issue [EPMDEDP-10398](https://jiraeu.epam.com/browse/EPMDEDP-10398)
+- Add section how to update EDP to 2.12.x [EPMDEDP-10398](https://jiraeu.epam.com/browse/EPMDEDP-10398)
+- Update the Add Lib page in the AC guide [EPMDEDP-10443](https://jiraeu.epam.com/browse/EPMDEDP-10443)
+- Language review fixes on EDP installation (OpenShift) [EPMDEDP-10448](https://jiraeu.epam.com/browse/EPMDEDP-10448)
+- Update the Customize CI Pipeline Documentation [EPMDEDP-10495](https://jiraeu.epam.com/browse/EPMDEDP-10495)
+- Update RoadMap [EPMDEDP-10568](https://jiraeu.epam.com/browse/EPMDEDP-10568)
+- Update EKS deploy steps [EPMDEDP-10585](https://jiraeu.epam.com/browse/EPMDEDP-10585)
+- Fix secret format for import strategy [EPMDEDP-10708](https://jiraeu.epam.com/browse/EPMDEDP-10708)
+- Switch from v1alpha1 to v1 [EPMDEDP-10708](https://jiraeu.epam.com/browse/EPMDEDP-10708)
+- Add note about gitProvider in GitServer spec [EPMDEDP-10743](https://jiraeu.epam.com/browse/EPMDEDP-10743)
+- Add a link to the edp-tekton repository into the Readme file [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
+- Deploy ReportPortal via helm chart and helmfile to OpenShift cluster [EPMDEDP-10811](https://jiraeu.epam.com/browse/EPMDEDP-10811)
+
+
+<a name="v2.12.1"></a>
+## [v2.12.1] - 2022-10-28
 ### Routine
 
 - Enable edp-argocd-operator as subcomponent [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Align helm charts versions [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
 
 
 <a name="v2.12.0"></a>
@@ -289,7 +340,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v2.12.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v2.12.1...HEAD
+[v2.12.1]: https://github.com/epam/edp-install/compare/v2.12.0...v2.12.1
 [v2.12.0]: https://github.com/epam/edp-install/compare/v2.11.1...v2.12.0
 [v2.11.1]: https://github.com/epam/edp-install/compare/v2.11.0...v2.11.1
 [v2.11.0]: https://github.com/epam/edp-install/compare/v2.10.2...v2.11.0

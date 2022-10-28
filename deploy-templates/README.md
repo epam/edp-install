@@ -22,16 +22,16 @@ A Helm chart for EDP Install
 | Repository | Name | Version |
 |------------|------|---------|
 | @epamedp | admin-console-operator | 2.12.0 |
-| @epamedp | cd-pipeline-operator | 2.12.0 |
-| @epamedp | codebase-operator | 2.13.0 |
+| @epamedp | cd-pipeline-operator | 2.12.1 |
+| @epamedp | codebase-operator | 2.13.1 |
 | @epamedp | edp-argocd-operator | 0.2.0 |
 | @epamedp | edp-component-operator | 0.12.0 |
 | @epamedp | edp-headlamp | 0.2.0 |
 | @epamedp | edp-tekton | 0.1.1 |
 | @epamedp | gerrit-operator | 2.12.0 |
-| @epamedp | jenkins-operator | 2.12.0 |
+| @epamedp | jenkins-operator | 2.12.1 |
 | @epamedp | keycloak-operator | 1.12.0 |
-| @epamedp | nexus-operator | 2.12.0 |
+| @epamedp | nexus-operator | 2.12.1 |
 | @epamedp | perf-operator | 2.12.0 |
 | @epamedp | reconciler | 2.12.0 |
 | @epamedp | sonar-operator | 2.12.0 |

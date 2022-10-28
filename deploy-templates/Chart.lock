@@ -4,10 +4,10 @@ dependencies:
   version: 1.12.0
 - name: codebase-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.13.0
+  version: 2.13.1
 - name: jenkins-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.0
+  version: 2.12.1
 - name: edp-component-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.12.0
@@ -22,10 +22,10 @@ dependencies:
   version: 0.1.1
 - name: cd-pipeline-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.0
+  version: 2.12.1
 - name: nexus-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.0
+  version: 2.12.1
 - name: sonar-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
@@ -41,5 +41,5 @@ dependencies:
 - name: perf-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
-digest: sha256:5f00dea340224adeda5766b8fd61fe997340727c5fb6307e5bebc47b5130c2b7
-generated: "2022-10-06T15:57:12.00163+03:00"
+digest: sha256:7d611682749bb71ec93b912e8b72e694032c6a45f6568449a694dd6796ab9fa6
+generated: "2022-10-28T17:53:28.729607+03:00"
