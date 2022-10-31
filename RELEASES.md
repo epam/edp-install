@@ -4,15 +4,16 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 2.12.1](#2.12.1)
 * [Version 2.12.0](#2.12.0)
 * [Version 2.11.0](#2.11.0)
 * [Version 2.10.2](#2.10.2)
 * [Version 2.10.1](#2.10.1)
 * [Version 2.10.0](#2.10.0)
-* [Version 2.9.0](#2.9.0)
 <details>
   <summary>Earlier Versions</summary>
 
+* [Version 2.9.0](#2.9.0)
 * [Version 2.8.4](#2.8.4)
 * [Version 2.8.3](#2.8.3)
 * [Version 2.8.2](#2.8.2)
@@ -32,6 +33,15 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 2.12.1 <a name="2.12.1"></a> (October 28, 2022)
+
+### Fixed Issues
+
+* Kiosk integration with the cd-pipeline operator is no longer mandatory for the EDP deployment.
+* By default, Java 8 Maven and Java 8 Gradle Jenkins agents now use Java 8 instead of Java 11.
+* The 431 error for Nexus is fixed by increasing the request header size.
+* Remote Git HEAD is set as a default branch in Gerrit.
 
 ## Version 2.12.0 <a name="2.12.0"></a> (August 30, 2022)
 
