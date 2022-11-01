@@ -81,11 +81,6 @@ dependencies:
   version: "2.12.0"
   condition: gerrit-operator.enabled
 
-- name: reconciler
-  repository: "@epamedp"
-  version: "2.12.0"
-  condition: reconciler.enabled
-
 - name: perf-operator
   repository: "@epamedp"
   version: "2.12.0"
@@ -111,8 +106,6 @@ annotations:
       image: epamedp/admin-console-operator:2.12.0
     - name: gerrit-operator:2.12.0
       image: epamedp/gerrit-operator:2.12.0
-    - name: reconciler:2.12.0
-      image: epamedp/reconciler:2.12.0
     - name: edp-headlamp:0.2.0
       image: epamedp/edp-headlamp:0.2.0
     - name: edp-argocd-operator:0.2.0

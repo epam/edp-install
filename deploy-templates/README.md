@@ -33,7 +33,6 @@ A Helm chart for EDP Install
 | @epamedp | keycloak-operator | 1.12.0 |
 | @epamedp | nexus-operator | 2.12.1 |
 | @epamedp | perf-operator | 2.12.0 |
-| @epamedp | reconciler | 2.12.0 |
 | @epamedp | sonar-operator | 2.12.0 |
 
 ## Values
@@ -86,7 +85,6 @@ A Helm chart for EDP Install
 | nexus-operator.enabled | bool | `true` |  |
 | perf-operator.enabled | bool | `true` |  |
 | perf.enabled | string | `"false"` | Enable PERF integration |
-| reconciler.enabled | bool | `true` |  |
 | sonar-operator.enabled | bool | `true` |  |
 | vcs.enabled | string | `"false"` |  |
 

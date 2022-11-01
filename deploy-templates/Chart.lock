@@ -35,11 +35,8 @@ dependencies:
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
-- name: reconciler
-  repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.0
 - name: perf-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
-digest: sha256:7d611682749bb71ec93b912e8b72e694032c6a45f6568449a694dd6796ab9fa6
-generated: "2022-10-28T17:53:28.729607+03:00"
+digest: sha256:aad05cb0dc993e8959e764ef072c7afc7af7fcc905e6a57e2eddd4b2f6c3a30a
+generated: "2022-11-01T10:15:29.747016+02:00"
