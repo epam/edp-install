@@ -1080,7 +1080,7 @@ def createListView(codebaseName, branchName) {
 }
 
 def registerWebHook(repositoryPath, codebaseName, jobName, webhookToken) {
-    def apiUrl = 'https://' + repositoryPath.replaceAll("ssh://", "").split('@')[1].replace('/', "%2F").replaceAll(~/:\d+%2F/, '/api/v4/projects/') + '/hooks'
+    def apiUrl = 'https://' + repositoryPath.replaceAll("ssh://", "").split('@')[1].replace('/', "%2F").replaceAll(~/:\d+%2F/, '/api/v4/projects/').replaceAll(".git", "") + '/hooks'
     def jobWebhookUrl = "${System.getenv('JENKINS_UI_URL')}/project/${codebaseName}/${jobName}"
     def gitlabToken = getSecretValue('gitlab-access-token')
 
