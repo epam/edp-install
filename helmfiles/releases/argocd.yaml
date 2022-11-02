@@ -34,12 +34,12 @@ releases:
     args: ["delete", "-f", "../resources/argocd-scc.yaml"]
   {{- end }}
   disableValidation: true
-  version: "4.9.2"
+  version: "5.13.1"
   wait: true
   installed: true
   values:
     - redis-ha:
-        enabled: true
+        enabled: false
 
       controller:
         enableStatefulSet: true
