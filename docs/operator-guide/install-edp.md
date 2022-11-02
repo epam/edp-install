@@ -66,7 +66,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
 
       helm search repo epamedp/edp-install
       NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-      epamedp/edp-install     2.12.0          2.12.0          A Helm chart for EDP Install
+      epamedp/edp-install     2.12.1          2.12.1          A Helm chart for EDP Install
 
   !!! note
       It is highly recommended to use the latest released version.
@@ -104,7 +104,7 @@ global:
   webConsole:
     url: <kubeconfig.clusters.cluster.server>
 
-  # set platform type: OpenShift or Kubernetes;
+  # set platform type: OpenShift or kubernetes;
   platform: <platform_type>
 
   # Administrators of the tenant separated by comma (,) e.g. user@example.com;
@@ -128,7 +128,7 @@ dockerRegistry:
 
 gerrit-operator:
   gerrit:
-    # Gerrit SSH node port;
+    # free Nodeport;
     sshPort: <gerrit_ssh_port>
 kaniko:
   # AWS IAM role with push access to ECR, e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
