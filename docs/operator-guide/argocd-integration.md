@@ -13,12 +13,7 @@ Both approaches can be deployed with High Availability (HA) or Non High Availabi
 
 EDP uses the HA deployment with the cluster-admin permissions, to minimize cluster resources consumption by sharing single Argo CD instance across multiple EDP Tenants. Please follow [the installation instructions](./install-argocd.md), to deploy Argo CD.
 
-## EDP Argo CD Operator
-
-EDP Argo CD Operator works as a `proxy` between the `EDP Tenant` used in the EDP installation process and the centralized `Argo CD`. It monitors the [EDP Custom Resource ArgoApplication](https://github.com/epam/edp-argocd-operator/blob/master/config/crd/bases/v1.edp.epam.com_argoapplications.yaml) and `Secrets` with the `argocd.edp.epam.com/secret-type: repository` label in EDP namespaces and creates related entities in Argo CD using an API (the JWT token and Argo CD URL must be defined to start the operator successfully). There is one-to-one mapping between the EDP and Argo CD custom resources:
-
-* `argoapplications.v1.edp.epam.com` and `applications.argoproj.io`
-* `Secret` with labels `argocd.edp.epam.com/secret-type: repository` and `argocd.argoproj.io/secret-type=repository`
+## EDP Argo CD Integration
 
 See a diagram below for the details:
 
@@ -28,11 +23,7 @@ See a diagram below for the details:
 * Argo CD uses a `cluster-admin` role for managing cluster-scope resources.
 * The `control-plane` application is created using the App of Apps approach, and its code is managed by the `control-plane` members.
 * The `control-plane` is used to onboard new Argo CD Tenants (Argo CD Projects - AppProject).
-* The `control-plane admin` provides `JWT Token` for each `EDP Tenant`.
-* The `EDP Tenant` deploys `edp-argocd-operator` in its `edpTenant` EDP namespace, and uses `JWT Token` and `URL for Argo CD Instance` provided by `control-plane admin`.
-* The `EDP Tenant Member` manages `Argo CD Repositories` and `Argo CD Applications` using `kind: Secret` and `kind: ArgoApplication` in the `edpTenant` namespace.
-
-Please find the information about the advanced operator deployment in the [Helm chart repository for the EDP Argo CD Operator](https://github.com/epam/edp-argocd-operator/tree/master/deploy-templates).
+* The `EDP Tenant Member` manages `Argo CD Applications` using `kind: Application` in the `edpTenant` namespace.
 
 ## Configuration
 
@@ -67,7 +58,7 @@ To start using Argo CD with EDP, perform the following steps:
 
     The Root Application must be created under the `control-plane` scope.
 
-2. Create an Argo CD Project (EDP Tenant), for example, with the `team-foo` name. Two resources must be created:
+2. Create an Argo CD Project (EDP Tenant), for example, with the `team-foo` name and a Keycloak Group. Two resources must be created:
 
     **KeycloakRealmGroup**
 
@@ -108,10 +99,6 @@ To start using Argo CD with EDP, perform the following steps:
             - p, proj:team-foo:developer, repositories, delete, team-foo/*, allow
             - p, proj:team-foo:developer, repositories, update, team-foo/*, allow
             - p, proj:team-foo:developer, repositories, get, team-foo/*, allow
-            - p, proj:team-foo:developer, clusters, create, team-foo/*, allow
-            - p, proj:team-foo:developer, clusters, delete, team-foo/*, allow
-            - p, proj:team-foo:developer, clusters, update, team-foo/*, allow
-            - p, proj:team-foo:developer, clusters, get, team-foo/*, allow
           groups:
             # Keycloak Group name
             - ArgoCD-team-foo-users
@@ -136,48 +123,41 @@ To start using Argo CD with EDP, perform the following steps:
       namespaceResourceWhitelist:
       - group: '*'
         kind: '*'
-      # we are ok to deploy from any repo
+      # enable access only for specific git server. The example below 'team-foo' - it is namespace where EDP deployed 
       sourceRepos:
-        - '*'
+        - ssh://argocd@gerrit.team-foo:30007/*
+      # enable capability to deploy objects from namespaces
+      sourceNamespaces:
+        - team-foo
     ```
 
-3. Get a JWT Token for the `team-foo` project in the `Argo CD -> Settings -> Projects -> team-foo -> Roles -> developer` section. Please find more information about the automation tokens generation in the [Authentication section of the Argo CD official documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/security/#authentication). The generated `JWT Token` and `Argo CD URL` must be stored in the EDP namespace under the `argocd-access` secret name and used for the [edp-argocd-operator deployment](https://github.com/epam/edp-argocd-operator/blob/master/deploy-templates/templates/deployment.yaml).
+3. In Keycloak, add users to the `ArgoCD-team-foo-users` Keycloak Group.
 
-4. In Keycloak, add users to the `ArgoCD-team-foo-users` Keycloak Group.
-
-5. Deploy a test EDP Application with the `demo` name, which is stored in a Gerrit private repository, as Gerrit is a part of EDP.
-
-    **Repository:**
+4. Enable argocd controller to manage the Application resources in the specific namespaces (`team-foo`, in our case). Modify the `argocd-cmd-params-cm` configmap in the argocd namespace and add the `application.namespaces` parameter to the subsection data:
+   
+    **argocd-cmd-params-cm:**
 
     ```yaml
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: demo
-      labels:
-      # must be type of repository
-        argocd.edp.epam.com/secret-type: repository
-    stringData:
-      type: git
-      url: ssh://argocd@gerrit.edpnamespace:30007/demo.git
-      # Our Tenant name
-      project: team-foo
-      #  Use insecure to work with privately hosted Git services over SSH.
-      #  If true, it is the same as use --insecure-skip-server-verification.
-      #  Optional, default - "false".
-      #  See: https://argo-cd.readthedocs.io/en/release-1.8/user-guide/private-repositories/#unknown-ssh-hosts
-      insecure: "true"
-      sshPrivateKey: |
-        -----BEGIN OPENSSH PRIVATE KEY-----
-        YOUR_PRIVATE_SSH_KEY
-        -----END OPENSSH PRIVATE KEY-----
+    data:
+      application.namespaces: team-foo
     ```
 
-    **ArgoApplication:**
+  The values.yaml file:
+
+    **argocd-deploy-values:**
 
     ```yaml
-    apiVersion: v1.edp.epam.com/v1alpha1
-    kind: ArgoApplication
+    configs:
+      params:
+        application.namespaces: team-foo
+    ```
+
+5. Add a [credential template](https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#private-repositories) for Gerrit integration. The credential template must be created for each EDP tenant (per git server). Deploy test EDP Application with the `demo` name, which is stored in a Gerrit private repository.
+    **Application:**
+
+    ```yaml
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
     metadata:
       name: demo
     spec:
@@ -193,7 +173,7 @@ To start using Argo CD with EDP, perform the following steps:
             - name: image.repository
               value: image-repo
         path: deploy-templates
-        repoURL: ssh://argocd@gerrit.edpnamespace:30007/demo.git
+        repoURL: ssh://argocd@gerrit.team-foo:30007/demo.git
         targetRevision: master
       syncPolicy:
         syncOptions:
@@ -203,7 +183,7 @@ To start using Argo CD with EDP, perform the following steps:
           prune: true
     ```
 
-6. Check that your new Repository and Application are added under the `team-foo` Project scope in the Argo CD UI.
+6. Check that your new Repository and Application are added to the Argo CD UI under the `team-foo` Project scope.
 
 ## Related Articles
 
