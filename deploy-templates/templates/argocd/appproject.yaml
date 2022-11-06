@@ -1,0 +1,65 @@
+{{- if .Values.argocd.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ .Values.global.edpName }}
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+  description: CD pipelines for {{ .Values.global.edpName }}
+  destinations:
+    - namespace: {{ .Values.global.edpName }}-*
+      server: https://kubernetes.default.svc
+  namespaceResourceBlacklist:
+    - group: ''
+      kind: ResourceQuota
+    - group: ''
+      kind: LimitRange
+    - group: ''
+      kind: NetworkPolicy
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  roles:
+    - description: Users for {{ .Values.global.edpName }} tenant
+      groups:
+        - ArgoCD-{{ .Values.global.edpName }}-users
+      name: developer
+      policies:
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, applications, create,
+          {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, applications, delete,
+          {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, applications, get,
+          {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, applications,
+          override, {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, applications, sync,
+          {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, applications, update,
+          {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, repositories, create,
+          {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, repositories, delete,
+          {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, repositories, update,
+          {{ .Values.global.edpName }}/*, allow
+        - >-
+          p, proj:{{ .Values.global.edpName }}:developer, repositories, get,
+          {{ .Values.global.edpName }}/*, allow
+  sourceNamespaces:
+    - {{ .Values.global.edpName }}
+  sourceRepos:
+    - '*'
+{{- end }}
