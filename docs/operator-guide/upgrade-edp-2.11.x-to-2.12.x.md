@@ -128,7 +128,7 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
       To verify the installation, it is possible to test the deployment before applying it to the cluster with the following command:<br>
       `helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=2.12.x  --dry-run`
 
-5. After the update, please remove the `gerrit-operator.gerrit.version` value. In this case, the default value will be used, and Gerrit will be updated to the `v3.6.1` version. Run the following command:
+7. After the update, please remove the `gerrit-operator.gerrit.version` value. In this case, the default value will be used, and Gerrit will be updated to the `v3.6.1` version. Run the following command:
 
         helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=2.12.x
 
@@ -136,7 +136,7 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
       To verify the installation, it is possible to test the deployment before applying it to the cluster with the following command:<br>
       `helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=2.12.x  --dry-run`
 
-6. Update image versions for the Jenkins agents in the *ConfigMap*:
+8. Update image versions for the Jenkins agents in the *ConfigMap*:
 
         kubectl edit configmap jenkins-slaves -n <edp-namespace>
 
@@ -147,10 +147,10 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
         epamedp/edp-jenkins-dotnet-31-agent:3.0.7
         epamedp/edp-jenkins-go-agent:3.0.11
         epamedp/edp-jenkins-gradle-java11-agent:3.0.5
-        epamedp/edp-jenkins-gradle-java8-agent:3.0.5
+        epamedp/edp-jenkins-gradle-java8-agent:3.0.7
         epamedp/edp-jenkins-helm-agent:3.0.8
         epamedp/edp-jenkins-maven-java11-agent:3.0.6
-        epamedp/edp-jenkins-maven-java8-agent:3.0.6
+        epamedp/edp-jenkins-maven-java8-agent:3.0.8
         epamedp/edp-jenkins-npm-agent:3.0.7
         epamedp/edp-jenkins-opa-agent:3.0.5
         epamedp/edp-jenkins-python-38-agent:3.0.5
@@ -242,9 +242,9 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
 
    * Restart the Jenkins pod.
 
-7. Update Jenkins provisioners according to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction.
+9. Update Jenkins provisioners according to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction.
 
-8. Restart the `codebase-operator`, to recreate the Code Review and Build pipelines for the codebases.
+10. Restart the `codebase-operator`, to recreate the Code Review and Build pipelines for the codebases.
 
 !!! Warning
     In case there are different EDP versions on one cluster, the following error may occur on the `init` stage of Jenkins Groovy pipeline: `java.lang.NumberFormatException: For input string: ""`. To fix this issue, please run the following command using [`kubectl` v1.24.4+](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md):
