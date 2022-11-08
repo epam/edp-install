@@ -2,8 +2,8 @@
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmGroup
 metadata:
-  name: argocd-{{ .Values.global.edpName }}-users
+  name: argocd-admins
 spec:
-  name: ArgoCD-{{ .Values.global.edpName }}-users
+  name: ArgoCDAdmins
   realm: main
 {{- end }}
