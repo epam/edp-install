@@ -4,10 +4,12 @@ Inspect the prerequisites and the main steps to perform for enabling Argo CD in 
 
 ## Prerequisites
 
-* [Keycloak is installed](./install-keycloak.md)
-* [EDP is installed](./install-edp.md)
-* Kubectl version 1.18.0 is installed. Please refer to the [Kubernetes official website](https://v1-18.docs.kubernetes.io/docs/setup/release/notes/) for details.
-* [Helm](https://helm.sh) version 3.6.0 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.6.0) on GitHub for details.
+The following tools must be installed:
+
+* [Keycloak](./install-keycloak.md)
+* [EDP](./install-edp.md)
+* [Kubectl version 1.23.0](https://v1-23.docs.kubernetes.io/releases/download/)
+* [Helm version 3.10.0](https://github.com/helm/helm/releases/tag/v3.10.0)
 
 ## Installation
 
@@ -25,71 +27,76 @@ To enable Argo CD integration, ensure that the `argocd.enabled` flag [values.yam
 
 ### Install With Helm
 
-Argo CD can be installed in many ways, please follow the [official documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/) for more details.
+Argo CD can be installed in several ways, please follow the [official documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/) for more details.
 
 Follow the steps below to install Argo CD using Helm:
 
-!!! Note
+!!! warning "For the OpenShift users:"
     When using the OpenShift platform, apply the `SecurityContextConstraints` resource. Change the namespace in the `users` section if required.
 
+    <details>
+    <summary><b>View: argocd-scc.yaml</b></summary>
+    
+    ```yaml
+    allowHostDirVolumePlugin: false
+    allowHostIPC: false
+    allowHostNetwork: false
+    allowHostPID: false
+    allowHostPorts: false
+    allowPrivilegeEscalation: true
+    allowPrivilegedContainer: false
+    allowedCapabilities: null
+    apiVersion: security.openshift.io/v1
+    allowedFlexVolumes: []
+    defaultAddCapabilities: []
+    fsGroup:
+      type: MustRunAs
+      ranges:
+        - min: 99
+          max: 65543
+    groups: []
+    kind: SecurityContextConstraints
+    metadata:
+      annotations:
+          "helm.sh/hook": "pre-install"
+      name: argo-redis-ha
+    priority: 1
+    readOnlyRootFilesystem: false
+    requiredDropCapabilities:
+    - KILL
+    - MKNOD
+    - SETUID
+    - SETGID
+    runAsUser:
+      type: MustRunAsRange
+      uidRangeMin: 1
+      uidRangeMax: 65543
+    seLinuxContext:
+      type: MustRunAs
+    supplementalGroups:
+      type: RunAsAny
+    seccompProfiles:
+      - '*'
+    users:
+    - system:serviceaccount:argocd:argo-redis-ha
+    - system:serviceaccount:argocd:argo-redis-ha-haproxy
+    - system:serviceaccount:argocd:argocd-notifications-controller
+    - system:serviceaccount:argocd:argo-argocd-repo-server
+    - system:serviceaccount:argocd:argocd-server
+    volumes:
+    - configMap
+    - downwardAPI
+    - emptyDir
+    - persistentVolumeClaim
+    - projected
+    - secret
+    ```
+    </details>
+
+1. Check out the *values.yaml* file sample of the Argo CD customization, which is based on the `HA mode without autoscaling`:
+
   <details>
-  <summary><b>View: argocd-scc.yaml</b></summary>
-
-  ```yaml
-  allowHostDirVolumePlugin: false
-  allowHostIPC: false
-  allowHostNetwork: false
-  allowHostPID: false
-  allowHostPorts: false
-  allowPrivilegeEscalation: true
-  allowPrivilegedContainer: false
-  allowedCapabilities: null
-  apiVersion: security.openshift.io/v1
-  allowedFlexVolumes: []
-  defaultAddCapabilities: []
-  fsGroup:
-    type: MustRunAs
-    ranges:
-      - min: 999
-        max: 65543
-  groups: []
-  kind: SecurityContextConstraints
-  metadata:
-    annotations:
-        "helm.sh/hook": "pre-install"
-    name: argo-redis-ha
-  priority: 1
-  readOnlyRootFilesystem: false
-  requiredDropCapabilities:
-  - KILL
-  - MKNOD
-  - SETUID
-  - SETGID
-  runAsUser:
-    type: MustRunAsRange
-    uidRangeMin: 1
-    uidRangeMax: 65543
-  seLinuxContext:
-    type: MustRunAs
-  supplementalGroups:
-    type: RunAsAny
-  users:
-  - system:serviceaccount:argocd:argo-redis-ha
-  - system:serviceaccount:argocd:argo-redis-ha-haproxy
-  volumes:
-  - configMap
-  - downwardAPI
-  - emptyDir
-  - persistentVolumeClaim
-  - projected
-  - secret
-  ```
-  </details>
-
-* Check out the *values.yaml* file sample of the Argo CD customization, which is based on `HA mode without autoscaling`:
-
-  <details>
-  <summary><b>View: values.yaml</b></summary>
+  <summary><b>View: kubernetes-values.yaml</b></summary>
 
   ```yaml
   redis-ha:
@@ -108,14 +115,14 @@ Follow the steps below to install Argo CD using Helm:
     ingress:
       enabled: true
       hosts:
-        - "argocd.{{ .Values.global.dnsWildCard }}"
+        - "argocd.<Values.global.dnsWildCard>"
     config:
       # required when SSO is enabled
-      url: "https://argocd.{{ .Values.global.dnsWildCard }}"
+      url: "https://argocd.<.Values.global.dnsWildCard>"
       application.instanceLabelKey: argocd.argoproj.io/instance-edp
       oidc.config: |
         name: Keycloak
-        issuer: https://{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main
+        issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/<.Values.global.edpName>-main
         clientID: argocd
         clientSecret: $oidc.keycloak.clientSecret
         requestedScopes:
@@ -133,9 +140,71 @@ Follow the steps below to install Argo CD using Helm:
         g, ArgoCDAdmins, role:admin
 
   configs:
-    secret:
-      extra:
-        oidc.keycloak.clientSecret: "REPLACE"
+    params:
+      application.namespaces: <.Values.global.edpName>
+
+  repoServer:
+    replicas: 2
+
+  # we use Keycloak so no DEX is required
+  dex:
+    enabled: false
+
+  # Disabled for multitenancy env with single instance deployment
+  applicationSet:
+    enabled: false
+  ```
+
+  </details>
+
+  <details>
+  <summary><b>View: openshift-values.yaml</b></summary>
+
+  ```yaml
+  redis-ha:
+    enabled: true
+
+  controller:
+    enableStatefulSet: true
+
+  server:
+    replicas: 2
+    extraArgs:
+      - "--insecure"
+    env:
+      - name: ARGOCD_API_SERVER_REPLICAS
+        value: '2'
+    route:
+      enabled: true
+      hostname: "argocd.<.Values.global.dnsWildCard>"
+      termination_type: edge
+      termination_policy: Redirect
+    config:
+      # required when SSO is enabled
+      url: "https://argocd.<.Values.global.dnsWildCard>"
+      application.instanceLabelKey: argocd.argoproj.io/instance-edp
+      oidc.config: |
+        name: Keycloak
+        issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/<.Values.global.edpName>-main
+        clientID: argocd
+        clientSecret: $oidc.keycloak.clientSecret
+        requestedScopes:
+          - openid
+          - profile
+          - email
+          - groups
+    rbacConfig:
+      # users may be still be able to login,
+      # but will see no apps, projects, etc...
+      policy.default: ''
+      scopes: '[groups]'
+      policy.csv: |
+        # default global admins
+        g, ArgoCDAdmins, role:admin
+
+  configs:
+    params:
+      application.namespaces: <.Values.global.edpName>
 
   repoServer:
     replicas: 2
@@ -153,24 +222,25 @@ Follow the steps below to install Argo CD using Helm:
 
     Populate Argo CD values with the values from the EDP [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml):
 
-  * .Values.global.dnsWildCard - EDP DNS WildCard
-  * .Values.global.keycloakEndpoint - Keycloak Hostname
-  * .Values.global.edpName - EDP name
+  * <.Values.global.dnsWildCard> is the EDP DNS WildCard.
+  * <.Values.global.keycloakEndpoint> is the Keycloak Hostname.
+  * <.Values.global.edpName> is the EDP name.
 
-* Run installation
+2. Run the installation:
 
   ```bash
   kubectl create ns argocd
   helm repo add argo https://argoproj.github.io/argo-helm
-  helm install argocd argo/argo-cd -f values.yaml
+  helm install argo argo/argo-cd -f values.yaml -n argocd
   ```
 
-* Update `argocd-secret` secret (in argocd namespace) by providing correct keycloak client secret (`oidc.keycloak.clientSecret`) with value from the `keycloak-client-argocd-secret` secret in EDP namespace and restart the deployment:
+3. Update the `argocd-secret` secret in the `argocd` namespace by providing the correct Keycloak client secret (`oidc.keycloak.clientSecret`)
+   with the value from the `keycloak-client-argocd-secret` secret in the EDP namespace. Then restart the deployment:
 
   ```bash
   ARGOCD_CLIENT=$(kubectl -n <EDP_NAMESPACE> get secret keycloak-client-argocd-secret  -o jsonpath='{.data.clientSecret}')
   kubectl -n argocd patch secret argocd-secret -p="{\"data\":{\"oidc.keycloak.clientSecret\": \"${ARGOCD_CLIENT}\"}}" -v=1
-  kubectl -n argocd rollout restart deployment argocd-server
+  kubectl -n argocd rollout restart deployment argo-argocd-server
   ```
 
 ## Related Articles

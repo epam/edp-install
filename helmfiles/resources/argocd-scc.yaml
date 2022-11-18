@@ -12,7 +12,7 @@ defaultAddCapabilities: []
 fsGroup:
   type: MustRunAs
   ranges:
-    - min: 999
+    - min: 99
       max: 65543
 groups: []
 kind: SecurityContextConstraints
@@ -35,9 +35,14 @@ seLinuxContext:
   type: MustRunAs
 supplementalGroups:
   type: RunAsAny
+seccompProfiles:
+  - '*'
 users:
 - system:serviceaccount:argocd:argo-redis-ha
 - system:serviceaccount:argocd:argo-redis-ha-haproxy
+- system:serviceaccount:argocd:argocd-notifications-controller
+- system:serviceaccount:argocd:argo-argocd-repo-server
+- system:serviceaccount:argocd:argocd-server
 volumes:
 - configMap
 - downwardAPI

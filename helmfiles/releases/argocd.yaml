@@ -51,10 +51,19 @@ releases:
         env:
           - name: ARGOCD_API_SERVER_REPLICAS
             value: '2'
+        {{- if eq .Values.global.platform "kubernetes" }}
         ingress:
           enabled: true
           hosts:
             - "argocd.{{ .Values.global.dnsWildCard }}"
+        {{- end }}
+        {{- if eq .Values.global.platform "openshift" }}
+        route:
+          enabled: true
+          hostname: "argocd.{{ .Values.global.dnsWildCard }}"
+          termination_type: edge
+          termination_policy: Redirect
+        {{- end }}
         config:
           # required when SSO is enabled
           url: "https://argocd.{{ .Values.global.dnsWildCard }}"
@@ -79,9 +88,8 @@ releases:
             g, ArgoCDAdmins, role:admin
 
       configs:
-        secret:
-          extra:
-            oidc.keycloak.clientSecret: "REPLACE"
+        params:
+          application.namespaces: {{ .Values.global.edpName }}
 
       repoServer:
         replicas: 2

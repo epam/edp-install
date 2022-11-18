@@ -4,10 +4,13 @@ This article provides the instruction on how to deploy EDP and components in Kub
 
 ## Prerequisites
 
-* [Helm](https://helm.sh) version 3.6.0+ is installed. Please refer to the [Helm](https://github.com/helm/helm/releases/tag/v3.6.0) page on GitHub for details.
-* Helmfile version 0.142.0 is installed. Please refer to the [GitHub](https://github.com/helmfile/helmfile) page for details.
-* Helm diff plugin version 3.5.0 is installed. Please refer to the [GitHub](https://github.com/databus23/helm-diff) page for details.
-* Helm-git plugin version 0.11.4 is installed. Please refer to the [GitHub](https://github.com/aslafy-z/helm-git) page for details.
+The following tools and plugins must be installed:
+
+* [Kubectl version 1.23.0](https://v1-23.docs.kubernetes.io/releases/download/)
+* [Helm version 3.10.0+](https://github.com/helm/helm/releases/tag/v3.10.0)
+* [Helmfile version 0.142.0](https://github.com/helmfile/helmfile)
+* [Helm diff plugin version 3.5.0](https://github.com/databus23/helm-diff)
+* [Helm-git plugin version 0.11.4](https://github.com/aslafy-z/helm-git)
 
 ## Helmfile Structure
 
@@ -149,19 +152,23 @@ To install EDP, follow the steps below:
 
 ### Deploy Argo CD
 
+Before Argo CD deployment, install the following tools:
+
+* [Keycloak](./install-keycloak.md)
+* [EDP](./install-edp.md)
+
 To install Argo CD, follow the steps below:
 
 1. Install Argo CD:
 
-  !!! Note
-      **For the OpenShift users:**<br>
-      When using a custom namespace for ArgoCD, the `argocd` namespace is also indicated as `users` in the `resources/argocd-scc.yaml` custom `SecurityContextConstraints` resource. Change it there as well.
+  !!! warning "For the OpenShift users:"
+            When using a custom namespace for Argo CD, the `argocd` namespace is also indicated as `users` in the `resources/argocd-scc.yaml` custom `SecurityContextConstraints` resource. Change it there as well.
 
     ```bash
-    helmfile  --selector component=argocd --environment platform -f helmfile.yaml apply
+    helmfile --selector component=argocd --environment platform -f helmfile.yaml apply
     ```
 
-2. Update the `argocd-secret` secret (in the Argo CD namespace) by providing the correct Keycloak client secret (`oidc.keycloak.clientSecret`) with the value from the `keycloak-client-argocd-secret` secret in EDP namespace, and restart the deployment:
+2. Update the `argocd-secret` secret in the Argo CD namespace by providing the correct Keycloak client secret (`oidc.keycloak.clientSecret`) with the value from the `keycloak-client-argocd-secret` secret in EDP namespace. Then restart the deployment:
 
   ```bash
   ARGOCD_CLIENT=$(kubectl -n platform get secret keycloak-client-argocd-secret  -o jsonpath='{.data.clientSecret}')
