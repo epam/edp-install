@@ -11,13 +11,12 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
 
 2. Generate access token for [GitLab](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) or [GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) account with read/write access to the API.
 
-3. Create a `Secret` in the &#8249;edp-project&#8250; namespace for the Git account with the **id_rsa**, **id_rsa.pub**, **username** and **token** fields.
+3. Create a `Secret` in the &#8249;edp-project&#8250; namespace for the Git account with the **id_rsa**, **username**, and **token** fields.
 
   As a sample, it is possible to use the following command (use *github-configuration* instead of *gitlab-configuration* for GitHub):
 
       kubectl create secret generic gitlab-configuration -n <edp-project> \
         --from-file=id_rsa=id_rsa \
-        --from-file=id_rsa.pub=id_rsa.pub \
         --from-literal=username=user@example.com \
         --from-literal=token=your_gitlab_access_token
 
