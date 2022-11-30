@@ -19,7 +19,7 @@ In order to add a new custom global pipeline library, perform the steps below:
 
   d. **Allow default version to be overridden**: If checked, scripts may select a custom version of the library by appending @someversion in the @Library annotation. Otherwise, they are restricted to using the version selected here.
 
-  e. **Include @Library changes in job recent changes**: If checked, any changes in the library will be included in the changesets of a build, and changing the library would cause new builds to run for Pipelines that include this library. This can be overridden in the jenkinsfile: @Library(value="name@version", changelog=true|false)
+  e. **Include @Library changes in job recent changes**: If checked, any changes in the library will be included in the changesets of a build, and changing the library would cause new builds to run for Pipelines that include this library. This can be overridden in the jenkinsfile: @Library(value="name@version", changelog=true|false).
 
   f. **Cache fetched versions on controller for quick retrieval**: If checked, versions fetched using this library will be cached on the controller. If a new library version is not downloaded during the build for some reason, remove the previous library version from cache in the Jenkins workspace.
 
@@ -30,7 +30,7 @@ In order to add a new custom global pipeline library, perform the steps below:
 
   g. **Project repository**: The URL of the repository
 
-  h **Credentials**: The credentials for the repository.
+  h. **Credentials**: The credentials for the repository.
 
 3. Use the Custom Global Pipeline Libraries on the pipeline, for example:
 

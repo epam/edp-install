@@ -1,29 +1,59 @@
 # Enable VCS Import Strategy
 
 !!! note
-    Enabling the VCS Import strategy is a prerequisite to integrate EDP with GitLab or GitHub. A Git server and a corresponding secret can be also created [in the EDP Headlamp](../headlamp-user-guide/add-git-server.md).
+    Enabling the VCS Import strategy is a prerequisite to integrate EDP with GitLab or GitHub.
 
-In order to use the **Import** strategy, it is required to add a Secret with SSH key, GitServer Custom Resource, and Jenkins credentials by taking the steps below.
+=== "Tekton"
 
-1. Generate an SSH key pair and add a public key to [GitLab](https://docs.gitlab.com/ee/ssh/) or [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) account.
+    In order to use the **Import** strategy, it is required to add a Secret with SSH key, and GitServer Custom Resource by taking the steps below.
 
+    1. Generate an SSH key pair and add a public key to [GitLab](https://docs.gitlab.com/ee/ssh/) or [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) account.
+
+      ```bash
       ssh-keygen -t ed25519 -C "email@example.com"
+      ```
 
-2. Generate access token for [GitLab](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) or [GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) account with read/write access to the API.
+    2. Generate access token for [GitLab](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) or [GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) account with read/write access to the API.
 
-3. Create a `Secret` in the &#8249;edp-project&#8250; namespace for the Git account with the **id_rsa**, **username**, and **token** fields.
+    3. Create a `Secret` in the `edp-project` namespace for the Git account with the **id_rsa**, **username**, and **token** fields.
 
-  As a sample, it is possible to use the following command (use *github-configuration* instead of *gitlab-configuration* for GitHub):
+      Take the following template as an example (use *github* instead of *gitlab* for GitHub):
 
-      kubectl create secret generic gitlab-configuration -n <edp-project> \
+      ```bash
+      kubectl create secret generic gitlab -n <edp-project> \
         --from-file=id_rsa=id_rsa \
         --from-literal=username=user@example.com \
         --from-literal=token=your_gitlab_access_token
+      ```
 
-4. Create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **gitProvider**, **httpsPort**, **sshPort** and **nameSshKeySecret** fields. The **gitProvider** field can be either *gitlab*, *github*, or *gerrit*.
+    4. Update `gitProvider` value in `global` section of edp-install values.yaml to enable Gitlab/Github integration:
 
-  As a sample, it is possible to use the following template:
+      ??? note "View: values.yaml"
+          ```yaml
+          global:
+            # -- Can be gerrit, github or gitlab. By default: gerrit
+            gitProvider: <git_provider_name>
+          ```
 
+    5. Upgrade edp-install release: `helm upgrade edp epamedp/edp-install --values values.yaml`.
+
+=== "Jenkins"
+
+    In order to use the **Import** strategy, it is required to add a Secret with SSH key, GitServer Custom Resource, and Jenkins credentials by taking the steps below.
+
+    1. Generate an SSH key pair and add a public key to [GitLab](https://docs.gitlab.com/ee/ssh/) or [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) account.
+
+      ```bash
+      ssh-keygen -t ed25519 -C "email@example.com"
+      ```
+
+    2. Generate access token for [GitLab](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) or [GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) account with read/write access to the API.
+
+    3. [Add a Git Server via Headlamp](../headlamp-user-guide/add-git-server.md), or create `GitServer` Custom Resource in the project namespace with the **gitHost**, **gitUser**, **gitProvider**, **httpsPort**, **sshPort** and **nameSshKeySecret** fields. The **gitProvider** field can be either *gitlab*, *github*, or *gerrit*.
+
+      Take the following template as an example:
+
+      ```yaml
       apiVersion: v2.edp.epam.com/v1
       kind: GitServer
       metadata:
@@ -34,45 +64,32 @@ In order to use the **Import** strategy, it is required to add a Secret with SSH
         gitUser: git
         gitProvider: gitlab
         httpsPort: 443
-        nameSshKeySecret: gitlab-configuration
+        nameSshKeySecret: gitlab
         sshPort: 22
+      ```
 
-  !!! note
-      The value of the **nameSshKeySecret** property is the name of the Secret that is indicated in the first point above.
+      !!! note
+          The value of the **nameSshKeySecret** property is the name of the Secret that is indicated in the first step above.
 
-5. Create `Jenkinsserviceaccount` Custom Resource with the **credentials** field that corresponds to the **nameSshKeySecret** property above.
+    4. Create the `Jenkinsserviceaccount` Custom Resource with the **credentials** field that corresponds to the **nameSshKeySecret** property above.
 
+      ```yaml
       apiVersion: v2.edp.epam.com/v1
       kind: JenkinsServiceAccount
       metadata:
-        name: gitlab-configuration
+        name: gitlab
         namespace: <edp-project>
       spec:
-        credentials: gitlab-configuration
+        credentials: gitlab
         ownerName: ''
         type: ssh
+      ```
 
-    Double-check if the credentials are created in Jenkins correctly. Navigate to **Jenkins -> Credentials -> System -> Global Credentials -> Add Credentials**:
+      Double-check that the credentials are created in Jenkins correctly. Navigate to **Jenkins -> Credentials -> System -> Global Credentials -> Add Credentials**:
 
-  !![Jenkins credential](../assets/operator-guide/add-credentials.png "Jenkins credential")
+        !![Jenkins credentials](../assets/operator-guide/add-credentials.png "Jenkins credentials")
 
-6. Make sure that the value of **INTEGRATION_STRATEGIES** variable is set to **Import** in the edp-admin-console deployment (should be by default). You can check it here:
-
-      spec:
-        containers:
-          - name: edp-admin-console
-          ....
-            env:
-              - name: INTEGRATION_STRATEGIES
-                value: 'Create,Clone,Import'
-
-  !!! note
-      The default values can be found in the deployment templates for `edp-admin-console-operator` in [edp-install umbrella chart](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml)
-
-!!! note
-    The **Import** strategy can be found on the **Applications** page of the Admin Console. For details, please refer to the [Add Applications](../user-guide/add-application.md) page.
-
-The next step is to integrate Jenkins with [GitHub](github-integration.md) or [GitLab](gitlab-integration.md).
+    5. The next step is to integrate Jenkins with [GitHub](github-integration.md) or [GitLab](gitlab-integration.md).
 
 ### Related Articles
 

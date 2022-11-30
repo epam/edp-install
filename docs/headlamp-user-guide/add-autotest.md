@@ -44,7 +44,7 @@ There are two available strategies: clone and import.
   !![Import autotest](../assets/headlamp-user-guide/headlamp-import-autotest.png "Import autotest")
 
   !!! note
-      In order to use the **Import** strategy, make sure to adjust it by following the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the **Import** strategy, make sure to adjust it by the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
 
 3. Click the Proceed button to switch to the next menu.
 

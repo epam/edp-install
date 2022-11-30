@@ -35,7 +35,7 @@ The **Create Application** dialog contains the three steps:
    * **Import** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
 
   !!! note
-      In order to use the Import strategy, make sure to adjust it by following the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the Import strategy, make sure to adjust it by the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
       The Import strategy is not applicable for Gerrit.
 
 3. Click the Proceed button to switch to the next menu.
@@ -145,7 +145,7 @@ and have a respective label in the Fix Version field.
   a. Select the name of the field in a Jira ticket from the **Mapping field name** drop-down menu. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 
   b. Click the plus icon to add the mapping field name.
-  
+
   c. Enter Jira pattern for the field name:
 
   * For the **Fix Version/s** field, select the **EDP_VERSION** variable that represents an EDP upgrade version,
