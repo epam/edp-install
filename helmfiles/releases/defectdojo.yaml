@@ -41,7 +41,7 @@ releases:
     command: "kubectl"
     args: ["delete", "-f", "../resources/defectdojo-route.yaml"]
   {{- end }}
-  version: "1.6.35"
+  version: "1.6.46"
   wait: true
   installed: true
   values:

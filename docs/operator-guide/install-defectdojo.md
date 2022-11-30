@@ -7,8 +7,8 @@ Inspect the main steps to perform for installing DefectDojo via Helm Chart.
 
 ## Prerequisites
 
-* Kubectl version 1.20.0 is installed. Please refer to the [Kubernetes official website](https://v1-20.docs.kubernetes.io/docs/setup/release/notes/) for details.
-* [Helm](https://helm.sh) version 3.9.2 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.9.2) on GitHub for details.
+* Kubectl version 1.23.0 is installed. Please refer to the [Kubernetes official website](https://v1-23.docs.kubernetes.io/releases/download/) for details.
+* [Helm](https://helm.sh) version 3.10.2 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.10.2) on GitHub for details.
 
 ## Installation
 
@@ -25,64 +25,63 @@ To install DefectDojo, follow the steps below:
    kubectl create namespace defectdojo
    ```
 
-  !!! Note
+  !!! warning "For the OpenShift users:"
       When using the OpenShift platform, install the `SecurityContextConstraints` resource. In case of using a custom namespace for `defectdojo`, change the namespace in the `users` section.<br>
 
-  <details>
-  <summary><b>View: defectdojo-scc.yaml</b></summary>
+      <details>
+      <summary><b>View: defectdojo-scc.yaml</b></summary>
 
-  ```yaml
-    allowHostDirVolumePlugin: false
-    allowHostIPC: false
-    allowHostNetwork: false
-    allowHostPID: false
-    allowHostPorts: false
-    allowPrivilegeEscalation: true
-    allowPrivilegedContainer: false
-    allowedCapabilities: null
-    apiVersion: security.openshift.io/v1
-    allowedFlexVolumes: []
-    defaultAddCapabilities: []
-    fsGroup:
-      type: MustRunAs
-      ranges:
-        - min: 999
-          max: 65543
-    groups: []
-    kind: SecurityContextConstraints
-    metadata:
-      annotations:
-          "helm.sh/hook": "pre-install"
-      name: defectdojo
-    priority: 1
-    readOnlyRootFilesystem: false
-    requiredDropCapabilities:
-    - KILL
-    - MKNOD
-    - SETUID
-    - SETGID
-    runAsUser:
-      type: MustRunAsRange
-      uidRangeMin: 1
-      uidRangeMax: 65543
-    seLinuxContext:
-      type: MustRunAs
-    supplementalGroups:
-      type: RunAsAny
-    users:
-    - system:serviceaccount:defectdojo:defectdojo
-    - system:serviceaccount:defectdojo:defectdojo-rabbitmq
-    - system:serviceaccount:defectdojo:default
-    volumes:
-    - configMap
-    - downwardAPI
-    - emptyDir
-    - persistentVolumeClaim
-    - projected
-    - secret
-  ```
-  </details>
-
+      ```yaml
+      allowHostDirVolumePlugin: false
+      allowHostIPC: false
+      allowHostNetwork: false
+      allowHostPID: false
+      allowHostPorts: false
+      allowPrivilegeEscalation: true
+      allowPrivilegedContainer: false
+      allowedCapabilities: null
+      apiVersion: security.openshift.io/v1
+      allowedFlexVolumes: []
+      defaultAddCapabilities: []
+      fsGroup:
+        type: MustRunAs
+        ranges:
+          - min: 999
+            max: 65543
+      groups: []
+      kind: SecurityContextConstraints
+      metadata:
+        annotations:
+            "helm.sh/hook": "pre-install"
+        name: defectdojo
+      priority: 1
+      readOnlyRootFilesystem: false
+      requiredDropCapabilities:
+      - KILL
+      - MKNOD
+      - SETUID
+      - SETGID
+      runAsUser:
+        type: MustRunAsRange
+        uidRangeMin: 1
+        uidRangeMax: 65543
+      seLinuxContext:
+        type: MustRunAs
+      supplementalGroups:
+        type: RunAsAny
+      users:
+      - system:serviceaccount:defectdojo:defectdojo
+      - system:serviceaccount:defectdojo:defectdojo-rabbitmq
+      - system:serviceaccount:defectdojo:default
+      volumes:
+      - configMap
+      - downwardAPI
+      - emptyDir
+      - persistentVolumeClaim
+      - projected
+      - secret
+      ```
+      </details>
 
 2. Add a chart repository:
 
@@ -135,7 +134,7 @@ To install DefectDojo, follow the steps below:
       The `metric_http_auth_password` password must be 32 characters long.
 
 
-6. Install DefectDojo v.2.12.0 using [defectdojo/defectdojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo) Helm chart v.1.6.35:
+6. Install DefectDojo v.2.16.2 using [defectdojo/defectdojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo) Helm chart v.1.6.46:
 
    ```bash
    helm upgrade --install \
@@ -151,7 +150,7 @@ To install DefectDojo, follow the steps below:
   <summary><b>View: values.yaml</b></summary>
 
 ```yaml
-
+tag: 2.16.2
 fullnameOverride: defectdojo
 host: defectdojo.<ROOT_DOMAIN>
 site_url: https://defectdojo.<ROOT_DOMAIN>
@@ -164,6 +163,7 @@ initializer:
 django:
   ingress:
     enabled: true # change to 'false' for OpenShift
+    activateTLS: false
   uwsgi:
     livenessProbe:
       # Enable liveness checks on uwsgi container. Those values are use on nginx readiness checks as well.
