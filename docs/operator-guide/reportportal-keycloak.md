@@ -66,3 +66,8 @@ Follow the steps below to integrate the ReportPortal with Keycloak.
       By default, after the first login, ReportPortal creates the <your_email\>_personal project and adds an account with the `Project manager` role.
 
   !![Report portal login page](../assets/operator-guide/reportportal-keycloak-7.png "Report portal login page")
+  
+## Related Articles
+
+* [ReportPortal Installation](install-reportportal.md)
+* [Integration With Tekton](report-portal-integration-tekton.md)

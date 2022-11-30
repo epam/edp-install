@@ -135,6 +135,7 @@ nav:
       - Perf Server Integration: operator-guide/perf-integration.md
       - ReportPortal:
           - Keycloak Integration: operator-guide/reportportal-keycloak.md
+          - Integration With Tekton: operator-guide/report-portal-integration-tekton.md
       - Logsight Integration: operator-guide/logsight-integration.md
     - Platform Capabilities:
       - GitOps:
