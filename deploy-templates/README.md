@@ -62,6 +62,7 @@ A Helm chart for EDP Install
 | global.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.edpName | string | `"stub-namespace"` | namespace or a project name (in case of OpenShift) |
+| global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |
 | global.kioskEnabled | bool | `true` |  |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"2.13.0-SNAPSHOT"` | EDP version |

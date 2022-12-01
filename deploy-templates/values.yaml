@@ -23,6 +23,9 @@ global:
     # -- URL to OpenShift/Kubernetes Web console
     url:
   kioskEnabled: true
+   # -- Can be gerrit, github or gitlab. By default: gerrit
+  gitProvider: gerrit
+
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
