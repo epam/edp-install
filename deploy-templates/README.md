@@ -40,7 +40,7 @@ A Helm chart for EDP Install
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | EDPComponents | object | `{}` |  |
-| admin-console-operator.enabled | bool | `true` |  |
+| admin-console-operator.enabled | bool | `false` |  |
 | annotations | object | `{}` |  |
 | argocd.enabled | bool | `false` | Enable ArgoCD integration |
 | argocd.url | string | `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }}) | ArgoCD URL in format schema://URI |
@@ -67,7 +67,7 @@ A Helm chart for EDP Install
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"2.13.0-SNAPSHOT"` | EDP version |
 | global.webConsole.url | string | `nil` | URL to OpenShift/Kubernetes Web console |
-| jenkins-operator.enabled | bool | `true` |  |
+| jenkins-operator.enabled | bool | `false` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
 | kaniko.initKanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-kaniko container |
 | kaniko.initKanikoContainer.image | string | `"busybox:1.35.0"` | init container image which waits for Dockerfile before starting actual build |

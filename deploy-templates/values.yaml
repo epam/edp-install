@@ -139,7 +139,7 @@ codebase-operator:
   #   credentialName: "jira-user"
 
 jenkins-operator:
-  enabled: true
+  enabled: false
   # image:
   #   repository: epamedp/jenkins-operator
   #   tag:
@@ -212,7 +212,7 @@ sonar-operator:
 #     basePath: ""
 
 admin-console-operator:
-  enabled: true
+  enabled: false
   # image:
   #   repository: epamedp/admin-console-operator
   #   tag:
