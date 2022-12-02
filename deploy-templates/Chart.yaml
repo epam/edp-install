@@ -46,11 +46,6 @@ dependencies:
   version: "0.2.0"
   condition: edp-headlamp.enabled
 
-- name: edp-argocd-operator
-  repository: "@epamedp"
-  version: "0.2.0"
-  condition: edp-argocd-operator.enabled
-
 - name: edp-tekton
   repository: "@epamedp"
   version: "0.1.1"
@@ -108,8 +103,6 @@ annotations:
       image: epamedp/gerrit-operator:2.12.0
     - name: edp-headlamp:0.2.0
       image: epamedp/edp-headlamp:0.2.0
-    - name: edp-argocd-operator:0.2.0
-      image: epamedp/edp-argocd-operator:0.2.0
     - name: perf-operator:2.12.0
       image: epamedp/perf-operator:2.12.0
     - name: postgres:9.6

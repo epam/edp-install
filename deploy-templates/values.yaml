@@ -260,12 +260,6 @@ edp-headlamp:
   #   repository: epamedp/edp-headlamp
   #   tag:
 
-edp-argocd-operator:
-  enabled: false
-  # image:
-  #   repository: epamedp/edp-headlamp
-  #   tag:
-
 edp-tekton:
   enabled: true
 

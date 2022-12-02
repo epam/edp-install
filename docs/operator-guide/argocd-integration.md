@@ -17,7 +17,7 @@ EDP uses the HA deployment with the cluster-admin permissions, to minimize clust
 
 See a diagram below for the details:
 
-!![edp-argocd-operator](../assets/operator-guide/edp-argocd-operator.png "Argo CD Diagram")
+!![edp-argocd](../assets/operator-guide/edp-argocd.png "Argo CD Diagram")
 
 * Argo CD is deployed in a separate `argocd` namespace.
 * Argo CD uses a `cluster-admin` role for managing cluster-scope resources.

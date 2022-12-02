@@ -24,7 +24,6 @@ A Helm chart for EDP Install
 | @epamedp | admin-console-operator | 2.12.0 |
 | @epamedp | cd-pipeline-operator | 2.12.1 |
 | @epamedp | codebase-operator | 2.13.1 |
-| @epamedp | edp-argocd-operator | 0.2.0 |
 | @epamedp | edp-component-operator | 0.12.0 |
 | @epamedp | edp-headlamp | 0.2.0 |
 | @epamedp | edp-tekton | 0.1.1 |
@@ -48,7 +47,6 @@ A Helm chart for EDP Install
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | codebase-operator.enabled | bool | `true` |  |
 | dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
-| edp-argocd-operator.enabled | bool | `false` |  |
 | edp-headlamp.enabled | bool | `true` |  |
 | edp-tekton.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore |
