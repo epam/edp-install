@@ -58,7 +58,7 @@ Find below the example of the installation command:
         --set global.platform=<platform_type> \
         --set dockerRegistry.url=<aws_account_id>.dkr.ecr.<region>.amazonaws.com \
         --set keycloak-operator.keycloak.url=<keycloak_endpoint> \
-        --set gerrit-operator.gerrit.sshPort=<gerrit_ssh_port> \
+        --set global.gerritSSHPort=<gerrit_ssh_port> \
         --namespace <edp-project>
 
 !!! warning

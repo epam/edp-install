@@ -23,9 +23,10 @@ global:
     # -- URL to OpenShift/Kubernetes Web console
     url:
   kioskEnabled: true
-   # -- Can be gerrit, github or gitlab. By default: gerrit
+  # -- Can be gerrit, github or gitlab. By default: gerrit
   gitProvider: gerrit
-
+  # -- Gerrit SSH node port
+  gerritSSHPort: "22"
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
@@ -247,7 +248,6 @@ gerrit-operator:
   #   deploy: true
   #   name: "gerrit"
   #   image: "openfrontier/gerrit"
-  #   sshPort: "22"
   #   version:
   #   imagePullSecrets:
   #   storage:
