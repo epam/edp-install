@@ -110,9 +110,26 @@ When adding an autotest, the default branch is a **master** branch. In order to 
   f. Click the **Apply** button and wait until the new branch will be added to the list.
 
 !!! info
-    Adding of a new branch is indicated in the context of the edp versioning type. To get more detailed information on how to add a branch using the default versioning type, please refer to the [Add Autotest](add-autotest.md) instruction.
+    Adding of a new branch is indicated in the context of the edp versioning type. To get more information on how to add a branch using the default versioning type, please refer to the [Add Autotest](add-autotest.md) instruction.
 
 The default autotest repository is cloned and changed to the new indicated version before the build, i.e. the new indicated version will not be committed to the repository; thus, the existing repository will keep the default version.
+
+## Build Branch
+
+In order to build branch from the latest commit, do the following:
+
+1. Navigate to the **Branches** block by clicking the autotest name link in the Autotests list.
+2. Select the options icon related to the necessary branch and then select **Build**:
+
+  !![Build branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Build branch")
+
+The pipeline run status is displayed near the branch name in the **Branches** block:
+
+  !![Pipeline run status in Headlamp](../assets/headlamp-user-guide/headlamp-pipeline-run-status.png "Pipeline run status in Headlamp")
+
+The corresponding item appears on the **Tekton Dashboard** in the **PipelineRuns** section:
+
+  !![Pipeline run status in Tekton](../assets/headlamp-user-guide/headlamp-pipeline-run-status-in-tekton.png "Pipeline run status in Tekton")
 
 ## Edit Branch
 
@@ -121,7 +138,7 @@ In order to edit a branch with the corresponding record in the Headlamp database
 1. Navigate to the **Branches** block by clicking the autotest name link in the Autotests list.
 2. Select the options icon related to the necessary branch and then select **Edit**:
 
-  !![Edit branch](../assets/headlamp-user-guide/headlamp-edit-branch.png "Edit branch")
+  !![Edit branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Edit branch")
 
 3. Edit the YAML file in a standard or minimal editor and select **Save & Apply**:
 
@@ -129,8 +146,8 @@ In order to edit a branch with the corresponding record in the Headlamp database
 
 ## Delete Branch
 
-  !!! note
-      The default **master** branch cannot be removed.
+!!! note
+    The default **master** branch cannot be removed.
 
 In order to delete the added branch with the corresponding record in the Headlamp database, do the following:
 
@@ -149,7 +166,7 @@ In order to add an autotest as a quality gate to a newly added CD pipeline, do t
 
 3. In the additional fields, select the previously created autotest name and specify its branch.
 
-4. After filling in all the necessary fields, click the Create button to start the provisioning of the pipeline. After the CD pipeline is added, the new namespace containing the stage name will be created in Kubernetes (in OpenShift, a new project will be created) with the following name pattern: _[cluster name]-[cd pipeline name]-[stage name]_
+4. After filling in all the necessary fields, click the Create button to start the provisioning of the pipeline. After the CD pipeline is added, the new namespace containing the stage name will be created in Kubernetes (in OpenShift, a new project will be created) with the following name pattern: _[cluster name]-[cd pipeline name]-[stage name]_.
 
 ## Configure Autotest Launch at Specific Stage
 

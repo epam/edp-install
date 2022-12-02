@@ -104,6 +104,23 @@ When adding an application, the default branch is a **master** branch. In order 
 
 The default application repository is cloned and changed to the new indicated version before the build, i.e. the new indicated version will not be committed to the repository; thus, the existing repository will keep the default version.
 
+## Build Branch
+
+In order to build branch from the latest commit, do the following:
+
+1. Navigate to the **Branches** block by clicking the application name link in the Applications list.
+2. Select the options icon related to the necessary branch and then select **Build**:
+
+  !![Build branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Build branch")
+
+The pipeline run status is displayed near the branch name in the **Branches** block:
+
+  !![Pipeline run status in Headlamp](../assets/headlamp-user-guide/headlamp-pipeline-run-status.png "Pipeline run status in Headlamp")
+
+The corresponding item appears on the **Tekton Dashboard** in the **PipelineRuns** section:
+
+  !![Pipeline run status in Tekton](../assets/headlamp-user-guide/headlamp-pipeline-run-status-in-tekton.png "Pipeline run status in Tekton")
+
 ## Edit Branch
 
 In order to edit a branch with the corresponding record in the Headlamp database, do the following:
@@ -111,7 +128,7 @@ In order to edit a branch with the corresponding record in the Headlamp database
 1. Navigate to the **Branches** block by clicking the application name link in the Applications list.
 2. Select the options icon related to the necessary branch and then select **Edit**:
 
-  !![Edit branch](../assets/headlamp-user-guide/headlamp-edit-branch.png "Edit branch")
+  !![Edit branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Edit branch")
 
 3. Edit the YAML file in a standard or minimal editor and select **Save & Apply**:
 
