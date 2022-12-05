@@ -231,7 +231,7 @@ Follow the steps below to install Argo CD using Helm:
   ```bash
   kubectl create ns argocd
   helm repo add argo https://argoproj.github.io/argo-helm
-  helm install argo argo/argo-cd -f values.yaml -n argocd
+  helm install argo --version 5.16.1 argo/argo-cd -f values.yaml -n argocd
   ```
 
 3. Update the `argocd-secret` secret in the `argocd` namespace by providing the correct Keycloak client secret (`oidc.keycloak.clientSecret`)
@@ -246,3 +246,4 @@ Follow the steps below to install Argo CD using Helm:
 ## Related Articles
 
 * [Argo CD Integration](argocd-integration.md)
+* [Install via Helmfile](./install-via-helmfile.md#deploy-argo-cd)

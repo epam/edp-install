@@ -34,7 +34,7 @@ releases:
     args: ["delete", "-f", "../resources/argocd-scc.yaml"]
   {{- end }}
   disableValidation: true
-  version: "5.13.5"
+  version: "5.16.1"
   wait: true
   installed: true
   values:

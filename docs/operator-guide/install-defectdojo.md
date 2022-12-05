@@ -139,6 +139,7 @@ To install DefectDojo, follow the steps below:
    ```bash
    helm upgrade --install \
    defectdojo \
+   --version 1.6.46 \
    defectdojo/defectdojo \
    --namespace defectdojo \
    --values values.yaml
