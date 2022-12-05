@@ -62,6 +62,7 @@ helm repo update
 --from-literal<span class=o>=</span><span class=nv>METRICS_HTTP_AUTH_PASSWORD</span><span class=o>=</span>&lt;metric_http_auth_password&gt;
 </code></pre></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>The <code>dd_admin_password</code> password must be 22 characters long.</p> <p>The <code>dd_secret_key</code> password must be 128 characters long.</p> <p>The <code>dd_credential_aes_256_key</code> password must be 128 characters long.</p> <p>The <code>metric_http_auth_password</code> password must be 32 characters long.</p> </div> </li> <li> <p>Install DefectDojo v.2.16.2 using <a href=https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo>defectdojo/defectdojo</a> Helm chart v.1.6.46:</p> <div class=highlight><pre><span></span><code>helm upgrade --install <span class=se>\</span>
 defectdojo <span class=se>\</span>
+--version <span class=m>1</span>.6.46 <span class=se>\</span>
 defectdojo/defectdojo <span class=se>\</span>
 --namespace defectdojo <span class=se>\</span>
 --values values.yaml
