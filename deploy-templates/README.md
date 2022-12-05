@@ -72,9 +72,9 @@ A Helm chart for EDP Install
 | kaniko.initKanikoContainer.image | string | `"busybox:1.35.0"` | init container image which waits for Dockerfile before starting actual build |
 | kaniko.initRepositoryContainer.extraCommandOptions | string | `""` | Configure extra options for command 'aws ecr create-repository' |
 | kaniko.initRepositoryContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-repository container |
-| kaniko.initRepositoryContainer.image | string | `"amazon/aws-cli:2.7.20"` | aws-cli image is used to provision non-existing AWS ECR repository |
+| kaniko.initRepositoryContainer.image | string | `"amazon/aws-cli:2.9.4"` | aws-cli image is used to provision non-existing AWS ECR repository |
 | kaniko.kanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the Kaniko container |
-| kaniko.kanikoContainer.image | string | `"gcr.io/kaniko-project/executor:v1.8.1"` | kaniko image |
+| kaniko.kanikoContainer.image | string | `"gcr.io/kaniko-project/executor:v1.9.1@sha256:7d1923bcf2a9ed1e33e1918c3e208c7a60dd2def7c6bd302cde0c839c5bf5425"` | kaniko image |
 | kaniko.kanikoContainer.resources.limits | object | `{}` | The resources limits for the Kaniko containers |
 | kaniko.kanikoContainer.resources.requests | object | `{}` | The requested resources for the Kaniko containers |
 | kaniko.nodeSelector | object | `{}` | nodeSelector Node labels for pod assignment |
