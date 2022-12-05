@@ -22,7 +22,7 @@ releases:
     vendor: "kubernetes"
     default: "true"
   chart: "ingress-nginx/ingress-nginx"
-  version: "4.1.4"
+  version: "4.4.0"
   wait: true
   installed: true
   values:

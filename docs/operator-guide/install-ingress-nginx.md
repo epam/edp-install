@@ -4,8 +4,8 @@ Inspect the prerequisites and the main steps to perform for installing [Install 
 
 ## Prerequisites
 
-* Kubectl version 1.20.0 is installed. Please refer to the [Kubernetes official website](https://v1-18.docs.kubernetes.io/docs/setup/release/notes/) for details.
-* [Helm](https://helm.sh) version 3.6.0 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.6.0) on GitHub for details.
+* Kubectl version 1.23.0 is installed. Please refer to the [Kubernetes official website](https://v1-23.docs.kubernetes.io/releases/download/) for details.
+* [Helm](https://helm.sh) version 3.10.2 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.10.2) on GitHub for details.
 
 ## Installation
 
@@ -26,7 +26,7 @@ To install the ingress-nginx chart, follow the steps below:
 3. Install the ingress-nginx chart:
 
       helm install ingress ingress-nginx/ingress-nginx \
-      --version 4.1.4 \
+      --version 4.4.0 \
       --values values.yaml \
       --namespace ingress-nginx
 
@@ -82,5 +82,5 @@ serviceAccount:
 
 </details>
 
-!!! note
+!!! warning
     Align value **controller.config.proxy-real-ip-cidr** with [AWS VPC CIDR](https://kubernetes.github.io/ingress-nginx/user-guide/miscellaneous/#source-ip-address).
