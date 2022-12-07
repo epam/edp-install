@@ -41,11 +41,12 @@ releases:
     command: "kubectl"
     args: ["delete", "-f", "../resources/defectdojo-route.yaml"]
   {{- end }}
-  version: "1.6.46"
+  version: "1.6.47"
   wait: true
   installed: true
   values:
-    - fullnameOverride: defectdojo
+    - tag: 2.17.0
+      fullnameOverride: defectdojo
       host: defectdojo.{{ .Values.global.dnsWildCard }}
       site_url: https://defectdojo.{{ .Values.global.dnsWildCard }}
       alternativeHosts:
