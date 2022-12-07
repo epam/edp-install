@@ -60,13 +60,13 @@ helm repo update
 --from-literal<span class=o>=</span><span class=nv>DD_SECRET_KEY</span><span class=o>=</span>&lt;dd_secret_key&gt; <span class=se>\</span>
 --from-literal<span class=o>=</span><span class=nv>DD_CREDENTIAL_AES_256_KEY</span><span class=o>=</span>&lt;dd_credential_aes_256_key&gt; <span class=se>\</span>
 --from-literal<span class=o>=</span><span class=nv>METRICS_HTTP_AUTH_PASSWORD</span><span class=o>=</span>&lt;metric_http_auth_password&gt;
-</code></pre></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>The <code>dd_admin_password</code> password must be 22 characters long.</p> <p>The <code>dd_secret_key</code> password must be 128 characters long.</p> <p>The <code>dd_credential_aes_256_key</code> password must be 128 characters long.</p> <p>The <code>metric_http_auth_password</code> password must be 32 characters long.</p> </div> </li> <li> <p>Install DefectDojo v.2.16.2 using <a href=https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo>defectdojo/defectdojo</a> Helm chart v.1.6.46:</p> <div class=highlight><pre><span></span><code>helm upgrade --install <span class=se>\</span>
+</code></pre></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>The <code>dd_admin_password</code> password must be 22 characters long.</p> <p>The <code>dd_secret_key</code> password must be 128 characters long.</p> <p>The <code>dd_credential_aes_256_key</code> password must be 128 characters long.</p> <p>The <code>metric_http_auth_password</code> password must be 32 characters long.</p> </div> </li> <li> <p>Install DefectDojo v.2.17.0 using <a href=https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo>defectdojo/defectdojo</a> Helm chart v.1.6.47:</p> <div class=highlight><pre><span></span><code>helm upgrade --install <span class=se>\</span>
 defectdojo <span class=se>\</span>
---version <span class=m>1</span>.6.46 <span class=se>\</span>
+--version <span class=m>1</span>.6.47 <span class=se>\</span>
 defectdojo/defectdojo <span class=se>\</span>
 --namespace defectdojo <span class=se>\</span>
 --values values.yaml
-</code></pre></div> <p>Check out the <em>values.yaml</em> file sample of the DefectDojo customization:</p> <details> <summary><b>View: values.yaml</b></summary> <div class=highlight><pre><span></span><code><span class=nt>tag</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">2.16.2</span><span class=w></span>
+</code></pre></div> <p>Check out the <em>values.yaml</em> file sample of the DefectDojo customization:</p> <details> <summary><b>View: values.yaml</b></summary> <div class=highlight><pre><span></span><code><span class=nt>tag</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">2.17.0</span><span class=w></span>
 <span class=nt>fullnameOverride</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">defectdojo</span><span class=w></span>
 <span class=nt>host</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">defectdojo.&lt;ROOT_DOMAIN&gt;</span><span class=w></span>
 <span class=nt>site_url</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">https://defectdojo.&lt;ROOT_DOMAIN&gt;</span><span class=w></span>
