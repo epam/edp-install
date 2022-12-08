@@ -26,7 +26,7 @@ A Helm chart for EDP Install
 | @epamedp | codebase-operator | 2.13.1 |
 | @epamedp | edp-component-operator | 0.12.0 |
 | @epamedp | edp-headlamp | 0.2.0 |
-| @epamedp | edp-tekton | 0.1.1 |
+| @epamedp | edp-tekton | 0.2.1 |
 | @epamedp | gerrit-operator | 2.12.0 |
 | @epamedp | jenkins-operator | 2.12.1 |
 | @epamedp | keycloak-operator | 1.12.0 |
