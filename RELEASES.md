@@ -4,15 +4,16 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 3.0.0](#3.0.0)
 * [Version 2.12.1](#2.12.1)
 * [Version 2.12.0](#2.12.0)
 * [Version 2.11.0](#2.11.0)
-* [Version 2.10.2](#2.10.2)
-* [Version 2.10.1](#2.10.1)
-* [Version 2.10.0](#2.10.0)
 <details>
   <summary>Earlier Versions</summary>
 
+* [Version 2.10.2](#2.10.2)
+* [Version 2.10.1](#2.10.1)
+* [Version 2.10.0](#2.10.0)
 * [Version 2.9.0](#2.9.0)
 * [Version 2.8.4](#2.8.4)
 * [Version 2.8.3](#2.8.3)
@@ -33,6 +34,99 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.0.0 <a name="3.0.0"></a> (December 19, 2022)
+
+## What's New
+
+In EDP 3.0.0, Tekton is used alongside Jenkins for building, testing, and deploying application components. Tekton is a cloud-native CI/CD solution working seamlessly with Kubernetes and OpenShift Container Platform.
+
+Argo CD is integrated with EDP and allows using GitOps approach for Kubernetes application deployment.
+
+The Keycloak operator is now available on the OperatorHub. Now this operator can be installed on the OpenShift cluster using the OperatorHub installation approach.
+
+EDP Headlamp UI tool is now used as a new EDP dashboard. Because of the EDP Headlamp implementation, the edp-admin-console and edp-reconciler tools are deprecated and completely removed.
+
+EDP suggests ReportPortal as a primary test result aggregation tool. The ReportPortal tool integration with EDP allows categorizing the automated test results and reduce test results analysis efforts using built-in analytics features and Machine Learning.
+
+Explore the upgrades, new functionality, breaking changes and improvements below.
+
+### Upgrades
+
+* Kubectl is updated to the [1.24.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1243) version.
+* Helm is updated to the [3.10.2](https://github.com/helm/helm/releases/tag/v3.10.2) version.
+* Gerrit is updated to the [3.6.2](https://www.gerritcodereview.com/3.6.html#362) version.
+* Jenkins is updated to the [2.375.1](https://www.jenkins.io/doc/upgrade-guide/2.375/) version, as well as Jenkins plugins are updated to the latest stable versions.
+* SonarQube is updated to the [8.9.10](https://www.sonarqube.org/downloads/) version.
+* Nexus is updated to the [3.43.0](https://github.com/sonatype/nexus-public/releases) version.
+* Argo CD is updated to the [2.5.3](https://github.com/argoproj/argo-cd/releases/tag/v2.5.3) version.
+* Keycloak is updated to the [20.0.1](https://www.keycloak.org/archive/downloads-20.0.1.html) version.
+* Golang is updated to the [1.19.3](https://pkg.go.dev/golang.org/dl/go1.19.3) version.
+* DefectDojo is updated to the [2.17.0](https://github.com/DefectDojo/django-DefectDojo/blob/master/helm/defectdojo/Chart.yaml) version.
+
+### New Functionality
+
+* The `edp-tekton` is enabled as a EDP subcomponent and a part of the EDP deployment pipeline.
+* The web and desktop versions of EDP Headlamp are implemented.
+* The `keycloak-operator` is published on the OperatorHub. The Keycloak client is updated alongside with the KeycloakClient custom resource.
+* The ReportPortal functionality is integrated into EDP. The ReportPortal deployment is added into the Helmfile.
+* The Argo CD functionality is integrated into EDP. Argo CD application is deployed in the edp-tenant and Gerrit Argo CD user is created.
+* The `basePath` variable is added to the `gerrit-operator` to form the `gerritApiUrl`.
+
+### Enhancements
+
+* Dotnet 2.1 is no longer supported.
+* The `edp-reconciler` is no longer supported. All V1 API handlers are switched to V2 version and database resources are removed from the deployment templates.
+* The `edp-admin-console` is no longer supported. All REST and WebUI handlers are deprecated and database resources are removed from the deployment templates.
+* The `edp-argocd-operator` is no longer supported.
+* The process of resource updating operations is refactored for the codebase controller, thus shortening the reconciliation period.
+* Keycloak adapter client structure is updated when updating `KeycloakClient` custom resource.
+* New approach to SonarQube plugins installation is implemented in the `sonar-operator` repository.
+* By default, anonymous statistics for SonarQube deployment is disabled.
+
+### Fixed Issues
+
+* The `create-release` job possible failure is fixed on the `create-branch` step.
+* The `codebase-operator` leader election is fixed.
+* The `ImageName` parameter is aligned for the verified stages of the CD pipeline.
+* The `sonar-project.properties` are now considered in the Npm code review.
+
+### Documentation
+
+* The [EDP RoadMap](https://epam.github.io/edp-install/roadmap/) is updated.
+
+* The [Headlamp User Guide](https://epam.github.io/edp-install/headlamp-user-guide/) is created.
+
+* The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+  * The ReportPortal section is created with the [Integration With Tekton](https://epam.github.io/edp-install/operator-guide/report-portal-integration-tekton/) and [Keycloak Integration](https://epam.github.io/edp-install/operator-guide/reportportal-keycloak/) pages.
+  * The [Use Cert-Manager in OpenShift](https://epam.github.io/edp-install/operator-guide/ssl-automation-okd/) page is added.
+  * The [Logsight Integration](https://epam.github.io/edp-install/operator-guide/logsight-integration/) page is added.
+  * The [Upgrade Keycloak v.17.0.x-Legacy to v.19.0.x](https://epam.github.io/edp-install/operator-guide/upgrade-keycloak-17.0.x-legacy-to-19.0.x/) page is added.
+  * The [Overview](https://epam.github.io/edp-install/operator-guide/) page is updated.
+  * The [Debug GitLab Webhooks in Jenkins](https://epam.github.io/edp-install/operator-guide/gitlab-debug-webhooks/) page is updated.
+  * The [GitLab Integration](https://epam.github.io/edp-install/operator-guide/gitlab-integration/) page is updated.
+  * The [Debug GitHub Webhooks in Jenkins](https://epam.github.io/edp-install/operator-guide/github-debug-webhooks/) page is updated.
+  * The [GitHub Integration](https://epam.github.io/edp-install/operator-guide/github-integration/) page is updated.
+  * The [Enable VCS Import Strategy](https://epam.github.io/edp-install/operator-guide/import-strategy/) page is updated.
+  * The [Adjust Jira Integration](https://epam.github.io/edp-install/operator-guide/jira-integration/) page is updated.
+  * The [Install via Helmfile](https://epam.github.io/edp-install/operator-guide/install-via-helmfile/) page is updated.
+  * The [Install ReportPortal](https://epam.github.io/edp-install/operator-guide/install-reportportal/) page is updated.
+  * The [Install Argo CD](https://epam.github.io/edp-install/operator-guide/install-argocd/) page is updated.
+  * The [Install DefectDojo](https://epam.github.io/edp-install/operator-guide/install-defectdojo/) page is updated.
+  * The [Install Keycloak](https://epam.github.io/edp-install/operator-guide/install-keycloak/) page is updated.
+  * The [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/) page is updated.
+  * The [Deploy AWS EKS Cluster](https://epam.github.io/edp-install/operator-guide/deploy-aws-eks/) page is updated.
+  * The [Manage Jenkins CI Pipeline Job Provisioner](https://epam.github.io/edp-install/operator-guide/manage-jenkins-ci-job-provision/) page is updated.
+  * The [Argo CD Integration](https://epam.github.io/edp-install/operator-guide/argocd-integration/) page is updated.
+
+* The [User Guide](https://epam.github.io/edp-install/user-guide/) is updated with the following:
+  * The [Add a Custom Global Pipeline Library](https://epam.github.io/edp-install/user-guide/add-custom-global-pipeline-lib/) page is updated.
+  * The [CI Pipeline for Container](https://epam.github.io/edp-install/user-guide/container-stages/) page is updated with the [Tools for Container Images Building](https://epam.github.io/edp-install/user-guide/container-stages/#tools-for-container-images-building) section.
+  * The [Add Library](https://epam.github.io/edp-install/user-guide/add-library/) page is updated.
+  * The [Customize CI Pipeline](https://epam.github.io/edp-install/user-guide/customize-ci-pipeline/) page is updated.
+
+* The [FAQ](https://epam.github.io/edp-install/faq/) documentation section is updated with the following:
+  * [How To Change the Lifespan of an Access Token That Is Used for Headlamp and 'oidc-login' Plugin?](https://epam.github.io/edp-install/faq/#how-to-change-the-lifespan-of-an-access-token-that-is-used-for-headlamp-and-oidc-login-plugin)
 
 ## Version 2.12.1 <a name="2.12.1"></a> (October 28, 2022)
 
