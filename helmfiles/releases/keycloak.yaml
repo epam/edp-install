@@ -35,7 +35,7 @@ releases:
     command: "kubectl"
     args: ["delete", "-f", "../resources/keycloak-scc.yaml"]
   {{- end }}
-  version: "1.6.0" # Keycloak app version 19.0.1
+  version: "1.7.0" # Keycloak app version 19.0.1
   wait: true
   installed: true
   values:
@@ -43,7 +43,7 @@ releases:
 
       # Deploy the latest verion
       image:
-        tag: "19.0.1"
+        tag: "20.0.1"
 
       # start: create OpenShift realm which is required by EDP
       extraInitContainers: |
@@ -122,7 +122,7 @@ releases:
         # TLS configuration
         tls:
           enabled: true
-      {{- end }} 
+      {{- end }}
 
       resources:
         limits:

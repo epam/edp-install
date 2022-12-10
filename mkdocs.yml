@@ -16,6 +16,9 @@ markdown_extensions:
       server: http://www.plantuml.com/plantuml
   - toc:
       permalink: ⚓︎
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.superfences:
       preserve_tabs: true
       custom_fences:
