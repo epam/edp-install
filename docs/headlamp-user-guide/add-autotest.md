@@ -1,6 +1,6 @@
 # Add Autotests
 
-Headlamp enables to clone or import an autotest, add it to the environment with its subsequent deployment in Gerrit (in case the Clone strategy is used) and building of the Code Review pipeline in Jenkins, as well as to use it for work with an application under development.
+Headlamp enables to clone or import an autotest, add it to the environment with its subsequent deployment in Gerrit (in case the Clone strategy is used) and building of the Code Review pipeline in Jenkins/Tekton, as well as to use it for work with an application under development.
  It is also possible to use autotests as quality gates in a newly created CD pipeline.
 
 !!! info

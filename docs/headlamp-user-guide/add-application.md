@@ -1,6 +1,6 @@
 # Add Application
 
-Headlamp allows to create, clone, import an application and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins.
+Headlamp allows to create, clone, import an application and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins/Tekton.
 
 To add an application, navigate to the **Applications** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create Application** dialog will appear. You can create an Application [in YAML](#YAML) or [via the three-step menu](#menu) in the dialog.
 

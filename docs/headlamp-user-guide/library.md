@@ -6,13 +6,13 @@ This section describes the subsequent possible actions that can be performed wit
 
 As soon as the library is successfully provisioned, the following will be created:
 
-- Code Review and Build pipelines in Jenkins for this library. The Build pipeline will be triggered automatically if at least one environment is already added.
+- Code Review and Build pipelines in Jenkins/Tekton for this library. The Build pipeline will be triggered automatically if at least one environment is already added.
 - A new project in Gerrit or another VCS.
-- SonarQube integration will be available after the Build pipeline in Jenkins is passed.
-- Nexus Repository Manager will be available after the Build pipeline in Jenkins is passed as well.
+- SonarQube integration will be available after the Build pipeline in Jenkins/Tekton is passed.
+- Nexus Repository Manager will be available after the Build pipeline in Jenkins/Tekton is passed as well.
 
 !!! info
-    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
+    To navigate quickly to OpenShift, Jenkins/Tekton, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
 
 The added library will be listed in the Libraries list allowing to do the following:
 
@@ -29,7 +29,7 @@ The added library will be listed in the Libraries list allowing to do the follow
 
 3. Edit the library by selecting the options icon next to its name in the Libraries list, and then selecting **Edit**. For details see the [Edit Existing Library](#edit-existing-library) section.
 
-4. Remove library with the corresponding database and Jenkins pipelines by selecting the options icon next to its name in the Libraries list, and then selecting **Delete**:
+4. Remove library with the corresponding database and Jenkins/Tekton pipelines by selecting the options icon next to its name in the Libraries list, and then selecting **Delete**:
 
   !!! note
       The library that is used in a CD pipeline cannot be removed.
@@ -38,7 +38,7 @@ The added library will be listed in the Libraries list allowing to do the follow
 
 6. Search the necessary libraries by the namespace or by entering the corresponding name, language or the build tool into the **Filter** tool.
 
-7. Select a number of libraries displayed per page (15, 25 or 50 rows)  and navigate between pages if the number of libraries exceeds the capacity of a single page.
+7. Select a number of libraries displayed per page (15, 25 or 50 rows) and navigate between pages if the number of libraries exceeds the capacity of a single page.
 
 ## Edit Existing Library
 
@@ -62,7 +62,7 @@ EDP Headlamp provides the ability to enable, disable or edit the Jira Integratio
 
    b. Select the **Apply** button to apply the changes.
 
-   c. Navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
+   c. Navigate to Jenkins/Tekton and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
 
 3. To disable Jira integration, in the **Edit Library** dialog do the following:
 
@@ -70,7 +70,7 @@ EDP Headlamp provides the ability to enable, disable or edit the Jira Integratio
 
    b. Select the **Apply** button to apply the changes.
 
-   c. Navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
+   c. Navigate to Jenkins/Tekton and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
 As a result, the necessary changes will be applied.
 
@@ -81,7 +81,8 @@ As a result, the necessary changes will be applied.
 
 When adding a library, the default branch is a **master** branch. In order to add a new branch, follow the steps below:
 
-1. Navigate to the **Branches** block by clicking the application name link in the Applications list.
+1. Navigate to the **Branches** block by clicking the library name link in the Libraries list.
+
 2. Select the options icon related to the necessary branch and then select **Create**:
 
   !![Add branch](../assets/headlamp-user-guide/headlamp-addbranch1.png "Add branch")

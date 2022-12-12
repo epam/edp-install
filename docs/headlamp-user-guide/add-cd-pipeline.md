@@ -102,11 +102,11 @@ page for details.
   g. Add an unlimited number of quality gates by clicking a corresponding plus sign icon and remove them as well
 by clicking the recycle bin icon;
 
-  h. Type the step name, which will be displayed in Jenkins, for every quality gate;
+  h. Type the step name, which will be displayed in Jenkins/Tekton, for every quality gate;
 
   i. Select the quality gate type:
 
-  * Manual - means that the promoting process should be confirmed in Jenkins manually;
+  * Manual - means that the promoting process should be confirmed in Jenkins/Tekton manually;
   * Autotests - means that the promoting process should be confirmed by the successful passing of the autotests.
 
   In the additional fields, select the previously created autotest name (j) and specify its branch for the autotest
@@ -126,55 +126,121 @@ next to its name.
 13. Click the **Apply** button to start the provisioning of the pipeline. After the CD pipeline is added, the new project
 with the stage name will be created in OpenShift.
 
-### Check CD Pipeline Availability
+## Manage CD Pipeline
 
 As soon as the CD pipeline is provisioned and added to the CD Pipelines list, there is an ability to:
 
-  !![CD page](../assets/headlamp-user-guide/headlamp-cd-pipeline-page.png "CD page")
+  !![CD pipeline page](../assets/headlamp-user-guide/headlamp-cd-pipeline-page.png "CD pipeline page")
 
 1. Create another application by clicking the plus sign icon in the lower-right corner of the screen and performing the same steps as described
 in the [Add CD Pipeline](#add-cd-pipeline) section.
 
-2. Sort the existing CD pipelines in a table by clicking the sorting icon in the **CD Pipeline** column. The CD pipelines will be displayed
-in alphabetical order.
+2. Open CD pipeline data by clicking its link name. Once clicked, the following blocks will be displayed:
 
-3. Sort the existing CD pipelines by their status in a table by clicking the sorting icon in the **Status** column.
+  * **General Info** - displays common information about the CD pipeline, such as name and deployment type.
+  * **Applications** - displays the CD pipeline applications to promote.
+  * **Stages** - displays the CD pipeline stages and stage metadata (by selecting the information icon near the stage name); allows to [add](#add-stage), [edit](#edit-stage) and [delete](#delete-stage) stages, as well as deploy or uninstall image stream versions of the related applications for a stage.
+  * **Metadata** - displays the CD pipeline name, namespace, creation date, finalizers, generation, resource version, and UID. Open this block by selecting the information icon near the options icon next to the CD pipeline name.
 
-4. Search the necessary CD pipeline by the namespace or by entering the corresponding name, language or the build tool into the **Filter** tool.
+3. Edit the CD pipeline by selecting the options icon next to its name in the CD Pipelines list, and then selecting **Edit**. For details see the [Edit Existing CD Pipeline](#edit-existing-pipeline) section.
 
-#### Edit CD Pipeline
-
-* Edit the CD pipeline by selecting the options icon next to its name in the CD Pipelines list, and then selecting **Edit**:
-
-  !![Edit CD pipeline](../assets/headlamp-user-guide/headlamp-edit-cd-pipeline.png "Edit CD pipeline")
-
-  * apply the necessary changes (the list of applications for deploy, application branches, and promotion in the pipeline) and click the **Apply** button to confirm the editions:
-
-   !![Edit CD pipeline page](../assets/headlamp-user-guide/headlamp-edit-cd-pipeline-page.png)
-
-  * add new extra stages steps by clicking the plus sign icon and filling in the application branch and promotion in the pipeline.
-
-* Check the CD pipeline general information, metadata, and stages by clicking the CD pipeline name in the CD Pipelines list:
-
-  !![CD pipeline details](../assets/headlamp-user-guide/headlamp-cd-pipeline-details.png "CD pipeline details")
-
-  * the **Edit** option in the options icon near the CD pipeline name refers to the same **Edit CD Pipeline** page as mentioned above and allows to apply the necessary changes;
-  
-  !![CD pipeline overview](../assets/headlamp-user-guide/headlamp-cd-pipeline-overview.png "CD pipeline overview")
-
-  * the **Create** menu in the **Stages** section opens the **Create stage** dialog;
-
-  * the options icon menu near the stage name allows editing or deleting the stage;
-  
-    !!! note
-        You cannot remove the last stage, as the CD pipeline does not exist without stages.
-
-  * the expand icon near the stage name allows displaying the general information, quality gates, and metadata for the stage.
-
-* Delete the added CD pipeline by selecting the options icon next to its name in the CD Pipelines list, and then selecting **Delete**.
+4. Delete the added CD pipeline by selecting the options icon next to its name in the CD Pipelines list, and then selecting **Delete**.
 
   !!! info
       In OpenShift, if the deployment fails with the ImagePullBackOff error, delete the POD.
+
+5. Sort the existing CD pipelines in a table by clicking the sorting icons in the table header. When sorting by name, the CD pipelines will be displayed in alphabetical order. You can also sort the CD pipelines by their status.
+
+6. Search the necessary CD pipeline by the namespace or by entering the corresponding name, language or the build tool into the **Filter** tool.
+
+7. Select a number of CD pipelines displayed per page (15, 25 or 50 rows) and navigate between pages if the number of CD pipelines exceeds the capacity of a single page.
+
+### Edit Existing CD Pipeline<a name="edit-existing-pipeline"></a>
+
+Edit the CD pipeline directly from the CD Pipelines overview page or when viewing the CD Pipeline data:
+
+1. Select **Edit** in the options icon menu next to the CD pipeline name:
+
+  !![Edit CD pipeline on the CD Pipelines overview page](../assets/headlamp-user-guide/headlamp-edit-cd-pipeline-1.png "Edit CD pipeline on the CD Pipelines overview page")
+
+  !![Edit CD pipeline when viewing the CD pipeline data](../assets/headlamp-user-guide/headlamp-edit-cd-pipeline-2.png "Edit CD pipeline when viewing the CD pipeline data")
+
+2. Apply the necessary changes (edit the list of applications for deploy, application branches, and promotion in the pipeline). Add new extra stages by clicking the plus sign icon and filling in the application branch and promotion in the pipeline.
+
+   !![Edit CD pipeline dialog](../assets/headlamp-user-guide/headlamp-edit-cd-pipeline-page.png "Edit CD pipeline dialog")
+
+3. Select the **Apply** button to confirm the changes.
+
+### Add a New Stage<a name="add-stage"></a>
+
+In order to create a new stage for the existing CD pipeline, follow the steps below:
+
+1. Navigate to the **Stages** block by clicking the CD pipeline name link in the CD Pipelines list.
+
+  !![Add CD pipeline stage](../assets/headlamp-user-guide/headlamp-add-cd-pipeline-stage.png "Add CD pipeline stage")
+
+3. Select **Create** to open the **Create stage** dialog.
+
+4. Click **Edit YAML** in the upper-right corner of the **Create stage** dialog to open the YAML editor and add a stage. Otherwise, fill in the required fields in the dialog. Please see the [Stages Menu](#the-stages-menu) section for details.
+
+5. Click the **Apply** button.
+
+### Edit Stage<a name="edit-stage"></a>
+
+In order to edit a stage for the existing CD pipeline, follow the steps below:
+
+1. Navigate to the **Stages** block by clicking the CD pipeline name link in the CD Pipelines list.
+
+  !![Edit CD pipeline stage](../assets/headlamp-user-guide/headlamp-edit-cd-pipeline-stage.png "Edit CD pipeline stage")
+
+2. Select the options icon related to the necessary stage and then select **Edit**.
+
+  !![Edit CD pipeline stage dialog](../assets/headlamp-user-guide/headlamp-edit-cd-pipeline-stage-dialog.png "Edit CD pipeline stage dialog")
+
+3. In the **Edit Stage** dialog, change the stage trigger type. See more about this field in the [Stages Menu](#the-stages-menu) section.
+
+4. Click the **Apply** button.
+
+### Delete Stage<a name="delete-stage"></a>
+
+!!! note
+    You cannot remove the last stage, as the CD pipeline does not exist without stages.
+
+In order to delete a stage for the existing CD pipeline, follow the steps below:
+
+1. Navigate to the **Stages** block by clicking the CD pipeline name link in the CD Pipelines list.
+
+  !![Delete CD pipeline stage](../assets/headlamp-user-guide/headlamp-edit-cd-pipeline-stage.png "Delete CD pipeline stage")
+
+2. Select the options icon related to the necessary stage and then select **Delete**. After the confirmation, the CD stage is deleted with all its components: database record, Jenkins/Tekton pipeline, and cluster namespace.
+
+### View Stage Data
+
+To view the CD pipeline stage data for the existing CD pipeline, follow the steps below:
+
+1. Navigate to the **Stages** block by clicking the CD pipeline name link in the CD Pipelines list.
+
+  !![Expand CD pipeline stage](../assets/headlamp-user-guide/headlamp-expand-stage.png "Expand CD pipeline stage")
+
+2. Select the expand icon near the stage name. The following blocks will be displayed:
+
+  !![CD pipeline stage overview](../assets/headlamp-user-guide/headlamp-stage-overview.png "CD pipeline stage overview")
+
+* **Applications** - displays the status of the applications related to the stage and allows [deploying the applications](#deploy-application). Applications health and sync statuses are returned from the Argo CD tool.
+* **General Info** - displays the stage status, CD pipeline, description, job provisioning, order, trigger type, and source.
+* **Quality Gates** - displays the stage quality gate type, step name, autotest name, and branch name.
+
+#### Deploy Application<a name="deploy-application"></a>
+
+Navigate to the **Applications block** of the stage and select an application. Select the image stream version from the drop-down list and click **Deploy**. The application will be deployed in the Argo CD tool as well.
+
+!![Deploy the promoted application](../assets/headlamp-user-guide/headlamp-deploy-application.png "Deploy the promoted application")
+
+To update or uninstall the application, select **Update** or **Uninstall**.
+
+!![Update or uninstall the application](../assets/headlamp-user-guide/headlamp-update-uninstall-application.png "Update or uninstall the application")
+
+After this, the application will be updated or uninstalled in the Argo CD tool as well.
 
 ## Related Articles
 

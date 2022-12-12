@@ -6,10 +6,10 @@ This section describes the subsequent possible actions that can be performed wit
 
 As soon as the application is successfully provisioned, the following will be created:
 
-- Code Review and Build pipelines in Jenkins for this application. The Build pipeline will be triggered automatically if at least one environment is already added.
+- Code Review and Build pipelines in Jenkins/Tekton for this application. The Build pipeline will be triggered automatically if at least one environment is already added.
 - A new project in Gerrit or another VCS.
-- SonarQube integration will be available after the Build pipeline in Jenkins is passed.
-- Nexus Repository Manager will be available after the Build pipeline in Jenkins is passed as well.
+- SonarQube integration will be available after the Build pipeline in Jenkins/Tekton is passed.
+- Nexus Repository Manager will be available after the Build pipeline in Jenkins/Tekton is passed as well.
 
 The added application will be listed in the Applications list allowing you to do the following:
 
@@ -61,7 +61,7 @@ EDP Headlamp provides the ability to enable, disable or edit the Jira Integratio
 
    b. Select the **Apply** button to apply the changes.
 
-   c. Navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
+   c. Navigate to Jenkins/Tekton and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
 
 3. To disable Jira integration, in the **Edit Application** dialog do the following:
 
@@ -69,7 +69,7 @@ EDP Headlamp provides the ability to enable, disable or edit the Jira Integratio
 
    b. Select the **Apply** button to apply the changes.
 
-   c. Navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
+   c. Navigate to Jenkins/Tekton and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
 ## Add a New Branch
 

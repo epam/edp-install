@@ -1,6 +1,6 @@
 # Add Library
 
-Headlamp helps to create, clone or import a library and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins.
+Headlamp helps to create, clone or import a library and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins/Tekton.
 
 To add a library, navigate to the **Libraries** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create Library** dialog will appear. You can create a library [in YAML](#YAML) or [via the three-step menu](#menu) in the dialog.
 

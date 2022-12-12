@@ -1,7 +1,7 @@
 # Overview
 
 !!! important
-    <p>Headlamp will replace the Admin Console tool that will be deprecated in the upcoming releases.<br> This Guide is under development and may be changed.</p>
+    Headlamp will replace the Admin Console tool that will be deprecated in the upcoming releases.
 
 The EDP Headlamp User guide is intended for developers and provides details on working with EDP Headlamp, different codebase types, and EDP CI/CD flow.
 
