@@ -1,0 +1,34 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+#######################################################################################
+## aerokube-moon
+#######################################################################################
+
+#
+# References:
+#   - https://github.com/aerokube/charts
+#
+- name: "moon"
+  namespace: "moon"
+  labels:
+    chart: "aerokube/moon"
+    repo: "prometheus-msteams"
+    component: "moon"
+    namespace: "moon"
+    vendor: "aerokube"
+    default: "true"
+  chart: "moon/moon"
+  version: "1.1.25"
+  wait: true
+  values:
+    - moon:
+        replicas: 1
+        service:
+          type: NodePort
+        ingress:
+            enabled: true
+            host: moon.{{ .Values.global.dnsWildCard }}

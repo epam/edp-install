@@ -61,6 +61,7 @@ Using the Helmfile, the following components can be installed:
 * [Argo CD](https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd)
 * [External Secrets Operator](https://github.com/external-secrets/external-secrets/tree/main/deploy/charts/external-secrets)
 * [DefectDojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo)
+* [Moon](https://github.com/aerokube/moon)
 * [ReportPortal](https://github.com/reportportal/kubernetes/tree/develop/reportportal)
 
 ### Deploy NGINX Ingress Controller
@@ -332,6 +333,47 @@ To install ReportPortal via Helmfile, follow the steps below:
     For user access: default/1q2w3e<br>
     For admin access: superadmin/erebus<br>
     Please refer to the [ReportPortal.io](https://reportportal.io/installation) page for details.
+
+
+### Deploy Moon
+[Moon](https://github.com/aerokube/moon) is a browser automation solution compatible with Selenium, Cypress, Playwright, and Puppeteer using Kubernetes or Openshift to launch browsers.
+!!! note
+      Aerokube/Moon does not require third-party deployments.
+
+Follow the steps below to deploy Moon:
+
+1. Use the following command to install Moon:
+
+      ```bash
+      helmfile --selector component=moon --environment platform -f helmfile.yaml apply
+      ```
+
+2. After the installation, open the Ingress Dashboard and check that `SELENOID` and `SSE` have the `CONNECTED` status.
+
+  !![Ingress link](../assets/operator-guide/moon_dashboard_clean.png "Main board")
+
+3. In Moon, use the following command with the Ingress rule, for example, `wd/hub`:
+
+      ```bash
+          curl -X POST 'http://<INGRESS_LINK>/wd/hub/session' -d '{
+                      "desiredCapabilities":{
+                          "browserName":"firefox",
+                          "version": "79.0",
+                          "platform":"ANY",
+                          "enableVNC": true,
+                          "name": "edp",
+                          "sessionTimeout": "480s"
+                      }
+                  }'
+      ```
+
+  See below the list of Moon Dashboard Ingress rules:
+
+  !![Moon Dashboard Ingress rules](../assets/operator-guide/moon_ingress.png "Moon Dashboard Ingress rules")
+
+  After using the command above, the container will start, and the VNC viewer will be displayed on the Moon Dashboard:
+
+  !![VNC viewer with the container starting](../assets/operator-guide/moon_dashboard.png "VNC viewer with the container starting")
 
 ## Related Articles
 * [Install EDP](install-edp.md)

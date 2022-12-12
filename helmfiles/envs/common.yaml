@@ -46,6 +46,9 @@ repositories:
 - name: "report-portal"
   url: "git+https://github.com/reportportal/kubernetes@reportportal?ref=master"
 
+# Aerokube/Moon helm chart:
+- name: "moon"
+  url: "https://charts.aerokube.com"
 ---
 helmDefaults:
   createNamespace: true
