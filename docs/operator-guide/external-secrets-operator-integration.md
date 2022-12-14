@@ -20,7 +20,7 @@ See a diagram below for more details:
 ![eso-with-kubernetes](../assets/operator-guide/eso-k8s.png)
 
 ### EDP Install Scenario
-In order to [install EDP](./install-edp.md), a list of passwords must be created: super-admin-db, db-admin-console, and keycloak. Secrets are provided automatically when using ESO.
+In order to [install EDP](./install-edp.md), a list of passwords must be created: defectdojo-ciuser-token, keycloak-client-headlamp-secret and keycloak. Secrets are provided automatically when using ESO.
 
 1. Create a common namespace for secrets and EDP:
 
@@ -35,7 +35,7 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
     apiVersion: v1
     kind: Secret
     metadata:
-      name: super-admin-db
+      name: keycloak
       namespace: edp-vault
     data:
       password: cGFzcw==  # pass
@@ -117,13 +117,13 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
               key: ca.crt
     ```
 
-7. Each secret must be defined by the `ExternalSecret` object. A code example below creates the `super-admin-db` secret in the `edp` namespace based on a secret with the same name in the `edp-vault` namespace:
+7. Each secret must be defined by the `ExternalSecret` object. A code example below creates the `keycloak` secret in the `edp` namespace based on a secret with the same name in the `edp-vault` namespace:
 
     ```yaml
     apiVersion: external-secrets.io/v1beta1
     kind: ExternalSecret
     metadata:
-      name: super-admin-db
+      name: keycloak
       namespace: edp
     spec:
       refreshInterval: 1h
@@ -135,11 +135,11 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
       data:
       - secretKey: username       # key to be created
         remoteRef:
-          key: super-admin-db     # remote secret name
+          key: keycloak           # remote secret name
           property: username      # value will be fetched from this field
       - secretKey: password       # key to be created
         remoteRef:
-          key: super-admin-db     # remote secret name
+          key: keycloak           # remote secret name
           property: password      # value will be fetched from this field
     ```
 
@@ -152,7 +152,7 @@ AWS SSM Parameter Store can be used as a [Secret Provider for ESO](https://exter
 ![eso-with-ssm](../assets/operator-guide/eso-ssm.png)
 
 ### EDP Install Scenario
-In order to [install EDP](./install-edp.md), a list of passwords must be created: super-admin-db, db-admin-console, and keycloak. Follow the steps below, to get secrets from the SSM:
+In order to [install EDP](./install-edp.md), a list of passwords must be created: defectdojo-ciuser-token, keycloak-client-headlamp-secret and keycloak. Follow the steps below, to get secrets from the SSM:
 
 1. In the AWS, create an AWS IAM policy and an IAM role used by `ServiceAccount` in `SecretStore`. The IAM role must have permissions to get values from the SSM Parameter Store.<a name="step 1"></a>
 
@@ -198,8 +198,8 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
 
     ```json
     {
-      "super-admin-db": {"username": "super-user", "password": "pass"},
-      "db-admin-console": {"username": "edp-user", "password": "pass"},
+      "keycloak-client-headlamp-secret":  "XXXXXXXXXXXX",
+      "defectdojo-ciuser-token": {"token": "XXXXXXXXXXXX", "url": "https://defectdojo.example.com"},
       "keycloak": {"username": "realm-user", "password": "pass"},
     }
     ```
@@ -234,7 +234,7 @@ spec:
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: super-admin-db
+  name: keycloak
   namespace: edp
 spec:
   refreshInterval: 1h
@@ -245,11 +245,11 @@ spec:
   - secretKey: username
     remoteRef:
       key: /edp/my-json-secret
-      property: super-admin-db.username
+      property: keycloak.username
   - secretKey: password
     remoteRef:
       key: /edp/my-json-secret
-      property: super-admin-db.password
+      property: keycloak.password
 ```
 
 where:
@@ -257,7 +257,7 @@ where:
 * `ROLE_NAME` - is a value defined on [step 1.b](#step 1.b),
 * `AWS_REGION` - is the AWS region, used on [step 1](#step 1).
 
-As a result, a secret with the `super-admin-db` name is created in the `edp` namespace with the content defined in JSON format on [step 2](#step 2).
+As a result, a secret with the `keycloak` name is created in the `edp` namespace with the content defined in JSON format on [step 2](#step 2).
 
 ## Related Articles
 * [Install External Secrets Operator](install-external-secrets-operator.md)
