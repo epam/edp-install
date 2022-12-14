@@ -13,13 +13,7 @@
 --from-literal=password=&lt;keycloak_admin_password&gt;
 </code></pre></div> </li> <li> <p>Install Keycloak:</p> <div class=codehilite><pre><span></span><code>helmfile  --selector component=sso --environment platform -f helmfile.yaml apply
 </code></pre></div> </li> </ol> <h3 id=deploy-epam-delivery-platform>Deploy EPAM Delivery Platform<a class=headerlink href=#deploy-epam-delivery-platform title="Permanent link">⚓︎</a></h3> <p>To install EDP, follow the steps below:</p> <ol> <li> <p>Create a <code>platform</code> namespace:</p> <div class=codehilite><pre><span></span><code>kubectl create namespace platform
-</code></pre></div> </li> <li> <p>Create a secret for administrative access to the database:</p> <div class=codehilite><pre><span></span><code>kubectl -n platform create secret generic super-admin-db \
-  --from-literal=username=&lt;super_admin_db_username&gt; \
-  --from-literal=password=&lt;super_admin_db_password&gt;
-</code></pre></div> <div class="admonition warning"> <p class=admonition-title>Warning</p> <p>Do not use the <strong>admin</strong> username here since the <strong>admin</strong> is a reserved name.</p> </div> </li> <li> <p>Create a secret for an EDP tenant database user:</p> <div class=codehilite><pre><span></span><code>kubectl -n platform create secret generic db-admin-console \
-  --from-literal=username=&lt;tenant_db_username&gt; \
-  --from-literal=password=&lt;tenant_db_password&gt;
-</code></pre></div> <div class="admonition warning"> <p class=admonition-title>Warning</p> <p>Do not use the <code>admin</code> username here since the <code>admin</code> is a reserved name.</p> </div> </li> <li> <p>For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the <a href=../install-keycloak/#configuration>Keycloak Configuration</a> section.</p> <div class=codehilite><pre><span></span><code>kubectl -n platform create secret generic keycloak \
+</code></pre></div> </li> <li> <p>For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the <a href=../install-keycloak/#configuration>Keycloak Configuration</a> section.</p> <div class=codehilite><pre><span></span><code>kubectl -n platform create secret generic keycloak \
   --from-literal=username=&lt;username&gt; \
   --from-literal=password=&lt;password&gt;
 </code></pre></div> </li> <li> <p>In the <code>envs/platform.yaml</code> file, set the <code>edpName</code> and <code>keycloakEndpoint</code> parameters.</p> </li> <li> <p>In the <code>releases/edp-install.yaml</code> file, check and fill in all values.</p> </li> <li> <p>Install EDP:</p> <div class=codehilite><pre><span></span><code>helmfile  --selector component=edp --environment platform -f helmfile.yaml apply
