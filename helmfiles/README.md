@@ -163,27 +163,7 @@ To install EDP, follow the steps below:
    kubectl create namespace platform
    ```
 
-2. Create a secret for administrative access to the database:
-
-   ```bash
-   kubectl -n platform create secret generic super-admin-db \
-   --from-literal=username=<super_admin_db_username> \
-   --from-literal=password=<super_admin_db_password>
-   ```
-
-  > **WARNING**: Do not use the `admin` username here since the `admin` is a reserved name.
-
-3. Create a secret for an EDP tenant database user:
-
-   ```bash
-   kubectl -n platform create secret generic db-admin-console \
-   --from-literal=username=<tenant_db_username> \
-   --from-literal=password=<tenant_db_password>
-   ```
-
-> **WARNING**: Do not use the `admin` username here since the `admin` is a reserved name.
-
-4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](https://epam.github.io/edp-install/operator-guide/install-keycloak/#configuration) section.
+2. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](https://epam.github.io/edp-install/operator-guide/install-keycloak/#configuration) section.
 
    ```bash
    kubectl -n platform create secret generic keycloak \
@@ -191,11 +171,11 @@ To install EDP, follow the steps below:
    --from-literal=password=<password>
    ```
 
-5. In the `envs/platform.yaml` file, set the `edpName` and `keycloakEndpoint` parameters.
+3. In the `envs/platform.yaml` file, set the `edpName` and `keycloakEndpoint` parameters.
 
-6. In the `releases/edp-install.yaml` file, check and fill in all values.
+4. In the `releases/edp-install.yaml` file, check and fill in all values.
 
-7. Install EDP:
+5. Install EDP:
 
    ```bash
    helmfile  --selector component=edp --environment platform -f helmfile.yaml apply

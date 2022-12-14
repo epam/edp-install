@@ -34,35 +34,17 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   To store EDP data, use any existing Postgres database or create one during the installation.
   Additionally, create two secrets in the &#8249;edp-project&#8250; namespace: one with administrative credentials and another with credentials for the EDP tenant (database schema).
 
-2. Create a secret for administrative access to the database:
-
-      kubectl -n <edp-project> create secret generic super-admin-db \
-        --from-literal=username=<super_admin_db_username> \
-        --from-literal=password=<super_admin_db_password>
-
-  !!! warning
-      Do not use the **admin** username here since **admin** is a reserved name.
-
-3. Create a secret for an EDP tenant database user.
-
-      kubectl -n <edp-project> create secret generic db-admin-console \
-        --from-literal=username=<tenant_db_username> \
-        --from-literal=password=<tenant_db_password>
-
-  !!! warning
-      Do not use the **admin** username here since **admin** is a reserved name.
-
-4. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section.
+2. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section.
 
       kubectl -n <edp-project> create secret generic keycloak \
         --from-literal=username=<username> \
         --from-literal=password=<password>
 
-5. Add the Helm EPAMEDP Charts for local client.
+3. Add the Helm EPAMEDP Charts for local client.
 
       helm repo add epamedp https://epam.github.io/edp-helm-charts/stable
 
-6. Choose the required Helm chart version:
+4. Choose the required Helm chart version:
 
       helm search repo epamedp/edp-install
       NAME                    CHART VERSION   APP VERSION     DESCRIPTION
@@ -71,11 +53,11 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   !!! note
       It is highly recommended to use the latest released version.
 
-7. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file.
+5. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file.
 
-8. With the external database, set the global.database.host value to the database DNS name accessible from the &#8249;edp-project&#8250; namespace.
+6. With the external database, set the global.database.host value to the database DNS name accessible from the &#8249;edp-project&#8250; namespace.
 
-9. Install EDP in the &#8249;edp-project&#8250; namespace with the helm tool.
+7. Install EDP in the &#8249;edp-project&#8250; namespace with the helm tool.
 
       helm install edp epamedp/edp-install --wait --timeout=900s \
       --version <edp_version> \
