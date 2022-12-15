@@ -25,8 +25,8 @@ A Helm chart for EDP Install
 | @epamedp | cd-pipeline-operator | 2.13.0 |
 | @epamedp | codebase-operator | 2.14.0 |
 | @epamedp | edp-component-operator | 0.12.0 |
-| @epamedp | edp-headlamp | 0.2.1 |
-| @epamedp | edp-tekton | 0.2.2 |
+| @epamedp | edp-headlamp | 0.2.2 |
+| @epamedp | edp-tekton | 0.2.4 |
 | @epamedp | gerrit-operator | 2.13.2 |
 | @epamedp | jenkins-operator | 2.13.0 |
 | @epamedp | keycloak-operator | 1.14.0 |
@@ -62,7 +62,7 @@ A Helm chart for EDP Install
 | global.edpName | string | `"stub-namespace"` | namespace or a project name (in case of OpenShift) |
 | global.gerritSSHPort | string | `"22"` | Gerrit SSH node port |
 | global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |
-| global.kioskEnabled | bool | `true` |  |
+| global.kioskEnabled | bool | `false` |  |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.0.0"` | EDP version |
 | global.webConsole.url | string | `nil` | URL to OpenShift/Kubernetes Web console |
