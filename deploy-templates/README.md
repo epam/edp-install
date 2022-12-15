@@ -84,7 +84,7 @@ A Helm chart for EDP Install
 | keycloak-operator.keycloak.url | string | `"keycloak.example.com"` |  |
 | nexus-operator.enabled | bool | `true` |  |
 | perf-operator.enabled | bool | `true` |  |
-| perf.enabled | string | `"false"` | Enable PERF integration |
+| perf-operator.perf.integration | bool | `false` | Enable PERF integration |
 | sonar-operator.enabled | bool | `true` |  |
 | vcs.enabled | string | `"false"` |  |
 

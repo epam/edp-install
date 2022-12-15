@@ -39,10 +39,6 @@ argocd:
   # @default -- `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }})
   url: ""
 
-perf:
-  # -- Enable PERF integration
-  enabled: "false"
-
 vcs:
   enabled: "false"
 
@@ -269,8 +265,9 @@ perf-operator:
   # image:
   #   repository: epamedp/perf-operator
   #   tag:
-  # perf:
-  #   integration: false
+  perf:
+    # -- Enable PERF integration
+    integration: false
   #   name: "perf"
   #   apiUrl: "https://perf.delivery.example.com"
   #   rootUrl: "https://perf.delivery.example.com"
