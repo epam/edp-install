@@ -36,4 +36,4 @@ dependencies:
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
 digest: sha256:8d60c2e733a5dc2e6335a6de47181445ca5d8563b5e5d38745431f152716c535
-generated: "2022-12-08T15:13:55.870174+02:00"
+generated: "2022-12-15T18:39:42.3465972+02:00"
