@@ -102,6 +102,7 @@ nav:
         - Install DefectDojo: operator-guide/install-defectdojo.md
         - Install ReportPortal: operator-guide/install-reportportal.md
         - Install Argo CD: operator-guide/install-argocd.md
+        - Install Tekton: operator-guide/install-tekton.md
         - Kiosk:
             - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
             - Set Up Kiosk: operator-guide/install-kiosk.md
