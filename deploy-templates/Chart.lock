@@ -16,7 +16,7 @@ dependencies:
   version: 0.3.0
 - name: edp-tekton
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.2.6
+  version: 0.2.7
 - name: cd-pipeline-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.13.0
@@ -35,5 +35,5 @@ dependencies:
 - name: perf-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
-digest: sha256:a53c34e868f88497c306775285ea45cb8e2c3249884e996bfde3da42e557020c
-generated: "2022-12-16T12:24:39.875323+02:00"
+digest: sha256:7d45af5ea8c4bc68b2ec919cbf72b01fd762586b0f5a1f4a0c7c5d678dcf7b93
+generated: "2022-12-16T18:27:02.035103+02:00"
