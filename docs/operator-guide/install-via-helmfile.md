@@ -326,9 +326,9 @@ Follow the steps below to deploy Moon:
 
 1. Use the following command to install Moon:
 
-      ```bash
-      helmfile --selector component=moon --environment platform -f helmfile.yaml apply
-      ```
+  ```bash
+  helmfile --selector component=moon --environment platform -f helmfile.yaml apply
+  ```
 
 2. After the installation, open the Ingress Dashboard and check that `SELENOID` and `SSE` have the `CONNECTED` status.
 
@@ -336,18 +336,18 @@ Follow the steps below to deploy Moon:
 
 3. In Moon, use the following command with the Ingress rule, for example, `wd/hub`:
 
-      ```bash
-          curl -X POST 'http://<INGRESS_LINK>/wd/hub/session' -d '{
-                      "desiredCapabilities":{
-                          "browserName":"firefox",
-                          "version": "79.0",
-                          "platform":"ANY",
-                          "enableVNC": true,
-                          "name": "edp",
-                          "sessionTimeout": "480s"
-                      }
-                  }'
-      ```
+  ```bash
+      curl -X POST 'http://<INGRESS_LINK>/wd/hub/session' -d '{
+                  "desiredCapabilities":{
+                      "browserName":"firefox",
+                      "version": "79.0",
+                      "platform":"ANY",
+                      "enableVNC": true,
+                      "name": "edp",
+                      "sessionTimeout": "480s"
+                  }
+              }'
+  ```
 
   See below the list of Moon Dashboard Ingress rules:
 
