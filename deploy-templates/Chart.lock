@@ -13,7 +13,7 @@ dependencies:
   version: 0.12.0
 - name: edp-headlamp
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.2.2
+  version: 0.3.0
 - name: edp-tekton
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.2.6
@@ -35,5 +35,5 @@ dependencies:
 - name: perf-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
-digest: sha256:d7b9db8d88a6044b72b62b83ad0a54903651632e07ea044ab4184736997c74ef
-generated: "2022-12-16T11:04:56.373753+02:00"
+digest: sha256:a53c34e868f88497c306775285ea45cb8e2c3249884e996bfde3da42e557020c
+generated: "2022-12-16T12:24:39.875323+02:00"
