@@ -31,7 +31,7 @@ releases:
         edpName: {{ .Values.global.edpName }}
         dnsWildCard: {{ .Values.global.dnsWildCard }}
         # Enable or disable integration with Kiosk (by default the value is true)
-        kioskEnabled: false
+        kioskEnabled: {{ .Values.global.kioskEnabled }}
         webConsole:
           # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com can get from kubeconfig.clusters.cluster.server
           url:

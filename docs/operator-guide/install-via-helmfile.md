@@ -357,6 +357,14 @@ Follow the steps below to deploy Moon:
 
   !![VNC viewer with the container starting](../assets/operator-guide/moon_dashboard.png "VNC viewer with the container starting")
 
+### Deploy Kiosk
+
+To install Kiosk, follow the steps below:
+
+  ```bash
+  helmfile  --selector component=kiosk --environment platform -f helmfile.yaml apply
+  ```
+
 ## Related Articles
 * [Install EDP](install-edp.md)
 * [Install NGINX Ingress Controller](install-ingress-nginx.md)

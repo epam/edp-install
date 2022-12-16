@@ -9,3 +9,5 @@ global:
   edpName:
   # Gerrit SSH node port
   gerritSSHPort: 30022
+  # Enable or disable integration with Kiosk (by default the value is true)
+  kioskEnabled: false

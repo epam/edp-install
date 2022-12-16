@@ -12,3 +12,4 @@ helmfiles:
   - releases/external-secrets-operator.yaml
   - releases/defectdojo.yaml
   - releases/report-portal.yaml
+  - releases/kiosk.yaml

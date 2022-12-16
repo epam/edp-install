@@ -1,0 +1,70 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+#######################################################################################
+## Kiosk                                                                             ##
+#######################################################################################
+
+#
+# References:
+#   - https://github.com/loft-sh/kiosk/tree/master/chart
+
+- name: "kiosk"
+  namespace: "kiosk"
+  labels:
+    app: kiosk
+    app.kubernetes.io/managed-by: Helm
+    chart: kiosk-0.2.11
+    component: "kiosk"
+    heritage: Helm
+    release: kiosk
+  chart: "loft/kiosk"
+  version: "0.2.11" # Kiosk app version 0.2.11
+  wait: true
+  installed: true
+  values:
+   # Default values for kiosk.
+    - replicaCount: 1
+
+      env: {}
+      nodeSelector: {}
+
+      readinessProbe:
+        enabled: true
+
+      livenessProbe:
+        enabled: true
+
+      kiosk:
+        command:
+        - /kiosk
+        args: []
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 128Mi
+            cpu: 50m
+
+      webhook:
+        create: true
+
+      apiservice:
+        create: true
+        port: 8443
+
+      serviceAccount:
+        name: serviceaccount
+        create: true
+        clusterRole: cluster-admin
+
+      nameOverride: ""
+      fullnameOverride: ""
+
+      service:
+        type: ClusterIP
+        port: 443
