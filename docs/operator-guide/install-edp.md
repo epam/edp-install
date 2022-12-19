@@ -1,6 +1,6 @@
 # Install EDP
 
-Inspect the main steps to install EPAM Delivery Platform. Please check the prerequisites section before starting the installation.
+Inspect the main steps to install EPAM Delivery Platform. Please check the [Prerequisites Overview](prerequisites.md) page before starting the installation.
 There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and using [Helmfile](./install-via-helmfile.md#deploy-epam-delivery-platform).
 
 !!! note
@@ -60,7 +60,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   !!! note
       It is highly recommended to use the latest released version.
 
-5. By default, EDP uses Tekton as a CI tool. To use Jenkins instead of Tekton, redefine the following parameters in the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file:
+5. By default, EDP uses Tekton as a CI tool (see more in the [Prerequisites Overview](prerequisites.md) page). To use Jenkins instead of Tekton, redefine the following parameters in the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file:
 
   ??? note "View: values.yaml"
       ```yaml
@@ -127,7 +127,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   See the details on the parameters below:
 
   === "Tekton CI tool"
-      
+
       ``` yaml title="Example values.yaml file"
       global:
         # -- namespace or a project name (in case of OpenShift)
@@ -249,6 +249,6 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
 * [Enable VCS Import Strategy](./import-strategy.md)
 * [GitHub Integration](github-integration.md)
 * [GitLab Integration](gitlab-integration.md)
-* [Install Keycloak](install-keycloak.md)
 * [Set Up Kubernetes](kubernetes-cluster-settings.md)
 * [Set Up OpenShift](openshift-cluster-settings.md)
+* [EDP Installation Prerequisites Overview](prerequisites.md)

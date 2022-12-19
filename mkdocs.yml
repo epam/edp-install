@@ -97,6 +97,7 @@ nav:
     - operator-guide/index.md
     - Installation:
       - Prerequisites:
+        - Overview: operator-guide/prerequisites.md
         - Install NGINX Ingress Controller: operator-guide/install-ingress-nginx.md
         - Install Keycloak: operator-guide/install-keycloak.md
         - Install DefectDojo: operator-guide/install-defectdojo.md
