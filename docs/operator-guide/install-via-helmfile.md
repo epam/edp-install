@@ -8,9 +8,8 @@ The following tools and plugins must be installed:
 
 * [Kubectl version 1.23.0](https://v1-23.docs.kubernetes.io/releases/download/)
 * [Helm version 3.10.0+](https://github.com/helm/helm/releases/tag/v3.10.0)
-* [Helmfile version 0.142.0](https://github.com/helmfile/helmfile)
-* [Helm diff plugin version 3.5.0](https://github.com/databus23/helm-diff)
-* [Helm-git plugin version 0.11.4](https://github.com/aslafy-z/helm-git)
+* [Helmfile version 0.144.0](https://github.com/helmfile/helmfile)
+* [Helm diff plugin version 3.6.0](https://github.com/databus23/helm-diff)
 
 ## Helmfile Structure
 

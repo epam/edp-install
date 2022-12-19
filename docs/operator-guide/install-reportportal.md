@@ -7,9 +7,8 @@ Inspect the prerequisites and the main steps to perform for installing ReportPor
 
 ## Prerequisites
 
-* Kubectl version 1.20.0 is installed. Please refer to the [Kubernetes official website](https://v1-20.docs.kubernetes.io/docs/setup/release/notes/) for details.
-* [Helm](https://helm.sh) version 3.9.2 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.9.2) on GitHub for details.
-* Helm-git plugin version 0.11.4 is installed. Please refer to the [GitHub](https://github.com/aslafy-z/helm-git) page for details.
+* [Kubectl](https://kubernetes.io/docs/tasks/tools/) version 1.23.0 is installed. Please refer to the [Kubernetes official website](https://v1-23.docs.kubernetes.io/releases/download/) for details.
+* [Helm](https://helm.sh) version 3.10.2 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.10.2) on GitHub for details.
 
 !!! info
     Please refer to the [ReportPortal Helm Chart](https://github.com/reportportal/kubernetes/tree/develop/reportportal) section for details.
@@ -389,7 +388,7 @@ volumes:
 2. Add a chart repository:
 
   ```bash
-  helm repo add report-portal "git+https://github.com/reportportal/kubernetes@reportportal?ref=master"
+  helm repo add report-portal "https://reportportal.github.io/kubernetes"
   helm repo update
   ```
 
@@ -651,6 +650,10 @@ spec:
   type: ClusterIP
 ```
   </details>
+!!! note
+    For user access: default/1q2w3e<br>
+    For admin access: superadmin/erebus<br>
+    Please refer to the [ReportPortal.io](https://reportportal.io/installation) page for details.
 
 ## Related Articles
 
