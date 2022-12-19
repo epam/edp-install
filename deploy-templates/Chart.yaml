@@ -48,7 +48,7 @@ dependencies:
 
 - name: edp-tekton
   repository: "@epamedp"
-  version: "0.2.9"
+  version: "0.3.0"
   condition: edp-tekton.enabled
 
 - name: cd-pipeline-operator
@@ -103,6 +103,8 @@ annotations:
       image: epamedp/gerrit-operator:2.13.3
     - name: edp-headlamp:0.3.0
       image: epamedp/edp-headlamp:0.3.0
+    - name: edp-tekton:0.3.0
+      image: epamedp/edp-tekton:0.3.0
     - name: perf-operator:2.12.0
       image: epamedp/perf-operator:2.12.0
     - name: postgres:9.6
