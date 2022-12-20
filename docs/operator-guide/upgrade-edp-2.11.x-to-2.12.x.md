@@ -1,7 +1,7 @@
 # Upgrade EDP v.2.11.x to v.2.12.x
 
-!!! Warning
-    Please make a backup of your EDP environment before the upgrade procedure.
+!!! Important
+    We suggest making a backup of the EDP environment before starting the upgrade procedure.
 
 This section provides the details on the EDP upgrade from the v.2.11.x to the v.2.12.x. Explore the actions and requirements below.
 
@@ -9,9 +9,9 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
     * EDP now supports Kubernetes 1.22: Ingress Resources use `networking.k8s.io/v1`, and Ingress Operators use CustomResourceDefinition `apiextensions.k8s.io/v1`.
     * EDP Team now delivers its own Gerrit Docker image: [epamedp/edp-gerrit](https://hub.docker.com/r/epamedp/edp-gerrit/tags). It is based on the [openfrontier Gerrit Docker image](https://github.com/openfrontier/docker-gerrit/).
 
-1. EDP now uses DefectDojo as a SAST tool. It is mandatory to [deploy DefectDojo](./install-defectdojo.md) before updating EDP to v.2.12.x. 
+1. EDP now uses DefectDojo as a SAST tool. It is mandatory to [deploy DefectDojo](./install-defectdojo.md) before updating EDP to v.2.12.x.
 
-2. Update Custom Resource Definitions (CRDs). Run the following command, to apply all necessary CRDs to the cluster:
+2. Update Custom Resource Definitions (CRDs). Run the following command to apply all necessary CRDs to the cluster:
 
       kubectl apply -f https://raw.githubusercontent.com/epam/edp-admin-console-operator/release/2.12/deploy-templates/crds/v2.edp.epam.com_adminconsoles.yaml
       kubectl apply -f https://raw.githubusercontent.com/epam/edp-cd-pipeline-operator/release/2.12/deploy-templates/crds/v2.edp.epam.com_cdpipelines.yaml
@@ -68,7 +68,7 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
 3. Set the required parameters. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/2.12/deploy-templates/values.yaml) file.
 
    * In version v.2.12.x, EDP contains Gerrit `v3.6.1`. According to the [Official Gerrit Upgrade flow](https://www.gerritcodereview.com/3.6.html#offline-upgrade), a user must initially upgrade to Gerrit `v3.5.2`, and then upgrade to `v3.6.1`. Therefore, define the `gerrit-operator.gerrit.version=3.5.2` value in the edp-install `values.yaml` file.
-   
+
    * Two more components are available with the new functionality:
 
      * [`edp-argocd-operator`](./argocd-integration.md)
@@ -105,7 +105,7 @@ This section provides the details on the EDP upgrade from the v.2.11.x to the v.
     <summary><b>View: jenkins-resources-role</b></summary>
 
     ```yaml
-   
+
     apiVersion: rbac.authorization.k8s.io/v1
     kind: RoleBinding
     metadata:
