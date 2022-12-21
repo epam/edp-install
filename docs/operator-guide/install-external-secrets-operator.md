@@ -16,10 +16,9 @@ helm repo add external-secrets https://charts.external-secrets.io
 
 helm install external-secrets \
    external-secrets/external-secrets \
-    -version 0.6.1 \
+    --version 0.6.1 \
     -n external-secrets \
-    --create-namespace \
-  # --set installCRDs=true
+    --create-namespace
 ```
 
 !!! info
