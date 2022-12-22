@@ -124,7 +124,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   --namespace <edp-project>
   ```
 
-  See the details on the parameters below:
+  See the details on the parameters below:<a name="values"></a>
 
   === "Tekton CI tool"
 
@@ -177,6 +177,11 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
 
       perf-operator:
         enabled: false
+
+      edp-headlamp:
+        config:
+          oidc:
+            enabled: false
       ```
 
   === "Jenkins CI tool"
@@ -236,6 +241,11 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
 
       perf-operator:
         enabled: false
+
+      edp-headlamp:
+        config:
+          oidc:
+            enabled: false
       ```
 
   !!! note

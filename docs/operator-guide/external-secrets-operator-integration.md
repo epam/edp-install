@@ -204,7 +204,7 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
     }
     ```
 
-3. In the `edp` Kubernetes namespace, create the following objects:
+3. In the `edp` Kubernetes namespace, create the following objects <a name="external_secret_values"></a>:
 
 ```yaml
 ---

@@ -253,6 +253,13 @@ gerrit-operator:
 
 edp-headlamp:
   enabled: true
+  config:
+    oidc:
+      enabled: false
+      clientID: "kubernetes"
+      clientSecretName: "keycloak-client-headlamp-secret"
+      clientSecretKey: "clientSecret"
+      issuerRealm: "openshift"
   # image:
   #   repository: epamedp/edp-headlamp
   #   tag:

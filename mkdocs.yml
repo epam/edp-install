@@ -154,6 +154,7 @@ nav:
         - Manage Jenkins CI Pipeline Job Provisioner: operator-guide/manage-jenkins-ci-job-provision.md
         - Manage Jenkins CD Pipeline Job Provisioner: operator-guide/manage-jenkins-cd-job-provision.md
         - Delete Jenkins Job Provision: operator-guide/delete-jenkins-job-provision.md
+      - Headlamp OIDC: operator-guide/headlamp-oidc.md
     - Integration:
       - Tekton:
           Overview: operator-guide/tekton-overview.md

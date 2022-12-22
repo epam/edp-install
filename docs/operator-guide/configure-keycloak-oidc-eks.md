@@ -34,12 +34,12 @@ Roles present a set of permissions, in turn RoleBindings map Kubernetes Role to 
 
 To configure Keycloak, follow the steps described below.
 
-* Create a client:
+* Create a client:<a name="keycloak_client"></a>
 
 ```terraform
 resource "keycloak_openid_client" "openid_client" {
-  realm_id                                  = <realm_id>
-  client_id                                 = <client_id>
+  realm_id                                  = "openshift"
+  client_id                                 = "kubernetes"
   access_type                               = "CONFIDENTIAL"
   standard_flow_enabled                     = true
   implicit_flow_enabled                     = false
@@ -126,7 +126,7 @@ resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_ma
 ```terraform
 resource "keycloak_group" "oidc_tenant_admin" {
   realm_id = <realm_id>
-  name     = "<env_prefix_name>-oidc-admins"
+  name     = "kubernetes-oidc-admins"
 }
 ```
 
@@ -314,3 +314,7 @@ To access the Kubernetes cluster via [Lens](https://k8slens.dev/), follow the st
 
 !!! note
     Lens does not add namespaces of the project automatically, so it is necessary to add them manually, simply go to **Settings** -> **Namespaces** and add the namespaces of a project.
+
+## Related Articles
+
+* [Headlamp OIDC Configuration](headlamp-oidc.md)

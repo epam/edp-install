@@ -47,6 +47,11 @@ A Helm chart for EDP Install
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | codebase-operator.enabled | bool | `true` |  |
 | dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
+| edp-headlamp.config.oidc.clientID | string | `"kubernetes"` |  |
+| edp-headlamp.config.oidc.clientSecretKey | string | `"clientSecret"` |  |
+| edp-headlamp.config.oidc.clientSecretName | string | `"keycloak-client-headlamp-secret"` |  |
+| edp-headlamp.config.oidc.enabled | bool | `false` |  |
+| edp-headlamp.config.oidc.issuerRealm | string | `"openshift"` |  |
 | edp-headlamp.enabled | bool | `true` |  |
 | edp-tekton.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore |
