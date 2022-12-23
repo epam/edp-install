@@ -158,8 +158,9 @@ To install PostgreSQL, follow the steps below:
   ```
 
   Check out the *values.yaml* file sample of the PostgreSQL customization:
-
-  ```yaml title="values.yaml"
+  <details>
+  <summary><b>View: values.yaml</b></summary>
+  ```yaml
   # PostgreSQL read only replica parameters
   readReplicas:
     # Number of PostgreSQL read only replicas
@@ -184,13 +185,13 @@ To install PostgreSQL, follow the steps below:
       # If the default StorageClass will be used - change "gp2-retain" to "gp2"
       storageClass: "gp2-retain"
   ```
-
+  </details>
 
   ??? note "Install an additional StorageClass (optional)"
       If the PostgreSQL installation uses a StorageClass with **reclaimPolicy: Retain**, install additional StorageClass *storageclass.yaml*.
 
       === "gp2"
-          ```yaml title="storageclass.yaml" 
+          ```yaml title="storageclass.yaml"
           kind: StorageClass
           apiVersion: storage.k8s.io/v1
           metadata:
@@ -203,7 +204,7 @@ To install PostgreSQL, follow the steps below:
           volumeBindingMode: WaitForFirstConsumer
           ```
       === "gp3"
-          ```yaml title="storageclass.yaml" 
+          ```yaml title="storageclass.yaml"
           kind: StorageClass
           apiVersion: storage.k8s.io/v1
           metadata:
@@ -363,33 +364,34 @@ To prepare Keycloak for integration with EDP, follow the steps below:
 
 1. Ensure that the `openshift` realm is created.
 
-2. Create a user `edp_<EDP_PROJECT>` in `Master` realm.
+2. Create the `edp_<EDP_PROJECT>` user and set the password in the `Master` realm.
 
   !!! note
-      This user should be used by EDP to access Keycloak. Please refer to the [Install EDP](install-edp.md) section for details.
+      This user should be used by EDP to access Keycloak. Please refer to the [Install EDP](install-edp.md) and [Install EDP via Helmfile](install-via-helmfile.md) sections for details.
 
-3. In the `Role Mapping` tab, assign the proper roles to user:
+3. In the `Role Mapping` tab, assign the proper roles to the user:
 
-* Realm Roles:
+  * Realm Roles:
 
-  * create-realm,
+    * create-realm,
 
-  * offline_access,
+    * offline_access,
 
-  * uma_authorization
+    * uma_authorization
 
-* Client Roles `openshift-realm`:
+  * Client Roles `openshift-realm`:
 
-  * impersonation,
+    * impersonation,
 
-  * manage-authorization,
+    * manage-authorization,
 
-  * manage-clients,
+    * manage-clients,
 
-  * manage-users
+    * manage-users
 
-!![Role mappings](../assets/operator-guide/keycloak-roles.png "Role mappings")
+  !![Role mappings](../assets/operator-guide/keycloak-roles.png "Role mappings")
 
 ## Related Articles
-
-* [Install via Helmfile](install-via-helmfile.md)
+* [Install EDP with values file](install-edp.md)
+* [Install EDP by one command](../../getting-started/#install-prerequisites)
+* [Install EDP via Helmfile](install-via-helmfile.md)

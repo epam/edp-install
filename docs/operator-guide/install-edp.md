@@ -95,8 +95,11 @@ global:
   # Developers of the tenant separated by comma (,) e.g. user@example.com;
   developers: [user1@example.com,user2@example.com]
 
+  # Gerrit SSH node port
+  gerritSSHPort: <gerrit_ssh_port>
+
 # AWS Region, e.g. "eu-central-1"
-awsRegion:
+awsRegion: <region>
 
 keycloak-operator:
   keycloak:
@@ -108,10 +111,6 @@ dockerRegistry:
   # URL to Docker registry e.g. <aws_account_id>.dkr.ecr.<region>.amazonaws.com;
   url: <aws_account_id>.dkr.ecr.<region>.amazonaws.com
 
-gerrit-operator:
-  gerrit:
-    # free Nodeport;
-    sshPort: <gerrit_ssh_port>
 kaniko:
   # AWS IAM role with push access to ECR, e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
   roleArn:
@@ -133,8 +132,8 @@ Consult [VCS integration](./import-strategy.md) section, if it is necessary to i
 ## Related Articles
 
 * [Enable VCS Import Strategy](./import-strategy.md)
-* [GitHub Integration](http://localhost:8000/edp-install/operator-guide/github-integration/)
-* [GitLab Integration](http://localhost:8000/edp-install/operator-guide/gitlab-integration/)
-* [Install Keycloak](http://localhost:8000/edp-install/operator-guide/install-keycloak/)
+* [GitHub Integration](github-integration.md)
+* [GitLab Integration](gitlab-integration.md)
+* [Install Keycloak](install-keycloak.md)
 * [Set Up Kubernetes](kubernetes-cluster-settings.md)
 * [Set Up OpenShift](openshift-cluster-settings.md)

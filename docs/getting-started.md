@@ -56,6 +56,7 @@ Find below the example of the installation command:
         --set global.dnsWildCard=<cluster_DNS_wilcdard> \
         --set global.webConsole.url=<kubeconfig.clusters.cluster.server> \
         --set global.platform=<platform_type> \
+        --set awsRegion=<region> \
         --set dockerRegistry.url=<aws_account_id>.dkr.ecr.<region>.amazonaws.com \
         --set keycloak-operator.keycloak.url=<keycloak_endpoint> \
         --set global.gerritSSHPort=<gerrit_ssh_port> \
