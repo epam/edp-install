@@ -48,6 +48,9 @@ repositories:
 # Aerokube/Moon helm chart:
 - name: "moon"
   url: "https://charts.aerokube.com"
+# Kiosk helm chart:
+- name: "loft"
+  url: "https://charts.loft.sh"
 ---
 helmDefaults:
   createNamespace: true
