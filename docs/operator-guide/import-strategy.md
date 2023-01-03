@@ -3,7 +3,7 @@
 !!! note
     Enabling the VCS Import strategy is a prerequisite to integrate EDP with GitLab or GitHub.
 
-=== "Tekton"
+=== "Tekton CI tool"
 
     In order to use the **Import** strategy, it is required to add a Secret with SSH key, and GitServer Custom Resource by taking the steps below.
 
@@ -37,7 +37,7 @@
 
     5. Upgrade edp-install release: `helm upgrade edp epamedp/edp-install --values values.yaml`.
 
-=== "Jenkins"
+=== "Jenkins CI tool"
 
     In order to use the **Import** strategy, it is required to add a Secret with SSH key, GitServer Custom Resource, and Jenkins credentials by taking the steps below.
 

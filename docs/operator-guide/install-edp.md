@@ -10,124 +10,239 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
 !!! note
     &#8249;edp-project&#8250; is the name of the EDP tenant in all the following steps.
 
-1. Create an &#8249;edp-project&#8250; namespace or a Kiosk space depending on whether Kiosk is used or not.
+1. Create an &#8249;edp-project&#8250; namespace or a Kiosk space depending on whether [Kiosk](./edp-kiosk-usage.md) is used or not.
 
   * Without Kiosk, create a namespace:
 
-        kubectl create namespace <edp-project>
+    ```bash
+    kubectl create namespace <edp-project>
+    ```
 
     !!! note
-        For an OpenShift cluster, run the `oc` command instead of `kubectl` one.
+        For an OpenShift cluster, run the `oc` command instead of the `kubectl` one.
 
   * With Kiosk, create a relevant space:
 
-        apiVersion: tenancy.kiosk.sh/v1alpha1
-        kind: Space
-        metadata:
-          name: <edp-project>
-        spec:
-          account: <edp-project>-admin
+    ```yaml
+    apiVersion: tenancy.kiosk.sh/v1alpha1
+    kind: Space
+    metadata:
+      name: <edp-project>
+    spec:
+      account: <edp-project>-admin
+    ```
 
   !!! note
       Kiosk is mandatory for EDP v.2.8.x. It is not implemented for the previous versions, and is optional for EDP since v.2.9.x.
 
-  To store EDP data, use any existing Postgres database or create one during the installation.
-  Additionally, create two secrets in the &#8249;edp-project&#8250; namespace: one with administrative credentials and another with credentials for the EDP tenant (database schema).
-
 2. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with user and password provisioned in the step 2 of the [Keycloak Configuration](./install-keycloak.md#configuration) section.
 
-      kubectl -n <edp-project> create secret generic keycloak \
-        --from-literal=username=<username> \
-        --from-literal=password=<password>
+  ```bash
+  kubectl -n <edp-project> create secret generic keycloak \
+    --from-literal=username=<username> \
+    --from-literal=password=<password>
+  ```
 
 3. Add the Helm EPAMEDP Charts for local client.
 
-      helm repo add epamedp https://epam.github.io/edp-helm-charts/stable
+  ```bash
+  helm repo add epamedp https://epam.github.io/edp-helm-charts/stable
+  ```
 
 4. Choose the required Helm chart version:
 
-      helm search repo epamedp/edp-install
-      NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-      epamedp/edp-install     2.12.1          2.12.1          A Helm chart for EDP Install
+  ```bash
+  helm search repo epamedp/edp-install
+  NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+  epamedp/edp-install     3.0.0           3.0.0           A Helm chart for EDP Install
+  ```
 
   !!! note
       It is highly recommended to use the latest released version.
 
-5. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file.
+5. By default, EDP uses Tekton as a CI tool. To use Jenkins instead of Tekton, redefine the following parameters in the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file:
 
-6. With the external database, set the global.database.host value to the database DNS name accessible from the &#8249;edp-project&#8250; namespace.
+  ??? note "View: values.yaml"
+      ```yaml
+      ...
+      edp-tekton:
+        enabled: false
+      ...
+      jenkins-operator:
+        enabled: true
+      ...
+      admin-console-operator:
+        enabled: true
+      ...
+      ```
 
-7. Install EDP in the &#8249;edp-project&#8250; namespace with the helm tool.
+6. EDP can be integrated with the following version control systems:
 
-      helm install edp epamedp/edp-install --wait --timeout=900s \
-      --version <edp_version> \
-      --values values.yaml \
-      --namespace <edp-project>
+  * [Gerrit](https://gerrit-review.googlesource.com/Documentation/) (by default)
+  * [GitHub](https://docs.github.com/en)
+  * [GitLab](https://docs.gitlab.com/)
 
-See the details on parameters below:
+  This integration implies in what system the development of the application will be or is already being carried out. The `global.gitProvider` flag in the edp-install controls this integration:
 
-<details>
-<summary><b>View: values.yaml</b></summary>
+  === "Gerrit (by default)"
 
-```yaml
+      ``` yaml title="values.yaml"
+      ...
+      global:
+        gitProvider: gerrit
+      ...
+      ```
 
-global:
+  === "GitHub"
 
-  # Name of the <edp-project> EDP namespace that was previously defined;
-  edpName: <edp-project>
+      ``` yaml title="values.yaml"
+      ...
+      global:
+        gitProvider: github
+      ...
+      ```
 
-  # DNS wildcard for routing in the Kubernetes cluster;
-  dnsWildCard: <DNS_wilcdard>
+  === "GitLab"
 
-  # Enable or disable integration with Kiosk (by default the value is true)
-  kioskEnabled: <true/false>
+      ``` yaml title="values.yaml"
+      ...
+      global:
+        gitProvider: gitlab
+      ...
+      ```
 
-  # Kubernetes API server;
-  webConsole:
-    url: <kubeconfig.clusters.cluster.server>
+  By default, the internal Gerrit server is deployed as a result of EDP deployment. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the [Enable VCS Import Strategy](./import-strategy.md) article.
 
-  # set platform type: OpenShift or kubernetes;
-  platform: <platform_type>
+7. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/3.0/deploy-templates/values.yaml) file.
 
-  # Administrators of the tenant separated by comma (,) e.g. user@example.com;
-  admins: [user1@example.com,user2@example.com]
+8. Install EDP in the &#8249;edp-project&#8250; namespace with the Helm tool.
 
-  # Developers of the tenant separated by comma (,) e.g. user@example.com;
-  developers: [user1@example.com,user2@example.com]
+  ```bash
+  helm install edp epamedp/edp-install --wait --timeout=900s \
+  --version <edp_version> \
+  --values values.yaml \
+  --namespace <edp-project>
+  ```
 
-  # Gerrit SSH node port
-  gerritSSHPort: <gerrit_ssh_port>
+  See the details on the parameters below:
 
-# AWS Region, e.g. "eu-central-1"
-awsRegion: <region>
+  === "Tekton CI tool"
+      
+      ``` yaml title="Example values.yaml file"
+      global:
+        # -- namespace or a project name (in case of OpenShift)
+        edpName: <edp-project>
+        # -- platform type that can be "kubernetes" or "openshift"
+        platform: "kubernetes"
+        # DNS wildcard for routing in the Kubernetes cluster;
+        dnsWildCard: <DNS_wilcdard>
+        # -- Administrators of your tenant
+        admins:
+          - "stub_user_one@example.com"
+        # -- Developers of your tenant
+        developers:
+          - "stub_user_one@example.com"
+          - "stub_user_two@example.com"
+        # Kubernetes API server;
+        webConsole:
+          url: <kubeconfig.clusters.cluster.server>
+        # -- Can be gerrit, github or gitlab. By default: gerrit
+        gitProvider: gerrit
+        # -- Gerrit SSH node port
+        gerritSSHPort: "22"
 
-keycloak-operator:
-  keycloak:
-    # URL to Keycloak;
-    url: <keycloak_endpoint>
+      # AWS Region, e.g. "eu-central-1"
+      awsRegion:
 
-dockerRegistry:
-  enabled: true
-  # URL to Docker registry e.g. <aws_account_id>.dkr.ecr.<region>.amazonaws.com;
-  url: <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+      argocd:
+        # -- Enable ArgoCD integration
+        enabled: true
+        # -- ArgoCD URL in format schema://URI
+        # @default -- `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }})
+        url: ""
 
-kaniko:
-  # AWS IAM role with push access to ECR, e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
-  roleArn:
+      # Kaniko configuration section
+      kaniko:
+        # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
+        roleArn:
 
-```
+      dockerRegistry:
+        # -- Docker Registry endpoint
+        url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
-</details>
+      keycloak-operator:
+        keycloak:
+          # URL to Keycloak;
+          url: <keycloak_endpoint>
 
-!!! note
-    Set `global.platform=openshift` while deploying EDP in OpenShift.
+      perf-operator:
+        enabled: false
+      ```
 
-!!! info
-    The full installation with integration between tools will take at least 10 minutes.
+  === "Jenkins CI tool"
 
-## Next Steps
+      ``` yaml title="Example values.yaml file"
+      global:
+        # -- namespace or a project name (in case of OpenShift)
+        edpName: <edp-project>
+        # -- platform type that can be "kubernetes" or "openshift"
+        platform: "kubernetes"
+        # DNS wildcard for routing in the Kubernetes cluster;
+        dnsWildCard: <DNS_wilcdard>
+        # -- Administrators of your tenant
+        admins:
+          - "stub_user_one@example.com"
+        # -- Developers of your tenant
+        developers:
+          - "stub_user_one@example.com"
+          - "stub_user_two@example.com"
+        # Kubernetes API server;
+        webConsole:
+          url: <kubeconfig.clusters.cluster.server>
+        # -- Can be gerrit, github or gitlab. By default: gerrit
+        gitProvider: gerrit
+        # -- Gerrit SSH node port
+        gerritSSHPort: "22"
 
-Consult [VCS integration](./import-strategy.md) section, if it is necessary to integrate [GitLab](./gitlab-integration.md) or [GitHub](./github-integration.md) with EDP.
+      # AWS Region, e.g. "eu-central-1"
+      awsRegion:
+
+      argocd:
+        # -- Enable ArgoCD integration
+        enabled: false
+
+      # Kaniko configuration section
+      kaniko:
+        # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWS_IAM_ROLE_NAME>
+        roleArn:
+
+      dockerRegistry:
+        # -- Docker Registry endpoint
+        url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
+
+      keycloak-operator:
+        keycloak:
+          # URL to Keycloak;
+          url: <keycloak_endpoint>
+
+      jenkins-operator:
+        enabled: true
+
+      admin-console-operator:
+        enabled: true
+
+      edp-tekton:
+        enabled: false
+
+      perf-operator:
+        enabled: false
+      ```
+
+  !!! note
+      Set `global.platform=openshift` while deploying EDP in OpenShift.
+
+  !!! info
+      The full installation with integration between tools will take at least 10 minutes.
 
 ## Related Articles
 
