@@ -6,7 +6,8 @@ Inspect the main steps to perform for installing the Tekton resources via the Te
 
 ## Prerequisites
 
-* Kubectl version 1.23.0 is installed. Please refer to the [Kubernetes official website](https://v1-23.docs.kubernetes.io/releases/download/) for details.
+* Kubectl version 1.24.0 or higher is installed. Please refer to the [Kubernetes official website](https://v1-24.docs.kubernetes.io/releases/download/) for details.
+* For Openshift/OKD, the latest version of the `oc` utility is required. Please refer to the [OKD page](https://github.com/okd-project/okd/releases) on GitHub for details.
 
 ## Installation on Kubernetes Cluster
 
@@ -53,13 +54,46 @@ To install Tekton resources, follow the steps below:
 !!! info
     Please refer to the [Install Tekton Operator](https://tekton.dev/docs/operator/) documentation for details.
 
-Install Tekton Operator v0.63.0 using the release file:
+!!! note
+    Tekton Operator also deploys [Pipelines as Code CI](https://pipelinesascode.com/) that requires OpenShift v4.11 (based on Kubernetes v1.24) or higher. This feature is optional and its deployments can be scaled to zero replicas.
+
+Install Tekton Operator v0.64.0 using the release file:
 
 ```bash
-kubectl apply -f https://github.com/tektoncd/operator/releases/download/v0.63.0/openshift-release.yaml
+kubectl apply -f https://github.com/tektoncd/operator/releases/download/v0.64.0/openshift-release.yaml
 ```
 
-After the installation, the Operator will install the following components: Pipeline, Trigger, and Addons.
+After the installation, the Tekton Operator will install the following components: Pipeline, Trigger, and Addons.
+
+!!! note
+    If there is the following error in the `openshift-operators` namespace for `openshift-pipelines-operator` and `tekton-operator-webhook` deployments:
+
+    ```bash
+    Error: container has runAsNonRoot and image will run as root
+    ```
+
+    Patch the deployments with the following commands:
+
+    ```bash
+    kubectl -n openshift-operators patch deployment openshift-pipelines-operator -p '{"spec": {"template": {"spec": {"securityContext": {"runAsUser": 1000}}}}}'
+    kubectl -n openshift-operators patch deployment tekton-operator-webhook -p '{"spec": {"template": {"spec": {"securityContext": {"runAsUser": 1000}}}}}'
+    ```
+
+Grant access for Tekton Service Accounts in the `openshift-pipelines` namespace to the Privileged SCC:
+
+```bash
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:tekton-operators-proxy-webhook
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:tekton-pipelines-controller
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:tekton-pipelines-resolvers
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:tekton-pipelines-webhook
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:tekton-triggers-controller
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:tekton-triggers-core-interceptors
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:tekton-triggers-webhook
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:pipelines-as-code-controller
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:pipelines-as-code-watcher
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:pipelines-as-code-webhook
+oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelines:default
+```
 
 ## Related Articles
 * [Install via Helmfile](install-via-helmfile.md)
