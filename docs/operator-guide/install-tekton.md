@@ -8,6 +8,7 @@ Inspect the main steps to perform for installing the Tekton resources via the Te
 
 * Kubectl version 1.24.0 or higher is installed. Please refer to the [Kubernetes official website](https://v1-24.docs.kubernetes.io/releases/download/) for details.
 * For Openshift/OKD, the latest version of the `oc` utility is required. Please refer to the [OKD page](https://github.com/okd-project/okd/releases) on GitHub for details.
+* Created AWS ECR repository for Kaniko cache. By default, the Kaniko cache repository name is `kaniko-cache` and this parameter is located in our Tekton `common-library`.
 
 ## Installation on Kubernetes Cluster
 
