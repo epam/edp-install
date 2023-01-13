@@ -91,7 +91,6 @@ extra:
 
 nav:
   - Overview: index.md
-  - features.md
   - Getting Started: getting-started.md
   - Operator Guide:
     - operator-guide/index.md

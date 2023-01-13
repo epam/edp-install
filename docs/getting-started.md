@@ -7,19 +7,18 @@ hide:
 
 ## Requirements
 
-- Kubernetes cluster 1.18+, or OpenShift 4.6+
+- Kubernetes cluster 1.23+, or OpenShift 4.9+
 - [kubectl](https://kubernetes.io/docs/tasks/tools/){target=_blank} tool
-- [helm 3.5.x+](https://helm.sh/docs/intro/install/){target=_blank}
-- [Keycloak 11.0+](https://www.keycloak.org){target=_blank}
+- [helm 3.10.x+](https://helm.sh/docs/intro/install/){target=_blank}
+- [Keycloak 18.0+](https://www.keycloak.org){target=_blank}
 - [Kiosk 0.2.11](https://github.com/loft-sh/kiosk){target=_blank}
-- [Amazon EKS Pod Identity Webhook](https://github.com/aws/amazon-eks-pod-identity-webhook){target=_blank} in case of using [AWS ECR](https://aws.amazon.com/ecr/){target=_blank} as Docker Registry
 
 ### Hardware
 
 Minimal:
 
-- CPU: 4 Core
-- Memory: 16 Gb
+- CPU: 8 Core
+- Memory: 32 Gb
 
 ## EDP Toolset
 
@@ -38,11 +37,11 @@ List of Tools used on the Platform:
 |Kubernetes Multitenancy|Kiosk|
 |Logging|EFK, ELK, Loki|
 |Monitoring|Prometheus, Grafana|
-|Pipeline Orchestration|Jenkins, GitLab CI (basic)|
+|Pipeline Orchestration|Tekton, Jenkins|
 |Policies/Rules|Open Policy Agent|
-|SSO|Keycloak, keycloak-proxy|
-|Static Code Analysis|SonarQube|
-|Test Report Tool|Allure|
+|SSO|Keycloak|
+|Static Code Analysis|SonarQube, DefectDojo, semgrep|
+|Test Report Tool|ReportPortal, Allure|
 
 ## Install prerequisites
 

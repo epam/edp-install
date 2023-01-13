@@ -23,10 +23,11 @@ EDP consists of the following:
 
 - Deployed and configured CI/CD toolset ([Jenkins](https://www.jenkins.io/){target=_blank}, [Gerrit](https://www.gerritcodereview.com/){target=_blank}, [Nexus](https://help.sonatype.com/repomanager3){target=_blank}, [SonarQube](https://www.sonarqube.org/){target=_blank})
 - [Gerrit](https://www.gerritcodereview.com/), [GitLab](https://about.gitlab.com/features/) or [GitHub](https://about.gitlab.com/features/) as a version control system for your code
+- [Tekton](./operator-guide/install-tekton.md) is a default pipeline orchestrator
 - [Jenkins](./operator-guide/overview-manage-jenkins-pipelines.md) is a pipeline orchestrator
 - [CI pipelines](./user-guide/pipeline-framework.md) for Python, Java 8, Java 11, .Net, Go, React, Terraform, Jenkins Groovy Pipelines, Dockerfile, Helm
 - Build tools: Go, Apache Maven, Apache Gradle
-- [Admin Console UI](./user-guide/index.md) as a single entry point
+- [Headlamp UI](./headlamp-user-guide/index.md) as a single entry point
 - [CD pipeline](./user-guide/customize-cd-pipeline.md) for Microservice Deployment
 - Kubernetes native approach ([CRD, CR](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/){target=_blank}) to declare CI/CD pipelines
 
@@ -37,11 +38,12 @@ EDP architecture is represented on a diagram below.
 
 !![Architecture](./assets/edp-context.png "Architecture")
 
-EDP consists of three cross-cutting concerns:
+EDP consists of four cross-cutting concerns:
 
 1. Infrastructure as a Service;
-2. Container orchestration and centralized services;
-3. Security.
+2. GitOps approach;
+3. Container orchestration and centralized services;
+4. Security.
 
 On the top of these indicated concerns, EDP adds several blocks that include:
 
