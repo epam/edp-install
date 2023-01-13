@@ -321,6 +321,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/prerequisites/</loc>
+         <lastmod>2023-01-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/report-portal-integration-tekton/</loc>
          <lastmod>2023-01-13</lastmod>
          <changefreq>daily</changefreq>
