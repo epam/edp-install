@@ -1,9 +1,4 @@
----
-hide:
-  - navigation
----
-
-# Getting Started
+# Quick Start
 
 ## Requirements
 

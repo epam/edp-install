@@ -3,6 +3,11 @@ repo_name: "GitHub"
 repo_url: https://github.com/epam/edp-install
 site_url: https://epam.github.io/edp-install
 edit_uri: ""
+site_description: EPAM Delivery Platform
+
+# Copyright
+copyright: Copyright &copy; 2018 - 2023 EPAM Delivery Platform -
+  <a href="#__consent">Change cookie settings</a>
 
 # Extensions
 markdown_extensions:
@@ -19,6 +24,9 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.superfences:
       preserve_tabs: true
       custom_fences:
@@ -51,17 +59,21 @@ theme:
       primary: cyan
       accent: blue
       toggle:
-        icon: material/toggle-switch
+        icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
       toggle:
-        icon: material/toggle-switch-off-outline
+        icon: material/brightness-4
         name: Switch to light mode
   features:
+    - announce.dismiss
+    - content.code.copy
     - navigation.sections
     - navigation.tabs
     - navigation.top
-    - announce.dismiss
+    - search.highlight
+    - search.share
+    - search.suggest
 
 plugins:
   - search
@@ -75,8 +87,12 @@ extra:
     provider: google
     property: G-7ZV6PJ2LSP
   social:
+    - icon: fontawesome/brands/medium
+      link: https://medium.com/epam-delivery-platform
     - icon: fontawesome/brands/docker
       link: https://hub.docker.com/u/epamedp
+    - icon: fontawesome/solid/paper-plane
+      link: mailto:SupportEPMD-EDP@epam.com
 
   consent:
     actions:
@@ -90,8 +106,12 @@ extra:
       make our documentation better.
 
 nav:
-  - Overview: index.md
-  - Getting Started: getting-started.md
+  - Home: index.md
+  - Getting Started:
+    - overview.md
+    - features.md
+    - getting-started.md
+    - glossary.md
   - Operator Guide:
     - operator-guide/index.md
     - Installation:
@@ -234,11 +254,10 @@ nav:
     - developer-guide/rest-api.md
     - developer-guide/mk-docs-development.md
     - developer-guide/edp-workflow.md
-  - RoadMap: roadmap.md
   - Use Cases:
     - use-cases/index.md
     - Autotest as Quality Gate: use-cases/autotest-as-quality-gate.md
     - Promote Application in CD Pipeline: use-cases/promotion-procedure.md
   - FAQ: faq.md
-  - glossary.md
+  - RoadMap: roadmap.md
   - Releases ⧉: https://github.com/epam/edp-install/blob/master/RELEASES.md

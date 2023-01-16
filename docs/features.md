@@ -1,11 +1,6 @@
----
-hide:
-  - navigation
----
-
 # Basic Concepts
 
-Consult [EDP Glossary](./glossary.md) section for definitions mentioned on this page and [EDP Toolset](./getting-started/#edp-toolset) to have a full list of tools used with the Platform. The below table contains a full list of features provided by EDP.
+Consult [EDP Glossary](./glossary.md) section for definitions mentioned on this page and [EDP Toolset](https://epam.github.io/edp-install/getting-started/#edp-toolset) to have a full list of tools used with the Platform. The below table contains a full list of features provided by EDP.
 
 |Features|Description|
 |-|-|
