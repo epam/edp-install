@@ -22,7 +22,7 @@
       ```bash
       kubectl create secret generic gitlab -n <edp-project> \
         --from-file=id_rsa=id_rsa \
-        --from-literal=username=user@example.com \
+        --from-literal=username=git \
         --from-literal=token=your_gitlab_access_token
       ```
 
