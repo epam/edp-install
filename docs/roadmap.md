@@ -27,7 +27,7 @@ RoadMap consists of three streams:
 
 Another artifact aggregator which is used by EDP - [ArtifactHub](https://artifacthub.io/packages/search?ts_query_web=edp&sort=relevance&page=1){target=_blank}, that holds description for both components: [stable](https://artifacthub.io/packages/search?repo=epmdedp){target=_blank} and [under-development](https://artifacthub.io/packages/search?repo=epmdedp-dev){target=_blank}.
 
-!!! done "OperatorHub. Keycloak Operator"
+!!! success "OperatorHub. Keycloak Operator"
     [EDP Keycloak Operator](https://operatorhub.io/operator/edp-keycloak-operator) is now available from OperatorHub both for Upstream (Kubernetes) and OpenShift deployments.
 
 ## II. Architecture
@@ -57,7 +57,7 @@ EDP uses [Open Policy Agent](https://www.openpolicyagent.org/){target=_blank} (f
 
 EDP should provide secrets management as a part of platform. There are multiple tools providing secrets management capabilities. The aim is to be aligned with GitOps and [Operator Pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/){target=_blank} approaches so [HashiCorp Vault](https://www.vaultproject.io/docs/platform/k8s){target=_blank}, [Banzaicloud Bank Vaults](https://github.com/banzaicloud/bank-vaults){target=_blank}, [Bitnami Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets){target=_blank} are currently used for internal projects and some of them should be made publicly available - as a part of EDP Deployment.
 
-!!! done "EDP Release 2.12.x"
+!!! success "EDP Release 2.12.x"
     [External Secret Operator](./operator-guide/external-secrets-operator-integration.md) is a recommended secret management tool for the EDP components.
 
 ### Release Management
@@ -80,8 +80,11 @@ This list is under investigation and solution is going to be implemented in two 
 1. Introduce tool that provide *Continues Delivery/Deployment* approach. Argo CD is one of the best to go with.
 2. Integrate EDP with tool that provides *Continues Integration* capabilities.
 
-!!! done "EDP Release 2.12.x"
-    [Argo CD](./operator-guide/argocd-integration.md) is suggested as a solution providing the `Continuous Delivery` capabilities. A new EDP operator called [edp-argocd-operator](https://github.com/epam/edp-argocd-operator/) has been developed, which runs as an adapter layer between the EDP Platform and Argo CD.
+!!! success "EDP Release 2.12.x"
+    [Argo CD](./operator-guide/argocd-integration.md) is suggested as a solution providing the `Continuous Delivery` capabilities.
+
+!!! success "EDP Release 3.0"
+    [Tekton](./operator-guide/install-tekton.md) is used as a CI/CD pipelines orchestration tool on the platform. Review [edp-tekton](http://github.com/epam/edp-tekton) GitHub repository that keeps all the logic behind this solution on the EDP (Pipelines, Tasks, TriggerTemplates, Interceptors, etc). Get acquainted with the series of publications on our [Medium Page](https://medium.com/epam-delivery-platform/part-1-tekton-adoption-d5d47bf1bfc0).
 
 ### Advanced EDP Role-based Model
 
@@ -103,7 +106,7 @@ Persistent layer, which is based on [edp-db](https://github.com/epam/edp-install
 * Enable integration with the Centralized Test Reporting Frameworks
 * Onboard SAST/DAST tool as a part of CI pipelines and Non-Functional Testing activities
 
-!!! done "EDP Release 2.12.x"
+!!! success "EDP Release 2.12.x"
     [SAST](./operator-guide/overview-sast.md) is introduced as a mandatory part of the [CI Pipelines](./user-guide/ci-pipeline-details.md). The [list of currently supported SAST scanners](https://epam.github.io/edp-install/operator-guide/overview-sast/#supported-languages) and the [instruction on how to add them](./operator-guide/add-security-scanner.md) are also available.
 
 ### Infrastructure as Code
@@ -121,6 +124,9 @@ One of the challenges for Application running in Kubernetes is to manage databas
 ### Report Portal
 
 EDP uses [Allure Framework](https://github.com/allure-framework/allure2){target=_blank} as a *Test Report tool*. Another option is to integrate [Report Portal](https://reportportal.io/){target=_blank} into EDP ecosystem.
+
+!!! success "EDP Release 3.0"
+    Use [ReportPortal](./operator-guide/install-reportportal.md) to consolidate and analyze your Automation tests results. Consult our pages on how to perform [reporting](./operator-guide/report-portal-integration-tekton.md) and [Keycloak integration](./operator-guide/reportportal-keycloak.md).
 
 ### Carrier
 
@@ -144,9 +150,9 @@ EDP supports two LTS versions of Java: 8 and 11. The goal is to provide [Java 17
 
 ### OpenShift 4.X
 
-[OpenShift 4.6](https://docs.openshift.com/container-platform/4.6/welcome/index.html) is a platform that EDP supports.
+EDP supports the [OpenShift 4.9](https://docs.openshift.com/container-platform/4.9/welcome/index.html) platform.
 
-!!! done "EDP Release 2.12.x"
+!!! success "EDP Release 2.12.x"
     EDP Platform runs on the latest OKD versions: [4.9](./operator-guide/deploy-okd.md) and [4.10](./operator-guide/deploy-okd-4.10.md). [Creating the IAM Roles for Service Account](https://docs.openshift.com/container-platform/4.10/authentication/managing_cloud_provider_credentials/cco-mode-sts.html#sts-mode-installing-manual-run-installer_cco-mode-sts) is a recommended way to work with AWS Resources from the OKD cluster.
 
 ## IV. Admin Console (UI)
@@ -157,16 +163,19 @@ EDP supports two LTS versions of Java: 8 and 11. The goal is to provide [Java 17
 * Introduce user management capabilities
 * Enrich with traceability metrics for products
 
-!!! done "EDP Release 2.12.x"
+!!! success "EDP Release 2.12.x"
     EDP Team has introduced a new UI component called [EDP Headlamp](https://github.com/epam/edp-headlamp), which will replace the [EDP Admin Console](./user-guide/index.md) in future releases. EDP Headlamp is based on the [Kinvolk Headlamp UI Client](https://github.com/kinvolk/headlamp).
+
+!!! success "EDP Release 3.0"
+    [EDP Headlamp](https://github.com/epam/edp-headlamp) is used as a Control Plane UI on the platform.
 
 ### Users Management
 
-EDP uses [Keycloak](https://www.keycloak.org/){target=_blank} as Identity and Access provider. EDP roles/groups are managed inside Keycloak realm, then these changes are propagated across EDP Tools. The plan is to provide this functionality in EDP Admin Console using Kubernetes native approach (Custom Resources).
+EDP uses [Keycloak](https://www.keycloak.org/){target=_blank} as an Identity and Access provider. EDP roles/groups are managed inside the Keycloak realm, then these changes are propagated across the EDP Tools. We plan to provide this functionality in EDP Headlamp using the Kubernetes-native approach (Custom Resources).
 
 ### The Delivery Pipelines Dashboard
 
-EDP [CD Pipeline section](./user-guide/add-cd-pipeline.md) in Admin Console provides basic information like: environments, artifact versions deployed per each environment, direct links to namespaces. One option is to enrich this panel with metrics (from prometheus, custom resources, events, etc). Another option is to use existing dashboards and expose EDP metrics to them, e.g. [plugin for Lens](https://github.com/lensapp/lens-extensions){target=_blank}, [OpenShift UI Console](https://github.com/openshift/console){target=_blank}
+The [CD Pipeline section](./user-guide/add-cd-pipeline.md) in EDP Headlamp provides basic information, such as environments, artifact versions deployed per each environment, and direct links to the namespaces. One option is to enrich this panel with metrics from the Prometheus, custom resources, or events. Another option is to use the existing dashboards and expose EDP metrics to them, for example, [plugin for Lens](https://github.com/lensapp/lens-extensions){target=_blank} or [OpenShift UI Console](https://github.com/openshift/console){target=_blank}.
 
 ### Split Jira and Commit Validation Sections
 
