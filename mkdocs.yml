@@ -155,6 +155,8 @@ nav:
         - Manage Jenkins CD Pipeline Job Provisioner: operator-guide/manage-jenkins-cd-job-provision.md
         - Delete Jenkins Job Provision: operator-guide/delete-jenkins-job-provision.md
     - Integration:
+      - Tekton:
+          Overview: operator-guide/tekton-overview.md
       - AWS Integration:
         - Configure AWS WAF With Terraform: operator-guide/waf-tf-configuration.md
         - Install Amazon EBS CSI Driver: operator-guide/ebs-csi-driver.md
