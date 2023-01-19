@@ -1,0 +1,370 @@
+<!-- Custom HTML site displayed as the Home chapter -->
+
+{% extends "main.html" %}
+{% block tabs %}
+{{ super() }}
+<style>
+    .md-main {
+        flex-grow: 0
+    }
+
+    .md-main__inner {
+        display: flex;
+        height: 100%;
+    }
+
+    .tx-container {
+        padding-top: .0rem;
+        background: linear-gradient(to bottom, var(--md-primary-fg-color), hsla(160deg, 47%, 55%, 1) 100%)
+    }
+
+    .tx-edphome {
+        margin: 32px 2.8rem;
+        color: var(--md-primary-bg-color);
+        justify-content: center;
+    }
+
+    .tx-edphome h1 {
+        margin-bottom: 1rem;
+        color: currentColor;
+        font-weight: 700
+    }
+
+    .tx-edphome__content {
+        padding-bottom: 1rem;
+        margin: 0 auto;
+    }
+
+    .tx-edphome__image {
+        width: 17rem;
+        height: 17rem;
+        order: 1;
+        padding-right: 2.5rem;
+    }
+
+    .tx-edphome .md-button {
+        margin-top: .5rem;
+        margin-right: .5rem;
+        color: var(--md-primary-bg-color)
+    }
+
+    .tx-edphome .md-button--primary {
+        background-color: var(--md-primary-bg-color);
+        color: hsla(280deg, 37%, 48%, 1);
+        border-color: var(--md-primary-bg-color)
+    }
+
+    .tx-edphome .md-button:focus,
+    .tx-edphome .md-button:hover {
+        background-color: var(--md-accent-fg-color);
+        color: var(--md-default-bg-color);
+        border-color: var(--md-accent-fg-color)
+    }
+
+    .feature-item h2 svg {
+        height: 30px;
+        float: left;
+        margin-right: 10px;
+        transform: translateY(10%);
+    }
+
+    .top-hr {
+        margin-top: 42px;
+    }
+
+    .feature-item {
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+        box-sizing: border-box;
+        padding: 0 15px;
+        word-break: break-word;
+    }
+
+    .feature-item h2 {
+        color: var(--md-typeset-color);
+        font-weight: 300;
+        font-size: 25px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: normal;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-family: inherit;
+    }
+
+    .feature-item p {
+        font-size: 16px;
+        line-height: 1.8em;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        color: var(--md-typeset-color);
+        margin: 0 0 10px;
+        display: block;
+    }
+
+    .twemoji {
+        fill: currentColor;
+    }
+
+    @media screen and (max-width:30em) {
+        .tx-edphome h1 {
+            font-size: 1.4rem
+        }
+    }
+
+    @media screen and (min-width:60em) {
+        .md-sidebar--secondary {
+            display: none
+        }
+
+        .tx-edphome {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tx-edphome__content {
+            max-width: 22rem;
+            margin-top: 3.5rem;
+            margin-bottom: 3.5rem;
+            margin-left: 1.0rem;
+            margin-right: 4.0rem;
+            align-items: center;
+        }
+    }
+
+    @media screen and (min-width:76.25em) {
+        .md-sidebar--primary {
+            display: none
+        }
+
+        .top-hr {
+            width: 100%;
+            display: flex;
+            max-width: 61rem;
+            margin-right: auto;
+            margin-left: auto;
+            padding: 0 .2rem;
+        }
+
+        .bottom-hr {
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+            max-width: 61rem;
+            margin-right: auto;
+            margin-left: auto;
+            padding: 0 .2rem;
+        }
+
+        .feature-item {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .feature-item:hover {
+            background-color: #526cfe47;
+            border-radius: 3px;
+        }
+    }
+
+    .hr {
+        border-bottom: 1px solid var(--md-primary-fg-color);
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .text-center {
+        text-align: center;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 15px;
+        font-family: 'Lato', sans-serif;
+        font-size: 23px;
+        font-weight: 300;
+        padding-bottom: 10px;
+    }
+
+    .logos {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: row wrap;
+        margin: 0 auto;
+    }
+
+    .logos img {
+        flex: 1 1 auto;
+        padding: 25px;
+        max-height: 130px;
+        vertical-align: middle;
+    }
+
+    .hr-logos {
+        margin-top: 0;
+        margin-bottom: 30px;
+    }
+
+    .md-footer-meta__inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 1.0rem;
+    }
+
+    .md-footer-social {
+        padding-top: 20px;
+    }
+
+</style>
+
+<!-- Main site Entry button descriptions -->
+<section class="tx-container">
+    <div class="md-grid md-typeset">
+        <div class="tx-edphome">
+            <div class="tx-edphome__image">
+                <img src="assets/home_logo.png" draggable="false">
+            </div>
+            <div class="tx-edphome__content">
+                <h1> Build your delivery rocket </h1>
+                <p><b>Boost</b> your delivery with the <b>development culture</b> based on the modern CI/CD stack,
+                    golden path and self-service capabilities of the EPAM Delivery Platform (EDP).
+                </p>
+                <a href="{{ page.next_page.url | url }}" title="{{ page.next_page.title | striptags }}"
+                    class="md-button md-button--primary">
+                    Getting started
+                </a>
+                <a href="mailto:SupportEPMD-EDP@epam.com?subject=EDP Demo Request"
+                    title="{{ lang.t('source.link.title') }}" class="md-button">
+                    Request a demo
+                    <span class="twemoji">
+                        {% include ".icons/fontawesome/regular/envelope.svg" %}
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main site box descriptions -->
+<div class="top-hr">
+    <div class="feature-item">
+        <a href="headlamp-user-guide/add-application/">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/crane.svg" %}
+                </span>
+                Application scaffolding
+            </h2>
+            <p>Use the Application templates to speed up your delivery. Extend library with your own templates.</p>
+        </a>
+    </div>
+    <div class="feature-item">
+        <a href="headlamp-user-guide/application/">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/rocket-launch.svg" %}
+                </span>
+                CI/CD pipelines
+            </h2>
+            <p>Run Kubernetes native pipelines for your applications using the EDP Library.</p>
+        </a>
+    </div>
+    <div class="feature-item">
+        <a href="headlamp-user-guide/add-cd-pipeline/">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/source-branch-check.svg" %}
+                </span>
+                GitOps
+            </h2>
+            <p>Use GitOps approach to deploy your code and infrastructure. Keep your state in code and manage changes.
+            </p>
+        </a>
+    </div>
+</div>
+
+<div class="bottom-hr">
+    <div class="feature-item">
+        <a href="operator-guide/install-keycloak/">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/account-key.svg" %}
+                </span>
+                Single sign-on
+            </h2>
+            <p>Integrate with your Enterprise SSO, thus enabling smooth user onboarding.</p>
+        </a>
+    </div>
+    <div class="feature-item">
+        <a href="operator-guide/install-edp/">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/kubernetes.svg" %}
+                </span>
+                Kubernetes-native
+            </h2>
+            <p>Run Platform in the preferred Kubernetes or OpenShift clusters.</p>
+        </a>
+    </div>
+    <div class="feature-item">
+        <a href="operator-guide/overview-sast/">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/clipboard-text-search-outline.svg" %}
+                </span>
+                Static analysis
+            </h2>
+            <p>Use Static Application Security Testing (SAST) as your mandatory quality gate.</p>
+        </a>
+    </div>
+</div>
+
+<div class="bottom-hr">
+    <div class="feature-item">
+        <a href="operator-guide/install-reportportal/">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/flask-outline.svg" %}
+                </span>
+                Autotest analysis
+            </h2>
+            <p>Ensure your regressions pass seamlessly and predictably. Increase your delivery using automations.</p>
+        </a>
+    </div>
+    <div class="feature-item">
+        <a href="operator-guide/multitenant-logging/">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/signal-cellular-outline.svg" %}
+                </span>
+                Metrics
+            </h2>
+            <p>Grab your application logs and metrics. Explore your application in runtime.</p>
+        </a>
+    </div>
+    <div class="feature-item">
+        <a href="overview">
+            <h2>
+                <span class="twemoji">
+                    {% include ".icons/material/open-source-initiative.svg" %}
+                </span>
+                Open-source
+            </h2>
+            <p>EDP is an open-source solution under Apache 2.0. We provide the top open-source tools to make your
+                delivery reliable.</p>
+        </a>
+    </div>
+</div>
+
+<div class="top-hr">
+    <div class="hr">
+    </div>
+</div>
+
+
+{% endblock %}
+{% block content %}{% endblock %}
