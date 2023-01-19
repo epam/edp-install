@@ -194,45 +194,45 @@ nav:
       - Use Cert-Manager in OpenShift: operator-guide/ssl-automation-okd.md
       - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
       - Upgrade Keycloak v.17.0.x-legacy to v.19.0.x: operator-guide/upgrade-keycloak-17.0.x-legacy-to-19.0.x.md
+#  - User Guide:
+#    - user-guide/index.md
+#    - Application:
+#      - Overview: user-guide/application.md
+#      - user-guide/add-application.md
+#    - Autotest:
+#      - Overview: user-guide/autotest.md
+#      - user-guide/add-autotest.md
+#    - Library:
+#      - Overview: user-guide/library.md
+#      - user-guide/add-library.md
+#    - Pipelines:
+#      - EDP CI/CD Overview: user-guide/cicd-overview.md
+#      - EDP Pipeline Framework: user-guide/pipeline-framework.md
+#      - Add Custom Pipeline Library: user-guide/add-custom-global-pipeline-lib.md
+#      - CI Pipeline:
+#        - user-guide/ci-pipeline-details.md
+#        - user-guide/code-review-pipeline.md
+#        - user-guide/build-pipeline.md
+#        - user-guide/customize-ci-pipeline.md
+#        - Stages:
+#          - Overview: user-guide/pipeline-stages.md
+#          - Use Dockerfile Linters for Code Review Pipeline: user-guide/dockerfile-stages.md
+#          - Promote Docker Images From ECR to Docker Hub: user-guide/ecr-to-docker-stages.md
+#          - Helm Chart Testing and Documentation Tools: user-guide/helm-stages.md
+#          - Use Open Policy Agent: user-guide/opa-stages.md
+#          - CI Pipeline for Terraform: user-guide/terraform-stages.md
+#          - CI Pipeline for Container: user-guide/container-stages.md
+#      - CD Pipeline:
+#        - user-guide/cd-pipeline-details.md
+#        - user-guide/add-cd-pipeline.md
+#        - user-guide/customize-cd-pipeline.md
+#        - user-guide/prepare-for-release.md
+#        - Stages:
+#          - Copy Shared Secrets: user-guide/copy-shared-secrets.md
+#          - Helm Release Deletion: user-guide/helm-release-deletion.md
+#          - Semi Auto Deploy: user-guide/semi-auto-deploy.md
+#    - user-guide/d-d-diagram.md
   - User Guide:
-    - user-guide/index.md
-    - Application:
-      - Overview: user-guide/application.md
-      - user-guide/add-application.md
-    - Autotest:
-      - Overview: user-guide/autotest.md
-      - user-guide/add-autotest.md
-    - Library:
-      - Overview: user-guide/library.md
-      - user-guide/add-library.md
-    - Pipelines:
-      - EDP CI/CD Overview: user-guide/cicd-overview.md
-      - EDP Pipeline Framework: user-guide/pipeline-framework.md
-      - Add Custom Pipeline Library: user-guide/add-custom-global-pipeline-lib.md
-      - CI Pipeline:
-        - user-guide/ci-pipeline-details.md
-        - user-guide/code-review-pipeline.md
-        - user-guide/build-pipeline.md
-        - user-guide/customize-ci-pipeline.md
-        - Stages:
-          - Overview: user-guide/pipeline-stages.md
-          - Use Dockerfile Linters for Code Review Pipeline: user-guide/dockerfile-stages.md
-          - Promote Docker Images From ECR to Docker Hub: user-guide/ecr-to-docker-stages.md
-          - Helm Chart Testing and Documentation Tools: user-guide/helm-stages.md
-          - Use Open Policy Agent: user-guide/opa-stages.md
-          - CI Pipeline for Terraform: user-guide/terraform-stages.md
-          - CI Pipeline for Container: user-guide/container-stages.md
-      - CD Pipeline:
-        - user-guide/cd-pipeline-details.md
-        - user-guide/add-cd-pipeline.md
-        - user-guide/customize-cd-pipeline.md
-        - user-guide/prepare-for-release.md
-        - Stages:
-          - Copy Shared Secrets: user-guide/copy-shared-secrets.md
-          - Helm Release Deletion: user-guide/helm-release-deletion.md
-          - Semi Auto Deploy: user-guide/semi-auto-deploy.md
-    - user-guide/d-d-diagram.md
-  - Headlamp User Guide:
     - headlamp-user-guide/index.md
     - Application:
         - Overview: headlamp-user-guide/application.md

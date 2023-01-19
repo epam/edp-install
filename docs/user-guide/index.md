@@ -1,7 +1,7 @@
 # Overview
 
 !!! important
-    Admin Console will be deprecated in the upcoming releases and replaced by the Headlamp tool. Please see the [Headlamp User guide](../headlamp-user-guide/index.md).
+    Admin Console is deprecated and replaced by the Headlamp tool. Please see the [Headlamp User guide](../headlamp-user-guide/index.md).
 
 The EDP User guide is intended for developers and provides details on working with EDP Admin Console, different codebase types and EDP CI/CD flow.
 
