@@ -62,6 +62,7 @@ A Helm chart for EDP Install
 | global.edpName | string | `"stub-namespace"` | namespace or a project name (in case of OpenShift) |
 | global.gerritSSHPort | string | `"22"` | Gerrit SSH node port |
 | global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |
+| global.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
 | global.kioskEnabled | bool | `true` |  |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"2.13.0-SNAPSHOT"` | EDP version |
@@ -81,7 +82,6 @@ A Helm chart for EDP Install
 | kaniko.roleArn | string | `nil` | AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME> |
 | kaniko.tolerations | list | `[]` | tolerations Tolerations for pod assignment |
 | keycloak-operator.enabled | bool | `true` |  |
-| keycloak-operator.keycloak.url | string | `"keycloak.example.com"` |  |
 | nexus-operator.enabled | bool | `true` |  |
 | perf-operator.enabled | bool | `true` |  |
 | perf-operator.perf.integration | bool | `false` | Enable PERF integration |

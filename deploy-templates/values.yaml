@@ -28,6 +28,8 @@ global:
   gitProvider: gerrit
   # -- Gerrit SSH node port
   gerritSSHPort: "22"
+  # -- Keycloak URL
+  keycloakUrl: https://keycloak.example.com
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
@@ -115,8 +117,6 @@ keycloak-operator:
   # image:
   #   repository: epamedp/keycloak-operator
   #   tag:
-  keycloak:
-    url: "keycloak.example.com"
 
 codebase-operator:
   enabled: true
