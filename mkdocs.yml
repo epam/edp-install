@@ -1,5 +1,4 @@
 site_name: EPAM Delivery Platform
-repo_name: "GitHub"
 repo_url: https://github.com/epam/edp-install
 site_url: https://epam.github.io/edp-install
 edit_uri: ""
@@ -86,6 +85,21 @@ extra:
   analytics:
     provider: google
     property: G-7ZV6PJ2LSP
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: >-
+            Thanks for your feedback!
+        - icon: material/emoticon-sad-outline
+          name: This page could be improved
+          data: 0
+          note: >-
+            Thanks for your feedback! Help us improve this page by
+            using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
+
   social:
     - icon: fontawesome/brands/medium
       link: https://medium.com/epam-delivery-platform
