@@ -103,3 +103,6 @@ This section provides the details on upgrading EDP from the v.2.12.x to the v.3.
 
 !!! Warning
     In EDP v.3.0.x, [Admin Console](../../user-guide/#admin-console) is deprecated, and EDP interface is available only via [Headlamp](../../headlamp-user-guide/#overview).
+
+## Related Articles
+* [Migrate CI Pipelines From Jenkins to Tekton](migrate-ci-pipelines-from-jenkins-to-tekton.md)
