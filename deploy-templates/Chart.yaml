@@ -3,8 +3,8 @@ description: A Helm chart for EDP Install
 home: https://epam.github.io/edp-install/
 name: edp-install
 type: application
-version: 2.13.0-SNAPSHOT
-appVersion: 2.13.0-SNAPSHOT
+version: 3.2.0-SNAPSHOT
+appVersion: 3.2.0-SNAPSHOT
 icon: https://epam.github.io/edp-install/assets/logo.png
 keywords:
   - edp
@@ -23,17 +23,17 @@ sources:
 dependencies:
 - name: keycloak-operator
   repository: "@epamedp"
-  version: "1.12.0"
+  version: "1.14.0"
   condition: keycloak-operator.enabled
 
 - name: codebase-operator
   repository: "@epamedp"
-  version: "2.13.1"
+  version: "2.14.1"
   condition: codebase-operator.enabled
 
 - name: jenkins-operator
   repository: "@epamedp"
-  version: "2.12.1"
+  version: "2.13.2"
   condition: jenkins-operator.enabled
 
 - name: edp-component-operator
@@ -43,37 +43,37 @@ dependencies:
 
 - name: edp-headlamp
   repository: "@epamedp"
-  version: "0.2.0"
+  version: "0.4.0"
   condition: edp-headlamp.enabled
 
 - name: edp-tekton
   repository: "@epamedp"
-  version: "0.2.1"
+  version: "0.3.1"
   condition: edp-tekton.enabled
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.12.1"
+  version: "2.13.0"
   condition: cd-pipeline-operator.enabled
 
 - name: nexus-operator
   repository: "@epamedp"
-  version: "2.12.1"
+  version: "2.13.0"
   condition: nexus-operator.enabled
 
 - name: sonar-operator
   repository: "@epamedp"
-  version: "2.12.0"
+  version: "2.13.0"
   condition: sonar-operator.enabled
 
 - name: admin-console-operator
   repository: "@epamedp"
-  version: "2.12.0"
+  version: "2.13.0"
   condition: admin-console-operator.enabled
 
 - name: gerrit-operator
   repository: "@epamedp"
-  version: "2.12.0"
+  version: "2.13.4"
   condition: gerrit-operator.enabled
 
 - name: perf-operator
@@ -85,34 +85,34 @@ annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/operator: "true"
   artifacthub.io/images: |
-    - name: keycloak-operator:1.12.0
-      image: epamedp/keycloak-operator:1.12.0
-    - name: codebase-operator:2.13.1
-      image: epamedp/codebase-operator:2.13.1
-    - name: jenkins-operator:2.12.1
-      image: epamedp/jenkins-operator:2.12.1
-    - name: cd-pipeline-operator:2.12.1
-      image: epamedp/cd-pipeline-operator:2.12.1
-    - name: nexus-operator:2.12.1
-      image: epamedp/nexus-operator:2.12.1
-    - name: sonar-operator:2.12.0
-      image: epamedp/sonar-operator:2.12.0
-    - name: admin-console-operator:2.12.0
-      image: epamedp/admin-console-operator:2.12.0
-    - name: gerrit-operator:2.12.0
-      image: epamedp/gerrit-operator:2.12.0
-    - name: edp-headlamp:0.2.0
-      image: epamedp/edp-headlamp:0.2.0
+    - name: keycloak-operator:1.14.0
+      image: epamedp/keycloak-operator:1.14.0
+    - name: codebase-operator:2.14.1
+      image: epamedp/codebase-operator:2.14.1
+    - name: jenkins-operator:2.13.2
+      image: epamedp/jenkins-operator:2.13.2
+    - name: cd-pipeline-operator:2.13.0
+      image: epamedp/cd-pipeline-operator:2.13.0
+    - name: nexus-operator:2.13.0
+      image: epamedp/nexus-operator:2.13.0
+    - name: sonar-operator:2.13.0
+      image: epamedp/sonar-operator:2.13.0
+    - name: admin-console-operator:2.13.0
+      image: epamedp/admin-console-operator:2.13.0
+    - name: gerrit-operator:2.13.4
+      image: epamedp/gerrit-operator:2.13.4
+    - name: edp-headlamp:0.4.0
+      image: epamedp/edp-headlamp:0.4.0
     - name: perf-operator:2.12.0
       image: epamedp/perf-operator:2.12.0
     - name: postgres:9.6
       image: postgres:9.6
-    - name: executor:v1.8.0
-      image: gcr.io/kaniko-project/executor:v1.8.0
+    - name: executor:v1.9.1
+      image: gcr.io/kaniko-project/executor:v1.9.1
     - name: busybox:1.35.0
       image: busybox:1.35.0
-    - name: aws-cli:2.5.2
-      image: amazon/aws-cli:2.5.2
+    - name: aws-cli:2.9.4
+      image: amazon/aws-cli:2.9.4
   artifacthub.io/operatorCapabilities: Full Lifecycle
   artifacthub.io/links: |
     - name: EDP Documentation

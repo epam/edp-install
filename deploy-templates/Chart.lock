@@ -1,39 +1,39 @@
 dependencies:
 - name: keycloak-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 1.12.0
+  version: 1.14.0
 - name: codebase-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.13.1
+  version: 2.14.1
 - name: jenkins-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.1
+  version: 2.13.2
 - name: edp-component-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.12.0
 - name: edp-headlamp
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.2.0
+  version: 0.4.0
 - name: edp-tekton
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.2.1
+  version: 0.3.1
 - name: cd-pipeline-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.1
+  version: 2.13.0
 - name: nexus-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.1
+  version: 2.13.0
 - name: sonar-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.0
+  version: 2.13.0
 - name: admin-console-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.0
+  version: 2.13.0
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.0
+  version: 2.13.4
 - name: perf-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
-digest: sha256:8d60c2e733a5dc2e6335a6de47181445ca5d8563b5e5d38745431f152716c535
-generated: "2022-12-15T18:39:42.3465972+02:00"
+digest: sha256:b64f4727b2784c159d126eb82eb724f5df96ac6b2296cbe3a8ae3d7d90352155
+generated: "2023-01-24T13:31:58.972269+02:00"

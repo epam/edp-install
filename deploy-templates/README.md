@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 2.13.0-SNAPSHOT](https://img.shields.io/badge/Version-2.13.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.13.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-2.13.0--SNAPSHOT-informational?style=flat-square)
+![Version: 3.2.0-SNAPSHOT](https://img.shields.io/badge/Version-3.2.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.2.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for EDP Install
 
@@ -21,18 +21,18 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | admin-console-operator | 2.12.0 |
-| @epamedp | cd-pipeline-operator | 2.12.1 |
-| @epamedp | codebase-operator | 2.13.1 |
+| @epamedp | admin-console-operator | 2.13.0 |
+| @epamedp | cd-pipeline-operator | 2.13.0 |
+| @epamedp | codebase-operator | 2.14.1 |
 | @epamedp | edp-component-operator | 0.12.0 |
-| @epamedp | edp-headlamp | 0.2.0 |
-| @epamedp | edp-tekton | 0.2.1 |
-| @epamedp | gerrit-operator | 2.12.0 |
-| @epamedp | jenkins-operator | 2.12.1 |
-| @epamedp | keycloak-operator | 1.12.0 |
-| @epamedp | nexus-operator | 2.12.1 |
+| @epamedp | edp-headlamp | 0.4.0 |
+| @epamedp | edp-tekton | 0.3.1 |
+| @epamedp | gerrit-operator | 2.13.4 |
+| @epamedp | jenkins-operator | 2.13.2 |
+| @epamedp | keycloak-operator | 1.14.0 |
+| @epamedp | nexus-operator | 2.13.0 |
 | @epamedp | perf-operator | 2.12.0 |
-| @epamedp | sonar-operator | 2.12.0 |
+| @epamedp | sonar-operator | 2.13.0 |
 
 ## Values
 
@@ -63,9 +63,9 @@ A Helm chart for EDP Install
 | global.gerritSSHPort | string | `"22"` | Gerrit SSH node port |
 | global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |
 | global.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
-| global.kioskEnabled | bool | `true` |  |
+| global.kioskEnabled | bool | `false` |  |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"2.13.0-SNAPSHOT"` | EDP version |
+| global.version | string | `"3.2.0-SNAPSHOT"` | EDP version |
 | global.webConsole.url | string | `nil` | URL to OpenShift/Kubernetes Web console |
 | jenkins-operator.enabled | bool | `false` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
