@@ -54,7 +54,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   ```bash
   helm search repo epamedp/edp-install
   NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-  epamedp/edp-install     3.0.0           3.0.0           A Helm chart for EDP Install
+  epamedp/edp-install     3.1.0           3.1.0           A Helm chart for EDP Install
   ```
 
   !!! note
