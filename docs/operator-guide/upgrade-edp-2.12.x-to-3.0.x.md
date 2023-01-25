@@ -1,7 +1,10 @@
 # Upgrade EDP v.2.12.x to v.3.0.x
 
 !!! Important
-    We suggest making a backup of the EDP environment before starting the upgrade procedure.
+    * Before starting the upgrade procedure, please make the necessary backups.
+    * Kiosk integration is disabled by default. With EDP below v.3.0.x, define the `global.kioskEnabled` parameter in the [values.yaml](https://github.cm/epam/edp-install/blob/release/3.0/deploy-templates/values.yaml) file. For details, please refer to the [Set Up Kiosk](install-kiosk.md) page.
+    * The `gerrit-ssh-port` parameter is moved from the `gerrit-operator.gerrit.sshport` to `global.gerritSSHPort` [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml#L30) file.
+    * In edp-gerrit-operator, the `gitServer.user` value is changed from the `jenkins` to `edp-ci`[values.yaml](https://github.com/epam/edp-gerrit-operator/blob/release/2.13/deploy-templates/values.yaml#L96) file.
 
 This section provides the details on upgrading EDP from the v.2.12.x to the v.3.0.x. Explore the actions and requirements below.
 
@@ -44,14 +47,14 @@ This section provides the details on upgrading EDP from the v.2.12.x to the v.3.
    ```
    </details>
 
-3. Add labels and annotations to Custom Resources:
+3. Add proper Helm annotations and labels as indicated below. This step is necessary starting from the release v.3.0.x as custom resources are managed by Helm and removed from the Keycloak Controller logic.
       ```
-        kubectl label EDPComponent main-keycloak app.kubernetes.io/managed-by=Helm -n <keycloak-namespace>
-        kubectl annotate EDPComponent main-keycloak meta.helm.sh/release-name=<edp-project> -n <keycloak-namespace>
-        kubectl annotate EDPComponent main-keycloak meta.helm.sh/release-namespace=<edp-namespace> -n <keycloak-namespace>
-        kubectl label KeycloakRealm main app.kubernetes.io/managed-by=Helm -n <keycloak-namespace>
-        kubectl annotate KeycloakRealm main meta.helm.sh/release-name=<edp-project> -n <keycloak-namespace>
-        kubectl annotate KeycloakRealm main meta.helm.sh/release-namespace=<edp-namespace> -n <keycloak-namespace>
+        kubectl label EDPComponent main-keycloak app.kubernetes.io/managed-by=Helm -n <edp-namespace>
+        kubectl annotate EDPComponent main-keycloak meta.helm.sh/release-name=<edp-release-name> -n <edp-namespace>
+        kubectl annotate EDPComponent main-keycloak meta.helm.sh/release-namespace=<edp-namespace> -n <edp-namespace>
+        kubectl label KeycloakRealm main app.kubernetes.io/managed-by=Helm -n <edp-namespace>
+        kubectl annotate KeycloakRealm main meta.helm.sh/release-name=<edp-release-name> -n <edp-namespace>
+        kubectl annotate KeycloakRealm main meta.helm.sh/release-namespace=<edp-namespace> -n <edp-namespace>
 
       ```
 
