@@ -301,6 +301,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/migrate-ci-pipelines-from-jenkins-to-tekton/</loc>
+         <lastmod>2023-01-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/multitenant-logging/</loc>
          <lastmod>2023-01-30</lastmod>
          <changefreq>daily</changefreq>
