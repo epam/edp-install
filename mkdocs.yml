@@ -157,6 +157,7 @@ nav:
     - Integration:
       - AWS Integration:
         - Configure AWS WAF With Terraform: operator-guide/waf-tf-configuration.md
+        - Install Amazon EBS CSI Driver: operator-guide/ebs-csi-driver.md
         - Associate IAM Roles With Service Accounts: operator-guide/enable-irsa.md
         - IAM Roles for Kaniko Service Accounts: operator-guide/kaniko-irsa.md
         - IAM Roles for Velero Service Accounts: operator-guide/velero-irsa.md
