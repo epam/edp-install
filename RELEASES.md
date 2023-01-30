@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 3.1.0](#3.1.0)
 * [Version 3.0.0](#3.0.0)
 * [Version 2.12.1](#2.12.1)
 * [Version 2.12.0](#2.12.0)
@@ -34,6 +35,57 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.1.0 <a name="3.1.0"></a> (January 24, 2023)
+
+### Upgrades
+
+* Update Tekton Operator to the [v0.64.0](https://tekton.dev/docs/operator/) version.
+
+### New Functionality
+
+* Gerrit and Jenkins Operators now can manage respective resources through custom URL.
+* Provide the ability to install `kiosk helm chart` for users using helmfile.
+* [Headlamp] Ensure secret is created in correct format for GitServer.
+* Use Argo CD for the deployment of an application added with the Import strategy.
+
+### Enhancements
+
+* [Headlamp] Disable 'Create' and 'Clone' button for Import strategy.
+* [Headlamp] Merge Applications, Libraries, and Autotests into Components section.
+* [Headlamp] Zoom in the tooltips for a better view.
+* `Headlamp` creates a Tekton PipelineRun with a name that consists of an application name and a branch.
+* Remove duplicate parameters for configuring `perf-operator` in Helm chart.
+* Deprecated Kubernetes resources for `edp-db` have been removed from the `edp-install` helm chart.
+
+### Fixed Issues
+
+* Fix the consideration of the `commit hash validity` during the promotion of a new codebase branch.
+* Tekton CI pipelines generate Jira `fixVersion` in lowercase, previously both uppercase and lowercase names were allowed causing an error.
+* [Headlamp] Fix the usage of autotests as a part of quality gate.
+* [Headlamp] Fix the description in the `Relative Path` field.
+* [Headlamp] Fix the commit message pattern for Jira integration.
+* [Headlamp] Fix the font size for the Components page titles.
+
+### Documentation
+
+* The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+  * The [Install Tekton](https://epam.github.io/edp-install/operator-guide/install-tekton/) page is updated.
+  * The [Manage Jenkins CI Pipeline Job Provisioner](https://epam.github.io/edp-install/operator-guide/manage-jenkins-ci-job-provision/) page is updated.
+  * The [Install ReportPortal](https://epam.github.io/edp-install/operator-guide/install-reportportal/) page is updated.
+  * The [Install via Helmfile](https://epam.github.io/edp-install/operator-guide/install-via-helmfile/) page is updated.
+  * The [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/) page is updated.
+  * The [EDP Installation Prerequisites Overview](https://epam.github.io/edp-install/operator-guide/prerequisites/) page is added.
+  * The [Enable VCS Import Strategy](https://epam.github.io/edp-install/operator-guide/import-strategy/) page is updated.
+  * The [Add a Custom Global Pipeline Library](https://epam.github.io/edp-install/user-guide/add-custom-global-pipeline-lib/) page is updated.
+  * The [Set Up Kubernetes](https://epam.github.io/edp-install/operator-guide/kubernetes-cluster-settings/) page is updated.
+  * The [Set Up OpenShift](https://epam.github.io/edp-install/operator-guide/openshift-cluster-settings/) page is updated.
+  * The [Install Keycloak](https://epam.github.io/edp-install/operator-guide/install-keycloak/) page is updated.
+  * The [Argo CD Integration](https://epam.github.io/edp-install/operator-guide/argocd-integration/) page is updated.
+  * The [Upgrade EDP v.2.11.x to v.2.12.x](https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.11.x-to-2.12.x/) page is updated.
+  * The [Upgrade EDP v.2.12.x to v.3.0.x](https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.12.x-to-3.0.x/) page is added.
+
+* The [Quick Start](https://epam.github.io/edp-install/getting-started/) page is updated.
 
 ## Version 3.0.0 <a name="3.0.0"></a> (December 19, 2022)
 
