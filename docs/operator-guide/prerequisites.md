@@ -29,29 +29,6 @@ Find below the list of the components to be installed for each scenario:
 [^1]:
     OpenShift cluster uses Routes to provide access to pods from external resources.
 
-=== "Kubernetes"
-    |Component|Tekton CI tool|Jenkins CI tool|
-    |- |- |- |
-    |[Tekton](install-tekton.md)|Mandatory| - |
-    |[NGINX Ingress Controller](install-ingress-nginx.md)|:simple-kubernetes: Mandatory| :simple-kubernetes: Mandatory|
-    |[Keycloak](install-keycloak.md)|:simple-redhatopenshift: Mandatory|:simple-redhatopenshift: Mandatory|
-    |[DefectDojo](install-defectdojo.md)|Mandatory|Mandatory|
-    |[Argo CD](install-argocd.md)|Mandatory|Optional|
-    |[ReportPortal](install-reportportal.md)|Optional|Optional|
-    |[Kiosk](install-kiosk.md)|Optional|Optional|
-    |[External Secrets](external-secrets-operator-integration.md)|Optional|Optional|
-=== "Openshift"
-    |Component|Tekton CI tool|Jenkins CI tool|
-    |- |- |- |
-    |[Tekton](install-tekton.md)|Mandatory| - |
-    |[Keycloak](install-keycloak.md)|Mandatory|Mandatory|
-    |[DefectDojo](install-defectdojo.md)|Mandatory|Mandatory|
-    |[Argo CD](install-argocd.md)|Mandatory|Optional|
-    |[ReportPortal](install-reportportal.md)|Optional|Optional|
-    |[Kiosk](install-kiosk.md)|Optional|Optional|
-    |[External Secrets](external-secrets-operator-integration.md)|Optional|Optional|
-
-
 !!! note
     Alternatively, use [Helmfiles](install-via-helmfile.md#deploy-components) to install the EDP components.
 
