@@ -15,16 +15,42 @@ There are two EDP installation scenarios based on the selected CI tool: Tekton (
 
 Find below the list of the components to be installed for each scenario:
 
-|Component|Tekton CI tool|Jenkins CI tool|
-|- |- |- |
-|[Tekton](install-tekton.md)|Mandatory| - |
-|[NGINX Ingress Controller](install-ingress-nginx.md)|Mandatory |Mandatory|
-|[Keycloak](install-keycloak.md)|Mandatory|Mandatory|
-|[DefectDojo](install-defectdojo.md)|Mandatory|Mandatory|
-|[Argo CD](install-argocd.md)|Mandatory|Optional|
-|[ReportPortal](install-reportportal.md)|Optional|Optional|
-|[Kiosk](install-kiosk.md)|Optional|Optional|
-|[External Secrets](external-secrets-operator-integration.md)|Optional|Optional|
+|Component|Tekton CI tool|Jenkins CI tool|Cluster|
+|:-|:-:|:-:|:-|
+|[Tekton](install-tekton.md)|Mandatory| - |:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
+|[NGINX Ingress Controller](install-ingress-nginx.md)[^1]| Mandatory|Mandatory|:simple-kubernetes:{ .kubernetes }|
+|[Keycloak](install-keycloak.md)|Mandatory|Mandatory|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
+|[DefectDojo](install-defectdojo.md)|Mandatory|Mandatory|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
+|[Argo CD](install-argocd.md)|Mandatory|Optional|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
+|[ReportPortal](install-reportportal.md)|Optional|Optional|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
+|[Kiosk](install-kiosk.md)|Optional|Optional|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
+|[External Secrets](external-secrets-operator-integration.md)|Optional|Optional|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
+
+[^1]:
+    OpenShift cluster uses Routes to provide access to pods from external resources.
+
+=== "Kubernetes"
+    |Component|Tekton CI tool|Jenkins CI tool|
+    |- |- |- |
+    |[Tekton](install-tekton.md)|Mandatory| - |
+    |[NGINX Ingress Controller](install-ingress-nginx.md)|:simple-kubernetes: Mandatory| :simple-kubernetes: Mandatory|
+    |[Keycloak](install-keycloak.md)|:simple-redhatopenshift: Mandatory|:simple-redhatopenshift: Mandatory|
+    |[DefectDojo](install-defectdojo.md)|Mandatory|Mandatory|
+    |[Argo CD](install-argocd.md)|Mandatory|Optional|
+    |[ReportPortal](install-reportportal.md)|Optional|Optional|
+    |[Kiosk](install-kiosk.md)|Optional|Optional|
+    |[External Secrets](external-secrets-operator-integration.md)|Optional|Optional|
+=== "Openshift"
+    |Component|Tekton CI tool|Jenkins CI tool|
+    |- |- |- |
+    |[Tekton](install-tekton.md)|Mandatory| - |
+    |[Keycloak](install-keycloak.md)|Mandatory|Mandatory|
+    |[DefectDojo](install-defectdojo.md)|Mandatory|Mandatory|
+    |[Argo CD](install-argocd.md)|Mandatory|Optional|
+    |[ReportPortal](install-reportportal.md)|Optional|Optional|
+    |[Kiosk](install-kiosk.md)|Optional|Optional|
+    |[External Secrets](external-secrets-operator-integration.md)|Optional|Optional|
+
 
 !!! note
     Alternatively, use [Helmfiles](install-via-helmfile.md#deploy-components) to install the EDP components.

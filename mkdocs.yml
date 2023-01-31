@@ -10,6 +10,7 @@ copyright: Copyright &copy; 2018 - 2023 EPAM Delivery Platform -
 
 # Extensions
 markdown_extensions:
+  - footnotes
   - fancyboxmd
   - admonition
   - attr_list
@@ -38,6 +39,7 @@ markdown_extensions:
 
 extra_css:
   - https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css
+  - stylesheets/extra.css
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js
