@@ -10,14 +10,169 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v2.12.2"></a>
+## [v2.12.2] - 2023-02-03
 ### Routine
 
 - Enable edp-argocd-operator as subcomponent [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Align helm charts versions [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Align helm charts versions [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
+- Update EDP release 2.12.1 to 2.12.2 [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
+
+### Documentation
+
+- Update Changelog for 2.12.1 and update RELEASES.md for 2.12.0 and 2.12.1 [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
+
+
+<a name="v3.1.0"></a>
+## [v3.1.0] - 2023-01-24
+### Features
+
+- Implement kiosk install via helmfile [EPMDEDP-11164](https://jiraeu.epam.com/browse/EPMDEDP-11164)
+
+### Bug Fixes
+
+- Fix keycloak-external secret typo [EPMDEDP-10610](https://jiraeu.epam.com/browse/EPMDEDP-10610)
+- Fix quoting for perf helm values [EPMDEDP-11163](https://jiraeu.epam.com/browse/EPMDEDP-11163)
+- Add link for kiosk chart to helmfile [EPMDEDP-11164](https://jiraeu.epam.com/browse/EPMDEDP-11164)
+- Fix library versions compatibility [EPMDEDP-11264](https://jiraeu.epam.com/browse/EPMDEDP-11264)
+
+### Routine
+
+- Update mkdocs framework [EPMDEDP-11129](https://jiraeu.epam.com/browse/EPMDEDP-11129)
+- Remove Perf intergration Helm values duplicates [EPMDEDP-11163](https://jiraeu.epam.com/browse/EPMDEDP-11163)
+- Change command [EPMDEDP-11169](https://jiraeu.epam.com/browse/EPMDEDP-11169)
+- Remove edp-db secrets maintenance [EPMDEDP-11194](https://jiraeu.epam.com/browse/EPMDEDP-11194)
+- Align helm charts versions [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
+- Update mkdocs Dockerfile [EPMDEDP-11264](https://jiraeu.epam.com/browse/EPMDEDP-11264)
+
+### Documentation
+
+- Describe Kaniko cache prerequisites [EPMDEDP-10532](https://jiraeu.epam.com/browse/EPMDEDP-10532)
+- Update the Releases.md file with the 3.0.0 version [EPMDEDP-10615](https://jiraeu.epam.com/browse/EPMDEDP-10615)
+- Update the Manage Jenkins CD Pipeline Job [EPMDEDP-10935](https://jiraeu.epam.com/browse/EPMDEDP-10935)
+- Report-Portal change the link of helm chart in mkdocs [EPMDEDP-10977](https://jiraeu.epam.com/browse/EPMDEDP-10977)
+- Fix Indent correction in the code block [EPMDEDP-11012](https://jiraeu.epam.com/browse/EPMDEDP-11012)
+- Selenoid (Moon) Installation by Helmfile [EPMDEDP-11012](https://jiraeu.epam.com/browse/EPMDEDP-11012)
+- Describe Tekton import strategy [EPMDEDP-11062](https://jiraeu.epam.com/browse/EPMDEDP-11062)
+- Update index page [EPMDEDP-11129](https://jiraeu.epam.com/browse/EPMDEDP-11129)
+- Add Storage Classes into Cluster settings [EPMDEDP-11169](https://jiraeu.epam.com/browse/EPMDEDP-11169)
+- Update installation EDP guide [EPMDEDP-11170](https://jiraeu.epam.com/browse/EPMDEDP-11170)
+- Update ArgoCD page [EPMDEDP-11171](https://jiraeu.epam.com/browse/EPMDEDP-11171)
+- Update Headlamp User Guide [EPMDEDP-11182](https://jiraeu.epam.com/browse/EPMDEDP-11182)
+- Add Install Tekton resources page [EPMDEDP-11203](https://jiraeu.epam.com/browse/EPMDEDP-11203)
+- Update EDP install documentation [EPMDEDP-11216](https://jiraeu.epam.com/browse/EPMDEDP-11216)
+- Add article to upgrade EDP to 3.0.x version [EPMDEDP-11220](https://jiraeu.epam.com/browse/EPMDEDP-11220)
+- Install Tekton operator v0.64.0 on Openshift [EPMDEDP-11290](https://jiraeu.epam.com/browse/EPMDEDP-11290)
+- Add scenarios for EDP install guide [EPMDEDP-11317](https://jiraeu.epam.com/browse/EPMDEDP-11317)
+
+
+<a name="v3.0.0"></a>
+## [v3.0.0] - 2022-12-19
+### Features
+
+- Use external-secrets to create clientSecret for edp-headlamp [EPMDEDP-10539](https://jiraeu.epam.com/browse/EPMDEDP-10539)
+- Add ReportPortal deployment into the Helmfile [EPMDEDP-10663](https://jiraeu.epam.com/browse/EPMDEDP-10663)
+- Add access token to Import strategy [EPMDEDP-10708](https://jiraeu.epam.com/browse/EPMDEDP-10708)
+- Add gitlab, github secrets provisioning [EPMDEDP-11119](https://jiraeu.epam.com/browse/EPMDEDP-11119)
+
+### Bug Fixes
+
+- Fix keycloak-external secret typo [EPMDEDP-10610](https://jiraeu.epam.com/browse/EPMDEDP-10610)
+- Change memory request to 2Gi for elasticsearch of report-portal [EPMDEDP-10663](https://jiraeu.epam.com/browse/EPMDEDP-10663)
+
+### Code Refactoring
+
+- Remove database related resources [EPMDEDP-10751](https://jiraeu.epam.com/browse/EPMDEDP-10751)
+
+### Routine
+
+- Enable edp-argocd-operator as subcomponent [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Update current development version [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Remove all records with edp-architecture github repo [EPMDEDP-10520](https://jiraeu.epam.com/browse/EPMDEDP-10520)
+- Bump release envs version [EPMDEDP-10610](https://jiraeu.epam.com/browse/EPMDEDP-10610)
+- Align helm charts versions [EPMDEDP-10610](https://jiraeu.epam.com/browse/EPMDEDP-10610)
+- Bump jenkins-operator chart version [EPMDEDP-10610](https://jiraeu.epam.com/browse/EPMDEDP-10610)
+- Disable init-db job if not using database [EPMDEDP-10621](https://jiraeu.epam.com/browse/EPMDEDP-10621)
+- Remove edp-argocd-operator [EPMDEDP-10642](https://jiraeu.epam.com/browse/EPMDEDP-10642)
+- Move gerrit sshPort to global section [EPMDEDP-10642](https://jiraeu.epam.com/browse/EPMDEDP-10642)
+- Enable edp-tekton as subcomponent [EPMDEDP-10660](https://jiraeu.epam.com/browse/EPMDEDP-10660)
+- Add SCC and gateway for Report-Portal [EPMDEDP-10663](https://jiraeu.epam.com/browse/EPMDEDP-10663)
+- Remove the reconciler from helm chart and Readme file [EPMDEDP-10762](https://jiraeu.epam.com/browse/EPMDEDP-10762)
+- Bump DefectDojo from 2.16.2 to 2.17.0 [EPMDEDP-10769](https://jiraeu.epam.com/browse/EPMDEDP-10769)
+- Bump up DefectDojo helm version to 1.6.46 [EPMDEDP-10769](https://jiraeu.epam.com/browse/EPMDEDP-10769)
+- Update current development version [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
+- Update Argo CD version [EPMDEDP-10840](https://jiraeu.epam.com/browse/EPMDEDP-10840)
+- Revert Add appproject creation if Argo CD integration enabled [EPMDEDP-10853](https://jiraeu.epam.com/browse/EPMDEDP-10853)
+- Add appproject creation if Argo CD integration enabled [EPMDEDP-10853](https://jiraeu.epam.com/browse/EPMDEDP-10853)
+- Align edp-tekton chart version [EPMDEDP-11087](https://jiraeu.epam.com/browse/EPMDEDP-11087)
+- Bump edp-tekton chart version [EPMDEDP-11087](https://jiraeu.epam.com/browse/EPMDEDP-11087)
+- Bump edp-headlamp chart version [EPMDEDP-11087](https://jiraeu.epam.com/browse/EPMDEDP-11087)
+- Bump edp-tekton chart version [EPMDEDP-11087](https://jiraeu.epam.com/browse/EPMDEDP-11087)
+- Bump edp-tekton chart version [EPMDEDP-11087](https://jiraeu.epam.com/browse/EPMDEDP-11087)
+- Bump edp-tekton and edp-headlamp chart versions [EPMDEDP-11087](https://jiraeu.epam.com/browse/EPMDEDP-11087)
+- Bump edp-tekton chart version [EPMDEDP-11087](https://jiraeu.epam.com/browse/EPMDEDP-11087)
+- Bump edp-tekton chart version [EPMDEDP-11087](https://jiraeu.epam.com/browse/EPMDEDP-11087)
+- Bump up Kaniko to latest stable version [EPMDEDP-11088](https://jiraeu.epam.com/browse/EPMDEDP-11088)
+- Disable jenkins-operator and admin-console-operator by default [EPMDEDP-11119](https://jiraeu.epam.com/browse/EPMDEDP-11119)
+- Add secretString field to gitProvider [EPMDEDP-11119](https://jiraeu.epam.com/browse/EPMDEDP-11119)
+- Enable exretnal secrets for Jira integration [EPMDEDP-11119](https://jiraeu.epam.com/browse/EPMDEDP-11119)
+- Bump helm chart version of ingress-nginx to 4.4.0 [EPMDEDP-11131](https://jiraeu.epam.com/browse/EPMDEDP-11131)
+- Bump helm chart version of external-secrets to 0.6.1 [EPMDEDP-11131](https://jiraeu.epam.com/browse/EPMDEDP-11131)
+- Update Keycloak version [EPMDEDP-11156](https://jiraeu.epam.com/browse/EPMDEDP-11156)
+- Remove edp-db secrets maintenance [EPMDEDP-11194](https://jiraeu.epam.com/browse/EPMDEDP-11194)
+
+### Documentation
+
+- Describe SSL automation with cert-manager on OKD [EPMDEDP-10089](https://jiraeu.epam.com/browse/EPMDEDP-10089)
+- Create documentation describing the Logsight implementation [EPMDEDP-10254](https://jiraeu.epam.com/browse/EPMDEDP-10254)
+- Update EDP version in documentation [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
+- Update the Releases.md file with the 2.12.0 version [EPMDEDP-10304](https://jiraeu.epam.com/browse/EPMDEDP-10304)
+- Add documentation on Keycloak upgrade to 19.0.1 [EPMDEDP-10382](https://jiraeu.epam.com/browse/EPMDEDP-10382)
+- Improve Helmfile documentation [EPMDEDP-10390](https://jiraeu.epam.com/browse/EPMDEDP-10390)
+- Add OpenShift resources for EDP installation [EPMDEDP-10390](https://jiraeu.epam.com/browse/EPMDEDP-10390)
+- How to change the build tool for Container Library [EPMDEDP-10393](https://jiraeu.epam.com/browse/EPMDEDP-10393)
+- Add section how to update EDP to 2.12.x [EPMDEDP-10398](https://jiraeu.epam.com/browse/EPMDEDP-10398)
+- Add recreating RoleBinding and warning for older versions for Update EDP to 2.12.x [EPMDEDP-10398](https://jiraeu.epam.com/browse/EPMDEDP-10398)
+- Fix formatting issue [EPMDEDP-10398](https://jiraeu.epam.com/browse/EPMDEDP-10398)
+- Update the Add Lib page in the AC guide [EPMDEDP-10443](https://jiraeu.epam.com/browse/EPMDEDP-10443)
+- Language review fixes on EDP installation (OpenShift) [EPMDEDP-10448](https://jiraeu.epam.com/browse/EPMDEDP-10448)
+- Update the Customize CI Pipeline Documentation [EPMDEDP-10495](https://jiraeu.epam.com/browse/EPMDEDP-10495)
+- Update RoadMap [EPMDEDP-10568](https://jiraeu.epam.com/browse/EPMDEDP-10568)
+- Update EKS deploy steps [EPMDEDP-10585](https://jiraeu.epam.com/browse/EPMDEDP-10585)
+- Rewrite GitLab and GitHub integration [EPMDEDP-10606](https://jiraeu.epam.com/browse/EPMDEDP-10606)
+- Fix secret format for import strategy [EPMDEDP-10708](https://jiraeu.epam.com/browse/EPMDEDP-10708)
+- Switch from v1alpha1 to v1 [EPMDEDP-10708](https://jiraeu.epam.com/browse/EPMDEDP-10708)
+- Add note about gitProvider in GitServer spec [EPMDEDP-10743](https://jiraeu.epam.com/browse/EPMDEDP-10743)
+- Fix 'EDP Main Repositories' table [EPMDEDP-10762](https://jiraeu.epam.com/browse/EPMDEDP-10762)
+- Align EDP install documentation to 2.12.1 and minor corrections [EPMDEDP-10770](https://jiraeu.epam.com/browse/EPMDEDP-10770)
+- Describe Headlamp functionality [EPMDEDP-10795](https://jiraeu.epam.com/browse/EPMDEDP-10795)
+- Updated Java 8 Gradle and Maven agents versions, blurred account ID on screenshot [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
+- Add a link to the edp-tekton repository into the Readme file [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
+- Update RELEASES.md for 2.12.1 [EPMDEDP-10806](https://jiraeu.epam.com/browse/EPMDEDP-10806)
+- Deploy ReportPortal via helm chart and helmfile to OpenShift cluster [EPMDEDP-10811](https://jiraeu.epam.com/browse/EPMDEDP-10811)
+- Use out of the box Argo CD functional instead of edp-operator [EPMDEDP-10841](https://jiraeu.epam.com/browse/EPMDEDP-10841)
+- Update Headlamp User Guide [EPMDEDP-10910](https://jiraeu.epam.com/browse/EPMDEDP-10910)
+- Update the Manage Jenkins CD Pipeline Job [EPMDEDP-10935](https://jiraeu.epam.com/browse/EPMDEDP-10935)
+- Update the Add Custom Global Pipeline Lib document [EPMDEDP-10975](https://jiraeu.epam.com/browse/EPMDEDP-10975)
+- ReportPortal Enable SAML integration [EPMDEDP-10981](https://jiraeu.epam.com/browse/EPMDEDP-10981)
+- Add how to change an Access Token Lifespan to FAQ page [EPMDEDP-10995](https://jiraeu.epam.com/browse/EPMDEDP-10995)
+- Add Report Portal integration with Tekton [EPMDEDP-11011](https://jiraeu.epam.com/browse/EPMDEDP-11011)
+- Update Argo CD pages, update Argo CD SCC for Openshift [EPMDEDP-11020](https://jiraeu.epam.com/browse/EPMDEDP-11020)
+- Remove public key from import stategy [EPMDEDP-11044](https://jiraeu.epam.com/browse/EPMDEDP-11044)
+- Update Argo CD version, pin version of helm charts [EPMDEDP-11108](https://jiraeu.epam.com/browse/EPMDEDP-11108)
+
+
+<a name="v2.12.1"></a>
+## [v2.12.1] - 2022-10-28
+### Routine
+
 - Align helm charts versions [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
 
 
 <a name="v2.12.0"></a>
-## [v2.12.0] - 2022-08-26
+## [v2.12.0] - 2022-08-27
 ### Features
 
 - Download required tools for Makefile targets [EPMDEDP-10105](https://jiraeu.epam.com/browse/EPMDEDP-10105)
@@ -43,6 +198,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align keycloak CRs to the latest changes [EPMDEDP-10090](https://jiraeu.epam.com/browse/EPMDEDP-10090)
 - Fix Jira Ticket pattern for changelog generator [EPMDEDP-10159](https://jiraeu.epam.com/browse/EPMDEDP-10159)
 - Disable a TLS secret and change a volume size in the Defectdojo [EPMDEDP-10234](https://jiraeu.epam.com/browse/EPMDEDP-10234)
+- Enable edp-argocd-operator as subcomponent [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
 - Align helm charts versions [EPMDEDP-10274](https://jiraeu.epam.com/browse/EPMDEDP-10274)
 - Update kaniko images [EPMDEDP-10275](https://jiraeu.epam.com/browse/EPMDEDP-10275)
 - Upgrade mkdocs to v8.4.0 [EPMDEDP-10283](https://jiraeu.epam.com/browse/EPMDEDP-10283)
@@ -50,8 +206,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Change 'go get' to 'go install' for git-chglog [EPMDEDP-10337](https://jiraeu.epam.com/browse/EPMDEDP-10337)
 - Remove VERSION file [EPMDEDP-10387](https://jiraeu.epam.com/browse/EPMDEDP-10387)
 - Add SecurityContextConstraints for kaniko service account [EPMDEDP-10393](https://jiraeu.epam.com/browse/EPMDEDP-10393)
-- Remove extra comma from list of stages [EPMDEDP-10394](https://jiraeu.epam.com/browse/EPMDEDP-10394)
 - Add ExternalSecret for Kaniko docker config [EPMDEDP-10394](https://jiraeu.epam.com/browse/EPMDEDP-10394)
+- Remove extra comma from list of stages [EPMDEDP-10394](https://jiraeu.epam.com/browse/EPMDEDP-10394)
 - Remove Kubernetes and GitOps libraries stages from job provisioners [EPMDEDP-10397](https://jiraeu.epam.com/browse/EPMDEDP-10397)
 - Update development version [EPMDEDP-8832](https://jiraeu.epam.com/browse/EPMDEDP-8832)
 - Update changelog [EPMDEDP-9231](https://jiraeu.epam.com/browse/EPMDEDP-9231)
@@ -290,7 +446,11 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v2.12.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v2.12.2...HEAD
+[v2.12.2]: https://github.com/epam/edp-install/compare/v3.1.0...v2.12.2
+[v3.1.0]: https://github.com/epam/edp-install/compare/v3.0.0...v3.1.0
+[v3.0.0]: https://github.com/epam/edp-install/compare/v2.12.1...v3.0.0
+[v2.12.1]: https://github.com/epam/edp-install/compare/v2.12.0...v2.12.1
 [v2.12.0]: https://github.com/epam/edp-install/compare/v2.11.1...v2.12.0
 [v2.11.1]: https://github.com/epam/edp-install/compare/v2.11.0...v2.11.1
 [v2.11.0]: https://github.com/epam/edp-install/compare/v2.10.2...v2.11.0
