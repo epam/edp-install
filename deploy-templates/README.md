@@ -23,12 +23,12 @@ A Helm chart for EDP Install
 |------------|------|---------|
 | @epamedp | admin-console-operator | 2.12.0 |
 | @epamedp | cd-pipeline-operator | 2.12.1 |
-| @epamedp | codebase-operator | 2.13.1 |
+| @epamedp | codebase-operator | 2.13.2 |
 | @epamedp | edp-argocd-operator | 0.2.0 |
 | @epamedp | edp-component-operator | 0.12.0 |
 | @epamedp | edp-headlamp | 0.2.0 |
-| @epamedp | gerrit-operator | 2.12.0 |
-| @epamedp | jenkins-operator | 2.12.1 |
+| @epamedp | gerrit-operator | 2.12.1 |
+| @epamedp | jenkins-operator | 2.12.2 |
 | @epamedp | keycloak-operator | 1.12.0 |
 | @epamedp | nexus-operator | 2.12.1 |
 | @epamedp | perf-operator | 2.12.0 |
@@ -78,7 +78,7 @@ A Helm chart for EDP Install
 | global.edpName | string | `"stub-namespace"` | namespace or a project name (in case of OpenShift) |
 | global.kioskEnabled | bool | `true` |  |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"2.12.1"` | EDP version |
+| global.version | string | `"2.12.2"` | EDP version |
 | global.webConsole.url | string | `nil` | URL to OpenShift/Kubernetes Web console |
 | jenkins-operator.enabled | bool | `true` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |

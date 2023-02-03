@@ -4,10 +4,10 @@ dependencies:
   version: 1.12.0
 - name: codebase-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.13.1
+  version: 2.13.2
 - name: jenkins-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.1
+  version: 2.12.2
 - name: edp-component-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.12.0
@@ -31,12 +31,12 @@ dependencies:
   version: 2.12.0
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.12.0
+  version: 2.12.1
 - name: reconciler
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
 - name: perf-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.12.0
-digest: sha256:c0a62fba91bbfc3b5a4e48e7aeff4e56ef570159e260b1bacdb06cf6d18dd249
-generated: "2022-10-28T13:42:55.963055+03:00"
+digest: sha256:c2124fc8c12b71ecdfe98c04c506a67f227a6ec973344b5b0ed7aa4a10b47362
+generated: "2023-02-03T18:26:08.365919921+02:00"
