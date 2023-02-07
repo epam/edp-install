@@ -37,7 +37,7 @@ The **Create CD Pipeline** dialog contains the three steps:
 the lower-case letters, numbers and inner dashes.
 
   !!! note
-      The namespace created by the CD pipeline has the following pattern combination: **[cluster name]-[cd pipeline name]-[stage name]**.
+      The namespace created by the CD pipeline has the following pattern combination: **[edp namespace]-[cd pipeline name]-[stage name]**.
       Please be aware that the namespace length should not exceed 63 symbols.
 
 3. Select the deployment type from the drop-down list:

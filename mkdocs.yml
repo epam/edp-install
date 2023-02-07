@@ -272,6 +272,7 @@ nav:
     - Pipelines:
         - CD Pipeline:
             - headlamp-user-guide/add-cd-pipeline.md
+            - headlamp-user-guide/add-quality-gate.md
     - Git Server:
         - headlamp-user-guide/add-git-server.md
   - Developer Guide:
