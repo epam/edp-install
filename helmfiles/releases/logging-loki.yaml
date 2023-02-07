@@ -1,0 +1,47 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## Loki Installation ###########################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
+#
+- name: "loki"
+  namespace: "logging"
+  labels:
+    chart: "loki"
+    repo: "grafana"
+    component: "logging"
+    namespace: "logging"
+    vendor: "kubernetes"
+    default: "false"
+  chart: "grafana/loki"
+  disableValidation: true
+  version: 4.5.0
+  wait: true
+  installed: true
+  values:
+    - loki:
+        image:
+          registry: docker.io
+          repository: grafana/loki
+          tag: 2.7.3
+        auth_enabled: false
+      write:
+        persistence:
+          storageClass: "{{ .Values.logging.storageClass }}"
+      read:
+        persistence:
+          storageClass: "{{ .Values.logging.storageClass }}"
+      backend:
+        persistence:
+          storageClass: "{{ .Values.logging.storageClass }}"
+      singleBinary:
+        persistence:
+          storageClass: "{{ .Values.logging.storageClass }}"

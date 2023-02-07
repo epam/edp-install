@@ -62,6 +62,11 @@ Using the Helmfile, the following components can be installed:
 * [DefectDojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo)
 * [Moon](https://github.com/aerokube/moon)
 * [ReportPortal](https://github.com/reportportal/kubernetes/tree/develop/reportportal)
+* [Kiosk](https://github.com/loft-sh/kiosk)
+* Monitoring stack, included [Prometheus](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack/templates/prometheus), [Alertmanager](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack/templates/alertmanager), [Grafana](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack/templates/grafana), [PrometheusOperator](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack/templates/prometheus-operator)
+
+* Logging ELK stack, included [Elasticsearch](https://github.com/elastic/helm-charts/tree/main/elasticsearch), [Fluent-bit](https://github.com/fluent/helm-charts/tree/main/charts/fluent-bit), [Kibana](https://github.com/elastic/helm-charts/tree/main/kibana)
+* Logging Grafana/Loki stack, included [Grafana](https://github.com/grafana/helm-charts/tree/main/charts/grafana), [Loki](https://github.com/grafana/loki/tree/main/production/helm/loki/templates), [Promtail](https://github.com/grafana/helm-charts/tree/main/charts/promtail), [Logging Operator](https://github.com/kube-logging/logging-operator/tree/master/charts/logging-operator), [Logging Operator Logging](https://github.com/kube-logging/logging-operator/tree/master/charts/logging-operator-logging)
 
 ### Deploy NGINX Ingress Controller
 
@@ -363,6 +368,106 @@ To install Kiosk, follow the steps below:
   ```bash
   helmfile  --selector component=kiosk --environment platform -f helmfile.yaml apply
   ```
+
+### Deploy monitoring stack
+
+The monitoring stack includes Grafana, Prometheus, Alertmanager, and Karma-dashboard. To deploy it follow the steps:
+
+1. Generate a token for Keycloak client:
+
+  !!! note
+      The token must be 32-character and include alphabetic and numeric symbols. For example, use the following command:
+
+    ```bash
+    keycloak_client_secret=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+    ```
+
+2. Create a secret for the Keycloak client:<a name="keycloak_client_secret"></a>
+
+    ```bash
+    kubectl -n platform create secret generic keycloak-client-grafana \
+      --from-literal=clientSecret=<keycloak_client_secret>
+    ```
+
+3. Create a secret for the Grafana:<a name="grafana_secret"></a>
+
+    ```bash
+    kubectl -n monitoring create secret generic keycloak-client-grafana \
+      --from-literal=GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=<keycloak_client_secret> \
+    ```
+
+4. Create a custom resource for the Keycloak client:
+
+  ??? note "View: keycloak_client"
+
+      ```yaml
+      apiVersion: v1.edp.epam.com/v1
+      kind: KeycloakClient
+      metadata:
+        name: grafana
+        namespace: platform
+      spec:
+        clientId: grafana
+        directAccess: true
+        serviceAccount:
+          enabled: true
+        targetRealm: platform-main
+        webUrl: https://grafana-monitoring.<dnsWildCard>
+        secret: keycloak-client.grafana
+      ```
+
+5. Run command:
+
+    ```bash
+    helmfile --selector component=monitoring --environment platform -f helmfile.yaml apply
+    ```
+
+### Deploy logging stack
+
+
+=== "ELK stack"
+
+    To install Elasticsearch, Kibana and Fluentbit, run command:
+
+    ```bash
+    helmfile --selector component=logging-elastic --environment platform -f helmfile.yaml apply
+    ```
+
+=== "Grafana, Loki, Promtail stack"
+
+    To install Grafana, Loki, Promtail, follow the steps below:
+
+    1. Make sure that appropriate resources are created:
+
+        * Secret for the [Keycloak client](#keycloak_client_secret)
+
+        * Secret for the [Grafana](#grafana_secret)
+
+    2. Create a custom resource for the Keycloak client:
+
+        ??? note "View: keycloak_client"
+
+            ```yaml
+            apiVersion: v1.edp.epam.com/v1
+            kind: KeycloakClient
+            metadata:
+              name: grafana
+              namespace: platform
+            spec:
+              clientId: grafana-logging
+              directAccess: true
+              serviceAccount:
+                enabled: true
+              targetRealm: platform-main
+              webUrl: https://grafana-logging.<dnsWildCard>
+              secret: keycloak-client.grafana
+            ```
+
+    3. Run command:
+
+      ```bash
+      helmfile --selector component=logging --environment platform -f helmfile.yaml apply
+      ```
 
 ## Related Articles
 

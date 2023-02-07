@@ -1,0 +1,47 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## Elasticsearch ###############################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/elastic/helm-charts/blob/master/elasticsearch/values.yaml
+#
+- name: "elasticsearch"
+  namespace: "logging"
+  labels:
+    chart: "elasticsearch"
+    repo: "elastic"
+    component: "logging-elastic"
+    namespace: "logging"
+    vendor: "Elastic"
+    default: "false"
+  chart: "elastic/elasticsearch"
+  version: "7.17.3"
+  wait: false
+  installed: true
+  values:
+    - replicas: 1
+      minimumMasterNodes: 1
+      esMajorVersion: 7
+      # we have single master node, so cluster is always in YELLOW state
+      clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+
+      esJavaOpts: "-Xmx512m -Xms512m"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "768Mi"
+        limits:
+          memory: "2Gi"
+
+      volumeClaimTemplate:
+        storageClassName: "{{ .Values.logging.storageClass }}"
+        resources:
+          requests:
+            storage: 10Gi

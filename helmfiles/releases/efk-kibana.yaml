@@ -1,0 +1,41 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## Kibana ######################################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/elastic/helm-charts/blob/master/kibana/values.yaml
+#
+- name: "kibana"
+  namespace: "logging"
+  labels:
+    chart: "elastic/kibana"
+    repo: "elastic"
+    component: "logging-elastic"
+    namespace: "logging"
+    vendor: "Elastic"
+    default: "false"
+  chart: "elastic/kibana"
+  version: "7.17.3"
+  wait: false
+  installed: true
+  values:
+    - resources:
+        requests:
+          cpu: "500m"
+          memory: "768Mi"
+        limits:
+          memory: "1Gi"
+
+      ingress:
+        enabled: true
+        hosts:
+          - host: "kibana.{{ .Values.global.dnsWildCard }}"
+            paths:
+              - path: /

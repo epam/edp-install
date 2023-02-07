@@ -1,0 +1,38 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## Karma-dashboard ##################################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/helm/charts/blob/master/stable/karma/values.yaml
+#
+- name: "karma-dashboard"
+  namespace: "monitoring"
+  labels:
+    chart: "karma-dashboard"
+    repo: "wiremind"
+    component: "monitoring"
+    namespace: "monitoring"
+    vendor: "kubernetes"
+    default: "false"
+  chart: "wiremind/karma"
+  version: "2.1.3"
+  wait: true
+  installed: true
+  values:
+    - image:
+        tag: "v0.111"
+      env:
+       - name: ALERTMANAGER_URI
+         value: "http://prom-kube-prometheus-stack-alertmanager.monitoring.svc:9093/"
+      ingress:
+        enabled: true
+        path: /
+        hosts:
+          - "karma-dashboard-monitoring.{{ .Values.global.dnsWildCard }}"

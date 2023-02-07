@@ -11,3 +11,7 @@ global:
   gerritSSHPort: 30022
   # Enable or disable integration with Kiosk (by default the value is true)
   kioskEnabled: false
+
+logging:
+  # Storage class name for PVC
+  storageClass: "gp2"

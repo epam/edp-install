@@ -1,0 +1,31 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## Promtail Installation #######################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/grafana/helm-charts/blob/main/charts/promtail/values.yaml
+#
+- name: "promtail"
+  namespace: "logging"
+  labels:
+    chart: "promtail"
+    repo: "grafana"
+    component: "logging"
+    namespace: "logging"
+    vendor: "kubernetes"
+    default: "false"
+  chart: "grafana/promtail"
+  disableValidation: true
+  version: 6.8.2
+  wait: true
+  installed: true
+  values:
+    - config:
+        lokiAddress: http://loki:3100/loki/api/v1/push

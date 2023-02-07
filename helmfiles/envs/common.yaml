@@ -51,6 +51,22 @@ repositories:
 # Kiosk helm chart:
 - name: "loft"
   url: "https://charts.loft.sh"
+# Karma dashboard helm chart:
+- name: "wiremind"
+  url: "https://wiremind.github.io/wiremind-helm-charts"
+# Prometheus helm chart:
+- name: "prometheus-community"
+  url: "https://prometheus-community.github.io/helm-charts"
+# Grafana helm chart:
+- name: "grafana"
+  url: "https://grafana.github.io/helm-charts"
+# Elasticsearch helm chart:
+- name: "elastic"
+  url: "https://helm.elastic.co"
+# Fluent helm chart:
+- name: "fluent"
+  url: "https://fluent.github.io/helm-charts"
+
 ---
 helmDefaults:
   createNamespace: true

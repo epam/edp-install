@@ -13,3 +13,11 @@ helmfiles:
   - releases/defectdojo.yaml
   - releases/report-portal.yaml
   - releases/kiosk.yaml
+  - releases/mon-prometheus-operator.yaml
+  - releases/mon-karma-dashboard.yaml
+  - releases/efk-fluent-bit.yaml
+  - releases/efk-elasticsearch.yaml
+  - releases/efk-kibana.yaml
+  - releases/logging-loki.yaml
+  - releases/logging-grafana.yaml
+  - releases/logging-promtail.yaml

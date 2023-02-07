@@ -1,0 +1,94 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## Fluent-bit ##################################################################
+################################################################################
+
+#
+# References:
+#   - https://github.com/fluent/helm-charts/tree/master/charts/fluent-bit/values.yaml
+#
+- name: "fluent-bit"
+  namespace: "logging"
+  labels:
+    chart: "fluent-bit"
+    repo: "fluent"
+    component: "logging-elastic"
+    namespace: "logging"
+    vendor: "kubernetes"
+    default: "false"
+  chart: "fluent/fluent-bit"
+  version: "0.23.0"
+  wait: false
+  installed: true
+  values:
+    - image:
+        pullPolicy: "IfNotPresent"
+
+      resources:
+        limits:
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+
+      config:
+        inputs: |
+          [INPUT]
+              Name tail
+              Path /var/log/containers/*.log
+              Parser docker
+              Tag kube.*
+              Mem_Buf_Limit 5MB
+              Skip_Long_Lines On
+
+          [INPUT]
+              Name systemd
+              Tag host.*
+              Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+              Read_From_Tail On
+              Strip_Underscores On
+
+        filters: |
+          [FILTER]
+              Name                kubernetes
+              Match               kube.*
+              Kube_Tag_Prefix     kube.var.log.containers.
+              Kube_URL            https://kubernetes.default.svc:443
+              Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+              Merge_Log           Off
+              K8S-Logging.Parser  On
+              K8S-Logging.Exclude On
+
+        outputs: |
+          [OUTPUT]
+              Name  es
+              Match *
+              Host  elasticsearch-master
+              Port  9200
+              Logstash_Format On
+              Retry_Limit False
+              Type  flb_type
+              Time_Key @es_time
+              Replace_Dots On
+              Logstash_Prefix kubernetes_cluster
+
+        customParsers: |
+          [PARSER]
+              Name        java_multiline
+              Format      regex
+              Regex       /^(?<time>\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}) (?<level>[^\s]+)(?<message>.*)/
+              Time_Key    time
+              Time_Format %Y-%m-%d %H:%M:%S
+
+          [PARSER]
+              Name        k8s-nginx-ingress
+              Format      regex
+              Regex       ^(?<host>[^ ]*) - (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<code>[^ ]*) (?<size>[^ ]*) "(?<referer>[^\"]*)" "(?<agent>[^\"]*)" (?<request_length>[^ ]*) (?<request_time>[^ ]*) \[(?<proxy_upstream_name>[^ ]*)\] (\[(?<proxy_alternative_upstream_name>[^ ]*)\] )?(?<upstream_addr>[^ ]*) (?<upstream_response_length>[^ ]*) (?<upstream_response_time>[^ ]*) (?<upstream_status>[^ ]*) (?<reg_id>[^ ]*).*$
+              Time_Key    time
+              Time_Format %d/%b/%Y:%H:%M:%S %z

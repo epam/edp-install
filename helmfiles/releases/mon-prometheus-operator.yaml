@@ -1,0 +1,106 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+#######################################################################################
+## prometheus-operator                                                               ##
+## creates/configures/manages Prometheus clusters atop Kubernetes                    ##
+#######################################################################################
+
+#
+# References:
+#   - https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+#   - https://github.com/coreos/prometheus-operator
+#
+- name: "prom"
+  namespace: "monitoring"
+  labels:
+    chart: "prometheus-operator"
+    repo: "prometheus-community"
+    component: "monitoring"
+    namespace: "monitoring"
+    vendor: "kubernetes"
+    default: "true"
+  chart: "prometheus-community/kube-prometheus-stack"
+  disableValidation: true
+  version: "44.3.1"
+  wait: false
+  values:
+      # we don't have ability to monitor these components on AWS EKS
+      # since they are running on control plane - let's disable them
+    - defaultRules:
+        rules:
+          etcd: false
+          kubeScheduler: true
+
+      kubeControllerManager:
+        enabled: false
+      kubeEtcd:
+        enabled: false
+      kubeScheduler:
+        enabled: false
+
+      prometheusOperator:
+        resources:
+          limits:
+            memory: "256Mi"
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+
+      prometheus:
+        ingress:
+          enabled: true
+          hosts:
+            - prometheus-monitoring.{{ .Values.global.dnsWildCard }}
+        additionalServiceMonitors: []
+
+      alertmanager:
+        ingress:
+          enabled: true
+          hosts:
+            - alertmanager-monitoring.{{ .Values.global.dnsWildCard }}
+        alertmanagerSpec:
+          resources:
+            limits:
+              memory: "300Mi"
+            requests:
+              cpu: "10m"
+              memory: "200Mi"
+
+      grafana:
+        envFromSecret: keycloak-client-grafana
+        grafana.ini:
+          server:
+            root_url: https://grafana-monitoring.{{ .Values.global.dnsWildCard }}
+          auth:
+            oauth_auto_login: true
+            disable_signout_menu: true
+          auth.generic_oauth:
+            enabled: true
+            client_id: grafana-monitoring
+            allow_sign_up:  true
+            scopes:  openid profile email roles
+            auth_url: "{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main/protocol/openid-connect/auth"
+            token_url: "{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main/protocol/openid-connect/token"
+            api_url: "{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main/protocol/openid-connect/userinfo"
+            role_attribute_path: contains(roles[*], 'administrator') && 'Admin' || contains(roles[*], 'developer') && 'Editor' || 'Viewer'
+
+        ingress:
+          enabled: true
+          hosts:
+            - grafana-monitoring.{{ .Values.global.dnsWildCard }}
+          paths:
+            - /
+        resources:
+          limits:
+            memory: "128Mi"
+          requests:
+            cpu: "25m"
+            memory: "72Mi"
+        persistence:
+            enabled: true
+            storageClassName: "{{ .Values.logging.storageClass }}"
+            size: 1Gi

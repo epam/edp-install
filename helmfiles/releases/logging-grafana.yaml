@@ -1,0 +1,73 @@
+---
+bases:
+  - envs/common.yaml
+---
+releases:
+
+################################################################################
+## Grafana Installation #####################################3##################
+################################################################################
+
+#
+# References:
+#   - https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+#
+- name: "grafana"
+  namespace: "logging"
+  labels:
+    chart: "grafana"
+    repo: "grafana"
+    component: "logging"
+    namespace: "logging"
+    vendor: "kubernetes"
+    default: "false"
+  chart: "grafana/grafana"
+  disableValidation: true
+  version: 6.50.7
+  wait: true
+  installed: true
+  values:
+    - ingress:
+        enabled: true
+        path: /
+        hosts:
+          - "grafana-logging.{{ .Values.global.dnsWildCard }}"
+      image:
+        repository: grafana/grafana
+        tag: 9.3.6
+      resources:
+        limits:
+          memory: "128Mi"
+        requests:
+          cpu: "50m"
+          memory: "128Mi"
+      persistence:
+        enabled: true
+        storageClassName: "{{ .Values.logging.storageClass }}"
+        size: 2Gi
+      datasources:
+       datasources.yaml:
+         apiVersion: 1
+         datasources:
+         - name: Loki
+           type: loki
+           url: http://loki:3100
+           access: proxy
+           isDefault: true
+           secureJsonData:
+             httpHeaderValue1: '1'
+      envFromSecret: keycloak-client-grafana
+      grafana.ini:
+        server:
+          root_url: https://grafana-logging.{{ .Values.global.dnsWildCard }}
+        auth:
+          oauth_auto_login: false
+          disable_signout_menu: false
+        auth.generic_oauth:
+          enabled: true
+          client_id: grafana-logging
+          allow_sign_up:  true
+          scopes:  openid profile email roles
+          auth_url: "{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.dnsWildCard }}-main/protocol/openid-connect/auth"
+          token_url: "{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.dnsWildCard }}-main/protocol/openid-connect/token"
+          api_url: "{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.dnsWildCard }}-main/protocol/openid-connect/userinfo"
