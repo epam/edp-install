@@ -371,6 +371,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/tekton-overview/</loc>
+         <lastmod>2023-02-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/upgrade-edp-2.10.x-to-2.11.x/</loc>
          <lastmod>2023-02-08</lastmod>
          <changefreq>daily</changefreq>
