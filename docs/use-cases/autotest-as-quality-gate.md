@@ -35,4 +35,3 @@ This use case describes the flow of adding an autotest as a quality gate to a ne
 * [Add Application](../user-guide/add-application.md)
 * [Add Autotest](../user-guide/add-autotest.md)
 * [Add CD Pipeline](../user-guide/add-cd-pipeline.md)
-

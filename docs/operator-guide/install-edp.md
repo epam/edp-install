@@ -135,7 +135,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         # -- platform type that can be "kubernetes" or "openshift"
         platform: "kubernetes"
         # DNS wildcard for routing in the Kubernetes cluster;
-        dnsWildCard: <DNS_wilcdard>
+        dnsWildCard: <DNS_wildcard>
         # -- Administrators of your tenant
         admins:
           - "stub_user_one@example.com"
@@ -188,7 +188,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         # -- platform type that can be "kubernetes" or "openshift"
         platform: "kubernetes"
         # DNS wildcard for routing in the Kubernetes cluster;
-        dnsWildCard: <DNS_wilcdard>
+        dnsWildCard: <DNS_wildcard>
         # -- Administrators of your tenant
         admins:
           - "stub_user_one@example.com"

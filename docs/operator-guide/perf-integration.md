@@ -6,7 +6,6 @@ Integration with Perf Server allows connecting to the [PERF Board (Project Perfo
     To adjust the PERF Server integration, make sure that PERF Operator is deployed. To get more information about the PERF Operator installation and architecture,
     please refer to the [PERF Operator](https://github.com/epam/edp-perf-operator#perf-operator) page.
 
-
 For integration, take the following steps:
 
 1. Create Secret in the OpenShift/Kubernetes namespace for Perf Server account with the **username** and **password** fields:
@@ -24,11 +23,9 @@ For integration, take the following steps:
 
        perf_integration_enabled: 'true'
 
-
 3. Being in Admin Console, navigate to the Advanced Settings menu to check that the **Integrate with Perf Server** check box appeared:
 
   !![Advanced settings](../assets/operator-guide/perf-server-integration.png "Advanced settings")
-
 
 ## Related Articles
 

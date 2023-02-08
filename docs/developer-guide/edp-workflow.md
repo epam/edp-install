@@ -123,7 +123,6 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
 
     BREAKING CHANGES: Update Gerrit config according to groups
 
-
 ### Related Articles
 
 * [Conventional Commits](https://www.conventionalcommits.org/)

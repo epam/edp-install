@@ -5,6 +5,7 @@ Headlamp allows to create, clone, import an application and add it to the enviro
 To add an application, navigate to the **Applications** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create Application** dialog will appear. You can create an Application [in YAML](#YAML) or [via the three-step menu](#menu) in the dialog.
 
 ## Create Application in YAML <a name="YAML"></a>
+
 Click **Edit YAML** in the upper-right corner of the **Create Application** dialog to open the YAML editor and create the Application.
 
 !![Edit YAML](../assets/headlamp-user-guide/headlamp-yaml-edit-application.png "Edit YAML")
@@ -14,6 +15,7 @@ To edit YAML in the minimal editor, turn on the **Use minimal editor** toggle in
 To save the changes, select the **Save & Apply** button.
 
 ## Create Application in the Dialog <a name="menu"></a>
+
 The **Create Application** dialog contains the three steps:
 
 * The Codebase Info Menu

@@ -93,9 +93,9 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
       ```bash
       EDP_NAMESPACE=<EPD_NAMESPACE>
       GERRIT_PORT=$(kubectl get gerrit gerrit -n ${EDP_NAMESPACE} -o jsonpath='{.spec.sshPort}')
-      GERRIT_ARGOCD_SSH_KEY_NANE="gerrit-argocd-sshkey"
+      GERRIT_ARGOCD_SSH_KEY_NAME="gerrit-argocd-sshkey"
       GERRIT_URL=$(echo "ssh://argocd@gerrit.${EDP_NAMESPACE}:${GERRIT_PORT}" | base64)
-      kubectl get secret ${GERRIT_ARGOCD_SSH_KEY_NANE} -n ${EDP_NAMESPACE} -o json | jq 'del(.data.username,.metadata.annotations,.metadata.creationTimestamp,.metadata.labels,.metadata.resourceVersion,.metadata.uid,.metadata.ownerReferences)' | jq '.metadata.namespace = "argocd"' | jq --arg name "${EDP_NAMESPACE}" '.metadata.name = $name' | jq --arg url "${GERRIT_URL}" '.data.url = $url' | jq '.data.sshPrivateKey = .data.id_rsa' | jq 'del(.data.id_rsa,.data."id_rsa.pub")' | kubectl apply -f -
+      kubectl get secret ${GERRIT_ARGOCD_SSH_KEY_NAME} -n ${EDP_NAMESPACE} -o json | jq 'del(.data.username,.metadata.annotations,.metadata.creationTimestamp,.metadata.labels,.metadata.resourceVersion,.metadata.uid,.metadata.ownerReferences)' | jq '.metadata.namespace = "argocd"' | jq --arg name "${EDP_NAMESPACE}" '.metadata.name = $name' | jq --arg url "${GERRIT_URL}" '.data.url = $url' | jq '.data.sshPrivateKey = .data.id_rsa' | jq 'del(.data.id_rsa,.data."id_rsa.pub")' | kubectl apply -f -
       kubectl label --overwrite secret ${EDP_NAMESPACE} -n argocd "argocd.argoproj.io/secret-type=repo-creds"
       ```
 

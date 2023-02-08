@@ -686,7 +686,7 @@ PGPASSWORD="${postgresql_postgres-password}" vacuumdb --analyze --verbose --all 
 The following script can be used for exporting and importing Postgres databases as well as optimizing them with the [vacuumdb](https://www.postgresql.org/docs/current/app-vacuumdb.html) application. Please examine the code and make the adjustments if required.
 
 * By default, the following command exports Keycloak Postgres databases from a Kubernetes pod to a local machine:
-     
+
       ./script.sh
 
   After running the command, please follow the prompt.

@@ -188,7 +188,6 @@ There is an ability to run the autotests locally using the IDEA (Integrated Deve
 
 4. As a result, all launched tests will be executed.
 
-
 ## Related Articles
 
 * [Add Application](add-application.md)

@@ -38,7 +38,7 @@ Make sure the cluster meets the following conditions:
 9. Storage classes are used with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain)
 and [Delete Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#delete).<br/>
 
-  !!! info 
+  !!! info
       By default, EDP uses the default Storage Class in a cluster. The EDP development team recommends using the following Storage Classes.<br/>
       See an example below.
 

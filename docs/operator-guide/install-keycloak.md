@@ -255,7 +255,7 @@ To install Keycloak, follow the steps below:
       ```yaml
       replicas: 1
 
-      # Deploy the latest verion
+      # Deploy the latest version
       image:
         tag: "20.0.1"
 
@@ -392,6 +392,7 @@ To prepare Keycloak for integration with EDP, follow the steps below:
   !![Role mappings](../assets/operator-guide/keycloak-roles.png "Role mappings")
 
 ## Related Articles
+
 * [Install EDP with values file](install-edp.md)
 * [Install EDP by one command](../../getting-started/#install-prerequisites)
 * [Install EDP via Helmfile](install-via-helmfile.md)

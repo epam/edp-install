@@ -61,4 +61,3 @@ Find below the example of the installation command:
 
 To install EDP with the necessary parameters, please refer to the [Install EDP](./operator-guide/install-edp.md) section of the [Operator Guide](https://epam.github.io/edp-install/operator-guide/).
 Mind the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml).
-

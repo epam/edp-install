@@ -44,7 +44,7 @@ The added application will be listed in the Applications list allowing you to do
 EDP Headlamp provides the ability to enable, disable or edit the Jira Integration functionality for applications.
 
 1. To edit an application directly from the Applications overview page or when viewing the application data:
-  
+
   - Select **Edit** in the options icon menu:
 
   !![Edit application on the Applications overview page](../assets/headlamp-user-guide/headlamp-edit-codebase-1.png "Edit application on the Applications overview page")

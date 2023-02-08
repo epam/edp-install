@@ -365,6 +365,7 @@ To install Kiosk, follow the steps below:
   ```
 
 ## Related Articles
+
 * [Install EDP](install-edp.md)
 * [Install NGINX Ingress Controller](install-ingress-nginx.md)
 * [Install Keycloak](install-keycloak.md)

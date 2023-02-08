@@ -97,4 +97,5 @@ oc adm policy add-scc-to-user privileged system:serviceaccount:openshift-pipelin
 ```
 
 ## Related Articles
+
 * [Install via Helmfile](install-via-helmfile.md)

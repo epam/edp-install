@@ -84,5 +84,3 @@ roleRef:
 ```
 * To provide access to the EDP tenant, [generate](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengaddingserviceaccttoken.htm) kubeconfig
 with Service Account &#8249;edp-project&#8250; permission. The &#8249;edp-project&#8250; account created earlier is located in the security namespace.
-
-

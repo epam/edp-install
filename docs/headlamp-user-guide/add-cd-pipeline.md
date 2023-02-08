@@ -41,6 +41,7 @@ the lower-case letters, numbers and inner dashes.
       Please be aware that the namespace length should not exceed 63 symbols.
 
 3. Select the deployment type from the drop-down list:
+
   * Container - the pipeline will be deployed in a Docker container;
   * Custom - this mode allows to deploy non-container applications and customize the Init stage of CD pipeline.
 
@@ -83,7 +84,7 @@ which was selected for the pipeline, will always be used.
 
   c. Select the trigger type. The available trigger types are _Manual_ and _Auto_. By selecting the _Auto_ trigger type, the CD pipeline will be launched automatically after the image is built.
   Every trigger type has a set of default stages that differ by the input stage (auto-deploy-input or manual-deploy-input).
-  
+
   !!! note
       When changing the Trigger Type, the job-provision automatically will change the set of stages to the corresponding stages set for the CD pipeline.
 
