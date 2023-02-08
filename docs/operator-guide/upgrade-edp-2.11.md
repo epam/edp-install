@@ -1,6 +1,6 @@
-# Upgrade EDP v.2.10.x to v.2.11.x
+# Upgrade EDP v2.10 to 2.11
 
-This section provides the details on the EDP upgrade from the v.2.10.x to the v.2.11.x. Explore the actions and requirements below.
+This section provides the details on the EDP upgrade to 2.11. Explore the actions and requirements below.
 
 1. Update Custom Resource Definitions. Run the following command to apply all the necessary CRDs to the cluster:
 

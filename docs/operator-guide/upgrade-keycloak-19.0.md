@@ -1,4 +1,4 @@
-# Upgrade Keycloak v.17.0.x-Legacy to v.19.0.x
+# Upgrade Keycloak v17.0 to 19.0
 
 Starting from Keycloak v.18.x.x, the Keycloak server has been moved from the Wildfly (JBoss) Application Server to [Quarkus](https://quarkus.io/) framework and is called [Keycloak.X](https://www.keycloak.org/2022/07/keycloak-1900-released).
 

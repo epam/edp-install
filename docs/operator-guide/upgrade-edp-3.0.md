@@ -1,4 +1,4 @@
-# Upgrade EDP v.2.12.x to v.3.0.x
+# Upgrade EDP v2.12 to 3.0
 
 !!! Important
     * Before starting the upgrade procedure, please make the necessary backups.
@@ -6,7 +6,7 @@
     * The `gerrit-ssh-port` parameter is moved from the `gerrit-operator.gerrit.sshport` to `global.gerritSSHPort` [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml#L30) file.
     * In edp-gerrit-operator, the `gitServer.user` value is changed from the `jenkins` to `edp-ci`[values.yaml](https://github.com/epam/edp-gerrit-operator/blob/release/2.13/deploy-templates/values.yaml#L96) file.
 
-This section provides the details on upgrading EDP from the v.2.12.x to the v.3.0.x. Explore the actions and requirements below.
+This section provides the details on upgrading EDP to 3.0. Explore the actions and requirements below.
 
 1. Update Custom Resource Definitions (CRDs). Run the following command to apply all necessary CRDs to the cluster:
 
@@ -58,7 +58,7 @@ This section provides the details on upgrading EDP from the v.2.12.x to the v.3.
 
       ```
 
-4. To upgrade EDP to the v.3.0.x, run the following command:
+4. To upgrade EDP to 3.0, run the following command:
 
       helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=3.0.x
 

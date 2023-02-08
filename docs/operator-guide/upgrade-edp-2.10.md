@@ -1,6 +1,6 @@
-# Upgrade EDP v.2.9.0 to v.2.10.2
+# Upgrade EDP v2.9 to 2.10
 
-This section provides the details on the EDP upgrade from the v.2.9.0 to the v.2.10.2. Explore the actions and requirements below.
+This section provides the details on the EDP upgrade to 2.10.2. Explore the actions and requirements below.
 
 !!! Note
     Kiosk is optional for EDP v.2.9.0 and higher, and is [enabled](https://github.com/epam/edp-install/blob/release/2.10/deploy-templates/values.yaml#L34) by default. To disable it, add the following parameter to the `values.yaml` file: `global.kioskEnabled: false`. Please refer to the [Set Up Kiosk](install-kiosk.md) documentation for the details.
@@ -8,7 +8,7 @@ This section provides the details on the EDP upgrade from the v.2.9.0 to the v.2
 !!! Note
     In the process of updating the EDP, it is necessary to migrate the database for SonarQube, before performing the update procedure, please carefully read section 4 of this guide.
 
-1. Before updating EDP from v.2.9.0 to v.2.10.2, delete SonarQube plugins by executing the following command in SonarQube pod:
+1. Before updating EDP to 2.10.2, delete SonarQube plugins by executing the following command in SonarQube pod:
 
       rm -r /opt/sonarqube/extensions/plugins/*
 

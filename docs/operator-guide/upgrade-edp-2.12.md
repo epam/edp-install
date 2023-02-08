@@ -1,9 +1,9 @@
-# Upgrade EDP v.2.11.x to v.2.12.x
+# Upgrade EDP v2.11 to 2.12
 
 !!! Important
     We suggest making a backup of the EDP environment before starting the upgrade procedure.
 
-This section provides the details on the EDP upgrade from the v.2.11.x to the v.2.12.x. Explore the actions and requirements below.
+This section provides the details on the EDP upgrade to 2.12. Explore the actions and requirements below.
 
 !!! Notes
     * EDP now supports Kubernetes 1.22: Ingress Resources use `networking.k8s.io/v1`, and Ingress Operators use CustomResourceDefinition `apiextensions.k8s.io/v1`.

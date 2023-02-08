@@ -1,6 +1,6 @@
-# Upgrade EDP v.2.8.4 to v.2.9.0
+# Upgrade EDP v2.8 to 2.9
 
-This section provides the details on the EDP upgrade from the v.2.8.4 to the v.2.9.0. Explore the actions and requirements below.
+This section provides the details on the EDP upgrade to 2.9.0. Explore the actions and requirements below.
 
 !!! Note
     Kiosk is optional for EDP v.2.9.0 and higher, and [enabled](https://github.com/epam/edp-install/blob/release/2.9/deploy-templates/values.yaml#L34) by default. To disable it, add the following parameter to the `values.yaml` file: `kioskEnabled: false`. Please refer to the [Set Up Kiosk](install-kiosk.md) documentation for the details.
@@ -9,7 +9,7 @@ This section provides the details on the EDP upgrade from the v.2.8.4 to the v.2
   * Enable IRSA and create AWS IAM Role for Kaniko image builder. Please refer to the [IAM Roles for Kaniko Service Accounts](kaniko-irsa.md) section for the details.
   * The Amazon Elastic Container Registry Roles can be stored in an [instance profile](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html).
 
-2. Before updating EDP from v.2.8.4 to v.2.9.0, update the `gerrit-is-credentials` secret by adding the new `clientSecret` key with the value from `gerrit-is-credentials.client_secret`:
+2. Before updating EDP to 2.9.0, update the `gerrit-is-credentials` secret by adding the new `clientSecret` key with the value from `gerrit-is-credentials.client_secret`:
 
       kubectl edit secret gerrit-is-credentials -n <edp-namespace>
 

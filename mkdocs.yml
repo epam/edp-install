@@ -200,20 +200,23 @@ nav:
           - Multitenant Logging: operator-guide/multitenant-logging.md
           - Schedule Pods Restart: operator-guide/schedule-pods-restart.md
     - Upgrade:
-      - EDP on Kubernetes:
-          - Upgrade EDP v.2.7.8 to v.2.8.4: operator-guide/upgrade-edp-2.7.8-to-2.8.4.md
-          - Upgrade EDP v.2.8.4 to v.2.9.0: operator-guide/upgrade-edp-2.8.4-to-2.9.0.md
-          - Upgrade EDP v.2.9.0 to v.2.10.2: operator-guide/upgrade-edp-2.9.0-to-2.10.2.md
-          - Upgrade EDP v.2.10.x to v.2.11.x: operator-guide/upgrade-edp-2.10.x-to-2.11.x.md
-          - Upgrade EDP v.2.11.x to v.2.12.x: operator-guide/upgrade-edp-2.11.x-to-2.12.x.md
-          - Upgrade EDP v.2.12.x to v.3.0.x: operator-guide/upgrade-edp-2.12.x-to-3.0.x.md
+      - EDP:
+          - v3.0 to 3.1: operator-guide/upgrade-edp-3.1.md
+          - v2.12 to 3.0: operator-guide/upgrade-edp-3.0.md
+          - v2.11 to 2.12: operator-guide/upgrade-edp-2.12.md
+          - Older Versions:
+            - v2.10 to 2.11: operator-guide/upgrade-edp-2.11.md
+            - v2.9 to 2.10: operator-guide/upgrade-edp-2.10.md
+            - v2.8 to 2.9: operator-guide/upgrade-edp-2.9.md
+            - v2.7 to 2.8: operator-guide/upgrade-edp-2.8.md
+      - Keycloak:
+          - v17.0 to 19.0: operator-guide/upgrade-keycloak-19.0.md
     - Tutorials:
       - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
       - Deploy OKD 4.9 Cluster: operator-guide/deploy-okd.md
       - Deploy OKD 4.10 Cluster: operator-guide/deploy-okd-4.10.md
       - Use Cert-Manager in OpenShift: operator-guide/ssl-automation-okd.md
       - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
-      - Upgrade Keycloak v.17.0.x-legacy to v.19.0.x: operator-guide/upgrade-keycloak-17.0.x-legacy-to-19.0.x.md
 #  - User Guide:
 #    - user-guide/index.md
 #    - Application:

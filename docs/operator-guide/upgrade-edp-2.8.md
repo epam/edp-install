@@ -1,11 +1,11 @@
-# Upgrade EDP v.2.7.8 to v.2.8.4
+# Upgrade EDP v2.7 to 2.8
 
-This section provides the details on the EDP upgrade from the v.2.7.8 to the v.2.8.4. Explore the actions and requirements below.
+This section provides the details on the EDP upgrade to 2.8.4. Explore the actions and requirements below.
 
 !!! Note
     Kiosk is implemented and mandatory for EDP v.2.8.4 and is optional for EDP v.2.9.0 and higher.
 
-To upgrade EDP v.2.7.8 to the v.2.8.4, take the following steps:
+To upgrade EDP to 2.8.4, take the following steps:
 
 1. Deploy and configure Kiosk (create a Service Account, Account, and ClusterRoleBinging) according to the [Set Up Kiosk](install-kiosk.md#installation) documentation.
 
