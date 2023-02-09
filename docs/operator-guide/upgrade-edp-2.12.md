@@ -250,3 +250,25 @@ This section provides the details on the EDP upgrade to 2.12. Explore the action
     In case there are different EDP versions on one cluster, the following error may occur on the `init` stage of Jenkins Groovy pipeline: `java.lang.NumberFormatException: For input string: ""`. To fix this issue, please run the following command using [`kubectl` v1.24.4+](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md):
 
         kubectl patch codebasebranches.v2.edp.epam.com <codebase-branch-name>  -n <edp-namespace>  '--subresource=status' '--type=merge' -p '{"status": {"build": "0"}}'
+
+## Upgrade EDP to 2.12.2
+
+!!! Important
+    We suggest making a backup of the EDP environment before starting the upgrade procedure.
+
+This section provides the details on the EDP upgrade to 2.12.2. Explore the actions and requirements below.
+
+1. Update Custom Resource Definitions (CRDs). Run the following command to apply all necessary CRDs to the cluster:
+
+  ```
+  kubectl apply -f https://raw.githubusercontent.com/epam/edp-jenkins-operator/v2.12.2/deploy-templates/crds/v2.edp.epam.com_jenkins.yaml
+  kubectl apply -f https://raw.githubusercontent.com/epam/edp-gerrit-operator/v2.12.1/deploy-templates/crds/v2.edp.epam.com_gerrits.yaml
+  ```
+
+2. To upgrade EDP to 2.12.2, run the following command:
+
+      helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=2.12.2
+
+  !!! Note
+      To verify the installation, it is possible to test the deployment before applying it to the cluster with the following command:<br>
+      `helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=2.12.2  --dry-run`
