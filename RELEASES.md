@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 2.12.2](#2.12.2)
 * [Version 2.12.1](#2.12.1)
 * [Version 2.12.0](#2.12.0)
 * [Version 2.11.0](#2.11.0)
@@ -33,6 +34,18 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 2.12.2 <a name="2.12.2"></a> (February 13, 2023)
+
+### Features
+
+* Gerrit and Jenkins Operators now can manage respective resources through custom URL.
+* The basePath key can be indicated in the Gerrit Operator custom resource to form gerritApiUrl.
+
+### Fixed Issues
+
+* Fix Gerrit project syncer and controller conflict in the Gerrit Operator to reduce the delay during the multiple projects sync.
+* Fix Jira project info error handler to work correctly with non-existing tickets.
 
 ## Version 2.12.1 <a name="2.12.1"></a> (October 28, 2022)
 
