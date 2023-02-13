@@ -20,12 +20,24 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Address markdown linting issues [EPMDEDP-10](https://jiraeu.epam.com/browse/EPMDEDP-10)
+- Desciribe the Tekton Overview page [EPMDEDP-10634](https://jiraeu.epam.com/browse/EPMDEDP-10634)
 - Update roadmap section [EPMDEDP-10808](https://jiraeu.epam.com/browse/EPMDEDP-10808)
 - Add Landing Page [EPMDEDP-10808](https://jiraeu.epam.com/browse/EPMDEDP-10808)
+- Describe Headlamp OIDC integration [EPMDEDP-11135](https://jiraeu.epam.com/browse/EPMDEDP-11135)
+- Update Headlamp guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Add page feedback feature [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Update mkdocs framework version [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
-- Update Headlamp guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
+- Update article to upgrade EDP to 3.0.x version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
+- Update edp-install release version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
+- Describe Argo CD with import strategy integration [EPMDEDP-11299](https://jiraeu.epam.com/browse/EPMDEDP-11299)
+- Update RELEASES.md file [EPMDEDP-11307](https://jiraeu.epam.com/browse/EPMDEDP-11307)
+- Update RELEASES.md file [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
+- Describe installation of Amazon EBS CSI Driver [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
+- Add article 'Migrate CI Pipelines From Jenkins to Tekton' [EPMDEDP-11335](https://jiraeu.epam.com/browse/EPMDEDP-11335)
 - Update Argo CD to 2.5.8 version [EPMDEDP-11408](https://jiraeu.epam.com/browse/EPMDEDP-11408)
+- Update prerequisites page [EPMDEDP-11425](https://jiraeu.epam.com/browse/EPMDEDP-11425)
+- Remove extra tables from the prerequisites page [EPMDEDP-11425](https://jiraeu.epam.com/browse/EPMDEDP-11425)
 
 
 <a name="v3.1.0"></a>
@@ -165,6 +177,17 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Update Argo CD pages, update Argo CD SCC for Openshift [EPMDEDP-11020](https://jiraeu.epam.com/browse/EPMDEDP-11020)
 - Remove public key from import stategy [EPMDEDP-11044](https://jiraeu.epam.com/browse/EPMDEDP-11044)
 - Update Argo CD version, pin version of helm charts [EPMDEDP-11108](https://jiraeu.epam.com/browse/EPMDEDP-11108)
+
+
+<a name="v2.12.2"></a>
+## [v2.12.2] - 2023-02-03
+### Routine
+
+- Update EDP release 2.12.1 to 2.12.2 [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
+
+### Documentation
+
+- Update Changelog for 2.12.1 and update RELEASES.md for 2.12.0 and 2.12.1 [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
 
 
 <a name="v2.12.1"></a>
@@ -451,7 +474,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 
 [Unreleased]: https://github.com/epam/edp-install/compare/v3.1.0...HEAD
 [v3.1.0]: https://github.com/epam/edp-install/compare/v3.0.0...v3.1.0
-[v3.0.0]: https://github.com/epam/edp-install/compare/v2.12.1...v3.0.0
+[v3.0.0]: https://github.com/epam/edp-install/compare/v2.12.2...v3.0.0
+[v2.12.2]: https://github.com/epam/edp-install/compare/v2.12.1...v2.12.2
 [v2.12.1]: https://github.com/epam/edp-install/compare/v2.12.0...v2.12.1
 [v2.12.0]: https://github.com/epam/edp-install/compare/v2.11.1...v2.12.0
 [v2.11.1]: https://github.com/epam/edp-install/compare/v2.11.0...v2.11.1
