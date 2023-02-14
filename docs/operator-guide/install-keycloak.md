@@ -144,7 +144,7 @@ To install PostgreSQL, follow the steps below:
   helm repo update
   ```
 
-4. Install PostgreSQL v.15.1.0 using [bitnami/postgresql](https://artifacthub.io/packages/helm/bitnami/postgresql) Helm chart v.12.1.3:
+4. Install PostgreSQL v15.2.0 using [bitnami/postgresql](https://artifacthub.io/packages/helm/bitnami/postgresql) Helm chart v12.1.15:
 
   !!! info
       The PostgreSQL can be deployed in production ready mode. For example, it may include multiple replicas, persistent storage, autoscaling, and monitoring.
@@ -152,7 +152,7 @@ To install PostgreSQL, follow the steps below:
 
   ```bash
   helm install postgresql bitnami/postgresql \
-  --version 12.1.3 \
+  --version 12.1.15 \
   --values values.yaml \
   --namespace security
   ```
@@ -167,7 +167,7 @@ To install PostgreSQL, follow the steps below:
     replicaCount: 1
 
   image:
-    tag: 15.1.0-debian-11-r7
+    tag: 15.2.0-debian-11-r0
 
   global:
     postgresql:
@@ -235,7 +235,7 @@ To install Keycloak, follow the steps below:
   --from-literal=password=<keycloak_admin_password>
   ```
 
-4. Install Keycloak 20.0.1 using [codecentric/keycloakx](https://artifacthub.io/packages/helm/codecentric/keycloakx) Helm chart:
+4. Install Keycloak 20.0.3 using [codecentric/keycloakx](https://artifacthub.io/packages/helm/codecentric/keycloakx) Helm chart:
 
   !!! info
       Keycloak can be deployed in production ready mode. For example, it may include multiple replicas, persistent storage, autoscaling, and monitoring.
@@ -243,7 +243,7 @@ To install Keycloak, follow the steps below:
 
   ```bash
   helm install keycloakx codecentric/keycloakx \
-  --version 1.7.0 \
+  --version 2.1.1 \
   --values values.yaml \
   --namespace security
   ```
@@ -257,7 +257,7 @@ To install Keycloak, follow the steps below:
 
       # Deploy the latest version
       image:
-        tag: "20.0.1"
+        tag: "20.0.3"
 
       # start: create OpenShift realm which is required by EDP
       extraInitContainers: |
