@@ -35,7 +35,7 @@ releases:
     command: "kubectl"
     args: ["delete", "-f", "../resources/postgresql-keycloak-scc.yaml"]
   {{- end }}
-  version: "12.1.3" # Postgresql app version 15.1.0-debian-11-r7
+  version: "12.1.15"
   wait: true
   installed: true
   values:
@@ -44,7 +44,7 @@ releases:
       replicaCount: 1
 
     image:
-      tag: 15.1.0-debian-11-r7
+      tag: 15.2.0-debian-11-r0
 
     global:
       postgresql:
