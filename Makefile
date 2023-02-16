@@ -47,7 +47,7 @@ helmdocs: ## Download helm-docs locally if necessary.
 GITCHGLOG = ${CURRENT_DIR}/bin/git-chglog
 .PHONY: git-chglog
 git-chglog: ## Download git-chglog locally if necessary.
-	$(call go-get-tool,$(GITCHGLOG),github.com/git-chglog/git-chglog/cmd/git-chglog,v0.15.1)
+	$(call go-get-tool,$(GITCHGLOG),github.com/git-chglog/git-chglog/cmd/git-chglog,v0.15.4)
 
 PROJECT_DIR := $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 define go-get-tool

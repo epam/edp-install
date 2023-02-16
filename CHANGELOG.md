@@ -17,25 +17,29 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### Routine
 
 - Align helm charts versions [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
+- Update Keycloak version in helmfiles [EPMDEDP-11413](https://jiraeu.epam.com/browse/EPMDEDP-11413)
 
 ### Documentation
 
 - Address markdown linting issues [EPMDEDP-10](https://jiraeu.epam.com/browse/EPMDEDP-10)
 - Desciribe the Tekton Overview page [EPMDEDP-10634](https://jiraeu.epam.com/browse/EPMDEDP-10634)
-- Update roadmap section [EPMDEDP-10808](https://jiraeu.epam.com/browse/EPMDEDP-10808)
 - Add Landing Page [EPMDEDP-10808](https://jiraeu.epam.com/browse/EPMDEDP-10808)
+- Update roadmap section [EPMDEDP-10808](https://jiraeu.epam.com/browse/EPMDEDP-10808)
 - Describe Headlamp OIDC integration [EPMDEDP-11135](https://jiraeu.epam.com/browse/EPMDEDP-11135)
-- Update Headlamp guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
-- Add page feedback feature [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Update mkdocs framework version [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
-- Update article to upgrade EDP to 3.0.x version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
+- Add page feedback feature [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
+- Update Headlamp guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
+- Upgrade EDP to 3.1 [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
 - Update edp-install release version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
+- Update article to upgrade EDP to 3.0.x version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
 - Describe Argo CD with import strategy integration [EPMDEDP-11299](https://jiraeu.epam.com/browse/EPMDEDP-11299)
 - Update RELEASES.md file [EPMDEDP-11307](https://jiraeu.epam.com/browse/EPMDEDP-11307)
-- Update RELEASES.md file [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
 - Describe installation of Amazon EBS CSI Driver [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
+- Upgrade EDP to 2.12.2 [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
+- Update RELEASES.md file [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
 - Add article 'Migrate CI Pipelines From Jenkins to Tekton' [EPMDEDP-11335](https://jiraeu.epam.com/browse/EPMDEDP-11335)
 - Update Argo CD to 2.5.8 version [EPMDEDP-11408](https://jiraeu.epam.com/browse/EPMDEDP-11408)
+- Update Keycloak installation guide [EPMDEDP-11413](https://jiraeu.epam.com/browse/EPMDEDP-11413)
 - Update prerequisites page [EPMDEDP-11425](https://jiraeu.epam.com/browse/EPMDEDP-11425)
 - Remove extra tables from the prerequisites page [EPMDEDP-11425](https://jiraeu.epam.com/browse/EPMDEDP-11425)
 
