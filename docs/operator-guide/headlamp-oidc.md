@@ -44,7 +44,7 @@ To proceed with the Keycloak configuration, perform the following:
     name: keycloak-client-headlamp-secret
     namespace: <edp-project>
   type: Opaque
-  data:
+  stringData:
     clientSecret: <keycloak_client_secret_key>
   ```
 
