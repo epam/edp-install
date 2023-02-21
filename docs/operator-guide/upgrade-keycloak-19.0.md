@@ -780,7 +780,7 @@ postgresql_su_pass(){
 }
 
 keycloak_pgdb_export(){
-    current_cluster="$(kubectl config current-context)"
+    current_cluster="$(kubectl config current-context | tr -dc '[:alnum:]-')"
     exported_db_name="keycloak_db_dump_${current_cluster}_${keycloak_namespace}_${postgres_username}_$(date +"%Y%m%d%H%M").sql"
 
     if [ "${postgres_username}" == 'postgres' ]; then
