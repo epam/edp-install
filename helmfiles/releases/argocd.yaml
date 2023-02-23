@@ -34,16 +34,12 @@ releases:
     args: ["delete", "-f", "../resources/argocd-scc.yaml"]
   {{- end }}
   disableValidation: true
-  version: "5.19.8"
+  version: "5.21.1"
   wait: true
   installed: true
   values:
     - redis-ha:
         enabled: true
-
-      controller:
-        enableStatefulSet: true
-
       server:
         replicas: 2
         extraArgs:
@@ -70,7 +66,7 @@ releases:
           application.instanceLabelKey: argocd.argoproj.io/instance-edp
           oidc.config: |
             name: Keycloak
-            issuer: https://{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main
+            issuer: {{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main
             clientID: argocd
             clientSecret: $oidc.keycloak.clientSecret
             requestedScopes:

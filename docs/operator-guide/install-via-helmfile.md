@@ -115,6 +115,22 @@ To install Keycloak, follow the steps below:
 
       helmfile  --selector component=sso --environment platform -f helmfile.yaml apply
 
+### Deploy External Secrets Operator
+
+To install External Secrets Operator, follow the steps below:
+
+  ```bash
+  helmfile --selector component=secrets --environment platform -f helmfile.yaml apply
+  ```
+
+### Deploy Kiosk
+
+To install Kiosk, follow the steps below:
+
+  ```bash
+  helmfile --selector component=kiosk --environment platform -f helmfile.yaml apply
+  ```
+
 ### Deploy EPAM Delivery Platform
 
 To install EDP, follow the steps below:
@@ -163,15 +179,11 @@ To install Argo CD, follow the steps below:
   kubectl -n argocd rollout restart deployment argo-argocd-server
   ```
 
-### Deploy External Secrets Operator
-
-To install External Secrets Operator, follow the steps below:
-
-  ```bash
-  helmfile  --selector component=secrets --environment platform -f helmfile.yaml apply
-  ```
-
 ### Deploy DefectDojo
+
+**Prerequisites**
+
+1. Before DefectDojo deployment,first make sure to have the [Keycloak configuration](https://defectdojo.github.io/django-DefectDojo/integrations/social-authentication/#keycloak).
 
 !!! info
     It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](./install-defectdojo.md) page.
@@ -233,9 +245,21 @@ To install DefectDojo via Helmfile, follow the steps below:
 
       The `metric_http_auth_password` password must be 32 characters long.
 
-6. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
+6. Create a Keycloak client secret for DefectDojo:
 
-7. Install DefectDojo:
+  !!! note
+      The `keycloak_client_secret` value received from: `edpName`-main realm -> clients -> defectdojo -> Credentials -> Client secret
+
+  ```bash
+  kubectl -n defectdojo create secret generic defectdojo-extrasecrets \
+  --from-literal=DD_SOCIAL_AUTH_KEYCLOAK_SECRET=<keycloak_client_secret>
+  ```
+
+7. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.
+
+8. In the releases/defectdojo.yaml file, check and fill in all values.
+
+9. Install DefectDojo:
 
   ```bash
   helmfile  --selector component=defectdojo --environment platform -f helmfile.yaml apply
@@ -253,7 +277,7 @@ To install third-party resources, follow the steps below:
 1. Create a RabbitMQ admin secret:
 
   ```bash
-  kubectl -n platform create secret generic reportportal-rabbitmq-creds \
+  kubectl -n report-portal create secret generic reportportal-rabbitmq-creds \
   --from-literal=rabbitmq-password=<rabbitmq_password> \
   --from-literal=rabbitmq-erlang-cookie=<rabbitmq_erlang_cookie>
   ```
@@ -266,7 +290,7 @@ To install third-party resources, follow the steps below:
 2. Create a PostgreSQL admin secret:
 
   ```bash
-  kubectl -n platform create secret generic reportportal-postgresql-creds \
+  kubectl -n report-portal create secret generic reportportal-postgresql-creds \
   --from-literal=postgresql-password=<postgresql_password> \
   --from-literal=postgresql-postgres-password=<postgresql_postgres_password>
   ```
@@ -277,7 +301,7 @@ To install third-party resources, follow the steps below:
 3. Create a MinIO admin secret:
 
   ```bash
-  kubectl -n platform create secret generic reportportal-minio-creds \
+  kubectl -n report-portal create secret generic reportportal-minio-creds \
   --from-literal=root-password=<root_password> \
   --from-literal=root-user=<root_user>
   ```
@@ -298,7 +322,7 @@ To install third-party resources, follow the steps below:
 6. After the rabbitmq pod gets the status Running, you need to configure the RabbitMQ memory threshold
 
   ```bash
-  kubectl -n platform exec -it rabbitmq-0 -- rabbitmqctl set_vm_memory_high_watermark 0.8
+  kubectl -n report-portal exec -it rabbitmq-0 -- rabbitmqctl set_vm_memory_high_watermark 0.8
   ```
 
 To install ReportPortal via Helmfile, follow the steps below:
@@ -361,15 +385,7 @@ Follow the steps below to deploy Moon:
 
   !![VNC viewer with the container starting](../assets/operator-guide/moon_dashboard.png "VNC viewer with the container starting")
 
-### Deploy Kiosk
-
-To install Kiosk, follow the steps below:
-
-  ```bash
-  helmfile  --selector component=kiosk --environment platform -f helmfile.yaml apply
-  ```
-
-### Deploy monitoring stack
+### Deploy Monitoring
 
 The monitoring stack includes Grafana, Prometheus, Alertmanager, and Karma-dashboard. To deploy it follow the steps:
 
@@ -422,7 +438,7 @@ The monitoring stack includes Grafana, Prometheus, Alertmanager, and Karma-dashb
     helmfile --selector component=monitoring --environment platform -f helmfile.yaml apply
     ```
 
-### Deploy logging stack
+### Deploy Logging
 
 
 === "ELK stack"

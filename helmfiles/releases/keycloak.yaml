@@ -100,6 +100,7 @@ releases:
             -Djava.awt.headless=true
             -Djgroups.dns.query=keycloakx-headless
 
+      {{- if eq .Values.global.platform "kubernetes" }}
       # This block is for Keycloak on Kubernetes.
       ingress:
         enabled: true
@@ -111,7 +112,7 @@ releases:
             paths:
               - path: "/auth/"
                 pathType: Prefix
-
+      {{- end}}
       {{- if eq .Values.global.platform "openshift" }}
       route:
         enabled: true

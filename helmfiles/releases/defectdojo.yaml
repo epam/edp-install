@@ -45,7 +45,7 @@ releases:
   wait: true
   installed: true
   values:
-    - tag: 2.17.0
+    - tag: 2.19.2
       fullnameOverride: defectdojo
       host: defectdojo.{{ .Values.global.dnsWildCard }}
       site_url: https://defectdojo.{{ .Values.global.dnsWildCard }}
@@ -66,9 +66,11 @@ releases:
         DD_SECURE_SSL_REDIRECT: 'True'
         DD_SOCIAL_AUTH_KEYCLOAK_OAUTH2_ENABLED: 'True'
         DD_SOCIAL_AUTH_KEYCLOAK_KEY: 'defectdojo'
-        DD_SOCIAL_AUTH_KEYCLOAK_PUBLIC_KEY: '<YOUR REALM PUBLIC KEYS> In your realm settings -> keys: copy the “Public key” (signing key)'
-        DD_SOCIAL_AUTH_KEYCLOAK_AUTHORIZATION_URL: 'https://{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main/protocol/openid-connect/auth'
-        DD_SOCIAL_AUTH_KEYCLOAK_ACCESS_TOKEN_URL: 'https://{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main/protocol/openid-connect/token'
+        # Keycloak realm public key received from: <realm_name> -> realm settings -> keys -> RS256 -> Public key
+        DD_SOCIAL_AUTH_KEYCLOAK_PUBLIC_KEY: '<KEYCLOAK_REALM_RSA256_PUBLIC_KEY>'
+        DD_SOCIAL_AUTH_KEYCLOAK_SECRET: "defectdojo-extrasecrets"
+        DD_SOCIAL_AUTH_KEYCLOAK_AUTHORIZATION_URL: '{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main/protocol/openid-connect/auth'
+        DD_SOCIAL_AUTH_KEYCLOAK_ACCESS_TOKEN_URL: '{{ .Values.global.keycloakEndpoint }}/auth/realms/{{ .Values.global.edpName }}-main/protocol/openid-connect/token'
 
       django:
         ingress:

@@ -21,14 +21,15 @@ releases:
     namespace: "moon"
     vendor: "aerokube"
     default: "true"
-  chart: "moon/moon"
-  version: "1.1.25"
+  chart: "moon/moon2"
+  version: "2.4.4"
   wait: true
   values:
-    - moon:
-        replicas: 1
-        service:
-          type: NodePort
-        ingress:
-            enabled: true
-            host: moon.{{ .Values.global.dnsWildCard }}
+    - replicas: 1
+      service:
+        type: NodePort
+      ingress:
+        {{- if eq .Values.global.platform "openshift" }}
+        openshift: true
+        {{- end }}
+        host: moon.{{ .Values.global.dnsWildCard }}
