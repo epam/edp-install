@@ -1,0 +1,15 @@
+{{- if eq .Values.global.platform "openshift" -}}
+apiVersion: authorization.openshift.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
+  name: edp-kaniko-registry-editor
+roleRef:
+  kind: ClusterRole
+  name: registry-editor
+subjects:
+  - kind: ServiceAccount
+    name: edp-kaniko
+    namespace: {{ .Values.global.edpName }}
+{{- end -}}
