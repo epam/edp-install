@@ -13,6 +13,9 @@ There are two EDP installation scenarios based on the selected CI tool: Tekton (
 
 **Scenario 2: Jenkins CI tool.** To use Jenkins as a CI tool, it is required to install the deprecated Admin Console UI tool. Admin Console is used only as a dependency for Jenkins, and Headlamp will still be used as a UI tool.
 
+!!! note
+    Starting from version 3.0.0, all the new enhancements and functionalities will be introduced only for *Tekton deploy scenario*. Jenkins deploy scenario will be supported at the bug fix and security breach level only. We understand that some users may need additional functionality in Jenkins, so if any, please create your request [here](https://github.com/epam/edp-jenkins-operator/issues/new). To stay up-to-date with all the updates, please check the [Release Notes](https://github.com/epam/edp-install/blob/master/RELEASES.md) page.
+
 Find below the list of the components to be installed for each scenario:
 
 |Component|Tekton CI tool|Jenkins CI tool|Cluster|
