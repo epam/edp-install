@@ -1,0 +1,72 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: edp-aggregate-view-{{ .Values.global.edpName }}
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-view: "true"
+rules:
+  - apiGroups:
+      - v1.edp.epam.com
+    resources:
+      - edpcomponents
+      - keycloakauthflows
+      - keycloakclients
+      - keycloakclientscopes
+      - keycloakrealmcomponents
+      - keycloakrealmgroups
+      - keycloakrealmidentityproviders
+      - keycloakrealmrolebatches
+      - keycloakrealmroles
+      - keycloakrealms
+      - keycloakrealmusers
+      - keycloaks
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - v2.edp.epam.com
+    resources:
+      - adminconsoles
+      - cdpipelines
+      - cdstagedeployments
+      - cdstagejenkinsdeployments
+      - codebasebranches
+      - codebaseimagestreams
+      - codebases
+      - gerritgroupmembers
+      - gerritgroups
+      - gerritmergerequests
+      - gerritprojectaccesses
+      - gerritprojects
+      - gerritreplicationconfigs
+      - gerrits
+      - gitservers
+      - gittags
+      - imagestreamtags
+      - jenkins
+      - jenkinsagents
+      - jenkinsauthorizationrolemappings
+      - jenkinsauthorizationroles
+      - jenkinsfolders
+      - jenkinsjobbuildruns
+      - jenkinsjobs
+      - jenkinsscripts
+      - jenkinsserviceaccounts
+      - jenkinssharedlibraries
+      - jiraissuemetadatas
+      - jiraservers
+      - nexuses
+      - nexususers
+      - perfdatasourcegitlabs
+      - perfdatasourcejenkinses
+      - perfdatasourcesonars
+      - perfservers
+      - sonargroups
+      - sonarpermissiontemplates
+      - sonars
+      - stages
+    verbs:
+      - get
+      - list
+      - watch
