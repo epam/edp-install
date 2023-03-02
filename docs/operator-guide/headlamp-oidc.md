@@ -1,10 +1,12 @@
 # Headlamp OIDC Configuration
 
-This page provides the instructions of configuring the  [OIDC authorization](https://openid.net/connect/) for [EDP Headlamp UI](../headlamp-user-guide/index.md), thus allowing using SSO for authorization in Headlamp, control of user access and rights from one configuration point.
+This page provides the instructions of configuring the [OIDC authorization](https://openid.net/connect/) for
+[EDP Headlamp UI](../headlamp-user-guide/index.md), thus allowing using SSO for authorization in Headlamp and controlling
+user access and rights from one configuration point.
 
 ## Prerequisites
 
-Before starting the Headlamp OIDC configuration, first, make sure to have the following values:
+Ensure the following values are set first before starting the Headlamp OIDC configuration:
 
 1. `realm_id`  = **openshift**
 
@@ -12,10 +14,12 @@ Before starting the Headlamp OIDC configuration, first, make sure to have the fo
 
 3. `keycloak_client_key`= **keycloak_client_secret_key** (received from: `Openshift realm` -> `clients` -> `kubernetes` -> `Credentials` -> `Client secret`)
 
-4. `group` = **kubernetes-oidc-admins**
+4. `group` = **`<edp-project>-oidc-admins`, `<edp-project>-oidc-builders`, `<edp-project>-oidc-deployers`, 
+`<edp-project>-oidc-developers`, `<edp-project>-oidc-viewers`** (Should be created manually in the realm from point 1)
 
 !!! note
-    The values indicated above are the result of the Keycloak configuration as an OIDC identity provider. To receive them, follow the instructions on the [Keycloak OIDC EKS Configuration](configure-keycloak-oidc-eks.md) page.
+    The values indicated above are the result of the Keycloak configuration as an OIDC identity provider.
+    To receive them, follow the instructions on the [Keycloak OIDC EKS Configuration](configure-keycloak-oidc-eks.md) page.
 
 ## Configure Keycloak
 
@@ -31,7 +35,7 @@ To proceed with the Keycloak configuration, perform the following:
         ]
       ```
 
-  - Make sure to define the following Keycloak client values as indicated:
+  Make sure to define the following Keycloak client values as indicated:
 
   !![Keycloak client configuration](../assets/operator-guide/headlamp-oidc-keycloak-2.png "Keycloak client configuration")
 
@@ -48,37 +52,44 @@ To proceed with the Keycloak configuration, perform the following:
     clientSecret: <keycloak_client_secret_key>
   ```
 
-3. Assign user in the `kubernetes-oidc-admins` group.
+3. Assign user to one or more groups.
+
+There are two types of group provided for users:
+
+- Independent group
+- Extension group
+
+Independent group provides the minimum required permission set. Extension group extends the rights of an independent group.
+
+For example, the `<edp-project>-oidc-viewers` group can be extended with rights from the `<edp-project>-oidc-builders` group.
+
+| Group Name | Independent Group | Extension Group |
+| - | :-: | :-: |
+|`<edp-project>-oidc-admins`    | :material-check: | |
+|`<edp-project>-oidc-developers`| :material-check: | |
+|`<edp-project>-oidc-viewers`   | :material-check: | |
+|`<edp-project>-oidc-builders`  | | :material-check: |
+|`<edp-project>-oidc-deployers` | | :material-check: |
+
+| Name | Action List |
+| - | - |
+| View | Getting of all namespaced resources |
+| Build | Starting a PipelineRun from Headlamp UI |
+| Deploy | Deploying a new version of application via Argo CD Application |
+
+| Group Name | View | Build | Deploy | Full Namespace Access |
+| - | :-: | :-: | :-: | :-: |
+|`<edp-project>-oidc-admins`    | :material-check: | :material-check: | :material-check: | :material-check: |
+|`<edp-project>-oidc-developers`| :material-check: | :material-check: | :material-check: | |
+|`<edp-project>-oidc-viewers`   | :material-check: | | | |
+|`<edp-project>-oidc-builders`  | | :material-check: | | |
+|`<edp-project>-oidc-deployers` | | | :material-check: | |
 
 ## Integrate Headlamp With Kubernetes
 
-Follow the steps below to integrate Headlamp OIDC with Kubernetes
+Headlamp can be integrated in Kubernetes in three steps:
 
-1. Create ClusterRole and RoleBinding in Kubernetes:
-
-  !!! note
-      The role binding provides access to all resources in the current namespace. The Cluster Role can be customized to define the resources.
-
-  In the example below, we use the 'cluster-admin' cluster role with the namespace scope:
-
-  ```yaml
-  apiVersion: rbac.authorization.k8s.io/v1
-  kind: RoleBinding
-  metadata:
-    name: headlamp-tenant-admin
-    namespace: <edp-project>
-  roleRef:
-    apiGroup: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: cluster-admin
-  subjects:
-    - apiGroup: rbac.authorization.k8s.io
-      kind: Group
-      name: "kubernetes-oidc-admins"
-  ```
-
-
-2. Update the [values.yaml](install-edp.md#values) file:
+1. Update the [values.yaml](install-edp.md#values) file by enabling OIDC:
 
   ??? note "View: values.yaml"
       ```yaml
@@ -88,11 +99,11 @@ Follow the steps below to integrate Headlamp OIDC with Kubernetes
             enabled: true
       ```
 
-4. Navigate to Headlamp and log in by clicking the Sign In button:
+2. Navigate to Headlamp and log in by clicking the `Sign In` button:
 
   !![Headlamp login page](../assets/operator-guide/headlamp-oidc-headlamp-1.png "Headlamp login page")
 
-5. Go to EDP section -> Account -> Settings, and set up a namespace:
+3. Go to `EDP` section -> `Account` -> `Settings`, and set up a namespace:
 
   !![Headlamp namespace settings](../assets/operator-guide/headlamp-oidc-headlamp-2.png "Headlamp namespace settings")
 
