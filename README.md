@@ -21,34 +21,6 @@ for details and info on prerequisites.
 
 >_**NOTE**: To get the notion of the most useful EDP terms, please refer to the [EDP Glossary](https://epam.github.io/edp-install/glossary/) page._
 
-## The Admin Console User Interface
-The Admin Console management tool allows users to collaborate easily with the environments: add and remove applications, autotests, libraries, CD pipelines,
-branches and much more. To get more accurate information, please check the
-[Admin Console](https://epam.github.io/edp-install/user-guide/) user guide.
-
-## EDP Pipeline Framework
-The general EDP Pipeline Framework consists of three parts:
-
-1. **Jenkinsfile** - a text file that keeps the definition of a Jenkins Pipeline and is checked into source control.
-Every Job has its Jenkinsfile that is stored in the specific application repository and in Jenkins as the plain text.
-
-2. **Loading Shared Libraries** - a part where every job loads libraries with the help of the shared libraries
-mechanism for Jenkins that allows to create reproducible pipelines, write them uniformly, and manage the update process.
-There are two main libraries: EDP Library Pipelines with the common logic described for the main pipelines (Code Review,
-Build, Deploy pipelines) and EDP Library Stages that keeps the description of the stages for every pipeline.
-
-3. **Run Stages** - a part where the predefined default stages are launched.
-
-The main conception is realized on the [Jenkins Shared Libraries](https://www.jenkins.io/doc/book/pipeline/shared-libraries/)
-allowing to define the external pipeline source and then reuse the predefined code from the central storage. The [EDP Library Pipelines](https://github.com/epam/edp-library-pipelines#edp-library-pipelines-overview) repository contains a structure and the execution subsequence of the stages parameters.
-The EDP Library Stages repository describes the specific steps and their realization in frames of a specific pipeline.
-
-If EDP pipelines are not enough for the CI/CD needs, it is possible to add a custom stage. To do this, a user creates the stage,
-adds it to the application repository, thus extending the EDP Pipelines Framework by customization,
-realization, and redefinition of the user stages. In such a case, the priority goes to the user stages.
-
->_**NOTE**: For detailed information about the pipelines and stages, please check out the [EDP Pipeline Framework](https://epam.github.io/edp-install/user-guide/pipeline-framework/) page._
-
 ## EDP Repositories Description
 EDP consists of the components that are presented as repositories. To find the necessary repository and get more details about its deployment and scheme, please refer to the Table 1.
 
@@ -56,8 +28,6 @@ _Table 1. EDP Main Repositories._
 
 | Repository             | Description                                                                                                              | Link                                                                                     |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
-| admin-console          | EDP Admin Console overview page with the local development info.                                                         | https://github.com/epam/edp-admin-console/tree/master#edp-admin-console                  |
-| admin-console-operator | The operator overview page with the corresponding description, installation, local development, and architecture scheme. | https://github.com/epam/edp-admin-console-operator/tree/master#admin-console-operator    |
 | edp-install            | Main overview repository.                                                                                                | https://github.com/epam/edp-install/tree/master#epam-delivery-platform                   |
 | codebase-operator      | The operator overview page with the corresponding description, installation, local development, and architecture scheme. In addition, the Jira Fix Version, Jira Server, Git Server, Codebase, Codebase Branch controllers overview and schemes. | https://github.com/epam/edp-codebase-operator/tree/master#codebase-operator |
 | edp-component-operator | The operator overview page with the corresponding description, installation, and local development.                      | https://github.com/epam/edp-component-operator/tree/master#edp-component-operator        |
