@@ -1,6 +1,8 @@
 apiVersion: v1
 data:
-  aws_region: {{ required "A valid .Values.awsRegion entry is required!" .Values.awsRegion }}
+  {{- if .Values.awsRegion }}
+  aws_region: {{ .Values.awsRegion }}
+  {{- end }}
   edp_name: {{ .Values.global.edpName }}
   edp_version: {{.Values.global.version}}
   dns_wildcard: {{ .Values.global.dnsWildCard }}
