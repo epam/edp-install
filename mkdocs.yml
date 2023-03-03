@@ -129,6 +129,7 @@ nav:
     - features.md
     - getting-started.md
     - glossary.md
+    - supported-versions.md
   - Operator Guide:
     - operator-guide/index.md
     - Installation:
