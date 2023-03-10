@@ -59,7 +59,7 @@ The **Create Library** dialog contains the three steps:
 
 7. Select any of the supported code languages with its framework in the **Application code language/framework** field:
 
-  * Java – selecting Java allows to specify Java 8 or Java 11, and further usage of the Gradle or Maven tool.
+  * Java – selecting specific Java version available.
   * JavaScript - selecting JavaScript allows using the NPM tool.
   * DotNet - selecting DotNet allows using the DotNet v.2.1 and DotNet v.3.1.
   * Groovy-pipeline - selecting Groovy-pipeline allows having the ability to customize a stages logic. For details,

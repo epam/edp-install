@@ -61,7 +61,7 @@ There are two available strategies: clone and import.
 
 6. Type the necessary description in the **Description** field.
 
-7. In the **Application code language/framework** field, select the Java code language (specify Java 8 or Java 11 to be used) and get the default Maven build tool OR add another code language.
+7. In the **Application code language/framework** field, select the Java code language version needed and get the default Maven build tool OR add another code language.
 Selecting **Other** allows extending the default code languages and get the necessary build tool, for details, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
 
   !!! note

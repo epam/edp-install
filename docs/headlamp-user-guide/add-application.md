@@ -63,7 +63,7 @@ and by using the lower-case letters, numbers and inner dashes.
 7. Select any of the supported application languages with its framework
 in the **Application Code Language/framework** field:
 
-  * Java – selecting Java allows using Java 8 or Java 11.
+  * Java – selecting specific Java version available.
   * JavaScript - selecting JavaScript allows using the React framework.
   * DotNet - selecting DotNet allows using the DotNet v.2.1 and DotNet v.3.1.
   * Go - selecting Go allows using the Beego and Operator SDK frameworks.
