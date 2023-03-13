@@ -8,7 +8,7 @@ For integration, take the following steps:
 
   !![ReportPortal profile](../assets/operator-guide/report-portal-profile.png "ReportPortal profile")
 
-2. Copy the **Access token** and use it as a value while creating a secret for the ReportPortal credentials:
+2. Copy the **Access token** and use it as a value while creating a kubernetes secret for the ReportPortal credentials:
 
   ```yaml
   apiVersion: v1
@@ -16,6 +16,7 @@ For integration, take the following steps:
   type: Opaque
   metadata:
     name: rp-credentials
+    namespace: <edp-project>
   stringData:
     rp_uuid: <access-token>
   ```
@@ -30,7 +31,12 @@ For integration, take the following steps:
   rp_project = <project>
   ```
 
-3. Create a custom Tekton task:
+3. In root directory of the project create/update **requirements.txt** file and fill with following. it's mandatory to install report-portal python library (version may vary):
+  ```aidl
+  pytest-reportportal == 5.1.2
+  ```
+
+4. Create a custom Tekton task:
 
    <details>
    <summary><b>View: Custom Tekton task</b></summary>
@@ -42,11 +48,10 @@ For integration, take the following steps:
      labels:
        app.kubernetes.io/version: '0.1'
      name: pytest-reportportal
-     namespace: <namespace>
+     namespace: <edp-project>
    spec:
      description: |-
        This task can be used to run pytest integrated with report portal.
-       This task can be used to run pytest integrated with report portal
      params:
        - default: .
          description: The path where package.json of the project is defined.
@@ -79,6 +84,7 @@ For integration, take the following steps:
            set -e
            export PATH=$PATH:$HOME/.local/bin
            $(params.EXTRA_COMMANDS)
+           # tests are being run from ./test directory in the project
            pytest ./tests --reportportal
          workingDir: $(workspaces.source.path)/$(params.PATH_CONTEXT)
      workspaces:
@@ -87,7 +93,7 @@ For integration, take the following steps:
 
    </details>
 
-4. Add this task ref to your Tekton pipeline after *tasks*:
+5. Add this task ref to your Tekton pipeline after *tasks*:
 
    <details>
    <summary><b>View: Tekton pipeline</b></summary>
@@ -96,7 +102,7 @@ For integration, take the following steps:
    - name: pytest
      params:
        - name: BASE_IMAGE
-         value: $(params.python-image-version)
+         value: $(params.image)
        - name: EXTRA_COMMANDS
          value: |
            set -ex
@@ -113,11 +119,11 @@ For integration, take the following steps:
    ```
    </details>
 
-5. Launch your Tekton pipeline and check that the custom task has been successfully executed:
+6. Launch your Tekton pipeline and check that the custom task has been successfully executed:
 
   !![Tekton task successfully executed](../assets/operator-guide/tekton-task-success.png "Tekton task successfully executed")
 
-6. Test reports will be displayed in the **Launches** section of the ReportPortal:
+7. Test reports will be displayed in the **Launches** section of the ReportPortal:
 
   !![Test report results](../assets/operator-guide/report-portal-results.png "Test report results")
 
