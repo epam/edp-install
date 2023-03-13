@@ -162,6 +162,7 @@ nav:
     - Integration:
       - Tekton:
           Overview: operator-guide/tekton-overview.md
+          Monitoring: operator-guide/tekton-monitoring.md
       - AWS Integration:
         - Configure AWS WAF With Terraform: operator-guide/waf-tf-configuration.md
         - Install Amazon EBS CSI Driver: operator-guide/ebs-csi-driver.md
