@@ -9,6 +9,8 @@ hide:
 
 This use case describes the creation and deployment of a FastAPI application to enable a developer to quickly generate a functional code structure for a FastAPI web application (with basic read functionality), customize it to meet specific requirements, and deploy it to a development environment. By using a scaffolding tool and a standardized process for code review, testing and deployment, developers can reduce the time and effort required to build and deploy a new application while improving the quality and reliability of the resulting code. Ultimately, the goal is to enable the development team to release new features and applications more quickly and efficiently while maintaining high code quality and reliability.
 
+![type:video](https://www.youtube.com/embed/TcPcIKYvKFo)
+
 ### __Roles__
 
 This documentation is tailored for the Developers and Team Leads.
