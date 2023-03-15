@@ -227,6 +227,7 @@ nav:
       - Deploy OKD 4.10 Cluster: operator-guide/deploy-okd-4.10.md
       - Use Cert-Manager in OpenShift: operator-guide/ssl-automation-okd.md
       - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
+      - Aggregate Application Logs Using EFK Stack: operator-guide/kibana-ilm-rollover.md
 #  - User Guide:
 #    - user-guide/index.md
 #    - Application:
