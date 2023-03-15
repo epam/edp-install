@@ -18,7 +18,7 @@ To install Tekton resources, follow the steps below:
     Please refer to the [Install Tekton Pipelines](https://tekton.dev/docs/installation/pipelines/) and
     [Install and set up Tekton Triggers](https://tekton.dev/docs/installation/triggers/) sections for details.
 
-1. Install Tekton pipelines v0.42.0 using the release file:
+1. Install Tekton pipelines v0.45.0 using the release file:
 
   !!! Note
       Tekton Pipeline resources are used for managing and running EDP Tekton Pipelines and Tasks.
@@ -26,26 +26,26 @@ To install Tekton resources, follow the steps below:
       [EDP Tekton Tasks](https://github.com/epam/edp-tekton/tree/master/charts/pipelines-library/templates/tasks) pages for details.
 
    ```bash
-   kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.42.0/release.yaml
+   kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.45.0/release.yaml
    ```
 
-2. Install Tekton Triggers v0.22.0 using the release file:
+2. Install Tekton Triggers v0.23.0 using the release file:
 
   !!! Note
       Tekton Trigger resources are used for managing and running EDP Tekton EventListeners, Triggers, TriggerBindings and TriggerTemplates.
       Please refer to the [EDP Tekton Triggers](https://github.com/epam/edp-tekton/tree/master/charts/pipelines-library/templates/triggers) page for details.
 
    ```bash
-   kubectl apply -f https://storage.googleapis.com/tekton-releases/triggers/previous/v0.22.0/release.yaml
+   kubectl apply -f https://storage.googleapis.com/tekton-releases/triggers/previous/v0.23.0/release.yaml
    ```
 
-3. Install Tekton Interceptors v0.22.0 using the release file:
+3. Install Tekton Interceptors v0.23.0 using the release file:
 
   !!! Note
       EPAM Delivery Platform uses GitLab and GitHub ClusterInterceptors for managing requests from webhooks.
 
    ```bash
-   kubectl apply -f https://storage.googleapis.com/tekton-releases/triggers/previous/v0.22.0/interceptors.yaml
+   kubectl apply -f https://storage.googleapis.com/tekton-releases/triggers/previous/v0.23.0/interceptors.yaml
    ```
 
 ## Installation on OKD cluster
@@ -58,10 +58,10 @@ To install Tekton resources, follow the steps below:
 !!! note
     Tekton Operator also deploys [Pipelines as Code CI](https://pipelinesascode.com/) that requires OpenShift v4.11 (based on Kubernetes v1.24) or higher. This feature is optional and its deployments can be scaled to zero replicas.
 
-Install Tekton Operator v0.64.0 using the release file:
+Install Tekton Operator v0.65.1 using the release file:
 
 ```bash
-kubectl apply -f https://github.com/tektoncd/operator/releases/download/v0.64.0/openshift-release.yaml
+kubectl apply -f https://github.com/tektoncd/operator/releases/download/v0.65.1/openshift-release.yaml
 ```
 
 After the installation, the Tekton Operator will install the following components: Pipeline, Trigger, and Addons.
