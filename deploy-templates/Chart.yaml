@@ -73,7 +73,7 @@ dependencies:
 
 - name: gerrit-operator
   repository: "@epamedp"
-  version: "2.13.4"
+  version: "2.13.5"
   condition: gerrit-operator.enabled
 
 - name: perf-operator
@@ -99,8 +99,8 @@ annotations:
       image: epamedp/sonar-operator:2.13.0
     - name: admin-console-operator:2.13.0
       image: epamedp/admin-console-operator:2.13.0
-    - name: gerrit-operator:2.13.4
-      image: epamedp/gerrit-operator:2.13.4
+    - name: gerrit-operator:2.13.5
+      image: epamedp/gerrit-operator:2.13.5
     - name: edp-headlamp:0.4.0
       image: epamedp/edp-headlamp:0.4.0
     - name: perf-operator:2.12.0
