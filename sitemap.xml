@@ -311,6 +311,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/manage-custom-certificate/</loc>
+         <lastmod>2023-03-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/manage-jenkins-cd-job-provision/</loc>
          <lastmod>2023-03-17</lastmod>
          <changefreq>daily</changefreq>
