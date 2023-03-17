@@ -96,6 +96,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/headlamp-user-guide/add-quality-gate/</loc>
+         <lastmod>2023-03-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/headlamp-user-guide/application/</loc>
          <lastmod>2023-03-17</lastmod>
          <changefreq>daily</changefreq>
