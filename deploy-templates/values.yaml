@@ -114,8 +114,11 @@ annotations: {}
 
 # Proxy configuration section
 oauth2_proxy:
-  # -- Install oauth2-proxy as a part of EDP deployment. Default: true
-  enabled: true
+  # oauth2-proxy requires keycloak to be configured properly before deployment
+  # you can set enable: true, when you platform is deployed and keycloak is
+  # configured.
+  # -- Install oauth2-proxy as a part of EDP deployment. Default: false
+  enabled: false
 
   image:
     # -- oauth2-proxy image repository

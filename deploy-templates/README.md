@@ -88,7 +88,7 @@ A Helm chart for EDP Install
 | kaniko.tolerations | list | `[]` | tolerations Tolerations for pod assignment |
 | keycloak-operator.enabled | bool | `true` |  |
 | nexus-operator.enabled | bool | `true` |  |
-| oauth2_proxy.enabled | bool | `true` | Install oauth2-proxy as a part of EDP deployment. Default: true |
+| oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |
 | oauth2_proxy.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
 | oauth2_proxy.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
 | oauth2_proxy.extraArgs | object | `{}` |  |
