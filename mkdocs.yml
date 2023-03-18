@@ -104,6 +104,8 @@ extra:
             using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
 
   social:
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@theplatformteam
     - icon: fontawesome/brands/medium
       link: https://medium.com/epam-delivery-platform
     - icon: fontawesome/brands/docker
