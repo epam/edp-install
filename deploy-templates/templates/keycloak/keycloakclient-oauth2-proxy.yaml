@@ -1,4 +1,4 @@
-{{- $oauth2ProxyUrl := printf "https://oauth-%s.%s" .Values.global.edpName .Values.global.dnsWildCard -}}
+{{- if .Values.oauth2_proxy.enabled -}}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
 metadata:
@@ -10,5 +10,6 @@ spec:
   public: false
   defaultClientScopes:
     - edp
-  targetRealm: {{ .Values.global.edpName }}-main
-  webUrl: "{{ $oauth2ProxyUrl }}"
+  targetRealm: "{{ .Values.global.edpName }}-main"
+  webUrl: "https://{{ include "oauth2_proxy.Url" . }}"
+{{ end }}

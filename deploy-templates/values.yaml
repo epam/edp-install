@@ -112,6 +112,41 @@ dockerRegistry:
 
 annotations: {}
 
+# Proxy configuration section
+oauth2_proxy:
+  # -- Install oauth2-proxy as a part of EDP deployment. Default: true
+  enabled: true
+
+  image:
+    # -- oauth2-proxy image repository
+    repository: quay.io/oauth2-proxy/oauth2-proxy
+    # -- oauth2-proxy image tag
+    tag: v7.4.0
+
+  # Create a cookie-secret with the following command
+  # openssl rand -base64 32 | head -c 32 | base64
+  # Use an existing secret for OAuth2 cookie-secret
+  existingSecret:
+    # -- Secret name which stores cookie-secret
+    secretName: oauth2-proxy-cookie-secret
+    # -- Secret key which stores cookie-secret
+    secretKey: cookie-secret
+
+  extraEnv: []
+  extraArgs: {}
+
+  ingress:
+    annotations: {}
+    # -- pathType is only for k8s >= 1.1=
+    pathType: Prefix
+    # -- For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+    # -- See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+    # ingressClassName: nginx
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
 keycloak-operator:
   enabled: true
   # image:

@@ -1,0 +1,27 @@
+{{- if .Values.oauth2_proxy.enabled -}}
+{{- $oidcIssueUrl := printf "%s/auth/realms/%s-main" .Values.global.keycloakUrl .Values.global.edpName -}}
+{{- $domains := printf ".%s" .Values.global.dnsWildCard -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: oauth2-proxy
+{{- include "edp-install.labels" . | nindent 4 }}
+  name: oauth2-proxy-config
+data:
+  oauth2_proxy.cfg: |-
+    allowed_roles = ["administrator", "developer"]
+    client_id = "oauth2-proxy"
+    code_challenge_method = "S256"
+    cookie_domains = "{{ $domains }}"
+    cookie_secure = "false"
+    email_domains = [ "*" ]
+    insecure_oidc_allow_unverified_email = "true"
+    oidc_issuer_url = "{{ $oidcIssueUrl }}"
+    pass_authorization_header = "true"
+    pass_basic_auth = "false"
+    provider="keycloak-oidc"
+    redirect_url = "https://{{ include "oauth2_proxy.Url" . }}/oauth2/callback"
+    skip_jwt_bearer_tokens = "true"
+    whitelist_domains = "{{ $domains }}"
+{{ end }}

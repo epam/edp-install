@@ -88,6 +88,16 @@ A Helm chart for EDP Install
 | kaniko.tolerations | list | `[]` | tolerations Tolerations for pod assignment |
 | keycloak-operator.enabled | bool | `true` |  |
 | nexus-operator.enabled | bool | `true` |  |
+| oauth2_proxy.enabled | bool | `true` | Install oauth2-proxy as a part of EDP deployment. Default: true |
+| oauth2_proxy.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
+| oauth2_proxy.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
+| oauth2_proxy.extraArgs | object | `{}` |  |
+| oauth2_proxy.extraEnv | list | `[]` |  |
+| oauth2_proxy.image.repository | string | `"quay.io/oauth2-proxy/oauth2-proxy"` | oauth2-proxy image repository |
+| oauth2_proxy.image.tag | string | `"v7.4.0"` | oauth2-proxy image tag |
+| oauth2_proxy.ingress.annotations | object | `{}` |  |
+| oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
+| oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
 | perf-operator.enabled | bool | `true` |  |
 | perf-operator.perf.integration | bool | `false` | Enable PERF integration |
 | sonar-operator.enabled | bool | `true` |  |

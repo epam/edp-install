@@ -1,0 +1,28 @@
+{{- if .Values.oauth2_proxy.enabled -}}
+{{ if eq .Values.global.platform "openshift" }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: oauth2-proxy
+    {{- include "edp-install.labels" . | nindent 4 }}
+  {{- with .Values.oauth2_proxy.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  name: oauth2-proxy-nexus
+spec:
+  host: {{ include "nexus-operator.nexusBaseUrl" . }}
+  path: {{ include "nexus-operator.nexusBasePath" . }}
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: oauth2-proxy
+    weight: 100
+  wildcardPolicy: None
+{{ end }}
+{{ end }}

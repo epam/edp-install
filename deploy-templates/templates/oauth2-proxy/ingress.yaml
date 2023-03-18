@@ -1,0 +1,45 @@
+{{- if .Values.oauth2_proxy.enabled -}}
+{{ if eq .Values.global.platform "kubernetes" }}
+{{- $ingressApiIsStable := eq (include "oauth2_proxy.ingress.isStable" .) "true" -}}
+{{- $ingressSupportsIngressClassName := eq (include "oauth2_proxy.ingress.supportsIngressClassName" .) "true" -}}
+{{- $ingressSupportsPathType := eq (include "oauth2_proxy.ingress.supportsPathType" .) "true" -}}
+{{- $ingressPathType := .Values.oauth2_proxy.ingress.pathType -}}
+kind: Ingress
+apiVersion: {{ include "oauth2_proxy.ingress.apiVersion" . }}
+metadata:
+  name: oauth2-proxy
+  labels:
+    app: oauth2-proxy
+    {{- include "edp-install.labels" . | nindent 4 }}
+  {{- with .Values.oauth2_proxy.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if and $ingressSupportsIngressClassName .Values.oauth2_proxy.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.oauth2_proxy.ingress.ingressClassName }}
+  {{- end }}
+{{- if .Values.oauth2_proxy.ingress.tls }}
+  tls:
+{{ tpl (toYaml .Values.oauth2_proxy.ingress.tls) $ | indent 4 }}
+{{- end }}
+  rules:
+    - host: {{ include "oauth2_proxy.Url" . }}
+      http:
+        paths:
+          - path: /
+            {{- if $ingressSupportsPathType }}
+            pathType: {{ $ingressPathType }}
+            {{- end }}
+            backend:
+              {{- if $ingressApiIsStable }}
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 8080
+              {{- else }}
+              serviceName: oauth2-proxy
+              servicePort: 8080
+              {{- end }}
+{{ end }}
+{{ end }}
