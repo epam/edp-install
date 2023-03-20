@@ -4,4 +4,3 @@ The Use Cases section provides useful recommendations of how to operate with the
 
 * [Scaffold and Deploy FastAPI Application](application-scaffolding.md)
 * [Autotest as Quality Gate](autotest-as-quality-gate.md)
-* [Promote Application in CD Pipeline](promotion-procedure.md)

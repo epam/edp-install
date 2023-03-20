@@ -289,7 +289,6 @@ nav:
     - use-cases/index.md
     - Scaffold and Deploy FastAPI Application: use-cases/application-scaffolding.md
     - Autotest as Quality Gate: use-cases/autotest-as-quality-gate.md
-    - Promote Application in CD Pipeline: use-cases/promotion-procedure.md
   - FAQ: faq.md
   - RoadMap: roadmap.md
   - Releases ⧉: https://github.com/epam/edp-install/blob/master/RELEASES.md

@@ -33,7 +33,7 @@ This documentation is tailored for the Developers and Team Leads.
 
 To scaffold and deploy FastAPI Application, follow the steps below.
 
-### Get Access to the Platform and Scaffold the New FastAPI Application
+### Scaffold the New FastAPI Application
 
 1. Open Headlamp URL. Use the Sign-In option.
 
@@ -70,7 +70,6 @@ To scaffold and deploy FastAPI Application, follow the steps below.
   - CI tool: `Tekton`
   - Codebase versioning type: `edp`
   - Start version from: `0.0.1` and `SNAPSHOT`
-  - Specify the pattern to validate a commit message: `(feat|fix|docs|style|refactor|test|chore)+!?:\s.*$`
 
   !![Advanced Settings](../assets/use-cases/fastapi-scaffolding/advanced-settings.png "Advanced settings")
 
@@ -80,31 +79,33 @@ To scaffold and deploy FastAPI Application, follow the steps below.
 
 ### Deploy the Application to the Development Environment
 
-1. This section describes the application deployment approach from the latest branch commit. The general steps are:
+This section describes the application deployment approach from the latest branch commit. The general steps are:
 
-  - Build the initial version (generated from the template) of the application from the last commit of the `main` branch.
+- Build the initial version (generated from the template) of the application from the last commit of the `main` branch.
 
-  - Create a `CD Pipeline` to establish continuous delivery to the development environment.
+- Create a `CD Pipeline` to establish continuous delivery to the development environment. 
 
-  - Deploy the initial version to the development env.
+- Deploy the initial version to the development env.
 
-2. Build Container from the latest branch commit. To build the initial version of the application's main branch, go to the fastapi-demo application -> branches -> main and select the `Build` menu.
+To succeed with the steps above, follow the instructions below:
+
+1. Build Container from the latest branch commit. To build the initial version of the application's main branch, go to the fastapi-demo application -> branches -> main and select the `Build` menu.
 
   !![Build Main Branch](../assets/use-cases/fastapi-scaffolding/build-initial-version.png "Application building")
 
-3. Build pipeline for the `fastapi-demo` application starts.
+2. Build pipeline for the `fastapi-demo` application starts.
 
   !![Branch Build Pipeline](../assets/use-cases/fastapi-scaffolding/trigger-build-pipeline.png "Pipeline building")
 
-4. You can track Pipeline's status by accessing **Tekton Dashboard** by clicking the `fastapi-demo-main-build-lb57m` application link.
+3. Track Pipeline's status by accessing **Tekton Dashboard** by clicking the `fastapi-demo-main-build-lb57m` application link.
 
   !![Alt text](../assets/use-cases/fastapi-scaffolding/tekton-build-pipeline.png "Console logs")
 
-5. Ensure that Build Pipeline was successfully completed.
+4. Ensure that Build Pipeline was successfully completed.
 
-6. Create CD Pipeline. To enable application deployment create a CD Pipeline with a single environment - Development (with the name `dev`).
+5. Create CD Pipeline. To enable application deployment create a CD Pipeline with a single environment - Development (with the name `dev`).
 
-7. Go to Headlamp -> EDP -> CD Pipelines tab and push `+` the create button. In the `Create CD Pipeline` dialog, define the below values:
+6. Go to Headlamp -> EDP -> CD Pipelines tab and push the `+` button to create pipeline. In the `Create CD Pipeline` dialog, define the below values:
 
   - **Pipeline tab**:
     - Pipeline name: `mypipe`
@@ -126,9 +127,8 @@ To scaffold and deploy FastAPI Application, follow the steps below.
 
     !![CD Pipeline Add Stage](../assets/use-cases/fastapi-scaffolding/cdpipeline-step3.png "Stages tab with parameters")
 
-### Deploy the Application
 
-1. Deploy the initial version of the application to the development environment:
+7. Deploy the initial version of the application to the development environment:
 
    - Open CD Pipeline with the name `mypipe`.
    - Select the `dev` stage from the Stages tab.
@@ -136,21 +136,25 @@ To scaffold and deploy FastAPI Application, follow the steps below.
 
   !![CD Pipeline Deploy initial version](../assets/use-cases/fastapi-scaffolding/deploy-app-1.png "CD Pipeline deploy")
 
-2. Ensure application status is `Healthy` and `Synced`, and the `Deployed version` points to `0.0.1-SNAPSHOT.1`:
+### Check the Application Status
+
+To ensure the application is deployed successfully, follow the steps below:
+
+1. Ensure application status is `Healthy` and `Synced`, and the `Deployed version` points to `0.0.1-SNAPSHOT.1`:
 
   !![CD Pipeline health status](../assets/use-cases/fastapi-scaffolding/deploy-app-2.png "Pipeline health status")
 
-3. Check that the selected version of the container is deployed on the `dev` environment. `${EDP-ENV}` - is the EDP namespace name:
+2. Check that the selected version of the container is deployed on the `dev` environment. `${EDP_ENV}` - is the EDP namespace name:
 
     ```bash
     # Check the deployment status of fastapi-demo application
-    $ kubectl get deployments -n ${EDP-ENV}-mypipe-dev
+    $ kubectl get deployments -n ${EDP_ENV}-mypipe-dev
     NAME                 READY   UP-TO-DATE   AVAILABLE   AGE
     fastapi-demo-dl1ft   1/1     1            1           30m
 
     # Check the image version of fastapi-demo application
-    $ kubectl get pods -o jsonpath="{.items[*].spec.containers[*].image}" -n ${EDP-ENV}-mypipe-dev
-    012345678901.dkr.ecr.eu-central-1.amazonaws.com/${EDP-ENV}/fastapi-demo:0.0.1-SNAPSHOT.1
+    $ kubectl get pods -o jsonpath="{.items[*].spec.containers[*].image}" -n ${EDP_ENV}-mypipe-dev
+    012345678901.dkr.ecr.eu-central-1.amazonaws.com/${EDP_ENV}/fastapi-demo:0.0.1-SNAPSHOT.1
     ```
 
 ### Deliver New Code
@@ -206,8 +210,8 @@ Perform the below steps to merge new code (Pull Request) that passes the Code Re
 10. Deliver the New Version to the Environment. Before the new version deployment, check the ingress object in `dev` namespace:
 
     ```bash
-    $ kubectl get ingress -n edp-delivery-tekton-dev-mypipe-dev
-    No resources found in edp-delivery-tekton-dev-mypipe-dev namespace.
+    $ kubectl get ingress -n ${EDP_ENV}-mypipe-dev
+    No resources found in ${EDP_ENV}-mypipe-dev namespace.
     ```
 
   No ingress object exists as expected.
@@ -224,11 +228,11 @@ Perform the below steps to merge new code (Pull Request) that passes the Code Re
 
     ```bash
     # Check the version of the deployed image
-    kubectl get pods -o jsonpath="{.items[*].spec.containers[*].image}" -n edp-delivery-tekton-dev-mypipe-dev
+    kubectl get pods -o jsonpath="{.items[*].spec.containers[*].image}" -n ${EDP_ENV}-mypipe-dev
     012345678901.dkr.ecr.eu-central-1.amazonaws.com/edp-delivery-tekton-dev/fastapi-demo:0.0.1-SNAPSHOT.2
 
     # Check Ingress object
-    kubectl get ingress -n edp-delivery-tekton-dev-mypipe-dev
+    kubectl get ingress -n ${EDP_ENV}-mypipe-dev
     NAME                 CLASS    HOSTS                            ADDRESS          PORTS   AGE
     fastapi-demo-ko1zs   <none>   fastapi-demo-ko1zs-example.com   12.123.123.123   80      115s
 
@@ -237,6 +241,6 @@ Perform the below steps to merge new code (Pull Request) that passes the Code Re
     {"Hello":"World"}
     ```
 
-### Related Articles
+## Related Articles
 
-- [Review other use-cases](./index.md)
+- [Use Cases](./index.md)
