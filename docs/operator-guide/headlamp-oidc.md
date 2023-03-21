@@ -52,38 +52,7 @@ To proceed with the Keycloak configuration, perform the following:
     clientSecret: <keycloak_client_secret_key>
   ```
 
-3. Assign user to one or more groups.
-
-There are two types of group provided for users:
-
-- Independent group
-- Extension group
-
-Independent group provides the minimum required permission set. Extension group extends the rights of an independent group.
-
-For example, the `<edp-project>-oidc-viewers` group can be extended with rights from the `<edp-project>-oidc-builders` group.
-
-| Group Name | Independent Group | Extension Group |
-| - | :-: | :-: |
-|`<edp-project>-oidc-admins`    | :material-check: | |
-|`<edp-project>-oidc-developers`| :material-check: | |
-|`<edp-project>-oidc-viewers`   | :material-check: | |
-|`<edp-project>-oidc-builders`  | | :material-check: |
-|`<edp-project>-oidc-deployers` | | :material-check: |
-
-| Name | Action List |
-| - | - |
-| View | Getting of all namespaced resources |
-| Build | Starting a PipelineRun from Headlamp UI |
-| Deploy | Deploying a new version of application via Argo CD Application |
-
-| Group Name | View | Build | Deploy | Full Namespace Access |
-| - | :-: | :-: | :-: | :-: |
-|`<edp-project>-oidc-admins`    | :material-check: | :material-check: | :material-check: | :material-check: |
-|`<edp-project>-oidc-developers`| :material-check: | :material-check: | :material-check: | |
-|`<edp-project>-oidc-viewers`   | :material-check: | | | |
-|`<edp-project>-oidc-builders`  | | :material-check: | | |
-|`<edp-project>-oidc-deployers` | | | :material-check: | |
+3. Assign user to one or more groups in Keycloak.
 
 ## Integrate Headlamp With Kubernetes
 
