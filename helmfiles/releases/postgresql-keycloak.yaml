@@ -57,8 +57,3 @@ releases:
       persistence:
         enabled: true
         size: 3Gi
-        # If the StorageClass with reclaimPolicy: Retain is used, install an additional StorageClass before installing PostgreSQL
-        # (the code is given below).
-        # If the default StorageClass will be used - change "gp2-retain" to "gp2"
-        storageClass: "gp2"
-

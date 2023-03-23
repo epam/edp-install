@@ -32,13 +32,31 @@ Make sure the cluster meets the following conditions:
 6. Helm 3.10 is installed on the installation machine with the help of the [Installing Helm](https://v3.helm.sh/docs/intro/install/) instruction.
 
 7. Storage classes are used with the [Retain Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#retain)
-and [Delete Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#delete).<br/>
+and [Delete Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#delete).
+
+8. We recommended using our storage class as [default storage class](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/#changing-the-default-storageclass).<br/>
 
   !!! info
       By default, EDP uses the default Storage Class in a cluster. The EDP development team recommends using the following Storage Classes.<br/>
       See an example below.
 
   Storage class templates with the Retain and Delete Reclaim Policies:
+
+  === "ebs-sc"
+      ``` yaml
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        name: ebs-sc
+      annotations:
+        storageclass.kubernetes.io/is-default-class: 'true'
+      allowedTopologies: []
+      mountOptions: []
+      provisioner: ebs.csi.aws.com
+      reclaimPolicy: Retain
+      volumeBindingMode: Immediate
+      ```
+
   === "gp3"
       ``` yaml
       kind: StorageClass
@@ -71,4 +89,5 @@ and [Delete Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persiste
 
 ## Related Articles
 
+* [Install Amazon EBS CSI Driver](ebs-csi-driver.md)
 * [Install Keycloak](install-keycloak.md)

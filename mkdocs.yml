@@ -137,6 +137,8 @@ nav:
     - Installation:
       - Prerequisites:
         - Overview: operator-guide/prerequisites.md
+        - Set Up Kubernetes: operator-guide/kubernetes-cluster-settings.md
+        - Set Up OpenShift: operator-guide/openshift-cluster-settings.md
         - Install NGINX Ingress Controller: operator-guide/install-ingress-nginx.md
         - Install Keycloak: operator-guide/install-keycloak.md
         - Install DefectDojo: operator-guide/install-defectdojo.md
@@ -146,8 +148,6 @@ nav:
         - Kiosk:
             - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
             - Set Up Kiosk: operator-guide/install-kiosk.md
-        - Set Up Kubernetes: operator-guide/kubernetes-cluster-settings.md
-        - Set Up OpenShift: operator-guide/openshift-cluster-settings.md
       - Install EDP: operator-guide/install-edp.md
       - Install via Helmfile: operator-guide/install-via-helmfile.md
     - Configuration:

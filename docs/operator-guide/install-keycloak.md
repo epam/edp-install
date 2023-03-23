@@ -180,39 +180,8 @@ To install PostgreSQL, follow the steps below:
     persistence:
       enabled: true
       size: 3Gi
-      # If the StorageClass with reclaimPolicy: Retain is used, install an additional StorageClass before installing PostgreSQL
-      # (the code is given below).
-      # If the default StorageClass will be used - change "gp2-retain" to "gp2"
-      storageClass: "gp2-retain"
   ```
   </details>
-
-  ??? note "Install an additional StorageClass (optional)"
-      If the PostgreSQL installation uses a StorageClass with **reclaimPolicy: Retain**, install additional StorageClass *storageclass.yaml*.
-
-      === "gp2"
-          ```yaml title="storageclass.yaml"
-          kind: StorageClass
-          apiVersion: storage.k8s.io/v1
-          metadata:
-            name: gp2-retain
-          provisioner: kubernetes.io/aws-ebs
-          parameters:
-            fsType: ext4
-            type: gp2
-          reclaimPolicy: Retain
-          volumeBindingMode: WaitForFirstConsumer
-          ```
-      === "gp3"
-          ```yaml title="storageclass.yaml"
-          kind: StorageClass
-          apiVersion: storage.k8s.io/v1
-          metadata:
-            name: gp3-retain
-          provisioner: ebs.csi.aws.com
-          reclaimPolicy: Retain
-          volumeBindingMode: WaitForFirstConsumer
-          ```
 
 ## Keycloak Installation
 
