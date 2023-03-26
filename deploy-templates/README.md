@@ -21,18 +21,18 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | admin-console-operator | 2.13.0 |
-| @epamedp | cd-pipeline-operator | 2.13.0 |
-| @epamedp | codebase-operator | 2.14.1 |
-| @epamedp | edp-component-operator | 0.12.0 |
-| @epamedp | edp-headlamp | 0.4.0 |
-| @epamedp | edp-tekton | 0.3.1 |
-| @epamedp | gerrit-operator | 2.13.5 |
-| @epamedp | jenkins-operator | 2.13.2 |
-| @epamedp | keycloak-operator | 1.14.0 |
-| @epamedp | nexus-operator | 2.13.0 |
-| @epamedp | perf-operator | 2.12.0 |
-| @epamedp | sonar-operator | 2.13.0 |
+| @epamedp | admin-console-operator | 2.14.0 |
+| @epamedp | cd-pipeline-operator | 2.14.0 |
+| @epamedp | codebase-operator | 2.15.0 |
+| @epamedp | edp-component-operator | 0.13.0 |
+| @epamedp | edp-headlamp | 0.5.0 |
+| @epamedp | edp-tekton | 0.4.0 |
+| @epamedp | gerrit-operator | 2.14.0 |
+| @epamedp | jenkins-operator | 2.14.0 |
+| @epamedp | keycloak-operator | 1.15.0 |
+| @epamedp | nexus-operator | 2.14.0 |
+| @epamedp | perf-operator | 2.13.0 |
+| @epamedp | sonar-operator | 2.14.0 |
 
 ## Values
 
@@ -70,7 +70,7 @@ A Helm chart for EDP Install
 | global.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
 | global.kioskEnabled | bool | `false` |  |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"3.2.0-SNAPSHOT"` | EDP version |
+| global.version | string | `"3.2.0"` | EDP version |
 | global.webConsole.url | string | `nil` | URL to OpenShift/Kubernetes Web console |
 | jenkins-operator.enabled | bool | `false` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
