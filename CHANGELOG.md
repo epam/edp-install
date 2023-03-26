@@ -10,6 +10,24 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.2.0"></a>
+## [v3.2.0] - 2023-03-26
+### Features
+
+- Add RoleBinding to enable kaniko-build with openshift internal registry [EPMDEDP-11429](https://jiraeu.epam.com/browse/EPMDEDP-11429)
+- Add YouTube icon [EPMDEDP-11453](https://jiraeu.epam.com/browse/EPMDEDP-11453)
+- Add video use case for FastAPI [EPMDEDP-11453](https://jiraeu.epam.com/browse/EPMDEDP-11453)
+- Add icons to EDP components on Overview page [EPMDEDP-11461](https://jiraeu.epam.com/browse/EPMDEDP-11461)
+- Implement RBAC model for cluster login [EPMDEDP-11553](https://jiraeu.epam.com/browse/EPMDEDP-11553)
+- Add general oauth2-proxy [EPMDEDP-11693](https://jiraeu.epam.com/browse/EPMDEDP-11693)
+- Configure keycloak for oauth2-proxy [EPMDEDP-11693](https://jiraeu.epam.com/browse/EPMDEDP-11693)
+
+### Bug Fixes
+
+- Add type field to EDP components [EPMDEDP-11461](https://jiraeu.epam.com/browse/EPMDEDP-11461)
+- Update headlamp OIDC documentation [EPMDEDP-11513](https://jiraeu.epam.com/browse/EPMDEDP-11513)
+
 ### Code Refactoring
 
 - Add keycloak resource [EPMDEDP-11369](https://jiraeu.epam.com/browse/EPMDEDP-11369)
@@ -18,6 +36,19 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 - Align helm charts versions [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
 - Update Keycloak version in helmfiles [EPMDEDP-11413](https://jiraeu.epam.com/browse/EPMDEDP-11413)
+- Add monitoring and logging stack to helmfile [EPMDEDP-11418](https://jiraeu.epam.com/browse/EPMDEDP-11418)
+- Change icon for docker-registry on overview page [EPMDEDP-11461](https://jiraeu.epam.com/browse/EPMDEDP-11461)
+- Bump helm chart dependency [EPMDEDP-11472](https://jiraeu.epam.com/browse/EPMDEDP-11472)
+- Align helm charts versions [EPMDEDP-11472](https://jiraeu.epam.com/browse/EPMDEDP-11472)
+- Align helmfile installation guide [EPMDEDP-11513](https://jiraeu.epam.com/browse/EPMDEDP-11513)
+- Update git-chglog for edp-isntall [EPMDEDP-11518](https://jiraeu.epam.com/browse/EPMDEDP-11518)
+- Make awsRegion field optional [EPMDEDP-11605](https://jiraeu.epam.com/browse/EPMDEDP-11605)
+- Remove deprecated scc for openshift [EPMDEDP-11606](https://jiraeu.epam.com/browse/EPMDEDP-11606)
+- Move OpenShift registry RBAC logic to cd-operator [EPMDEDP-11610](https://jiraeu.epam.com/browse/EPMDEDP-11610)
+- Align report-portal integration with Tekton docs [EPMDEDP-11645](https://jiraeu.epam.com/browse/EPMDEDP-11645)
+- Add external secret for oauth2-proxy [EPMDEDP-11693](https://jiraeu.epam.com/browse/EPMDEDP-11693)
+- Disable oauth2-proxy by default [EPMDEDP-11693](https://jiraeu.epam.com/browse/EPMDEDP-11693)
+- Provision cookie-secret for nexus-operator using ExternalSecret [EPMDEDP-6229](https://jiraeu.epam.com/browse/EPMDEDP-6229)
 
 ### Documentation
 
@@ -26,22 +57,39 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Add Landing Page [EPMDEDP-10808](https://jiraeu.epam.com/browse/EPMDEDP-10808)
 - Update roadmap section [EPMDEDP-10808](https://jiraeu.epam.com/browse/EPMDEDP-10808)
 - Describe Headlamp OIDC integration [EPMDEDP-11135](https://jiraeu.epam.com/browse/EPMDEDP-11135)
-- Update mkdocs framework version [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Add page feedback feature [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
+- Update mkdocs framework version [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Update Headlamp guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
-- Upgrade EDP to 3.1 [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
 - Update edp-install release version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
 - Update article to upgrade EDP to 3.0.x version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
+- Upgrade EDP to 3.1 [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
 - Describe Argo CD with import strategy integration [EPMDEDP-11299](https://jiraeu.epam.com/browse/EPMDEDP-11299)
 - Update RELEASES.md file [EPMDEDP-11307](https://jiraeu.epam.com/browse/EPMDEDP-11307)
-- Describe installation of Amazon EBS CSI Driver [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
 - Upgrade EDP to 2.12.2 [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
+- Describe installation of Amazon EBS CSI Driver [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
 - Update RELEASES.md file [EPMDEDP-11319](https://jiraeu.epam.com/browse/EPMDEDP-11319)
 - Add article 'Migrate CI Pipelines From Jenkins to Tekton' [EPMDEDP-11335](https://jiraeu.epam.com/browse/EPMDEDP-11335)
+- Update local development guide [EPMDEDP-11364](https://jiraeu.epam.com/browse/EPMDEDP-11364)
+- Describe how to use quality gate [EPMDEDP-11395](https://jiraeu.epam.com/browse/EPMDEDP-11395)
 - Update Argo CD to 2.5.8 version [EPMDEDP-11408](https://jiraeu.epam.com/browse/EPMDEDP-11408)
+- Fix Keycloak db migration script [EPMDEDP-11413](https://jiraeu.epam.com/browse/EPMDEDP-11413)
 - Update Keycloak installation guide [EPMDEDP-11413](https://jiraeu.epam.com/browse/EPMDEDP-11413)
-- Update prerequisites page [EPMDEDP-11425](https://jiraeu.epam.com/browse/EPMDEDP-11425)
+- Add Application Scaffolding use-case [EPMDEDP-11415](https://jiraeu.epam.com/browse/EPMDEDP-11415)
 - Remove extra tables from the prerequisites page [EPMDEDP-11425](https://jiraeu.epam.com/browse/EPMDEDP-11425)
+- Update prerequisites page [EPMDEDP-11425](https://jiraeu.epam.com/browse/EPMDEDP-11425)
+- Update Application Scaffolding documnetation [EPMDEDP-11453](https://jiraeu.epam.com/browse/EPMDEDP-11453)
+- Gather Tekton metrics and provide dashboard in grafana [EPMDEDP-11517](https://jiraeu.epam.com/browse/EPMDEDP-11517)
+- Update Headlamp OIDC Configuration for new approach [EPMDEDP-11553](https://jiraeu.epam.com/browse/EPMDEDP-11553)
+- Update Add_Application doc [EPMDEDP-11558](https://jiraeu.epam.com/browse/EPMDEDP-11558)
+- Add description that new functional is available only for Tekton [EPMDEDP-11568](https://jiraeu.epam.com/browse/EPMDEDP-11568)
+- Update images [EPMDEDP-11573](https://jiraeu.epam.com/browse/EPMDEDP-11573)
+- Update Getting Started page and remake a few screenshots [EPMDEDP-11599](https://jiraeu.epam.com/browse/EPMDEDP-11599)
+- Align documentation for storage class by edp approach [EPMDEDP-11613](https://jiraeu.epam.com/browse/EPMDEDP-11613)
+- Add a table of correspondences for the version of Kubernetes and OKD [EPMDEDP-11618](https://jiraeu.epam.com/browse/EPMDEDP-11618)
+- Manage custom certificates [EPMDEDP-11625](https://jiraeu.epam.com/browse/EPMDEDP-11625)
+- Remove text pertaining deprecated admin console and edp pipeline framework [EPMDEDP-11635](https://jiraeu.epam.com/browse/EPMDEDP-11635)
+- Align tekton version in documentation [EPMDEDP-11650](https://jiraeu.epam.com/browse/EPMDEDP-11650)
+- Add documentation on how to deploy oauth2-proxy [EPMDEDP-11693](https://jiraeu.epam.com/browse/EPMDEDP-11693)
 
 
 <a name="v3.1.0"></a>
@@ -476,7 +524,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.2.0...HEAD
+[v3.2.0]: https://github.com/epam/edp-install/compare/v3.1.0...v3.2.0
 [v3.1.0]: https://github.com/epam/edp-install/compare/v3.0.0...v3.1.0
 [v3.0.0]: https://github.com/epam/edp-install/compare/v2.12.2...v3.0.0
 [v2.12.2]: https://github.com/epam/edp-install/compare/v2.12.1...v2.12.2
