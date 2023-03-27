@@ -26,9 +26,9 @@ The **Create Library** dialog contains the three steps:
 
 !![Create library](../assets/headlamp-user-guide/headlamp-library-codebase-info.png "Create library")
 
-1. Select the existing namespace from the drop-down list.
+1. In the **Codebase type** field, select **Library**.
 
-2. In the **Codebase Integration Strategy** field, select the necessary configuration strategy:
+2. In the **Codebase onboarding strategy** field, select the necessary configuration strategy:
 
   * **Create** – creates a project on the pattern in accordance with a code language, a build tool, and a framework.
 
@@ -57,20 +57,22 @@ The **Create Library** dialog contains the three steps:
   !!! note
       The empty repository option is available only for the **Create** strategy.
 
-7. Select any of the supported code languages with its framework in the **Application code language/framework** field:
+7. Select any of the supported code languages with its framework in the **Library code language** field:
 
   * Java – selecting specific Java version available.
   * JavaScript - selecting JavaScript allows using the NPM tool.
-  * DotNet - selecting DotNet allows using the DotNet v.2.1 and DotNet v.3.1.
+  * DotNet - selecting DotNet allows using DotNet v.3.1.
+  * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask.
   * Groovy-pipeline - selecting Groovy-pipeline allows having the ability to customize a stages logic. For details,
   please refer to the [Customize CD Pipeline](../user-guide/customize-cd-pipeline.md) page.
-  * Python - selecting Python allows using the Python v.3.8.
   * Terraform - selecting Terraform allows using the Terraform different versions via the **Terraform version manager** ([tfenv](https://github.com/tfutils/tfenv#usage)).
   EDP supports all actions available in Terraform, thus providing the ability to modify the virtual infrastructure and launch some checks with the help of linters.
   For details, please refer to the [Use Terraform Library in EDP](../user-guide/terraform-stages.md) page.
   * Rego - this option allows using Rego code language with an Open Policy Agent (OPA) Library. For details, please
   refer to the [Use Open Policy Agent](../user-guide/opa-stages.md) page.
   * Container - this option allows using the Kaniko tool for building the container images from a Dockerfile. For details, please refer to the [CI Pipeline for Container](../user-guide/container-stages.md) page.
+  * Helm - this option allows using the [ct lint](https://github.com/helm/chart-testing) for Helm charts.
+  * C# - selecting C# allows using DotNet v.6.0.
   * Other - selecting Other allows extending the default code languages when creating a codebase with the Clone/Import strategy.
   To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) page.
 
@@ -90,7 +92,7 @@ The **Create Library** dialog contains the three steps:
   !!! note
       The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
 
-11. Select the **Jenkins agent** that will be used to handle a codebase. For details, refer to the [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md) instruction and inspect the steps that should be done to add a new Jenkins agent.
+11. Select the **Jenkins Agent** that will be used to handle a codebase. For details, refer to the [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md) instruction and inspect the steps that should be done to add a new Jenkins agent.
 
 12. Select the **CI pipeline provisioner** that will be used to handle a codebase. For details, refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction and become familiar with the main steps to add an additional job provisioner.
 
@@ -111,7 +113,7 @@ The **Create Library** dialog contains the three steps:
 
   !![Integrate with Jira server](../assets/headlamp-user-guide/headlamp-library-jira-server.png "Integrate with Jira server")
 
-14. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits
+14. Select the **Integrate with Jira server** check box in case it is required to connect Jira tickets with the commits
 and have a respective label in the Fix Version field.
 
   !!! note
@@ -124,9 +126,9 @@ and have a respective label in the Fix Version field.
 
 17. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira.
 
-18. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
-
   !![Mapping field name](../assets/headlamp-user-guide/headlamp-library-advanced-mapping.png "Mapping field name")
+
+18. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
 
   a. Select the name of the field in a Jira ticket. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 
@@ -145,6 +147,7 @@ and have a respective label in the Fix Version field.
 
   !!! note
       After the complete adding of the library, inspect the [Library Overview](library.md) part.
+
 
 ## Related Articles
 

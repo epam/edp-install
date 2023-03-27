@@ -26,7 +26,7 @@ The **Create Application** dialog contains the three steps:
 
    !![Create application](../assets/headlamp-user-guide/headlamp-codebase-info-menu.png "Create application")
 
-1. Select the existing namespace from the drop-down list.
+1. In the **Codebase type** field, select **Application**.
 
 2. In the **Codebase Integration Strategy** field, select the necessary configuration strategy:
 
@@ -65,9 +65,10 @@ in the **Application Code Language/framework** field:
 
   * Java – selecting specific Java version available.
   * JavaScript - selecting JavaScript allows using the React framework.
-  * DotNet - selecting DotNet allows using the DotNet v.2.1 and DotNet v.3.1.
+  * DotNet - selecting DotNet allows using DotNet v.3.1 framework.
+  * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask.
   * Go - selecting Go allows using the Beego and Operator SDK frameworks.
-  * Python - selecting Python allows using the Python v.3.8.
+  * C# - selecting C# allows using the DotNet v.6.0 frameworks.
   * Other - selecting Other allows extending the default code languages when creating a codebase
   with the clone/import strategy. To add another code language,
   inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
@@ -174,4 +175,3 @@ and have a respective label in the Fix Version field.
 * [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
 * [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Perf Server Integration](../operator-guide/perf-integration.md)
-* [Promote Application in CD Pipeline](../use-cases/promotion-procedure.md)
