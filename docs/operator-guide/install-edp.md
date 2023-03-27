@@ -54,7 +54,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   ```bash
   helm search repo epamedp/edp-install
   NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-  epamedp/edp-install     3.1.0           3.1.0           A Helm chart for EDP Install
+  epamedp/edp-install     3.2.0           3.2.0           A Helm chart for EDP Install
   ```
 
   !!! note
@@ -113,7 +113,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
 
   By default, the internal Gerrit server is deployed as a result of EDP deployment. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the [Enable VCS Import Strategy](./import-strategy.md) article.
 
-7. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/3.0/deploy-templates/values.yaml) file.
+7. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/3.2/deploy-templates/values.yaml) file.
 
 8. Install EDP in the &#8249;edp-project&#8250; namespace with the Helm tool.
 
@@ -150,6 +150,8 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         gitProvider: gerrit
         # -- Gerrit SSH node port
         gerritSSHPort: "22"
+        # URL to Keycloak;
+        keycloakUrl: <keycloak_endpoint>
 
       # AWS Region, e.g. "eu-central-1"
       awsRegion:
@@ -166,14 +168,15 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
         roleArn:
 
+      edp-tekton:
+        # Tekton Kaniko configuration section
+        kaniko:
+          # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
+          roleArn:
+
       dockerRegistry:
         # -- Docker Registry endpoint
         url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
-
-      keycloak-operator:
-        keycloak:
-          # URL to Keycloak;
-          url: <keycloak_endpoint>
 
       perf-operator:
         enabled: false
@@ -208,6 +211,8 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         gitProvider: gerrit
         # -- Gerrit SSH node port
         gerritSSHPort: "22"
+        # URL to Keycloak;
+        keycloakUrl: <keycloak_endpoint>
 
       # AWS Region, e.g. "eu-central-1"
       awsRegion:
@@ -224,11 +229,6 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
       dockerRegistry:
         # -- Docker Registry endpoint
         url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
-
-      keycloak-operator:
-        keycloak:
-          # URL to Keycloak;
-          url: <keycloak_endpoint>
 
       jenkins-operator:
         enabled: true

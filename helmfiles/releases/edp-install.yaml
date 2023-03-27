@@ -23,7 +23,7 @@ releases:
     default: "false"
   chart: "epamedp/edp-install"
   disableValidation: true
-  version: 3.1.0
+  version: 3.2.0
   wait: true
   installed: true
   values:
@@ -42,9 +42,7 @@ releases:
         # Developers of the tenant separated by comma (,) e.g. user@example.com
         developers: [user1@example.com,user2@example.com]
         gerritSSHPort: {{ .Values.global.gerritSSHPort }}
-      keycloak-operator:
-        keycloak:
-          url: {{ .Values.global.keycloakEndpoint }}
+        keycloakUrl: {{ .Values.global.keycloakEndpoint }}
       dockerRegistry:
         enabled: true
         # Docker Registry endpoint e.g. <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com
@@ -52,6 +50,11 @@ releases:
       kaniko:
         # AWS IAM role with push access to ECR e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
         roleArn:
+      edp-tekton:
+        # Tekton Kaniko configuration section
+        kaniko:
+          # AWS IAM role with push access to ECR e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
+          roleArn:
       # AWS Region, e.g. "eu-central-1"
       awsRegion:
       argocd:
