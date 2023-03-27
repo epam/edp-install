@@ -15,8 +15,7 @@ Argo CD can be installed using [two different approaches](https://argo-cd.readth
 Both approaches can be deployed with High Availability (HA) or Non High Availability (non HA) installation manifests.
 
 EDP uses the HA deployment with the cluster-admin permissions, to minimize cluster resources consumption by sharing
-single Argo CD instance across multiple EDP Tenants. Please follow [the installation instructions](./install-argocd.md),
-to deploy Argo CD.
+single Argo CD instance across multiple EDP Tenants. Please follow [the installation instructions](./install-argocd.md) to deploy Argo CD.
 
 ## EDP Argo CD Integration
 
@@ -223,9 +222,9 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
       - team-foo
   ```
 
-4. Optional: If the Argo CD controller has not been enabled to manage the Application resources in the specific namespaces
+4. Optional: if the Argo CD controller has not been enabled to manage the Application resources in the specific namespaces
    (`team-foo`, in our case) in the [Install Argo CD](../install-argocd/#install-with-helm), modify the `argocd-cmd-params-cm`
-   configmap in the Argo CD namespace and add the `application.namespaces` parameter to the subsection data:
+   ConfigMap in the Argo CD namespace and add the `application.namespaces` parameter to the subsection data:
 
   ```yaml title="argocd-cmd-params-cm"
   ...
@@ -244,10 +243,13 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
 
 5. Check that your new Repository, Known Hosts, and AppProject are added to the Argo CD UI.
 
-## Deploy Argo CD Application
+Once Argo CD is successfully integrated, EDP user can utilize Argo CD to deploy [CD pipelines](../../headlamp-user-guide/add-cd-pipeline/#deploy-application).
 
-1. Deploy a test EDP Application with the `demo` name stored in a Gerrit private repository following the
-[Headlamp Deploy-application](../../headlamp-user-guide/add-cd-pipeline/#deploy-application) instruction:
+## Check Argo CD Integration (Optional)
+
+This section provides the information on how to test the integration with Argo CD and is not mandatory to be followed.
+
+1. Follow the [Add Application](../../headlamp-user-guide/add-application/#create-application-in-yaml) instruction to deploy a test EDP application with the `demo` name, which should be stored in a Gerrit private repository:
 
   ??? Note "Example: Argo CD Application "
       ```yaml
