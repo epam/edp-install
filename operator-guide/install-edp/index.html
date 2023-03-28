@@ -11,7 +11,7 @@
 </code></pre></div> </li> <li> <p>Add the Helm EPAMEDP Charts for local client.</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>repo<span class=w> </span>add<span class=w> </span>epamedp<span class=w> </span>https://epam.github.io/edp-helm-charts/stable
 </code></pre></div> </li> <li> <p>Choose the required Helm chart version:</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>search<span class=w> </span>repo<span class=w> </span>epamedp/edp-install
 NAME<span class=w>                    </span>CHART<span class=w> </span>VERSION<span class=w>   </span>APP<span class=w> </span>VERSION<span class=w>     </span>DESCRIPTION
-epamedp/edp-install<span class=w>     </span><span class=m>3</span>.1.0<span class=w>           </span><span class=m>3</span>.1.0<span class=w>           </span>A<span class=w> </span>Helm<span class=w> </span>chart<span class=w> </span><span class=k>for</span><span class=w> </span>EDP<span class=w> </span>Install
+epamedp/edp-install<span class=w>     </span><span class=m>3</span>.2.0<span class=w>           </span><span class=m>3</span>.2.0<span class=w>           </span>A<span class=w> </span>Helm<span class=w> </span>chart<span class=w> </span><span class=k>for</span><span class=w> </span>EDP<span class=w> </span>Install
 </code></pre></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>It is highly recommended to use the latest released version.</p> </div> </li> <li> <p>By default, EDP uses Tekton as a CI tool (see more in the <a href=../prerequisites/ >Prerequisites Overview</a> page). To use Jenkins instead of Tekton, redefine the following parameters in the <a href=https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml>values.yaml</a> file:</p> <details class=note> <summary>View: values.yaml</summary> <div class=highlight><pre><span></span><code><span class=nn>...</span>
 <span class=nt>edp-tekton</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
@@ -34,7 +34,7 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.1.0<span cla
 <span class=nt>global</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>gitProvider</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gitlab</span>
 <span class=nn>...</span>
-</code></pre></div> </div> </div> </div> <p>By default, the internal Gerrit server is deployed as a result of EDP deployment. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the <a href=../import-strategy/ >Enable VCS Import Strategy</a> article.</p> </li> <li> <p>Check the parameters in the EDP installation chart. For details, please refer to the <a href=https://github.com/epam/edp-install/blob/release/3.0/deploy-templates/values.yaml>values.yaml</a> file.</p> </li> <li> <p>Install EDP in the &#8249;edp-project&#8250; namespace with the Helm tool.</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>install<span class=w> </span>edp<span class=w> </span>epamedp/edp-install<span class=w> </span>--wait<span class=w> </span>--timeout<span class=o>=</span>900s<span class=w> </span><span class=se>\</span>
+</code></pre></div> </div> </div> </div> <p>By default, the internal Gerrit server is deployed as a result of EDP deployment. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the <a href=../import-strategy/ >Enable VCS Import Strategy</a> article.</p> </li> <li> <p>Check the parameters in the EDP installation chart. For details, please refer to the <a href=https://github.com/epam/edp-install/blob/release/3.2/deploy-templates/values.yaml>values.yaml</a> file.</p> </li> <li> <p>Install EDP in the &#8249;edp-project&#8250; namespace with the Helm tool.</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>install<span class=w> </span>edp<span class=w> </span>epamedp/edp-install<span class=w> </span>--wait<span class=w> </span>--timeout<span class=o>=</span>900s<span class=w> </span><span class=se>\</span>
 --version<span class=w> </span>&lt;edp_version&gt;<span class=w> </span><span class=se>\</span>
 --values<span class=w> </span>values.yaml<span class=w> </span><span class=se>\</span>
 --namespace<span class=w> </span>&lt;edp-project&gt;
@@ -59,6 +59,8 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.1.0<span cla
 <span class=w>  </span><span class=nt>gitProvider</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gerrit</span>
 <span class=w>  </span><span class=c1># -- Gerrit SSH node port</span>
 <span class=w>  </span><span class=nt>gerritSSHPort</span><span class=p>:</span><span class=w> </span><span class=s>&quot;22&quot;</span>
+<span class=w>  </span><span class=c1># URL to Keycloak;</span>
+<span class=w>  </span><span class=nt>keycloakUrl</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;keycloak_endpoint&gt;</span>
 
 <span class=c1># AWS Region, e.g. &quot;eu-central-1&quot;</span>
 <span class=nt>awsRegion</span><span class=p>:</span>
@@ -75,14 +77,15 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.1.0<span cla
 <span class=w>  </span><span class=c1># -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::&lt;AWS_ACCOUNT_ID&gt;:role/&lt;AWS_IAM_ROLE_NAME&gt;</span>
 <span class=w>  </span><span class=nt>roleArn</span><span class=p>:</span>
 
+<span class=nt>edp-tekton</span><span class=p>:</span>
+<span class=w>  </span><span class=c1># Tekton Kaniko configuration section</span>
+<span class=w>  </span><span class=nt>kaniko</span><span class=p>:</span>
+<span class=w>    </span><span class=c1># -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::&lt;AWS_ACCOUNT_ID&gt;:role/&lt;AWS_IAM_ROLE_NAME&gt;</span>
+<span class=w>    </span><span class=nt>roleArn</span><span class=p>:</span>
+
 <span class=nt>dockerRegistry</span><span class=p>:</span>
 <span class=w>  </span><span class=c1># -- Docker Registry endpoint</span>
 <span class=w>  </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=s>&quot;&lt;AWS_ACCOUNT_ID&gt;.dkr.ecr.&lt;AWS_REGION&gt;.amazonaws.com&quot;</span>
-
-<span class=nt>keycloak-operator</span><span class=p>:</span>
-<span class=w>  </span><span class=nt>keycloak</span><span class=p>:</span>
-<span class=w>    </span><span class=c1># URL to Keycloak;</span>
-<span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;keycloak_endpoint&gt;</span>
 
 <span class=nt>perf-operator</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
@@ -112,6 +115,8 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.1.0<span cla
 <span class=w>  </span><span class=nt>gitProvider</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gerrit</span>
 <span class=w>  </span><span class=c1># -- Gerrit SSH node port</span>
 <span class=w>  </span><span class=nt>gerritSSHPort</span><span class=p>:</span><span class=w> </span><span class=s>&quot;22&quot;</span>
+<span class=w>  </span><span class=c1># URL to Keycloak;</span>
+<span class=w>  </span><span class=nt>keycloakUrl</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;keycloak_endpoint&gt;</span>
 
 <span class=c1># AWS Region, e.g. &quot;eu-central-1&quot;</span>
 <span class=nt>awsRegion</span><span class=p>:</span>
@@ -128,11 +133,6 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.1.0<span cla
 <span class=nt>dockerRegistry</span><span class=p>:</span>
 <span class=w>  </span><span class=c1># -- Docker Registry endpoint</span>
 <span class=w>  </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=s>&quot;&lt;AWS_ACCOUNT_ID&gt;.dkr.ecr.&lt;AWS_REGION&gt;.amazonaws.com&quot;</span>
-
-<span class=nt>keycloak-operator</span><span class=p>:</span>
-<span class=w>  </span><span class=nt>keycloak</span><span class=p>:</span>
-<span class=w>    </span><span class=c1># URL to Keycloak;</span>
-<span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;keycloak_endpoint&gt;</span>
 
 <span class=nt>jenkins-operator</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
