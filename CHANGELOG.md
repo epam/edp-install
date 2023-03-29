@@ -11,6 +11,14 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v3.2.1"></a>
+## [v3.2.1] - 2023-03-29
+### Routine
+
+- Align helm charts versions [EPMDEDP-11472](https://jiraeu.epam.com/browse/EPMDEDP-11472)
+- Add the ability to use additional volumes in oauth2 proxy [EPMDEDP-11628](https://jiraeu.epam.com/browse/EPMDEDP-11628)
+
+
 <a name="v3.2.0"></a>
 ## [v3.2.0] - 2023-03-26
 ### Features
@@ -524,7 +532,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.2.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.2.1...HEAD
+[v3.2.1]: https://github.com/epam/edp-install/compare/v3.2.0...v3.2.1
 [v3.2.0]: https://github.com/epam/edp-install/compare/v3.1.0...v3.2.0
 [v3.1.0]: https://github.com/epam/edp-install/compare/v3.0.0...v3.1.0
 [v3.0.0]: https://github.com/epam/edp-install/compare/v2.12.2...v3.0.0

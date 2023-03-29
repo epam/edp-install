@@ -3,8 +3,8 @@ description: A Helm chart for EDP Install
 home: https://epam.github.io/edp-install/
 name: edp-install
 type: application
-version: 3.2.0
-appVersion: 3.2.0
+version: 3.2.1
+appVersion: 3.2.1
 icon: https://epam.github.io/edp-install/assets/logo.png
 keywords:
   - edp
