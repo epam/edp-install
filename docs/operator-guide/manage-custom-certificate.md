@@ -11,6 +11,8 @@ EDP components that support custom certificates can be found in the table below:
 | jenkins-operator | jenkins-operator, edp-jenkins, jenkins agents |
 | sonar-operator | sonar-operator, edp-sonar |
 | keycloak-operator | keycloak-operator |
+| nexus-operator | oauth2-proxy |
+| edp-install | oauth2-proxy |
 
 ## Prerequisites
 
@@ -72,9 +74,9 @@ To import custom certificates to Keycloak, follow the steps below:
         ...
 
       ...
-      extraEnvFrom:
-          - secretRef:
-            name: spi-truststore-data
+      extraEnvFrom: |
+        - secretRef:
+          name: spi-truststore-data
       ...
       ```
 

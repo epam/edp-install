@@ -93,6 +93,8 @@ A Helm chart for EDP Install
 | oauth2_proxy.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
 | oauth2_proxy.extraArgs | object | `{}` |  |
 | oauth2_proxy.extraEnv | list | `[]` |  |
+| oauth2_proxy.extraVolumeMounts | list | `[]` | Additional volumeMounts to be added to the oauth2-proxy container |
+| oauth2_proxy.extraVolumes | list | `[]` | Additional volumes to be added to the oauth2-proxy pod |
 | oauth2_proxy.image.repository | string | `"quay.io/oauth2-proxy/oauth2-proxy"` | oauth2-proxy image repository |
 | oauth2_proxy.image.tag | string | `"v7.4.0"` | oauth2-proxy image tag |
 | oauth2_proxy.ingress.annotations | object | `{}` |  |

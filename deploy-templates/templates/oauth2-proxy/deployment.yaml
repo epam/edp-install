@@ -74,14 +74,20 @@ spec:
           resources:
 {{ toYaml .Values.oauth2_proxy.resources | indent 12 }}
           volumeMounts:
-          - mountPath: /etc/oauth2_proxy/oauth2_proxy.cfg
-            name: configmain
-            subPath: oauth2_proxy.cfg
+            - mountPath: /etc/oauth2_proxy/oauth2_proxy.cfg
+              name: configmain
+              subPath: oauth2_proxy.cfg
+          {{- if .Values.oauth2_proxy.extraVolumeMounts }}
+            {{- toYaml .Values.oauth2_proxy.extraVolumeMounts | nindent 12 }}
+          {{- end }}
       volumes:
         - configMap:
             defaultMode: 420
             name: oauth2-proxy-config
           name: configmain
+      {{- if .Values.oauth2_proxy.extraVolumes }}
+        {{- toYaml .Values.oauth2_proxy.extraVolumes | nindent 8 }}
+      {{- end }}
 
     {{- if .Values.oauth2_proxy.affinity }}
       affinity:
