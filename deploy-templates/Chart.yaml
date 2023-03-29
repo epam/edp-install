@@ -53,12 +53,12 @@ dependencies:
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.14.0"
+  version: "2.14.1"
   condition: cd-pipeline-operator.enabled
 
 - name: nexus-operator
   repository: "@epamedp"
-  version: "2.14.0"
+  version: "2.14.1"
   condition: nexus-operator.enabled
 
 - name: sonar-operator
@@ -91,10 +91,10 @@ annotations:
       image: epamedp/codebase-operator:2.15.0
     - name: jenkins-operator:2.14.0
       image: epamedp/jenkins-operator:2.14.0
-    - name: cd-pipeline-operator:2.14.0
-      image: epamedp/cd-pipeline-operator:2.14.0
-    - name: nexus-operator:2.14.0
-      image: epamedp/nexus-operator:2.14.0
+    - name: cd-pipeline-operator:2.14.1
+      image: epamedp/cd-pipeline-operator:2.14.1
+    - name: nexus-operator:2.14.1
+      image: epamedp/nexus-operator:2.14.1
     - name: sonar-operator:2.14.0
       image: epamedp/sonar-operator:2.14.0
     - name: admin-console-operator:2.14.0
