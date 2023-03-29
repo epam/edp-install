@@ -22,7 +22,7 @@ A Helm chart for EDP Install
 | Repository | Name | Version |
 |------------|------|---------|
 | @epamedp | admin-console-operator | 2.14.0 |
-| @epamedp | cd-pipeline-operator | 2.14.0 |
+| @epamedp | cd-pipeline-operator | 2.14.1 |
 | @epamedp | codebase-operator | 2.15.0 |
 | @epamedp | edp-component-operator | 0.13.0 |
 | @epamedp | edp-headlamp | 0.5.0 |
@@ -30,7 +30,7 @@ A Helm chart for EDP Install
 | @epamedp | gerrit-operator | 2.14.0 |
 | @epamedp | jenkins-operator | 2.14.0 |
 | @epamedp | keycloak-operator | 1.15.0 |
-| @epamedp | nexus-operator | 2.14.0 |
+| @epamedp | nexus-operator | 2.14.1 |
 | @epamedp | perf-operator | 2.13.0 |
 | @epamedp | sonar-operator | 2.14.0 |
 
