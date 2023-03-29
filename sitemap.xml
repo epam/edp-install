@@ -171,11 +171,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://epam.github.io/edp-install/operator-guide/edp-access-model/</loc>
-         <lastmod>2023-03-29</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/edp-kiosk-usage/</loc>
          <lastmod>2023-03-29</lastmod>
          <changefreq>daily</changefreq>
@@ -341,11 +336,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://epam.github.io/edp-install/operator-guide/notification-msteams/</loc>
-         <lastmod>2023-03-29</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/oauth2-proxy/</loc>
          <lastmod>2023-03-29</lastmod>
          <changefreq>daily</changefreq>
@@ -477,11 +467,6 @@
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/use-cases/autotest-as-quality-gate/</loc>
-         <lastmod>2023-03-29</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://epam.github.io/edp-install/use-cases/tekton-custom-pipelines/</loc>
          <lastmod>2023-03-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
