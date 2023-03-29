@@ -115,7 +115,7 @@ annotations: {}
 # Proxy configuration section
 oauth2_proxy:
   # oauth2-proxy requires keycloak to be configured properly before deployment
-  # you can set enable: true, when you platform is deployed and keycloak is
+  # you can set enable: true, when your platform is deployed and keycloak is
   # configured.
   # -- Install oauth2-proxy as a part of EDP deployment. Default: false
   enabled: false
@@ -137,6 +137,20 @@ oauth2_proxy:
 
   extraEnv: []
   extraArgs: {}
+
+  # -- Additional volumes to be added to the oauth2-proxy pod
+  extraVolumes: []
+  #  - name: custom-ca
+  #    secret:
+  #      defaultMode: 420
+  #      secretName: custom-ca
+
+  # -- Additional volumeMounts to be added to the oauth2-proxy container
+  extraVolumeMounts: []
+  #  - name: custom-ca
+  #    mountPath: /etc/ssl/certs/CA.crt
+  #    readOnly: true
+  #    subPath: CA.crt
 
   ingress:
     annotations: {}
