@@ -3,16 +3,18 @@
 ## Overview
 
 Get acquainted with the latest EDP releases.
-
+* [Version 3.2.1](#3.2.1)
+* [Version 3.2.0](#3.2.0)
 * [Version 3.1.0](#3.1.0)
 * [Version 3.0.0](#3.0.0)
+
+<details>
+  <summary>Earlier Versions</summary>
+
 * [Version 2.12.2](#2.12.2)
 * [Version 2.12.1](#2.12.1)
 * [Version 2.12.0](#2.12.0)
 * [Version 2.11.0](#2.11.0)
-<details>
-  <summary>Earlier Versions</summary>
-
 * [Version 2.10.2](#2.10.2)
 * [Version 2.10.1](#2.10.1)
 * [Version 2.10.0](#2.10.0)
@@ -37,17 +39,116 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.0](#2.6.0)
 </details>
 
-## Version 2.12.2 <a name="2.12.2"></a> (February 13, 2023)
+## Version 3.2.1 <a name="3.2.1"></a> (March 31, 2023)
 
-### Features
+### New Functionality
 
-* Gerrit and Jenkins Operators now can manage respective resources through custom URL.
-* The basePath key can be indicated in the Gerrit Operator custom resource to form gerritApiUrl.
+* The ability of using custom certificates is added to nexus-operator OAuth2-Proxy.
+* The ability of using custom certificates is added to edp-install OAuth2-Proxy.
 
 ### Fixed Issues
 
-* Fix Gerrit project syncer and controller conflict in the Gerrit Operator to reduce the delay during the multiple projects sync.
-* Fix Jira project info error handler to work correctly with non-existing tickets.
+* Remove the unused RoleBinding for jenkins-operator for OpenShift deploy scenario.
+
+## Version 3.2.0 <a name="3.2.0"></a> (March 26, 2023)
+
+## What's New
+
+One of the major highlights of this release is the addition of support for the latest Java 17 language version. Furthermore, we have added support for the FastAPI and Flask frameworks for Python language. We have also included support for the .NET 6.0 framework for C# language. We have expanded our support to include Helm as a library. This will allow users to onboard their custom charts and facilitate development.
+
+To improve security and streamline the login process, we have improved the [RBAC model](https://epam.github.io/edp-install/operator-guide/edp-access-model/?h=rbac#cluster-rbac-resources) for cluster login. Thus, we have enriched this with more granular permissions.
+
+We are pleased to announce that our platform now has the ability to use [custom certificates](https://epam.github.io/edp-install/operator-guide/manage-custom-certificate/) when deploying platform. This feature provides greater flexibility and customization options for users, enabling them to provide an additional level of flexibility.
+
+In addition to this, we have introduced the ability to enable [Single Sign-On](https://epam.github.io/edp-install/operator-guide/oauth2-proxy/) for the services (applications) that do not support OIDC from the box. This feature offers high flexibility, enabling you to choose the optimal authentication solution.
+
+We have integrated Kaniko to OpenShift internal registry, allowing users to build and store their container images with OpenShift native solution. This integration offers a range of benefits, including faster build times and greater control over image for OpenShift users.
+
+We are excited to introduce a new section in our documentation called ["Use Cases"](https://epam.github.io/edp-install/use-cases/). This section has been thoughtfully designed to guide you through the most common scenarios for using EDP, helping you to gain a better understanding of how our platform can be utilized to its full potential. By reading through these use cases, you will be equipped with the knowledge and tools you need to make the most of EDP and build advanced, high-quality applications with ease.
+
+Explore the upgrades, new functionality and improvements below.
+
+### Upgrades
+
+* Keycloak is updated to the [20.0.3](https://www.keycloak.org/2023/01/keycloak-2003-released.html) version.
+* Operator SDK is updated to the [1.25.3](https://github.com/operator-framework/operator-sdk/releases) version.
+* Alpine image is updated to the [3.16.4](https://hub.docker.com/_/alpine/tags?page=1&name=3.16.4) version.
+* .NET is updated to the [6.0](https://support.microsoft.com/en-us/topic/-net-6-0-update-b85603d0-00d5-4aa4-adac-b045322d35fc) version.
+* Findbugs plugin version in SonarQube is updated to the [4.2.2](https://github.com/spotbugs/sonar-findbugs/releases/tag/4.2.2) version.
+* Our latest application version includes an upgrade to the upstream Headlamp version [0.16.0](https://github.com/headlamp-k8s/headlamp/releases/tag/v0.16.0), which is now the foundation for our platform.
+* Semgrep is updated to the [1.2.1](https://github.com/returntocorp/semgrep/blob/develop/CHANGELOG.md) version.
+* Argo CD is updated to the [2.5.8](https://github.com/argoproj/argo-cd/releases/tag/v2.5.8) version.
+
+### New Functionality
+
+* The `VERSION` file creation for Go codebases is removed.
+* Read-only mode in tekton-dashboard is now available.
+* Cd-pipeline-operator now manages projects instead of namespaces on OpenShift.
+* Kiosk integration when using OpenShift cluster is removed.
+* The `cp-pipeline-operator` is now responsible for RBAC in the created namespaces.
+* The ability to set constant requeue time in GroupMember reconciler is added.
+* Add monitoring and logging stack to the helmfile.
+* Health check for Headlamp deployment is added.
+
+### Enhancements
+
+* In Headlamp UI, the `Repository URL` field is renamed to 'Forked from' for the cases of using clone strategy.
+* Tekton pipelines are now available in Headlamp UI.
+* The user is now able to onboard an application with custom build tool.
+* Empty project button is now hidden if clone/import strategy is used.
+* Commit validation functionality is available without JIRA integration.
+* Error message of reconciliation is available over status in case of failure in Headlamp UI.
+* The update/uninstall buttons when deploy pipeline run is in "running" status have been disabled.
+* The `Last time updated` field has been removed from Headlamp codebaseBranch info.
+* In the components overview list, icons have been provided for the language/framework/build tool/ci tool elements.
+* The Quality Gate Pipeline can now be run by the user only when the health status is green.
+* Request-limit resource block is added to Tekton tasks.
+* We have made the `awsRegion` parameter optional in order to eliminate the dependency on any specific cloud provider.
+* The deployment of EDP has been aligned with the requirements of the OpenShift cluster (OKD 4.10).
+
+### Fixed Issues
+
+* Change icon for docker-registry on overview page.
+* From now on, the `Git repo relative path` field is checked for uniqueness when creating application.
+* The field `From Commit Hash` in Headlamp is now validated to ensure that the entered commit hash exists so now users can not enter any numbers in the field.
+* App list rendering has been optimized.
+* Resource details page crashes when resource has no status.
+
+### Documentation
+
+* The [EDP RoadMap](https://epam.github.io/edp-install/roadmap/#roadmap) page is updated.
+
+* The [Use Cases](https://epam.github.io/edp-install/use-cases/) is updated with the following:
+  * The [Scaffold and Deploy FastAPI Application](https://epam.github.io/edp-install/use-cases/application-scaffolding/) page is added.
+  * The [Deploy Application With Custom Build Tool/Framework](https://epam.github.io/edp-install/use-cases/tekton-custom-pipelines/) page is added.
+
+* The [User Guide](https://epam.github.io/edp-install/headlamp-user-guide/) is updated with the following:
+  * The Headlamp User Guide tab is renamed to [User Guide](https://epam.github.io/edp-install/headlamp-user-guide/).
+  * The [Headlamp OIDC Integration](https://epam.github.io/edp-install/operator-guide/headlamp-oidc/) page is added.
+  * The [Add Quality Gate](https://epam.github.io/edp-install/headlamp-user-guide/add-quality-gate/) page is added.
+  * The [Add Application](https://epam.github.io/edp-install/headlamp-user-guide/add-application/) page is added.
+
+* The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+  * The [Report-Portal integration](https://epam.github.io/edp-install/operator-guide/report-portal-integration-tekton/) page is added.
+  * The [Tekton Overview](https://epam.github.io/edp-install/operator-guide/tekton-overview/) page is added.
+  * The [Upgrade EDP v2.12 to 3.0](https://epam.github.io/edp-install/operator-guide/upgrade-edp-3.0/) page is updated.
+  * The [Argo CD Integration](https://epam.github.io/edp-install/operator-guide/argocd-integration/) page is updated.
+  * The [Install Amazon EBS CSI Driver](https://epam.github.io/edp-install/operator-guide/ebs-csi-driver/) page is added.
+  * The [Migrate CI Pipelines From Jenkins to Tekton](https://epam.github.io/edp-install/operator-guide/migrate-ci-pipelines-from-jenkins-to-tekton/) page is added.
+  * The [Install Keycloak](https://epam.github.io/edp-install/operator-guide/install-keycloak/) page is updated.
+  * The [Monitoring](https://epam.github.io/edp-install/operator-guide/tekton-monitoring/) page is added.
+  * The [EDP Installation Prerequisites Overview](https://epam.github.io/edp-install/operator-guide/prerequisites/) page is updated.
+  * The [Set Up Kubernetes](https://epam.github.io/edp-install/operator-guide/kubernetes-cluster-settings/) page is updated.
+  * The [Manage Custom Certificates](https://epam.github.io/edp-install/operator-guide/manage-custom-certificate/) page is added.
+  * The [Protect Endpoints](https://epam.github.io/edp-install/operator-guide/oauth2-proxy) page is added.
+
+* The [Developer Guide](https://epam.github.io/edp-install/developer-guide/) is updated with the following:
+  * The Local Development Guide page is updated and renamed to [Workspace Setup Manual](https://epam.github.io/edp-install/developer-guide/local-development/).
+
+* The [Getting Started](https://epam.github.io/edp-install/overview/) is updated with the following:
+  * The [EDP Overview](https://epam.github.io/edp-install/#epam-delivery-platform) page is updated.
+  * The [Quick Start](https://epam.github.io/edp-install/getting-started/) page is updated.
+  * The [Supported Versions and Compatibility](https://epam.github.io/edp-install/supported-versions/) page is added.
 
 ## Version 3.1.0 <a name="3.1.0"></a> (January 24, 2023)
 
@@ -192,6 +293,17 @@ Explore the upgrades, new functionality, breaking changes and improvements below
 
 * The [FAQ](https://epam.github.io/edp-install/faq/) documentation section is updated with the following:
   * [How To Change the Lifespan of an Access Token That Is Used for Headlamp and 'oidc-login' Plugin?](https://epam.github.io/edp-install/faq/#how-to-change-the-lifespan-of-an-access-token-that-is-used-for-headlamp-and-oidc-login-plugin)
+
+## Version 2.12.2 <a name="2.12.2"></a> (February 13, 2023)
+
+### Features
+
+* Gerrit and Jenkins Operators now can manage respective resources through custom URL.
+* The basePath key can be indicated in the Gerrit Operator custom resource to form gerritApiUrl.
+
+### Fixed Issues
+
+* Fix Gerrit project syncer and controller conflict in the Gerrit Operator to reduce the delay during the multiple projects sync.
 
 ## Version 2.12.1 <a name="2.12.1"></a> (October 28, 2022)
 
@@ -1180,4 +1292,3 @@ Please refer to the [Application Info](https://github.com/epam/edp-admin-console
 * The [EDP Overview](https://github.com/epam/edp-install/tree/master#epam-delivery-platform-rocket) page is updated.
 * The [EDP Pipeline Framework](https://github.com/epam/edp-admin-console/blob/master/documentation/cicd_customization/edp_pipeline_framework.md#edp-pipeline-framework) page is added.
 * The [Keycloak Installation on Kubernetes](https://github.com/epam/edp-install/blob/master/documentation/install_keycloak.md) page is updated.
-
