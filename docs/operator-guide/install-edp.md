@@ -43,24 +43,36 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
     --from-literal=password=<password>
   ```
 
-3. Add the Helm EPAMEDP Charts for local client.
+3. Generate a cookie-secret for proxy with the following command:
+
+  ```bash
+  nexus_proxy_cookie_secret=$(openssl rand -base64 32 | head -c 32)
+  ```
+  Create `nexus-proxy-cookie-secret` in the <edp-project> namespace:
+
+  ```bash
+  kubectl -n <edp-project> create secret generic nexus-proxy-cookie-secret \
+      --from-literal=cookie-secret=${nexus_proxy_cookie_secret}
+  ```
+
+4. Add the Helm EPAMEDP Charts for local client.
 
   ```bash
   helm repo add epamedp https://epam.github.io/edp-helm-charts/stable
   ```
 
-4. Choose the required Helm chart version:
+5. Choose the required Helm chart version:
 
   ```bash
   helm search repo epamedp/edp-install
   NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-  epamedp/edp-install     3.2.0           3.2.0           A Helm chart for EDP Install
+  epamedp/edp-install     3.2.1           3.2.1           A Helm chart for EDP Install
   ```
 
   !!! note
       It is highly recommended to use the latest released version.
 
-5. By default, EDP uses Tekton as a CI tool (see more in the [Prerequisites Overview](prerequisites.md) page). To use Jenkins instead of Tekton, redefine the following parameters in the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file:
+6. By default, EDP uses Tekton as a CI tool (see more in the [Prerequisites Overview](prerequisites.md) page). To use Jenkins instead of Tekton, redefine the following parameters in the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file:
 
   ??? note "View: values.yaml"
       ```yaml
@@ -76,7 +88,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
       ...
       ```
 
-6. EDP can be integrated with the following version control systems:
+7. EDP can be integrated with the following version control systems:
 
   * [Gerrit](https://gerrit-review.googlesource.com/Documentation/) (by default)
   * [GitHub](https://docs.github.com/en)
@@ -113,9 +125,9 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
 
   By default, the internal Gerrit server is deployed as a result of EDP deployment. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the [Enable VCS Import Strategy](./import-strategy.md) article.
 
-7. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/3.2/deploy-templates/values.yaml) file.
+8. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/3.2/deploy-templates/values.yaml) file.
 
-8. Install EDP in the &#8249;edp-project&#8250; namespace with the Helm tool.
+9. Install EDP in the &#8249;edp-project&#8250; namespace with the Helm tool.
 
   ```bash
   helm install edp epamedp/edp-install --wait --timeout=900s \
@@ -262,3 +274,4 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
 * [Set Up Kubernetes](kubernetes-cluster-settings.md)
 * [Set Up OpenShift](openshift-cluster-settings.md)
 * [EDP Installation Prerequisites Overview](prerequisites.md)
+* [Headlamp OIDC Integration](headlamp-oidc.md)
