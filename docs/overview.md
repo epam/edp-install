@@ -18,7 +18,7 @@ EDP consists of the following:
 - [Gerrit](https://www.gerritcodereview.com/), [GitLab](https://about.gitlab.com/features/) or [GitHub](https://about.gitlab.com/features/) as a version control system for your code
 - [Tekton](./operator-guide/install-tekton.md) is a **default** pipeline orchestrator
 - [Jenkins](./operator-guide/overview-manage-jenkins-pipelines.md) is an optional pipeline orchestrator
-- [CI pipelines](./user-guide/pipeline-framework.md) for Python, Java 8, Java 11, .Net, Go, React, Terraform, Jenkins Groovy Pipelines, Dockerfile, Helm
+- [CI pipelines](./user-guide/pipeline-framework.md) for Python, Java, .Net, Go, React, Terraform, Jenkins Groovy Pipelines, Dockerfile, Helm
 - Build tools: Go, Apache Maven, Apache Gradle
 - [Headlamp UI](./headlamp-user-guide/index.md) as a single entry point
 - [CD pipeline](./user-guide/customize-cd-pipeline.md) for Microservice Deployment

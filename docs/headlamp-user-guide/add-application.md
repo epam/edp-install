@@ -63,10 +63,9 @@ and by using the lower-case letters, numbers and inner dashes.
 7. Select any of the supported application languages with its framework
 in the **Application Code Language/framework** field:
 
-  * Java – selecting specific Java version available.
-  * JavaScript - selecting JavaScript allows using the React framework.
-  * DotNet - selecting DotNet allows using DotNet v.3.1 framework.
-  * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask.
+  * Java – selecting specific Java version (8,11,17 are available).
+  * JavaScript - selecting JavaScript allows using React, Vue, Angular and Express frameworks.
+  * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask frameworks.
   * Go - selecting Go allows using the Beego and Operator SDK frameworks.
   * C# - selecting C# allows using the DotNet v.6.0 frameworks.
   * Other - selecting Other allows extending the default code languages when creating a codebase
@@ -163,7 +162,7 @@ and have a respective label in the Fix Version field.
 !!! note
     After the complete adding of the application, inspect the [Application Overview](application.md) part.
 
-### Related Articles
+## Related Articles
 
 * [Application Overview](application.md)
 * [Add CD Pipelines](add-cd-pipeline.md)
