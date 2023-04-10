@@ -85,7 +85,7 @@ Explore the upgrades, new functionality and improvements below.
 * Read-only mode in tekton-dashboard is now available.
 * Cd-pipeline-operator now manages projects instead of namespaces on OpenShift.
 * Kiosk integration when using OpenShift cluster is removed.
-* The `cp-pipeline-operator` is now responsible for RBAC in the created namespaces.
+* The `cd-pipeline-operator` is now responsible for RBAC in the created namespaces.
 * The ability to set constant requeue time in GroupMember reconciler is added.
 * Add monitoring and logging stack to the helmfile.
 * Health check for Headlamp deployment is added.
@@ -94,7 +94,7 @@ Explore the upgrades, new functionality and improvements below.
 
 * In Headlamp UI, the `Repository URL` field is renamed to 'Forked from' for the cases of using clone strategy.
 * Tekton pipelines are now available in Headlamp UI.
-* The user is now able to onboard an application with custom build tool.
+* The user is now able to onboard an application with custom framework/language version.
 * Empty project button is now hidden if clone/import strategy is used.
 * Commit validation functionality is available without JIRA integration.
 * Error message of reconciliation is available over status in case of failure in Headlamp UI.
