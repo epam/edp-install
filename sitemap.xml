@@ -301,6 +301,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/kibana-ilm-rollover/</loc>
+         <lastmod>2023-04-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/kubernetes-cluster-settings/</loc>
          <lastmod>2023-04-10</lastmod>
          <changefreq>daily</changefreq>
