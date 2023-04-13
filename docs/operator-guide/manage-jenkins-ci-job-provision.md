@@ -47,7 +47,7 @@ Code Review and Build pipelines for **docker** application:
       The default template should be changed if there is another creation logic for the Code Review, Build and Create Release pipelines.
       Furthermore, all pipeline types should have the necessary stages as well.
 
-  After the steps above are performed, the new custom job provision will be available in **Advanced Settings** during the application creation in Admin Console.
+  After the steps above are performed, the new custom job provision will be available in **Advanced Settings** during the application creation in the Headlamp UI:
 
   !![Custom ci provision](../assets/operator-guide/add-custom-ci-provision.png "Custom ci provision")
 
@@ -307,7 +307,7 @@ def createListView(codebaseName, branchName) {
 
   **Job Provision Pipeline Parameters**
 
-  The job-provisions pipeline consists of the following parameters:
+  The job-provisions pipeline consists of the following parameters of type string:
 
 * NAME - the application name;
 
@@ -349,7 +349,7 @@ To create a new job provision for work with GitHub, take the following steps:
 
    Max # of builds to keep: 10
 
-5. Select the *This project is parameterized* check box and add a few input parameters:
+5. Select the *This project is parameterized* check box and add a few input parameters (the type of the variables is string):
 
   * NAME;
 
@@ -747,7 +747,7 @@ def getSecretValue(name) {
 ```
    </details>
 
-  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
+  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in the Headlamp UI:
 
   !![Github job provision](../assets/operator-guide/github-job-provision.png "Github job provision")
 
@@ -769,7 +769,7 @@ To create a new job provision for work with GitLab, take the following steps:
 
    Max # of builds to keep: 10
 
-5. Select the *This project is parameterized* check box and add a few input parameters as the following strings:
+5. Select the *This project is parameterized* check box and add a few input parameters as the following strings (the type of the variables is string):
 
   * NAME;
 
@@ -1157,10 +1157,10 @@ def getSecretValue(name) {
 
 10. Create Secret, GitServer CR and Jenkins credentials with the "gitlab" ID by following the instruction: [Adjust Import Strategy](../operator-guide/import-strategy.md).
 
-  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in Admin Console.
+  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in the Headlamp UI:
 
   !![Gitlab job provision](../assets/operator-guide/gitlab-job-provision.png "Gitlab job provision")
 
-### Related Articles
+## Related Articles
 
 * [CI Pipeline for Container](../../user-guide/container-stages)
