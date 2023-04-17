@@ -98,6 +98,9 @@ EDP has a number of components which need to report their statuses: Build/Code R
 
 Persistent layer, which is based on [edp-db](https://github.com/epam/edp-install/tree/master/deploy-templates/templates/db) (PostgreSQL) and [reconciler](https://github.com/epam/edp-reconciler/) component should be retired in favour of [Kubernetes Custom Resource (CR)](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/){target=_blank}. The latest features in EDP are implemented using CR approach.
 
+!!! success "EDP Release 3.0"
+    Reconciler component is deprecated and is no longer supported. All the EDP components are migrated to Kubernetes Custom Resources (CR).
+
 ## III. Building Blocks
 
 *Goals:*
@@ -135,6 +138,9 @@ EDP uses [Allure Framework](https://github.com/allure-framework/allure2){target=
 ### Java 17
 
 EDP supports two LTS versions of Java: 8 and 11. The goal is to provide [Java 17 (LTS)](https://jdk.java.net/17/){target=_blank} support.
+
+!!! success "EDP Release 3.2.1"
+    CI Pipelines for [Java 17](./features.md) is available in EDP.
 
 ### Velero
 
