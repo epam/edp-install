@@ -35,7 +35,7 @@ The added application will be listed in the Applications list allowing you to do
 
 6. Search the necessary application by the namespace or by entering the corresponding name, language or the build tool into the **Filter** tool.
 
-7. Select a number of applications displayed per page (15, 25 or 50 rows)  and navigate between pages if the number of applications exceeds the capacity of a single page.
+7. Select a number of applications displayed per page (15, 25 or 50 rows)  and navigate between pages if the number of applications exceeds the capacity of a single page:
 
   !![Applications menu](../assets/headlamp-user-guide/headlamp-inspect-application-menu2.png "Applications menu")
 
@@ -146,7 +146,6 @@ In order to delete the added branch with the corresponding record in the Headlam
 
   !![Delete branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Delete branch")
 
-### Related Articles
+## Related Articles
 
 * [Add Application](add-application.md)
-* [Promote Application in CD Pipeline](../use-cases/promotion-procedure.md)

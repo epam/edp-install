@@ -24,43 +24,54 @@ The **Create Application** dialog contains the three steps:
 
 ### The Codebase Info Menu
 
-   !![Create application](../assets/headlamp-user-guide/headlamp-codebase-info-menu.png "Create application")
+Follow the instructions below to fill in the fields of the **Codebase Info** menu:
 
 1. In the **Codebase type** field, select **Application**.
 
-2. In the **Codebase Integration Strategy** field, select the necessary configuration strategy:
+2. In the **Repository onboarding strategy** field, select the necessary configuration strategy:
 
    * **Create** – creates a project on the pattern in accordance with an application language, a build tool, and a framework.
-
-   * **Clone** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the additional fields as well. Select the **Codebase Authentication** check box in case you clone the private repository, and fill in the repository login and password/access token.
-
-   * **Import** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
-
+  
+  !![Create application](../assets/headlamp-user-guide/headlamp-create-application.png "Create application")
+  
+  * **Clone** – clones the indicated repository into EPAM Delivery Platform. Fill in the **Repository URL** field. While cloning the existing repository, it is required to fill in the additional fields as well. Select the **Repository credentials** check box in case you clone the private repository, and fill in the repository login and password/access token.
+  
+  !![Clone application](../assets/headlamp-user-guide/headlamp-clone-application.png "Clone application")
+  
+  * **Import** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
+  
+  !![Import application](../assets/headlamp-user-guide/headlamp-import-application.png "Import application")
+  
   !!! note
-      In order to use the Import strategy, make sure to adjust it by the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
-      The Import strategy is not applicable for Gerrit.
+      In order to use the **Import** strategy, make sure to adjust it by the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
+      The **Import** strategy is not applicable for Gerrit.
 
-3. Click the Proceed button to switch to the next menu.
 
-  ### The Application Info Menu
+3. Click the **Proceed** button to switch to the next menu.
+
+### The Application Info Menu
+
+The **Application Info** menu should look like the picture below:
 
    !![Application info](../assets/headlamp-user-guide/headlamp-application-info-menu.png)
 
-4. Type the name of the application in the **Application Name** field by entering at least two characters
+Follow the instructions below to fill in the fields of the **Application Info** menu:
+
+1. Type the name of the application in the **Application name** field by entering at least two characters
 and by using the lower-case letters, numbers and inner dashes.
 
-5. Specify the name of the default branch where you want the development to be performed.
+2. Specify the name of the default branch where you want the development to be performed.
 
   !!! note
       The default branch cannot be deleted.
       For the **Clone** and **Import** strategies: if you want to use the existing branch, enter its name into this field.
 
-6. To create an application with an empty repository in Gerrit, select the **Empty project** check box.
+3. To create an application with an empty repository in Gerrit, select the **Empty project** check box.
 
   !!! note
       The empty repository option is available only for the **Create** strategy.
 
-7. Select any of the supported application languages with its framework
+4. Select any of the supported application languages with its framework
 in the **Application Code Language/framework** field:
 
   * Java – selecting specific Java version (8,11,17 are available).
@@ -75,26 +86,32 @@ in the **Application Code Language/framework** field:
   !!! note
       The **Create** strategy does not allow to customize the default code language set.
 
-8. Choose the necessary build tool in the **Select Build Tool** field:
+5. Choose the necessary build tool in the **Select Build Tool** field:
 
-  * Java - selecting Java allows using the Gradle or Maven tool.
-  * JavaScript - selecting JavaScript allows using the NPM tool.
-  * .Net - selecting .Net allows using the .Net tool.
+  * Java - selecting Java allows using the Gradle or Maven tool;
+  * JavaScript - selecting JavaScript allows using the NPM tool;
+  * C# - selecting C# allows using the .Net tool;
+  * Python - selecting Python allows using Python tool;
+  * Go - selecting Go allows using Go tool;
 
   !!! note
       The **Select Build Tool** field disposes of the default tools and can be changed in accordance with the selected code language.
 
-9. Click the Proceed button to switch to the next menu.
+6. Click the **Proceed** button to switch to the next menu.
 
   ### The Advanced Settings Menu
 
+The **Advanced Settings** menu should look similar to the picture below:
+
   !![Advanced settings](../assets/headlamp-user-guide/headlamp-application-advanced-settings.png "Advanced settings")
 
-10. Select CI pipeline provisioner that will be handling a codebase. For details, refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction and become familiar with the main steps to add another job provisioner.
+Follow the instructions below to fill in the fields of the **Advanced Setting** menu:
 
-11. Select Jenkins agent that will be used to handle a codebase. For details, refer to the [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md) instruction and inspect the steps that should be done to add a new Jenkins agent.
+1. Select the CI pipeline provisioner that will be handling a codebase. For details, refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction and become familiar with the main steps to add another job provisioner.
 
-12. Select the necessary codebase versioning type:
+2. Select Jenkins agent that will be used to handle a codebase. For details, refer to the [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md) instruction and inspect the steps that should be done to add a new Jenkins agent.
+
+3. Select the necessary codebase versioning type:
 
   * **default** - using the default versioning type, in order to specify the version of the current artifacts, images,
   and tags in the Version Control System, a developer should navigate to the corresponding file
@@ -114,10 +131,10 @@ in the **Application Code Language/framework** field:
       The **Start Version From** field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10.
       Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
-13. In the **Deployment Script** field, specify one of the available options:
+4. In the **Deployment Script** field, specify one of the available options:
 helm-chart / openshift-template that are predefined in case it is OpenShift or EKS.
 
-14. In the **Select CI Tool** field, choose the necessary tool: Jenkins or GitLab CI,
+5. In the **Select CI Tool** field, choose the necessary tool: Jenkins or GitLab CI,
 where Jenkins is the default tool and
 the GitLab CI tool can be additionally adjusted. For details,
 please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page.
@@ -127,22 +144,22 @@ please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integrati
 
   !![Integrate with jira server](../assets/headlamp-user-guide/headlamp-integrate-jira-server.png "Integrate with jira server")
 
-15. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits
+6. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits
 and have a respective label in the Fix Version field.
 
   !!! note
       To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page, and setup the [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md).
       Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
 
-16. In the **Jira Server** field, select the Jira server.
+7. In the **Jira Server** field, select the Jira server.
 
-17. Specify the pattern to validate a commit message. Use regular expression to indicate the pattern that is followed on the project to validate a commit message in the code review pipeline. An example of the pattern: `^[PROJECT_NAME-d{4}]:.*$`.
+8. Specify the pattern to validate a commit message. Use regular expression to indicate the pattern that is followed on the project to validate a commit message in the code review pipeline. An example of the pattern: `^[PROJECT_NAME-d{4}]:.*$`.
 
-18. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira. Combine several variables to obtain the desired value.
+9. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira. Combine several variables to obtain the desired value:
 
   !![Mapping field name](../assets/headlamp-user-guide/headlamp-advanced-mapping.png "Mapping field name")
 
-19. In the **Mapping field name** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
+10. In the **Mapping field name** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
 
   a. Select the name of the field in a Jira ticket from the **Mapping field name** drop-down menu. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 
@@ -157,7 +174,7 @@ and have a respective label in the Fix Version field.
 
   d. Click the bin icon to remove the Jira field name.
 
-20. Click the Apply button to add the application to the Applications list.
+11. Click the Apply button to add the application to the Applications list.
 
 !!! note
     After the complete adding of the application, inspect the [Application Overview](application.md) part.

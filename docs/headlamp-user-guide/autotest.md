@@ -186,7 +186,7 @@ There is an ability to run the autotests locally using the IDEA (Integrated Deve
 
 3. Paste the copied command value into the Command line field and run it with the necessary values and namespace.
 
-4. As a result, all launched tests will be executed.
+4. As a result, all the launched tests will be executed.
 
 ## Related Articles
 

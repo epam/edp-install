@@ -29,46 +29,48 @@ The **Create CD Pipeline** dialog contains the three steps:
 
 ### The Pipeline Menu
 
+The **Pipeline** tab of the **Create CD Pipeline** menu should look like the picture below:
+
 !![Create CD pipeline](../assets/headlamp-user-guide/headlamp-pipeline-menu.png "Create CD pipeline")
 
-1. Select the existing namespace from the drop-down list.
-
-2. Type the name of the pipeline in the **Pipeline Name** field by entering at least two characters and by using
+1. Type the name of the pipeline in the **Pipeline Name** field by entering at least two characters and by using
 the lower-case letters, numbers and inner dashes.
 
   !!! note
       The namespace created by the CD pipeline has the following pattern combination: **[edp namespace]-[cd pipeline name]-[stage name]**.
       Please be aware that the namespace length should not exceed 63 symbols.
 
-3. Select the deployment type from the drop-down list:
+2. Select the deployment type from the drop-down list:
 
   * Container - the pipeline will be deployed in a Docker container;
   * Custom - this mode allows to deploy non-container applications and customize the Init stage of CD pipeline.
 
-4. Click the **Proceed** button to switch to the next menu.
+3. Click the **Proceed** button to switch to the next menu.
 
-  ### The Applications Menu
+### The Applications Menu
+
+The **Pipeline** tab of the **Create CD Pipeline** menu should look like the picture below:
 
   !![CD pipeline applications](../assets/headlamp-user-guide/headlamp-cd-pipeline-applications.png "CD pipeline applications")
 
-5. Select the necessary application from the **Mapping field name** drop-down menu.
-6. Select the plus sign icon near the selected application to specify the necessary codebase Docker branch for the application (the output for the branch and other stages from other CD pipelines).
-7. Select the application branch from the drop-down menu.
-8. Select the **Promote in pipeline** check box in order to transfer the application from one to another stage
-by the specified codebase Docker branch. If the **Promote in pipeline** check box is not selected,
-the same codebase Docker stream will be deployed regardless of the stage, i.e. the codebase Docker stream input,
-which was selected for the pipeline, will always be used.
+1. Select the necessary application from the **Mapping field name** drop-down menu.
+2. Select the plus sign icon near the selected application to specify the necessary codebase Docker branch for the application (the output for the branch and other stages from other CD pipelines).
+3. Select the application branch from the drop-down menu.
+4. Select the **Promote in pipeline** check box in order to transfer the application from one to another stage
+  by the specified codebase Docker branch. If the **Promote in pipeline** check box is not selected,
+  the same codebase Docker stream will be deployed regardless of the stage, i.e. the codebase Docker stream input,
+  which was selected for the pipeline, will always be used.
 
   !!! note
       The newly created CD pipeline has the following pattern combination: [pipeline name]-[branch name].
       If there is another deployed CD pipeline stage with the respective codebase Docker stream (= image stream as an OpenShift term),
       the pattern combination will be as follows: [pipeline name]-[stage name]-[application name]-[verified].
 
-9. Click the **Proceed** button to switch to the next menu.
+5. Click the **Proceed** button to switch to the next menu.
 
-  ### The Stages Menu
+### The Stages Menu
 
-10. Click the plus sign icon in the **Stages** menu and fill in the necessary fields in the Adding Stage window <a name="adding_stage_window"></a>:
+1. Click the plus sign icon in the **Stages** menu and fill in the necessary fields in the Adding Stage window <a name="adding_stage_window"></a>:
 
   !![CD stages](../assets/headlamp-user-guide/headlamp-cd-pipeline-stages.png "CD stages")
 
@@ -88,20 +90,17 @@ which was selected for the pipeline, will always be used.
   !!! note
       When changing the Trigger Type, the job-provision automatically will change the set of stages to the corresponding stages set for the CD pipeline.
 
-[//]: # (  !!! note)
 
-[//]: # (      Please be aware that autotests used in the CD pipeline cannot be removed. For the details on how to create an autotest codebase, please refer to the [Add Autotest]&#40;add-autotest.md&#41; section.)
-
-  d. Select the job provisioner. In case of working with non container-based applications, there is an option to use
-a custom job provisioner. Please refer to the [Manage Jenkins CD Job Provision](../operator-guide/manage-jenkins-cd-job-provision.md)
-page for details.
+  d. Select the job provisioner. In case of working with non-container-based applications, there is an option to use
+  a custom job provisioner. Please refer to the [Manage Jenkins CD Job Provision](../operator-guide/manage-jenkins-cd-job-provision.md)
+  page for details.
 
   e. Select the groovy-pipeline library;
 
   f. Select the branch;
 
   g. Add an unlimited number of quality gates by clicking a corresponding plus sign icon and remove them as well
-by clicking the recycle bin icon;
+  by clicking the recycle bin icon;
 
   h. Type the step name, which will be displayed in Jenkins/Tekton, for every quality gate;
 
@@ -119,12 +118,12 @@ by clicking the recycle bin icon;
 
   l. Click the **Apply** button to display the stage in the Stages menu.
 
-11. Edit the stage by clicking its name and applying changes, and remove the added stage by clicking the recycle bin icon
-next to its name.
+  !![Continuous delivery menu](../assets/headlamp-user-guide/headlamp-cd-pipeline-stages-menu.png "Continuous delivery menu")
 
-!![Continuous delivery menu](../assets/headlamp-user-guide/headlamp-cd-pipeline-stages-menu.png "Continuous delivery menu")
+2. Edit the stage by clicking its name and applying changes, and remove the added stage by clicking the recycle bin icon
+   next to its name.
 
-13. Click the **Apply** button to start the provisioning of the pipeline. After the CD pipeline is added, the new project
+3. Click the **Apply** button to start the provisioning of the pipeline. After the CD pipeline is added, the new project
 with the stage name will be created in OpenShift.
 
 ## Manage CD Pipeline

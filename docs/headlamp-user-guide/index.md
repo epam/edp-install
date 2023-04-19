@@ -15,7 +15,7 @@ Headlamp is a central management tool in the EDP ecosystem that provides the abi
 !![Overview page](../assets/headlamp-user-guide/headlamp-overview-page.png "Overview page")
 
 1. **Navigation bar** – consists of four sections: Overview, Components, CD Pipelines, and Git Servers. Click the necessary section to add an entity or open a home page.
-2. **Login bar** – contains notifications, language selection options, color scheme change, and login menu.
+2. **Login bar** – contains notifications, settings, and login menu.
 3. **Main links** – displays the corresponding links to the major adjusted toolset, to the management tool and to the OpenShift cluster.
 4. **Filter** - used for searching and filtering the namespaces.
 
@@ -27,3 +27,4 @@ Inspect the main features available in Headlamp by following the corresponding l
 - [Add Library](add-library.md)
 - [Add Git Server](add-git-server.md)
 - [Add CD Pipeline](add-cd-pipeline.md)
+- [Add Quality Gate](add-quality-gate.md)

@@ -293,7 +293,6 @@ nav:
   - Use Cases:
     - use-cases/index.md
     - Scaffold and Deploy FastAPI Application: use-cases/application-scaffolding.md
-    - Autotest as Quality Gate: use-cases/autotest-as-quality-gate.md
     - Deploy Application With Custom Build Tool/Framework: use-cases/tekton-custom-pipelines.md
     - Secured Secrets Management for Application Deployment: use-cases/external-secrets.md
   - FAQ: faq.md
