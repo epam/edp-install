@@ -240,7 +240,10 @@ To update or uninstall the application, select **Update** or **Uninstall**.
 
 !![Update or uninstall the application](../assets/headlamp-user-guide/headlamp-update-uninstall-application.png "Update or uninstall the application")
 
-After this, the application will be updated or uninstalled in the Argo CD tool as well.
+After this, the application will be updated or uninstalled in the Argo CD tool as well. 
+
+!!! note
+    In a nutshell, the **Update** button updates your image version in the Helm chart, whereas the **Uninstall** button deletes the Helm chart from the namespace where the pipeline is deployed.
 
 ## Related Articles
 
