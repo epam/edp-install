@@ -1,8 +1,9 @@
-{{- if .Values.argocd.enabled }}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClientScope
 metadata:
   name: groups
+  labels:
+    {{- include "edp-install.labels" . | nindent 4 }}
 spec:
   name: groups
   realm: main
@@ -18,4 +19,3 @@ spec:
         "full.path": "false"
         "id.token.claim": "true"
         "userinfo.token.claim": "true"
-{{- end }}
