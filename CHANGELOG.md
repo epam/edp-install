@@ -11,6 +11,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v3.2.2"></a>
+## [v3.2.2] - 2023-04-21
+### Bug Fixes
+
+- Always create keycloakclientscope groups [EPMDEDP-11919](https://jiraeu.epam.com/browse/EPMDEDP-11919)
+
+
 <a name="v3.2.1"></a>
 ## [v3.2.1] - 2023-03-29
 ### Routine
@@ -532,7 +539,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.2.1...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.2.2...HEAD
+[v3.2.2]: https://github.com/epam/edp-install/compare/v3.2.1...v3.2.2
 [v3.2.1]: https://github.com/epam/edp-install/compare/v3.2.0...v3.2.1
 [v3.2.0]: https://github.com/epam/edp-install/compare/v3.1.0...v3.2.0
 [v3.1.0]: https://github.com/epam/edp-install/compare/v3.0.0...v3.1.0
