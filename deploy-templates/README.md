@@ -70,7 +70,7 @@ A Helm chart for EDP Install
 | global.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
 | global.kioskEnabled | bool | `false` |  |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"3.2.1"` | EDP version |
+| global.version | string | `"3.2.2"` | EDP version |
 | global.webConsole.url | string | `nil` | URL to OpenShift/Kubernetes Web console |
 | jenkins-operator.enabled | bool | `false` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
