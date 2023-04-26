@@ -12,7 +12,7 @@ There is a special **job-provisions/ci** folder in Jenkins for these provisioner
 During the EDP deployment, a default provisioner is created for integration with [Gerrit](https://www.gerritcodereview.com/) version control system.
 To configure integration with other version control systems, you need to add the required job provisioners to **job-provisions/ci** folder in Jenkins.
 
-## Custom (custom-default/github/gitlab)
+## Create Custom Provisioner (custom-default/github/gitlab)
 
 In some cases it is necessary to modify or update the job provisioner logic, for example when an [added other code language](./add-other-code-language.md)
 needs to create a custom job provisioner on the basis of an existing one out of the box.
@@ -799,21 +799,23 @@ To create a new job provision for work with GitLab, take the following steps:
 
   * DEFAULT_BRANCH;
 
-5. Check the *Execute concurrent builds if necessary* option.
+6. Check the *Execute concurrent builds if necessary* option.
 
-6. Check the *Restrict where this project can be run* option.
+7. Check the *Restrict where this project can be run* option.
 
-7. Fill in the *Label Expression* field by typing *master* to ensure job runs on Jenkins Master.
+8. Fill in the *Label Expression* field by typing *master* to ensure job runs on Jenkins Master.
 
-8. In the **Build** section, perform the following:
+9. In the **Build Steps** section, perform the following:
 
-  * Select *DSL Script*;
+  * Select **Add build step**;
 
-  * Select the *Use the provided DSL script* check box:
+  * Choose **Process Job DSLs**; 
+
+  * Select the **Use the provided DSL script** check box:
 
   !![DSL script check box](../assets/operator-guide/dsl_script.png "DSL script check box")
 
-9. As soon as all the steps above are performed, insert the code:
+10. As soon as all the steps above are performed, insert the code:
 
    <details>
    <Summary><b>View: Template</b></Summary>
@@ -1155,8 +1157,6 @@ def getSecretValue(name) {
 
    </details>
 
-10. Create Secret, GitServer CR and Jenkins credentials with the "gitlab" ID by following the instruction: [Adjust Import Strategy](../operator-guide/import-strategy.md).
-
   After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in the Headlamp UI:
 
   !![Gitlab job provision](../assets/operator-guide/gitlab-job-provision.png "Gitlab job provision")
@@ -1164,3 +1164,9 @@ def getSecretValue(name) {
 ## Related Articles
 
 * [CI Pipeline for Container](../../user-guide/container-stages)
+
+* [GitLab Integration](../operator-guide/gitlab-integration.md)
+
+* [GitHub Integration](../operator-guide/github-integration.md)
+
+* [Enable VCS Import Strategy](../operator-guide/import-strategy.md)

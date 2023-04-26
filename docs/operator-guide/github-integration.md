@@ -5,11 +5,11 @@ Follow the steps below to automatically integrate Jenkins with GitHub webhooks.
 !!! note
     Before applying the GitHub integration, make sure to enable VCS Import strategy. For details, please refer to the [Enable VCS Import Strategy](import-strategy.md) page.
 
-1. Create a new job provisioner by following the [instruction](manage-jenkins-ci-job-provision.md#github-github). The job provisioner will create a job suite for an application added to EDP. It will also create webhooks for the project in GitHub using a GitHub token.
+1. Ensure the new job provisioner is created, as well as **Secret** with SSH key and **GitServer** custom resources.
 
-2. Ensure the classic personal access token for GitHub is created.
+2. Ensure the access token for GitHub is created.
 
-3. Navigate to **Jenkins** -> **Credentials** -> **System** -> **Global credentials** -> **Add credentials**, and create new credentials with the *Secret text* kind. In the Secret field, provide the GitHub API token, fill in the **ID** field with the `github-access-token` value:
+3. Navigate to **Dashboard** -> **Manage Jenkins** -> **Manage Credentials** -> **Global** -> **Add Credentials**, and create new credentials with the **Secret text** kind. In the **Secret** field, provide the GitHub API token, fill in the **ID** field with the `github-access-token` value:
 
   !![Jenkins github credentials](../assets/operator-guide/api_token2.png "Jenkins github credentials")
 

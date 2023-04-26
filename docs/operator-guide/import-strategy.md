@@ -17,51 +17,55 @@ by taking the steps below.
 
 2. Generate access token for [GitLab](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html)
    or [GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-   account with read/write access to the API. Both personal and repository specific tokens are applicable.
+   account with read/write access to the API. Both personal and project access tokens are applicable.
 
 === "GitHub"
 
-      * Log in to GitHub.
-      * Click the profile account and navigate to **Settings** -> **Developer Settings**.
-      * Select *Personal access tokens (classic)* and generate a new token with the following parameters:
+    To create access token in GitHub, follow the steps below:
 
-      !![Repo permission](../assets/operator-guide/github-scopes-1.png "Repo permission")
+    * Log in to GitHub.
+    * Click the profile account and navigate to **Settings** -> **Developer Settings**.
+    * Select *Personal access tokens (classic)* and generate a new token with the following parameters:
 
-      !!! note
-          The access below is required for the GitHub Pull Request Builder plugin to get Pull Request commits, their status, and author info.
+    !![Repo permission](../assets/operator-guide/github-scopes-1.png "Repo permission")
 
-      !![Admin permission](../assets/operator-guide/github-scopes-2.png "Admin permission")
-      !![User permission](../assets/operator-guide/github-scopes-3.png "User permission")
+    !!! note
+        The access below is required for the GitHub Pull Request Builder plugin to get Pull Request commits, their status, and author info.
 
-      !!! warning
-          Make sure to save a new personal access token because it won`t be displayed later.
+    !![Admin permission](../assets/operator-guide/github-scopes-2.png "Admin permission")
+    !![User permission](../assets/operator-guide/github-scopes-3.png "User permission")
+
+    !!! warning
+        Make sure to save a new personal access token because it won`t be displayed later.
 
 === "GitLab"
 
-      * Log in to GitLab.
-      * In the top-right corner, click the avatar and select **Settings**.
-      * On the **User Settings** menu, select **Access Tokens**.
-      * Choose a name and an optional expiry date for the token.
-      * In the **Scopes** block, select the **api** scope for the token.
+    To create access token in GitLab, follow the steps below:
 
-      !![Personal access tokens](../assets/operator-guide/scopes.png "Personal access tokens")
+    * Log in to GitLab.
+    * In the top-right corner, click the avatar and select **Settings**.
+    * On the **User Settings** menu, select **Access Tokens**.
+    * Choose a name and an optional expiry date for the token.
+    * In the **Scopes** block, select the **api** scope for the token.
 
-      * Click the **Create personal access token** button.
+    !![Personal access tokens](../assets/operator-guide/scopes.png "Personal access tokens")
 
-      !!! note
-          Make sure to save the access token as there will not be any ability to access it once again.
+    * Click the **Create personal access token** button.
 
-      It is also possible to create a project access token instead of a personal access token. In this case, the GitLab Jenkins plugin will be able to accept payloads from webhooks for the project only:
+    !!! note
+        Make sure to save the access token as there will not be any ability to access it once again.
 
-      * Log in to GitLab and navigate to the project.
-      * On the **User Settings** menu, select *Access Tokens*.
-      * Choose a name and an optional expiry date for the token.
-      * Choose a role: *Owner* or *Maintainer*.
-      * In the **Scopes** block, select the *api* scope for the token.
+    In case you want to create a project access token instead of a personal one, the GitLab Jenkins plugin will be able to accept payloads from webhooks for the project only:
 
-      !![Project access tokens](../assets/operator-guide/scopes-project.png "Project access tokens")
+    * Log in to GitLab and navigate to the project.
+    * On the **User Settings** menu, select *Access Tokens*.
+    * Choose a name and an optional expiry date for the token.
+    * Choose a role: *Owner* or *Maintainer*.
+    * In the **Scopes** block, select the *api* scope for the token.
 
-      * Click the **Create project access token** button.
+    !![Project access tokens](../assets/operator-guide/scopes-project.png "Project access tokens")
+
+    * Click the **Create project access token** button.
 
 ## CI Tool Specific Steps
 
@@ -125,13 +129,13 @@ The further steps depend on the CI tool used.
         type: ssh
       ```
 
-    3. Double-check that the new SSH credentials called `gitlab`/`github` are created in Jenkins using the SSH key. Navigate to `Jenkins` -> `Manage Jenkins` -> `Manage Credentials` -> `Add Credentials`:
+    3. Double-check that the new SSH credentials called `gitlab`/`github` are created in Jenkins using the SSH key. Navigate to `Jenkins` -> `Manage Jenkins` -> `Manage Credentials` -> `(global)`:
 
         !![Jenkins credentials](../assets/operator-guide/add-credentials.png "Jenkins credentials")
 
-    4. The next step is to connect Jenkins plugins with your repository whether it is [GitHub](../operator-guide/github-integration.md) or [GitLab](../operator-guide/gitlab-integration.md).
+    4. The next step is to create a new job provisioner by following the instructions for [GitHub](manage-jenkins-ci-job-provision.md#github-github) or [GitLab](manage-jenkins-ci-job-provision.md#gitlab-gitlab). The job provisioner will create a job suite for an application added to EDP. It will also create webhooks for the project in GitLab using a GitLab token.
 
-    5. The next step is to integrate Jenkins with [GitHub](manage-jenkins-ci-job-provision.md#github-github) or [GitLab](manage-jenkins-ci-job-provision.md#gitlab-gitlab).
+    5. The next step is to integrate Jenkins with [GitHub](../operator-guide/github-integration.md) or [GitLab](../operator-guide/gitlab-integration.md) by setting their plugins.
 
 ## Related Articles
 
