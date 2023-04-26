@@ -18,7 +18,7 @@ Enabling OAuth2-Proxy implies the following general steps:
 
 1. Update your EDP deployment using command `--set 'oauth2_proxy.enabled=true'` **or** the `--values` file by enabling the oauth2_proxy parameter.
 2. Check that OAuth2-Proxy is deployed successfully.
-3. Enable authentication for your Ingress by adding `auth-signin` and `auth-url` of OAuth2-Proxy to its annotation.<br>
+3. Enable authentication for your Ingress by adding `auth-signin` and `auth-url` of OAuth2-Proxy to its annotation.
 
 This will deploy and connect OAuth2-Proxy to your application endpoint.
 
@@ -33,9 +33,10 @@ helm upgrade --version <version> --set 'oauth2_proxy.enabled=true' edp-install -
 2. Check that OAuth2-Proxy is deployed successfully.
 3. Edit the Tekton dashboard Ingress annotation by adding `auth-signin` and `auth-url` of oauth2-proxy by `kubectl` command:
    ```bash
-   kubectl annotate ingress <ingress-name> nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri' nginx.ingress.kubernetes.io/auth-url='http://<oauth-service-name>.<edp-project>.svc.cluster.local:8080/oauth2/auth'
+   kubectl annotate ingress <application-ingress-name> nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri' nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
    ```
+
 ## Related Articles
-[Keycloak Installation](install-keycloak.md)<br>
-[Keycloak OIDC Installation](configure-keycloak-oidc-eks.md)<br>
-[Tekton Installation](install-tekton.md)<br>
+[Keycloak Installation](install-keycloak.md)
+[Keycloak OIDC Installation](configure-keycloak-oidc-eks.md)
+[Tekton Installation](install-tekton.md)
