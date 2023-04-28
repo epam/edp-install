@@ -53,6 +53,7 @@ A Helm chart for EDP Install
 | edp-headlamp.config.oidc.enabled | bool | `false` |  |
 | edp-headlamp.config.oidc.issuerRealm | string | `"openshift"` |  |
 | edp-headlamp.enabled | bool | `true` |  |
+| edp-tekton.ctLint | string | `nil` |  |
 | edp-tekton.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for EDP installation, using External Secret Operator |

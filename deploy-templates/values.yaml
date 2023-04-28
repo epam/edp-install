@@ -319,6 +319,28 @@ edp-headlamp:
 edp-tekton:
   enabled: true
 
+  ctLint:
+    # -- This block make possible to modify ct-lint configuration. It setup ct-lint parameters: "--config", "--chart-yaml-schema" and "--lint-conf".
+    # -- Config block.
+    # validateMaintainers: ""  # -- true or false
+
+    # -- Chart schema block.
+    # -- Example parameters: https://github.com/helm/chart-testing/blob/main/etc/chart_schema.yaml
+    # chartSchema: |
+    #   name: str()
+    #   home: str()
+    #   version: str()
+    #   type: str()
+
+    # -- Lint-conf block.
+    # -- Example parameters: https://github.com/helm/chart-testing/blob/main/etc/lintconf.yaml
+    # lintconf: |
+    #   ---
+    #   rules:
+    #     braces:
+    #       min-spaces-inside: 0
+    #       max-spaces-inside: 0
+
 perf-operator:
   enabled: true
   # image:
