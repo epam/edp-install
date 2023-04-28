@@ -19,7 +19,7 @@
     }
 
     .tx-edphome {
-        margin: 32px 2.8rem;
+        margin: 32px 2.8rem 64px 2.8rem;
         color: var(--md-primary-bg-color);
         justify-content: center;
     }
@@ -31,15 +31,33 @@
     }
 
     .tx-edphome__content {
-        padding-bottom: 1rem;
         margin: 0 auto;
     }
 
+    .tx-edphome__video-wrapper {
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    .tx-edphome__video {
+        position: relative;
+        padding-bottom: 56.25%;
+    }
+
+    .tx-edphome__video iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     .tx-edphome__image {
-        width: 17rem;
-        height: 17rem;
-        order: 1;
-        padding-right: 2.5rem;
+        height: 9rem;
+    }
+
+    .tx-edphome__image img {
+        height: 100%;
     }
 
     .tx-edphome .md-button {
@@ -120,17 +138,21 @@
 
         .tx-edphome {
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
         }
 
         .tx-edphome__content {
             max-width: 22rem;
             margin-top: 3.5rem;
-            margin-bottom: 3.5rem;
             margin-left: 1.0rem;
             margin-right: 4.0rem;
             align-items: center;
+        }
+
+        .tx-edphome__video-wrapper {
+            width: 100%;
+            margin-top: 0;
         }
     }
 
@@ -225,10 +247,10 @@
 <section class="tx-container">
     <div class="md-grid md-typeset">
         <div class="tx-edphome">
-            <div class="tx-edphome__image">
-                <img src="assets/home_logo.png" draggable="false">
-            </div>
             <div class="tx-edphome__content">
+                <div class="tx-edphome__image">
+                    <img src="assets/home_logo.png" draggable="false">
+                </div>
                 <h1> Build your delivery rocket </h1>
                 <p><b>Boost</b> your delivery with the <b>development culture</b> based on the modern CI/CD stack,
                     golden path and self-service capabilities of the EPAM Delivery Platform (EDP).
@@ -244,6 +266,13 @@
                         {% include ".icons/fontawesome/regular/envelope.svg" %}
                     </span>
                 </a>
+            </div>
+            <div class="tx-edphome__video-wrapper">
+                <div class="tx-edphome__video">
+                    <iframe allowfullscreen frameborder="0"
+                        src="https://www.youtube.com/embed/Xsy1UKMb8vg">
+                    </iframe>
+                </div>
             </div>
         </div>
     </div>
