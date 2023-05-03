@@ -13,6 +13,7 @@ EDP components that support custom certificates can be found in the table below:
 | keycloak-operator | keycloak-operator |
 | nexus-operator | oauth2-proxy |
 | edp-install | oauth2-proxy |
+| edp-headlamp | edp-headlamp |
 
 ## Prerequisites
 
