@@ -5,9 +5,9 @@ Headlamp enables to clone or import an autotest, add it to the environment with 
 
 !!! info
     Please refer to the [Add Application](add-application.md) section for the details on how to add an application codebase type.
-    For the details on how to use autotests as quality gates, please refer to the [Stages Menu](add-cd-pipeline.md#stages-menu) section of the [Add CD Pipeline](add-cd-pipeline.md) documentation.
+    For the details on how to use autotests as quality gates, please refer to the [Stages Menu](add-cd-pipeline.md#the-stages-menu) section of the [Add CD Pipeline](add-cd-pipeline.md) documentation.
 
-To add an autotest, navigate to the **Autotests** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create Autotest** dialog will appear. You can create an autotest [in YAML](#YAML) or [via the three-step menu](#menu) in the dialog.
+To add an autotest, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create new component** dialog will appear, then select **Autotest** and choose one of the strategies which will be described later in this page. You can create an autotest [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
 ## Create Autotest in YAML <a name="YAML"></a>
 
@@ -21,59 +21,52 @@ To save the changes, select the **Save & Apply** button.
 
 ## Create Autotest in the Dialog <a name="menu"></a>
 
-The **Create Autotest** dialog contains the three steps:
+The **Create Autotest** dialog contains the two steps:
 
 * The Codebase Info Menu
-* The Autotest Info Menu
 * The Advanced Settings Menu
 
 ### The Codebase Info Menu
 
 There are two available strategies: clone and import.
 
-1. In the **Codebase type** field, select *Autotest*.
+1. The **Create new component** menu should look like the picture below:
+
+  !![Create new component menu](../assets/headlamp-user-guide/create_new_autotest.png "Create new component menu")
 
 2. In the **Repository onboarding strategy** field, select the necessary configuration strategy:
 
-  * **Clone** – clones the indicated repository into EPAM Delivery Platform. Fill in the **Repository URL** field. While cloning the existing repository, it is required to fill in the additional fields as well. Select the **Repository credentials** check box in case you clone the private repository, and fill in the repository login and password/access token.
-  
+  * **Clone** – clones the indicated repository into EPAM Delivery Platform.
+
   !![Clone autotest](../assets/headlamp-user-guide/headlamp-clone-autotest.png "Clone autotest")
-  
-  * **Import** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
-  
-  !![Import autotest](../assets/headlamp-user-guide/headlamp-import-autotest.png "Import autotest")
-  
+
+  1. While cloning the existing repository, it is required to fill in the **Repository URL** field.
+
+  2. Select the Git server from the drop-down list and define the relative path to the repository, such as `/epmd-edp/examples/basic/edp-auto-tests-simple-example`.
+
+  3. Select the **Repository credentials** check box in case you clone the private repository, and fill in the repository login and password/access token.
+
+  4. Fill in the **Component name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
+
+  5. Type the necessary description in the **Description** field.
+
+  6. In the **Autotest code language** field, select the Java code language with its framework (specify Java 8 or Java 11 to be used) and get the default Maven build tool OR add another code language. Selecting **Other** allows extending the default code languages and get the necessary build tool, for details, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
+
+    !!! note
+        Using the **Create** strategy does not allow to customize the default code language set.
+
+  7. Select the Java framework if Java is selected above.
+
+  8. The **Build Tool** field can dispose of the default Maven tool, Gradle or other built tool in accordance with the selected code language.
+
+  9. All the autotest reports will be created in the Allure framework that is available in the **Autotest Report Framework** field by default.
+
+  * **Import** - allows configuring a replication from the Git server. While importing the existing repository.
+
   !!! note
-      In order to use the **Import** strategy, make sure to adjust it by the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the **Import** strategy, make sure to adjust it by the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page. Also, you cannot choose the **Empty project** field using the **Import project** strategy.
 
 3. Click the **Proceed** button to switch to the next menu.
-
-  ### The Autotest Info Menu
-
-The **Autotest Info** menu should look like the picture below:
-
-  !![Autotest info](../assets/headlamp-user-guide/headlamp-autotest-info-menu.png "Autotest info")
-
-1. Fill in the **Autotest Name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
-
-2. Specify the name of the default branch where you want the development to be performed.
-
-  !!! note
-      The default branch cannot be deleted.
-
-3. Type the necessary description in the **Description** field.
-
-
-4. In the **Autotest code language** field, select the Java code language with its framework (specify Java 8 or Java 11 to be used) and get the default Maven build tool OR add another code language. Selecting **Other** allows extending the default code languages and get the necessary build tool, for details, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
-
-  !!! note
-      Using the **Create** strategy does not allow to customize the default code language set.
-
-5. The **Select Build Tool** field can dispose of the default Maven tool, Gradle or other built tool in accordance with the selected code language.
-
-6. All the autotest reports will be created in the Allure framework that is available in the **Autotest Report Framework** field by default.x
-
-7. Click the **Proceed** button to switch to the next menu.
 
   ### The Advanced Settings Menu
 
@@ -81,59 +74,62 @@ The **Advanced Settings** menu should look like the picture below:
 
   !![Advanced settings](../assets/headlamp-user-guide/headlamp-advanced-settings-autotest.png "Advanced settings")
 
-1. In the **CI tool** field, choose the necessary tool. Tekton is the default tool and the GitLab CI tool can be additionally adjusted. For details, please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page.
+a. Specify the name of the default branch where you want the development to be performed.
 
-  !!! note
-      The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
+!!! note
+    The default branch cannot be deleted.
 
-2. Select a **CI pipeline provisioner** that will be used to handle a codebase. For details, refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction and become familiar with the main steps to add another job provisioner.
+b. In the **CI tool** field, choose the necessary tool. Tekton is the default tool, whereas Jenkins and GitLab CI tools can be additionally adjusted. For details, please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page in case of using Gitlab CI. Refer to the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md) instruction in case of using Jenkins.
 
-3. Select the necessary codebase versioning type:
+!!! note
+    The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
 
-  * **default**: Using the default versioning type, in order to specify the version of the current artifacts, images, and tags in the Version Control System, a developer should navigate to the corresponding file and change the version **manually**.
+c. Select the necessary codebase versioning type:
 
-  * **edp**: Using the edp versioning type, a developer indicates the version number from which all the artifacts will be versioned and, as a result, **automatically** registered in the corresponding file (e.g. pom.xml).
+* **default**: Using the default versioning type, in order to specify the version of the current artifacts, images, and tags in the Version Control System, a developer should navigate to the corresponding file and change the version **manually**.
+
+* **edp**: Using the edp versioning type, a developer indicates the version number from which all the artifacts will be versioned and, as a result, **automatically** registered in the corresponding file (e.g. pom.xml).
 
   When selecting the edp versioning type, the extra field will appear:
 
   !![Edp versioning](../assets/headlamp-user-guide/headlamp-edp-versioning-autotest.png "Edp versioning")
 
-  a. Type the version number from which you want the artifacts to be versioned.
+  Type the version number from which you want the artifacts to be versioned.
 
-  !!! note
-      The **Start Version From** field must be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
+!!! note
+    The **Start Version From** field must be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
-  !![Jira integration](../assets/headlamp-user-guide/headlamp-integrate-jira-server-autotest.png)
+d. Specify the pattern to validate a commit message. Use regular expression to indicate the pattern that is followed on the project to validate a commit message in the code review pipeline. An example of the pattern: `^[PROJECT_NAME-d{4}]:.*$`
 
-4. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
+  !![Jira integration](../assets/headlamp-user-guide/headlamp-integrate-jira-server.png)
 
-  !!! note
-      To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page, and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
+e. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
 
-5. As soon as the Jira server is set, select it in the **Select Jira Server** field.
+!!! note
+    To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page, and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
 
-6. Specify the pattern to validate a commit message. Use regular expression to indicate the pattern that is followed on the project to validate a commit message in the code review pipeline. An example of the pattern: `^[PROJECT_NAME-d{4}]:.*$`
+f. As soon as the Jira server is set, select it in the **Jira Server** field.
 
-7. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira.
+g. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira.
 
-  !![Advanced mapping](../assets/headlamp-user-guide/headlamp-advanced-mapping-autotests.png)
+  !![Mapping field name](../assets/headlamp-user-guide/headlamp-library-advanced-mapping.png "Mapping field name")
 
-8. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
+h. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
 
-  a. Select the name of the field in a Jira ticket. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
+1. Select the name of the field in a Jira ticket. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 
-  b. Click the **add** icon to add the mapping field name.
+2. Click the **Add** button to add the mapping field name.
 
-  c. Enter Jira pattern for the field name:
+3. Enter Jira pattern for the field name:
 
   * For the **Fix Version/s** field, select the **EDP_VERSION** variable that represents an EDP upgrade version, as in _2.7.0-SNAPSHOT_.
   Combine variables to make the value more informative. For example, the pattern **EDP_VERSION-EDP_COMPONENT** will be displayed as _2.7.0-SNAPSHOT-nexus-operator_ in Jira.
   * For the **Component/s** field select the **EDP_COMPONENT** variable that defines the name of the existing repository. For example, _nexus-operator_.
-  * For the **Labels** field select the **EDP_GITTAG** variable that defines a tag assigned to the commit in Git Hub. For example, _build/2.7.0-SNAPSHOT.59_.
+  * For the **Labels** field select the **EDP_GITTAG**variable that defines a tag assigned to the commit in Git Hub. For example, _build/2.7.0-SNAPSHOT.59_.
 
-  d. Click the bin icon to remove the Jira field name.
+4. Click the bin icon to remove the Jira field name.
 
-9. Click the **Apply** button to add the autotest to the Autotests list.
+i. Click the **Apply** button to add the library to the Libraries list.
 
 !!! note
     After the complete adding of the autotest, inspect the [Autotest Overview](autotest.md) part.
