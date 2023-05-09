@@ -52,8 +52,8 @@ and [Delete Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persiste
       kind: StorageClass
       metadata:
         name: ebs-sc
-      annotations:
-        storageclass.kubernetes.io/is-default-class: 'true'
+        annotations:
+          storageclass.kubernetes.io/is-default-class: 'true'
       allowedTopologies: []
       mountOptions: []
       provisioner: ebs.csi.aws.com
@@ -67,8 +67,8 @@ and [Delete Reclaim Policy](https://kubernetes.io/docs/concepts/storage/persiste
       apiVersion: storage.k8s.io/v1
       metadata:
         name: gp3
-      annotations:
-        storageclass.kubernetes.io/is-default-class: 'true'
+        annotations:
+          storageclass.kubernetes.io/is-default-class: 'true'
       allowedTopologies: []
       mountOptions: []
       provisioner: ebs.csi.aws.com
