@@ -25,7 +25,7 @@ releases:
     default: "true"
   chart: "prometheus-community/kube-prometheus-stack"
   disableValidation: true
-  version: "44.3.1"
+  version: "45.21.0"
   wait: false
   values:
       # we don't have ability to monitor these components on AWS EKS
