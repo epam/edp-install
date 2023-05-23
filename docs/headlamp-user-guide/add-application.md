@@ -41,12 +41,12 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
 
   3. To create an application with an empty repository in Gerrit, select the Empty project check box.
 
-  4. Select any of the supported application languages with its framework in the **Application Code Language** field:
+  4. Select any of the supported application languages with their providers in the **Application Code Language** field:
 
     * Java – selecting specific Java version (8,11,17 are available).
     * JavaScript - selecting JavaScript allows using React, Vue, Angular and Express frameworks.
     * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask frameworks.
-    * Go - selecting Go allows using the Beego and Operator SDK frameworks.
+    * Go - selecting Go allows using the Beego, Gin and Operator SDK frameworks.
     * C# - selecting C# allows using the .Net v.3.1 and .Net v.6.0 frameworks.
     * Helm - selecting Helm allows using the Helm framework.
     * Other - selecting Other allows extending the default code languages when creating a codebase with the clone/import strategy. To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
