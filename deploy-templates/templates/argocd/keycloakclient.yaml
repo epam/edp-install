@@ -8,6 +8,9 @@ spec:
   advancedProtocolMappers: true
   clientId: argocd
   directAccess: true
+{{- if .Values.argocd.oidcSecretName }}
+  secret: {{ .Values.argocd.oidcSecretName }}
+{{- end }}
   public: false
   defaultClientScopes:
     - groups
