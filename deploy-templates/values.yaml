@@ -30,6 +30,8 @@ global:
   gerritSSHPort: "22"
   # -- Keycloak URL
   keycloakUrl: https://keycloak.example.com
+# -- Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http://<ip-address>:9000
+# sonarUrl: ""
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
@@ -94,7 +96,7 @@ externalSecrets:
     aws:
       # -- Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager
       service: ParameterStore
-      # -- IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::093899590031:role/rolename
+      # -- IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
       role:
       # -- AWS Region where secrets are stored, e.g. eu-central-1
       region: eu-central-1

@@ -189,6 +189,7 @@ nav:
           - Keycloak Integration: operator-guide/reportportal-keycloak.md
           - Integration With Tekton: operator-guide/report-portal-integration-tekton.md
       - Logsight Integration: operator-guide/logsight-integration.md
+      - SonarQube Integration: operator-guide/sonarqube.md
     - Platform Capabilities:
       - GitOps:
         - Argo CD Integration: operator-guide/argocd-integration.md
