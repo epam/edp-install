@@ -28,12 +28,12 @@ dependencies:
 
 - name: codebase-operator
   repository: "@epamedp"
-  version: "2.15.0"
+  version: "2.16.0"
   condition: codebase-operator.enabled
 
 - name: jenkins-operator
   repository: "@epamedp"
-  version: "2.14.0"
+  version: "2.15.0"
   condition: jenkins-operator.enabled
 
 - name: edp-component-operator
@@ -43,12 +43,12 @@ dependencies:
 
 - name: edp-headlamp
   repository: "@epamedp"
-  version: "0.5.0"
+  version: "0.6.0"
   condition: edp-headlamp.enabled
 
 - name: edp-tekton
   repository: "@epamedp"
-  version: "0.4.0"
+  version: "0.5.0"
   condition: edp-tekton.enabled
 
 - name: cd-pipeline-operator
@@ -58,7 +58,7 @@ dependencies:
 
 - name: nexus-operator
   repository: "@epamedp"
-  version: "2.14.1"
+  version: "2.15.0"
   condition: nexus-operator.enabled
 
 - name: sonar-operator
@@ -73,7 +73,7 @@ dependencies:
 
 - name: gerrit-operator
   repository: "@epamedp"
-  version: "2.14.0"
+  version: "2.15.0"
   condition: gerrit-operator.enabled
 
 - name: perf-operator
@@ -87,22 +87,22 @@ annotations:
   artifacthub.io/images: |
     - name: keycloak-operator:1.15.0
       image: epamedp/keycloak-operator:1.15.0
-    - name: codebase-operator:2.15.0
-      image: epamedp/codebase-operator:2.15.0
-    - name: jenkins-operator:2.14.0
-      image: epamedp/jenkins-operator:2.14.0
+    - name: codebase-operator:2.16.0
+      image: epamedp/codebase-operator:2.16.0
+    - name: jenkins-operator:2.15.0
+      image: epamedp/jenkins-operator:2.15.0
     - name: cd-pipeline-operator:2.14.1
       image: epamedp/cd-pipeline-operator:2.14.1
-    - name: nexus-operator:2.14.1
-      image: epamedp/nexus-operator:2.14.1
+    - name: nexus-operator:2.15.0
+      image: epamedp/nexus-operator:2.15.0
     - name: sonar-operator:2.14.0
       image: epamedp/sonar-operator:2.14.0
     - name: admin-console-operator:2.14.0
       image: epamedp/admin-console-operator:2.14.0
-    - name: gerrit-operator:2.14.0
-      image: epamedp/gerrit-operator:2.14.0
-    - name: edp-headlamp:0.5.0
-      image: epamedp/edp-headlamp:0.5.0
+    - name: gerrit-operator:2.15.0
+      image: epamedp/gerrit-operator:2.15.0
+    - name: edp-headlamp:0.6.0
+      image: epamedp/edp-headlamp:0.6.0
     - name: perf-operator:2.13.0
       image: epamedp/perf-operator:2.13.0
     - name: postgres:9.6
