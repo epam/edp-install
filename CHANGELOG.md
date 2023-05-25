@@ -10,22 +10,65 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.3.0"></a>
+## [v3.3.0] - 2023-05-25
+### Features
+
+- Add EDP Intro video [EPMDEDP-11824](https://jiraeu.epam.com/browse/EPMDEDP-11824)
+- Allow to provide custom secret name for ArgoCD oidc client [EPMDEDP-11826](https://jiraeu.epam.com/browse/EPMDEDP-11826)
+- Add EDP component Jaeger [EPMDEDP-11978](https://jiraeu.epam.com/browse/EPMDEDP-11978)
+
 ### Bug Fixes
 
 - Align icons in the headlamp guide [EPMDEDP-11577](https://jiraeu.epam.com/browse/EPMDEDP-11577)
+- Always create keycloakclientscope groups [EPMDEDP-11919](https://jiraeu.epam.com/browse/EPMDEDP-11919)
 
 ### Routine
 
 - Update current development version [EPMDEDP-11472](https://jiraeu.epam.com/browse/EPMDEDP-11472)
+- Update current development version [EPMDEDP-11472](https://jiraeu.epam.com/browse/EPMDEDP-11472)
 - Add the ability to use additional volumes in oauth2 proxy [EPMDEDP-11628](https://jiraeu.epam.com/browse/EPMDEDP-11628)
+- Align helm charts versions [EPMDEDP-11826](https://jiraeu.epam.com/browse/EPMDEDP-11826)
+- Add values for ct-lint configuration [EPMDEDP-11909](https://jiraeu.epam.com/browse/EPMDEDP-11909)
+- Bump version of prometheus-stack [EPMDEDP-11930](https://jiraeu.epam.com/browse/EPMDEDP-11930)
+- Bump version of agrocd [EPMDEDP-11957](https://jiraeu.epam.com/browse/EPMDEDP-11957)
 
 ### Documentation
 
+- Update Headlamp guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Align EDP install version to 3.2 [EPMDEDP-11472](https://jiraeu.epam.com/browse/EPMDEDP-11472)
+- Add release notes of EDP 3.2.0 to the RELEASES.md file [EPMDEDP-11499](https://jiraeu.epam.com/browse/EPMDEDP-11499)
 - Onboard application with custom build tool-framework [EPMDEDP-11602](https://jiraeu.epam.com/browse/EPMDEDP-11602)
+- Describe cd-pipeline RBAC model if manageNamespace: false [EPMDEDP-11630](https://jiraeu.epam.com/browse/EPMDEDP-11630)
 - Describe access control in EDP [EPMDEDP-11639](https://jiraeu.epam.com/browse/EPMDEDP-11639)
+- Add instructions on how to use the CD pipeline after integrating with Argo CD [EPMDEDP-11648](https://jiraeu.epam.com/browse/EPMDEDP-11648)
+- Use-case on how to work with sensitive data from Pipelines [EPMDEDP-11673](https://jiraeu.epam.com/browse/EPMDEDP-11673)
+- Describe Kibana ILM rollover in FEK stack [EPMDEDP-11696](https://jiraeu.epam.com/browse/EPMDEDP-11696)
+- Describe logic for Update/Uninstall buttons in Add CD Pipeline page [EPMDEDP-11703](https://jiraeu.epam.com/browse/EPMDEDP-11703)
+- Correct ingress annotation in oauth2-proxy docs [EPMDEDP-11704](https://jiraeu.epam.com/browse/EPMDEDP-11704)
 - Add language C# to documentation [EPMDEDP-11731](https://jiraeu.epam.com/browse/EPMDEDP-11731)
+- Update RoadMap with the latest features [EPMDEDP-11750](https://jiraeu.epam.com/browse/EPMDEDP-11750)
+- Add Vue, Angular and Express frameworks to JavaScript in mkdocs [EPMDEDP-11762](https://jiraeu.epam.com/browse/EPMDEDP-11762)
+- Update edp-install guide [EPMDEDP-11790](https://jiraeu.epam.com/browse/EPMDEDP-11790)
 - Set up the sending of pipeline status notifications to MS Teams [EPMDEDP-11800](https://jiraeu.epam.com/browse/EPMDEDP-11800)
+- Add the Gin provider to the Go language in mkdocs [EPMDEDP-11836](https://jiraeu.epam.com/browse/EPMDEDP-11836)
+- Correct ingress annotation in oauth2-proxy docs [EPMDEDP-11845](https://jiraeu.epam.com/browse/EPMDEDP-11845)
+- The ability to add custom certificates for Headlamp [EPMDEDP-11847](https://jiraeu.epam.com/browse/EPMDEDP-11847)
+- Add release 3.2 upgrade docs [EPMDEDP-11850](https://jiraeu.epam.com/browse/EPMDEDP-11850)
+- RELEASES.md typos hot fix [EPMDEDP-11872](https://jiraeu.epam.com/browse/EPMDEDP-11872)
+- Fix StorageClass annotation [EPMDEDP-11875](https://jiraeu.epam.com/browse/EPMDEDP-11875)
+- Update secret creation in the Enable VCS Import Strategy page [EPMDEDP-11880](https://jiraeu.epam.com/browse/EPMDEDP-11880)
+- Enable VCS Import Strategy page hot fix [EPMDEDP-11880](https://jiraeu.epam.com/browse/EPMDEDP-11880)
+- Add Helm language, add .NET 3.1 to C#, update Add App, Add Lib and Add Autotest docs [EPMDEDP-11881](https://jiraeu.epam.com/browse/EPMDEDP-11881)
+- Describe Java Maven Multi-module [EPMDEDP-11937](https://jiraeu.epam.com/browse/EPMDEDP-11937)
+
+
+<a name="v3.2.2"></a>
+## [v3.2.2] - 2023-04-21
+### Bug Fixes
+
+- Always create keycloakclientscope groups [EPMDEDP-11919](https://jiraeu.epam.com/browse/EPMDEDP-11919)
 
 
 <a name="v3.2.1"></a>
@@ -549,7 +592,9 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.2.1...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.3.0...HEAD
+[v3.3.0]: https://github.com/epam/edp-install/compare/v3.2.2...v3.3.0
+[v3.2.2]: https://github.com/epam/edp-install/compare/v3.2.1...v3.2.2
 [v3.2.1]: https://github.com/epam/edp-install/compare/v3.2.0...v3.2.1
 [v3.2.0]: https://github.com/epam/edp-install/compare/v3.1.0...v3.2.0
 [v3.1.0]: https://github.com/epam/edp-install/compare/v3.0.0...v3.1.0
