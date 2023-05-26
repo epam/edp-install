@@ -3,6 +3,8 @@
 ## Overview
 
 Get acquainted with the latest EDP releases.
+* [Version 3.3.0](#3.3.0)
+* [Version 3.2.2](#3.2.2)
 * [Version 3.2.1](#3.2.1)
 * [Version 3.2.0](#3.2.0)
 * [Version 3.1.0](#3.1.0)
@@ -38,6 +40,98 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.3.0 <a name="3.3.0"></a> (May 25, 2023)
+
+## What's new
+
+In this release, [Headlamp UI](https://epam.github.io/edp-install/headlamp-user-guide/) has been updated. Particularly, the component creation procedure has been significantly changed to be more intuitive. Users can also observe visualized autotest monitoring provided with clickable links to the corresponding Tekton pipelines. Also, we provided completely new component type called Infrastructure which is designed to build infrastructures powered by Terraform.
+
+We are thrilled to announce that one of our features called Autodeploy is now also available for Tekton CI tool. It is designed to automatically define the latest artifact tag and upgrade this service on each environment where this service is deployed. This crucial feature aimed to automate the application update procedure when using Tekton.
+
+With version 3.3.0, the Create and Clone strategies have become available for [GitLab/GitHub](https://epam.github.io/edp-install/operator-guide/import-strategy/) version control systems. This enhancement provides increased flexibility for onboarding your applications within our platform.
+
+We have provided Java [Multi-Module](https://epam.github.io/edp-install/headlamp-user-guide/add-application/?h=multi+module#codebase-info-menu) support for Tekton CI tool. This enhancement improves code organization, build time, dependency management, testing, parallel development, and overall maintainability of applications.
+
+One of our major highlights is that code review pipelines can now be re-triggered manually to force their runs. This feature was implemented to simplify the code review process.
+
+From now on, EDP supports Terraform infrastructure as an additional language out of the box. Better still, we have added the new frameworks, such as Vue, Angular and Express frameworks for JavaScript, Gin framework for Go and .Net 3.1 framework support for C# which migrated from the previous deploy scenario.
+
+Apart from that, we are presenting our [EDP Introduction video](https://www.youtube.com/watch?v=Xsy1UKMb8vg&ab_channel=ThePlatformTeam). This video provides a comprehensive overview of the platform's capabilities and benefits, making it easier for users to get started and maximize their productivity.
+
+Lastly, users can easily check their applications for bugs or other issues using [Autotests as a Quality Gate](https://epam.github.io/edp-install/headlamp-user-guide/autotest/#add-autotest-as-a-quality-gate). This powerful addition allows users to conveniently add multiple autotests to any environment, be it development or production. By running the appropriate autotests, users can effectively evaluate the stability of your application and ensure it functions properly.
+
+### Upgrades
+
+* Alpine image version is updated to the [3.16.4](https://hub.docker.com/layers/library/alpine/3.16.4/images/sha256-0b29a7f4d42d6b5d6433ea91322903900e81b95d47d97d909a6e388e840f4f4a?context=explore) version.
+* Go language is updated to the [1.19](https://go.dev/blog/go1.19) version.
+* Prometheus stack is updated to the [45.21.0](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack/templates/prometheus) version.
+* Argo CD is updated to the [2.7.0](https://github.com/argoproj/argo-cd/releases/tag/v2.7.0) version.
+* Headlamp is updated to the [0.16.0](https://headlamp.dev/docs/latest/installation/desktop/linux-installation#upgrading) version.
+* Tekton dashboard is updated to the [0.35.0](https://github.com/tektoncd/dashboard/releases) version.
+* Semgrep scanner is updated to the [1.19.0](https://github.com/returntocorp/semgrep/releases/tag/v1.19.0) version.
+* Go security scanner is updated to the [2.15.0](https://github.com/securego/gosec/releases/tag/v2.15.0) version.
+
+### New Functionality
+
+* The additional volumes in [OAuth2-Proxy](https://epam.github.io/edp-install/operator-guide/manage-custom-certificate/) are now can be added to improve data management.
+* Custom certificates are now also supported by Headlamp to make Headlamp UI more secure.
+* Nexus proxy usage is implemented for the NPM package manager. This feature will increase Nexus flexibility.
+* Code review pipelines can now be re-triggered manually to force their runs by sending "/recheck" reply message. This might be helpful if the code review process is stuck.
+* Autotests as a Quality Gates are now displayed in the CD Pipelines menu for Tekton deploy scenario. This allows users to monitor run status for autotests. By running the appropriate autotests, users can ensure if the application functions properly. Autotest are to also provided with clickable links to have to the possibility to observe pipeline runs.
+* GitLab and GitHub now support Create and Clone strategies. This improvement provides increased flexibility for onboarding applications in EDP.
+* New type of component called Infrastructure is added to Headlamp. It allows users to create cloud infrastructures powered by AWS from scratch.
+* Vue, Angular and Express frameworks support is added for JavaScript language.
+* Gin framework support is added for Go language.
+* Headlamp UI now supports deploying Helm applications.
+* To improve overall integration with other tools. We have added such links to pipeline stages that lead users to Grafana, Kibana, Argo CD, and cluster.
+
+### Enhancements
+
+* To simplify secret creation workflow, Argo CD OIDC client can now be provided with custom secret name.
+* In the `Components` menu in Headlamp UI, near the build status icon, the `Go to the Source code` and `Go to the Quality Gates` clickable icons is added to navigate users directly to the corresponding application code and quality gates.
+* To simplify bug reporting procedure, templates for reporting GitHub issues in our operators are created. Please see an [example](https://github.com/epam/edp-keycloak-operator/issues/new/choose).
+* The [codebase template](https://github.com/epam/edp-codebase-operator/blob/master/build/templates/applications/helm-chart/kubernetes/templates/deployment.yaml) chart has been refactored, so now it is aligned to upstream and  doesn't contain deprecated parameters.
+* The .Net language option is hidden from the codebase creation menu for non-Jenkins CI tools.
+* Now the `code-review` pipeline includes the `Dockerbuild-verify` stage that depends on the `build` step, thus allowing to build the application.
+
+### Fixed Issues
+
+* The `JenkinsFolder` repository URL is added for create/clone strategy if Jenkins deploy scenario is used.
+* The hard-coded `project-creator` SSH user was removed, Git application path to Git repo provisioning was aligned.
+* Fixed issue when the first reconciliation fails with a git clone error for import strategy.
+* Hotfix swap namespace/name in delete resource request.
+* Fixed issue when Java and JavaScript pipelines were failing when the JIRA integration option was enabled for create strategy.
+* Fixed wrong tag attachment when EDP versioning is used.
+
+### Documentation
+
+* The [User Guide](https://epam.github.io/edp-install/headlamp-user-guide/) is updated with the following:
+  * The [Add CD Pipeline](https://epam.github.io/edp-install/headlamp-user-guide/add-cd-pipeline/) page has been updated.
+  * The [Add Application](https://epam.github.io/edp-install/headlamp-user-guide/add-application/) page has been updated.
+  * The [Add Autotest](https://epam.github.io/edp-install/headlamp-user-guide/add-autotest/) page has been updated.
+  * The [Add Library](https://epam.github.io/edp-install/headlamp-user-guide/add-library/) page has been updated.
+
+* The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+  * The [Manage Namespace](https://epam.github.io/edp-install/operator-guide/namespace-management/) page has been added.
+  * The [Argo CD Integration](https://epam.github.io/edp-install/operator-guide/argocd-integration/#deploy-argo-cd-application) page has been updated.
+  * The [Aggregate Application Logs Using EFK Stack](https://epam.github.io/edp-install/operator-guide/kibana-ilm-rollover/) page has been added.
+  * The [Protect Endpoints](https://epam.github.io/edp-install/operator-guide/oauth2-proxy/) page has been updated.
+  * The [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/) page has been updated.
+  * The [Microsoft Teams Notification](https://epam.github.io/edp-install/operator-guide/notification-msteams/) page has been added.
+  * The [Set Up Kubernetes](https://epam.github.io/edp-install/operator-guide/kubernetes-cluster-settings/) page has been updated.
+  * The [Enable VCS Import Strategy](https://epam.github.io/edp-install/operator-guide/import-strategy/) page has been updated.
+
+* The [Use Cases](https://epam.github.io/edp-install/use-cases/) is updated with the following:
+  * The [Secured Secrets Management for Application Deployment](https://epam.github.io/edp-install/use-cases/external-secrets/) page has been added.
+
+
+## Version 3.2.2 <a name="3.2.2"></a> (April 21, 2023)
+
+### Fixed Issues
+
+* Fixed issue when the `keycloakclientscope` resource couldn't be created depending on the Argo CD integration settings.
+
 
 ## Version 3.2.1 <a name="3.2.1"></a> (March 31, 2023)
 
