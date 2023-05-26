@@ -243,6 +243,13 @@ To install Keycloak, follow the steps below:
             - name: realm
               mountPath: /opt/keycloak/data/import
 
+      # The following parameter is unrecommended to expose. Exposed health checks lead to an unnecessary attack vector.
+      health:
+        enabled: false
+      # The following parameter is unrecommended to expose. Exposed metrics lead to an unnecessary attack vector.
+      metrics:
+        enabled: false
+
       extraVolumeMounts: |
         - name: realm
           mountPath: /opt/keycloak/data/import
@@ -290,6 +297,9 @@ To install Keycloak, follow the steps below:
         annotations:
           kubernetes.io/ingress.class: nginx
           ingress.kubernetes.io/affinity: cookie
+        # The following parameter is unrecommended to expose. Admin paths lead to an unnecessary attack vector.
+        console:
+          enabled: false
         rules:
           - host: keycloak.<ROOT_DOMAIN>
             paths:

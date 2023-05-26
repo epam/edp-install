@@ -100,6 +100,13 @@ releases:
             -Djava.awt.headless=true
             -Djgroups.dns.query=keycloakx-headless
 
+       # The following parameter is unrecommended to expose. Exposed health checks lead to an unnecessary attack vector.
+      health:
+        enabled: false
+      # The following parameter is unrecommended to expose. Exposed metrics lead to an unnecessary attack vector.
+      metrics:
+        enabled: false
+
       {{- if eq .Values.global.platform "kubernetes" }}
       # This block is for Keycloak on Kubernetes.
       ingress:
@@ -107,6 +114,9 @@ releases:
         annotations:
           kubernetes.io/ingress.class: nginx
           ingress.kubernetes.io/affinity: cookie
+        # The following parameter is unrecommended to expose. Admin paths lead to an unnecessary attack vector.
+        console:
+          enabled: false
         rules:
           - host: keycloak.{{ .Values.global.dnsWildCard }}
             paths:
