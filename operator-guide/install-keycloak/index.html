@@ -149,6 +149,13 @@ helm<span class=w> </span>repo<span class=w> </span>update
 <span class=w>      </span><span class=no>- name: realm</span>
 <span class=w>        </span><span class=no>mountPath: /opt/keycloak/data/import</span>
 
+<span class=c1># The following parameter is unrecommended to expose. Exposed health checks lead to an unnecessary attack vector.</span>
+<span class=nt>health</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class=c1># The following parameter is unrecommended to expose. Exposed metrics lead to an unnecessary attack vector.</span>
+<span class=nt>metrics</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
 <span class=nt>extraVolumeMounts</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
 <span class=w>  </span><span class=no>- name: realm</span>
 <span class=w>    </span><span class=no>mountPath: /opt/keycloak/data/import</span>
@@ -196,6 +203,9 @@ helm<span class=w> </span>repo<span class=w> </span>update
 <span class=w>  </span><span class=nt>annotations</span><span class=p>:</span>
 <span class=w>    </span><span class=nt>kubernetes.io/ingress.class</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
 <span class=w>    </span><span class=nt>ingress.kubernetes.io/affinity</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">cookie</span>
+<span class=w>  </span><span class=c1># The following parameter is unrecommended to expose. Admin paths lead to an unnecessary attack vector.</span>
+<span class=w>  </span><span class=nt>console</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class=w>  </span><span class=nt>rules</span><span class=p>:</span>
 <span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>host</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">keycloak.&lt;ROOT_DOMAIN&gt;</span>
 <span class=w>      </span><span class=nt>paths</span><span class=p>:</span>
