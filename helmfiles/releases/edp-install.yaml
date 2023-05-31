@@ -23,7 +23,7 @@ releases:
     default: "false"
   chart: "epamedp/edp-install"
   disableValidation: true
-  version: 3.2.0
+  version: 3.3.0
   wait: true
   installed: true
   values:
@@ -55,6 +55,9 @@ releases:
         kaniko:
           # AWS IAM role with push access to ECR e.g. arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
           roleArn:
+          # Change to true to pass ctLint config
+          ctLint:
+            validateMaintainers: false
       # AWS Region, e.g. "eu-central-1"
       awsRegion:
       argocd:

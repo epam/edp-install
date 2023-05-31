@@ -66,7 +66,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   ```bash
   helm search repo epamedp/edp-install
   NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-  epamedp/edp-install     3.2.1           3.2.1           A Helm chart for EDP Install
+  epamedp/edp-install     3.3.0           3.3.0           A Helm chart for EDP Install
   ```
 
   !!! note
@@ -185,6 +185,9 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         kaniko:
           # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
           roleArn:
+          # Change to true to pass ctLint config
+          ctLint:
+            validateMaintainers: false
 
       dockerRegistry:
         # -- Docker Registry endpoint
