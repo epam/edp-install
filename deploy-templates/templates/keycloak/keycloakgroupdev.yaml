@@ -1,9 +1,9 @@
-{{- if .Values.argocd.enabled }}
+{{- if ne (index .Values "argo-cd" "enabled") "false" -}}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmGroup
 metadata:
-  name: argocd-admins
+  name: argocd-devs
 spec:
-  name: ArgoCDAdmins
+  name: Developer
   realm: main
 {{- end }}

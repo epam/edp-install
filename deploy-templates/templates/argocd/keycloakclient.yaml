@@ -1,19 +1,21 @@
 {{- $argocdDefaultURL := printf "https://argocd.%s" .Values.global.dnsWildCard -}}
-{{- if .Values.argocd.enabled }}
+{{- if ne (index .Values "argo-cd" "enabled") "false" -}}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
 metadata:
-  name: argocd
+  name: argocd-tenant
 spec:
   advancedProtocolMappers: true
-  clientId: argocd
+  clientId: argocd-tenant
   directAccess: true
-{{- if .Values.argocd.oidcSecretName }}
-  secret: {{ .Values.argocd.oidcSecretName }}
-{{- end }}
+  {{ if and .Values.externalSecrets.enabled .Values.externalSecrets.manageEDPInstallSecrets }}
+  secret: keycloak-client-argocd-secret
+  {{ else if (index .Values "argo-cd" "oidcSecretName") }}
+  secret: {{ (index .Values "argo-cd" "oidcSecretName") }}
+  {{ end }}
   public: false
   defaultClientScopes:
     - groups
   targetRealm: {{ .Values.global.edpName }}-main
-  webUrl: "{{ .Values.argocd.url | default $argocdDefaultURL }}"
+  webUrl: "{{ (index .Values "argo-cd" "url" ) | default $argocdDefaultURL }}"
 {{- end }}
