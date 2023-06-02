@@ -212,7 +212,7 @@ To install Keycloak, follow the steps below:
 
   ```bash
   helm install keycloakx codecentric/keycloakx \
-  --version 2.1.1 \
+  --version 2.2.1 \
   --values values.yaml \
   --namespace security
   ```

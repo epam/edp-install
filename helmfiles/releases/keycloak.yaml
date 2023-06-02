@@ -35,7 +35,7 @@ releases:
     command: "kubectl"
     args: ["delete", "-f", "../resources/keycloak-scc.yaml"]
   {{- end }}
-  version: "2.1.1"
+  version: "2.2.1"
   wait: true
   installed: true
   values:

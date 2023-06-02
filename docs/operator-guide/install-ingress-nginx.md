@@ -26,7 +26,7 @@ To install the ingress-nginx chart, follow the steps below:
 3. Install the ingress-nginx chart:
 
       helm install ingress ingress-nginx/ingress-nginx \
-      --version 4.4.0 \
+      --version 4.7.0 \
       --values values.yaml \
       --namespace ingress-nginx
 

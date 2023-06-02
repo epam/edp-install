@@ -392,7 +392,7 @@ volumes:
   helm repo update
   ```
 
-3. Install ReportPortal v.5.7.2 using Helm chart v.5.7.2:
+3. Install ReportPortal v.5.8.0 using Helm chart v.5.8.0:
 
   ```bash
   helm install report-portal report-portal/reportportal \

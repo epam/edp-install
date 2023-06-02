@@ -147,7 +147,7 @@ releases:
     vendor: "report-portal"
     default: "true"
   chart: "report-portal/reportportal"
-  version: "5.7.3"
+  version: "5.8.0"
   {{- if eq .Values.global.platform "openshift" }}
   hooks:
     - events: ["prepare"]
