@@ -125,7 +125,7 @@ helm<span class=w> </span>repo<span class=w> </span>update
 --from-literal<span class=o>=</span><span class=nv>username</span><span class=o>=</span>&lt;keycloak_admin_username&gt;<span class=w> </span><span class=se>\</span>
 --from-literal<span class=o>=</span><span class=nv>password</span><span class=o>=</span>&lt;keycloak_admin_password&gt;
 </code></pre></div> </li> <li> <p>Install Keycloak 20.0.3 using <a href=https://artifacthub.io/packages/helm/codecentric/keycloakx>codecentric/keycloakx</a> Helm chart:</p> <div class="admonition info"> <p class=admonition-title>Info</p> <p>Keycloak can be deployed in production ready mode. For example, it may include multiple replicas, persistent storage, autoscaling, and monitoring. For details, please refer to the <a href=https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx>official Chart documentation</a>.</p> </div> <div class=highlight><pre><span></span><code>helm<span class=w> </span>install<span class=w> </span>keycloakx<span class=w> </span>codecentric/keycloakx<span class=w> </span><span class=se>\</span>
---version<span class=w> </span><span class=m>2</span>.1.1<span class=w> </span><span class=se>\</span>
+--version<span class=w> </span><span class=m>2</span>.2.1<span class=w> </span><span class=se>\</span>
 --values<span class=w> </span>values.yaml<span class=w> </span><span class=se>\</span>
 --namespace<span class=w> </span>security
 </code></pre></div> <p>Check out the <em>values.yaml</em> file sample of the Keycloak customization:</p> <details class=note> <summary>View: values.yaml</summary> <div class=highlight><pre><span></span><code><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">1</span>

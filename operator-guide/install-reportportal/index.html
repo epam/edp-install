@@ -206,7 +206,7 @@ helm<span class=w> </span>repo<span class=w> </span>update
 <span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">secret</span>
 </code></pre></div> </details> </li> <li> <p>Add a chart repository:</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>repo<span class=w> </span>add<span class=w> </span>report-portal<span class=w> </span><span class=s2>&quot;https://reportportal.github.io/kubernetes&quot;</span>
 helm<span class=w> </span>repo<span class=w> </span>update
-</code></pre></div> </li> <li> <p>Install ReportPortal v.5.7.2 using Helm chart v.5.7.2:</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>install<span class=w> </span>report-portal<span class=w> </span>report-portal/reportportal<span class=w> </span><span class=se>\</span>
+</code></pre></div> </li> <li> <p>Install ReportPortal v.5.8.0 using Helm chart v.5.8.0:</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>install<span class=w> </span>report-portal<span class=w> </span>report-portal/reportportal<span class=w> </span><span class=se>\</span>
 --values<span class=w> </span>values.yaml<span class=w> </span><span class=se>\</span>
 --namespace<span class=w> </span>&lt;edp-project&gt;
 </code></pre></div> <p>Check out the <em>values.yaml</em> file sample of the ReportPortal customization:</p> <details> <summary><b>View: values.yaml</b></summary> <div class=highlight><pre><span></span><code><span class=nt>serviceindex</span><span class=p>:</span>

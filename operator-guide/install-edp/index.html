@@ -14,7 +14,7 @@
 </code></pre></div> </li> <li> <p>Add the Helm EPAMEDP Charts for local client.</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>repo<span class=w> </span>add<span class=w> </span>epamedp<span class=w> </span>https://epam.github.io/edp-helm-charts/stable
 </code></pre></div> </li> <li> <p>Choose the required Helm chart version:</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>search<span class=w> </span>repo<span class=w> </span>epamedp/edp-install
 NAME<span class=w>                    </span>CHART<span class=w> </span>VERSION<span class=w>   </span>APP<span class=w> </span>VERSION<span class=w>     </span>DESCRIPTION
-epamedp/edp-install<span class=w>     </span><span class=m>3</span>.2.1<span class=w>           </span><span class=m>3</span>.2.1<span class=w>           </span>A<span class=w> </span>Helm<span class=w> </span>chart<span class=w> </span><span class=k>for</span><span class=w> </span>EDP<span class=w> </span>Install
+epamedp/edp-install<span class=w>     </span><span class=m>3</span>.3.0<span class=w>           </span><span class=m>3</span>.3.0<span class=w>           </span>A<span class=w> </span>Helm<span class=w> </span>chart<span class=w> </span><span class=k>for</span><span class=w> </span>EDP<span class=w> </span>Install
 </code></pre></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>It is highly recommended to use the latest released version.</p> </div> </li> <li> <p>By default, EDP uses Tekton as a CI tool (see more in the <a href=../prerequisites/ >Prerequisites Overview</a> page). To use Jenkins instead of Tekton, redefine the following parameters in the <a href=https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml>values.yaml</a> file:</p> <details class=note> <summary>View: values.yaml</summary> <div class=highlight><pre><span></span><code><span class=nn>...</span>
 <span class=nt>edp-tekton</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
@@ -85,6 +85,9 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.2.1<span cla
 <span class=w>  </span><span class=nt>kaniko</span><span class=p>:</span>
 <span class=w>    </span><span class=c1># -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::&lt;AWS_ACCOUNT_ID&gt;:role/&lt;AWS_IAM_ROLE_NAME&gt;</span>
 <span class=w>    </span><span class=nt>roleArn</span><span class=p>:</span>
+<span class=w>    </span><span class=c1># Change to true to pass ctLint config</span>
+<span class=w>    </span><span class=nt>ctLint</span><span class=p>:</span>
+<span class=w>      </span><span class=nt>validateMaintainers</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 
 <span class=nt>dockerRegistry</span><span class=p>:</span>
 <span class=w>  </span><span class=c1># -- Docker Registry endpoint</span>
