@@ -84,12 +84,10 @@ The **Pipeline** tab of the **Create CD Pipeline** menu should look like the pic
 
   b. Enter the description for this stage;
 
-  c. Select the trigger type. The available trigger types are _Manual_ and _Auto_. By selecting the _Auto_ trigger type, the CD pipeline will be launched automatically after the image is built.
-  Every trigger type has a set of default stages that differ by the input stage (auto-deploy-input or manual-deploy-input).
+  c. Select the trigger type. The key benefit of the automatic deploy feature is to keep environments up-to-date. The available trigger types are _Manual_ and _Auto_. When the _Auto_ trigger type is chosen, the CD pipeline will initiate automatically once the image is built. _Manual_ implies that user has to perform deploy manually by clicking the **Deploy** button in the CD Pipeline menu. Please refer to the [Architecture Scheme of CD Pipeline Operator](https://github.com/epam/edp-cd-pipeline-operator/blob/master/docs/arch.md) page for additional details.
 
   !!! note
-      When changing the Trigger Type, the job-provision automatically will change the set of stages to the corresponding stages set for the CD pipeline.
-
+      In Tekton deploy scenario, automatic deploy will start working only after the first manual deploy.
 
   d. Select the job provisioner. In case of working with non-container-based applications, there is an option to use
   a custom job provisioner. Please refer to the [Manage Jenkins CD Job Provision](../operator-guide/manage-jenkins-cd-job-provision.md)
@@ -240,7 +238,7 @@ To update or uninstall the application, select **Update** or **Uninstall**.
 
 !![Update or uninstall the application](../assets/headlamp-user-guide/headlamp-update-uninstall-application.png "Update or uninstall the application")
 
-After this, the application will be updated or uninstalled in the Argo CD tool as well. 
+After this, the application will be updated or uninstalled in the Argo CD tool as well.
 
 !!! note
     In a nutshell, the **Update** button updates your image version in the Helm chart, whereas the **Uninstall** button deletes the Helm chart from the namespace where the pipeline is deployed.
