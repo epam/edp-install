@@ -215,6 +215,7 @@ nav:
           - Protect Endpoints: operator-guide/oauth2-proxy.md
     - Upgrade:
       - EDP:
+          - v3.2 to 3.3: operator-guide/upgrade-edp-3.3.md
           - v3.1 to 3.2: operator-guide/upgrade-edp-3.2.md
           - v3.0 to 3.1: operator-guide/upgrade-edp-3.1.md
           - v2.12 to 3.0: operator-guide/upgrade-edp-3.0.md
