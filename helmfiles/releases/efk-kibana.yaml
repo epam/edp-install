@@ -39,3 +39,29 @@ releases:
           - host: "kibana.{{ .Values.global.dnsWildCard }}"
             paths:
               - path: /
+
+      lifecycle:
+        postStart:
+          exec:
+            command:
+            - bash
+            - -c
+            - |
+              #!/usr/bin/bash
+              # Config the index_pattern
+              TEMPLATE_NAME=default_logstash
+              INDEX_PATTERN="edp*"
+              KIBANA_URL=http://localhost:5601
+              # Wait until service is ready
+              while [ "$(curl -s -o /dev/null -w '%{http_code}\n' $KIBANA_URL/app/kibana)" != "302" ]; do
+                sleep 1
+              done
+              # Apply Index Pattern into Kibana
+              INDEX_PATTERN_RESPONSE=$(curl -s -X POST -H 'kbn-xsrf: true' -H 'Content-Type: application/json' \
+                -d '{"attributes": {"title": "'$INDEX_PATTERN'"}}' $KIBANA_URL/api/saved_objects/index-pattern)
+
+              INDEX_PATTERN_ID=$(echo "$INDEX_PATTERN_RESPONSE" | grep -oP '(?<="id":")[^"]+' | head -n 1)
+
+              # Set the default index pattern
+              curl -s -X POST -H 'kbn-xsrf: true' -H 'Content-Type: application/json' \
+                -d '{"value": "'$INDEX_PATTERN_ID'"}' $KIBANA_URL/api/kibana/settings/defaultIndex
