@@ -194,70 +194,91 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
     }
     ```
 
-2. In the AWS Parameter Store, create a secret with the `/edp/my-json-secret` name:<a name="step 2"></a>
+2. Create a secret in the AWS Parameter Store with the name `/edp/my-json-secret`. This secret is represented as a parameter of type string within the AWS Parameter Store:<a name="step 2"></a>
+
 
     ```json
     {
+      "keycloak":
+      {
+        "username": "keycloak-username",
+        "password": "keycloak-password"
+      },
+      "defectdojo-ciuser-token":
+      {
+        "token": "XXXXXXXXXXXX",
+        "url": "https://defectdojo.example.com"
+      },
+      "kaniko-docker-config":  "secret-string",
+      "github-config":
+      {
+        "id_rsa": "id-rsa-key",
+        "token": "github-token",
+        "secretString": "XXXXXXXXXXXX"
+      },
+      "gitlab-config":
+      {
+        "id_rsa": "id-rsa-key",
+        "token": "gitlab-token",
+        "secretString": "XXXXXXXXXXXX"
+      },
+      "jira-user":
+      {
+        "username": "jira-username",
+        "password": "jira-password"
+      },
+      "oauth2-proxy-cookie-secret": {"cookie-secret": "XXXXXXXXXXXX"},
+      "nexus-proxy-cookie-secret": {"cookie-secret": "XXXXXXXXXXXX"},
       "keycloak-client-headlamp-secret":  "XXXXXXXXXXXX",
-      "defectdojo-ciuser-token": {"token": "XXXXXXXXXXXX", "url": "https://defectdojo.example.com"},
-      "keycloak": {"username": "realm-user", "password": "pass"},
+      "keycloak-client-argo-secret":  "XXXXXXXXXXXX"
     }
     ```
+  For better clarification, please refer to the table below to understand the contents of the secret above:
 
-3. In the `edp` Kubernetes namespace, create the following objects <a name="external_secret_values"></a>:
+    |Name|Field|Description|
+    |:-|:-|:-|
+    |keycloak|username|Admin username for keycloak, used by keycloak operator|
+    |keycloak|password|Admin password for keycloak, used by keycloak operator|
+    |defectdojo-ciuser-token|token|Defectdojo token with admin permissions|
+    |defectdojo-ciuser-token|url|Defectdojo url|
+    |github-config|id_rsa|Private key from github repo in base64|
+    |github-config|token|Api token|
+    |github-config|secretString|Random string|
+    |gitlab-config|id_rsa|Private key from gitlab repo in base64|
+    |gitlab-config|token|Api token|
+    |gitlab-config|secretString|Random string|
+    |jira-user|username|Jira username in base64|
+    |jira-user|password|Jira password in base64|
+    |oauth2-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
+    |nexus-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
+    |keycloak-client-headlamp-secret||Secret key for keycloak client in base64|
+    |keycloak-client-argo-secret||Secret key for keycloak client in base64|
 
-```yaml
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::012345678910:role/ROLE_NAME
-  name: secret-manager
-  namespace: edp
----
-apiVersion: external-secrets.io/v1beta1
-kind: SecretStore
-metadata:
-  name: aws-parameter-store
-  namespace: edp
-spec:
-  provider:
-    aws:
-      service: ParameterStore
-      region: AWS_REGION
-      auth:
-        jwt:
-          serviceAccountRef:
-            name: secret-manager
----
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: keycloak
-  namespace: edp
-spec:
-  refreshInterval: 1h
-  secretStoreRef:
-    kind: SecretStore
-    name: aws-parameter-store
-  data:
-  - secretKey: username
-    remoteRef:
-      key: /edp/my-json-secret
-      property: keycloak.username
-  - secretKey: password
-    remoteRef:
-      key: /edp/my-json-secret
-      property: keycloak.password
-```
+    To create the `kaniko-docker-config` field using a string in base64 format, you can use the following command with your login/password:
 
-where:
+    ```bash
+      kaniko=$(echo -n '<username>:<password>' | base64) && echo -e "{\n  \"auths\": {\n    \"https://index.docker.io/v1/\": {\n      \"auth\": \"$kaniko\"\n    }\n  },\n  \"credsStore\": \"ecr-login\"\n}" | base64
 
-* `ROLE_NAME` - is a value defined on [step 1.b](#step 1.b),
-* `AWS_REGION` - is the AWS region, used on [step 1](#step 1).
+    ```
 
-As a result, a secret with the `keycloak` name is created in the `edp` namespace with the content defined in JSON format on [step 2](#step 2).
+
+3. Set External Secret operator enabled by updating the values.yaml file:
+
+    ```yaml title="EDP install values.yaml"
+    externalSecrets:
+      enabled: true
+    ```
+
+4. Install/upgrade edp-install:
+
+    ```bash
+    helm upgrade --install edp epamedp/edp-install --wait --timeout=900s \
+    --version <edp_version> \
+    --values values.yaml \
+    --namespace <edp-project> \
+    --atomic
+    ```
+
 
 ## Related Articles
 * [Install External Secrets Operator](install-external-secrets-operator.md)
