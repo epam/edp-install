@@ -471,6 +471,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/upgrade-edp-3.3/</loc>
+         <lastmod>2023-06-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/upgrade-keycloak-19.0/</loc>
          <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
