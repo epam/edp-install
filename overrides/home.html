@@ -8,10 +8,6 @@
         background: linear-gradient(to bottom, var(--md-primary-fg-color), hsl(212deg 47% 55%) 100%)
     }
 
-    .main-gradient--to-top{
-        background: linear-gradient(to top, var(--md-primary-fg-color), hsl(212deg 47% 55%) 100%)
-    }
-
     .welcome-section {
         padding-top: 32px;
         padding-bottom: 64px;
@@ -35,37 +31,11 @@
         font-weight: 700
     }
 
-    .welcome-section__animation {
+    .welcome-section__item--animation {
         display: flex;
         align-items: flex-end;
         line-height: 0;
         min-height: 349px;
-    }
-
-    .youtube-section {
-        padding: 24px 0;
-    }
-
-    .youtube-section__inner {
-        margin: 0 auto;
-    }
-
-    .youtube-section__content {
-        width: 100%;
-        position: relative;
-        padding-bottom: 56.25%;
-    }
-
-    .youtube-section__content iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .youtube-section__inner {
-        max-width: 90%;
     }
 
     .welcome-section__image img {
@@ -92,7 +62,7 @@
     }
 
     .features-section {
-        padding: 64px 0;
+        padding-top: 78px;
     }
 
     .features-section__content {
@@ -142,6 +112,13 @@
         fill: currentColor;
     }
 
+    .logos img {
+        flex: 1 1 auto;
+        padding: 25px;
+        max-height: 130px;
+        vertical-align: middle;
+    }
+
     @media screen and (max-width:30em) {
         .welcome-section__content h1 {
             font-size: 1.4rem
@@ -150,21 +127,21 @@
 
     @media screen and (min-width:768px) {
         .welcome-section__content {
+            padding: 0 36px;
             flex-direction: row;
             align-items: flex-end;
-            padding: 0;
         }
 
-        .youtube-section {
-            padding: 64px 0;
+        .welcome-section__content h1 {
+            font-size: 3em;
         }
 
-        .youtube-section__inner {
-            max-width: 70%;
+        .welcome-section__item--text {
+            flex-basis: 55%;
         }
 
-        .welcome-section__item {
-            flex-basis: 50%;
+        .welcome-section__item--animation {
+            flex-basis: 45%;
         }
 
         .feature-item:hover {
@@ -176,19 +153,12 @@
             width: 33.3%;
         }
     }
-
-    .logos img {
-        flex: 1 1 auto;
-        padding: 25px;
-        max-height: 130px;
-        vertical-align: middle;
-    }
 </style>
 
 <section class="welcome-section main-gradient--to-bottom">
     <div class="md-grid md-typeset">
         <div class="welcome-section__content">
-            <div class="welcome-section__item">
+            <div class="welcome-section__item welcome-section__item--text">
                 <h1> Build your delivery rocket </h1>
                 <p><b>Boost</b> your delivery with the <b>development culture</b> based on the modern CI/CD stack,
                     golden path and self-service capabilities of the EPAM Delivery Platform (EDP).
@@ -198,14 +168,21 @@
                     Getting started
                 </a>
                 <a href="mailto:SupportEPMD-EDP@epam.com?subject=EDP Demo Request"
-                   title="{{ lang.t('source.link.title') }}" class="md-button">
+                   class="md-button">
                     Request a demo
                     <span class="twemoji">
                         {% include ".icons/fontawesome/regular/envelope.svg" %}
                     </span>
                 </a>
+                <a href="https://www.youtube.com/embed/Xsy1UKMb8vg" target="_blank"
+                   title="{{ lang.t('source.link.title') }}" class="md-button">
+                    Watch teaser
+                    <span class="twemoji">
+                        {% include ".icons/fontawesome/brands/youtube.svg" %}
+                    </span>
+                </a>
             </div>
-            <div class="welcome-section__item welcome-section__animation" id="main-animation-container"></div>
+            <div class="welcome-section__item welcome-section__item--animation" id="main-animation-container"></div>
         </div>
     </div>
 </section>
@@ -313,18 +290,6 @@
                     <p>EDP is an open-source solution under Apache 2.0. We provide the top open-source tools to make your
                         delivery reliable.</p>
                 </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="youtube-section main-gradient--to-top">
-    <div class="md-grid md-typeset">
-        <div class="youtube-section__inner">
-            <div class="youtube-section__content">
-                <iframe allowfullscreen frameborder="0"
-                        src="https://www.youtube.com/embed/Xsy1UKMb8vg">
-                </iframe>
             </div>
         </div>
     </div>
