@@ -176,6 +176,7 @@ nav:
         - Delete Jenkins Job Provision: operator-guide/delete-jenkins-job-provision.md
       - Headlamp OIDC: operator-guide/headlamp-oidc.md
       - Manage Namespace: operator-guide/namespace-management.md
+      - EKS OIDC Integration: operator-guide/eks-oidc-integration.md
     - Integration:
       - Tekton:
           Overview: operator-guide/tekton-overview.md
