@@ -231,6 +231,8 @@ nav:
       - Use Cert-Manager in OpenShift: operator-guide/ssl-automation-okd.md
       - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
       - Aggregate Application Logs Using EFK Stack: operator-guide/kibana-ilm-rollover.md
+      - Migrate CI Pipelines From Jenkins to Tekton: operator-guide/migrate-ci-pipelines-from-jenkins-to-tekton.md
+      - Uninstall EDP: operator-guide/delete-edp.md
 #  - User Guide:
 #    - user-guide/index.md
 #    - Application:
@@ -269,7 +271,6 @@ nav:
 #          - Helm Release Deletion: user-guide/helm-release-deletion.md
 #          - Semi Auto Deploy: user-guide/semi-auto-deploy.md
 #    - user-guide/d-d-diagram.md
-      - Migrate CI Pipelines From Jenkins to Tekton: operator-guide/migrate-ci-pipelines-from-jenkins-to-tekton.md
   - User Guide:
     - headlamp-user-guide/index.md
     - Application:
