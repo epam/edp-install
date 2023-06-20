@@ -45,3 +45,25 @@ releases:
         resources:
           requests:
             storage: 10Gi
+
+      lifecycle:
+        postStart:
+          exec:
+            command:
+            - bash
+            - -c
+            - |
+              #!/usr/bin/bash
+              # Config the index_pattern
+              INDEX_PATTERN="edp*"
+              ELASTICSEARCH_URL=http://localhost:9200
+              # Wait until service is ready
+              while [ "$(curl -s -o /dev/null -w '%{http_code}\n' $ELASTICSEARCH_URL)" != "200" ]; do
+                sleep 10
+              done
+
+              # Create ILM policy
+              curl -s -X PUT -H 'Content-Type: application/json' -d '{"policy":{"phases":{"hot":{"min_age":"0ms","actions":{"set_priority":{"priority":100}}},"delete":{"min_age":"7d","actions":{"delete":{"delete_searchable_snapshot":true}}}}}}' $ELASTICSEARCH_URL/_ilm/policy/edp-policy
+
+              # Create index template
+              curl -s -X PUT -H 'Content-Type: application/json' -d '{"index_patterns":["edp*"],"template":{"settings":{"index":{"lifecycle":{"name":"edp-policy","rollover_alias":"edp"},"number_of_shards":"1","number_of_replicas":"0"}},"aliases":{},"mappings":{}}}' $ELASTICSEARCH_URL/_index_template/edp-index-template
