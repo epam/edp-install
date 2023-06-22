@@ -71,6 +71,10 @@ To create and apply the additional scrape config, follow the steps below:
 
     g. Click the `Import` button.
 
+As soon as the dashboard procedure is completed, you can track the newcoming metrics in the dashboard menu:
+
+  !![Tekton dashboard](../assets/operator-guide/tekton-dashboard.png "Tekton dashboard")
+
 ## Related Articles
 
 * [Install Tekton](install-tekton.md)

@@ -154,7 +154,7 @@ nav:
       - Install via Helmfile: operator-guide/install-via-helmfile.md
     - Configuration:
       - EDP Access Model: operator-guide/edp-access-model.md
-      - Add Other Code Language: operator-guide/add-other-code-language.md
+      # - Add Other Code Language: operator-guide/add-other-code-language.md
       - Enable VCS Import Strategy: operator-guide/import-strategy.md
       - Manage Jenkins Pipelines:
         - Overview: operator-guide/overview-manage-jenkins-pipelines.md
@@ -207,6 +207,7 @@ nav:
           - Install Grafana Loki: operator-guide/install-loki.md
           - Multitenant Logging: operator-guide/multitenant-logging.md
           - Schedule Pods Restart: operator-guide/schedule-pods-restart.md
+          - Aggregate Application Logs Using EFK Stack: operator-guide/kibana-ilm-rollover.md
       - Manage Custom Certificates: operator-guide/manage-custom-certificate.md
       - Single Sign-on:
           - Protect Endpoints: operator-guide/oauth2-proxy.md
@@ -291,7 +292,6 @@ nav:
   - Developer Guide:
     - developer-guide/index.md
     - developer-guide/local-development.md
-    - developer-guide/rest-api.md
     - developer-guide/mk-docs-development.md
     - developer-guide/edp-workflow.md
   - Use Cases:
@@ -299,6 +299,7 @@ nav:
     - Scaffold and Deploy FastAPI Application: use-cases/application-scaffolding.md
     - Deploy Application With Custom Build Tool/Framework: use-cases/tekton-custom-pipelines.md
     - Secured Secrets Management for Application Deployment: use-cases/external-secrets.md
+    - Autotest as a Quality Gate: use-cases/autotest-as-quality-gate.md
   - FAQ: faq.md
   - RoadMap: roadmap.md
   - Releases ⧉: https://github.com/epam/edp-install/blob/master/RELEASES.md

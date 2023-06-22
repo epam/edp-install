@@ -77,7 +77,7 @@ To import custom certificates to Keycloak, follow the steps below:
       ...
       extraEnvFrom: |
         - secretRef:
-          name: spi-truststore-data
+            name: spi-truststore-data
       ...
       ```
 

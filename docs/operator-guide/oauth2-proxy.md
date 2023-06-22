@@ -51,7 +51,7 @@ The example below illustrates how to use OAuth2-Proxy in practice when using the
     ```
     3. Run `helm upgrade` to update edp-install release:
     ```bash
-    helm upgrade --version <version> --set 'edp-tekton.dashboard.oauth2_proxy.enabled=true' edp-install --namespace <edp-project>
+    helm upgrade --version <version> --set 'edp-tekton.dashboard.openshift_proxy.enabled=true' edp-install --namespace <edp-project>
     ```
 
 ## Related Articles

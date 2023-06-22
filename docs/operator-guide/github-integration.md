@@ -29,7 +29,7 @@ Follow the steps below to automatically integrate Jenkins with GitHub webhooks.
 
   !![GitHub pull plugin config](../assets/operator-guide/pull_request.png "GitHub pull plugin config")
 
-### Related Articles
+## Related Articles
 
 * [Enable VCS Import Strategy](import-strategy.md)
 * [Adjust Jira Integration](jira-integration.md)
