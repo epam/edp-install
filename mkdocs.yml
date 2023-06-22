@@ -198,11 +198,8 @@ nav:
       - Secrets Management:
         - Install External Secrets Operator: operator-guide/install-external-secrets-operator.md
         - External Secrets Operator Integration: operator-guide/external-secrets-operator-integration.md
-      - Static Application Security Testing:
-          - Static Application Security Testing Overview: operator-guide/overview-sast.md
-          - Scanners:
-              - Add Security Scanner: operator-guide/add-security-scanner.md
-              - Semgrep: operator-guide/sast-scaner-semgrep.md
+      - DevSecOps:
+        - Secure delivery: operator-guide/overview-devsecops.md
       - Backup With Velero:
           - Install Velero: operator-guide/install-velero.md
           - Restore EDP Tenant With Velero: operator-guide/restore-edp-with-velero.md
