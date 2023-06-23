@@ -372,6 +372,6 @@ To prepare Keycloak for integration with EDP, follow the steps below:
 
 ## Related Articles
 
-* [Install EDP with values file](install-edp.md)
-* [Install EDP by one command](../../getting-started/#install-prerequisites)
-* [Install EDP via Helmfile](install-via-helmfile.md)
+* [Install EDP](install-edp.md)
+* [Install via Helmfile](install-via-helmfile.md)
+* [Install Harbor](install-harbor.md)

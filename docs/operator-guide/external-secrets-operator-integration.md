@@ -227,6 +227,12 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
         "username": "jira-username",
         "password": "jira-password"
       },
+      "harbor": {
+        "HARBOR_ADMIN_PASSWORD": "password",
+        "secretKey": "secret-key",
+        "REGISTRY_HTPASSWD": "ht-password",
+        "REGISTRY_PASSWD": "password"
+      },
       "oauth2-proxy-cookie-secret": {"cookie-secret": "XXXXXXXXXXXX"},
       "nexus-proxy-cookie-secret": {"cookie-secret": "XXXXXXXXXXXX"},
       "keycloak-client-headlamp-secret":  "XXXXXXXXXXXX",
@@ -253,6 +259,10 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
     |nexus-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
     |keycloak-client-headlamp-secret||Secret key for keycloak client in base64|
     |keycloak-client-argo-secret||Secret key for keycloak client in base64|
+    |harbor|HARBOR_ADMIN_PASSWORD|Administrator password in base64|
+    |harbor|secretKey|Secret string in base64|
+    |harbor|REGISTRY_HTPASSWD|Secret string in base64|
+    |harbor|REGISTRY_PASSWD|Secret string in base64|
 
     To create the `kaniko-docker-config` field using a string in base64 format, you can use the following command with your login/password:
 

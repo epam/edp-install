@@ -28,6 +28,7 @@ Find below the list of the components to be installed for each scenario:
 |[ReportPortal](install-reportportal.md)|Optional|Optional|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
 |[Kiosk](install-kiosk.md)|Optional|Optional|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
 |[External Secrets](install-external-secrets-operator.md)|Optional|Optional|:simple-kubernetes:{ .kubernetes } :simple-redhatopenshift:{ .openshift }|
+|[Harbor](install-harbor.md)|Optional|Optional|:simple-kubernetes:{ .kubernetes }|
 
 [^1]:
     OpenShift cluster uses Routes to provide access to pods from external resources.

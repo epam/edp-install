@@ -150,6 +150,7 @@ nav:
         - Kiosk:
             - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
             - Set Up Kiosk: operator-guide/install-kiosk.md
+        - Install Harbor: operator-guide/install-harbor.md
       - Install EDP: operator-guide/install-edp.md
       - Install via Helmfile: operator-guide/install-via-helmfile.md
     - Configuration:

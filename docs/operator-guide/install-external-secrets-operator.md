@@ -26,3 +26,4 @@ helm install external-secrets \
 
 ## Related Articles
 * [External Secrets Operator Integration](external-secrets-operator-integration.md)
+* [Install Harbor](install-harbor.md)

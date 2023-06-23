@@ -234,3 +234,4 @@ To prepare DefectDojo for integration with EDP, follow the steps below:
 ## Related Articles
 
 * [Install via Helmfile](install-via-helmfile.md)
+* [Install Harbor](install-harbor.md)

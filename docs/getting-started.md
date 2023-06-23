@@ -21,7 +21,8 @@ EPAM Delivery Platform uses the following tools:
 
 |Domain|Related Tools/Solutions|
 |- |- |
-|Artefacts Management|Nexus Repository, AWS ECR, OpenShift Registry|
+|Artifacts Management|Nexus Repository|
+|Artifact Registry|AWS ECR, OpenShift Registry, Harbor|
 |AWS|Amazon EKS Pod Identity Webhook, AWS ECR, AWS EFS|
 |Build|.NET, Go, Apache Gradle, Apache Maven, NPM|
 |Cluster Backup|Velero|
