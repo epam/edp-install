@@ -12,8 +12,8 @@ metadata:
   {{- end }}
   name: oauth2-proxy-nexus
 spec:
-  host: {{ include "nexus-operator.nexusBaseUrl" . }}
-  path: {{ include "nexus-operator.nexusBasePath" . }}
+  host: {{ include "oauth2_proxy.Url" . }}
+  path: /
   port:
     targetPort: http
   tls:
