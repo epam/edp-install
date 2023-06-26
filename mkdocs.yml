@@ -169,6 +169,9 @@ nav:
           Overview: operator-guide/tekton-overview.md
           Monitoring: operator-guide/tekton-monitoring.md
           MS Teams Notification: operator-guide/notification-msteams.md
+      - Container Registry:
+        - Harbor:
+          - Harbor Integration: operator-guide/container-registry-harbor-integration-tekton-ci.md
       - AWS Integration:
         - Configure AWS WAF With Terraform: operator-guide/waf-tf-configuration.md
         - Install Amazon EBS CSI Driver: operator-guide/ebs-csi-driver.md
