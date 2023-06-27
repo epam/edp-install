@@ -10,7 +10,7 @@ metadata:
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  name: oauth2-proxy-nexus
+  name: oauth2-proxy
 spec:
   host: {{ include "oauth2_proxy.Url" . }}
   path: /
