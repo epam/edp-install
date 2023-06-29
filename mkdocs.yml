@@ -293,6 +293,8 @@ nav:
             - headlamp-user-guide/add-quality-gate.md
     - Git Server:
         - headlamp-user-guide/add-git-server.md
+    - Cluster:
+        - headlamp-user-guide/add-cluster.md
   - Developer Guide:
     - developer-guide/index.md
     - developer-guide/local-development.md
