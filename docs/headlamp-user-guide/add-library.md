@@ -51,7 +51,7 @@ The **Create Library** dialog contains the two steps:
     * Rego - this option allows using Rego code language with an Open Policy Agent (OPA) Library. For details, please
       refer to the [Use Open Policy Agent](../user-guide/opa-stages.md) page.
     * Container - this option allows using the Kaniko tool for building the container images from a Dockerfile. For details, please refer to the [CI Pipeline for Container](../user-guide/container-stages.md) page.
-    * Helm - this option allows using the [chart testing lint](https://github.com/helm/chart-testing) for Helm charts.
+    * Helm - this option allows using the [chart testing lint](https://github.com/helm/chart-testing) (Pipeline) for Helm charts or using Helm chart as a set of other Helm charts organized according to the [example](https://github.com/argoproj/argo-helm/tree/main).
     * C# - selecting C# allows using .Net v.3.1 and .Net v.6.0.
     * Other - selecting Other allows extending the default code languages when creating a codebase with the Clone/Import strategy. To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) page.
 
