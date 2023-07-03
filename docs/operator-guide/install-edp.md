@@ -1,7 +1,10 @@
 # Install EDP
 
 Inspect the main steps to install EPAM Delivery Platform. Please check the [Prerequisites Overview](prerequisites.md) page before starting the installation.
-There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and using [Helmfile](./install-via-helmfile.md#deploy-epam-delivery-platform).
+There are several recommended ways to deploy EPAM Delivery Platform:
+
+* Using Helm (see below);
+* Using [Helmfile](./install-via-helmfile.md#deploy-epam-delivery-platform).
 
 !!! note
     The installation process below is given for a Kubernetes cluster. The steps that differ for an OpenShift cluster are
@@ -146,8 +149,8 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         edpName: <edp-project>
         # -- platform type that can be "kubernetes" or "openshift"
         platform: "kubernetes"
-        # DNS wildcard for routing in the Kubernetes cluster;
-        dnsWildCard: <DNS_wildcard>
+        # DNS wildcard for routing in the Kubernetes cluster; 
+        dnsWildCard: "example.com"
         # -- Administrators of your tenant
         admins:
           - "stub_user_one@example.com"
@@ -155,15 +158,15 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         developers:
           - "stub_user_one@example.com"
           - "stub_user_two@example.com"
-        # Kubernetes API server;
+        # -- Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com can get from kubeconfig.clusters.cluster.server;
         webConsole:
           url: <kubeconfig.clusters.cluster.server>
         # -- Can be gerrit, github or gitlab. By default: gerrit
         gitProvider: gerrit
         # -- Gerrit SSH node port
         gerritSSHPort: "22"
-        # URL to Keycloak;
-        keycloakUrl: <keycloak_endpoint>
+        # Keycloak address with which the platform will be integrated
+        keycloakUrl: "https://keycloak.example.com"
 
       # AWS Region, e.g. "eu-central-1"
       awsRegion:
@@ -172,7 +175,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         # -- Enable ArgoCD integration
         enabled: true
         # -- ArgoCD URL in format schema://URI
-        # @default -- `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }})
+        # -- By default, https://argocd.{{ .Values.global.dnsWildCard }}
         url: ""
 
       # Kaniko configuration section
@@ -219,15 +222,15 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
         developers:
           - "stub_user_one@example.com"
           - "stub_user_two@example.com"
-        # Kubernetes API server;
+        # -- Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com can get from kubeconfig.clusters.cluster.server;
         webConsole:
           url: <kubeconfig.clusters.cluster.server>
         # -- Can be gerrit, github or gitlab. By default: gerrit
         gitProvider: gerrit
         # -- Gerrit SSH node port
         gerritSSHPort: "22"
-        # URL to Keycloak;
-        keycloakUrl: <keycloak_endpoint>
+        # Keycloak address with which the platform will be integrated
+        keycloakUrl: "https://keycloak.example.com"
 
       # AWS Region, e.g. "eu-central-1"
       awsRegion:
@@ -248,6 +251,7 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
       jenkins-operator:
         enabled: true
 
+      # Critical operator used by Jenkins
       admin-console-operator:
         enabled: true
 
@@ -269,9 +273,24 @@ There are two ways to deploy EPAM Delivery Platform: using Helm (see below) and 
   !!! info
       The full installation with integration between tools will take at least 10 minutes.
 
+
+10. To check if the installation is successful, run the command below:
+
+    ```bash
+    helm status <edp-release> -n <edp-project>
+    ```
+    You can also check ingress endpoints to get Headlamp endpoint to enter Headlamp UI:
+    ```bash
+    kubectl describe ingress -n <edp-project>
+    ```
+
+11. Once EDP is successfully installed, you can navigate to our [Use Cases](../use-cases/index.md) to try out EDP functionality.
+
 ## Related Articles
 
-* [Enable VCS Import Strategy](./import-strategy.md)
+* [Quick Start](../getting-started.md)
+* [Install EDP via Helmfile](install-via-helmfile.md)
+* [Enable VCS Import Strategy](import-strategy.md)
 * [GitHub Integration](github-integration.md)
 * [GitLab Integration](gitlab-integration.md)
 * [Set Up Kubernetes](kubernetes-cluster-settings.md)
