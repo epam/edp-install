@@ -18,10 +18,39 @@ EDP consists of the following:
 - [Gerrit](https://www.gerritcodereview.com/), [GitLab](https://about.gitlab.com/features/) or [GitHub](https://about.gitlab.com/features/) as a version control system for your code
 - [Tekton](./operator-guide/install-tekton.md) is a **default** pipeline orchestrator
 - [Jenkins](./operator-guide/overview-manage-jenkins-pipelines.md) is an optional pipeline orchestrator
-- [CI pipelines](./user-guide/pipeline-framework.md) for Python, Java, .Net, Go, React, Terraform, Jenkins Groovy Pipelines, Dockerfile, Helm
-- Build tools: Go, Apache Maven, Apache Gradle
+- [CI pipelines](./headlamp-user-guide/index.md)
+
+  === "Tekton (by default)"
+
+      |Language|Framework|Build Tool|Application|Library|Autotest|
+      |:-|:-:|:-:|:-:|:-:|:-:|
+      |Java|Java 8, Java 11, Java 17|Gradle, Maven|:material-check:|:material-check:|:material-check:|
+      |Python|Python 3.8, FastAPI, Flask|Python|:material-check:|:material-check:||
+      |C#|.Net 3.1, .Net 6.0|.Net|:material-check:|:material-check:||
+      |Go|Beego, Gin, Operator SDK|Go|:material-check:|||
+      |JavaScript|React, Vue, Angular, Express, Next.js|NPM|:material-check:|:material-check:||
+      |HCL|Terraform|Terraform||:material-check:||
+      |Helm|Helm, Pipeline|Helm||:material-check:||
+      |Groovy|Codenarc|Codenarc||:material-check:||
+      |Rego|OPA|OPA||:material-check:||
+      |Container|Docker|Kaniko||:material-check:||
+
+  === "Jenkins (optional)"
+
+      |Language|Framework|Build Tool|Application|Library|Autotest|
+      |:-|:-:|:-:|:-:|:-:|:-:|
+      |Java|Java 8, Java 11|Gradle, Maven|:material-check:|:material-check:|:material-check:|
+      |Python|Python 3.8|Python|:material-check:|:material-check:||
+      |.Net|.Net 3.1|.Net|:material-check:|:material-check:||
+      |Go|Beego, Operator SDK|Go|:material-check:||||
+      |JavaScript|React|NPM|:material-check:|:material-check:||
+      |HCL|Terraform|Terraform||:material-check:||
+      |Groovy|Codenarc|Codenarc||:material-check:||
+      |Rego|OPA|OPA||:material-check:||
+      |Container|Docker|Kaniko||:material-check:||
+
 - [Headlamp UI](./headlamp-user-guide/index.md) as a single entry point
-- [CD pipeline](./user-guide/customize-cd-pipeline.md) for Microservice Deployment
+- [CD pipeline](./headlamp-user-guide/add-cd-pipeline.md) for Microservice Deployment
 - Kubernetes native approach ([CRD, CR](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/){target=_blank}) to declare CI/CD pipelines
 
 ## What's Inside
@@ -63,3 +92,11 @@ There are two main options for Kubernetes provided by EDP:
 - OpenShift that is a Platform as a Service on the top of Kubernetes from Red Hat. OpenShift is the default option for on-premise installation and it can be considered whether the _solution built on the top of EDP_ should be **cloud-agnostic** or require **enterprise support**;
 
 There is no limitation to run EDP on vanilla Kubernetes.
+
+
+## Related Articles
+
+* [Quick Start](getting-started.md)
+* [Basic Concepts](features.md)
+* [Glossary](glossary.md)
+* [Supported Versions and Compatibility](supported-versions.md)
