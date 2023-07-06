@@ -1,0 +1,131 @@
+global:
+  kioskEnabled: false
+  gitProvider: gitlab
+  edpName: "stub-namespace"
+  dnsWildCard:
+  webConsole:
+    url:
+  platform: openshift
+  admins: [stub_user_one@example.com]
+  developers: [stub_user_one@example.com]
+  keycloakUrl: https://keycloak.example.com
+dockerRegistry:
+  url: image-registry.openshift-image-registry.svc:5000
+perf-operator:
+  enabled: true
+externalSecrets:
+  enabled: false
+argocd:
+  enabled: false
+  url:
+edp-headlamp:
+  extraVolumes:
+  - name: custom-ca
+    secret:
+      defaultMode: 420
+      secretName: custom-ca-certificates
+
+  # -- Additional volumeMounts to be added to the container
+  extraVolumeMounts:
+  - name: custom-ca
+    mountPath: /etc/ssl/certs/ca.crt
+    readOnly: true
+    subPath: ca.crt
+  config:
+    oidc:
+      enabled: true
+      clientID: "client"
+
+oauth2_proxy:
+  enabled: false
+  # -- Additional volumes to be added to the oauth2-proxy pod
+  extraVolumes:
+    - name: custom-ca
+      secret:
+        defaultMode: 420
+        secretName: custom-ca
+
+  # -- Additional volumeMounts to be added to the oauth2-proxy container
+  extraVolumeMounts:
+    - name: custom-ca
+      mountPath: /etc/ssl/certs/ca.crt
+      readOnly: true
+      subPath: ca.crt
+
+keycloak-operator:
+  enabled: true
+
+  # -- Additional volumes to be added to the pod
+  extraVolumes:
+    - name: custom-ca
+      secret:
+        defaultMode: 420
+        secretName: custom-ca-certificates
+
+  # -- Additional volumeMounts to be added to the container
+  extraVolumeMounts:
+    - name: custom-ca
+      mountPath: /etc/ssl/certs/ca.crt
+      readOnly: true
+      subPath: ca.crt
+
+gerrit-operator:
+  enabled: false
+  gerrit:
+    caCerts:
+      # -- Flag for enabling additional CA certificates
+      enabled: true
+      # -- Change init CA certificates container image
+      image: adoptopenjdk/openjdk11:alpine
+      # -- Name of the secret containing additional CA certificates
+      secret: custom-ca-certificates
+
+sonar-operator:
+  # -- Additional volumes to be added to the pod
+  extraVolumes:
+  - name: custom-ca
+    secret:
+      defaultMode: 420
+      secretName: custom-ca-certificates
+
+  # -- Additional volumeMounts to be added to the container
+  extraVolumeMounts:
+  - name: custom-ca
+    mountPath: /etc/ssl/certs/ca.crt
+    readOnly: true
+    subPath: ca.crt
+
+  sonar:
+    caCerts:
+      # -- Flag for enabling additional CA certificates
+      enabled: true
+      # -- Change init CA certificates container image
+      image: adoptopenjdk/openjdk11:alpine
+      # -- Name of the secret containing additional CA certificates
+      secret: custom-ca-certificates
+
+nexus-operator:
+  oauth2_proxy:
+    # -- Additional volumes to be added to the oauth2-proxy pod
+    extraVolumes:
+    - name: custom-ca
+      secret:
+        defaultMode: 420
+        secretName: custom-ca-certificates
+
+    # -- Additional volumeMounts to be added to the oauth2-proxy container
+    extraVolumeMounts:
+    - name: custom-ca
+      mountPath: /etc/ssl/certs/ca.crt
+      readOnly: true
+      subPath: ca.crt
+
+edp-tekton:
+  dashboard:
+    readOnly: false
+    ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri
+        nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth
+  gitlab:
+    host: gitlab.com
