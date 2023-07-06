@@ -26,15 +26,33 @@ This will deploy and connect OAuth2-Proxy to your application endpoint.
 
 The example below illustrates how to use OAuth2-Proxy in practice when using the Tekton dashboard:
 
-1. Run `helm upgrade` to update edp-install release:
-```bash
-helm upgrade --version <version> --set 'oauth2_proxy.enabled=true' edp-install --namespace <edp-project>
-```
-2. Check that OAuth2-Proxy is deployed successfully.
-3. Edit the Tekton dashboard Ingress annotation by adding `auth-signin` and `auth-url` of oauth2-proxy by `kubectl` command:
-   ```bash
-   kubectl annotate ingress <application-ingress-name> nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri' nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
-   ```
+=== "Kubernetes"
+
+    1. Run `helm upgrade` to update edp-install release:
+    ```bash
+    helm upgrade --version <version> --set 'oauth2_proxy.enabled=true' edp-install --namespace <edp-project>
+    ```
+    2. Check that OAuth2-Proxy is deployed successfully.
+    3. Edit the Tekton dashboard Ingress annotation by adding `auth-signin` and `auth-url` of oauth2-proxy by `kubectl` command:
+    ```bash
+    kubectl annotate ingress <application-ingress-name> nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri' nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
+    ```
+
+=== "Openshift"
+
+    1. Generate a cookie-secret for proxy with the following command:
+    ```bash
+    tekton_dashboard_cookie_secret=$(openssl rand -base64 32 | head -c 32)
+    ```
+    2. Create `tekton-dashboard-proxy-cookie-secret` in the <edp-project> namespace:
+    ```bash
+    kubectl -n <edp-project> create secret generic tekton-dashboard-proxy-cookie-secret \
+        --from-literal=cookie-secret=${tekton_dashboard_cookie_secret}
+    ```
+    3. Run `helm upgrade` to update edp-install release:
+    ```bash
+    helm upgrade --version <version> --set 'edp-tekton.dashboard.oauth2_proxy.enabled=true' edp-install --namespace <edp-project>
+    ```
 
 ## Related Articles
 [Keycloak Installation](install-keycloak.md)
