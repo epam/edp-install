@@ -115,58 +115,6 @@ dockerRegistry:
 
 annotations: {}
 
-# Proxy configuration section
-oauth2_proxy:
-  # oauth2-proxy requires keycloak to be configured properly before deployment
-  # you can set enable: true, when your platform is deployed and keycloak is
-  # configured.
-  # -- Install oauth2-proxy as a part of EDP deployment. Default: false
-  enabled: false
-
-  image:
-    # -- oauth2-proxy image repository
-    repository: quay.io/oauth2-proxy/oauth2-proxy
-    # -- oauth2-proxy image tag
-    tag: v7.4.0
-
-  # Create a cookie-secret with the following command
-  # openssl rand -base64 32 | head -c 32 | base64
-  # Use an existing secret for OAuth2 cookie-secret
-  existingSecret:
-    # -- Secret name which stores cookie-secret
-    secretName: oauth2-proxy-cookie-secret
-    # -- Secret key which stores cookie-secret
-    secretKey: cookie-secret
-
-  extraEnv: []
-  extraArgs: {}
-
-  # -- Additional volumes to be added to the oauth2-proxy pod
-  extraVolumes: []
-  #  - name: custom-ca
-  #    secret:
-  #      defaultMode: 420
-  #      secretName: custom-ca
-
-  # -- Additional volumeMounts to be added to the oauth2-proxy container
-  extraVolumeMounts: []
-  #  - name: custom-ca
-  #    mountPath: /etc/ssl/certs/CA.crt
-  #    readOnly: true
-  #    subPath: CA.crt
-
-  ingress:
-    annotations: {}
-    # -- pathType is only for k8s >= 1.1=
-    pathType: Prefix
-    # -- For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-    # -- See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    # ingressClassName: nginx
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
-
 keycloak-operator:
   enabled: true
   # image:
@@ -322,6 +270,28 @@ edp-headlamp:
 edp-tekton:
   enabled: true
 
+  dashboard:
+    # -- Deploy EDP Dashboard as a part of pipeline library when true. Default: true
+    enabled: true
+
+    # -- Make it possible to use openshift as OIDC provider to hide tekton-dashboard.
+    # -- Only for openshift deploy scenario,
+    # -- For EKS scenario - uncomment dashboard.ingress.annotations block and
+    # -- set the value of the oauth2_proxy.enable to true
+    # -- More details:
+    # -- https://epam.github.io/edp-install/operator-guide/oauth2-proxy/?h=#enable-oauth2-proxy-on-tekton-dashboard
+    openshift_proxy:
+      # -- Enable oauth-proxy to include authorization layer on tekton-dashboard. Default: flase
+      enabled: false
+
+    ingress:
+      # -- Annotations for Ingress resource
+      annotations: {}
+        # -- Uncomment it to enable tekton-dashboard OIDC on EKS cluster
+        # nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri'
+        # nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
+
+
   ctLint:
     # -- This block make possible to modify ct-lint configuration. It setup ct-lint parameters: "--config", "--chart-yaml-schema" and "--lint-conf".
     # -- Config block.
@@ -343,6 +313,58 @@ edp-tekton:
     #     braces:
     #       min-spaces-inside: 0
     #       max-spaces-inside: 0
+
+# Proxy configuration section
+oauth2_proxy:
+  # oauth2-proxy requires keycloak to be configured properly before deployment
+  # you can set enable: true, when your platform is deployed and keycloak is
+  # configured.
+  # -- Install oauth2-proxy as a part of EDP deployment. Default: false
+  enabled: false
+
+  image:
+    # -- oauth2-proxy image repository
+    repository: quay.io/oauth2-proxy/oauth2-proxy
+    # -- oauth2-proxy image tag
+    tag: v7.4.0
+
+  # Create a cookie-secret with the following command
+  # openssl rand -base64 32 | head -c 32 | base64
+  # Use an existing secret for OAuth2 cookie-secret
+  existingSecret:
+    # -- Secret name which stores cookie-secret
+    secretName: oauth2-proxy-cookie-secret
+    # -- Secret key which stores cookie-secret
+    secretKey: cookie-secret
+
+  extraEnv: []
+  extraArgs: {}
+
+  # -- Additional volumes to be added to the oauth2-proxy pod
+  extraVolumes: []
+  #  - name: custom-ca
+  #    secret:
+  #      defaultMode: 420
+  #      secretName: custom-ca
+
+  # -- Additional volumeMounts to be added to the oauth2-proxy container
+  extraVolumeMounts: []
+  #  - name: custom-ca
+  #    mountPath: /etc/ssl/certs/CA.crt
+  #    readOnly: true
+  #    subPath: CA.crt
+
+  ingress:
+    annotations: {}
+    # -- pathType is only for k8s >= 1.1=
+    pathType: Prefix
+    # -- For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+    # -- See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+    # ingressClassName: nginx
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 perf-operator:
   enabled: true
