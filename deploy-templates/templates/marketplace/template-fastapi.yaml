@@ -1,0 +1,25 @@
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Template
+metadata:
+  name: fastapi
+spec:
+  displayName: Fast API Microservice
+  buildTool: python
+  type: application
+  framework: fastapi
+  language: python
+  description: FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.
+  category: API
+  icon:
+    - base64data: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PGcgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiIGZpbGw9IiMwNDk3ODkiIHJ4PSI2MCIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMjcuNSA0MUM3OS43NDMgNDEgNDEgNzkuNzQzIDQxIDEyNy41Uzc5Ljc0MyAyMTQgMTI3LjUgMjE0czg2LjUtMzguNzQzIDg2LjUtODYuNVMxNzUuMjU3IDQxIDEyNy41IDQxWm0tNC41MDcgMTU1LjgzOXYtNTQuMjU4SDkyLjgzMWw0My4zMzYtODQuNDJ2NTQuMjU4aDI5LjAzNmwtNDIuMjEgODQuNDJaIi8+PC9nPjwvc3ZnPg==
+      mediatype: image/svg+xml
+  keywords:
+    - fastapi
+    - python
+  maintainers:
+    - name: SupportEPMD-EDP
+      email: SupportEPMD-EDP@epam.com
+  source: https://github.com/epmd-edp/python-python-fastapi
+  version: 0.1.0
+  minEDPVersion: 3.4.0
+  maturity: stable
