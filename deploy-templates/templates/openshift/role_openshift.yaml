@@ -46,7 +46,6 @@ rules:
   - imagestreamimages
   - imagestreammappings
   - imagestreams
-  - imagestreamtags
   verbs:
   - get
   - list
