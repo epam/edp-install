@@ -44,7 +44,7 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
   4. Select any of the supported application languages with their providers in the **Application Code Language** field:
 
     * Java – selecting specific Java version (8,11,17 are available).
-    * JavaScript - selecting JavaScript allows using React, Vue, Angular, Express and Next.js frameworks.
+    * JavaScript - selecting JavaScript allows using React, Vue, Angular, Express, Next.js and Antora frameworks.
     * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask frameworks.
     * Go - selecting Go allows using the Beego, Gin and Operator SDK frameworks.
     * C# - selecting C# allows using the .Net v.3.1 and .Net v.6.0 frameworks.

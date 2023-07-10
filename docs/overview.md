@@ -28,7 +28,7 @@ EDP consists of the following:
       |Python|Python 3.8, FastAPI, Flask|Python|:material-check:|:material-check:||
       |C#|.Net 3.1, .Net 6.0|.Net|:material-check:|:material-check:||
       |Go|Beego, Gin, Operator SDK|Go|:material-check:|||
-      |JavaScript|React, Vue, Angular, Express, Next.js|NPM|:material-check:|:material-check:||
+      |JavaScript|React, Vue, Angular, Express, Next.js, Antora|NPM|:material-check:|:material-check:||
       |HCL|Terraform|Terraform||:material-check:||
       |Helm|Helm, Pipeline|Helm||:material-check:||
       |Groovy|Codenarc|Codenarc||:material-check:||
