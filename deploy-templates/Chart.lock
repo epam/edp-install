@@ -32,8 +32,5 @@ dependencies:
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.15.0
-- name: perf-operator
-  repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.13.0
-digest: sha256:db1cb13171b743b4414c1eba2db350aaab0163ea418544d5ebd3e858592c9f2f
-generated: "2023-05-25T18:16:00.472216+03:00"
+digest: sha256:02a0ca1a3c6caa08723ff5b70006ef559de85f01660d0f7f554165d948aacd1a
+generated: "2023-07-11T12:09:05.791805+03:00"

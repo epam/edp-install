@@ -31,7 +31,6 @@ A Helm chart for EDP Install
 | @epamedp | jenkins-operator | 2.15.0 |
 | @epamedp | keycloak-operator | 1.15.0 |
 | @epamedp | nexus-operator | 2.15.0 |
-| @epamedp | perf-operator | 2.13.0 |
 | @epamedp | sonar-operator | 2.14.0 |
 
 ## Values
@@ -77,7 +76,7 @@ A Helm chart for EDP Install
 | global.kioskEnabled | bool | `false` |  |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.4.0-SNAPSHOT"` | EDP version |
-| global.webConsole.url | string | `nil` | URL to OpenShift/Kubernetes Web console |
+| global.webConsole.url | string | `"https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com"` | URL to OpenShift/Kubernetes Web console |
 | jenkins-operator.enabled | bool | `false` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
 | kaniko.initKanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-kaniko container |
@@ -106,8 +105,6 @@ A Helm chart for EDP Install
 | oauth2_proxy.ingress.annotations | object | `{}` |  |
 | oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
 | oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
-| perf-operator.enabled | bool | `true` |  |
-| perf-operator.perf.integration | bool | `false` | Enable PERF integration |
 | sonar-operator.enabled | bool | `true` |  |
 | vcs.enabled | string | `"false"` |  |
 

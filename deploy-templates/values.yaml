@@ -22,7 +22,7 @@ global:
   webConsole:
     # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
     # -- URL to OpenShift/Kubernetes Web console
-    url:
+    url: https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
   kioskEnabled: false
   # -- Can be gerrit, github or gitlab. By default: gerrit
   gitProvider: gerrit
@@ -365,24 +365,6 @@ oauth2_proxy:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
-
-perf-operator:
-  enabled: true
-  # image:
-  #   repository: epamedp/perf-operator
-  #   tag:
-  perf:
-    # -- Enable PERF integration
-    integration: false
-  #   name: "perf"
-  #   apiUrl: "https://perf.delivery.example.com"
-  #   rootUrl: "https://perf.delivery.example.com"
-  #   credentialName: "perf-user"
-  #   projectName: "PROJECT-NAME"
-  #   luminate:
-  #     enabled: false
-  #     apiUrl: "https://api.example.luminatesec.com"
-  #     credentialName: "luminate-secret"
 
 # define EDPComponents, more details: https://github.com/epam/edp-component-operator/
 EDPComponents: {}

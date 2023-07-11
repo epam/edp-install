@@ -6,7 +6,6 @@ data:
   edp_name: {{ .Values.global.edpName }}
   edp_version: {{.Values.global.version}}
   dns_wildcard: {{ .Values.global.dnsWildCard }}
-  perf_integration_enabled: "{{ index .Values "perf-operator" "perf" "integration" }}"
   vcs_integration_enabled: "{{ .Values.vcs.enabled }}"
 kind: ConfigMap
 metadata:

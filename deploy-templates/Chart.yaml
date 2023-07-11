@@ -76,11 +76,6 @@ dependencies:
   version: "2.15.0"
   condition: gerrit-operator.enabled
 
-- name: perf-operator
-  repository: "@epamedp"
-  version: "2.13.0"
-  condition: perf-operator.enabled
-
 annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/operator: "true"
@@ -103,8 +98,6 @@ annotations:
       image: epamedp/gerrit-operator:2.15.0
     - name: edp-headlamp:0.6.0
       image: epamedp/edp-headlamp:0.6.0
-    - name: perf-operator:2.13.0
-      image: epamedp/perf-operator:2.13.0
     - name: postgres:9.6
       image: postgres:9.6
     - name: executor:v1.9.1
