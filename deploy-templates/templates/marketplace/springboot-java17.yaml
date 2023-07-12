@@ -1,0 +1,27 @@
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Template
+metadata:
+  name: springboot-java17
+spec:
+  displayName: Simple Spring Boot Application
+  buildTool: maven
+  type: application
+  framework: java17
+  language: java
+  description: Develop powerful and scalable Java applications with ease using Spring Boot. Leverage the latest features and enhancements introduced in Java 17 to build modern, cloud-native applications. Build RESTful APIs, integrate with databases, implement security, and deploy your application with confidence using Spring Boot's opinionated approach and extensive ecosystem.
+  category: api
+  icon:
+    - base64data: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5Ny4xIDk3Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzZkYjMzZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPnNwcmluZy1pY29uPC90aXRsZT48ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIj48ZyBpZD0ibG9nb3MiPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTg4LjQsNS42YTQyLjMyLDQyLjMyLDAsMCwxLTUuMiw5LjFBNDguNDYsNDguNDYsMCwxLDAsMTUuNSw4NGwxLjgsMS42QTQ4LjQxLDQ4LjQxLDAsMCwwLDk2LjgsNTJDOTguMiwzOS44LDk0LjUsMjQuMiw4OC40LDUuNlpNMjIuNSw4NC40YTQuMTIsNC4xMiwwLDEsMS0uNi01LjhBNC4yMSw0LjIxLDAsMCwxLDIyLjUsODQuNFpNODguMSw2OS45Qzc2LjIsODUuOCw1MC42LDgwLjQsMzQuMyw4MS4yYzAsMC0yLjkuMi01LjguNiwwLDAsMS4xLS41LDIuNS0xLDExLjUtNCwxNi45LTQuOCwyMy45LTguNEM2OCw2NS43LDgxLjEsNTEsODMuNywzNS44Yy01LDE0LjYtMjAuMiwyNy4yLTM0LDMyLjNDNDAuMiw3MS42LDIzLjEsNzUsMjMuMSw3NWwtLjctLjRjLTExLjYtNS43LTEyLTMwLjksOS4yLTM5LDkuMy0zLjYsMTguMS0xLjYsMjguMi00LDEwLjctMi41LDIzLjEtMTAuNSwyOC4xLTIxQzkzLjUsMjcuNSwxMDAuMyw1My43LDg4LjEsNjkuOVoiLz48L2c+PC9nPjwvc3ZnPg==
+      mediatype: image/svg+xml
+  keywords:
+    - api
+    - java
+    - microservice
+    - springboot
+  maintainers:
+    - name: SupportEPMD-EDP
+      email: SupportEPMD-EDP@epam.com
+  source: https://github.com/epmd-edp/java-maven-java17
+  version: 0.1.0
+  minEDPVersion: 3.4.0
+  maturity: stable
