@@ -196,9 +196,6 @@ There are several recommended ways to deploy EPAM Delivery Platform:
         # -- Docker Registry endpoint
         url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
-      perf-operator:
-        enabled: false
-
       edp-headlamp:
         config:
           oidc:
@@ -256,9 +253,6 @@ There are several recommended ways to deploy EPAM Delivery Platform:
         enabled: true
 
       edp-tekton:
-        enabled: false
-
-      perf-operator:
         enabled: false
 
       edp-headlamp:

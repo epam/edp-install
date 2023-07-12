@@ -11,8 +11,6 @@ global:
   keycloakUrl: https://keycloak.example.com
 dockerRegistry:
   url: image-registry.openshift-image-registry.svc:5000
-perf-operator:
-  enabled: true
 externalSecrets:
   enabled: false
 argocd:
