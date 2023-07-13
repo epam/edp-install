@@ -1,0 +1,27 @@
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Template
+metadata:
+  name: terraform-module
+spec:
+  displayName: Terraform Module
+  buildTool: terraform
+  type: library
+  framework: terraform
+  language: terraform
+  description: Encapsulate reusable infrastructure components, abstracting complex configurations into modular and scalable building blocks - Terraform modules.
+  category: iac
+  icon:
+    - base64data: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIwLjg4ZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI5MSI+PHBhdGggZmlsbD0iIzQwNDBCMiIgZD0iTTE3Ni40ODUgMTg4Ljk5NEwyNTYgMTQzLjEyN1Y1MS4yNDlsLTc5LjUxNSA0NS45NjN6Ii8+PHBhdGggZmlsbD0iIzVDNEVFNSIgZD0ibTg4LjI0MyA1MS4yNDlsNzkuNTE1IDQ1Ljk2M3Y5MS43ODJMODguMjQzIDE0My4wOE0wIDkxLjgzbDc5LjUxNSA0NS45MTZ2LTkxLjgzTDAgMG04OC4yNDMgMjQ0Ljk5NGw3OS41MTUgNDUuOTE1di05MS44M2wtNzkuNTE1LTQ1LjkxNSIvPjwvc3ZnPg==
+      mediatype: image/svg+xml
+  keywords:
+    - hcl
+    - iac
+    - infrastructure
+    - terraform
+  maintainers:
+    - name: SupportEPMD-EDP
+      email: SupportEPMD-EDP@epam.com
+  source: https://github.com/epmd-edp/javascript-npm-antora
+  version: 0.1.0
+  minEDPVersion: 3.4.0
+  maturity: stable
