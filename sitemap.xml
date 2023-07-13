@@ -141,6 +141,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/container-registry-harbor-integration-tekton-ci/</loc>
+         <lastmod>2023-07-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/delete-edp/</loc>
          <lastmod>2023-07-13</lastmod>
          <changefreq>daily</changefreq>
