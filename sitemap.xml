@@ -226,6 +226,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/harbor-oidc/</loc>
+         <lastmod>2023-07-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/headlamp-oidc/</loc>
          <lastmod>2023-07-14</lastmod>
          <changefreq>daily</changefreq>
