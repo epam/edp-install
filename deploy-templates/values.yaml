@@ -30,8 +30,10 @@ global:
   gerritSSHPort: "22"
   # -- Keycloak URL
   keycloakUrl: https://keycloak.example.com
-# -- Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http://<ip-address>:9000
-# sonarUrl: ""
+  # -- Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http://<ip-address>:9000
+  # sonarUrl: ""
+  # -- Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port>
+  # nexusUrl:
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
