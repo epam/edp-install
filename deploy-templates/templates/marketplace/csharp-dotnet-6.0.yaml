@@ -20,7 +20,7 @@ spec:
   maintainers:
     - name: SupportEPMD-EDP
       email: SupportEPMD-EDP@epam.com
-  source: https://github.com/epmd-edp/javascript-npm-antora
+  source: https://github.com/epmd-edp/csharp-dotnet-dotnet-6.0
   version: 0.1.0
   minEDPVersion: 3.4.0
   maturity: stable
