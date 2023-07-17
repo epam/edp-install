@@ -7,7 +7,7 @@ spec:
   buildTool: terraform
   type: library
   framework: terraform
-  language: terraform
+  language: hcl
   description: Encapsulate reusable infrastructure components, abstracting complex configurations into modular and scalable building blocks - Terraform modules.
   category: iac
   icon:
