@@ -46,7 +46,6 @@ A Helm chart for EDP Install
 | awsRegion | string | `nil` | AWS Region, e.g. "eu-central-1" |
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | codebase-operator.enabled | bool | `true` |  |
-| dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
 | edp-headlamp.config.oidc.clientID | string | `"kubernetes"` |  |
 | edp-headlamp.config.oidc.clientSecretKey | string | `"clientSecret"` |  |
 | edp-headlamp.config.oidc.clientSecretName | string | `"keycloak-client-headlamp-secret"` |  |
@@ -69,8 +68,9 @@ A Helm chart for EDP Install
 | global.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
 | global.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
-| global.dockerRegistry | object | `{"type":"ecr"}` | Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port> nexusUrl: |
+| global.dockerRegistry | object | `{"type":"ecr","url":"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"}` | Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port> nexusUrl: |
 | global.dockerRegistry.type | string | `"ecr"` | Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor |
+| global.dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
 | global.edpName | string | `"stub-namespace"` | namespace or a project name (in case of OpenShift) |
 | global.gerritSSHPort | string | `"22"` | Gerrit SSH node port |
 | global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |

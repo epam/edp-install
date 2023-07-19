@@ -96,10 +96,9 @@ To make EDP and Harbor project interact with each other, set up a robot account:
     ...
     kaniko:
       existingDockerConfig: "kaniko-docker-config"
-    dockerRegistry:
-      url: harbor-registry.com
-    edp-tekton:
+    global:
       dockerRegistry:
+        url: harbor-registry.com
         type: "harbor"
     ...
     ```
@@ -112,10 +111,9 @@ To make EDP and Harbor project interact with each other, set up a robot account:
       existingDockerConfig: "kaniko-docker-config"
     externalSecrets:
       enabled: true
-    dockerRegistry:
-      url: harbor-registry.com
-    edp-tekton:
+    global:
       dockerRegistry:
+        url: harbor-registry.com
         type: "harbor"
     ...
     ```

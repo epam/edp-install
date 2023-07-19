@@ -167,6 +167,9 @@ There are several recommended ways to deploy EPAM Delivery Platform:
         gerritSSHPort: "22"
         # Keycloak address with which the platform will be integrated
         keycloakUrl: "https://keycloak.example.com"
+        dockerRegistry:
+          # -- Docker Registry endpoint
+          url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
       # AWS Region, e.g. "eu-central-1"
       awsRegion:
@@ -191,10 +194,6 @@ There are several recommended ways to deploy EPAM Delivery Platform:
           # Change to true to pass ctLint config
           ctLint:
             validateMaintainers: false
-
-      dockerRegistry:
-        # -- Docker Registry endpoint
-        url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
       edp-headlamp:
         config:
@@ -228,6 +227,11 @@ There are several recommended ways to deploy EPAM Delivery Platform:
         gerritSSHPort: "22"
         # Keycloak address with which the platform will be integrated
         keycloakUrl: "https://keycloak.example.com"
+        dockerRegistry:
+          # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor
+          type: "ecr"
+          # -- Docker Registry endpoint
+          url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
       # AWS Region, e.g. "eu-central-1"
       awsRegion:
@@ -240,10 +244,6 @@ There are several recommended ways to deploy EPAM Delivery Platform:
       kaniko:
         # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWS_IAM_ROLE_NAME>
         roleArn:
-
-      dockerRegistry:
-        # -- Docker Registry endpoint
-        url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
       jenkins-operator:
         enabled: true

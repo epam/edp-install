@@ -9,8 +9,8 @@ global:
   admins: [stub_user_one@example.com]
   developers: [stub_user_one@example.com]
   keycloakUrl: https://keycloak.example.com
-dockerRegistry:
-  url: image-registry.openshift-image-registry.svc:5000
+  dockerRegistry:
+    url: image-registry.openshift-image-registry.svc:5000
 externalSecrets:
   enabled: false
 argocd:

@@ -37,6 +37,8 @@ global:
   dockerRegistry:
     # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor
     type: "ecr"
+    # -- Docker Registry endpoint
+    url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
@@ -113,10 +115,6 @@ externalSecrets:
   manageEDPInstallSecrets: true
   # -- Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true
   manageEDPInstallSecretsName: /edp/deploy-secrets
-
-dockerRegistry:
-  # -- Docker Registry endpoint
-  url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
 
 annotations: {}
 
