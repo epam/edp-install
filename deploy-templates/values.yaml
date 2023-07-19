@@ -34,6 +34,9 @@ global:
   # sonarUrl: ""
   # -- Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port>
   # nexusUrl:
+  dockerRegistry:
+    # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor
+    type: "ecr"
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
