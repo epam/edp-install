@@ -126,7 +126,7 @@ There are several recommended ways to deploy EPAM Delivery Platform:
       ...
       ```
 
-  By default, the internal Gerrit server is deployed as a result of EDP deployment. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the [Enable VCS Import Strategy](./import-strategy.md) article.
+  By default, the internal Gerrit server is deployed as a result of EDP deployment. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the [Integrate GitHub/GitLab in Jenkins](./import-strategy-jenkins.md) or [Integrate GitHub/GitLab in Tekton](./import-strategy-tekton.md) article.
 
 8. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/release/3.2/deploy-templates/values.yaml) file.
 
@@ -284,9 +284,10 @@ There are several recommended ways to deploy EPAM Delivery Platform:
 
 * [Quick Start](../getting-started.md)
 * [Install EDP via Helmfile](install-via-helmfile.md)
-* [Enable VCS Import Strategy](import-strategy.md)
-* [GitHub Integration](github-integration.md)
-* [GitLab Integration](gitlab-integration.md)
+* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
+* [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
+* [GitHub Webhook Configuration](github-integration.md)
+* [GitLab Webhook Configuration](gitlab-integration.md)
 * [Set Up Kubernetes](kubernetes-cluster-settings.md)
 * [Set Up OpenShift](openshift-cluster-settings.md)
 * [EDP Installation Prerequisites Overview](prerequisites.md)

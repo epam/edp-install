@@ -6,7 +6,7 @@ according to your business needs:
 * The **Installation** section provides the prerequisites for EDP installation, including [Kubernetes](kubernetes-cluster-settings.md) or [OpenShift](openshift-cluster-settings.md) cluster setup,
 [Keycloak](install-keycloak.md), [DefectDojo](install-defectdojo.md), [Kiosk](install-kiosk.md), and [Ingress-nginx](install-ingress-nginx.md) setup as well as the subsequent [deployment of EPAM Delivery Platform](install-edp.md).
 
-* The **Configuration** section indicates the options to set the project with [adding a code language](add-other-code-language.md), [backup](restore-edp-with-velero.md), [VCS import strategy](import-strategy.md),
+* The **Configuration** section indicates the options to set the project with [adding a code language](add-other-code-language.md), [backup](restore-edp-with-velero.md), [integrate VCS with Jenkins](../operator-guide/import-strategy-jenkins.md) or [Tekton](../operator-guide/import-strategy-tekton.md),
 [managing Jenkins pipelines](overview-manage-jenkins-pipelines.md), and [logging](install-loki.md).
 
 * The **Integration** section comprises the [AWS](enable-irsa.md), [GitHub](github-integration.md), [GitLab](gitlab-integration.md), [Jira](jira-integration.md), and [Logsight](logsight-integration.md) integration options.

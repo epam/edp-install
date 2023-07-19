@@ -141,5 +141,5 @@ The further steps depend on the CI tool used.
 
 * [Add Git Server](../headlamp-user-guide/add-git-server.md)
 * [Add Application](../user-guide/add-application.md)
-* [GitHub Integration](github-integration.md)
-* [GitLab Integration](gitlab-integration.md)
+* [GitHub Webhook Configuration](github-integration.md)
+* [GitLab Webhook Configuration](gitlab-integration.md)

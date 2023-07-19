@@ -1,10 +1,10 @@
-# GitLab Integration
+# GitLab Webhook Configuration
 
 Follow the steps below to automatically create and integrate Jenkins GitLab webhooks.
 
 !!! note
-    Before applying the GitLab integration, make sure to enable VCS Import strategy. For details, please refer to
-    the [Enable VCS Import Strategy](import-strategy.md) page.
+    Before applying the GitLab integration, make sure to enable Integrate GitHub/GitLab in Jenkins. For details, please refer to
+    the [Integrate GitHub/GitLab in Jenkins](import-strategy-jenkins.md) page.
 
 1. Ensure the new job provisioner is created, as well as **Secret** with SSH key and **GitServer** custom resources.
 
@@ -44,6 +44,7 @@ Follow the steps below to automatically create and integrate Jenkins GitLab webh
 ### Related Articles
 
 * [Adjust Jira Integration](jira-integration.md)
-* [Enable VCS Import Strategy](import-strategy.md)
-* [Jenkins integration with GitLab](https://docs.gitlab.com/ee/integration/jenkins.html)
+* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
+* [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
+* [Grant Jenkins Access to the Gitlab Project](https://docs.gitlab.com/ee/integration/jenkins.html#grant-jenkins-access-to-the-gitlab-project)
 * [Manage Jenkins CI Pipeline Job Provision](manage-jenkins-ci-job-provision.md)

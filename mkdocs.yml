@@ -156,7 +156,19 @@ nav:
     - Configuration:
       - EDP Access Model: operator-guide/edp-access-model.md
       # - Add Other Code Language: operator-guide/add-other-code-language.md
-      - Enable VCS Import Strategy: operator-guide/import-strategy.md
+      - Version Control Systems:
+        - Overview: operator-guide/vcs.md
+        - Jenkins Scenario:
+          - Integrate GitHub/GitLab in Jenkins: operator-guide/import-strategy-jenkins.md
+          - GitHub:
+            - GitHub Webhook Configuration: operator-guide/github-integration.md
+            - Debug GitHub Webhooks in Jenkins: operator-guide/github-debug-webhooks.md
+          - GitLab:
+            - GitLab Webhook Configuration: operator-guide/gitlab-integration.md
+            - Adjust GitLab CI Tool: operator-guide/gitlabci-integration.md
+            - Debug GitLab Webhooks in Jenkins: operator-guide/gitlab-debug-webhooks.md
+        - Tekton Scenario:
+          - Integrate GitHub/GitLab in Tekton: operator-guide/import-strategy-tekton.md
       - Manage Jenkins Pipelines:
         - Overview: operator-guide/overview-manage-jenkins-pipelines.md
         - Manage Jenkins CI Pipeline Job Provisioner: operator-guide/manage-jenkins-ci-job-provision.md
@@ -184,13 +196,6 @@ nav:
       - Jira Integration:
           - Adjust Jira Integration: operator-guide/jira-integration.md
           - Adjust VCS Integration With Jira: operator-guide/jira-gerrit-integration.md
-      - GitHub Integration:
-          - GitHub Integration: operator-guide/github-integration.md
-          - Debug GitHub Webhooks in Jenkins: operator-guide/github-debug-webhooks.md
-      - GitLab Integration:
-          - GitLab Integration: operator-guide/gitlab-integration.md
-          - Adjust GitLab CI Tool: operator-guide/gitlabci-integration.md
-          - Debug GitLab Webhooks in Jenkins: operator-guide/gitlab-debug-webhooks.md
       - Perf Server Integration: operator-guide/perf-integration.md
       - ReportPortal:
           - Keycloak Integration: operator-guide/reportportal-keycloak.md

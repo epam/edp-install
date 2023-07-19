@@ -64,7 +64,7 @@ There are two available strategies: clone and import.
   * **Import** - allows configuring a replication from the Git server. While importing the existing repository.
 
   !!! note
-      In order to use the **Import** strategy, make sure to adjust it by the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page. Also, you cannot choose the **Empty project** field using the **Import project** strategy.
+      In order to use the **Import** strategy, make sure to adjust it with the [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md) page. Also, you cannot choose the **Empty project** field using the **Import project** strategy.
 
 3. Click the **Proceed** button to switch to the next menu.
 
@@ -143,7 +143,8 @@ i. Click the **Apply** button to add the library to the Libraries list.
 * [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
-* [Enable VCS Import Strategy](../operator-guide/import-strategy.md)
+* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
+* [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
 * [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
 * [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Perf Server Integration](../operator-guide/perf-integration.md)

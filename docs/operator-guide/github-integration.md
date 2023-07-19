@@ -1,9 +1,9 @@
-# GitHub Integration
+# GitHub Webhook Configuration
 
 Follow the steps below to automatically integrate Jenkins with GitHub webhooks.
 
 !!! note
-    Before applying the GitHub integration, make sure to enable VCS Import strategy. For details, please refer to the [Enable VCS Import Strategy](import-strategy.md) page.
+    Before applying the GitHub integration, make sure you have already visited the [Integrate GitHub/GitLab in Jenkins](import-strategy-jenkins.md) page.
 
 1. Ensure the new job provisioner is created, as well as **Secret** with SSH key and **GitServer** custom resources.
 
@@ -31,6 +31,7 @@ Follow the steps below to automatically integrate Jenkins with GitHub webhooks.
 
 ## Related Articles
 
-* [Enable VCS Import Strategy](import-strategy.md)
+* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
+* [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
 * [Adjust Jira Integration](jira-integration.md)
 * [Manage Jenkins CI Pipeline Job Provision](manage-jenkins-ci-job-provision.md)

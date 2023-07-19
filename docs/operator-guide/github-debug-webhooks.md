@@ -1,7 +1,7 @@
 # Debug GitHub Webhooks in Jenkins
 
 A webhook enables third-party services like GitHub to send real-time updates to an application. Updates are triggered by an event or an action by the webhook provider (for example, a push to a repository, a Pull Request creation), and pushed to the application via HTTP requests, namely, Jenkins.<br>
-The GitHub Jenkins job provisioner creates a webhook in the GitHub repository during the **Create release** pipeline once the [VCS Import Strategy](import-strategy.md) is enabled and the [GitHub Integration](github-integration.md) is completed.
+The GitHub Jenkins job provisioner creates a webhook in the GitHub repository during the **Create release** pipeline once the [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md) is enabled and the [GitHub Webhook Configuration](github-integration.md) is completed.
 
 The Jenkins setup in EDP uses the following plugins responsible for listening on GitHub webhooks:
 
@@ -114,8 +114,9 @@ In case of any issues with webhooks, try the following solutions:
 ### Related Articles
 
 * [GitHub Webhooks](https://docs.github.com/en/developers/webhooks-and-events/webhooks)
-* [Enable VCS Import Strategy](import-strategy.md)
-* [GitHub Integration](github-integration.md)
+* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
+* [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
+* [GitHub Webhook Configuration](github-integration.md)
 * [Manage Jenkins CI Pipeline Job Provision](manage-jenkins-ci-job-provision.md)
-* [GitHub plugin](https://plugins.jenkins.io/github/)
+* [GitHub Plugin](https://plugins.jenkins.io/github/)
 * [GitHub Pull Request Builder](https://plugins.jenkins.io/ghprb/)

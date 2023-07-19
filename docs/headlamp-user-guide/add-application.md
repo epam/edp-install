@@ -29,9 +29,9 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
 
    !![Application info](../assets/headlamp-user-guide/create-new-component.png)
 
-2. Select the necessary configuration strategy:
+2. Select the necessary configuration strategy. There are three configuration strategies:
 
-* **Create from template** – creates a project on the pattern in accordance with an application language, a build tool, and a framework.
+* **Create from template** – creates a project on the pattern in accordance with an application language, a build tool, and a framework. This strategy is recommended for projects that start developing their applications from scratch.
 
   !![Create application](../assets/headlamp-user-guide/headlamp-create-application.png "Create application")
 
@@ -70,13 +70,13 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
     !!! note
         Tekton pipelines offer built-in support for Java Maven Multi-Module projects. These pipelines are capable of recognizing Java deployable modules based on the information in the **pom.xml** file and performing relevant deployment actions. It's important to note that although the Dockerfile is typically located in the root directory, Kaniko, the tool used for building container images, uses the targets folder within the deployable module's context. For a clear illustration of a Multi-Module project structure, please refer to this [example](https://github.com/epmd-edp/java-maven-java17-multimodule.git) on GitHub, which showcases a commonly used structure for Java Maven Multi-Module projects.
 
-* **Import project** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
+* **Import project** - enables working with the repository located in the added [Git server](../headlamp-user-guide/add-git-server.md). While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*. Please refer to the [Add Git Server](../headlamp-user-guide/add-git-server.md) page for details.
 
   !!! note
-      In order to use the **Import project** strategy, make sure to adjust it by the [Enable VCS Import Strategy](../operator-guide/import-strategy.md) page.
+      In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md) page.
       The **Import project** strategy is not applicable for Gerrit. Also, you cannot choose the **Empty project** field using the **Import project** strategy.
 
-* **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field as well:
+* **Clone project** – clones the indicated repository into EPAM Delivery Platform. In this scenario, the application repository is forked in your account and then is integrated with EDP. While cloning the existing repository, it is required to fill in the **Repository URL** field as well:
 
   !![Import application](../assets/headlamp-user-guide/headlamp-clone-application.png "Clone application")
 
@@ -162,7 +162,8 @@ i. Click the **Apply** button to add the application to the Applications list.
 * [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
-* [Enable VCS Import Strategy](../operator-guide/import-strategy.md)
+* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
+* [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
 * [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
 * [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Perf Server Integration](../operator-guide/perf-integration.md)

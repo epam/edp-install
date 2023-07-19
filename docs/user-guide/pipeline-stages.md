@@ -59,6 +59,5 @@ The table below provides the details on all the stages in the EDP pipeline frame
 ### Related Articles
 
 * [Manage Jenkins CI Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
-* [GitLab Integration](../operator-guide/gitlab-integration.md)
-* [GitHub Integration](../operator-guide/github-integration.md)
-
+* [GitLab Webhook Configuration](../operator-guide/gitlab-integration.md)
+* [GitHub Webhook Configuration](../operator-guide/github-integration.md)

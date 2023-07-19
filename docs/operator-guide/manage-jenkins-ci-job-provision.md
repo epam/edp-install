@@ -1164,9 +1164,7 @@ def getSecretValue(name) {
 ## Related Articles
 
 * [CI Pipeline for Container](../../user-guide/container-stages)
-
-* [GitLab Integration](../operator-guide/gitlab-integration.md)
-
-* [GitHub Integration](../operator-guide/github-integration.md)
-
-* [Enable VCS Import Strategy](../operator-guide/import-strategy.md)
+* [GitLab Webhook Configuration](../operator-guide/gitlab-integration.md)
+* [GitHub Webhook Configuration](../operator-guide/github-integration.md)
+* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
+* [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
