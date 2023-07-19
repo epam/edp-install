@@ -209,7 +209,7 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
         "token": "XXXXXXXXXXXX",
         "url": "https://defectdojo.example.com"
       },
-      "kaniko-docker-config":  "secret-string",
+      "kaniko-docker-config": {"auths" : {"registry-endpoint": { "auth": "<base64 encoded "user:secret" string>" }}},
       "github-config":
       {
         "id_rsa": "id-rsa-key",
@@ -263,14 +263,6 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
     |harbor|secretKey|Secret string in base64|
     |harbor|REGISTRY_HTPASSWD|Secret string in base64|
     |harbor|REGISTRY_PASSWD|Secret string in base64|
-
-    To create the `kaniko-docker-config` field using a string in base64 format, you can use the following command with your login/password:
-
-    ```bash
-      kaniko=$(echo -n '<username>:<password>' | base64) && echo -e "{\n  \"auths\": {\n    \"https://index.docker.io/v1/\": {\n      \"auth\": \"$kaniko\"\n    }\n  },\n  \"credsStore\": \"ecr-login\"\n}" | base64
-
-    ```
-
 
 3. Set External Secret operator enabled by updating the values.yaml file:
 

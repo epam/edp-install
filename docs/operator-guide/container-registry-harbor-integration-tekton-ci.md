@@ -74,11 +74,11 @@ To make EDP and Harbor project interact with each other, set up a robot account:
 
   === "External Secret Operator"
 
-      By default, EDP allows to get a value from the SecretStore, in which the value of `kaniko-docker-config` secret is stored in base64 string:
+      By default, EDP allows to get a value from the SecretStore, in which the value of `kaniko-docker-config`:
 
       ```json title="/edp/deploy-secrets"
       {
-        "kaniko-docker-config":  "<insert_your_kaniko_docker_config>"
+        "kaniko-docker-config":  {"auths" : {"harbor-registry.com": { "auth": "<base64 encoded "user:secret" string>" }}}
       }
       ```
 
