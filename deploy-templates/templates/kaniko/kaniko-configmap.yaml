@@ -79,4 +79,7 @@ data:
           secretName: {{ .Values.kaniko.existingDockerConfig }}
         {{- else }}
           secretName: kaniko-docker-config
+          items:
+            - key: .dockerconfigjson
+              path: config.json
         {{- end }}

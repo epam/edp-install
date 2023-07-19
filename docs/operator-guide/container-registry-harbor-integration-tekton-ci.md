@@ -62,9 +62,9 @@ To make EDP and Harbor project interact with each other, set up a robot account:
       metadata:
         name: kaniko-docker-config
         namespace: platform
-      type: Opaque
+      type: kubernetes.io/dockerconfigjson
       stringData:
-        config.json: |
+        .dockerconfigjson: |
           {
             "auths" : {
               "harbor-registry.com": { "auth": "<base64 encoded "user:secret" string>" }
