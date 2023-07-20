@@ -18,10 +18,9 @@
 </code></pre></div></p> </div> </li> <li> <p>In the <a href=https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml>values.yaml</a> file for the <strong>edp-install</strong> helm chart, set the following values for the specified fields:</p> <ul> <li> <p>If <code>kaniko-docker-config</code> secret has been created manually.</p> <div class=highlight><span class=filename>values.yaml</span><pre><span></span><code><span class=nn>...</span>
 <span class=nt>kaniko</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>existingDockerConfig</span><span class=p>:</span><span class=w> </span><span class=s>&quot;kaniko-docker-config&quot;</span>
-<span class=nt>dockerRegistry</span><span class=p>:</span>
-<span class=w>  </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">harbor-registry.com</span>
-<span class=nt>edp-tekton</span><span class=p>:</span>
+<span class=nt>global</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>dockerRegistry</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">harbor-registry.com</span>
 <span class=w>    </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=s>&quot;harbor&quot;</span>
 <span class=nn>...</span>
 </code></pre></div> </li> </ul> <ul> <li> <p>If <code>kaniko-docker-config</code> secret has been created via External Secrets Operator</p> <div class=highlight><span class=filename>values.yaml</span><pre><span></span><code><span class=nn>...</span>
@@ -29,10 +28,9 @@
 <span class=w>  </span><span class=nt>existingDockerConfig</span><span class=p>:</span><span class=w> </span><span class=s>&quot;kaniko-docker-config&quot;</span>
 <span class=nt>externalSecrets</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class=nt>dockerRegistry</span><span class=p>:</span>
-<span class=w>  </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">harbor-registry.com</span>
-<span class=nt>edp-tekton</span><span class=p>:</span>
+<span class=nt>global</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>dockerRegistry</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">harbor-registry.com</span>
 <span class=w>    </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=s>&quot;harbor&quot;</span>
 <span class=nn>...</span>
 </code></pre></div> </li> </ul> </li> <li> <p>(Optional) Update the EDP Helm chart if it has already been deployed:</p> <div class=highlight><pre><span></span><code>helm<span class=w> </span>update<span class=w> </span>--install<span class=w> </span>edp<span class=w> </span>epamedp/edp-install<span class=w> </span><span class=se>\</span>

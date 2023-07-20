@@ -64,6 +64,9 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.3.0<span cla
 <span class=w>  </span><span class=nt>gerritSSHPort</span><span class=p>:</span><span class=w> </span><span class=s>&quot;22&quot;</span>
 <span class=w>  </span><span class=c1># Keycloak address with which the platform will be integrated</span>
 <span class=w>  </span><span class=nt>keycloakUrl</span><span class=p>:</span><span class=w> </span><span class=s>&quot;https://keycloak.example.com&quot;</span>
+<span class=w>  </span><span class=nt>dockerRegistry</span><span class=p>:</span>
+<span class=w>    </span><span class=c1># -- Docker Registry endpoint</span>
+<span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=s>&quot;&lt;AWS_ACCOUNT_ID&gt;.dkr.ecr.&lt;AWS_REGION&gt;.amazonaws.com&quot;</span>
 
 <span class=c1># AWS Region, e.g. &quot;eu-central-1&quot;</span>
 <span class=nt>awsRegion</span><span class=p>:</span>
@@ -88,10 +91,6 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.3.0<span cla
 <span class=w>    </span><span class=c1># Change to true to pass ctLint config</span>
 <span class=w>    </span><span class=nt>ctLint</span><span class=p>:</span>
 <span class=w>      </span><span class=nt>validateMaintainers</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-
-<span class=nt>dockerRegistry</span><span class=p>:</span>
-<span class=w>  </span><span class=c1># -- Docker Registry endpoint</span>
-<span class=w>  </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=s>&quot;&lt;AWS_ACCOUNT_ID&gt;.dkr.ecr.&lt;AWS_REGION&gt;.amazonaws.com&quot;</span>
 
 <span class=nt>edp-headlamp</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>config</span><span class=p>:</span>
@@ -120,6 +119,11 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.3.0<span cla
 <span class=w>  </span><span class=nt>gerritSSHPort</span><span class=p>:</span><span class=w> </span><span class=s>&quot;22&quot;</span>
 <span class=w>  </span><span class=c1># Keycloak address with which the platform will be integrated</span>
 <span class=w>  </span><span class=nt>keycloakUrl</span><span class=p>:</span><span class=w> </span><span class=s>&quot;https://keycloak.example.com&quot;</span>
+<span class=w>  </span><span class=nt>dockerRegistry</span><span class=p>:</span>
+<span class=w>    </span><span class=c1># -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor</span>
+<span class=w>    </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=s>&quot;ecr&quot;</span>
+<span class=w>    </span><span class=c1># -- Docker Registry endpoint</span>
+<span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=s>&quot;&lt;AWS_ACCOUNT_ID&gt;.dkr.ecr.&lt;AWS_REGION&gt;.amazonaws.com&quot;</span>
 
 <span class=c1># AWS Region, e.g. &quot;eu-central-1&quot;</span>
 <span class=nt>awsRegion</span><span class=p>:</span>
@@ -132,10 +136,6 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.3.0<span cla
 <span class=nt>kaniko</span><span class=p>:</span>
 <span class=w>  </span><span class=c1># -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::&lt;AWS_ACCOUNT_ID&gt;:role/AWS_IAM_ROLE_NAME&gt;</span>
 <span class=w>  </span><span class=nt>roleArn</span><span class=p>:</span>
-
-<span class=nt>dockerRegistry</span><span class=p>:</span>
-<span class=w>  </span><span class=c1># -- Docker Registry endpoint</span>
-<span class=w>  </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=s>&quot;&lt;AWS_ACCOUNT_ID&gt;.dkr.ecr.&lt;AWS_REGION&gt;.amazonaws.com&quot;</span>
 
 <span class=nt>jenkins-operator</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>enabled</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
