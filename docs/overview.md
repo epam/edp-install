@@ -93,7 +93,6 @@ There are two main options for Kubernetes provided by EDP:
 
 There is no limitation to run EDP on vanilla Kubernetes.
 
-
 ## Related Articles
 
 * [Quick Start](getting-started.md)

@@ -17,28 +17,29 @@ The system should have the following specifications to run properly:
 
 ## EDP Toolset
 
-EPAM Delivery Platform uses the following tools:
+EPAM Delivery Platform supports the following tools:
 
 |Domain|Related Tools/Solutions|
 |- |- |
-|Artifacts Management|Nexus Repository|
-|Artifact Registry|AWS ECR, OpenShift Registry, Harbor|
-|AWS|Amazon EKS Pod Identity Webhook, AWS ECR, AWS EFS|
+|Artifacts Management|Nexus Repository, Jfrog Artifactory|
+|AWS|IRSA, AWS ECR, AWS EFS, Parameter Store, S3, ALB/NLB, Route53|
 |Build|.NET, Go, Apache Gradle, Apache Maven, NPM|
 |Cluster Backup|Velero|
 |Code Review|Gerrit, GitLab, GitHub|
-|Docker|Hadolint, Kaniko, Crane|
-|Infrastructure as Code|Terraform, TFLint|
-|Kubernetes Deployment|Kubectl, Helm, Chart Testing, Argo CD|
+|Container Registry|AWS ECR, OpenShift Registry, Harbor, DockerHub|
+|Containers|Hadolint, Kaniko, Crane|
+|Infrastructure as Code|Terraform, TFLint, Crossplane, AWS Controllers for Kubernetes|
+|Kubernetes Deployment|Kubectl, Helm, Chart Testing, Argo CD, Argo Rollout|
 |Kubernetes Multitenancy|Kiosk|
-|Logging|EFK, ELK, Loki|
-|Monitoring|Prometheus, Grafana|
+|Logging|OpenSearch, EFK, ELK, Loki, Splunk|
+|Monitoring|Prometheus, Grafana, VictoriaMetrics|
 |Pipeline Orchestration|Tekton, Jenkins|
 |Policies/Rules|Open Policy Agent|
-|SSO|Keycloak|
-|Static Code Analysis|SonarQube, DefectDojo, Semgrep|
+|Secrets Management|External Secret Operator, Vault|
+|Secure Development|SonarQube, DefectDojo, Dependency Track,  Semgrep, Grype, Trivy, Clair, gitleaks|
+|SSO|Keycloak, oauth2-proxy|
 |Test Report Tool|ReportPortal, Allure|
-|Secrets Management|External secret|
+|Tracing|OpenTelemetry, Jaeger|
 
 ## Install EDP
 
