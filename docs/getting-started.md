@@ -28,15 +28,16 @@ EPAM Delivery Platform supports the following tools:
 |Code Review|Gerrit, GitLab, GitHub|
 |Container Registry|AWS ECR, OpenShift Registry, Harbor, DockerHub|
 |Containers|Hadolint, Kaniko, Crane|
-|Infrastructure as Code|Terraform, TFLint, Crossplane, AWS Controllers for Kubernetes|
-|Kubernetes Deployment|Kubectl, Helm, Chart Testing, Argo CD, Argo Rollout|
+|Documentation as Code|MkDocs, Antora (AsciiDoc)|
+|Infrastructure as Code|Terraform, TFLint, Terraform Docs, Crossplane, AWS Controllers for Kubernetes|
+|Kubernetes Deployment|Kubectl, Helm, Helm Docs, Chart Testing, Argo CD, Argo Rollout|
 |Kubernetes Multitenancy|Kiosk|
 |Logging|OpenSearch, EFK, ELK, Loki, Splunk|
 |Monitoring|Prometheus, Grafana, VictoriaMetrics|
 |Pipeline Orchestration|Tekton, Jenkins|
 |Policies/Rules|Open Policy Agent|
 |Secrets Management|External Secret Operator, Vault|
-|Secure Development|SonarQube, DefectDojo, Dependency Track,  Semgrep, Grype, Trivy, Clair, gitleaks|
+|Secure Development|SonarQube, DefectDojo, Dependency Track,  Semgrep, Grype, Trivy, Clair, GitLeaks, CycloneDX Generator, tfsec, checkov|
 |SSO|Keycloak, oauth2-proxy|
 |Test Report Tool|ReportPortal, Allure|
 |Tracing|OpenTelemetry, Jaeger|
