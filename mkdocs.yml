@@ -285,23 +285,31 @@ nav:
 #    - user-guide/d-d-diagram.md
   - User Guide:
     - headlamp-user-guide/index.md
-    - Application:
-        - Overview: headlamp-user-guide/application.md
-        - headlamp-user-guide/add-application.md
-    - Autotest:
-        - Overview: headlamp-user-guide/autotest.md
-        - headlamp-user-guide/add-autotest.md
-    - Library:
-        - Overview: headlamp-user-guide/library.md
-        - headlamp-user-guide/add-library.md
-    - Pipelines:
+    - Components:
+      - Application:
+          - headlamp-user-guide/add-application.md
+          - Manage Applications: headlamp-user-guide/application.md
+      - Autotest:
+          - headlamp-user-guide/add-autotest.md
+          - Manage Autotests: headlamp-user-guide/autotest.md
+      - Library:
+          - headlamp-user-guide/add-library.md
+          - Manage Libraries: headlamp-user-guide/library.md
+      - Infrastructure:
+          - headlamp-user-guide/add-infrastructure.md
+          - Manage Infrastructures: headlamp-user-guide/infrastructure.md
+      - Manage Branches: headlamp-user-guide/manage-branches.md
+    - Environments:
         - CD Pipeline:
             - headlamp-user-guide/add-cd-pipeline.md
             - headlamp-user-guide/add-quality-gate.md
-    - Git Server:
-        - headlamp-user-guide/add-git-server.md
-    - Cluster:
-        - headlamp-user-guide/add-cluster.md
+    - Configuration:
+      - Git Server:
+          - headlamp-user-guide/add-git-server.md
+          - Manage Git Servers: headlamp-user-guide/git-server-overview.md
+      - Cluster:
+          - headlamp-user-guide/add-cluster.md
+          - Manage Clusters: headlamp-user-guide/cluster.md
   - Developer Guide:
     - developer-guide/index.md
     - developer-guide/local-development.md

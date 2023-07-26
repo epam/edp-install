@@ -1,4 +1,4 @@
-# Autotest
+# Manage Autotests
 
 This section describes the subsequent possible actions that can be performed with the newly added or existing autotests.
 
@@ -16,29 +16,30 @@ As soon as the autotest is successfully provisioned, the following will be creat
 
 The added autotest will be listed in the Autotests list allowing you to do the following:
 
-!![Autotests page](../assets/headlamp-user-guide/headlamp-autotests-page.png "Autotests page")
+!![Autotests page](../assets/headlamp-user-guide/headlamp-inspect-autotest-menu.png "Autotests page")
 
-1. Create another autotest by clicking the plus sign icon in the lower-right corner of the screen and performing the same steps as described on the [Add Autotest](add-autotest.md) page.
+* **Autotest status** - displays the Git Server status. Can be red or green depending on if the Headlamp managed to connect to the Git Server with the specified credentials or not.
 
-2. Open autotest data by clicking its link name. Once clicked, the following blocks will be displayed:
+* **Autotest name (clickable)** - displays the Git Server name set during the Git Server creation.
 
-  * **Branches** - displays the status and name of the deployment branch.
-  * **General Info** - displays common information about the cloned/imported autotest, such as language, if the project is empty or not, build tool, framework, strategy, and default branch.
-  * **Advanced Settings** - displays the specified job provisioner, CI tool, deployment script, Jenkins agent, Jira server,Jira issue metadata payload, commit message pattern, and ticket name pattern.
-  * **Metadata** - displays the autotest name, namespace, creation date, finalizers, generation, resource version, and UID. Open this block by selecting the information icon near the options icon next to the autotest name.
+* **Open documentation** - opens the documentation that leads to this page.
 
-3. Edit the autotest by selecting the options icon next to its name in the Autotests list, and then selecting **Edit**. For details see the [Edit Existing Autotest](#edit-existing-autotest) section.
+* **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
 
-4. Remove autotest with the corresponding database and Jenkins/Tekton pipelines by selecting the options icon next to its name in the Autotests list, and then selecting **Delete**:
+* **Create new autotest** - displays the **Create new component** menu.
+
+* **Edit autotest** - edit the autotest by selecting the options icon next to its name in the autotests list, and then selecting **Edit**. For details see the [Edit Existing Autotest](#edit-existing-autotest) section.
+
+* **Delete autotest** - remove autotest with the corresponding database and Jenkins/Tekton pipelines by selecting the options icon next to its name in the Autotests list, and then selecting **Delete**:
 
   !!! note
       The autotest that is used in a CD pipeline cannot be removed.
 
-5. Sort the existing autotests in a table by clicking the sorting icons in the table header. Sort the autotests alphabetically by their name, language, build tool, framework, and CI tool. You can also sort the autotests by their status: Created, Failed, or In progress.
+There are also options to sort the applications:
 
-6. Search the necessary autotests by the namespace or by entering the corresponding name, language or the build tool into the **Filter** tool.
+* Sort the existing autotests in a table by clicking the sorting icons in the table header. Sort the autotests alphabetically by their name, language, build tool, framework, and CI tool. You can also sort the autotests by their status: Created, Failed, or In progress.
 
-7. Select a number of autotests displayed per page (15, 25 or 50 rows)  and navigate between pages if the number of autotests exceeds the capacity of a single page.
+* Select a number of autotests displayed per page (15, 25 or 50 rows)  and navigate between pages if the number of autotests exceeds the capacity of a single page.
 
 ## Edit Existing Autotest
 
@@ -58,7 +59,7 @@ EDP Headlamp provides the ability to enable, disable or edit the Jira Integratio
 
    !![Edit autotest](../assets/headlamp-user-guide/headlamp-edit-autotest-jira.png "Edit library")
 
-   a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see steps 15-19 on the [Add Autotests page](add-autotest.md#the-advanced-settings-menu).
+   a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see steps d-h on the [Add Autotests](add-autotest.md#the-advanced-settings-menu) page.
 
    b. Select the **Apply** button to apply the changes.
 
@@ -78,83 +79,9 @@ EDP Headlamp provides the ability to enable, disable or edit the Jira Integratio
 
    c. Navigate to Jenkins/Tekton and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
-As a result, the necessary changes will be applied.
+  As a result, the necessary changes will be applied.
 
-## Add a New Branch
-
-!!! note
-    Pay attention when specifying the branch name: the branch name is involved in the formation of the autotest version, so it must comply with the [versioning semantic rules](https://semver.org/) for the application.
-
-When adding an autotest, the default branch is a **master** branch. In order to add a new branch, follow the steps below:
-
-1. Navigate to the **Branches** block by clicking the autotest name link in the Autotests list.
-
-2. Select the options icon related to the necessary branch and then select **Create**:
-
-  !![Add branch](../assets/headlamp-user-guide/headlamp-addbranch1.png "Add branch")
-
-3. Click **Edit YAML** in the upper-right corner of the **Create Autotest** dialog to open the YAML editor and add a branch. Otherwise, fill in the required fields in the dialog:
-
-  !![New branch](../assets/headlamp-user-guide/headlamp-create-new-branch.png "New branch")
-
-  a. **Release Branch** - select the **Release Branch** check box if you need to create a release branch.
-
-  b. **Branch name** - type the branch name. Pay attention that this field remains static if you create a release branch. If you want to use the existing branch, enter its name into this field.
-
-  c. **From Commit Hash** - paste the commit hash from which the branch will be created. Note that if the **From Commit Hash** field is empty, the latest commit from the branch name will be used.
-
-  d. **Branch version** - enter the necessary branch version for the artifact. The Release Candidate (RC) postfix is concatenated to the branch version number.
-
-  e. **Default branch version** - type the branch version that will be used in a master branch after the release creation. The Snapshot postfix is concatenated to the master branch version number.
-
-  f. Click the **Apply** button and wait until the new branch will be added to the list.
-
-!!! info
-    Adding of a new branch is indicated in the context of the edp versioning type. To get more information on how to add a branch using the default versioning type, please refer to the [Add Autotest](add-autotest.md) instruction.
-
-The default autotest repository is cloned and changed to the new indicated version before the build, i.e. the new indicated version will not be committed to the repository; thus, the existing repository will keep the default version.
-
-## Build Branch
-
-In order to build branch from the latest commit, do the following:
-
-1. Navigate to the **Branches** block by clicking the autotest name link in the Autotests list.
-2. Select the options icon related to the necessary branch and then select **Build**:
-
-  !![Build branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Build branch")
-
-The pipeline run status is displayed near the branch name in the **Branches** block:
-
-  !![Pipeline run status in Headlamp](../assets/headlamp-user-guide/headlamp-pipeline-run-status.png "Pipeline run status in Headlamp")
-
-The corresponding item appears on the **Tekton Dashboard** in the **PipelineRuns** section:
-
-  !![Pipeline run status in Tekton](../assets/headlamp-user-guide/headlamp-pipeline-run-status-in-tekton.png "Pipeline run status in Tekton")
-
-## Edit Branch
-
-In order to edit a branch with the corresponding record in the Headlamp database, do the following:
-
-1. Navigate to the **Branches** block by clicking the autotest name link in the Autotests list.
-2. Select the options icon related to the necessary branch and then select **Edit**:
-
-  !![Edit branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Edit branch")
-
-3. Edit the YAML file in a standard or minimal editor and select **Save & Apply**:
-
-  !![Edit branch](../assets/headlamp-user-guide/headlamp-edit-branch-autotest-yaml.png "Edit branch")
-
-## Delete Branch
-
-!!! note
-    The default **master** branch cannot be removed.
-
-In order to delete the added branch with the corresponding record in the Headlamp database, do the following:
-
-1. Navigate to the **Branches** block by clicking the library name link in the Libraries list.
-2. Select the options icon related to the necessary branch and then select **Delete**:
-
-  !![Delete branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Delete branch")
+4. To create, edit and delete application branches, please refer to the [Manage Branches](../headlamp-user-guide/manage-branches.md) page.
 
 ## Add Autotest as a Quality Gate
 
@@ -195,3 +122,4 @@ There is an ability to run the autotests locally using the IDEA (Integrated Deve
 * [Add CD Pipeline](add-cd-pipeline.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
+* [Manage Branches](../headlamp-user-guide/manage-branches.md)

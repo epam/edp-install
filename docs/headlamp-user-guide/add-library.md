@@ -1,6 +1,6 @@
 # Add Library
 
-Headlamp helps to create, clone or import a library and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins/Tekton.
+Headlamp helps to create, clone and import a library and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins/Tekton.
 
 To add a library, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create new component** dialog will appear, then select **Library** and choose one of the strategies which will be described later in this page. You can create a library [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
@@ -16,7 +16,7 @@ To edit YAML in the minimal editor, turn on the **Use minimal editor** toggle in
 
 To save the changes, select the **Save & Apply** button.
 
-## Create Library in the Dialog <a name="menu"></a>
+## Create Library via UI <a name="menu"></a>
 
 The **Create Library** dialog contains the two steps:
 
@@ -31,49 +31,52 @@ The **Create Library** dialog contains the two steps:
 
 2. In the **Create new component** menu, select the necessary configuration strategy. The choice will define the parameters you will need to specify:
 
-  * **Create from template** – creates a project on the pattern in accordance with a code language, a build tool, and a framework.
+  * **Create from template** – creates a project on the pattern in accordance with a library language, a build tool, and a framework.
 
-  !![Create library](../assets/headlamp-user-guide/headlamp-library-codebase-info.png "Create library")
-
-  1. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `/epmd-edp/examples/basic/edp-auto-tests-simple-example`
-  2. Type the name of the library in the **Component name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
-  3. To create a library with an empty repository in Gerrit, select the **Empty project** check box. The empty repository option is available only for the **Create from template** strategy.
-  4. Select any of the supported code languages with its framework in the **Library code language** field:
-
-    * Java – selecting specific Java version available.
-    * JavaScript - selecting JavaScript allows using the NPM tool.
-    * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask.
-    * Groovy-pipeline - selecting Groovy-pipeline allows having the ability to customize a stages logic. For details,
-      please refer to the [Customize CD Pipeline](../user-guide/customize-cd-pipeline.md) page.
-    * Terraform - selecting Terraform allows using the Terraform different versions via the **Terraform version manager** ([tfenv](https://github.com/tfutils/tfenv#usage)).
-      EDP supports all actions available in Terraform, thus providing the ability to modify the virtual infrastructure and launch some checks with the help of linters.
-      For details, please refer to the [Use Terraform Library in EDP](../user-guide/terraform-stages.md) page.
-    * Rego - this option allows using Rego code language with an Open Policy Agent (OPA) Library. For details, please
-      refer to the [Use Open Policy Agent](../user-guide/opa-stages.md) page.
-    * Container - this option allows using the Kaniko tool for building the container images from a Dockerfile. For details, please refer to the [CI Pipeline for Container](../user-guide/container-stages.md) page.
-    * Helm - this option allows using the [chart testing lint](https://github.com/helm/chart-testing) (Pipeline) for Helm charts or using Helm chart as a set of other Helm charts organized according to the [example](https://github.com/argoproj/argo-helm/tree/main).
-    * C# - selecting C# allows using .Net v.3.1 and .Net v.6.0.
-    * Other - selecting Other allows extending the default code languages when creating a codebase with the Clone/Import strategy. To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) page.
+  * **Import project** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
 
     !!! note
-        The **Create** strategy does not allow to customize the default code language set.
+        In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
 
-  5. Select necessary **Language version/framework** depending on the **Library code language** field.
+  * **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field as well:
 
-  6. The **Select Build Tool** field disposes of the default tools and can be changed in accordance with the selected code language:
+    !![Clone library](../assets/headlamp-user-guide/headlamp-clone-library.png "Clone library")
 
-  * **Import project** - allows configuring a replication from the Git server.
+    In our example, we will use the **Create from template** strategy:
 
-  !!! note
-      In order to use the **Import** strategy, make sure to adjust it with the [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md) page. Also, you cannot choose the **Empty project** field using the **Import project** strategy.
+    !![Create library](../assets/headlamp-user-guide/headlamp-library-codebase-info.png "Create library")
 
-  * **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field. Select the **Repository credentials** check box in case you clone the private repository, and fill in the repository login and password/access token.
+    1. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `/epmd-edp/examples/basic/edp-auto-tests-simple-example`
+    2. Type the name of the library in the **Component name** field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
+    3. Type the library description.
+    4. To create a library with an empty repository in Gerrit, select the **Empty project** check box. The empty repository option is available only for the **Create from template** strategy.
+    5. Select any of the supported code languages with its framework in the **Library code language** field:
 
-  !![Clone library](../assets/headlamp-user-guide/headlamp-clone-library.png "Clone library")
+      * Java – selecting specific Java version available.
+      * JavaScript - selecting JavaScript allows using the NPM tool.
+      * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask.
+      * Groovy-pipeline - selecting Groovy-pipeline allows having the ability to customize a stages logic. For details,
+        please refer to the [Customize CD Pipeline](../user-guide/customize-cd-pipeline.md) page.
+      * Terraform - selecting Terraform allows using the Terraform different versions via the **Terraform version manager** ([tfenv](https://github.com/tfutils/tfenv#usage)).
+        EDP supports all actions available in Terraform, thus providing the ability to modify the virtual infrastructure and launch some checks with the help of linters.
+        For details, please refer to the [Use Terraform Library in EDP](../user-guide/terraform-stages.md) page.
+      * Rego - this option allows using Rego code language with an Open Policy Agent (OPA) Library. For details, please
+        refer to the [Use Open Policy Agent](../user-guide/opa-stages.md) page.
+      * Container - this option allows using the Kaniko tool for building the container images from a Dockerfile. For details, please refer to the [CI Pipeline for Container](../user-guide/container-stages.md) page.
+      * Helm - this option allows using the [chart testing lint](https://github.com/helm/chart-testing) (Pipeline) for Helm charts or using Helm chart as a set of other Helm charts organized according to the [example](https://github.com/argoproj/argo-helm/tree/main).
+      * C# - selecting C# allows using .Net v.3.1 and .Net v.6.0.
+      * Other - selecting Other allows extending the default code languages when creating a codebase with the Clone/Import strategy. To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) page.
+
+      !!! note
+          The **Create** strategy does not allow to customize the default code language set.
+
+    6. Select necessary **Language version/framework** depending on the **Library code language** field.
+
+    7. The **Select Build Tool** field disposes of the default tools and can be changed in accordance with the selected code language.
 
 3. Click the **Proceed** button to switch to the next menu.
 
-  ### The Advanced Settings Menu
+### The Advanced Settings Menu
 
 The **Advanced Settings** menu should look like the picture below:
 
@@ -84,12 +87,7 @@ a. Specify the name of the default branch where you want the development to be p
 !!! note
     The default branch cannot be deleted.
 
-b. In the **CI Tool** field, choose the necessary tool: Jenkins or GitLab CI, where Jenkins is the default tool and the GitLab CI tool can be additionally adjusted. For details, please refer to the [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md) page.
-
-!!! note
-    The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
-
-c. Select the necessary codebase versioning type:
+b. Select the necessary codebase versioning type:
 
 * **default**: Using the default versioning type, in order to specify the version of the current artifacts, images, and tags in the Version Control System, a developer should navigate to the corresponding file and change the version **manually**.
 
@@ -104,24 +102,24 @@ Type the version number from which you want the artifacts to be versioned.
 !!! note
     The **Start Version From** field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
-d. Specify the pattern to validate a commit message. Use regular expression to indicate the pattern that is followed on the project to validate a commit message in the code review pipeline. An example of the pattern: `^[PROJECT_NAME-d{4}]:.*$`
+c. Specify the pattern to validate a commit message. Use regular expression to indicate the pattern that is followed on the project to validate a commit message in the code review pipeline. An example of the pattern: `^[PROJECT_NAME-d{4}]:.*$`
 
   !![Integrate with Jira server](../assets/headlamp-user-guide/headlamp-library-jira-server.png "Integrate with Jira server")
 
-e. Select the **Integrate with Jira server** check box in case it is required to connect Jira tickets with the commits
+d. Select the **Integrate with Jira server** check box in case it is required to connect Jira tickets with the commits
 and have a respective label in the **Fix Version** field.
 
 !!! note
     To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page,
     and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
 
-f. As soon as the Jira server is set, select it in the **Jira Server** field.
+e. As soon as the Jira server is set, select it in the **Jira Server** field.
 
-g. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira.
+f. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira.
 
-  !![Mapping field name](../assets/headlamp-user-guide/headlamp-library-advanced-mapping.png "Mapping fields")
+  !![Mapping fields](../assets/headlamp-user-guide/headlamp-library-advanced-mapping.png "Mapping fields")
 
-h. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
+g. In the **Advanced Mapping** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
 
 1. Select the name of the field in a Jira ticket. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 
@@ -136,15 +134,17 @@ h. In the **Advanced Mapping** section, specify the names of the Jira fields tha
 
 4. Click the bin icon to remove the Jira field name.
 
-i. Click the **Apply** button to add the library to the Libraries list.
+h. Click the **Apply** button to add the library to the Libraries list.
 
 !!! note
     After the complete adding of the library, inspect the [Library Overview](library.md) part.
 
+!!! note
+    Since EDP v3.3.0, the **CI tool** field has been hidden. Now Headlamp automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, Headlamp chooses Tekton by default. To define the CI tool manualy, operate with the **spec.ciTool** parameters.
 
 ## Related Articles
 
-* [Library Overview](library.md)
+* [Manage Libraries](library.md)
 * [Add CD Pipeline](add-cd-pipeline.md)
 * [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md)

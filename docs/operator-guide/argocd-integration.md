@@ -115,8 +115,8 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
       Copy SSH private key to Argo CD namespace
 
       ```bash
-      EDP_NAMESPACE=<EPD_NAMESPACE>
-      VCS_HOST="<github.com_or_github.com>"
+      EDP_NAMESPACE=<EDP_NAMESPACE>
+      VCS_HOST="<github.com_or_gitlab.com>"
       ACCOUNT_NAME="<ACCOUNT_NAME>"
       URL="ssh://git@${VCS_HOST}:22/${ACCOUNT_NAME}"
 
@@ -136,7 +136,7 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
       Add Gerrit host to Argo CD config map with known hosts
 
       ```bash
-      EDP_NAMESPACE=<EPD_NAMESPACE>
+      EDP_NAMESPACE=<EDP_NAMESPACE>
       KNOWN_HOSTS_FILE="/tmp/ssh_known_hosts"
       ARGOCD_KNOWN_HOSTS_NAME="argocd-ssh-known-hosts-cm"
       GERRIT_PORT=$(kubectl get gerrit gerrit -n ${EDP_NAMESPACE} -o jsonpath='{.spec.sshPort}')
