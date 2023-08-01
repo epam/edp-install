@@ -286,6 +286,9 @@ nav:
 #    - user-guide/d-d-diagram.md
   - User Guide:
     - headlamp-user-guide/index.md
+    - Marketplace:
+        - Marketplace Overview: headlamp-user-guide/marketplace.md
+        - headlamp-user-guide/add-marketplace.md
     - Components:
       - Application:
           - headlamp-user-guide/add-application.md
@@ -301,9 +304,8 @@ nav:
           - Manage Infrastructures: headlamp-user-guide/infrastructure.md
       - Manage Branches: headlamp-user-guide/manage-branches.md
     - Environments:
-        - CD Pipeline:
-            - headlamp-user-guide/add-cd-pipeline.md
-            - headlamp-user-guide/add-quality-gate.md
+        - headlamp-user-guide/add-cd-pipeline.md
+        - headlamp-user-guide/add-quality-gate.md
     - Configuration:
       - Git Server:
           - headlamp-user-guide/add-git-server.md
