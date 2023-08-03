@@ -1,106 +1,30 @@
-# CI Pipeline for Terraform
+# CI Pipelines for Terraform
 
-EPAM Delivery Platform ensures the implemented Terraform support allowing to work with Terraform code that is processed by means of stages in the **Code-Review** and **Build** pipelines. These pipelines are expected to be created after the Terraform Library is added.
+EPAM Delivery Platform ensures the implemented Terraform support by adding a separate component type called **Infrastructure**. The **Infrastructure** codebase type allows to work with Terraform code that is processed by means of stages in the **Code-Review** and **Build** pipelines.
 
-## Code Review Pipeline Stages
+## Pipeline Stages for Terraform
 
-In the **Code Review** pipeline, the following stages are available:
+Under the hood, Infrastructure codebase type, namely Terraform, looks quite similar to other codebase types. The distinguishing characterstic of the Infrastructure codebase type is that there is a stage called **terraform-check** in both of **Code Review** and **Build** pipelines. This stage runs the pre-commit activities which in their turn run the following commands and tools:
 
-1. **checkout** stage, a standard step during which all files are checked out from a selected branch of the Git repository.
+1. [Terraform fmt](https://developer.hashicorp.com/terraform/cli/commands/fmt) - the first step of the stage is basically the `terraform fmt` command. The `terraform fmt` command automatically updates the formatting of Terraform configuration files to follow the standard conventions and make the code more readable and consistent.
 
-2. **terraform-lint** stage containing a script that performs the following actions:
+2. [Lock provider versions](https://developer.hashicorp.com/terraform/tutorials/configuration-language/provider-versioning) - locks the versions of the Terraform providers used in the project. This ensures that the project uses specific versions of the providers and prevents unexpected changes from impacting the infrastructure due to newer provider versions.
 
-  2.1. Checks whether the repository contains the _.terraform-version_ file, where the information about the Terraform version is stored. If there is no _.terraform-version_ file, the default Terraform version (0.14.5) will be used on this stage. In order to install different versions of Terraform, use the [Terraform version manager](https://github.com/tfutils/tfenv#tfenv).
+3. [Terraform validate](https://developer.hashicorp.com/terraform/cli/commands/validate) - checks the syntax and validity of the Terraform configuration files. It scans the configuration files for all possible issues.
 
-  2.2. Launches the [_terraform init_](https://www.terraform.io/docs/cli/commands/init.html) command that initializes backend.
+4. [Terraform docs](https://github.com/terraform-docs/terraform-docs) - generates human-readable documentation for the Terraform project.
 
-  2.3. Launches the linters described below. Pay attention that if at least one of these checks is not true (returns with an error), the Code Review pipeline will fail on this step and will be displayed in red.
+5. [Tflint](https://github.com/terraform-linters/tflint) - additional validation step using the `tflint` linter to provide more in-depth checks in addition to what the `terraform validate` command does.
 
-    * [_terraform fmt_](https://www.terraform.io/docs/cli/commands/fmt.html) linter checks the formatting of the Terraform code;
+6. [Checkov](https://github.com/bridgecrewio/checkov) - runs the `checkov` command against the Terraform codebase to identify any security misconfigurations or compliance issues.
 
-    * [_tflint_](https://github.com/terraform-linters/tflint#tflint) linter checks Terraform linters for possible errors and deprecated syntax;
+7. [Tfsec](https://github.com/aquasecurity/tfsec) - another security-focused validation step using the `tfsec` command. Tfsec is a security scanner for Terraform templates that detects potential security issues and insecure configurations in the Terraform code.
 
-    * [_terraform validate_](https://www.terraform.io/docs/cli/commands/validate.html) linter validates the Terraform code.
+!!! note
+    The commands and their attributes are displayed in the [**.pre-commit-config.yaml**](https://github.com/epmd-edp/hcl-terraform-terraform/blob/master/.pre-commit-config.yaml) file.
 
-## Build Pipeline Stages
+## Related Articles
 
-In the **Build** pipeline, the following stages are available:
-
-1. **checkout** stage is a standard step during which all files are checked out from a master branch of Git repository.
-
-  !!! note
-      With the default versioning, in the base directory of the project, create a file named 'VERSION' with a proper Terraform version (e.g.1.0.0).
-
-2. **terraform-lint** stage containing a script that performs the same actions as in the Code Review pipeline, namely:
-
-  2.1. Checks whether the repository contains the _.terraform-version_ file, where the information about the Terraform version is stored. If there is no _.terraform-version_ file, the default Terraform version (0.14.5) will be used on this stage. In order to install different versions of Terraform, use the [Terraform version manager](https://github.com/tfutils/tfenv#tfenv).
-
-  2.2. Launches the [_terraform init_](https://www.terraform.io/docs/cli/commands/init.html) stage that initializes backend.
-
-  2.3. Launches the linters described below. Pay attention that if at least one of these checks is not true (returns with an error), the Build pipeline will fail on this step and will be displayed in red.
-
-    - [_terraform fmt_](https://www.terraform.io/docs/cli/commands/fmt.html) linter checks the formatting of the Terraform code;
-
-    - [_tflint_](https://github.com/terraform-linters/tflint#tflint) linter checks Terraform linters for possible errors and deprecated syntax;
-
-    - [_terraform validate_](https://www.terraform.io/docs/cli/commands/validate.html) linter validates the Terraform code.
-
-3. **terraform-plan** stage containing a script that performs the following actions:
-
-  3.1. Checks whether the repository contains the _.terraform-version_ file, where the information about the Terraform version is stored. If there is no _.terraform-version_ file, the default Terraform version (0.14.5) will be used on this stage. In order to install different versions of Terraform, use the [Terraform version manager](https://github.com/tfutils/tfenv#tfenv).
-
-  3.2. Launches the [_terraform init_](https://www.terraform.io/docs/cli/commands/init.html) command that initializes backend.
-
-  3.3. Returns the name of the user, on behalf of whom the actions will be performed, with the help of [_aws_](https://docs.aws.amazon.com/cli/latest/reference/index.html).
-
-  3.4. Launches the _terraform-plan_ command saving the results in the _.tfplan_ file.
-
-  !!! note
-      EDP expects **AWS credentials** to be added in Jenkins under the name _aws.user_. To learn how to create credentials for the **terraform-plan** and **terraform-apply** stages, see the section [**Create AWS Credentials**](#create-aws-credentials).
-
-4. **terraform-apply** stage containing a script that performs the following actions:
-
-  4.1. Checks whether the repository contains the _.terraform-version_ file, where the information about the Terraform version is stored. If there is no _.terraform-version_ file, the default Terraform version (0.14.5) will be used on this stage. In order to install different versions of Terraform, use the [Terraform version manager](https://github.com/tfutils/tfenv#tfenv).
-
-  4.2. Launches the _terraform init_ command that initializes backend.
-
-  4.3. Launches the _terraform-plan_ command saving the results in the _tfplan_ file.
-
-  4.4. Approves the application of Terraform code in your project by manually clicking the **Proceed** button. To decline the Terraform code, click the **Abort** button. If none of the buttons is selected within 30 minutes, by default the _terraform-plan_ command will not be applied.
-
-  4.5. Launches the [_terraform-apply_](https://www.terraform.io/docs/cli/commands/apply.html) command.
-
-## Create AWS Credentials
-
-To create credentials that will be used in _terraform-plan_ and _terraform-apply_ stages, perform the following steps:
-
-  1. Go to **Jenkins** -> **Manage Jenkins** -> **Manage Credentials**. In the **Store scoped to Jenkins** section select _global_ as **Domains**.
-    !![Jenkins credential](../assets/user-guide/tflib1.png)
-
-  2. Click the **Add Credentials** tab and select _AWS Credentials_ in the **Kind** dropdown.
-    !![Jenkins credential](../assets/user-guide/tflib2.png)
-
-  3. Enter the ID name. By default, EDP expects AWS credentials to be under the ID _aws.user_.
-
-  4. Enter values into the **Access Key ID** and **Secret Access Key** fields (credentials should belong to a user in AWS).
-
-  5. Click **OK** to save these credentials. Now the ID of the credentials is visible in the **Global credentials** table in Jenkins.
-
-## Use Existing AWS Credentials
-
-To use other existing credentials (e.g. from other accounts) instead of the expected ones in the Build pipeline and in the _terraform-plan_ and _terraform-apply_ stages, perform the following steps:
-
-1. Navigate to the Build pipeline and select the **Configure** tab.
-
-2. Click the **Add Parameter** button and select the **String Parameter** option.
-  !![Add string parameter](../assets/user-guide/tflib3.png)
-
-3. Fill in the respective fields with the variable name _AWS_CREDENTIALS_, description, and the default value (e.g.,_aws.user_, used previously in pipelines).
-  !![Set value](../assets/user-guide/tflib4.png)
-
-Now during the launch of the Build pipeline, it is possible to select the desired credentials, added in Jenkins, in the _AWS_CREDENTIALS_ field of the Build pipeline settings.
-
-### Related Articles
-
-* [EDP Pipeline Framework](pipeline-framework.md)
-* [Associate IAM Roles With Service Accounts](../operator-guide/enable-irsa.md)
+* [User Guide Overview](../headlamp-user-guide/index.md)
+* [Add Infrastructure](../headlamp-user-guide/add-infrastructure.md)
+* [Manage Infrastructures](../headlamp-user-guide/infrastructure.md)

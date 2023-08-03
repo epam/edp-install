@@ -237,6 +237,7 @@ nav:
       - Keycloak:
           - v17.0 to 19.0: operator-guide/upgrade-keycloak-19.0.md
     - Tutorials:
+      - CI Pipelines for Terraform: user-guide/terraform-stages.md
       - Deploy AWS EKS Cluster: operator-guide/deploy-aws-eks.md
       - Deploy OKD 4.9 Cluster: operator-guide/deploy-okd.md
       - Deploy OKD 4.10 Cluster: operator-guide/deploy-okd-4.10.md
