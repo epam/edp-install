@@ -1,4 +1,3 @@
-{{- if eq .Values.global.platform "kubernetes" -}}
 {{- $edpComponentLables := include "edp-install.labels" . -}}
 {{- range $key, $value := index .Values.EDPComponents }}
 ---
@@ -15,5 +14,4 @@ spec:
   visible: {{ .visible }}
   icon: {{ .icon }}
   {{ end }}
-{{ end }}
 {{ end }}
