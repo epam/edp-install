@@ -83,7 +83,7 @@ kaniko:
 
   kanikoContainer:
     # -- kaniko image
-    image: gcr.io/kaniko-project/executor:v1.9.1@sha256:7d1923bcf2a9ed1e33e1918c3e208c7a60dd2def7c6bd302cde0c839c5bf5425
+    image: gcr.io/kaniko-project/executor:v1.12.1-debug
     # Kaniko resource requests and limits
     # -- Array with extra environment variables to add to the Kaniko container
     extraEnvVars: []

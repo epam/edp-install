@@ -100,8 +100,8 @@ annotations:
       image: epamedp/edp-headlamp:0.6.0
     - name: postgres:9.6
       image: postgres:9.6
-    - name: executor:v1.9.1
-      image: gcr.io/kaniko-project/executor:v1.9.1
+    - name: executor:v1.12.1-debug
+      image: gcr.io/kaniko-project/executor:v1.12.1-debug
     - name: busybox:1.35.0
       image: busybox:1.35.0
     - name: aws-cli:2.9.4
