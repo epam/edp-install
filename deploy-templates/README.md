@@ -64,11 +64,11 @@ A Helm chart for EDP Install
 | externalSecrets.secretProvider.aws.region | string | `"eu-central-1"` | AWS Region where secrets are stored, e.g. eu-central-1 |
 | externalSecrets.secretProvider.aws.role | string | `nil` | IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME> |
 | externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
+| extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
 | gerrit-operator.enabled | bool | `true` |  |
 | global.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
 | global.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
-| global.dockerRegistry | object | `{"type":"ecr","url":"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"}` | Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port> nexusUrl: |
 | global.dockerRegistry.type | string | `"ecr"` | Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor |
 | global.dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
 | global.edpName | string | `"stub-namespace"` | namespace or a project name (in case of OpenShift) |
@@ -76,7 +76,9 @@ A Helm chart for EDP Install
 | global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |
 | global.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
 | global.kioskEnabled | bool | `false` |  |
+| global.nexusUrl | string | `""` | Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port> |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
+| global.sonarUrl | string | `""` | Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http://<ip-address>:9000 |
 | global.version | string | `"3.4.0-SNAPSHOT"` | EDP version |
 | global.webConsole.url | string | `"https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com"` | URL to OpenShift/Kubernetes Web console |
 | jenkins-operator.enabled | bool | `false` |  |

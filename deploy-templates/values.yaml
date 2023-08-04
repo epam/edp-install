@@ -31,9 +31,9 @@ global:
   # -- Keycloak URL
   keycloakUrl: https://keycloak.example.com
   # -- Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http://<ip-address>:9000
-  # sonarUrl: ""
+  sonarUrl: ""
   # -- Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port>
-  # nexusUrl:
+  nexusUrl: ""
   dockerRegistry:
     # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor
     type: "ecr"
@@ -383,3 +383,41 @@ EDPComponents: {}
   #     url: https://ingress-anothertool.example.com
   #     visible: true
   #     icon: icon_in_base64
+
+# -- Array of extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: external-secrets.io/v1beta1
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: example-secret-1
+  #   spec:
+  #     data:
+  #       - remoteRef:
+  #           key: /edp/deploy-secrets
+  #           property: example-secret-1.username
+  #         secretKey: username
+  #       - remoteRef:
+  #           key: /edp/deploy-secrets
+  #           property: example-secret-1.password
+  #         secretKey: password
+  #     secretStoreRef:
+  #       kind: SecretStore
+  #       name: example-parameterstore
+  # - |
+  #       apiVersion: external-secrets.io/v1beta1
+  #       kind: ExternalSecret
+  #       metadata:
+  #         name: example-secret-2
+  #       spec:
+  #         data:
+  #           - remoteRef:
+  #               key: /edp/deploy-secrets
+  #               property: example-secret-2.username
+  #             secretKey: username
+  #           - remoteRef:
+  #               key: /edp/deploy-secrets
+  #               property: example-secret-2.password
+  #             secretKey: password
+  #         secretStoreRef:
+  #           kind: SecretStore
+  #           name: example-parameterstore
