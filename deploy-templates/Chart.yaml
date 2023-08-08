@@ -31,11 +31,6 @@ dependencies:
   version: "2.16.0"
   condition: codebase-operator.enabled
 
-- name: jenkins-operator
-  repository: "@epamedp"
-  version: "2.15.0"
-  condition: jenkins-operator.enabled
-
 - name: edp-component-operator
   repository: "@epamedp"
   version: "0.13.0"
@@ -66,11 +61,6 @@ dependencies:
   version: "2.14.0"
   condition: sonar-operator.enabled
 
-- name: admin-console-operator
-  repository: "@epamedp"
-  version: "2.14.0"
-  condition: admin-console-operator.enabled
-
 - name: gerrit-operator
   repository: "@epamedp"
   version: "2.15.0"
@@ -84,16 +74,12 @@ annotations:
       image: epamedp/keycloak-operator:1.15.0
     - name: codebase-operator:2.16.0
       image: epamedp/codebase-operator:2.16.0
-    - name: jenkins-operator:2.15.0
-      image: epamedp/jenkins-operator:2.15.0
     - name: cd-pipeline-operator:2.14.1
       image: epamedp/cd-pipeline-operator:2.14.1
     - name: nexus-operator:2.15.0
       image: epamedp/nexus-operator:2.15.0
     - name: sonar-operator:2.14.0
       image: epamedp/sonar-operator:2.14.0
-    - name: admin-console-operator:2.14.0
-      image: epamedp/admin-console-operator:2.14.0
     - name: gerrit-operator:2.15.0
       image: epamedp/gerrit-operator:2.15.0
     - name: edp-headlamp:0.6.0

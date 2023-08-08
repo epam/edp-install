@@ -21,14 +21,12 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | admin-console-operator | 2.14.0 |
 | @epamedp | cd-pipeline-operator | 2.14.1 |
 | @epamedp | codebase-operator | 2.16.0 |
 | @epamedp | edp-component-operator | 0.13.0 |
 | @epamedp | edp-headlamp | 0.6.0 |
 | @epamedp | edp-tekton | 0.5.0 |
 | @epamedp | gerrit-operator | 2.15.0 |
-| @epamedp | jenkins-operator | 2.15.0 |
 | @epamedp | keycloak-operator | 1.15.0 |
 | @epamedp | nexus-operator | 2.15.0 |
 | @epamedp | sonar-operator | 2.14.0 |
@@ -38,7 +36,6 @@ A Helm chart for EDP Install
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | EDPComponents | object | `{}` |  |
-| admin-console-operator.enabled | bool | `false` |  |
 | annotations | object | `{}` |  |
 | argo-cd.enabled | string | `"false"` | Configure Argo CD for EDP platform. |
 | argo-cd.oidcSecretName | string | `nil` | Custom secret name for argo-cd keycloak client. Ignored if external secret enabled. |
@@ -81,7 +78,6 @@ A Helm chart for EDP Install
 | global.sonarUrl | string | `""` | Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http://<ip-address>:9000 |
 | global.version | string | `"3.4.0-SNAPSHOT"` | EDP version |
 | global.webConsole.url | string | `"https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com"` | URL to OpenShift/Kubernetes Web console |
-| jenkins-operator.enabled | bool | `false` |  |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
 | kaniko.initKanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-kaniko container |
 | kaniko.initKanikoContainer.image | string | `"busybox:1.35.0"` | init container image which waits for Dockerfile before starting actual build |

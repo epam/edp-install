@@ -142,35 +142,6 @@ codebase-operator:
   #   rootUrl: "https://jiraeu.example.com"
   #   credentialName: "jira-user"
 
-jenkins-operator:
-  enabled: false
-  # image:
-  #   repository: epamedp/jenkins-operator
-  #   tag:
-  # jenkins:
-  #   deploy: true
-  #   image: epamedp/edp-jenkins
-  #   version:
-  #   storage:
-  #     class: gp2
-  #     size: 10Gi
-  #   initImage:
-  #   sharedLibraries:
-  #     - name: "edp-library-stages"
-  #       url: "https://github.com/epam/edp-library-stages.git"
-  #       tag: "master"
-  #     - name: "edp-library-pipelines"
-  #       url: "https://github.com/epam/edp-library-pipelines.git"
-  #       tag: "master"
-  # example of using private repository:
-  #     - name: "stub-name"
-  #       url: "stub-url"
-  #       tag: "stub-tag"
-  #       secret: "stub-secret-name"
-  #       type: "ssh" # can be "ssh", "password" or "token"
-  #   pullSecrets:
-  #   basePath: ""
-
 cd-pipeline-operator:
   enabled: true
   # image:
@@ -214,33 +185,6 @@ sonar-operator:
 #        size: 1Gi
 #     imagePullSecrets:
 #     basePath: ""
-
-admin-console-operator:
-  enabled: false
-  # image:
-  #   repository: epamedp/admin-console-operator
-  #   tag:
-  # adminConsole:
-  #   image: epamedp/edp-admin-console
-  #   version:
-  #   envs:
-  #     - name: INTEGRATION_STRATEGIES
-  #       value: "Create,Clone,Import"
-  #     - name: BUILD_TOOLS
-  #       value: "maven"
-  #     # DEPLOYMENT_SCRIPT value can be helm-chart or openshift-template or both helm-chart,openshift-template
-  #     - name: DEPLOYMENT_SCRIPT
-  #       value: "helm-chart"
-  #     - name: VERSIONING_TYPES
-  #       value: "default,edp"
-  #     - name: CI_TOOLS
-  #       value: "Jenkins,GitLab CI"
-  #     - name: PERF_DATA_SOURCES
-  #       value: "Sonar,Jenkins,GitLab"
-  #   imagePullSecrets:
-  #   basePath: ""
-  #    projectUrlMask: "/console/project/{namespace}/overview"
-  #    imageStreamUrlMask: "/console/project/{namespace}/browse/images/{stream}"
 
 gerrit-operator:
   enabled: true
