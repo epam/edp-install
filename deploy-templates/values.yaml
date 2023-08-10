@@ -43,7 +43,7 @@ global:
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
 
-argo-cd:
+argocd:
   # -- Configure Argo CD for EDP platform.
   enabled: "false"
   # -- Custom secret name for argo-cd keycloak client. Ignored if external secret enabled.

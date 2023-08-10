@@ -37,9 +37,9 @@ A Helm chart for EDP Install
 |-----|------|---------|-------------|
 | EDPComponents | object | `{}` |  |
 | annotations | object | `{}` |  |
-| argo-cd.enabled | string | `"false"` | Configure Argo CD for EDP platform. |
-| argo-cd.oidcSecretName | string | `nil` | Custom secret name for argo-cd keycloak client. Ignored if external secret enabled. |
-| argo-cd.url | string | `nil` |  |
+| argocd.enabled | string | `"false"` | Configure Argo CD for EDP platform. |
+| argocd.oidcSecretName | string | `nil` | Custom secret name for argo-cd keycloak client. Ignored if external secret enabled. |
+| argocd.url | string | `nil` |  |
 | awsRegion | string | `nil` | AWS Region, e.g. "eu-central-1" |
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | codebase-operator.enabled | bool | `true` |  |
