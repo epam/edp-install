@@ -106,5 +106,4 @@ A Helm chart for EDP Install
 | oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
 | oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
 | sonar-operator.enabled | bool | `true` |  |
-| vcs.enabled | string | `"false"` |  |
 

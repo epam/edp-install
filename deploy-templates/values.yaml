@@ -51,9 +51,6 @@ argocd:
   # -- @default -- `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }})
   url:
 
-vcs:
-  enabled: "false"
-
 # Kaniko configuration section
 kaniko:
   # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
