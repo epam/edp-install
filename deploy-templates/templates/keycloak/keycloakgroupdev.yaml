@@ -1,4 +1,4 @@
-{{- if ne (index .Values "argocd" "enabled") "false" -}}
+{{- if .Values.argocd.enabled -}}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakRealmGroup
 metadata:
