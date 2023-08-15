@@ -203,6 +203,7 @@ nav:
           - Integration With Tekton: operator-guide/report-portal-integration-tekton.md
       - Logsight Integration: operator-guide/logsight-integration.md
       - SonarQube: operator-guide/sonarqube.md
+      - Nexus Sonatype: operator-guide/nexus-sonatype.md
     - Platform Capabilities:
       - GitOps:
         - Argo CD Integration: operator-guide/argocd-integration.md
