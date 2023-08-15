@@ -2,12 +2,45 @@
 
 [External Secrets Operator (ESO)](https://external-secrets.io/) can be integrated with EDP.
 
-There are [multiple Secrets Providers](https://external-secrets.io/latest/guides-introduction/) that can be used within ESO. EDP is integrated with two major providers:
+There are [multiple Secrets Providers](https://external-secrets.io/latest/introduction/stability-support) that can be used within ESO. EDP is integrated with two major providers:
 
 * [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
 * [AWS Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
 
-## Kubernetes
+EDP uses various secrets to integrate various applications. Below is a list of secrets that are used in the EDP platform and their description.
+
+|Secret Name|Field|Description|
+|:-|:-|:-|
+|keycloak|username|Admin username for keycloak, used by keycloak operator|
+|keycloak|password|Admin password for keycloak, used by keycloak operator|
+|defectdojo-ciuser-token|token|Defectdojo token with admin permissions|
+|defectdojo-ciuser-token|url|Defectdojo url|
+|kaniko-docker-config|registry.com|Change to registry url|
+|kaniko-docker-config|username|Registry username|
+|kaniko-docker-config|password|Registry password|
+|kaniko-docker-config|auth|Base64 encoded 'user:secret' string|
+|regcred|registry.com|Change to registry url|
+|regcred|username|Registry username|
+|regcred|password|Registry password|
+|regcred|auth|Base64 encoded 'user:secret' string|
+|github-config|id_rsa|Private key from github repo in base64|
+|github-config|token|Api token|
+|github-config|secretString|Random string|
+|gitlab-config|id_rsa|Private key from gitlab repo in base64|
+|gitlab-config|token|Api token|
+|gitlab-config|secretString|Random string|
+|jira-user|username|Jira username in base64|
+|jira-user|password|Jira password in base64|
+|sonar-ciuser-token|username|Sonar service account username|
+|sonar-ciuser-token|secret|Sonar service account secret|
+|nexus-ci-user|username|Nexus service account username|
+|nexus-ci-user|password|Nexus service accountpassword|
+|oauth2-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
+|nexus-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
+|keycloak-client-headlamp-secret||Secret key for keycloak client in base64|
+|keycloak-client-argo-secret||Secret key for keycloak client in base64|
+
+## Kubernetes Provider
 
 All secrets are stored in Kubernetes in pre-defined namespaces. EDP suggests using the following approach for secrets management:
 
@@ -19,8 +52,7 @@ See a diagram below for more details:
 
 ![eso-with-kubernetes](../assets/operator-guide/eso-k8s.png)
 
-### EDP Install Scenario
-In order to [install EDP](./install-edp.md), a list of passwords must be created: defectdojo-ciuser-token, keycloak-client-headlamp-secret and keycloak. Secrets are provided automatically when using ESO.
+In order to [install EDP](./install-edp.md), a list of passwords must be created. Secrets are provided automatically when using ESO.
 
 1. Create a common namespace for secrets and EDP:
 
@@ -38,8 +70,8 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
       name: keycloak
       namespace: edp-vault
     data:
-      password: cGFzcw==  # pass
-      username: dXNlcg==  # user
+      password: cGFzcw==  # pass in base64
+      username: dXNlcg==  # user in base64
     type: Opaque
     ```
 
@@ -147,12 +179,12 @@ Apply the same approach for enabling secrets management in the namespaces used f
 
 ## AWS Systems Manager Parameter Store
 
-AWS SSM Parameter Store can be used as a [Secret Provider for ESO](https://external-secrets.io/latest/provider-aws-parameter-store/). For EDP, it is recommended to use the [IAM Roles For Service Accounts approach](https://external-secrets.io/latest/provider-aws-parameter-store/#eks-service-account-credentials) (see a diagram below).
+AWS SSM Parameter Store can be used as a [Secret Provider for ESO](https://external-secrets.io/latest/provider/aws-parameter-store). For EDP, it is recommended to use the [IAM Roles For Service Accounts approach](https://external-secrets.io/latest/provider/aws-parameter-store/#eks-service-account-credentials) (see a diagram below).
 
 ![eso-with-ssm](../assets/operator-guide/eso-ssm.png)
 
-### EDP Install Scenario
-In order to [install EDP](./install-edp.md), a list of passwords must be created: defectdojo-ciuser-token, keycloak-client-headlamp-secret and keycloak. Follow the steps below, to get secrets from the SSM:
+### AWS Parameter Store in EDP Scenario
+In order to [install EDP](./install-edp.md), a list of passwords must be created. Follow the steps below, to get secrets from the SSM:
 
 1. In the AWS, create an AWS IAM policy and an IAM role used by `ServiceAccount` in `SecretStore`. The IAM role must have permissions to get values from the SSM Parameter Store.<a name="step 1"></a>
 
@@ -196,73 +228,67 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
 
 2. Create a secret in the AWS Parameter Store with the name `/edp/my-json-secret`. This secret is represented as a parameter of type string within the AWS Parameter Store:<a name="step 2"></a>
 
+  ??? note "View: Parameter Store JSON"
 
-    ```json
-    {
-      "keycloak":
+      ```json
       {
-        "username": "keycloak-username",
-        "password": "keycloak-password"
-      },
-      "defectdojo-ciuser-token":
-      {
-        "token": "XXXXXXXXXXXX",
-        "url": "https://defectdojo.example.com"
-      },
-      "kaniko-docker-config": {"auths" : {"registry-endpoint": { "auth": "<base64 encoded "user:secret" string>" }}},
-      "github-config":
-      {
-        "id_rsa": "id-rsa-key",
-        "token": "github-token",
-        "secretString": "XXXXXXXXXXXX"
-      },
-      "gitlab-config":
-      {
-        "id_rsa": "id-rsa-key",
-        "token": "gitlab-token",
-        "secretString": "XXXXXXXXXXXX"
-      },
-      "jira-user":
-      {
-        "username": "jira-username",
-        "password": "jira-password"
-      },
-      "harbor": {
-        "HARBOR_ADMIN_PASSWORD": "password",
-        "secretKey": "secret-key",
-        "REGISTRY_HTPASSWD": "ht-password",
-        "REGISTRY_PASSWD": "password"
-      },
-      "oauth2-proxy-cookie-secret": {"cookie-secret": "XXXXXXXXXXXX"},
-      "nexus-proxy-cookie-secret": {"cookie-secret": "XXXXXXXXXXXX"},
-      "keycloak-client-headlamp-secret":  "XXXXXXXXXXXX",
-      "keycloak-client-argo-secret":  "XXXXXXXXXXXX"
-    }
-    ```
-  For better clarification, please refer to the table below to understand the contents of the secret above:
-
-    |Name|Field|Description|
-    |:-|:-|:-|
-    |keycloak|username|Admin username for keycloak, used by keycloak operator|
-    |keycloak|password|Admin password for keycloak, used by keycloak operator|
-    |defectdojo-ciuser-token|token|Defectdojo token with admin permissions|
-    |defectdojo-ciuser-token|url|Defectdojo url|
-    |github-config|id_rsa|Private key from github repo in base64|
-    |github-config|token|Api token|
-    |github-config|secretString|Random string|
-    |gitlab-config|id_rsa|Private key from gitlab repo in base64|
-    |gitlab-config|token|Api token|
-    |gitlab-config|secretString|Random string|
-    |jira-user|username|Jira username in base64|
-    |jira-user|password|Jira password in base64|
-    |oauth2-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
-    |nexus-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
-    |keycloak-client-headlamp-secret||Secret key for keycloak client in base64|
-    |keycloak-client-argo-secret||Secret key for keycloak client in base64|
-    |harbor|HARBOR_ADMIN_PASSWORD|Administrator password in base64|
-    |harbor|secretKey|Secret string in base64|
-    |harbor|REGISTRY_HTPASSWD|Secret string in base64|
-    |harbor|REGISTRY_PASSWD|Secret string in base64|
+        "keycloak":
+        {
+          "username": "keycloak-username",
+          "password": "keycloak-password"
+        },
+        "defectdojo-ciuser-token":
+        {
+          "token": "XXXXXXXXXXXX",
+          "url": "https://defectdojo.example.com"
+        },
+        "kaniko-docker-config":
+        {
+          "auths" :
+          {
+            "registry.com":
+            {
+              "username":"registry-username",
+              "password":"registry-password",
+              "auth": "<base64 encoded 'user:secret' string>"
+            }
+        }},
+        "regcred":
+        {
+            "auths":
+            {
+              "registry.com":
+              {
+                "username":"registry-username",
+                "password":"registry-password",
+                "auth":"<base64 encoded 'user:secret' string>"
+              }
+        }},
+        "github-config":
+        {
+          "id_rsa": "id-rsa-key",
+          "token": "github-token",
+          "secretString": "XXXXXXXXXXXX"
+        },
+        "gitlab-config":
+        {
+          "id_rsa": "id-rsa-key",
+          "token": "gitlab-token",
+          "secretString": "XXXXXXXXXXXX"
+        },
+        "jira-user":
+        {
+          "username": "jira-username",
+          "password": "jira-password"
+        },
+        "sonar-ciuser-token": { "username": "<ci-user>",  "secret": "<secret>" },
+        "nexus-ci-user": { "username": "<ci.user>",  "password": "<secret>" },
+        "oauth2-proxy-cookie-secret": { "cookie-secret": "XXXXXXXXXXXX" },
+        "nexus-proxy-cookie-secret": { "cookie-secret": "XXXXXXXXXXXX" },
+        "keycloak-client-headlamp-secret":  "XXXXXXXXXXXX",
+        "keycloak-client-argo-secret":  "XXXXXXXXXXXX"
+      }
+      ```
 
 3. Set External Secret operator enabled by updating the values.yaml file:
 
