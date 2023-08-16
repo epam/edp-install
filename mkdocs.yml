@@ -177,6 +177,9 @@ nav:
       - Headlamp OIDC: operator-guide/headlamp-oidc.md
       - Manage Namespace: operator-guide/namespace-management.md
       - EKS OIDC Integration: operator-guide/eks-oidc-integration.md
+      - Jira:
+        - Adjust Jira Integration: operator-guide/jira-integration.md
+        - Adjust VCS Integration With Jira: operator-guide/jira-gerrit-integration.md
     - Integration:
       - Tekton:
           Overview: operator-guide/tekton-overview.md
@@ -194,9 +197,6 @@ nav:
         - IAM Roles for Velero Service Accounts: operator-guide/velero-irsa.md
         - IAM Roles for Loki Service Accounts: operator-guide/loki-irsa.md
         - EKS OIDC With Keycloak: operator-guide/configure-keycloak-oidc-eks.md
-      - Jira Integration:
-          - Adjust Jira Integration: operator-guide/jira-integration.md
-          - Adjust VCS Integration With Jira: operator-guide/jira-gerrit-integration.md
       - Perf Server Integration: operator-guide/perf-integration.md
       - ReportPortal:
           - Keycloak Integration: operator-guide/reportportal-keycloak.md

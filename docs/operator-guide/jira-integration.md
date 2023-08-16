@@ -20,8 +20,21 @@ Teams can utilize these fields to enhance their work prioritization, identify de
 
 In order to adjust the Jira server integration, first add JiraServer CR by performing the following:
 
-1. Create the secret in the OpenShift/Kubernetes namespace for Jira Server account. Set your own **username** and **password** fields:
+1. Create the secret in the <edp-project> namespace for Jira Server account. Fill in the **username** and **password** fields with your own values:
 
+  === "External Secret Operator"
+
+      By default, EDP allows to get a value from the [SecretStore](./external-secrets-operator-integration.md#step 2), in which the value of `jira-user`:
+
+      ```json title="/edp/deploy-secrets"
+      {
+        "jira-user": { "username": "usernameInBase64", "password": "passwordInBase64" }
+      }
+      ```
+
+  === "Manually"
+
+      ```yaml
       apiVersion: v1
       data:
         password: passwordInBase64
@@ -30,13 +43,14 @@ In order to adjust the Jira server integration, first add JiraServer CR by perfo
       metadata:
         name: jira-user
       type: kubernetes.io/basic-auth
+      ```
 
 2. Create JiraServer CR in the OpenShift/Kubernetes namespace with the **apiUrl**, **credentialName** and **rootUrl** fields:
 
       apiVersion: v2.edp.epam.com/v1
       kind: JiraServer
       metadata:
-        name: epam-jira
+        name: jira-server
       spec:
         apiUrl: 'https://jira-api.example.com'
         credentialName: jira-user
@@ -49,7 +63,19 @@ In order to adjust the Jira server integration, first add JiraServer CR by perfo
 
     !![Advanced settings](../assets/operator-guide/jira_integration_ac.png "Advanced settings")
 
-As a result of successful Jira integration, the additional information will be added to tickets.
+  !!! note
+
+      There are four predefined variables with the respective values that can be specified singly or as a combination:
+
+      **EDP_COMPONENT** – returns application-name<br>
+      **EDP_VERSION** – returns 0.0.0-SNAPSHOT or 0.0.0-RC<br>
+      **EDP_SEM_VERSION** – returns 0.0.0<br>
+      **EDP_GITTAG** – returns build/0.0.0-SNAPSHOT.2 or build/0.0.0-RC.2<br>
+
+      There are no character restrictions when combining the variables, combination samples:<br>
+      EDP_SEM_VERSION-EDP_COMPONENT or <br>EDP_COMPONENT-hello-world/EDP_VERSION, etc.
+
+    As a result of successful Jira integration, the additional information will be added to tickets.
 
 ## Related Articles
 
