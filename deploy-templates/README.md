@@ -21,15 +21,15 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.14.1 |
-| @epamedp | codebase-operator | 2.16.0 |
+| @epamedp | cd-pipeline-operator | 2.15.0 |
+| @epamedp | codebase-operator | 2.17.0 |
 | @epamedp | edp-component-operator | 0.13.0 |
-| @epamedp | edp-headlamp | 0.6.0 |
-| @epamedp | edp-tekton | 0.5.0 |
-| @epamedp | gerrit-operator | 2.15.0 |
-| @epamedp | keycloak-operator | 1.15.0 |
-| @epamedp | nexus-operator | 2.15.0 |
-| @epamedp | sonar-operator | 2.14.0 |
+| @epamedp | edp-headlamp | 0.7.0 |
+| @epamedp | edp-tekton | 0.6.0 |
+| @epamedp | gerrit-operator | 2.16.0 |
+| @epamedp | keycloak-operator | 1.17.0 |
+| @epamedp | nexus-operator | 2.16.0 |
+| @epamedp | sonar-operator | 2.14.1 |
 
 ## Values
 
@@ -76,7 +76,7 @@ A Helm chart for EDP Install
 | global.nexusUrl | string | `""` | Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port> |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.sonarUrl | string | `""` | Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http://<ip-address>:9000 |
-| global.version | string | `"3.4.0-SNAPSHOT"` | EDP version |
+| global.version | string | `"3.4.0"` | EDP version |
 | global.webConsole.url | string | `"https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com"` | URL to OpenShift/Kubernetes Web console |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
 | kaniko.initKanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-kaniko container |
