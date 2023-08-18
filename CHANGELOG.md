@@ -10,9 +10,102 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.4.0"></a>
+## [v3.4.0] - 2023-08-18
+### Features
+
+- Hide Keycloak endpoints [EPMDEDP-12015](https://jiraeu.epam.com/browse/EPMDEDP-12015)
+- Update main page markup [EPMDEDP-12114](https://jiraeu.epam.com/browse/EPMDEDP-12114)
+- Update main page animation [EPMDEDP-12114](https://jiraeu.epam.com/browse/EPMDEDP-12114)
+- Add animation to main page, redesign main page [EPMDEDP-12114](https://jiraeu.epam.com/browse/EPMDEDP-12114)
+- Add to global parameters nexusUrl [EPMDEDP-12220](https://jiraeu.epam.com/browse/EPMDEDP-12220)
+- Provide example of values.yaml file with custom certs support [EPMDEDP-12224](https://jiraeu.epam.com/browse/EPMDEDP-12224)
+- Migrate dockerRegistry to global section [EPMDEDP-12315](https://jiraeu.epam.com/browse/EPMDEDP-12315)
+- Enable regcred secret creation via external secret operator [EPMDEDP-12315](https://jiraeu.epam.com/browse/EPMDEDP-12315)
+- Add label to DefectDojo secret for Headlamp UI [EPMDEDP-12448](https://jiraeu.epam.com/browse/EPMDEDP-12448)
+- Add label to Jira secret for Headlamp UI [EPMDEDP-12452](https://jiraeu.epam.com/browse/EPMDEDP-12452)
+
+### Bug Fixes
+
+- Fix oauth-proxy route creation [EPMDEDP-12210](https://jiraeu.epam.com/browse/EPMDEDP-12210)
+- Fix oauth-proxy route creation [EPMDEDP-12210](https://jiraeu.epam.com/browse/EPMDEDP-12210)
+- Put correct links for the Marketplace components [EPMDEDP-12267](https://jiraeu.epam.com/browse/EPMDEDP-12267)
+- Fix regcred template, align kaniko-docker-config and regcred for helm usage [EPMDEDP-12315](https://jiraeu.epam.com/browse/EPMDEDP-12315)
+- Enable regcred creation in case if harbor usage, fix kaniko-docker-config template [EPMDEDP-12315](https://jiraeu.epam.com/browse/EPMDEDP-12315)
+- Fix variable type on Argocd template [EPMDEDP-12355](https://jiraeu.epam.com/browse/EPMDEDP-12355)
+- Align field in Nexus secret [EPMDEDP-12389](https://jiraeu.epam.com/browse/EPMDEDP-12389)
+- Change argocd values type [EPMDEDP-12437](https://jiraeu.epam.com/browse/EPMDEDP-12437)
+
 ### Routine
 
 - Update current development version [EPMDEDP-11826](https://jiraeu.epam.com/browse/EPMDEDP-11826)
+- Provide example of PS EDP secret creation [EPMDEDP-11910](https://jiraeu.epam.com/browse/EPMDEDP-11910)
+- Define name for default Kibana index [EPMDEDP-11962](https://jiraeu.epam.com/browse/EPMDEDP-11962)
+- Add template for argocd integrate with keycloak [EPMDEDP-12038](https://jiraeu.epam.com/browse/EPMDEDP-12038)
+- Upgrade EDP dependencies version [EPMDEDP-12075](https://jiraeu.epam.com/browse/EPMDEDP-12075)
+- Automate create lifecycle policy and index template for edp index [EPMDEDP-12177](https://jiraeu.epam.com/browse/EPMDEDP-12177)
+- Disable perf-operator as edp-install subcomponent [EPMDEDP-12190](https://jiraeu.epam.com/browse/EPMDEDP-12190)
+- Enable oauth-proxy for openshift deploy scenario [EPMDEDP-12211](https://jiraeu.epam.com/browse/EPMDEDP-12211)
+- Update documentation for new framework (Antora) [EPMDEDP-12212](https://jiraeu.epam.com/browse/EPMDEDP-12212)
+- Use regcred secrets structure for kaniko push [EPMDEDP-12241](https://jiraeu.epam.com/browse/EPMDEDP-12241)
+- Provision kaniko-docker-config secret from string format in case of external-secret operator usage [EPMDEDP-12241](https://jiraeu.epam.com/browse/EPMDEDP-12241)
+- Align helm charts versions [EPMDEDP-12254](https://jiraeu.epam.com/browse/EPMDEDP-12254)
+- Add Fast-API Template to the Marketplace [EPMDEDP-12267](https://jiraeu.epam.com/browse/EPMDEDP-12267)
+- Terraform language was renamed to hcl [EPMDEDP-12267](https://jiraeu.epam.com/browse/EPMDEDP-12267)
+- Add Terraform Module and Web App template [EPMDEDP-12267](https://jiraeu.epam.com/browse/EPMDEDP-12267)
+- Add antora, gin, springboot Templates to Market [EPMDEDP-12267](https://jiraeu.epam.com/browse/EPMDEDP-12267)
+- Remove deprecated resources Gittag and Imagestreamtag [EPMDEDP-12283](https://jiraeu.epam.com/browse/EPMDEDP-12283)
+- Bump kaniko executor version for jenkins deploy scenario [EPMDEDP-12349](https://jiraeu.epam.com/browse/EPMDEDP-12349)
+- Bump mkdocs to the latest stable [EPMDEDP-12354](https://jiraeu.epam.com/browse/EPMDEDP-12354)
+- Add Argo CD EDP-Component [EPMDEDP-12355](https://jiraeu.epam.com/browse/EPMDEDP-12355)
+- Enable EDP component creation for OKD [EPMDEDP-12372](https://jiraeu.epam.com/browse/EPMDEDP-12372)
+- Fix nexus-ciuser creation [EPMDEDP-12389](https://jiraeu.epam.com/browse/EPMDEDP-12389)
+- Enable EDP component creation for shared Sonar, Nexus [EPMDEDP-12389](https://jiraeu.epam.com/browse/EPMDEDP-12389)
+- Enable cluster extra objects deploy, nexus ci user secret provisioning by external secret operator [EPMDEDP-12389](https://jiraeu.epam.com/browse/EPMDEDP-12389)
+- Remove deprecated jenkins deploy [EPMDEDP-12389](https://jiraeu.epam.com/browse/EPMDEDP-12389)
+- Add label to secrets for Sonar and Nexus integration [EPMDEDP-12389](https://jiraeu.epam.com/browse/EPMDEDP-12389)
+- Add templates for github issues [EPMDEDP-12421](https://jiraeu.epam.com/browse/EPMDEDP-12421)
+- Revert values in EDP install for ArgoCD [EPMDEDP-12437](https://jiraeu.epam.com/browse/EPMDEDP-12437)
+- Remove deprecated flag [EPMDEDP-12437](https://jiraeu.epam.com/browse/EPMDEDP-12437)
+
+### Documentation
+
+- Update security tools section [EPMDEDP-11245](https://jiraeu.epam.com/browse/EPMDEDP-11245)
+- Update tools section [EPMDEDP-11245](https://jiraeu.epam.com/browse/EPMDEDP-11245)
+- Create Enable Autodeploy doc [EPMDEDP-11438](https://jiraeu.epam.com/browse/EPMDEDP-11438)
+- Add a page Displaying the Tools, Languages including versions [EPMDEDP-11438](https://jiraeu.epam.com/browse/EPMDEDP-11438)
+- Add the Delete EDP page GitHub issue: https://github.com/epam/edp-install/issues/5 [EPMDEDP-11566](https://jiraeu.epam.com/browse/EPMDEDP-11566)
+- Update EDP install [EPMDEDP-11735](https://jiraeu.epam.com/browse/EPMDEDP-11735)
+- Reorganize VCS documentation structure [EPMDEDP-11781](https://jiraeu.epam.com/browse/EPMDEDP-11781)
+- Add release notes of EDP 3.3.0 to the RELEASES.md file [EPMDEDP-11826](https://jiraeu.epam.com/browse/EPMDEDP-11826)
+- Update EDP release 3.3 documentation [EPMDEDP-11826](https://jiraeu.epam.com/browse/EPMDEDP-11826)
+- Add Cluster section into the User Guide section [EPMDEDP-11885](https://jiraeu.epam.com/browse/EPMDEDP-11885)
+- Update DevSecOps section [EPMDEDP-11905](https://jiraeu.epam.com/browse/EPMDEDP-11905)
+- Update documentation related to DevSecOps on the Platform [EPMDEDP-11905](https://jiraeu.epam.com/browse/EPMDEDP-11905)
+- Update EDP documentation to 3.3.0 [EPMDEDP-11905](https://jiraeu.epam.com/browse/EPMDEDP-11905)
+- Update Roadmap section [EPMDEDP-11905](https://jiraeu.epam.com/browse/EPMDEDP-11905)
+- Integration with public SonarQube [EPMDEDP-12074](https://jiraeu.epam.com/browse/EPMDEDP-12074)
+- Add Next.js framework to the Add Application page. [EPMDEDP-12080](https://jiraeu.epam.com/browse/EPMDEDP-12080)
+- Upgrade EDP to 3.3 [EPMDEDP-12098](https://jiraeu.epam.com/browse/EPMDEDP-12098)
+- EDP 3.3.0 supports OKD 4.12 and EKS 1.26 version [EPMDEDP-12104](https://jiraeu.epam.com/browse/EPMDEDP-12104)
+- Fix annotations [EPMDEDP-12104](https://jiraeu.epam.com/browse/EPMDEDP-12104)
+- Keycloak AWS EKS integration [EPMDEDP-12107](https://jiraeu.epam.com/browse/EPMDEDP-12107)
+- Oidc Harbor configuration [EPMDEDP-12181](https://jiraeu.epam.com/browse/EPMDEDP-12181)
+- Describe Harbor installation [EPMDEDP-12181](https://jiraeu.epam.com/browse/EPMDEDP-12181)
+- Harbor integration with Tekton CI pipelines [EPMDEDP-12181](https://jiraeu.epam.com/browse/EPMDEDP-12181)
+- Update project icon [EPMDEDP-12188](https://jiraeu.epam.com/browse/EPMDEDP-12188)
+- Update Headlamp User Guide to 3.3.0 [EPMDEDP-12188](https://jiraeu.epam.com/browse/EPMDEDP-12188)
+- Disable perf-operator as edp-install subcomponent [EPMDEDP-12190](https://jiraeu.epam.com/browse/EPMDEDP-12190)
+- Add Helm-Helm-Helm lib to Add Library doc [EPMDEDP-12208](https://jiraeu.epam.com/browse/EPMDEDP-12208)
+- Describe enable oauth-proxy for openshift deploy scenario [EPMDEDP-12211](https://jiraeu.epam.com/browse/EPMDEDP-12211)
+- Add the Marketplace section to mkdocs [EPMDEDP-12313](https://jiraeu.epam.com/browse/EPMDEDP-12313)
+- Update the CI Pipelines for Terraform page in mkdocs [EPMDEDP-12356](https://jiraeu.epam.com/browse/EPMDEDP-12356)
+
+### BREAKING CHANGE:
+
+
+Recreate kaniko-docker-config secret in AWS PS in string format, instead of base64:
 
 
 <a name="v3.3.0"></a>
@@ -596,7 +689,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.3.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.4.0...HEAD
+[v3.4.0]: https://github.com/epam/edp-install/compare/v3.3.0...v3.4.0
 [v3.3.0]: https://github.com/epam/edp-install/compare/v3.2.2...v3.3.0
 [v3.2.2]: https://github.com/epam/edp-install/compare/v3.2.1...v3.2.2
 [v3.2.1]: https://github.com/epam/edp-install/compare/v3.2.0...v3.2.1
