@@ -75,7 +75,7 @@ A Helm chart for EDP Install
 | global.kioskEnabled | bool | `false` |  |
 | global.nexusUrl | string | `""` | Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port> |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.sonarUrl | string | `""` | Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http://<ip-address>:9000 |
+| global.sonarUrl | string | `""` | Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http(s)://<endpoint> |
 | global.version | string | `"3.5.0-SNAPSHOT"` | EDP version |
 | global.webConsole.url | string | `"https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com"` | URL to OpenShift/Kubernetes Web console |
 | kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
