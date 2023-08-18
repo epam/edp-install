@@ -16,7 +16,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### {{ .Title }}
 
 {{ range .Commits -}}
-- {{ .Subject }} [{{ .Scope }}](https://jiraeu.epam.com/browse/{{ .Scope }})
+- {{ if .Scope }}**{{ .Scope }}:** {{ end }}{{ .Subject }}
 {{ end }}
 {{ end -}}
 {{ end -}}
@@ -29,7 +29,14 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### {{ .Title }}
 
 {{ range .Commits -}}
-- {{ .Subject }} [{{ .Scope }}](https://jiraeu.epam.com/browse/{{ .Scope }})
+- {{ if .Scope }}**{{ .Scope }}:** {{ end }}{{ .Subject }}
+{{ end }}
+{{ end -}}
+
+{{- if .MergeCommits -}}
+### Pull Requests
+{{ range .MergeCommits -}}
+- {{ .Header }}
 {{ end }}
 {{ end -}}
 

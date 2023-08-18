@@ -5,7 +5,7 @@
 
 global:
   # -- EDP version
-  version: "3.4.0-SNAPSHOT"
+  version: "3.5.0-SNAPSHOT"
   # -- namespace or a project name (in case of OpenShift)
   edpName: "stub-namespace"
    # -- platform type that can be "kubernetes" or "openshift"
