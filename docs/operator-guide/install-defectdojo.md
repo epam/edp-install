@@ -3,12 +3,12 @@
 Inspect the main steps to perform for installing DefectDojo via Helm Chart.
 
 !!! info
-    It is also possible to install DefectDojo using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md##deploy-defectdojo) page.
+    It is also possible to install DefectDojo using the EDP addons approach. For details, please refer to the [EDP addons approach](https://github.com/epam/edp-cluster-add-ons).
 
 ## Prerequisites
 
-* Kubectl version 1.23.0 is installed. Please refer to the [Kubernetes official website](https://v1-23.docs.kubernetes.io/releases/download/) for details.
-* [Helm](https://helm.sh) version 3.10.2 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.10.2) on GitHub for details.
+* [Kubectl](https://v1-26.docs.kubernetes.io/releases/download/) version 1.26.0 is installed.
+* [Helm](https://helm.sh) version 3.12.0+ is installed.
 
 ## Installation
 
@@ -223,15 +223,39 @@ To prepare DefectDojo for integration with EDP, follow the steps below:
 
   * Copy the API key.
 
-3. Create a DefectDojo secret in your edp namespace:
+3. Provision secrets using kubectl, EDP Portal UI or with the `externalSecrets` operator:
 
-   ```bash
-   kubectl -n <edp_namespace> create secret generic defectdojo-ciuser-token \
-   --from-literal=token=<dd_token_of_dd_user> \
-   --from-literal=url="<defectdojo_url>"
-   ```
+=== "kubectl"
+
+    ```bash
+    kubectl -n <edp_namespace> create secret generic defectdojo-ciuser-token \
+    --from-literal=token=<dd_token_of_dd_user> \
+    --from-literal=url="<defectdojo_url>"
+    ```
+
+=== "EDP Portal UI"
+
+    Go to the `EDP Portal UI` open `EDP` -> `Configuration` -> `DefectDojo` change `URL` and `Token` and click `save` button.
+
+    !![DefectDojo update manual secret](../assets/operator-guide/defectdojo-token.png "DefectDojo update manual secret")
+
+=== "External Secrets Operator"
+
+    Store defectdojo URL and Token in AWS Parameter Store with following format:
+    ```bash
+    "defectdojo-ciuser-token":
+    {
+      "token": "XXXXXXXXXXXX",
+      "url": "https://defectdojo.example.com"
+    },
+    ```
+
+    More detail of External Secrets Operator Integration can found on [the following page](external-secrets-operator-integration.md)
+
+After following the instructions provided, you should be able to integrate your DefectDojo with the EPAM Delivery Platform using one of the few available scenarios.
 
 ## Related Articles
 
-* [Install via Helmfile](install-via-helmfile.md)
+* [Install External Secrets Operator](install-external-secrets-operator.md)
+* [External Secrets Operator Integration](external-secrets-operator-integration.md)
 * [Install Harbor](install-harbor.md)
