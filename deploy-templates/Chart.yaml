@@ -38,7 +38,7 @@ dependencies:
 
 - name: edp-headlamp
   repository: "@epamedp"
-  version: "0.7.0"
+  version: "0.8.0"
   condition: edp-headlamp.enabled
 
 - name: edp-tekton
@@ -82,8 +82,8 @@ annotations:
       image: epamedp/sonar-operator:2.14.1
     - name: gerrit-operator:2.16.0
       image: epamedp/gerrit-operator:2.16.0
-    - name: edp-headlamp:0.7.0
-      image: epamedp/edp-headlamp:0.7.0
+    - name: edp-headlamp:0.8.0
+      image: epamedp/edp-headlamp:0.8.0
     - name: postgres:9.6
       image: postgres:9.6
     - name: executor:v1.12.1-debug

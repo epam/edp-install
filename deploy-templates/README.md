@@ -24,7 +24,7 @@ A Helm chart for EDP Install
 | @epamedp | cd-pipeline-operator | 2.15.0 |
 | @epamedp | codebase-operator | 2.17.0 |
 | @epamedp | edp-component-operator | 0.13.0 |
-| @epamedp | edp-headlamp | 0.7.0 |
+| @epamedp | edp-headlamp | 0.8.0 |
 | @epamedp | edp-tekton | 0.6.0 |
 | @epamedp | gerrit-operator | 2.16.0 |
 | @epamedp | keycloak-operator | 1.17.0 |

@@ -10,7 +10,7 @@ dependencies:
   version: 0.13.0
 - name: edp-headlamp
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.7.0
+  version: 0.8.0
 - name: edp-tekton
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.6.0
@@ -26,5 +26,5 @@ dependencies:
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.16.0
-digest: sha256:745112351a2252fbaed5df97b11c6a2216e5537696c40838eef560595a781a3d
-generated: "2023-08-18T17:04:50.232673+03:00"
+digest: sha256:aae51545916fd6245a3b1eb96cb00ea5636b060664f82c8b0ea434aa2f5c9843
+generated: "2023-08-28T21:04:14.95435+03:00"
