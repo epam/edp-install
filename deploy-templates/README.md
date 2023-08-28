@@ -49,7 +49,7 @@ A Helm chart for EDP Install
 | edp-headlamp.config.oidc.enabled | bool | `false` |  |
 | edp-headlamp.config.oidc.issuerRealm | string | `"openshift"` |  |
 | edp-headlamp.enabled | bool | `true` |  |
-| edp-tekton.ctLint | string | `nil` |  |
+| edp-tekton.ctLint.validateMaintainers | bool | `false` | Config block. |
 | edp-tekton.dashboard.enabled | bool | `true` | Deploy EDP Dashboard as a part of pipeline library when true. Default: true |
 | edp-tekton.dashboard.ingress.annotations | object | `{}` | Annotations for Ingress resource |
 | edp-tekton.dashboard.openshift_proxy | object | `{"enabled":false}` | https://epam.github.io/edp-install/operator-guide/oauth2-proxy/?h=#enable-oauth2-proxy-on-tekton-dashboard |
