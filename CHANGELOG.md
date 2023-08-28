@@ -11,6 +11,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v3.4.1"></a>
+## [v3.4.1] - 2023-08-28
+
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 ### Features
@@ -689,7 +692,8 @@ Job provisioner create jenkinsfile and configure in jenkins pipeline as pipeline
 <a name="v2.8.0"></a>
 ## v2.8.0 - 2022-01-04
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.4.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.4.1...HEAD
+[v3.4.1]: https://github.com/epam/edp-install/compare/v3.4.0...v3.4.1
 [v3.4.0]: https://github.com/epam/edp-install/compare/v3.3.0...v3.4.0
 [v3.3.0]: https://github.com/epam/edp-install/compare/v3.2.2...v3.3.0
 [v3.2.2]: https://github.com/epam/edp-install/compare/v3.2.1...v3.2.2
