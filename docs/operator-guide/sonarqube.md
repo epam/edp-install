@@ -44,14 +44,22 @@ To establish robust authentication and precise access control, generating a Sona
 
   !![SonarQube token](../assets/operator-guide/sonar-copy-token.png "SonarQube token")
 
-4. Provision secrets using kubectl, EDP Portal or with the externalSecrets operator
+4. Provision secrets using manifest, EDP Portal or with the externalSecrets operator
 
-=== "kubectl"
+=== "manifest"
 
-    ```bash
-    kubectl -n <edp_namespace> create secret generic sonar-ciuser-token \
-    --from-literal=username=<username> \
-    --from-literal=secret=<Sonarqube-token>
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: sonar-ciuser-token
+      namespace: <edp-namespace>
+      labels:
+        app.edp.epam.com/secret-type: sonar
+    type: Opaque
+    stringData:
+      secret: <sonarqube-token>
+      username: <username>
     ```
 
 === "Manual Secret"
