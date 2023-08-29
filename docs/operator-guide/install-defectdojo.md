@@ -228,9 +228,15 @@ To prepare DefectDojo for integration with EDP, follow the steps below:
 === "kubectl"
 
     ```bash
-    kubectl -n <edp_namespace> create secret generic defectdojo-ciuser-token \
+    kubectl -n edp create secret generic defectdojo-ciuser-token \
     --from-literal=token=<dd_token_of_dd_user> \
     --from-literal=url="<defectdojo_url>"
+    ```
+
+    After creating the secret, it is necessary to attach a label to it. This will allow to see and manage the secret through the EDP Portal UI.
+
+   ```bash
+    kubectl -n edp label secret defectdojo-ciuser-token "app.edp.epam.com/secret-type=defectdojo"
     ```
 
 === "EDP Portal UI"
