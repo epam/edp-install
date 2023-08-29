@@ -91,13 +91,22 @@ To create the Nexus `ci.user`and define repository parameters follow the steps b
       d) Click Create a repository by selecting "pypi(group)" and set the name as "edp-python-group". Add repository to group. Save the configuration.
 
 
-4. Provision secrets using kubectl, EDP Portal or with the externalSecrets operator
+4. Provision secrets using manifest, EDP Portal or with the externalSecrets operator
 
-=== "kubectl"
-    ```bash
-    kubectl -n <edp_namespace> create secret generic nexus-ci.user \
-    --from-literal=password=<nexus-user-id> \
-    --from-literal=username=<nexus-user-password>
+=== "manifest"
+
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: nexus-ci.user
+      namespace: <edp-namespace>
+      labels:
+        app.edp.epam.com/secret-type: nexus
+    type: Opaque
+    stringData:
+      password: <nexus-user-password>
+      username: <nexus-user-id>
     ```
 
 === "EDP Portal UI"
