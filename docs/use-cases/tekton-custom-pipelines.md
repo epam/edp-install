@@ -27,7 +27,7 @@ To create and then modify a custom Tekton library, please follow the steps below
 
 ### Add Custom Application to EDP
 
-1. Open Headlamp URL. Use the Sign-In option:
+1. Open EDP Portal URL. Use the Sign-In option:
 
   !![Logging Page](../assets/use-cases/fastapi-scaffolding/login.png "Logging screen")
 
@@ -338,7 +338,7 @@ Perform the below steps to merge new code (Merge Request) that passes the Code R
   !![Review Change](../assets/use-cases/tekton-custom/tekton-gerrit07.png)
 
   !!! Note
-      If the build is added and configured, push steps in the pipeline, it will produce a new version of artifact, which will be available for the deployment in Headlamp.
+      If the build is added and configured, push steps in the pipeline, it will produce a new version of artifact, which will be available for the deployment in EDP Portal.
 
 9. Check the pipelines in the Tekton dashboard:
 
@@ -362,4 +362,4 @@ This chart will be using the core of `common-library` and `pipelines-library` an
 ## Related Articles
 
 * [Tekton Overview](../operator-guide/tekton-overview.md)
-* [Add Application to Headlamp](../headlamp-user-guide/add-application.md)
+* [Add Application using EDP Portal](../user-guide/add-application.md)

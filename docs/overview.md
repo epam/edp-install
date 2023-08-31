@@ -18,7 +18,7 @@ EDP consists of the following:
 - [Gerrit](https://www.gerritcodereview.com/), [GitLab](https://about.gitlab.com/features/) or [GitHub](https://about.gitlab.com/features/) as a version control system for your code
 - [Tekton](./operator-guide/install-tekton.md) is a **default** pipeline orchestrator
 - [Jenkins](./operator-guide/overview-manage-jenkins-pipelines.md) is an optional pipeline orchestrator
-- [CI pipelines](./headlamp-user-guide/index.md)
+- [CI pipelines](./user-guide/index.md)
 
   === "Tekton (by default)"
 
@@ -49,8 +49,8 @@ EDP consists of the following:
       |Rego|OPA|OPA||:material-check:||
       |Container|Docker|Kaniko||:material-check:||
 
-- [Headlamp UI](./headlamp-user-guide/index.md) as a single entry point
-- [CD pipeline](./headlamp-user-guide/add-cd-pipeline.md) for Microservice Deployment
+- [Portal UI](./user-guide/index.md) as a single entry point
+- [CD pipeline](./user-guide/add-cd-pipeline.md) for Microservice Deployment
 - Kubernetes native approach ([CRD, CR](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/){target=_blank}) to declare CI/CD pipelines
 
 ## What's Inside

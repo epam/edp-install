@@ -3,7 +3,7 @@
 !!! important
     This article describes how to add a Git Server when deploying EDP with **Jenkins**. When deploying EDP with **Tekton**, Git Server is created automatically.
 
-Add Git servers to use the **Import strategy for Jenkins and Tekton** when creating an application, autotest or library in EDP Headlamp (*Codebase Info* step of the *Create Application/Autotest/Library* dialog). Enabling the Import strategy is a prerequisite to integrate EDP with Gitlab or GitHub.
+Add Git servers to use the **Import strategy for Jenkins and Tekton** when creating an application, autotest or library in EDP Portal (*Codebase Info* step of the *Create Application/Autotest/Library* dialog). Enabling the Import strategy is a prerequisite to integrate EDP with Gitlab or GitHub.
 
 !!! note
     `GitServer` Custom Resource can be also created manually. See step 3 for Jenkins import strategy in the [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md) article.
@@ -14,7 +14,7 @@ To add a Git server, navigate to the **Git servers** section on the navigation b
 
 Click **Edit YAML** in the upper-right corner of the **Create Git server** dialog to open the YAML editor and create a Git server.
 
-!![Edit YAML](../assets/headlamp-user-guide/headlamp-yaml-edit-git-server.png "Edit YAML")
+!![Edit YAML](../assets/user-guide/edp-portal-yaml-edit-git-server.png "Edit YAML")
 
 To edit YAML in the minimal editor, turn on the **Use minimal editor** toggle in the upper-right corner of the **Create Git server** dialog.
 
@@ -24,7 +24,7 @@ To save the changes, select the **Save & Apply** button.
 
 Fill in the following fields:
 
-!![Create Git server](../assets/headlamp-user-guide/headlamp-create-git-server.png "Create Git server")
+!![Create Git server](../assets/user-guide/edp-portal-create-git-server.png "Create Git server")
 
 * *Git provider* - select *Gerrit*, *GitLab* or *GitHub*.
 * *Host* - enter a Git server endpoint.

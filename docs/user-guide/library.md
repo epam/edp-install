@@ -1,4 +1,4 @@
-# Library
+# Manage Libraries
 
 This section describes the subsequent possible actions that can be performed with the newly added or existing libraries.
 
@@ -6,130 +6,75 @@ This section describes the subsequent possible actions that can be performed wit
 
 As soon as the library is successfully provisioned, the following will be created:
 
-- Code Review and Build pipelines in Jenkins for this library. The Build pipeline will be triggered automatically if at least one environment is already added.
+- Code Review and Build pipelines in Jenkins/Tekton for this library. The Build pipeline will be triggered automatically if at least one environment is already added.
 - A new project in Gerrit or another VCS.
-- SonarQube integration will be available after the Build pipeline in Jenkins is passed.
-- Nexus Repository Manager will be available after the Build pipeline in Jenkins is passed as well.
+- SonarQube integration will be available after the Build pipeline in Jenkins/Tekton is passed.
+- Nexus Repository Manager will be available after the Build pipeline in Jenkins/Tekton is passed as well.
 
 !!! info
-    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
+    To navigate quickly to OpenShift, Jenkins/Tekton, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
 
 The added library will be listed in the Libraries list allowing to do the following:
 
-!![Library menu](../assets/user-guide/library-page.png "Library menu")
+!![Library menu](../assets/user-guide/edp-portal-library-page.png "Library menu")
 
-1. Create another library by clicking the Create button and performing the same steps as described on the [Add Library](add-library.md) page;
+1. Create another library by clicking the plus sign icon in the lower-right corner of the screen and performing the same steps as described on the [Add Library](add-library.md) page.
 
 2. Open library data by clicking its link name. Once clicked, the following blocks will be displayed:
 
-  * **General Info** - displays common information about the created/cloned/imported library.
-  * **Advanced Settings** - displays the specified job provisioner, Jenkins agent, deployment script, and the versioning type with the start versioning from number (the latter two fields appear in case of edp versioning type).
-  * **Branches** - displays the status and name of the deployment branch, keeps the additional links to Jenkins and Gerrit. In case of edp versioning type, there are two additional fields:
-
-    * **Build Number** - indicates the current build number;
-    * **Last Successful Build** - indicates the last successful build number.
-
-  * **Status Info** - displays all the actions that were performed during the creation/cloning/importing process.
-
-3. Edit the library codebase by clicking the pencil icon. For details see the [Edit Existing Codebase](#edit-existing-codebase) section.
-
-4. Remove library with the corresponding database and Jenkins pipelines:
-
-  - Click the delete icon next to the library name;
-  - Type the required library name;
-  - Confirm the deletion by clicking the Delete button.
+* **Library status** - displays the Git Server status. Can be red or green depending on if the EDP Portal managed to connect to the Git Server with the specified credentials or not.
+* **Library name (clickable)** - displays the Git Server name set during the Git Server creation.
+* **Open documentation** - opens the documentation that leads to this page.
+* **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
+* **Create new library** - displays the **Create new component** menu.
+* **Edit library** - edit the library by selecting the options icon next to its name in the libraries list, and then selecting **Edit**. For details see the [Edit Existing Library](#edit-existing-library) section.
+* **Delete Library** - remove library with the corresponding database and Jenkins/Tekton pipelines by selecting the options icon next to its name in the libraries list, and then selecting **Delete**.
 
   !!! note
       The library that is used in a CD pipeline cannot be removed.
 
-  !![Library menu](../assets/user-guide/library-page2.png "Library menu")
+There are also options to sort the libraries:
 
-5. Select a number of existing libraries to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
+* Sort the existing libraries in a table by clicking the sorting icons in the table header. Sort the libraries alphabetically by their name, language, build tool, framework, and CI tool. You can also sort the libraries by their status: Created, Failed, or In progress.
+* Select a number of libraries displayed per page (15, 25 or 50 rows) and navigate between pages if the number of libraries exceeds the capacity of a single page.
 
-6. Sort the existing libraries in a list by clicking the Name title. The libraries will be displayed in an alphabetical order.
+## Edit Existing Library
 
-7. Search the necessary application by entering the corresponding name, language or the build tool into the **Search** field. The search can be performed by the library name, language or a build tool.
+EDP Portal provides the ability to enable, disable or edit the Jira Integration functionality for libraries.
 
-8. Navigate between pages, if the number of libraries exceeds the capacity of a single page.
+1. To edit a library directly from the Libraries overview page or when viewing the library data:
 
-## Edit Existing Codebase
+  - Select **Edit** in the options icon menu:
 
-The EDP Admin Console provides the ability to enable, disable or edit the Jira Integration functionality for applications via the Edit Codebase page.
+    !![Edit library on the libraries overview page](../assets/user-guide/edp-portal-edit-library-1.png "Edit library on the libraries overview page")
 
-1. Perform the editing from one of the following sections on the Admin Console interface:
+    !![Edit library when viewing the library data](../assets/user-guide/edp-portal-edit-library-2.png "Edit library when viewing the library data")
 
-    !![Edit library](../assets/user-guide/edit-library-codebase.png "Edit library")
+  - The Edit Library dialog opens.
 
-  - Navigate to the codebase overview page and click the **pencil** icon, or
+2. To enable Jira integration, in the **Edit Library** dialog do the following:
 
-    !![Edit library](../assets/user-guide/library-pen-icon.png "Edit library")
+   !![Edit library](../assets/user-guide/edp-portal-edit-library-jira.png "Edit library")
 
-  - Navigate to the codebase list page and click the **pencil** icon.
+   a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see steps d-h on the [Add Library page](add-library.md#the-advanced-settings-menu).
 
-    !![Edit library](../assets/user-guide/edit-codebase-library.png "Edit library")
+   b. Select the **Apply** button to apply the changes.
 
-2. To enable Jira integration, on the **Edit Codebase** page do the following:
+   c. Navigate to Jenkins/Tekton and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
 
-  - mark the **Integrate with Jira server** check box and fill in the necessary fields;
-  - click the **Proceed** button to apply the changes;
-  - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
+3. To disable Jira integration, in the **Edit Library** dialog do the following:
 
-3. To disable Jira integration, on the **Edit Codebase** page do the following:
+   a. Unmark the **Integrate with Jira server** check box.
 
-  - unmark the **Integrate with Jira server** check box;
-  - click the **Proceed** button to apply the changes;
-  - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
+   b. Select the **Apply** button to apply the changes.
 
-As a result, the necessary changes will be applied.
+   c. Navigate to Jenkins/Tekton and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
-## Add a New Branch
+  As a result, the necessary changes will be applied.
 
-!!! note
-    Pay attention when specifying the branch name: the branch name is involved in the formation of the application version, so it must comply with the [versioning semantic rules](https://semver.org/) for the application.
+4. To create, edit and delete library branches, please refer to the [Manage Branches](../user-guide/manage-branches.md) page.
 
-When adding a library, the default branch is a **master** branch. In order to add a new branch, follow the steps below:
-
-1. Navigate to the **Branches** block and click the Create button:
-
-  !![Add branch](../assets/user-guide/addbranch1.png "Add branch")
-
-2. Fill in the required fields:
-
-  !![New branch](../assets/user-guide/create-new-branch-library.png "New branch")
-
-  a. Release Branch - select the Release Branch check box if you need to create a release branch;
-
-  b. Branch Name - type the branch name. Pay attention that this field remain static if you create a release branch.
-
-  c. From Commit Hash - paste the commit hash from which the new branch will be created. Note that if the From Commit Hash field is empty, the latest commit from the branch name will be used.
-
-  d. Branch Version - enter the necessary branch version for the artifact. The Release Candidate (RC) postfix is concatenated to the branch version number.
-
-  e. Master Branch Version - type the branch version that will be used in a master branch after the release creation. The Snapshot postfix is concatenated to the master branch version number;
-
-  f. Click the Proceed button and wait until the new branch will be added to the list.
-
-!!! info
-    Adding of a new branch is indicated in the context of the edp versioning type. To get more detailed information on
-    how to add a branch using the default versioning type, please refer to [Advanced Settings Menu](https://epam.github.io/edp-install/user-guide/add-library/#the-advanced-settings-menu) section of the Admin Console user guide.
-
-The default library repository is cloned and changed to the new indicated version before the build, i.e. the new indicated version will not be committed to the repository; thus, the existing repository will keep the default version.
-
-## Remove Branch
-
-In order to remove the added branch with the corresponding  record in the Admin Console database, do the following:
-
-1. Navigate to the Branches block by clicking the library name link in the Libraries list;
-
-2. Click the delete icon related to the necessary branch:
-
-  !![Remove branch](../assets/user-guide/removebranch.png "Remove branch")
-
-3. Enter the branch name and click the Delete button;
-
-!!! note
-    The default **master** branch cannot be removed.
-
-### Related Articles
+## Related Articles
 
 * [Add Library](add-library.md)
+* [Manage Branches](../user-guide/manage-branches.md)

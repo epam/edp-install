@@ -13,9 +13,9 @@ As soon as the infrastructure is successfully provisioned, the following will be
 
 The added application will be listed in the Applications list allowing you to do the following:
 
-!![Applications menu](../assets/headlamp-user-guide/headlamp-inspect-infrastructure-menu.png "Applications menu")
+!![Applications menu](../assets/user-guide/edp-portal-inspect-infrastructure-menu.png "Applications menu")
 
-* **Infrastructure status** - displays the Git Server status. Can be red or green depending on if the Headlamp managed to connect to the Git Server with the specified credentials or not.
+* **Infrastructure status** - displays the Git Server status. Can be red or green depending on if the EDP Portal managed to connect to the Git Server with the specified credentials or not.
 * **Infrastructure name (clickable)** - displays the infrastructure name set during the Git Server creation.
 * **Open documentation** - opens the documentation that leads to this page.
 * **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
@@ -31,21 +31,21 @@ There are also options to sort the infrastructures:
 
 ## Edit Existing Infrastructure
 
-EDP Headlamp provides the ability to enable, disable or edit the Jira Integration functionality for infrastructures.
+EDP Portal provides the ability to enable, disable or edit the Jira Integration functionality for infrastructures.
 
 1. To edit an infrastructure directly from the infrastructures overview page or when viewing the infrastructure data:
 
   - Select **Edit** in the options icon menu:
 
-  !![Edit infrastructure on the Infrastructures overview page](../assets/headlamp-user-guide/headlamp-edit-infrastructure-1.png "Edit infrastructure on the Infrastructures overview page")
+  !![Edit infrastructure on the Infrastructures overview page](../assets/user-guide/edp-portal-edit-infrastructure-1.png "Edit infrastructure on the Infrastructures overview page")
 
-  !![Edit infrastructure when viewing the infrastructure data](../assets/headlamp-user-guide/headlamp-edit-codebase-2.png "Edit infrastructure when viewing the infrastructure data")
+  !![Edit infrastructure when viewing the infrastructure data](../assets/user-guide/edp-portal-edit-codebase-2.png "Edit infrastructure when viewing the infrastructure data")
 
   - The **Edit Infrastructure** dialog opens.
 
 2. To enable Jira integration, in the **Edit Infrastructure** dialog do the following:
 
-   !![Edit application](../assets/headlamp-user-guide/headlamp-edit-codebase-infrastructure.png "Edit infrastructure")
+   !![Edit application](../assets/user-guide/edp-portal-edit-codebase-infrastructure.png "Edit infrastructure")
 
    a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see steps d-h on the [Add Infrastructure page](add-infrastructure.md#the-advanced-settings-menu).
 
@@ -61,9 +61,9 @@ EDP Headlamp provides the ability to enable, disable or edit the Jira Integratio
 
    c. Navigate to Jenkins/Tekton and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
-4. To create, edit and delete infrastructure branches, please refer to the [Manage Branches](../headlamp-user-guide/manage-branches.md) page.
+4. To create, edit and delete infrastructure branches, please refer to the [Manage Branches](../user-guide/manage-branches.md) page.
 
 ## Related Articles
 
 * [Add Infrastructure](add-infrastructure.md)
-* [Manage Branches](../headlamp-user-guide/manage-branches.md)
+* [Manage Branches](../user-guide/manage-branches.md)

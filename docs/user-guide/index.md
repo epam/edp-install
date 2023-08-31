@@ -1,31 +1,29 @@
 # Overview
 
-!!! important
-    Admin Console is deprecated and replaced by the Headlamp tool. Please see the [Headlamp User guide](../headlamp-user-guide/index.md).
+The EDP Portal user guide is intended for developers and provides details on working with EDP Portal, different codebase types, and EDP CI/CD flow.
 
-The EDP User guide is intended for developers and provides details on working with EDP Admin Console, different codebase types and EDP CI/CD flow.
+## EDP Portal
 
-## Admin Console
+EDP Portal is a central management tool in the EDP ecosystem that provides the ability to define pipelines, project resources and new technologies in a simple way. Using EDP Portal enables to manage business entities:
 
-Admin Console is a central management tool in the EDP ecosystem that provides the ability to define pipelines, project resources and new technologies in a simple way. Using Admin Console enables to manage business entities:
-
-- Create such codebase types as Applications, Libraries and Autotests;
+- Create such codebase types as Applications, Libraries, Autotests and Inrastructures;
 - Create/Update CD Pipelines;
+- Add external Git servers and Clusters.
 
-!!! note
-    To interact with Admin Console via REST API, explore the [Create Codebase Entity](../developer-guide/rest-api.md) page.
+!![Overview page](../assets/user-guide/edp-portal-overview-page.png "Overview page")
 
-!![Overview page](../assets/user-guide/ac-overview-page.png "Overview page")
+* **Navigation bar** – consists of the following sections: Overview, Marketplace, Components, CD Pipelines, and Configuration.
+* **Top panel bar** – contains documentation link, notifications, EDP Portal settings, and cluster settings, such as default and allowed namespaces.
+* **Main links** – displays the corresponding links to the major adjusted toolset, to the management tool and to the OpenShift cluster.
+* **Filters** – used for searching and filtering the namespaces.
 
-- **Navigation bar** – consists of six sections: Overview, Continuous Delivery, Applications, Autotests, Libraries, and Delivery Dashboard Diagram. Click the necessary section to add an entity, open a home page or check the diagram.
-- **User name** – displays the registered user name.
-- **Main links** – displays the corresponding links to the major adjusted toolset, to the management tool and to the OpenShift cluster.
+EDP Portal is a complete tool allowing to manage and control the codebases (applications, autotests, libraries and infrastructures) added to the environment as well as to create a CD pipeline.
 
-Admin Console is a complete tool allowing to manage and control added to the environment codebases (applications, autotests, libraries) as well as to create a CD pipeline and check the visualization diagram.
-Inspect the main features available in Admin Console by following the corresponding link:
+Inspect the main features available in EDP Portal by following the corresponding link:
 
 - [Add Application](add-application.md)
 - [Add Autotest](add-autotest.md)
 - [Add Library](add-library.md)
+- [Add Git Server](add-git-server.md)
 - [Add CD Pipeline](add-cd-pipeline.md)
-- [Delivery Dashboard Diagram](d-d-diagram.md)
+- [Add Quality Gate](add-quality-gate.md)

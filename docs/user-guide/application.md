@@ -1,4 +1,4 @@
-# Application
+# Manage Applications
 
 This section describes the subsequent possible actions that can be performed with the newly added or existing applications.
 
@@ -6,129 +6,69 @@ This section describes the subsequent possible actions that can be performed wit
 
 As soon as the application is successfully provisioned, the following will be created:
 
-- Code Review and Build pipelines in Jenkins for this application. The Build pipeline will be triggered automatically if at least one environment is already added.
+- Code Review and Build pipelines in Jenkins/Tekton for this application. The Build pipeline will be triggered automatically if at least one environment is already added.
 - A new project in Gerrit or another VCS.
-- SonarQube integration will be available after the Build pipeline in Jenkins is passed.
-- Nexus Repository Manager will be available after the Build pipeline in Jenkins is passed as well.
-
-!!! info
-    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
+- SonarQube integration will be available after the Build pipeline in Jenkins/Tekton is passed.
+- Nexus Repository Manager will be available after the Build pipeline in Jenkins/Tekton is passed as well.
 
 The added application will be listed in the Applications list allowing you to do the following:
 
-!![Applications menu](../assets/user-guide/inspect-application-menu.png "Applications menu")
+!![Applications menu](../assets/user-guide/edp-portal-inspect-application-menu.png "Applications menu")
 
-1. Create another application by clicking the Create button and performing the same steps as described in the [Add Applications](add-application.md) section.
-
-2. Open application data by clicking its link name. Once clicked, the following blocks will be displayed:
-
-  * **General Info** - displays common information about the created/cloned/imported application.
-  * **Advanced Settings** - displays the specified job provisioner, Jenkins agent, deployment script, and the versioning type with the start versioning from number (the latter two fields appear in case of edp versioning type).
-  * **Branches** - displays the status and name of the deployment branch, keeps the additional links to Jenkins and Gerrit. In case of edp versioning type, there are two additional fields:
-
-    * **Build Number** - indicates the current build number;
-    * **Last Successful Build** - indicates the last successful build number.
-
-  * **Status Info** - displays all the actions that were performed during the creation/cloning/importing process.
-
-3. Edit the application codebase by clicking the pencil icon. For details see the [Edit Existing Codebase](#edit-existing-codebase) section.
-
-4. Remove application with the corresponding database and Jenkins pipelines:
-
-  - Click the delete icon next to the application name;
-  - Type the required application name;
-  - Confirm the deletion by clicking the Delete button.
+* **Application status** - displays the Git Server status. Can be red or green depending on if the EDP Portal managed to connect to the Git Server with the specified credentials or not.
+* **Application name (clickable)** - displays the Git Server name set during the Git Server creation.
+* **Open documentation** - opens the documentation that leads to this page.
+* **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
+* **Create new application** - displays the **Create new component** menu.
+* **Edit application** - edit the application by selecting the options icon next to its name in the applications list, and then selecting **Edit**. For details see the [Edit Existing Application](#edit-existing-application) section.
+* **Delete application** - remove application by selecting the options icon next to its name in the applications list, and then selecting **Delete**.
 
   !!! note
       The application that is used in a CD pipeline cannot be removed.
 
-  !![Applications menu](../assets/user-guide/inspect-application-menu2.png "Applications menu")
+There are also options to sort the applications:
 
-5. Select a number of existing applications to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
+* Sort the existing applications in a table by clicking the sorting icons in the table header. Sort the applications alphabetically by their name, language, build tool, framework, and CI tool. You can also sort the applications by their status: Created, Failed, or In progress.
 
-6. Sort the existing applications in a list by clicking the Name title. The applications will be displayed in alphabetical order.
+* Select a number of applications displayed per page (15, 25 or 50 rows) and navigate between pages if the number of applications exceeds the capacity of a single page:
 
-7. Search the necessary application by entering the corresponding name, language or the build tool into the **Search** field. The search can be performed by the application name, language or a build tool.
+  !![Applications pages](../assets/user-guide/edp-portal-inspect-application-menu2.png "Applications pages")
 
-8. Navigate between pages if the number of applications exceeds the capacity of a single page.
+## Edit Existing Application
 
-## Add a New Branch
+EDP Portal provides the ability to enable, disable or edit the Jira Integration functionality for applications.R
 
-!!! note
-    Pay attention when specifying the branch name: the branch name is involved in the formation of the application version, so it must comply with the [versioning semantic rules](https://semver.org/) for the application.
+1. To edit an application directly from the Applications overview page or when viewing the application data:
 
-When adding an application, the default branch is a **master** branch. In order to add a new branch, follow the steps below:
+  - Select **Edit** in the options icon menu:
 
-1. Navigate to the **Branches** block and click the Create button:]
+  !![Edit application on the Applications overview page](../assets/user-guide/edp-portal-edit-codebase-1.png "Edit application on the Applications overview page")
 
-  !![Add branch](../assets/user-guide/addbranch1.png "Add branch")
+  !![Edit application when viewing the application data](../assets/user-guide/edp-portal-edit-codebase-2.png "Edit application when viewing the application data")
 
-2. Fill in the required fields:
+  - The Edit Application dialog opens.
 
-  !![New branch](../assets/user-guide/create-new-branch.png "New branch")
+2. To enable Jira integration, in the **Edit Application** dialog do the following:
 
-  a. Release Branch - select the **Release Branch** check box if you need to create a release branch;
+   !![Edit application](../assets/user-guide/edp-portal-edit-codebase-application.png "Edit application")
 
-  b. Branch Name - type the branch name. Pay attention that this field remains static if you create a release branch.
+   a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see steps d-h of the [Add Application](add-application.md#the-advanced-settings-menu) page.
 
-  c. From Commit Hash - paste the commit hash from which the new branch will be created. Note that if the **From Commit Hash** field is empty, the latest commit from the branch name will be used.
+   b. Select the **Apply** button to apply the changes.
 
-  d. Branch Version - enter the necessary branch version for the artifact. The Release Candidate (RC) postfix is concatenated to the branch version number.
+   c. (Optional) Enable commit validation mechanism by navigating to Jenkins/Tekton and adding the _commit-validate_ stage in the Code Review pipeline to have your commits reviewed.
 
-  e. Master Branch Version - type the branch version that will be used in a master branch after the release creation. The Snapshot postfix is concatenated to the master branch version number;
+3. To disable Jira integration, in the **Edit Application** dialog do the following:
 
-  f. Click the Proceed button and wait until the new branch will be added to the list.
+   a. Unmark the **Integrate with Jira server** check box.
 
-  !!! info
-      Adding of a new branch is indicated in the context of the edp versioning type. To get more detailed information on how to add a branch using the default versioning type, please refer [here](https://github.com/epam/edp-admin-console/blob/release-2.2/documentation/add_applications.md#-check-application-availability).
+   b. Select the **Apply** button to apply the changes.
 
-The default application repository is cloned and changed to the new indicated version before the build, i.e. the new indicated version will not be committed to the repository; thus, the existing repository will keep the default version.
+   c. (Optional) Disable commit validation mechanism by navigating to Jenkins/Tekton and removing the _commit-validate_ stage in the Code Review pipeline to have your commits reviewed.
 
-## Edit Existing Codebase
+4. To create, edit and delete application branches, please refer to the [Manage Branches](../user-guide/manage-branches.md) page.
 
-The EDP Admin Console provides the ability to enable, disable or edit the Jira Integration functionality for applications via the Edit Codebase page.
-
-1. Perform the editing from one of the following sections on the Admin Console interface:
-
-  !![Edit codebase](../assets/user-guide/edit-codebase-1.png "Edit codebase")
-
-  - Navigate to the codebase overview page and click the **pencil** icon, or
-
-  !![Edit codebase](../assets/user-guide/edit-codebase-2.png "Edit codebase")
-
-  - Navigate to the codebase list page and click the **pencil** icon.
-
-  !![Edit codebase](../assets/user-guide/edit-codebase-application.png "Edit codebase")
-
-2. To enable Jira integration, on the **Edit Codebase** page do the following:
-
-   - mark the **Integrate with Jira server** check box and fill in the necessary fields;
-   - click the **Proceed** button to apply the changes;
-   - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
-
-3. To disable Jira integration, on the **Edit Codebase** page do the following:
-
-   - unmark the **Integrate with Jira server** check box;
-   - click the Proceed button to apply the changes;
-   - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
-
-As a result, the necessary changes will be applied.
-
-## Remove Branch
-
-In order to remove the added branch with the corresponding record in the Admin Console database, do the following:
-
-1. Navigate to the Branches block by clicking the application name link in the Applications list;
-2. Click the delete icon related to the necessary branch:
-
-  !![Remove branch](../assets/user-guide/removebranch.png "Remove branch")
-
-3. Enter the branch name and click the Delete button;
-
-!!! note
-    The default **master** branch cannot be removed.
-
-### Related Articles
+## Related Articles
 
 * [Add Application](add-application.md)
-* [Promote Application in CD Pipeline](../use-cases/promotion-procedure.md)
+* [Manage Branches](../user-guide/manage-branches.md)

@@ -1,6 +1,6 @@
 # Add Cluster
 
-Adding other clusters allows deploying applications to several clusters when creating a stage of CD pipeline in EDP Headlamp.
+Adding other clusters allows deploying applications to several clusters when creating a stage of CD pipeline in EDP Portal.
 
 To add a cluster, follow the steps below:
 
@@ -8,15 +8,15 @@ To add a cluster, follow the steps below:
 
   === "List option"
 
-        !![Add Cluster](../assets/headlamp-user-guide/configuration_menu.png "Configuration menu (List option)")
+        !![Add Cluster](../assets/user-guide/configuration_menu.png "Configuration menu (List option)")
 
   === "Tiled option"
 
-        !![Add Cluster](../assets/headlamp-user-guide/configuration_menu_tiles_format.png "Configuration menu (Tiled option)")
+        !![Add Cluster](../assets/user-guide/configuration_menu_tiles_format.png "Configuration menu (Tiled option)")
 
 2. Click the **+** button to enter the **Create new cluster** menu:
 
-  !![Add Cluster](../assets/headlamp-user-guide/add_new_cluster.png "Add Cluster")
+  !![Add Cluster](../assets/user-guide/add_new_cluster.png "Add Cluster")
 
 3. Once clicked, the **Create new cluster** dialog will appear. You can create a Cluster in YAML or via UI:
 
@@ -26,7 +26,7 @@ To add a cluster, follow the steps below:
 
     * Click the **Edit YAML** button in the upper-right corner of the **Create New Cluster** dialog to open the YAML editor and create a Kubernetes secret.
 
-    !![Edit YAML](../assets/headlamp-user-guide/headlamp-yaml-edit-cluster.png "Edit YAML")
+    !![Edit YAML](../assets/user-guide/edp-portal-yaml-edit-cluster.png "Edit YAML")
 
     * To edit YAML in the minimal editor, turn on the **Use minimal editor** toggle in the upper-right corner of the **Create new cluster** dialog.
 
@@ -43,7 +43,7 @@ To add a cluster, follow the steps below:
       * **Cluster Token** - enter a cluster token;
       * **Cluster Certificate** - enter a cluster certificate.
 
-    !![Add Cluster](../assets/headlamp-user-guide/headlamp-add-cluster.png "Add Cluster")
+    !![Add Cluster](../assets/user-guide/edp-portal-add-cluster.png "Add Cluster")
 
     * Click the **Apply** button to add the cluster to the clusters list.
 

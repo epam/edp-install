@@ -1,12 +1,12 @@
 # Headlamp OIDC Configuration
 
 This page provides the instructions of configuring the [OIDC authorization](https://openid.net/connect/) for
-[EDP Headlamp UI](../headlamp-user-guide/index.md), thus allowing using SSO for authorization in Headlamp and controlling
+[EDP Portal UI](../user-guide/index.md), thus allowing using SSO for authorization in Portal and controlling
 user access and rights from one configuration point.
 
 ## Prerequisites
 
-Ensure the following values are set first before starting the Headlamp OIDC configuration:
+Ensure the following values are set first before starting the Portal OIDC configuration:
 
 1. `realm_id`  = **openshift**
 

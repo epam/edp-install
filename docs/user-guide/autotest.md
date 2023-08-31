@@ -1,4 +1,4 @@
-# Autotest
+# Manage Autotests
 
 This section describes the subsequent possible actions that can be performed with the newly added or existing autotests.
 
@@ -6,133 +6,82 @@ This section describes the subsequent possible actions that can be performed wit
 
 As soon as the autotest is successfully provisioned, the following will be created:
 
-- Code Review and Build pipelines in Jenkins for this autotest. The Build pipeline will be triggered automatically if at least one environment is already added.
+- Code Review and Build pipelines in Jenkins/Tekton for this autotest. The Build pipeline will be triggered automatically if at least one environment is already added.
 - A new project in Gerrit or another VCS.
-- SonarQube integration will be available after the Build pipeline in Jenkins is passed.
-- Nexus Repository Manager will be available after the Build pipeline in Jenkins is passed as well.
+- SonarQube integration will be available after the Build pipeline in Jenkins/Tekton is passed.
+- Nexus Repository Manager will be available after the Build pipeline in Jenkins/Tekton is passed as well.
 
 !!! info
-    To navigate quickly to OpenShift, Jenkins, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
+    To navigate quickly to OpenShift, Jenkins/Tekton, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
 
 The added autotest will be listed in the Autotests list allowing you to do the following:
 
-!![Autotests page](../assets/user-guide/autotests-page.png "Autotests page")
+!![Autotests page](../assets/user-guide/edp-portal-inspect-autotest-menu.png "Autotests page")
 
-1. Add another autotest by clicking the Create button and performing the same steps as described at the [Add Autotest](add-autotest.md) page.
+* **Autotest status** - displays the Git Server status. Can be red or green depending on EDP Portal managed to connect to the Git Server with the specified credentials or not.
 
-2. Open autotest data by clicking its link name. Once clicked, the following blocks will be displayed:
+* **Autotest name (clickable)** - displays the Git Server name set during the Git Server creation.
 
-  * **General Info** - displays common information about the cloned/imported autotest.
-  * **Advanced Settings** - displays the specified job provisioner, Jenkins agent, deployment script, and the versioning type with the start versioning from number (the latter two fields appear in case of edp versioning type).
-  * **Branches** - displays the status and name of the deployment branch, keeps the additional links to Jenkins and Gerrit. In case of edp versioning type, there are two additional fields:
-    * **Build Number** - indicates the current build number;
-    * **Last Successful Build** - indicates the number of the last successful build.
-  * **Status Info** - displays all the actions that were performed during the cloning/importing process.
+* **Open documentation** - opens the documentation that leads to this page.
 
-3. Edit the autotest codebase by clicking the pencil icon. For details see the [Edit Existing Codebase](#edit-existing-codebase) section.
+* **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
 
-4. Remove autotest with the corresponding database and Jenkins pipelines:
+* **Create new autotest** - displays the **Create new component** menu.
 
-  - Click the delete icon next to the autotest name;
-  - Type the required autotest name;
-  - Confirm the deletion by clicking the Delete button.
+* **Edit autotest** - edit the autotest by selecting the options icon next to its name in the autotests list, and then selecting **Edit**. For details see the [Edit Existing Autotest](#edit-existing-autotest) section.
+
+* **Delete autotest** - remove autotest with the corresponding database and Jenkins/Tekton pipelines by selecting the options icon next to its name in the Autotests list, and then selecting **Delete**:
 
   !!! note
       The autotest that is used in a CD pipeline cannot be removed.
 
-   !![Autotests page](../assets/user-guide/autotests-page2.png "Autotests page")
+There are also options to sort the applications:
 
-5. Select a number of existing autotests to be displayed on one page in the **Show entries** field. The filter allows to show 10, 25, 50 or 100 entries per page.
+* Sort the existing autotests in a table by clicking the sorting icons in the table header. Sort the autotests alphabetically by their name, language, build tool, framework, and CI tool. You can also sort the autotests by their status: Created, Failed, or In progress.
 
-6. Sort the existing autotests in a list by clicking the Name title. The autotests will be displayed in alphabetical order.
+* Select a number of autotests displayed per page (15, 25 or 50 rows)  and navigate between pages if the number of autotests exceeds the capacity of a single page.
 
-7. Search the necessary autotest by entering the corresponding name, language or the build tool into the **Search** field. The search can be performed by the autotest name, language or a build tool.
+## Edit Existing Autotest
 
-8. Navigate between pages, if the number of autotests exceeds the capacity of a single page.
+EDP Portal provides the ability to enable, disable or edit the Jira Integration functionality for autotests.
 
-## Edit Existing Codebase
+1. To edit an autotest directly from the Autotests overview page or when viewing the autotest data:
 
-The EDP Admin Console provides the ability to enable, disable or edit the Jira Integration functionality for autotests via the Edit Codebase page.
+  - Select **Edit** in the options icon menu:
 
-1. Perform the editing from one of the following sections on the Admin Console interface:
+    !![Edit autotest on the autotests overview page](../assets/user-guide/edp-portal-edit-autotest-1.png "Edit autotest on the autotests overview page")
 
-    !![Edit autotest](../assets/user-guide/edit-autotest.png "Edit autotest")
+    !![Edit autotest when viewing the autotest data](../assets/user-guide/edp-portal-edit-autotest-2.png "Edit autotest when viewing the autotest data")
 
-  - Navigate to the codebase overview page and click the **pencil** icon, or
+  - The Edit Autotest dialog opens.
 
-    !![Edit autotest](../assets/user-guide/autotest-pencil-icon.png "Edit autotest")
+2. To enable Jira integration, on the **Edit Autotest** page do the following:
 
-  - Navigate to the codebase list page and click the **pencil** icon.
+   !![Edit autotest](../assets/user-guide/edp-portal-edit-autotest-jira.png "Edit library")
 
-    !![Edit autotest](../assets/user-guide/autotest-edit-codebase.png "Edit autotest")
+   a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see steps d-h on the [Add Autotests](add-autotest.md#the-advanced-settings-menu) page.
 
-2. To enable Jira integration, on the **Edit Codebase** page do the following:
+   b. Select the **Apply** button to apply the changes.
 
-  - mark the **Integrate with Jira server** check box and fill in the necessary fields;
-  - click the Proceed button to apply the changes;
-  - navigate to Jenkins and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code-Review pipeline.
+   c. Navigate to Jenkins/Tekton and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
 
   !!! note
       Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
 
-
   !!! note
       To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md) pages.
 
-3. To disable Jira integration, on the **Edit Codebase** page do the following:
+3. To disable Jira integration, in the **Edit Autotest** dialog do the following:
 
-  - unmark the **Integrate with Jira server** check box;
-  - click the **Proceed** button to apply the changes;
-  - navigate to Jenkins and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
+   a. Unmark the **Integrate with Jira server** check box.
 
-As a result, the necessary changes will be applied.
+   b. Select the **Apply** button to apply the changes.
 
-## Add a New Branch
+   c. Navigate to Jenkins/Tekton and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
-!!! note
-    Pay attention when specifying the branch name: the branch name is involved in the formation of the application version, so it must comply with the [versioning semantic rules](https://semver.org/) for the application.
+  As a result, the necessary changes will be applied.
 
-When adding an autotest, the default branch is a **master** branch. In order to add a new branch, follow the steps below:
-
-1. Navigate to the **Branches** block and click the Create button:
-
-  !![Add branch](../assets/user-guide/addbranch1.png "Add branch")
-
-2. Fill in the required fields:
-
-  !![New branch](../assets/user-guide/create-new-branch-autotest.png "New branch")
-
-  a. Release Branch - select the Release Branch check box if you need to create a release branch;
-
-  b. Branch Name - type the branch name. Pay attention that this field remains static if you create a release branch.
-
-  c. From Commit Hash - paste the commit hash from which the new branch will be created. Note that if the **From Commit Hash** field is empty, the latest commit from the branch name will be used.
-
-  d. Branch Version - enter the necessary branch version for the artifact. The Release Candidate (RC) postfix is concatenated to the branch version number.
-
-  e. Master Branch Version - type the branch version that will be used in a master branch after the release creation. The Snapshot postfix is concatenated to the master branch version number;
-
-  f. Click the Proceed button and wait until the new branch will be added to the list.
-
-!!! info
-    Adding of a new branch is indicated in the context of the edp versioning type. To get more detailed information on how to add a branch using the default versioning type, please refer to the [Add Autotest](add-autotest.md) instruction.
-
-The default autotest repository is cloned and changed to the new indicated version before the build, i.e. the new indicated version will not be committed to the repository; thus, the existing repository will keep the default version.
-
-## Remove Branch
-
-In order to remove the added branch with the corresponding  record in the Admin Console database, do the following:
-
-1. Navigate to the Branches block by clicking the autotest name link in the Autotests list;
-
-2. Click the delete icon related to the necessary branch:
-
-  !![Remove branch](../assets/user-guide/removebranch.png "Remove branch")
-
-3. Enter the branch name and click the Delete button;
-
-  !!! note
-      The default **master** branch cannot be removed.
+4. To create, edit and delete application branches, please refer to the [Manage Branches](../user-guide/manage-branches.md) page.
 
 ## Add Autotest as a Quality Gate
 
@@ -144,7 +93,7 @@ In order to add an autotest as a quality gate to a newly added CD pipeline, do t
 
 3. In the additional fields, select the previously created autotest name and specify its branch.
 
-4. After filling in all the necessary fields, click the Create button to start the provisioning of the pipeline. After the CD pipeline is added, the new namespace containing the stage name will be created in Kubernetes (in OpenShift, a new project will be created) with the following name pattern: _[cluster name]-[cd pipeline name]-[stage name]_
+4. After filling in all the necessary fields, click the Create button to start the provisioning of the pipeline. After the CD pipeline is added, the new namespace containing the stage name will be created in Kubernetes (in OpenShift, a new project will be created) with the following name pattern: _[cluster name]-[cd pipeline name]-[stage name]_.
 
 ## Configure Autotest Launch at Specific Stage
 
@@ -164,13 +113,13 @@ There is an ability to run the autotests locally using the IDEA (Integrated Deve
 
 3. Paste the copied command value into the Command line field and run it with the necessary values and namespace.
 
-4. As a result, all launched tests will be executed.
+4. As a result, all the launched tests will be executed.
 
+## Related Articles
 
-### Related Articles
-
-- [Add Application](add-application.md)
-- [Add Autotests](add-autotest.md)
-- [Add CD Pipeline](add-cd-pipeline.md)
+* [Add Application](add-application.md)
+* [Add Autotests](add-autotest.md)
+* [Add CD Pipeline](add-cd-pipeline.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
+* [Manage Branches](../user-guide/manage-branches.md)

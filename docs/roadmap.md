@@ -175,20 +175,23 @@ EDP supports the [OpenShift 4.9](https://docs.openshift.com/container-platform/4
 !!! success "EDP Release 3.0"
     [EDP Headlamp](https://github.com/epam/edp-headlamp) is used as a Control Plane UI on the platform.
 
+!!! success "EDP Release 3.4"
+    Since EDP v3.4.0, Headlamp UI has been renamed to EDP Portal.
+
 ### Users Management
 
-EDP uses [Keycloak](https://www.keycloak.org/){target=_blank} as an Identity and Access provider. EDP roles/groups are managed inside the Keycloak realm, then these changes are propagated across the EDP Tools. We plan to provide this functionality in EDP Headlamp using the Kubernetes-native approach (Custom Resources).
+EDP uses [Keycloak](https://www.keycloak.org/){target=_blank} as an Identity and Access provider. EDP roles/groups are managed inside the Keycloak realm, then these changes are propagated across the EDP Tools. We plan to provide this functionality in EDP Portal using the Kubernetes-native approach (Custom Resources).
 
 ### The Delivery Pipelines Dashboard
 
-The [CD Pipeline section](./user-guide/add-cd-pipeline.md) in EDP Headlamp provides basic information, such as environments, artifact versions deployed per each environment, and direct links to the namespaces. One option is to enrich this panel with metrics from the Prometheus, custom resources, or events. Another option is to use the existing dashboards and expose EDP metrics to them, for example, [plugin for Lens](https://github.com/lensapp/lens-extensions){target=_blank} or [OpenShift UI Console](https://github.com/openshift/console){target=_blank}.
+The [CD Pipeline section](./user-guide/add-cd-pipeline.md) in EDP Portal provides basic information, such as environments, artifact versions deployed per each environment, and direct links to the namespaces. One option is to enrich this panel with metrics from the Prometheus, custom resources, or events. Another option is to use the existing dashboards and expose EDP metrics to them, for example, [plugin for Lens](https://github.com/lensapp/lens-extensions){target=_blank} or [OpenShift UI Console](https://github.com/openshift/console){target=_blank}.
 
 ### Split Jira and Commit Validation Sections
 
 [Commit Validate step](../user-guide/pipeline-stages/#stages-description) was initially designed to be aligned with [Jira Integration](./operator-guide/jira-integration.md) and cannot be used as single feature. Target state is to ensure features *CommitMessage Validation* and *Jira Integration* both can be used independently. We also want to add support for [Conventional Commits](https://www.conventionalcommits.org){target=_blank}.
 
 !!! success "EDP Release 3.2.0"
-    [EDP Headlamp](https://github.com/epam/edp-headlamp) has separate sections for [Jira Integration](./operator-guide/jira-integration.md) and CommitMessage Validation step.
+    [EDP Portal](https://github.com/epam/edp-headlamp) has separate sections for [Jira Integration](./operator-guide/jira-integration.md) and CommitMessage Validation step.
 
 ## V. Documentation as Code
 

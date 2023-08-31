@@ -1,6 +1,6 @@
 # Adjust Jira Integration
 
-This documentation guide provides step-by-step instructions for enabling the Jira integration option in the Headlamp UI for EPAM Delivery Platform. Jira integration allows including useful metadata in Jira tickets.
+This documentation guide provides step-by-step instructions for enabling the Jira integration option in the EDP Portal UI for EPAM Delivery Platform. Jira integration allows including useful metadata in Jira tickets.
 
 ## Overview
 
@@ -59,7 +59,7 @@ In order to adjust the Jira server integration, first add JiraServer CR by perfo
   !!! note
       The value of the **credentialName** property is the name of the Secret, which is indicated in the first point above.
 
-3. In the Headlamp UI, navigate to the **Advanced Settings** menu to check that the **Integrate with Jira server** check box appeared:
+3. In the EDP Portal UI, navigate to the **Advanced Settings** menu to check that the **Integrate with Jira server** check box appeared:
 
     !![Advanced settings](../assets/operator-guide/jira_integration_ac.png "Advanced settings")
 
@@ -80,4 +80,4 @@ In order to adjust the Jira server integration, first add JiraServer CR by perfo
 ## Related Articles
 
 * [Adjust VCS Integration With Jira](jira-gerrit-integration.md)
-* [Add Application](../headlamp-user-guide/add-application.md)
+* [Add Application](../user-guide/add-application.md)

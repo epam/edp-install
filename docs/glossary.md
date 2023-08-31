@@ -9,7 +9,7 @@ Get familiar with the definitions and context for the most useful EDP terms pres
 
  | Terms  | Details  |
  |---|---|
- | **EDP Component** - an item used in CI/CD process |**EDP Headlamp UI** - an EDP component that helps to manage, set up, and control the business entities.|
+ | **EDP Component** - an item used in CI/CD process |**EDP Portal UI** - an EDP component that helps to manage, set up, and control the business entities.|
  |                                                   |**Artifactory** - an EDP component that stores all the binary artifacts. _**NOTE**: Nexus is used as a possible implementation of a repository._|
  |                                                   |**CI/CD Server** - an EDP component that launches pipelines that perform the build, QA, and deployment code logic. _**NOTE**: Jenkins is used as a possible implementation of a CI/CD server._|
  |                                                   |**Code Review tool** - an EDP component that collaborates with the changes in the codebase. _**NOTE**: Gerrit is used as a possible implementation of a code review tool._|

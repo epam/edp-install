@@ -31,7 +31,7 @@ To use External Secret in EDP approach, follow the steps below:
 
 To begin, you will need an application first. Here are the steps to create it:
 
-1. Open Headlamp URL. Use the `Sign-In` option:
+1. Open EDP Portal URL. Use the `Sign-In` option:
 
   !![Logging Page](../assets/use-cases/external-secrets/headlamp_login.png "Logging screen")
 
@@ -75,7 +75,7 @@ To begin, you will need an application first. Here are the steps to create it:
 
 ### Create CD Pipeline
 
-This section outlines the process of establishing a CD pipeline within Headlamp. There are two fundamental steps in this procedure:
+This section outlines the process of establishing a CD pipeline within EDP Portal. There are two fundamental steps in this procedure:
 
 - Build the application from the last commit of the `master` branch;
 
@@ -182,7 +182,7 @@ To make the system to function properly, it is imperative to create the followin
 
 Now that RBAC is configured properly, it is time to add external secrets templates to application Helm chart. Follow the instructions provided below:
 
-1. Navigate to `Headlamp` -> `EDP` -> `Overview`, and push the Gerrit link:
+1. Navigate to `EDP Portal` -> `EDP` -> `Overview`, and push the Gerrit link:
 
   !![Overview page](../assets/use-cases/external-secrets/edp_overview.png "Overview page")
 
@@ -292,7 +292,7 @@ Now that RBAC is configured properly, it is time to add external secrets templat
 
 Deploy the application by following the steps provided below:
 
-1. When build pipeline is finished, navigate to `Headlamp` -> `EDP` -> `CD-Pipeline` and select `deploy` pipeline.
+1. When build pipeline is finished, navigate to `EDP Portal` -> `EDP` -> `CD-Pipeline` and select `deploy` pipeline.
 
 2. Deploy the initial version of the application to the SIT environment:
 
@@ -323,11 +323,11 @@ To ensure the application is deployed successfully, do the following:
 
 2. In the top right corner, enter the `Cluster settings` and add `demo-deploy-sit` to the `Allowed namespace`.
 
-3. Navigate `Headlamp` -> `Configuration` -> `Secrets` and ensure that secret was created:
+3. Navigate `EDP Portal` -> `Configuration` -> `Secrets` and ensure that secret was created:
 
   !![Secrets](../assets/use-cases/external-secrets/headlamp_secrets.png "Secrets")
 
-4. Navigate `Headlamp` -> `Workloads` -> `Pods` and select deployed application:
+4. Navigate `EDP Portal` -> `Workloads` -> `Pods` and select deployed application:
 
   !![Pod information](../assets/use-cases/external-secrets/pod_env.png "Pod information")
 
@@ -335,5 +335,5 @@ To ensure the application is deployed successfully, do the following:
 ## Related Articles
 
 - [Use Cases](./index.md)
-- [Add Application](../headlamp-user-guide/add-application.md)
-- [CD Pipeline](../headlamp-user-guide/add-cd-pipeline.md)
+- [Add Application](../user-guide/add-application.md)
+- [CD Pipeline](../user-guide/add-cd-pipeline.md)

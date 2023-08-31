@@ -45,7 +45,7 @@ To implement autotests as Quality Gates, follow the steps below:
   !![Create new component menu](../assets/use-cases/autotest-as-quality-gate/application_create.png "Create new component menu")
 
   !!! note
-      Please refer to the [Add Application](../headlamp-user-guide/add-application.md) section for details.
+      Please refer to the [Add Application](../user-guide/add-application.md) section for details.
 
 5. On the **Codebase info** tab, define the following values and press the **Proceed** button:
 
@@ -126,7 +126,7 @@ The steps below instruct how to create autotests in EDP:
   !![Add autotest](../assets/use-cases/autotest-as-quality-gate/add_autotest.png "Add autotest")
 
   !!! note
-      Please refer to the [Add Autotest](../headlamp-user-guide/add-autotest.md) section for details.
+      Please refer to the [Add Autotest](../user-guide/add-autotest.md) section for details.
 
 2. On the **Codebase info** tab, define the following values and press the **Proceed** button:
 
@@ -234,7 +234,7 @@ After the CD pipeline is created, deploy applications and run autotests by follo
 
 ## Related Articles
 
-* [Add Application](../headlamp-user-guide/add-application.md)
-* [Add Autotest](../headlamp-user-guide/add-autotest.md)
-* [Add CD Pipeline](../headlamp-user-guide/add-cd-pipeline.md)
-* [Add Quality Gate](../headlamp-user-guide/add-quality-gate.md)
+* [Add Application](../user-guide/add-application.md)
+* [Add Autotest](../user-guide/add-autotest.md)
+* [Add CD Pipeline](../user-guide/add-cd-pipeline.md)
+* [Add Quality Gate](../user-guide/add-quality-gate.md)

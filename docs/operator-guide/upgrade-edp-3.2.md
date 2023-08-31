@@ -61,10 +61,10 @@ This section provides the details on the EDP upgrade to v3.2.2. Explore the acti
       --from-literal=cookie-secret=${nexus_proxy_cookie_secret}
   ```
 
-4. EDP 3.2.2 features OIDC configuration for Headlamp. If this parameter is required, create `keycloak-client-headlamp-secret` as described in this [article](headlamp-oidc.md):
+4. EDP 3.2.2 features OIDC configuration for EDP Portal. If this parameter is required, create `keycloak-client-headlamp-secret` as described in this [article](headlamp-oidc.md):
 
   ```bash
-  kubectl -n <edp-project> create secret generic keycloak-client-headlamp-secret \
+  kubectl -n <edp-project> create secret generic keycloak-client-edp-portal-secret \
       --from-literal=clientSecret=<keycloak_client_secret_key>
   ```
 

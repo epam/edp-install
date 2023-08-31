@@ -23,8 +23,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Provide example of values.yaml file with custom certs support [EPMDEDP-12224](https://jiraeu.epam.com/browse/EPMDEDP-12224)
 - Migrate dockerRegistry to global section [EPMDEDP-12315](https://jiraeu.epam.com/browse/EPMDEDP-12315)
 - Enable regcred secret creation via external secret operator [EPMDEDP-12315](https://jiraeu.epam.com/browse/EPMDEDP-12315)
-- Add label to DefectDojo secret for Headlamp UI [EPMDEDP-12448](https://jiraeu.epam.com/browse/EPMDEDP-12448)
-- Add label to Jira secret for Headlamp UI [EPMDEDP-12452](https://jiraeu.epam.com/browse/EPMDEDP-12452)
+- Add label to DefectDojo secret for EDP Portal UI [EPMDEDP-12448](https://jiraeu.epam.com/browse/EPMDEDP-12448)
+- Add label to Jira secret for EDP Portal UI [EPMDEDP-12452](https://jiraeu.epam.com/browse/EPMDEDP-12452)
 
 ### Bug Fixes
 
@@ -95,7 +95,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Describe Harbor installation [EPMDEDP-12181](https://jiraeu.epam.com/browse/EPMDEDP-12181)
 - Harbor integration with Tekton CI pipelines [EPMDEDP-12181](https://jiraeu.epam.com/browse/EPMDEDP-12181)
 - Update project icon [EPMDEDP-12188](https://jiraeu.epam.com/browse/EPMDEDP-12188)
-- Update Headlamp User Guide to 3.3.0 [EPMDEDP-12188](https://jiraeu.epam.com/browse/EPMDEDP-12188)
+- Update User Guide to 3.3.0 [EPMDEDP-12188](https://jiraeu.epam.com/browse/EPMDEDP-12188)
 - Disable perf-operator as edp-install subcomponent [EPMDEDP-12190](https://jiraeu.epam.com/browse/EPMDEDP-12190)
 - Add Helm-Helm-Helm lib to Add Library doc [EPMDEDP-12208](https://jiraeu.epam.com/browse/EPMDEDP-12208)
 - Describe enable oauth-proxy for openshift deploy scenario [EPMDEDP-12211](https://jiraeu.epam.com/browse/EPMDEDP-12211)
@@ -118,7 +118,7 @@ Recreate kaniko-docker-config secret in AWS PS in string format, instead of base
 
 ### Bug Fixes
 
-- Align icons in the headlamp guide [EPMDEDP-11577](https://jiraeu.epam.com/browse/EPMDEDP-11577)
+- Align icons in the user guide [EPMDEDP-11577](https://jiraeu.epam.com/browse/EPMDEDP-11577)
 - Always create keycloakclientscope groups [EPMDEDP-11919](https://jiraeu.epam.com/browse/EPMDEDP-11919)
 
 ### Routine
@@ -133,7 +133,7 @@ Recreate kaniko-docker-config secret in AWS PS in string format, instead of base
 
 ### Documentation
 
-- Update Headlamp guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
+- Update User guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Align EDP install version to 3.2 [EPMDEDP-11472](https://jiraeu.epam.com/browse/EPMDEDP-11472)
 - Add release notes of EDP 3.2.0 to the RELEASES.md file [EPMDEDP-11499](https://jiraeu.epam.com/browse/EPMDEDP-11499)
 - Onboard application with custom build tool-framework [EPMDEDP-11602](https://jiraeu.epam.com/browse/EPMDEDP-11602)
@@ -151,7 +151,7 @@ Recreate kaniko-docker-config secret in AWS PS in string format, instead of base
 - Set up the sending of pipeline status notifications to MS Teams [EPMDEDP-11800](https://jiraeu.epam.com/browse/EPMDEDP-11800)
 - Add the Gin provider to the Go language in mkdocs [EPMDEDP-11836](https://jiraeu.epam.com/browse/EPMDEDP-11836)
 - Correct ingress annotation in oauth2-proxy docs [EPMDEDP-11845](https://jiraeu.epam.com/browse/EPMDEDP-11845)
-- The ability to add custom certificates for Headlamp [EPMDEDP-11847](https://jiraeu.epam.com/browse/EPMDEDP-11847)
+- The ability to add custom certificates for EDP Portal [EPMDEDP-11847](https://jiraeu.epam.com/browse/EPMDEDP-11847)
 - Add release 3.2 upgrade docs [EPMDEDP-11850](https://jiraeu.epam.com/browse/EPMDEDP-11850)
 - RELEASES.md typos hot fix [EPMDEDP-11872](https://jiraeu.epam.com/browse/EPMDEDP-11872)
 - Fix StorageClass annotation [EPMDEDP-11875](https://jiraeu.epam.com/browse/EPMDEDP-11875)
@@ -224,7 +224,7 @@ Recreate kaniko-docker-config secret in AWS PS in string format, instead of base
 - Describe Headlamp OIDC integration [EPMDEDP-11135](https://jiraeu.epam.com/browse/EPMDEDP-11135)
 - Add page feedback feature [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Update mkdocs framework version [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
-- Update Headlamp guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
+- Update User guide [EPMDEDP-11238](https://jiraeu.epam.com/browse/EPMDEDP-11238)
 - Update edp-install release version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
 - Update article to upgrade EDP to 3.0.x version [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
 - Upgrade EDP to 3.1 [EPMDEDP-11260](https://jiraeu.epam.com/browse/EPMDEDP-11260)
@@ -292,7 +292,7 @@ Recreate kaniko-docker-config secret in AWS PS in string format, instead of base
 - Add Storage Classes into Cluster settings [EPMDEDP-11169](https://jiraeu.epam.com/browse/EPMDEDP-11169)
 - Update installation EDP guide [EPMDEDP-11170](https://jiraeu.epam.com/browse/EPMDEDP-11170)
 - Update ArgoCD page [EPMDEDP-11171](https://jiraeu.epam.com/browse/EPMDEDP-11171)
-- Update Headlamp User Guide [EPMDEDP-11182](https://jiraeu.epam.com/browse/EPMDEDP-11182)
+- Update User Guide [EPMDEDP-11182](https://jiraeu.epam.com/browse/EPMDEDP-11182)
 - Add Install Tekton resources page [EPMDEDP-11203](https://jiraeu.epam.com/browse/EPMDEDP-11203)
 - Update EDP install documentation [EPMDEDP-11216](https://jiraeu.epam.com/browse/EPMDEDP-11216)
 - Add article to upgrade EDP to 3.0.x version [EPMDEDP-11220](https://jiraeu.epam.com/browse/EPMDEDP-11220)
@@ -379,13 +379,13 @@ Recreate kaniko-docker-config secret in AWS PS in string format, instead of base
 - Add note about gitProvider in GitServer spec [EPMDEDP-10743](https://jiraeu.epam.com/browse/EPMDEDP-10743)
 - Fix 'EDP Main Repositories' table [EPMDEDP-10762](https://jiraeu.epam.com/browse/EPMDEDP-10762)
 - Align EDP install documentation to 2.12.1 and minor corrections [EPMDEDP-10770](https://jiraeu.epam.com/browse/EPMDEDP-10770)
-- Describe Headlamp functionality [EPMDEDP-10795](https://jiraeu.epam.com/browse/EPMDEDP-10795)
+- Describe EDP Portal functionality [EPMDEDP-10795](https://jiraeu.epam.com/browse/EPMDEDP-10795)
 - Add a link to the edp-tekton repository into the Readme file [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
 - Updated Java 8 Gradle and Maven agents versions, blurred account ID on screenshot [EPMDEDP-10805](https://jiraeu.epam.com/browse/EPMDEDP-10805)
 - Update RELEASES.md for 2.12.1 [EPMDEDP-10806](https://jiraeu.epam.com/browse/EPMDEDP-10806)
 - Deploy ReportPortal via helm chart and helmfile to OpenShift cluster [EPMDEDP-10811](https://jiraeu.epam.com/browse/EPMDEDP-10811)
 - Use out of the box Argo CD functional instead of edp-operator [EPMDEDP-10841](https://jiraeu.epam.com/browse/EPMDEDP-10841)
-- Update Headlamp User Guide [EPMDEDP-10910](https://jiraeu.epam.com/browse/EPMDEDP-10910)
+- Update User Guide [EPMDEDP-10910](https://jiraeu.epam.com/browse/EPMDEDP-10910)
 - Update the Manage Jenkins CD Pipeline Job [EPMDEDP-10935](https://jiraeu.epam.com/browse/EPMDEDP-10935)
 - Update the Add Custom Global Pipeline Lib document [EPMDEDP-10975](https://jiraeu.epam.com/browse/EPMDEDP-10975)
 - ReportPortal Enable SAML integration [EPMDEDP-10981](https://jiraeu.epam.com/browse/EPMDEDP-10981)

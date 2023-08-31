@@ -13,11 +13,11 @@ When adding a component, the default branch is a **master** branch. In order to 
 
 2. Select the options icon related to the necessary branch and then select **Create**:
 
-  !![Add branch](../assets/headlamp-user-guide/headlamp-addbranch1.png "Add branch")
+  !![Add branch](../assets/user-guide/edp-portal-addbranch1.png "Add branch")
 
 3. Click **Edit YAML** in the upper-right corner of the dialog to open the YAML editor and add a branch. Otherwise, fill in the required fields in the dialog:
 
-  !![New branch](../assets/headlamp-user-guide/headlamp-create-new-branch.png "New branch")
+  !![New branch](../assets/user-guide/edp-portal-create-new-branch.png "New branch")
 
   a. **Release Branch** - select the **Release Branch** check box if you need to create a release branch.
 
@@ -43,30 +43,30 @@ In order to build branch from the latest commit, do the following:
 1. Navigate to the **Branches** block by clicking the library name link in the Libraries list.
 2. Select the options icon related to the necessary branch and then select **Build**:
 
-  !![Build branch](../assets/headlamp-user-guide/headlamp-build-branch.png "Build branch")
+  !![Build branch](../assets/user-guide/edp-portal-build-branch.png "Build branch")
 
 The pipeline run status is displayed near the branch name in the **Branches** block:
 
-  !![Pipeline run status in Headlamp](../assets/headlamp-user-guide/headlamp-pipeline-run-status.png "Pipeline run status in Headlamp")
+  !![Pipeline run status in EDP Portal](../assets/user-guide/edp-portal-pipeline-run-status.png "Pipeline run status in EDP Portal")
 
 The corresponding item appears on the **Tekton Dashboard** in the **PipelineRuns** section:
 
-  !![Pipeline run status in Tekton](../assets/headlamp-user-guide/headlamp-pipeline-run-status-in-tekton.png "Pipeline run status in Tekton")
+  !![Pipeline run status in Tekton](../assets/user-guide/edp-portal-pipeline-run-status-in-tekton.png "Pipeline run status in Tekton")
 
 ## Delete Branch
 
 !!! note
     The default **master** branch cannot be removed.
 
-In order to delete the added branch with the corresponding record in the Headlamp database, do the following:
+In order to delete the added branch with the corresponding record in the EDP Portal database, do the following:
 
 1. Navigate to the **Branches** block by clicking the component name link in the compoents list.
 2. Select the options icon related to the necessary branch and then select **Delete**:
 
-  !![Delete branch](../assets/headlamp-user-guide/headlamp-delete-branch.png "Delete branch")
+  !![Delete branch](../assets/user-guide/edp-portal-delete-branch.png "Delete branch")
 
 ## Related Articles
 
-* [Add Application](../headlamp-user-guide/add-application.md)
-* [Add Library](../headlamp-user-guide/add-library.md)
-* [Add Autotest](../headlamp-user-guide/add-autotest.md)
+* [Add Application](../user-guide/add-application.md)
+* [Add Library](../user-guide/add-library.md)
+* [Add Autotest](../user-guide/add-autotest.md)

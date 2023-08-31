@@ -47,7 +47,7 @@ Code Review and Build pipelines for **docker** application:
       The default template should be changed if there is another creation logic for the Code Review, Build and Create Release pipelines.
       Furthermore, all pipeline types should have the necessary stages as well.
 
-  After the steps above are performed, the new custom job provision will be available in **Advanced Settings** during the application creation in the Headlamp UI:
+  After the steps above are performed, the new custom job provision will be available in **Advanced Settings** during the application creation in the EDP Portal UI:
 
   !![Custom ci provision](../assets/operator-guide/add-custom-ci-provision.png "Custom ci provision")
 
@@ -747,7 +747,7 @@ def getSecretValue(name) {
 ```
    </details>
 
-  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in the Headlamp UI:
+  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in the EDP Portal UI:
 
   !![Github job provision](../assets/operator-guide/github-job-provision.png "Github job provision")
 
@@ -1157,7 +1157,7 @@ def getSecretValue(name) {
 
    </details>
 
-  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in the Headlamp UI:
+  After the steps above are performed, the new custom job-provision will be available in **Advanced Settings** during the application creation in the EDP Portal UI:
 
   !![Gitlab job provision](../assets/operator-guide/gitlab-job-provision.png "Gitlab job provision")
 

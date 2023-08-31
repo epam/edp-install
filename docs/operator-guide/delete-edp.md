@@ -6,14 +6,14 @@ This tutorial provides detailed instructions on the optimal method to uninstall 
 
 To uninstall EDP, perform the following steps:
 
-1. It is highly recommended to delete all the resources created via Headlamp UI first. It can be:
+1. It is highly recommended to delete all the resources created via EDP Portal UI first. It can be:
   * Applications;
   * Libraries;
   * Autotests;
   * Infrastructures;
   * CD Pipelines.
 
-  We recommend deleting them via Headlamp UI respectively, although it is also possible to delete all the Headlamp resources using the `kubectl delete` command.
+  We recommend deleting them via EDP Portal UI respectively, although it is also possible to delete all the EDP Portal resources using the `kubectl delete` command.
 
 2. Delete application namespaces. They should be called according to the `<edp-project>-<cd-pipeline>-<stage-name>` pattern.
 

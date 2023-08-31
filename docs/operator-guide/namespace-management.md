@@ -1,6 +1,6 @@
 # Manage Namespace
 
-EDP provides the ability to [deploy](../headlamp-user-guide/add-cd-pipeline.md) services to namespaces. By default, EDP creates these namespaces automatically. This chapter describes the alternative way of namespace creation and management.
+EDP provides the ability to [deploy](../user-guide/add-cd-pipeline.md) services to namespaces. By default, EDP creates these namespaces automatically. This chapter describes the alternative way of namespace creation and management.
 
 ## Overview
 
@@ -10,7 +10,7 @@ The `cd-pipeline-operator` should have the permissions to automatically create n
 ## Disable Automatic Namespace Creation
 
 Occasionally, there are cases when automatic creation of namespaces is not allowed. For example, due to security reasons of the project, EDP user may need to disable this setting. This option is manipulated by the `manageNamespace` parameter which is located in the [values.yaml](https://github.com/epam/edp-cd-pipeline-operator/blob/release/2.14/deploy-templates/values.yaml#L30) file.
-The `manageNamespace` parameter is set to `true` by default, but it can be changed to false. As an aftermath, after setting the `manageNamespace` parameter users are supposed to face the problem that they can not deploy their application in Headlamp UI because of permission restrictions:
+The `manageNamespace` parameter is set to `true` by default, but it can be changed to false. As an aftermath, after setting the `manageNamespace` parameter users are supposed to face the problem that they can not deploy their application in EDP Portal UI because of permission restrictions:
 
   !![Namespace creation error](../assets/operator-guide/failed_cd_pipeline_creation.png)
 

@@ -2,11 +2,11 @@
 
 This section describes the subsequent possible actions that can be performed with the newly added or existing clusters.
 
-In a nutshell, cluster in Headlamp is a Kubernetes secret that stores credentials and enpoint to connect to the another cluster. Adding new clusters allows users to deploy applications in several clusters, thus improving flexibilty of your infrastructure.
+In a nutshell, cluster in EDP Portal is a Kubernetes secret that stores credentials and enpoint to connect to the another cluster. Adding new clusters allows users to deploy applications in several clusters, thus improving flexibilty of your infrastructure.
 
 The added cluster will be listed in the clusters list allowing you to do the following:
 
-!![Clusters list](../assets/headlamp-user-guide/headlamp-cluster-overview.png "Clusters list")
+!![Clusters list](../assets/user-guide/edp-portal-cluster-overview.png "Clusters list")
 
 ## View Authentication Data
 
@@ -26,5 +26,5 @@ To delete cluster, use the `kubectl delete` command as follows:
 
 ## Related Articles
 
-* [Add Cluster](../headlamp-user-guide/add-cluster.md)
-* [Add Application](../headlamp-user-guide/add-application.md)
+* [Add Cluster](../user-guide/add-cluster.md)
+* [Add Application](../user-guide/add-application.md)

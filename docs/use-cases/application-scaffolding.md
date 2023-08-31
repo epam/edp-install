@@ -35,7 +35,7 @@ To scaffold and deploy FastAPI Application, follow the steps below.
 
 ### Scaffold the New FastAPI Application
 
-1. Open Headlamp URL. Use the Sign-In option.
+1. Open EDP Portal URL. Use the Sign-In option.
 
   !![Logging Page](../assets/use-cases/fastapi-scaffolding/login.png "Logging screen")
 
@@ -105,7 +105,7 @@ To succeed with the steps above, follow the instructions below:
 
 5. Create CD Pipeline. To enable application deployment create a CD Pipeline with a single environment - Development (with the name `dev`).
 
-6. Go to Headlamp -> EDP -> CD Pipelines tab and push the `+` button to create pipeline. In the `Create CD Pipeline` dialog, define the below values:
+6. Go to EDP Portal -> EDP -> CD Pipelines tab and push the `+` button to create pipeline. In the `Create CD Pipeline` dialog, define the below values:
 
   - **Pipeline tab**:
     - Pipeline name: `mypipe`
@@ -199,9 +199,9 @@ Perform the below steps to merge new code (Pull Request) that passes the Code Re
 
   !![Pipeline Status Gerrit](../assets/use-cases/fastapi-scaffolding/gerrit-6.png)
 
-  - Headlamp.
+  - EDP Portal.
 
-  !![Pipeline Status Headlamp](../assets/use-cases/fastapi-scaffolding/gerrit-7.png)
+  !![Pipeline Status EDP Portal](../assets/use-cases/fastapi-scaffolding/gerrit-7.png)
 
 9. With no Code Review Pipeline issues, set `Code-Review +2` for the patchset and push the `Submit` button. Then, your code is merged to the `main` branch, triggering the Build Pipeline. The build Pipeline produces the new version of artifact: `0.0.1-SNAPSHOT.2`, which is available for the deployment.
 
@@ -218,7 +218,7 @@ Perform the below steps to merge new code (Pull Request) that passes the Code Re
 
 11. Deploy the new version `0.0.1-SNAPSHOT.2` which has the ingress object in place. Since we use `Manual` deployment approach, we perform version upgrade by hand.
 
-  - Go to the `CD Pipelines` section of the `Headlamp`, select `mypipe` pipeline and choose `dev` stage.
+  - Go to the `CD Pipelines` section of the `EDP Portal`, select `mypipe` pipeline and choose `dev` stage.
   - In the `Image stream version` select the new version `0.0.1-SNAPSHOT.2` and push the `Update` button.
   - Check that the new version is deployed: application status is `Healthy` and `Synced`, and the `Deployed version` points to `0.0.1-SNAPSHOT.2`.
 

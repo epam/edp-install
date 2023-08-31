@@ -243,13 +243,13 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
 
 5. Check that your new Repository, Known Hosts, and AppProject are added to the Argo CD UI.
 
-Once Argo CD is successfully integrated, EDP user can utilize Argo CD to deploy [CD pipelines](../../headlamp-user-guide/add-cd-pipeline/#deploy-application).
+Once Argo CD is successfully integrated, EDP user can utilize Argo CD to deploy [CD pipelines](../../user-guide/add-cd-pipeline/#deploy-application).
 
 ## Check Argo CD Integration (Optional)
 
 This section provides the information on how to test the integration with Argo CD and is not mandatory to be followed.
 
-1. Follow the [Add Application](../../headlamp-user-guide/add-application/#create-application-in-yaml) instruction to deploy a test EDP application with the `demo` name, which should be stored in a Gerrit private repository:
+1. Follow the [Add Application](../../user-guide/add-application/#create-application-in-yaml) instruction to deploy a test EDP application with the `demo` name, which should be stored in a Gerrit private repository:
 
   ??? Note "Example: Argo CD Application "
       ```yaml

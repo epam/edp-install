@@ -127,7 +127,7 @@ To make EDP and Harbor project interact with each other, set up a robot account:
   ```
 
 7. After completing the steps above, you can get back and continue [installing EDP](../operator-guide/install-edp.md).
-  As a result, application images built in Headlamp UI will be stored in your Harbor project.
+  As a result, application images built in EDP Portal UI will be stored in your Harbor project.
 
 ## Related Articles
 

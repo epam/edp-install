@@ -273,7 +273,7 @@ There are several recommended ways to deploy EPAM Delivery Platform:
     ```bash
     helm status <edp-release> -n <edp-project>
     ```
-    You can also check ingress endpoints to get Headlamp endpoint to enter Headlamp UI:
+    You can also check ingress endpoints to get EDP Portal endpoint to enter EDP Portal UI:
     ```bash
     kubectl describe ingress -n <edp-project>
     ```

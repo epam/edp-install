@@ -4,7 +4,7 @@ EDP uses two different methods to regulate access to resources, each tailored to
 
 * The initial method involves `roles` and `groups` in Keycloak and is used for SonarQube, Jenkins and partly for Nexus.
 
-* The second method of resource access control in EDP involves `EDP custom resources`. This approach requires modifying custom resources that outline the required access privileges for every user or group and is used to govern access to Gerrit, Nexus, Headlamp, EKS Cluster and Argo CD.
+* The second method of resource access control in EDP involves `EDP custom resources`. This approach requires modifying custom resources that outline the required access privileges for every user or group and is used to govern access to Gerrit, Nexus, EDP Portal, EKS Cluster and Argo CD.
 
 !!! info
     These two approaches are not interchangeable, as each has its unique capabilities.
@@ -44,7 +44,7 @@ EDP uses two different realms for group management, `<edp-project>` and `openshi
 
 * The `<edp-project>` realm contains two groups that are specifically used for controlling access to Argo CD. These groups are named `ArgoCDAdmins` and `ArgoCD-<edp-project>-users`.
 
-* The `openshift` realm contains five groups that are used for access control in both the Headlamp and EKS cluster. These groups are named `<edp-project>-oidc-admins`, `<edp-project>-oidc-builders`, `<edp-project>-oidc-deployers`,`<edp-project>-oidc-developers` and `<edp-project>-oidc-viewers`.
+* The `openshift` realm contains five groups that are used for access control in both the EDP Portal and EKS cluster. These groups are named `<edp-project>-oidc-admins`, `<edp-project>-oidc-builders`, `<edp-project>-oidc-deployers`,`<edp-project>-oidc-developers` and `<edp-project>-oidc-viewers`.
 
 | Realm Group Name | Realm Name |
 | - | - |
@@ -190,9 +190,9 @@ The ConfigMap below is an example of the `GerritGroupMember` resource:
 
 After the `GerritGroupMember` resource is created, the user will have the permissions and access levels associated with that group.
 
-## Headlamp and EKS Cluster
+## EDP Portal and EKS Cluster
 
-Both Headlamp and EKS Cluster use Keycloak groups for controlling access.
+Both Portal and EKS Cluster use Keycloak groups for controlling access.
 Users need to be added to the required group in Keycloak to get access.
 The groups that are used for access control are in the `openshift` realm.
 
@@ -218,7 +218,7 @@ For example, the `<edp-project>-oidc-viewers` group can be extended with rights 
 | Name | Action List |
 | - | - |
 | View | Getting of all namespaced resources |
-| Build | Starting a PipelineRun from Headlamp UI |
+| Build | Starting a PipelineRun from EDP Portal UI |
 | Deploy | Deploying a new version of application via Argo CD Application |
 
 | Group Name | View | Build | Deploy | Full Namespace Access |
@@ -264,6 +264,6 @@ in Keycloak. This ensures that only authorized users can access and modify appli
 
 ## Related Articles
 
-* [Headlamp Overview](../../headlamp-user-guide)
+* [EDP Portal Overview](../user-guide/index.md)
 * [EKS OIDC With Keycloak](configure-keycloak-oidc-eks.md)
 * [Argo CD Integration](argocd-integration.md)

@@ -247,73 +247,35 @@ nav:
       - Aggregate Application Logs Using EFK Stack: operator-guide/kibana-ilm-rollover.md
       - Migrate CI Pipelines From Jenkins to Tekton: operator-guide/migrate-ci-pipelines-from-jenkins-to-tekton.md
       - Uninstall EDP: operator-guide/delete-edp.md
-#  - User Guide:
-#    - user-guide/index.md
-#    - Application:
-#      - Overview: user-guide/application.md
-#      - user-guide/add-application.md
-#    - Autotest:
-#      - Overview: user-guide/autotest.md
-#      - user-guide/add-autotest.md
-#    - Library:
-#      - Overview: user-guide/library.md
-#      - user-guide/add-library.md
-#    - Pipelines:
-#      - EDP CI/CD Overview: user-guide/cicd-overview.md
-#      - EDP Pipeline Framework: user-guide/pipeline-framework.md
-#      - Add Custom Pipeline Library: user-guide/add-custom-global-pipeline-lib.md
-#      - CI Pipeline:
-#        - user-guide/ci-pipeline-details.md
-#        - user-guide/code-review-pipeline.md
-#        - user-guide/build-pipeline.md
-#        - user-guide/customize-ci-pipeline.md
-#        - Stages:
-#          - Overview: user-guide/pipeline-stages.md
-#          - Use Dockerfile Linters for Code Review Pipeline: user-guide/dockerfile-stages.md
-#          - Promote Docker Images From ECR to Docker Hub: user-guide/ecr-to-docker-stages.md
-#          - Helm Chart Testing and Documentation Tools: user-guide/helm-stages.md
-#          - Use Open Policy Agent: user-guide/opa-stages.md
-#          - CI Pipeline for Terraform: user-guide/terraform-stages.md
-#          - CI Pipeline for Container: user-guide/container-stages.md
-#      - CD Pipeline:
-#        - user-guide/cd-pipeline-details.md
-#        - user-guide/add-cd-pipeline.md
-#        - user-guide/customize-cd-pipeline.md
-#        - user-guide/prepare-for-release.md
-#        - Stages:
-#          - Copy Shared Secrets: user-guide/copy-shared-secrets.md
-#          - Helm Release Deletion: user-guide/helm-release-deletion.md
-#          - Semi Auto Deploy: user-guide/semi-auto-deploy.md
-#    - user-guide/d-d-diagram.md
   - User Guide:
-    - headlamp-user-guide/index.md
+    - user-guide/index.md
     - Marketplace:
-        - Marketplace Overview: headlamp-user-guide/marketplace.md
-        - headlamp-user-guide/add-marketplace.md
+        - Marketplace Overview: user-guide/marketplace.md
+        - user-guide/add-marketplace.md
     - Components:
       - Application:
-          - headlamp-user-guide/add-application.md
-          - Manage Applications: headlamp-user-guide/application.md
+          - user-guide/add-application.md
+          - Manage Applications: user-guide/application.md
       - Autotest:
-          - headlamp-user-guide/add-autotest.md
-          - Manage Autotests: headlamp-user-guide/autotest.md
+          - user-guide/add-autotest.md
+          - Manage Autotests: user-guide/autotest.md
       - Library:
-          - headlamp-user-guide/add-library.md
-          - Manage Libraries: headlamp-user-guide/library.md
+          - user-guide/add-library.md
+          - Manage Libraries: user-guide/library.md
       - Infrastructure:
-          - headlamp-user-guide/add-infrastructure.md
-          - Manage Infrastructures: headlamp-user-guide/infrastructure.md
-      - Manage Branches: headlamp-user-guide/manage-branches.md
+          - user-guide/add-infrastructure.md
+          - Manage Infrastructures: user-guide/infrastructure.md
+      - Manage Branches: user-guide/manage-branches.md
     - Environments:
-        - headlamp-user-guide/add-cd-pipeline.md
-        - headlamp-user-guide/add-quality-gate.md
+        - user-guide/add-cd-pipeline.md
+        - user-guide/add-quality-gate.md
     - Configuration:
       - Git Server:
-          - headlamp-user-guide/add-git-server.md
-          - Manage Git Servers: headlamp-user-guide/git-server-overview.md
+          - user-guide/add-git-server.md
+          - Manage Git Servers: user-guide/git-server-overview.md
       - Cluster:
-          - headlamp-user-guide/add-cluster.md
-          - Manage Clusters: headlamp-user-guide/cluster.md
+          - user-guide/add-cluster.md
+          - Manage Clusters: user-guide/cluster.md
   - Developer Guide:
     - developer-guide/index.md
     - developer-guide/local-development.md

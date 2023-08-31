@@ -7,7 +7,7 @@ These tailored Templates include preset CI/CD pipelines, automating your develop
 
 To see the Marketplace section, navigate to the **Main menu** -> **EDP** -> **Marketplace**. General look of the Marketplace section is described below:
 
-!![Marketplace section](../assets/headlamp-user-guide/marketplace-overview-listed.png "Marketplace section (listed view)")
+!![Marketplace section](../assets/user-guide/marketplace-overview-listed.png "Marketplace section (listed view)")
 
 * **Marketplace templates** - all the components marketplace can offer;
 * **Template properties** - the item summary that shows the type, category, language, framework, build tool and maturity;
@@ -16,11 +16,11 @@ To see the Marketplace section, navigate to the **Main menu** -> **EDP** -> **Ma
 
 There is also a possibility to switch into the tiled view instead of the listed one:
 
-!![Marketplace section](../assets/headlamp-user-guide/marketplace-overview-tiled.png "Marketplace section (tiled view)")
+!![Marketplace section](../assets/user-guide/marketplace-overview-tiled.png "Marketplace section (tiled view)")
 
 To view the details of a marketplace item, simply click on its name:
 
-!![Item details](../assets/headlamp-user-guide/headlamp-marketplace-item-details.png "Item details")
+!![Item details](../assets/user-guide/edp-portal-marketplace-item-details.png "Item details")
 
 The details window shows suplemental information, such as item's author, keywords, release version and the link to the repository it is located in. The window also contains the **Create from template** button that allows users to create the component by the chosen template. The procedure of creating new components is described in the [Add Component via Marketplace](add-marketplace.md) page.
 

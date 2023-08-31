@@ -25,6 +25,6 @@ Under the hood, Infrastructure codebase type, namely Terraform, looks quite simi
 
 ## Related Articles
 
-* [User Guide Overview](../headlamp-user-guide/index.md)
-* [Add Infrastructure](../headlamp-user-guide/add-infrastructure.md)
-* [Manage Infrastructures](../headlamp-user-guide/infrastructure.md)
+* [User Guide Overview](../user-guide/index.md)
+* [Add Infrastructure](../user-guide/add-infrastructure.md)
+* [Manage Infrastructures](../user-guide/infrastructure.md)

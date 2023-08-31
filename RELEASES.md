@@ -156,20 +156,20 @@ To strengthen security measures, we're [expanding our security checks by integra
   * The [Overview](https://epam.github.io/edp-install/overview/) page has been updated.
   * The [Supported Versions](https://epam.github.io/edp-install/supported-versions/) page has been updated.
 
-* The [User Guide](https://epam.github.io/edp-install/headlamp-user-guide/) is updated with the following:
-  * To simplify navigation, the [User Guide](https://epam.github.io/edp-install/headlamp-user-guide/) section has been reorganized. Now it resembles EDP Portal structure.
-  * The [Add Cluster](https://epam.github.io/edp-install/headlamp-user-guide/add-cluster/) page has been added.
-  * The [Manage Clusters](https://epam.github.io/edp-install/headlamp-user-guide/cluster/) page has been added.
-  * The [Add Infrastructure](https://epam.github.io/edp-install/headlamp-user-guide/add-infrastructure/) page has been added.
-  * The [Manage Infrastructures](https://epam.github.io/edp-install/headlamp-user-guide/infrastructure/) page has been added.
-  * The [Marketplace Overview](https://epam.github.io/edp-install/headlamp-user-guide/marketplace/) page has been added.
-  * The [Add Component via Marketplace](https://epam.github.io/edp-install/headlamp-user-guide/add-marketplace/) page has been added.
-  * The [Add Application](https://epam.github.io/edp-install/headlamp-user-guide/add-application/) page has been updated.
-  * The [Add Library](https://epam.github.io/edp-install/headlamp-user-guide/add-library/) page has been updated.
-  * The [Add Autotest](https://epam.github.io/edp-install/headlamp-user-guide/add-autotest/) page has been updated.
-  * The Application [Overview](https://epam.github.io/edp-install/headlamp-user-guide/application/) page has been updated and renamed to Manage Applications.
-  * The Library [Overview](https://epam.github.io/edp-install/headlamp-user-guide/library/) page has been updated and renamed to Manage Libraries.
-  * The Autotest [Overview](https://epam.github.io/edp-install/headlamp-user-guide/autotest/) page has been updated and renamed to Manage Autotests.
+* The [User Guide](https://epam.github.io/edp-install/user-guide/) is updated with the following:
+  * To simplify navigation, the [User Guide](https://epam.github.io/edp-install/user-guide/) section has been reorganized. Now it resembles EDP Portal structure.
+  * The [Add Cluster](https://epam.github.io/edp-install/user-guide/add-cluster/) page has been added.
+  * The [Manage Clusters](https://epam.github.io/edp-install/user-guide/cluster/) page has been added.
+  * The [Add Infrastructure](https://epam.github.io/edp-install/user-guide/add-infrastructure/) page has been added.
+  * The [Manage Infrastructures](https://epam.github.io/edp-install/user-guide/infrastructure/) page has been added.
+  * The [Marketplace Overview](https://epam.github.io/edp-install/user-guide/marketplace/) page has been added.
+  * The [Add Component via Marketplace](https://epam.github.io/edp-install/user-guide/add-marketplace/) page has been added.
+  * The [Add Application](https://epam.github.io/edp-install/user-guide/add-application/) page has been updated.
+  * The [Add Library](https://epam.github.io/edp-install/user-guide/add-library/) page has been updated.
+  * The [Add Autotest](https://epam.github.io/edp-install/user-guide/add-autotest/) page has been updated.
+  * The Application [Overview](https://epam.github.io/edp-install/user-guide/application/) page has been updated and renamed to Manage Applications.
+  * The Library [Overview](https://epam.github.io/edp-install/user-guide/library/) page has been updated and renamed to Manage Libraries.
+  * The Autotest [Overview](https://epam.github.io/edp-install/user-guide/autotest/) page has been updated and renamed to Manage Autotests.
   * The [Adjust Jira Integration](https://epam.github.io/edp-install/operator-guide/jira-integration/) page has been updated.
 
 * The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
@@ -202,13 +202,13 @@ To strengthen security measures, we're [expanding our security checks by integra
 
 ## What's new
 
-In this release, [Headlamp UI](https://epam.github.io/edp-install/headlamp-user-guide/) has been updated. Particularly, the component creation procedure has been significantly changed to be more intuitive. Users can also observe visualized autotest monitoring provided with clickable links to the corresponding Tekton pipelines. Also, we provided completely new component type called Infrastructure which is designed to build infrastructures powered by Terraform.
+In this release, [Headlamp UI](https://epam.github.io/edp-install/user-guide/) has been updated. Particularly, the component creation procedure has been significantly changed to be more intuitive. Users can also observe visualized autotest monitoring provided with clickable links to the corresponding Tekton pipelines. Also, we provided completely new component type called Infrastructure which is designed to build infrastructures powered by Terraform.
 
 We are thrilled to announce that one of our features called Autodeploy is now also available for Tekton CI tool. It is designed to automatically define the latest artifact tag and upgrade this service on each environment where this service is deployed. This crucial feature aimed to automate the application update procedure when using Tekton.
 
 With version 3.3.0, the Create and Clone strategies have become available for [GitLab/GitHub](https://epam.github.io/edp-install/operator-guide/import-strategy/) version control systems. This enhancement provides increased flexibility for onboarding your applications within our platform.
 
-We have provided Java [Multi-Module](https://epam.github.io/edp-install/headlamp-user-guide/add-application/?h=multi+module#codebase-info-menu) support for Tekton CI tool. This enhancement improves code organization, build time, dependency management, testing, parallel development, and overall maintainability of applications.
+We have provided Java [Multi-Module](https://epam.github.io/edp-install/user-guide/add-application/?h=multi+module#codebase-info-menu) support for Tekton CI tool. This enhancement improves code organization, build time, dependency management, testing, parallel development, and overall maintainability of applications.
 
 One of our major highlights is that code review pipelines can now be re-triggered manually to force their runs. This feature was implemented to simplify the code review process.
 
@@ -216,7 +216,7 @@ From now on, EDP supports Terraform infrastructure as an additional language out
 
 Apart from that, we are presenting our [EDP Introduction video](https://www.youtube.com/watch?v=Xsy1UKMb8vg&ab_channel=ThePlatformTeam). This video provides a comprehensive overview of the platform's capabilities and benefits, making it easier for users to get started and maximize their productivity.
 
-Lastly, users can easily check their applications for bugs or other issues using [Autotests as a Quality Gate](https://epam.github.io/edp-install/headlamp-user-guide/autotest/#add-autotest-as-a-quality-gate). This powerful addition allows users to conveniently add multiple autotests to any environment, be it development or production. By running the appropriate autotests, users can effectively evaluate the stability of your application and ensure it functions properly.
+Lastly, users can easily check their applications for bugs or other issues using [Autotests as a Quality Gate](https://epam.github.io/edp-install/user-guide/autotest/#add-autotest-as-a-quality-gate). This powerful addition allows users to conveniently add multiple autotests to any environment, be it development or production. By running the appropriate autotests, users can effectively evaluate the stability of your application and ensure it functions properly.
 
 ### Upgrades
 
@@ -263,11 +263,11 @@ Lastly, users can easily check their applications for bugs or other issues using
 
 ### Documentation
 
-* The [User Guide](https://epam.github.io/edp-install/headlamp-user-guide/) is updated with the following:
-  * The [Add CD Pipeline](https://epam.github.io/edp-install/headlamp-user-guide/add-cd-pipeline/) page has been updated.
-  * The [Add Application](https://epam.github.io/edp-install/headlamp-user-guide/add-application/) page has been updated.
-  * The [Add Autotest](https://epam.github.io/edp-install/headlamp-user-guide/add-autotest/) page has been updated.
-  * The [Add Library](https://epam.github.io/edp-install/headlamp-user-guide/add-library/) page has been updated.
+* The [User Guide](https://epam.github.io/edp-install/user-guide/) is updated with the following:
+  * The [Add CD Pipeline](https://epam.github.io/edp-install/user-guide/add-cd-pipeline/) page has been updated.
+  * The [Add Application](https://epam.github.io/edp-install/user-guide/add-application/) page has been updated.
+  * The [Add Autotest](https://epam.github.io/edp-install/user-guide/add-autotest/) page has been updated.
+  * The [Add Library](https://epam.github.io/edp-install/user-guide/add-library/) page has been updated.
 
 * The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
   * The [Manage Namespace](https://epam.github.io/edp-install/operator-guide/namespace-management/) page has been added.
@@ -372,11 +372,11 @@ Explore the upgrades, new functionality and improvements below.
   * The [Scaffold and Deploy FastAPI Application](https://epam.github.io/edp-install/use-cases/application-scaffolding/) page is added.
   * The [Deploy Application With Custom Build Tool/Framework](https://epam.github.io/edp-install/use-cases/tekton-custom-pipelines/) page is added.
 
-* The [User Guide](https://epam.github.io/edp-install/headlamp-user-guide/) is updated with the following:
-  * The Headlamp User Guide tab is renamed to [User Guide](https://epam.github.io/edp-install/headlamp-user-guide/).
+* The [User Guide](https://epam.github.io/edp-install/user-guide/) is updated with the following:
+  * The Headlamp User Guide tab is renamed to [User Guide](https://epam.github.io/edp-install/user-guide/).
   * The [Headlamp OIDC Integration](https://epam.github.io/edp-install/operator-guide/headlamp-oidc/) page is added.
-  * The [Add Quality Gate](https://epam.github.io/edp-install/headlamp-user-guide/add-quality-gate/) page is added.
-  * The [Add Application](https://epam.github.io/edp-install/headlamp-user-guide/add-application/) page is added.
+  * The [Add Quality Gate](https://epam.github.io/edp-install/user-guide/add-quality-gate/) page is added.
+  * The [Add Application](https://epam.github.io/edp-install/user-guide/add-application/) page is added.
 
 * The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
   * The [Report-Portal integration](https://epam.github.io/edp-install/operator-guide/report-portal-integration-tekton/) page is added.
@@ -511,7 +511,7 @@ Explore the upgrades, new functionality, breaking changes and improvements below
 
 * The [EDP RoadMap](https://epam.github.io/edp-install/roadmap/) is updated.
 
-* The [Headlamp User Guide](https://epam.github.io/edp-install/headlamp-user-guide/) is created.
+* The [Headlamp User Guide](https://epam.github.io/edp-install/user-guide/) is created.
 
 * The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
   * The ReportPortal section is created with the [Integration With Tekton](https://epam.github.io/edp-install/operator-guide/report-portal-integration-tekton/) and [Keycloak Integration](https://epam.github.io/edp-install/operator-guide/reportportal-keycloak/) pages.

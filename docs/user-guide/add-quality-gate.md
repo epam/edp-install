@@ -107,19 +107,19 @@ Before running the quality gate, first of all, ensure that the environment has d
 
 1. Check the CD pipeline status. To do this, open the created CD pipeline, select `Image stream version`, click `DEPLOY` button and wait until `Applications`, `Health` and `Sync` statuses become `green`. This implies that the application is successfully deployed and ready to run the quality gate.
 
-    !![CD pipeline stage overview](../assets/headlamp-user-guide/qg_cd_status.png "CD pipeline stage overview")
+    !![CD pipeline stage overview](../assets/user-guide/qg_cd_status.png "CD pipeline stage overview")
 
 2. Select the `<name-of-quality-gate>` of `Quality gates` from the drop-down list and click the `RUN` button.<br>The execution process should be started in the `Pipelines` menu:
 
 
-    !![Quality gate pipeline status](../assets/headlamp-user-guide/qg_stage_status.png "Quality gate pipeline status")
+    !![Quality gate pipeline status](../assets/user-guide/qg_stage_status.png "Quality gate pipeline status")
 
 ## Add Stage for Quality Gate
 
 For a better understanding of this section, please read the documentation about how to [add a new stage for quality gate](../add-cd-pipeline/#add-a-new-stage).<br>
 The scheme below illustrates two approaches of adding quality gates:
 
-!![Quality gate promote a scheme](../assets/headlamp-user-guide/qg_promote_shema.png "Types of adding quality gate")
+!![Quality gate promote a scheme](../assets/user-guide/qg_promote_shema.png "Types of adding quality gate")
 
 - The first type of adding a quality gate is about adding the specific quality gate to the specific pipeline stage.
 
@@ -129,4 +129,4 @@ As a result, after the quality gate is successfully passed, the projected image 
 
 ## Related Articles
 
-* [Add CD Pipeline](../headlamp-user-guide/add-cd-pipeline.md)
+* [Add CD Pipeline](../user-guide/add-cd-pipeline.md)

@@ -78,7 +78,7 @@ by taking the steps below.
 
 ## Related Articles
 
-* [Add Git Server](../headlamp-user-guide/add-git-server.md)
+* [Add Git Server](../user-guide/add-git-server.md)
 * [Add Application](../user-guide/add-application.md)
 * [GitHub WebHook Configuration](github-integration.md)
 * [GitLab WebHook Configuration](gitlab-integration.md)

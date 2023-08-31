@@ -67,17 +67,17 @@ by taking the steps below:
 
       * Click the **Create project access token** button.
 
-3. Create secret in the `<edp-project>` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. We recommend using Headlamp to implement this:
+3. Create secret in the `<edp-project>` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. We recommend using EDP Portal to implement this:
 
-  *  Open Headlamp URL. Use the Sign-In option:
+  *  Open EDP Portal URL. Use the Sign-In option:
 
     !![Logging Page](../assets/use-cases/fastapi-scaffolding/login.png "Logging screen")
 
-  *  In the top right corner, enter the `Cluster settings` and set the `Default namespace`. The `Allowed namespaces` field is optional. All the resources created via Headlamp are created in the `Default namespace` whereas `Allowed namespaces` means the namespaces you are allowed to access in this cluster:
+  *  In the top right corner, enter the `Cluster settings` and set the `Default namespace`. The `Allowed namespaces` field is optional. All the resources created via EDP Portal are created in the `Default namespace` whereas `Allowed namespaces` means the namespaces you are allowed to access in this cluster:
 
     !![Settings](../assets/use-cases/tekton-custom/cluster-settings.png "Cluster settings")
 
-  *  Log into Headlamp UI, select `EDP` -> `Git Servers` -> `+` to see the `Create Git Server` menu:
+  *  Log into EDP Portal UI, select `EDP` -> `Git Servers` -> `+` to see the `Create Git Server` menu:
 
     !![Git Servers overview](../assets/operator-guide/edp-git-servers-overview.png)
 
@@ -88,7 +88,7 @@ by taking the steps below:
 
     !![Create Git Servers menu](../assets/operator-guide/create-git-servers.png)
 
-  *  After performing the steps above, two Kubernetes custom resources will be created in the default namespace: secret and GitServer. Headlamp appends random symbols to both the secret and the GitServer to provide names with uniqueness. Also, the attempt to connect to your actual Git server will be performed. If the connection with the server is established, the Git server status should be green:
+  *  After performing the steps above, two Kubernetes custom resources will be created in the default namespace: secret and GitServer. EDP Portal appends random symbols to both the secret and the GitServer to provide names with uniqueness. Also, the attempt to connect to your actual Git server will be performed. If the connection with the server is established, the Git server status should be green:
 
     !![Git server status](../assets/operator-guide/git-server-status.png)
 
@@ -119,7 +119,7 @@ by taking the steps below:
 
 ## Related Articles
 
-* [Add Git Server](../headlamp-user-guide/add-git-server.md)
+* [Add Git Server](../user-guide/add-git-server.md)
 * [Add Application](../user-guide/add-application.md)
 * [GitHub Webhook Configuration](github-integration.md)
 * [GitLab Webhook Configuration](gitlab-integration.md)
