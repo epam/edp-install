@@ -85,6 +85,26 @@ plugins:
   - charts
   - minify:
       minify_html: true
+  - redirects:
+      redirect_maps:
+        headlamp-user-guide/index.md: user-guide/index.md
+        headlamp-user-guide/marketplace.md: user-guide/marketplace.md
+        headlamp-user-guide/add-marketplace.md: user-guide/add-marketplace.md
+        headlamp-user-guide/add-application.md: user-guide/add-application.md
+        headlamp-user-guide/application.md: user-guide/application.md
+        headlamp-user-guide/add-autotest.md: user-guide/add-autotest.md
+        headlamp-user-guide/autotest.md: user-guide/autotest.md
+        headlamp-user-guide/add-library.md: user-guide/add-library.md
+        headlamp-user-guide/library.md: user-guide/library.md
+        headlamp-user-guide/add-infrastructure.md: user-guide/add-infrastructure.md
+        headlamp-user-guide/infrastructure.md: user-guide/infrastructure.md
+        headlamp-user-guide/manage-branches.md: user-guide/manage-branches.md
+        headlamp-user-guide/add-cd-pipeline.md: user-guide/add-cd-pipeline.md
+        headlamp-user-guide/add-quality-gate.md: user-guide/add-quality-gate.md
+        headlamp-user-guide/add-git-server.md: user-guide/add-git-server.md
+        headlamp-user-guide/git-server-overview.md: user-guide/git-server-overview.md
+        headlamp-user-guide/add-cluster.md: user-guide/add-cluster.md
+        headlamp-user-guide/cluster.md: user-guide/cluster.md
 
 extra:
   analytics:

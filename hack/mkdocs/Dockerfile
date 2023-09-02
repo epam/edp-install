@@ -6,5 +6,6 @@ RUN pip install \
     mike==1.1.2 \
     mkdocs-awesome-pages-plugin==2.8.0 \
     mkdocs-charts-plugin==0.0.8 \
+    mkdocs-redirects==1.2.1 \
     mkdocs-video==1.4.0 \
     plantuml-markdown==3.8.0
