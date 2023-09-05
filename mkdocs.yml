@@ -105,6 +105,11 @@ plugins:
         headlamp-user-guide/git-server-overview.md: user-guide/git-server-overview.md
         headlamp-user-guide/add-cluster.md: user-guide/add-cluster.md
         headlamp-user-guide/cluster.md: user-guide/cluster.md
+        operator-guide/upgrade-edp-2.7.8-to-2.8.4.md: operator-guide/upgrade-edp-2.8.md
+        operator-guide/upgrade-edp-2.8.4-to-2.9.0.md: operator-guide/upgrade-edp-2.9.md
+        operator-guide/upgrade-edp-2.10.x-to-2.11.x.md: operator-guide/upgrade-edp-2.11.md
+        operator-guide/upgrade-edp-2.11.x-to-2.12.x.md: operator-guide/upgrade-edp-2.12.md
+        operator-guide/upgrade-keycloak-17.0.x-legacy-to-19.0.x.md: operator-guide/upgrade-keycloak-19.0.md
 
 extra:
   analytics:
