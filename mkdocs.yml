@@ -206,6 +206,7 @@ nav:
         - Adjust Jira Integration: operator-guide/jira-integration.md
         - Adjust VCS Integration With Jira: operator-guide/jira-gerrit-integration.md
     - Integration:
+      - Cluster Add-Ons: operator-guide/add-ons-overview.md
       - Tekton:
           Overview: operator-guide/tekton-overview.md
           Monitoring: operator-guide/tekton-monitoring.md
