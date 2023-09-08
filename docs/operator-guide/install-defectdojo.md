@@ -205,8 +205,9 @@ django:
 
 To prepare DefectDojo for integration with EDP, follow the steps below:
 
-1. Get credentials of the DefectDojo admin:
+1. Create ci user in DefectDojo UI:
 
+  * Login to DefectDojo UI using admin credentials:
    ```bash
    echo "DefectDojo admin password: $(kubectl \
    get secret defectdojo \
@@ -214,10 +215,14 @@ To prepare DefectDojo for integration with EDP, follow the steps below:
    --output jsonpath='{.data.DD_ADMIN_PASSWORD}' \
    | base64 --decode)"
    ```
+  * Go to User section
+
+  * Create new user with write permission:
+  !![DefectDojo update manual secret](../assets/operator-guide/defectdojo-createuser.png "DefectDojo set user permission")
 
 2. Get a token of the DefectDojo user:
 
-  * Login to the DefectDojo UI using the credentials.
+  * Login to the DefectDojo UI using the credentials from previous steps.
 
   * Go to the API v2 key (token).
 
@@ -235,7 +240,7 @@ To prepare DefectDojo for integration with EDP, follow the steps below:
 
     After creating the secret, it is necessary to attach a label to it. This will allow to see and manage the secret through the EDP Portal UI.
 
-   ```bash
+    ```bash
     kubectl -n edp label secret defectdojo-ciuser-token "app.edp.epam.com/secret-type=defectdojo"
     ```
 
