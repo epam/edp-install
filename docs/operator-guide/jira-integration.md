@@ -20,7 +20,7 @@ Teams can utilize these fields to enhance their work prioritization, identify de
 
 In order to adjust the Jira server integration, first add JiraServer CR by performing the following:
 
-1. Create the secret in the <edp-project> namespace for Jira Server account. Fill in the **username** and **password** fields with your own values:
+1. Create the secret in the edp namespace for Jira Server account. Fill in the **username** and **password** fields with your own values:
 
   === "External Secret Operator"
 

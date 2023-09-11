@@ -88,7 +88,7 @@ Creating custom certificates is a necessary but not sufficient condition for app
 1. Create the `custom-ca-certificates` secret in the EDP namespace.
 
    ```bash
-   kubectl -n <edp-project> create secret generic custom-ca-certificates \
+   kubectl -n edp create secret generic custom-ca-certificates \
    --from-file=CA.crt
    ```
 
@@ -246,7 +246,7 @@ Also, the `jenkins-agent-opt-java-openjdk-lib-security-cacerts` secret contains 
 4. Reload the Jenkins pod:
 
   ```bash
-  ns="<edp-project>"
+  ns="edp"
   kubectl rollout restart -n "${ns}" deployment/jenkins
   ```
 

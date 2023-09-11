@@ -26,7 +26,7 @@ Explore the way [Kiosk, a multi-tenancy extension for Kubernetes](https://github
 * Once the above step is executed, **edp-cd-pipeline-operator** service account will be linked to **kiosk-edit** ClusterRole
   to get an ability for leveraging Kiosk specific resources (e.g. Space);
 
-* Newly created stage in &#8249;edp-project&#8250; installation of EDP generates new Kiosk Space resource that is linked to <edp-project> Kiosk Account;
+* Newly created stage in `edp` installation of EDP generates new Kiosk Space resource that is linked to edp Kiosk Account;
 
 * According to Kiosk doc the Space resource creates namespace with RoleBinding that contains relation between service account
   which is linked to Kiosk Account and **kiosk-space-admin** ClusterRole.

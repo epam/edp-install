@@ -53,7 +53,7 @@ To establish robust authentication and precise access control, generating a Sona
     kind: Secret
     metadata:
       name: sonar-ciuser-token
-      namespace: <edp-namespace>
+      namespace: edp
       labels:
         app.edp.epam.com/secret-type: sonar
     type: Opaque

@@ -19,10 +19,10 @@ To create a link to Incoming Webhook for the Microsoft Teams channel, follow the
   4. Copy and save the unique `WebHookURL` presented in the dialog. Click `Done`:
      !![WebhookURL](../assets/operator-guide/ms-notification-settings-done.png "WebHookURL")
 
-  5. Create a secret with the <WebHookURL> within the <edp-project> namespace.
+  5. Create a secret with the <WebHookURL> within the edp namespace.
 
   ```yaml
-    kubectl -n <edp-project> create secret generic microsoft-teams-webhook-url \
+    kubectl -n edp create secret generic microsoft-teams-webhook-url \
     --from-literal=url=<webhookURL>
   ```
 

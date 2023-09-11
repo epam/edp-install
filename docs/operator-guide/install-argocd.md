@@ -238,7 +238,7 @@ Follow the steps below to install Argo CD using Helm:
    with the value from the `keycloak-client-argocd-secret` secret in the EDP namespace. Then restart the deployment:
 
   ```bash
-  ARGOCD_CLIENT=$(kubectl -n <EDP_NAMESPACE> get secret keycloak-client-argocd-secret  -o jsonpath='{.data.clientSecret}')
+  ARGOCD_CLIENT=$(kubectl -n edp get secret keycloak-client-argocd-secret  -o jsonpath='{.data.clientSecret}')
   kubectl -n argocd patch secret argocd-secret -p="{\"data\":{\"oidc.keycloak.clientSecret\": \"${ARGOCD_CLIENT}\"}}" -v=1
   kubectl -n argocd rollout restart deployment argo-argocd-server
   ```

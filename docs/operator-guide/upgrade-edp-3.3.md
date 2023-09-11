@@ -18,19 +18,19 @@ This section provides the details on the EDP upgrade to v3.3.0. Explore the acti
 2. If you use Gerrit VCS, delete the corresponding resource due to changes in annotations:
 
   ```
-  kubectl -n <edp-project> delete EDPComponent gerrit
+  kubectl -n edp delete EDPComponent gerrit
   ```
   The deployment will create a new EDPComponent called `gerrit` instead.
 
 3. To upgrade EDP to the v3.3.0, run the following command:
 
   ```
-  helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=3.3.0
+  helm upgrade edp epamedp/edp-install -n edp --values values.yaml --version=3.3.0
   ```
 
   !!! Note
       To verify the installation, it is possible to test the deployment before applying it to the cluster with the `--dry-run` tag:<br>
-      `helm upgrade edp epamedp/edp-install -n <edp-namespace> --values values.yaml --version=3.3.0  --dry-run`
+      `helm upgrade edp epamedp/edp-install -n edp --values values.yaml --version=3.3.0  --dry-run`
 
 4. In EDP v3.3.0, a new feature was introduced allowing manual pipeline re-triggering by sending a comment with `/recheck`.
 To enable the re-trigger feature for applications that were added before the upgrade, please proceed with the following:

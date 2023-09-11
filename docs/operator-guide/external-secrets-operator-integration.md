@@ -303,7 +303,7 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
     helm upgrade --install edp epamedp/edp-install --wait --timeout=900s \
     --version <edp_version> \
     --values values.yaml \
-    --namespace <edp-project> \
+    --namespace edp \
     --atomic
     ```
 

@@ -19,14 +19,14 @@ The added application will be listed in the Applications list allowing you to do
 * **Create new Git Server** - displays the **Create Git Server** menu.
 
 !!! note
-    Git Server can't be deleted via the EDP Portal UI. Use the `kubectl delete GitServer <Git_server_name> -n <edp-project>` command to delete the GitServer custom resource.
+    Git Server can't be deleted via the EDP Portal UI. Use the `kubectl delete GitServer <Git_server_name> -n edp` command to delete the GitServer custom resource.
 
 ## View Authentication Data
 
 To view authentication data that is used to connect to the Git server, use `kubectl describe` command as follows:
 
   ```bash
-  kubectl describe GitServer git_server_name -n <edp-project>
+  kubectl describe GitServer git_server_name -n edp
   ```
 
 ## Delete Git Server
@@ -34,7 +34,7 @@ To view authentication data that is used to connect to the Git server, use `kube
 To remove a Git Server from the Git Servers list, utilize the `kubectl delete` command as follows:
 
   ```bash
-  kubectl delete GitServer git_server_name -n <edp-project>
+  kubectl delete GitServer git_server_name -n edp
   ```
 
 # Related Articles

@@ -58,11 +58,11 @@ Quality gate pipeline is a usual Tekton pipeline but with a specific label: `app
           labels:
             app.edp.epam.com/pipelinetype: deploy
           name: <name-of-quality-gate>
-          namespace: <edp-namespace>
+          namespace: edp
         spec:
           params:
             - default: >-
-                https://<CI-pipeline-provisioner>-<edp-namespace>.<cluster-name>.aws.main.edp.projects.epam.com/#/namespaces/$(context.pipelineRun.namespace)/pipelineruns/$(context.pipelineRun.name)
+                https://<CI-pipeline-provisioner>-edp.<cluster-name>.aws.main.edp.projects.epam.com/#/namespaces/$(context.pipelineRun.namespace)/pipelineruns/$(context.pipelineRun.name)
               name: pipelineUrl
               type: string
             - default: ''

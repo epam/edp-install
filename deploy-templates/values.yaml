@@ -194,7 +194,7 @@ edp-tekton:
       annotations: {}
         # -- Uncomment it to enable tekton-dashboard OIDC on EKS cluster
         # nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri'
-        # nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
+        # nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.edp.svc.cluster.local:8080/oauth2/auth'
 
 
   ctLint:

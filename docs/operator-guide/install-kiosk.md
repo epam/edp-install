@@ -47,23 +47,23 @@ To provide access to the EDP tenant, follow the steps below.
 
 * Add a service account to the security namespace.
 
-        kubectl -n security create sa <edp-project>
+        kubectl -n security create sa edp
 
 !!! info
-    &#8249;edp-project&#8250; is the name of the EDP tenant here and in all the following steps.
+    Please note that `edp` is the name of the EDP tenant here and in all the following steps.
 
 * Apply the Account template to the cluster. Please check the sample below:
 ```yaml
 apiVersion: tenancy.kiosk.sh/v1alpha1
 kind: Account
 metadata:
-  name: <edp-project>-admin
+  name: edp-admin
 spec:
   space:
     clusterRole: kiosk-space-admin
   subjects:
   - kind: ServiceAccount
-    name: <edp-project>
+    name: edp
     namespace: security
 ```
 
@@ -72,10 +72,10 @@ spec:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: <edp-project>-kiosk-edit
+  name: edp-kiosk-edit
 subjects:
 - kind: ServiceAccount
-  name: <edp-project>
+  name: edp
   namespace: security
 roleRef:
   kind: ClusterRole
@@ -83,4 +83,4 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 * To provide access to the EDP tenant, [generate](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengaddingserviceaccttoken.htm) kubeconfig
-with Service Account &#8249;edp-project&#8250; permission. The &#8249;edp-project&#8250; account created earlier is located in the security namespace.
+with Service Account edp permission. The edp account created earlier is located in the security namespace.

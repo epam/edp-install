@@ -14,8 +14,8 @@ Ensure the following values are set first before starting the Portal OIDC config
 
 3. `keycloak_client_key`= **keycloak_client_secret_key** (received from: `Openshift realm` -> `clients` -> `kubernetes` -> `Credentials` -> `Client secret`)
 
-4. `group` = **`<edp-project>-oidc-admins`, `<edp-project>-oidc-builders`, `<edp-project>-oidc-deployers`, 
-`<edp-project>-oidc-developers`, `<edp-project>-oidc-viewers`** (Should be created manually in the realm from point 1)
+4. `group` = **`edp-oidc-admins`, `edp-oidc-builders`, `edp-oidc-deployers`, 
+`edp-oidc-developers`, `edp-oidc-viewers`** (Should be created manually in the realm from point 1)
 
 !!! note
     The values indicated above are the result of the Keycloak configuration as an OIDC identity provider.
@@ -30,7 +30,7 @@ To proceed with the Keycloak configuration, perform the following:
   ??? note "View: keycloak_openid_client"
       ```yaml
         valid_redirect_uris = [
-          "https://edp-headlamp-<edp_namespace>.<dns_wildcard>/*"
+          "https://edp-headlamp-edp.<dns_wildcard>/*"
           "http://localhost:8000/*"
         ]
       ```
@@ -46,7 +46,7 @@ To proceed with the Keycloak configuration, perform the following:
   kind: Secret
   metadata:
     name: keycloak-client-headlamp-secret
-    namespace: <edp-project>
+    namespace: edp
   type: Opaque
   stringData:
     clientSecret: <keycloak_client_secret_key>

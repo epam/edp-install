@@ -112,7 +112,7 @@ To succeed with the steps above, follow the instructions below:
 
 !!! Note
 
-    In this scenario, three namespaces are used: `demo`, which is the namespace where EDP is deployed, `demo-vault`, which is the vault where developers store secrets, and`demo-deploy-sit`, which is the namespace used for deploying the application. The target namespace name for deploying application is formed with the pattern: `<edp-project>-<cd_pipeline_name>-<stage_name>`.
+    In this scenario, three namespaces are used: `demo`, which is the namespace where EDP is deployed, `demo-vault`, which is the vault where developers store secrets, and`demo-deploy-sit`, which is the namespace used for deploying the application. The target namespace name for deploying application is formed with the pattern: `edp-<cd_pipeline_name>-<stage_name>`.
 
 To make the system to function properly, it is imperative to create the following resources:
 

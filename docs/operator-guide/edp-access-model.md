@@ -15,7 +15,7 @@ This section explains what realm roles and realm groups are and how they functio
 
 ### Realm Roles
 
-The Keycloak realm of `<edp-project>` has two realm roles with a composite types named `administrator` and `developer`:
+The Keycloak realm of `edp` has two realm roles with a composite types named `administrator` and `developer`:
 
 * The `administrator` realm role is designed for users who need administrative access to the tools used in the project.
 This realm role contains two roles: `jenkins-administrators` and `sonar-administrators`.
@@ -40,21 +40,21 @@ The table below shows the realm roles and the composite types they relate to.
 
 ### Realm Groups
 
-EDP uses two different realms for group management, `<edp-project>` and `openshift`:
+EDP uses two different realms for group management, `edp` and `openshift`:
 
-* The `<edp-project>` realm contains two groups that are specifically used for controlling access to Argo CD. These groups are named `ArgoCDAdmins` and `ArgoCD-<edp-project>-users`.
+* The `edp` realm contains two groups that are specifically used for controlling access to Argo CD. These groups are named `ArgoCDAdmins` and `ArgoCD-edp-users`.
 
-* The `openshift` realm contains five groups that are used for access control in both the EDP Portal and EKS cluster. These groups are named `<edp-project>-oidc-admins`, `<edp-project>-oidc-builders`, `<edp-project>-oidc-deployers`,`<edp-project>-oidc-developers` and `<edp-project>-oidc-viewers`.
+* The `openshift` realm contains five groups that are used for access control in both the EDP Portal and EKS cluster. These groups are named `edp-oidc-admins`, `edp-oidc-builders`, `edp-oidc-deployers`,`edp-oidc-developers` and `edp-oidc-viewers`.
 
 | Realm Group Name | Realm Name |
 | - | - |
-| ArgoCDAdmins | `<edp-project>` |
-| `ArgoCD-<edp-project>-users` | `<edp-project>` |
-| `<edp-project>-oidc-admins` | openshift |
-| `<edp-project>-oidc-builders` | openshift |
-| `<edp-project>-oidc-deployers` | openshift |
-| `<edp-project>-oidc-developers` | openshift |
-| `<edp-project>-oidc-viewers` | openshift |
+| ArgoCDAdmins | `edp` |
+| `ArgoCD-edp-users` | `edp` |
+| `edp-oidc-admins` | openshift |
+| `edp-oidc-builders` | openshift |
+| `edp-oidc-deployers` | openshift |
+| `edp-oidc-developers` | openshift |
+| `edp-oidc-viewers` | openshift |
 
 ## SonarQube
 
@@ -62,7 +62,7 @@ In the case of SonarQube, there are two ways to manage access: via Keycloak and 
 
 ### Manage Access via Keycloak
 
-SonarQube access is managed using Keycloak roles in the `<edp-project>` realm.
+SonarQube access is managed using Keycloak roles in the `edp` realm.
 The `sonar-developers` and `sonar-administrators` realm roles are the two available roles that determine user access levels.
 To grant access, the corresponding role must be added to the user in Keycloak.
 
@@ -205,15 +205,15 @@ There are two types of groups provided for users:
 - Independent group: provides the minimum required permission set.
 - Extension group: extends the rights of an independent group.
 
-For example, the `<edp-project>-oidc-viewers` group can be extended with rights from the `<edp-project>-oidc-builders` group.
+For example, the `edp-oidc-viewers` group can be extended with rights from the `edp-oidc-builders` group.
 
 | Group Name | Independent Group | Extension Group |
 | - | :-: | :-: |
-|`<edp-project>-oidc-admins`    | :material-check: | |
-|`<edp-project>-oidc-developers`| :material-check: | |
-|`<edp-project>-oidc-viewers`   | :material-check: | |
-|`<edp-project>-oidc-builders`  | | :material-check: |
-|`<edp-project>-oidc-deployers` | | :material-check: |
+|`edp-oidc-admins`    | :material-check: | |
+|`edp-oidc-developers`| :material-check: | |
+|`edp-oidc-viewers`   | :material-check: | |
+|`edp-oidc-builders`  | | :material-check: |
+|`edp-oidc-deployers` | | :material-check: |
 
 | Name | Action List |
 | - | - |
@@ -223,35 +223,35 @@ For example, the `<edp-project>-oidc-viewers` group can be extended with rights 
 
 | Group Name | View | Build | Deploy | Full Namespace Access |
 | - | :-: | :-: | :-: | :-: |
-|`<edp-project>-oidc-admins`    | :material-check: | :material-check: | :material-check: | :material-check: |
-|`<edp-project>-oidc-developers`| :material-check: | :material-check: | :material-check: | |
-|`<edp-project>-oidc-viewers`   | :material-check: | | | |
-|`<edp-project>-oidc-builders`  | | :material-check: | | |
-|`<edp-project>-oidc-deployers` | | | :material-check: | |
+|`edp-oidc-admins`    | :material-check: | :material-check: | :material-check: | :material-check: |
+|`edp-oidc-developers`| :material-check: | :material-check: | :material-check: | |
+|`edp-oidc-viewers`   | :material-check: | | | |
+|`edp-oidc-builders`  | | :material-check: | | |
+|`edp-oidc-deployers` | | | :material-check: | |
 
 ### Cluster RBAC Resources
 
-The `<edp-project>` namespace has five role bindings that provide the necessary permissions for the Keycloak groups
+The `edp` namespace has five role bindings that provide the necessary permissions for the Keycloak groups
 described above.
 
 | Role Binding Name| Role Name | Groups |
 | - | - | - |
-| tenant-admin | cluster-admin | `<edp-project>-oidc-admins` |
-| tenant-builder | tenant-builder | `<edp-project>-oidc-builders` |
-| tenant-deployer | tenant-deployer | `<edp-project>-oidc-deployers` |
-| tenant-developer | tenant-developer | `<edp-project>-oidc-developers` |
-| tenant-viewer | view | `<edp-project>-oidc-viewers` , `<edp-project>-oidc-developers` |
+| tenant-admin | cluster-admin | `edp-oidc-admins` |
+| tenant-builder | tenant-builder | `edp-oidc-builders` |
+| tenant-deployer | tenant-deployer | `edp-oidc-deployers` |
+| tenant-developer | tenant-developer | `edp-oidc-developers` |
+| tenant-viewer | view | `edp-oidc-viewers` , `edp-oidc-developers` |
 
 !!! note
-    EDP provides an aggregate ClusterRole with permissions to view custom EDP resources. ClusterRole is named `edp-aggregate-view-<edp-project>`
+    EDP provides an aggregate ClusterRole with permissions to view custom EDP resources. ClusterRole is named `edp-aggregate-view-edp`
 
 !!! info
     The `tenant-admin` RoleBinding will be created in a created namespace by `cd-pipeline-operator`.<br>
-    `tenant-admin` RoleBinding assign the `admin` role to `<edp-project>-oidc-admins` and `<edp-project>-oidc-developers` groups.
+    `tenant-admin` RoleBinding assign the `admin` role to `edp-oidc-admins` and `edp-oidc-developers` groups.
 
 ### Grant User Access to the Created Namespaces
 
-To provide users with admin or developer privileges for project namespaces, they need to be added to the `<edp-project>-oidc-admins` and `<edp-project>-oidc-developers` groups in Keycloak.
+To provide users with admin or developer privileges for project namespaces, they need to be added to the `edp-oidc-admins` and `edp-oidc-developers` groups in Keycloak.
 
 ## Argo CD
 

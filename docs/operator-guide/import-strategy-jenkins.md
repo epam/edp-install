@@ -67,7 +67,7 @@ by taking the steps below:
 
       * Click the **Create project access token** button.
 
-3. Create secret in the `<edp-project>` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. We recommend using EDP Portal to implement this:
+3. Create secret in the `edp` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. We recommend using EDP Portal to implement this:
 
   *  Open EDP Portal URL. Use the Sign-In option:
 
@@ -102,7 +102,7 @@ by taking the steps below:
     kind: JenkinsServiceAccount
     metadata:
       name: gitlab # It can also be github.
-      namespace: <edp-project>
+      namespace: edp
     spec:
       credentials: <nameSshKeySecret>
       ownerName: ''

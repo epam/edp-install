@@ -30,12 +30,12 @@ The example below illustrates how to use OAuth2-Proxy in practice when using the
 
     1. Run `helm upgrade` to update edp-install release:
     ```bash
-    helm upgrade --version <version> --set 'oauth2_proxy.enabled=true' edp-install --namespace <edp-project>
+    helm upgrade --version <version> --set 'oauth2_proxy.enabled=true' edp-install --namespace edp
     ```
     2. Check that OAuth2-Proxy is deployed successfully.
     3. Edit the Tekton dashboard Ingress annotation by adding `auth-signin` and `auth-url` of oauth2-proxy by `kubectl` command:
     ```bash
-    kubectl annotate ingress <application-ingress-name> nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri' nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.<edp-project>.svc.cluster.local:8080/oauth2/auth'
+    kubectl annotate ingress <application-ingress-name> nginx.ingress.kubernetes.io/auth-signin='https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri' nginx.ingress.kubernetes.io/auth-url='http://oauth2-proxy.edp.svc.cluster.local:8080/oauth2/auth'
     ```
 
 === "Openshift"
@@ -44,14 +44,14 @@ The example below illustrates how to use OAuth2-Proxy in practice when using the
     ```bash
     tekton_dashboard_cookie_secret=$(openssl rand -base64 32 | head -c 32)
     ```
-    2. Create `tekton-dashboard-proxy-cookie-secret` in the <edp-project> namespace:
+    2. Create `tekton-dashboard-proxy-cookie-secret` in the edp namespace:
     ```bash
-    kubectl -n <edp-project> create secret generic tekton-dashboard-proxy-cookie-secret \
+    kubectl -n edp create secret generic tekton-dashboard-proxy-cookie-secret \
         --from-literal=cookie-secret=${tekton_dashboard_cookie_secret}
     ```
     3. Run `helm upgrade` to update edp-install release:
     ```bash
-    helm upgrade --version <version> --set 'edp-tekton.dashboard.openshift_proxy.enabled=true' edp-install --namespace <edp-project>
+    helm upgrade --version <version> --set 'edp-tekton.dashboard.openshift_proxy.enabled=true' edp-install --namespace edp
     ```
 
 ## Related Articles

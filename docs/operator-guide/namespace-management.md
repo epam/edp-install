@@ -19,7 +19,7 @@ The manual namespace creation procedure does not depend on the deployment scenar
 
 1. Create the namespace by running the command below:
 
-       kubectl create namespace <edp_namespace>-<pipelineName>-<stageName>
+       kubectl create namespace edp-<pipelineName>-<stageName>
 
 
 2. Create the administrator RoleBinding resource by applying the file below with the `kubectl apply -f grant_admin_permissions.yaml` command:
@@ -31,11 +31,11 @@ The manual namespace creation procedure does not depend on the deployment scenar
           apiVersion: rbac.authorization.k8s.io/v1
           metadata:
             name: edp-cd-pipeline-operator-admin
-            namespace: <edp_namespace>-<pipelineName>-<stageName>
+            namespace: edp-<pipelineName>-<stageName>
           subjects:
             - kind: ServiceAccount
               name: edp-cd-pipeline-operator
-              namespace: <edp_namespace>
+              namespace: edp
           roleRef:
             apiGroup: rbac.authorization.k8s.io
             kind: ClusterRole

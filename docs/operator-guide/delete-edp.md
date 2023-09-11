@@ -15,7 +15,7 @@ To uninstall EDP, perform the following steps:
 
   We recommend deleting them via EDP Portal UI respectively, although it is also possible to delete all the EDP Portal resources using the `kubectl delete` command.
 
-2. Delete application namespaces. They should be called according to the `<edp-project>-<cd-pipeline>-<stage-name>` pattern.
+2. Delete application namespaces. They should be called according to the `edp-<cd-pipeline>-<stage-name>` pattern.
 
 3. Uninstall EDP the same way it was installed.
 
@@ -222,7 +222,7 @@ To uninstall EDP, perform the following steps:
 
   The script will prompt user to specify the namespace where EDP was deployed in and choose if the namespace is going to be deleted. This script will delete EDP custom resources in the namespace specified by user.
 
-5. In Keycloak, delete the `<edp-project>-main` realm, also delete client which is supposed to be called by the `<edp-project>-main` pattern in the **openshift** realm.
+5. In Keycloak, delete the `edp-main` realm, also delete client which is supposed to be called by the `edp-main` pattern in the **openshift** realm.
 
 ## Related Articles
 * [Install EDP](install-edp.md)

@@ -265,18 +265,18 @@ To create and then modify a custom Tekton library, please follow the steps below
 10. Install the custom chart with the command below. You can also use the `--dry-run` flag to simulate the chart installation and catch possible errors:
 
   ```
-  helm upgrade --install edp-tekton-custom . -n <edp-project> --dry-run
+  helm upgrade --install edp-tekton-custom . -n edp --dry-run
   ```
 
   ```
-  helm upgrade --install edp-tekton-custom . -n <edp-project>
+  helm upgrade --install edp-tekton-custom . -n edp
   ```
 
 11. Check the created pipelines and tasks in the cluster:
 
   ```
-  kubectl get tasks -n <edp-project>
-  kubectl get pipelines -n <edp-project>
+  kubectl get tasks -n edp
+  kubectl get pipelines -n edp
   ```
 
 12. Commit and push the modified Tekton Helm chart to Gerrit:

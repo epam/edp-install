@@ -21,11 +21,11 @@ To start from, configure Keycloak by creating two Kubernetes resources. Follow t
   ```
 
   ```bash
-  kubectl -n <edp-project> create secret generic keycloak-client-harbor-secret \
+  kubectl -n edp create secret generic keycloak-client-harbor-secret \
       --from-literal=cookie-secret=${keycloak_client_harbor_secret}
   ```
 
-2. Create the KeycloakClient custom resource by applying the HarborKeycloakClient.yaml file in the <edp-project> namespace. This custom resource will use the `keycloak-client-harbor-secret` to include the harbor client. After the download, you will receive the created harbor client, and the password that is actually the value of the Kubernetes secret from the step 1:
+2. Create the KeycloakClient custom resource by applying the HarborKeycloakClient.yaml file in the edp namespace. This custom resource will use the `keycloak-client-harbor-secret` to include the harbor client. After the download, you will receive the created harbor client, and the password that is actually the value of the Kubernetes secret from the step 1:
 
   ??? note "View: HarborKeycloakClient.yaml"
       ```yaml

@@ -51,7 +51,7 @@ Find below the example of the installation command:
 
         helm install edp epamedp/edp-install --wait --timeout=900s \
         --version <edp_version> \
-        --set global.edpName=<edp-project> \
+        --set global.edpName=edp \
         --set global.dnsWildCard=<cluster_DNS_wilcdard> \
         --set global.webConsole.url=<kubeconfig.clusters.cluster.server> \
         --set global.platform=<platform_type> \
@@ -59,7 +59,7 @@ Find below the example of the installation command:
         --set global.dockerRegistry.url=<aws_account_id>.dkr.ecr.<region>.amazonaws.com \
         --set keycloak-operator.keycloak.url=<keycloak_endpoint> \
         --set global.gerritSSHPort=<gerrit_ssh_port> \
-        --namespace <edp-project>
+        --namespace edp
 
 !!! warning
     Please be aware that the command above is an example.

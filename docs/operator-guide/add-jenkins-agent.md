@@ -53,9 +53,9 @@ After the Docker agent update/creation, build and load the image into the projec
 
 To add a new Jenkins agent, take the steps below:
 
-1. Run the following command. Please be aware that &#8249;edp-project&#8250; is the name of the EDP tenant.
+1. Run the following command. Please be aware that `edp` is the name of the EDP tenant.
 
-        kubectl edit configmap jenkins-slaves -n <edp-project>
+        kubectl edit configmap jenkins-slaves -n edp
 
   !!! note
       On an OpenShift cluster, run the `oc` command instead of `kubectl` one.
@@ -130,9 +130,9 @@ and scroll down to find new Jenkins agent **Pod Template details...**:
 
 If your application is integrated with EDP, take the steps below to change an existing agent configuration:
 
-1. Run the following command. Please be aware that &#8249;edp-project&#8250; is the name of the EDP tenant.
+1. Run the following command. Please be aware that `edp` is the name of the EDP tenant.
 
-        kubectl edit configmap jenkins-slaves -n <edp-project>
+        kubectl edit configmap jenkins-slaves -n edp
 
   !!! note
       On an OpenShift cluster, run the `oc` command instead of `kubectl` one.

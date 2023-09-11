@@ -77,7 +77,7 @@ The further steps depend on the CI tool used.
       Take the following template as an example (use github instead of gitlab for GitHub):
 
       ```yaml
-      kubectl create secret generic gitlab -n <edp-project> \
+      kubectl create secret generic gitlab -n edp \
       --from-file=id_rsa=id_rsa \
       --from-literal=username=git \
       --from-literal=token=your_gitlab_access_token
@@ -87,7 +87,7 @@ The further steps depend on the CI tool used.
 
 === "Jenkins CI tool"
 
-    1. Create secret in the `<edp-project>` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. We recommend using EDP Portal to implement this:
+    1. Create secret in the `edp` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. We recommend using EDP Portal to implement this:
 
       Open EDP Portal URL. Use the Sign-In option:
 
@@ -122,7 +122,7 @@ The further steps depend on the CI tool used.
       kind: JenkinsServiceAccount
       metadata:
         name: gitlab # It can also be github.
-        namespace: <edp-project>
+        namespace: edp
       spec:
         credentials: <nameSshKeySecret>
         ownerName: ''

@@ -48,7 +48,7 @@ The "build-image-kaniko" stage manages [ECR](https://aws.amazon.com/ecr/) throug
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
               "StringEquals": {
-                "<OIDC_PROVIDER>:sub": "system:serviceaccount:<EDP_NAMESPACE>:edp-kaniko"
+                "<OIDC_PROVIDER>:sub": "system:serviceaccount:edp:edp-kaniko"
               }
             }
           }

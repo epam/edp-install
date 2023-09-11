@@ -28,7 +28,7 @@ The **ecr-to-docker** stage contains a specific script that launches the followi
 
 The **ecr-to-docker** stage expects the authorization credentials to be added as Kubernetes secret into EDP-installed namespace. To create the **dockerhub-credentials** secret, run the following command:
 
-      kubectl -n <edp-project> create secret generic dockerhub-credentials \
+      kubectl -n edp create secret generic dockerhub-credentials \
       --from-literal=accesstoken=<dockerhub_access_token> \
       --from-literal=account=<dockerhub_account_name> \
       --from-literal=username=<dockerhub_user_name>

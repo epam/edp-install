@@ -11,14 +11,14 @@ To customize the Build Tool list, perform the following:
 
 *  Edit the edp-admin-console deployment by adding the necessary code language into the **BUILD TOOLS** field:
 
-       kubectl edit deployment edp-admin-console -n <edp-project>
+       kubectl edit deployment edp-admin-console -n edp
 
   !!! note
       Using an OpenShift cluster, run the `oc` command instead of `kubectl` one.
 
 
   !!! info
-      &#8249;edp-project&#8250; is the name of the EDP tenant here and in all the following steps.
+      `edp` is the name of the EDP tenant here and in all the following steps.
 
   <details>
   <summary><b>View: edp-admin-console deployment</b></summary>
