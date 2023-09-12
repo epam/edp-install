@@ -78,19 +78,6 @@ A Helm chart for EDP Install
 | global.sonarUrl | string | `""` | Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http(s)://<endpoint> |
 | global.version | string | `"3.5.0-SNAPSHOT"` | EDP version |
 | global.webConsole.url | string | `"https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com"` | URL to OpenShift/Kubernetes Web console |
-| kaniko.existingDockerConfig | string | `nil` | Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created with default value: { "credStore": "ecr-login"} |
-| kaniko.initKanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-kaniko container |
-| kaniko.initKanikoContainer.image | string | `"busybox:1.35.0"` | init container image which waits for Dockerfile before starting actual build |
-| kaniko.initRepositoryContainer.extraCommandOptions | string | `""` | Configure extra options for command 'aws ecr create-repository' |
-| kaniko.initRepositoryContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the init-repository container |
-| kaniko.initRepositoryContainer.image | string | `"amazon/aws-cli:2.9.4"` | aws-cli image is used to provision non-existing AWS ECR repository |
-| kaniko.kanikoContainer.extraEnvVars | list | `[]` | Array with extra environment variables to add to the Kaniko container |
-| kaniko.kanikoContainer.image | string | `"gcr.io/kaniko-project/executor:v1.12.1-debug"` | kaniko image |
-| kaniko.kanikoContainer.resources.limits | object | `{}` | The resources limits for the Kaniko containers |
-| kaniko.kanikoContainer.resources.requests | object | `{}` | The requested resources for the Kaniko containers |
-| kaniko.nodeSelector | object | `{}` | nodeSelector Node labels for pod assignment |
-| kaniko.roleArn | string | `nil` | AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME> |
-| kaniko.tolerations | list | `[]` | tolerations Tolerations for pod assignment |
 | keycloak-operator.enabled | bool | `true` |  |
 | nexus-operator.enabled | bool | `true` |  |
 | oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |

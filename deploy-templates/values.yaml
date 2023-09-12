@@ -51,45 +51,6 @@ argocd:
   # -- @default -- `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }})
   url:
 
-# Kaniko configuration section
-kaniko:
-  # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
-  roleArn:
-  # -- Existing secret which contains docker-config, if not defined then 'kaniko-docker-config' will be created
-  # with default value: { "credStore": "ecr-login"}
-  existingDockerConfig:
-  # -- nodeSelector Node labels for pod assignment
-  nodeSelector: {}
-  # -- tolerations Tolerations for pod assignment
-  tolerations: []
-
-  initKanikoContainer:
-    # -- init container image which waits for Dockerfile before starting actual build
-    image: busybox:1.35.0
-    # -- Array with extra environment variables to add to the init-kaniko container
-    extraEnvVars: []
-
-  initRepositoryContainer:
-    # -- aws-cli image is used to provision non-existing AWS ECR repository
-    image: amazon/aws-cli:2.9.4
-    # -- Configure extra options for command 'aws ecr create-repository'
-    extraCommandOptions: ""
-    # extraCommandOptions: "--tags Key=user:tag,Value=TENANT_NAME"
-    # -- Array with extra environment variables to add to the init-repository container
-    extraEnvVars: []
-
-  kanikoContainer:
-    # -- kaniko image
-    image: gcr.io/kaniko-project/executor:v1.12.1-debug
-    # Kaniko resource requests and limits
-    # -- Array with extra environment variables to add to the Kaniko container
-    extraEnvVars: []
-    resources:
-      # -- The resources limits for the Kaniko containers
-      limits: {}
-      # -- The requested resources for the Kaniko containers
-      requests: {}
-
 # Configure External Secrets Operator to provision secrets for Platform and/or EDP
 # https://external-secrets.io/latest/provider-aws-secrets-manager/
 externalSecrets:
