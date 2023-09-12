@@ -4,8 +4,8 @@ EDP provides the ability to [deploy](../user-guide/add-cd-pipeline.md) services 
 
 ## Overview
 
-Namespaces are typically created by the platform when running CD Pipelines. The operator creates them according to the specific format: `<edp-project>-<application-name>-<stage-name>`.
-The `cd-pipeline-operator` should have the permissions to automatically create namespaces when deploying application and delete when uninstalling application.
+Namespaces are typically created by the platform when running CD Pipelines. The operator creates them according to the specific format: `edp-<application-name>-<stage-name>`.
+The `cd-pipeline-operator` should have the permissions to automatically create namespaces when deploying applications and delete them when uninstalling applications.
 
 ## Disable Automatic Namespace Creation
 
@@ -14,7 +14,7 @@ The `manageNamespace` parameter is set to `true` by default, but it can be chang
 
   !![Namespace creation error](../assets/operator-guide/failed_cd_pipeline_creation.png)
 
-The error message shown above says that user needs to create the namespace in the `<edp-project>-<application-name>-<stage-name>` format first before creating stages. In addition to it, the `cd-pipeline-operator` must be granted with the administrator permissions to have the ability to manage this namespace.
+The error message shown above says that user needs to create the namespace in the `edp-<application-name>-<stage-name>` format first before creating stages. In addition to it, the `cd-pipeline-operator` must be granted with the administrator permissions to have the ability to manage this namespace.
 The manual namespace creation procedure does not depend on the deployment scenario whether Jenkins or Tekton is used. To create namespace manually, follow the steps below:
 
 1. Create the namespace by running the command below:
@@ -25,7 +25,7 @@ The manual namespace creation procedure does not depend on the deployment scenar
 2. Create the administrator RoleBinding resource by applying the file below with the `kubectl apply -f grant_admin_permissions.yaml` command:
 
   ??? note "View: grant_admin_permissions.yaml"
-  
+
          ```yaml
           kind: RoleBinding
           apiVersion: rbac.authorization.k8s.io/v1

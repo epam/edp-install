@@ -7,6 +7,7 @@ Get acquainted with the list of the latest releases and component versions on wh
 
 |EDP Release Version|Release Date|[EKS](https://aws.amazon.com/eks/) Version|[OpenShift](https://github.com/okd-project/okd/releases) Version|
 |:-:|:-:|:-:|:-:|
+|3.4 |Aug 18, 2023|1.26|4.12|
 |3.3 |May 25, 2023|1.26|4.12|
 |3.2 |Mar 26, 2023|1.23|4.10|
 |3.1 |Jan 24, 2023|1.23|4.10|
