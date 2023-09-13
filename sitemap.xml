@@ -91,6 +91,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/operator-guide/aws-marketplace-install/</loc>
+         <lastmod>2023-09-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/</loc>
          <lastmod>2023-09-13</lastmod>
          <changefreq>daily</changefreq>
