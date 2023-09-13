@@ -178,6 +178,7 @@ nav:
         - Install Harbor: operator-guide/install-harbor.md
       - Install EDP: operator-guide/install-edp.md
       - Install via Helmfile: operator-guide/install-via-helmfile.md
+      - AWS Marketplace Install: operator-guide/aws-marketplace-install.md
     - Configuration:
       - EDP Access Model: operator-guide/edp-access-model.md
       # - Add Other Code Language: operator-guide/add-other-code-language.md
