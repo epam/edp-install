@@ -1,24 +1,23 @@
-# AWS Marketplace Installation
+# Install via AWS Marketplace
 
-This document provides the detailed information regarding the EPAM Delivery Platform product installation from the AWS marketplace.
+This documentation provides the detailed instructions on how to install the EPAM Delivery Platform from the AWS marketplace.
 
 ## Prerequisites
 
-Please make sure that the [Prerequisites](prerequisites.md) for deploying the product are met. According to the prerequisite, the minimal set of created resources for successful deployment of the platform should be as follows:
+Please familiarize yourself with the [Prerequisites](prerequisites.md) page before deploying the product. To perform a minimal installation, ensure that you meet the following requirements:
 
-* domain available and associated with a cluster;
-* cluster admin access is granted;
-* `edp` namespace is created;
-* Keycloak endpoint is available;
-* credentials for platform integration are [available](./install-keycloak.md#configuration) in the `edp` namespace;
-* `nexus-proxy-cookie-secret` secret is available in `edp` namespace;
-* IAM Role with IRSA access to AWS ECR for Kaniko push pipeline;
+* The domain name is available and associated with the cluster.
+* Administrative rights within the cluster are required.
+* The `edp` namespace is created.
+* The Keycloak endpoint is available and credentials to integrate platform are [available](./install-keycloak.md#configuration) in `edp` namespace.
+* The `nexus-proxy-cookie-secret` secret is available in the `edp` namespace.
+* The IAM Role with IRSA access to AWS ECR for the Kaniko push pipeline is created.
 
 ## Deploy EPAM Delivery Platform
 
-To deploy EPAM Delivery Platform from AWS Marketplace, follow the steps below:
+To deploy the platform, follow the steps below:
 
-- Define mandatory parameters you would like to install using the command
+1. Define the mandatory parameters you would like to use for installation using the following command:
 
   ```bash
   helm install edp-install \
@@ -36,13 +35,13 @@ To deploy EPAM Delivery Platform from AWS Marketplace, follow the steps below:
       --set argocd.url=https://argocd.example.com
   ```
 
-- Run the command to get ingress endpoints and access to the EPAM Delivery Platform components UI:
+2. Run the following command to get ingress endpoints and copy the URL to access the EPAM Delivery Platform components UI:
 
   ```bash
   kubectl get ingress -n edp
   ```
 
-As a result, you will get access to EPAM Delivery Platform components via ingresses.
+As a result, you will get access to EPAM Delivery Platform components via EDP Portal UI. Navigate to our [Use Cases](../use-cases/index.md) to try out EDP functionality. Visit other subsections of the [Operator Guide](../operator-guide/index.md) to figure out how to configure EDP and integrate it with various tools.
 
 ## Related Articles
 
