@@ -3,7 +3,7 @@
 <span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
 <span class=nt>metadata</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">rp-credentials</span>
-<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;edp-project&gt;</span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">edp</span>
 <span class=nt>stringData</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>rp_uuid</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;access-token&gt;</span>
 </code></pre></div> </li> <li> <p>In the <strong>Configuration examples</strong> section of the ReportPortal <strong>User Profile</strong> menu, copy the following <code>REQUIRED</code> fields: <code>rp.endpoint</code>, <code>rp.launch</code> and <code>rp.project</code>. Insert these fields to the <code>pytest.ini</code> file in root directory of your project:</p> <div class=highlight><pre><span></span><code>[pytest]
@@ -18,7 +18,7 @@ rp_project = &lt;project&gt;
 <span class=w>  </span><span class=nt>labels</span><span class=p>:</span>
 <span class=w>    </span><span class=nt>app.kubernetes.io/version</span><span class=p>:</span><span class=w> </span><span class=s>&#39;0.1&#39;</span>
 <span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">pytest-reportportal</span>
-<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;edp-project&gt;</span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">edp</span>
 <span class=nt>spec</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>description</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|-</span>
 <span class=w>    </span><span class=no>This task can be used to run pytest integrated with report portal.</span>

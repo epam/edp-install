@@ -67,10 +67,10 @@ global:
 </code></pre></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>The <code>helm-lint</code> task references to the default <code>pipeline-library</code> Helm chart which is applied to the cluster during EDP installation.</p> <p>The <code>runAfter</code> parameter shows that this Pipeline task will be run after the <code>hello</code> pipeline task.</p> </div> </li> <li> <p>Build Helm dependencies in the custom chart:</p> <div class=highlight><pre><span></span><code>helm dependency update .
 </code></pre></div> </li> <li> <p>Ensure that the chart is valid and all the indentations are fine:</p> <div class=highlight><pre><span></span><code>helm lint .
 </code></pre></div> <p>To validate if the values are substituted in the templates correctly, render the templated YAML files with the values using the following command. It generates and displays all the manifest files with the substituted values:</p> <div class=highlight><pre><span></span><code>helm template .
-</code></pre></div> </li> <li> <p>Install the custom chart with the command below. You can also use the <code>--dry-run</code> flag to simulate the chart installation and catch possible errors:</p> <div class=highlight><pre><span></span><code>helm upgrade --install edp-tekton-custom . -n &lt;edp-project&gt; --dry-run
-</code></pre></div> <div class=highlight><pre><span></span><code>helm upgrade --install edp-tekton-custom . -n &lt;edp-project&gt;
-</code></pre></div> </li> <li> <p>Check the created pipelines and tasks in the cluster:</p> <div class=highlight><pre><span></span><code>kubectl get tasks -n &lt;edp-project&gt;
-kubectl get pipelines -n &lt;edp-project&gt;
+</code></pre></div> </li> <li> <p>Install the custom chart with the command below. You can also use the <code>--dry-run</code> flag to simulate the chart installation and catch possible errors:</p> <div class=highlight><pre><span></span><code>helm upgrade --install edp-tekton-custom . -n edp --dry-run
+</code></pre></div> <div class=highlight><pre><span></span><code>helm upgrade --install edp-tekton-custom . -n edp
+</code></pre></div> </li> <li> <p>Check the created pipelines and tasks in the cluster:</p> <div class=highlight><pre><span></span><code>kubectl get tasks -n edp
+kubectl get pipelines -n edp
 </code></pre></div> </li> <li> <p>Commit and push the modified Tekton Helm chart to Gerrit:</p> <div class=highlight><pre><span></span><code>git add .
 git commit -m &quot;Add Helm chart testing for go-shell application&quot;
 git push origin HEAD:refs/for/master

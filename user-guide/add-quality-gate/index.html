@@ -36,11 +36,11 @@
    labels:
      app.edp.epam.com/pipelinetype: deploy
    name: &lt;name-of-quality-gate&gt;
-   namespace: &lt;edp-namespace&gt;
+   namespace: edp
  spec:
    params:
      - default: &gt;-
-         https://&lt;CI-pipeline-provisioner&gt;-&lt;edp-namespace&gt;.&lt;cluster-name&gt;.aws.main.edp.projects.epam.com/#/namespaces/$(context.pipelineRun.namespace)/pipelineruns/$(context.pipelineRun.name)
+         https://&lt;CI-pipeline-provisioner&gt;-edp.&lt;cluster-name&gt;.aws.main.edp.projects.epam.com/#/namespaces/$(context.pipelineRun.namespace)/pipelineruns/$(context.pipelineRun.name)
        name: pipelineUrl
        type: string
      - default: &#39;&#39;
