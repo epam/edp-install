@@ -1,5 +1,4 @@
 global:
-  kioskEnabled: false
   gitProvider: gitlab
   edpName: "stub-namespace"
   dnsWildCard:

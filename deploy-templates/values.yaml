@@ -23,7 +23,6 @@ global:
     # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
     # -- URL to OpenShift/Kubernetes Web console
     url: https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
-  kioskEnabled: false
   # -- Can be gerrit, github or gitlab. By default: gerrit
   gitProvider: gerrit
   # -- Gerrit SSH node port
@@ -105,6 +104,8 @@ cd-pipeline-operator:
   # image:
   #   repository: epamedp/cd-pipeline-operator
   #   tag:
+  # -- defines the type of the tenant engine that can be "none", "kiosk" or "capsule"
+  tenancyEngine: "none"
 
 nexus-operator:
   enabled: true
