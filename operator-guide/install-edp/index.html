@@ -44,8 +44,6 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.4.1<span cla
 --values<span class=w> </span>values.yaml<span class=w> </span><span class=se>\</span>
 --namespace<span class=w> </span>edp
 </code></pre></div> <p>See the details on the parameters below:<a name=values></a></p> <div class=highlight><span class=filename>Example values.yaml file</span><pre><span></span><code><span class=nt>global</span><span class=p>:</span>
-<span class=w>  </span><span class=c1># -- namespace or a project name (in case of using OpenShift)</span>
-<span class=w>  </span><span class=nt>edpName</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">edp</span>
 <span class=w>  </span><span class=c1># -- platform type that can be either &quot;kubernetes&quot; or &quot;openshift&quot;</span>
 <span class=w>  </span><span class=nt>platform</span><span class=p>:</span><span class=w> </span><span class=s>&quot;kubernetes&quot;</span>
 <span class=w>  </span><span class=c1># DNS wildcard for routing in the Kubernetes cluster;</span>
@@ -57,9 +55,6 @@ epamedp/edp-install<span class=w>     </span><span class=m>3</span>.4.1<span cla
 <span class=w>  </span><span class=nt>developers</span><span class=p>:</span>
 <span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=s>&quot;stub_user_one@example.com&quot;</span>
 <span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=s>&quot;stub_user_two@example.com&quot;</span>
-<span class=w>  </span><span class=c1># -- Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com can get from kubeconfig.clusters.cluster.server;</span>
-<span class=w>  </span><span class=nt>webConsole</span><span class=p>:</span>
-<span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">&lt;kubeconfig.clusters.cluster.server&gt;</span>
 <span class=w>  </span><span class=c1># -- Can be gerrit, github or gitlab. By default: gerrit</span>
 <span class=w>  </span><span class=nt>gitProvider</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gerrit</span>
 <span class=w>  </span><span class=c1># -- Gerrit SSH node port</span>
