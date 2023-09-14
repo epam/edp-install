@@ -3,7 +3,7 @@ data:
   {{- if .Values.awsRegion }}
   aws_region: {{ .Values.awsRegion }}
   {{- end }}
-  edp_name: {{ .Values.global.edpName }}
+  edp_name: {{ .Release.Namespace }}
   edp_version: {{.Values.global.version}}
   dns_wildcard: {{ .Values.global.dnsWildCard }}
 kind: ConfigMap

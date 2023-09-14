@@ -166,8 +166,6 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 
   ``` yaml title="Example values.yaml file"
   global:
-    # -- namespace or a project name (in case of using OpenShift)
-    edpName: edp
     # -- platform type that can be either "kubernetes" or "openshift"
     platform: "kubernetes"
     # DNS wildcard for routing in the Kubernetes cluster;
@@ -179,9 +177,6 @@ There are two recommended ways to deploy EPAM Delivery Platform:
     developers:
       - "stub_user_one@example.com"
       - "stub_user_two@example.com"
-    # -- Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com can get from kubeconfig.clusters.cluster.server;
-    webConsole:
-      url: <kubeconfig.clusters.cluster.server>
     # -- Can be gerrit, github or gitlab. By default: gerrit
     gitProvider: gerrit
     # -- Gerrit SSH node port

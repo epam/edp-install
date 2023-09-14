@@ -2,10 +2,10 @@
 apiVersion: authorization.openshift.io/v1
 kind: Role
 metadata:
-  namespace: {{ .Values.global.edpName }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
-  name: edp-{{ .Values.global.edpName }}
+  name: edp-{{ .Release.Namespace }}
 rules:
 - apiGroups:
     - ""

@@ -36,7 +36,7 @@ Follow the steps below to install Argo CD using Helm:
 
     <details>
     <summary><b>View: argocd-scc.yaml</b></summary>
-    
+
     ```yaml
     allowHostDirVolumePlugin: false
     allowHostIPC: false
@@ -122,7 +122,7 @@ Follow the steps below to install Argo CD using Helm:
       application.instanceLabelKey: argocd.argoproj.io/instance-edp
       oidc.config: |
         name: Keycloak
-        issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/<.Values.global.edpName>-main
+        issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/edp-main
         clientID: argocd
         clientSecret: $oidc.keycloak.clientSecret
         requestedScopes:
@@ -141,7 +141,7 @@ Follow the steps below to install Argo CD using Helm:
 
   configs:
     params:
-      application.namespaces: <.Values.global.edpName>
+      application.namespaces: edp
 
   repoServer:
     replicas: 2
@@ -185,7 +185,7 @@ Follow the steps below to install Argo CD using Helm:
       application.instanceLabelKey: argocd.argoproj.io/instance-edp
       oidc.config: |
         name: Keycloak
-        issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/<.Values.global.edpName>-main
+        issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/edp-main
         clientID: argocd
         clientSecret: $oidc.keycloak.clientSecret
         requestedScopes:
@@ -204,7 +204,7 @@ Follow the steps below to install Argo CD using Helm:
 
   configs:
     params:
-      application.namespaces: <.Values.global.edpName>
+      application.namespaces: edp
 
   repoServer:
     replicas: 2
@@ -224,7 +224,7 @@ Follow the steps below to install Argo CD using Helm:
 
   * <.Values.global.dnsWildCard> is the EDP DNS WildCard.
   * <.Values.global.keycloakEndpoint> is the Keycloak Hostname.
-  * <.Values.global.edpName> is the EDP name.
+  * We use `edp` namespace.
 
 2. Run the installation:
 

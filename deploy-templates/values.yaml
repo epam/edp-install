@@ -6,8 +6,6 @@
 global:
   # -- EDP version
   version: "3.5.0-SNAPSHOT"
-  # -- namespace or a project name (in case of OpenShift)
-  edpName: "stub-namespace"
    # -- platform type that can be "kubernetes" or "openshift"
   platform: "kubernetes"
   # -- a cluster DNS wildcard name
@@ -19,10 +17,6 @@ global:
   developers:
     - "stub_user_one@example.com"
     - "stub_user_two@example.com"
-  webConsole:
-    # Cluster URL, e.g. https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
-    # -- URL to OpenShift/Kubernetes Web console
-    url: https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com
   # -- Can be gerrit, github or gitlab. By default: gerrit
   gitProvider: gerrit
   # -- Gerrit SSH node port

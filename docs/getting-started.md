@@ -51,9 +51,7 @@ Find below the example of the installation command:
 
         helm install edp epamedp/edp-install --wait --timeout=900s \
         --version <edp_version> \
-        --set global.edpName=edp \
         --set global.dnsWildCard=<cluster_DNS_wilcdard> \
-        --set global.webConsole.url=<kubeconfig.clusters.cluster.server> \
         --set global.platform=<platform_type> \
         --set awsRegion=<region> \
         --set global.dockerRegistry.url=<aws_account_id>.dkr.ecr.<region>.amazonaws.com \

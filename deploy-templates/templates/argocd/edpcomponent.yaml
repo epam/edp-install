@@ -1,4 +1,4 @@
-{{- $argocdDefaultURL := printf "https://argocd-%s.%s" .Values.global.edpName .Values.global.dnsWildCard -}}
+{{- $argocdDefaultURL := printf "https://argocd-%s.%s" .Release.Namespace .Values.global.dnsWildCard -}}
 {{- if .Values.argocd.enabled -}}
 apiVersion: v1.edp.epam.com/v1
 kind: EDPComponent

@@ -10,6 +10,6 @@ spec:
   public: false
   defaultClientScopes:
     - edp
-  targetRealm: "{{ .Values.global.edpName }}-main"
+  targetRealm: "{{ .Release.Namespace }}-main"
   webUrl: "https://{{ include "oauth2_proxy.Url" . }}"
 {{ end }}

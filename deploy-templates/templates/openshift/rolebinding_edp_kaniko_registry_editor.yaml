@@ -11,5 +11,5 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: edp-kaniko
-    namespace: {{ .Values.global.edpName }}
+    namespace: {{ .Release.Namespace }}
 {{- end -}}

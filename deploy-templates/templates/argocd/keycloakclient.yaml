@@ -16,6 +16,6 @@ spec:
   public: false
   defaultClientScopes:
     - groups
-  targetRealm: {{ .Values.global.edpName }}-main
+  targetRealm: {{ .Release.Namespace }}-main
   webUrl: "{{ .Values.argocd.url | default $argocdDefaultURL }}"
 {{- end }}

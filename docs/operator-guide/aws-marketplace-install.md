@@ -23,9 +23,7 @@ To deploy EPAM Delivery Platform from AWS Marketplace, follow the steps below:
   ```bash
   helm install edp-install \
       --namespace edp ./* \
-      --set global.edpName=edp \
       --set global.dnsWildCard=example.com \
-      --set global.webConsole.url=https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com \
       --set global.admins={"stub_user_one@example.com"} \
       --set global.developers={"stub_user_one@example.com"} \
       --set global.gitProvider=gerrit \

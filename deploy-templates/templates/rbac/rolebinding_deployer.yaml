@@ -9,4 +9,4 @@ roleRef:
 subjects:
   - apiGroup: rbac.authorization.k8s.io
     kind: Group
-    name: "{{ .Values.global.edpName }}-oidc-deployers"
+    name: "{{ .Release.Namespace }}-oidc-deployers"

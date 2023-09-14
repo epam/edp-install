@@ -1,5 +1,5 @@
 {{- if eq .Values.global.platform "openshift"  -}}
-  {{- $name := printf "edp-%s-admin" .Values.global.edpName -}}
+  {{- $name := printf "edp-%s-admin" .Release.Namespace -}}
 apiVersion: authorization.openshift.io/v1
 kind: RoleBinding
 metadata:
@@ -12,9 +12,9 @@ subjects:
 - kind: User
   name: admin
 - kind: User
-  name: system:serviceaccount:{{ .Values.global.edpName }}:edp
+  name: system:serviceaccount:{{ .Release.Namespace }}:edp
 userNames:
 - admin
-- system:serviceaccount:{{ .Values.global.edpName }}:edp
+- system:serviceaccount:{{ .Release.Namespace }}:edp
 groupNames: []
 {{- end -}}

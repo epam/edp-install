@@ -81,7 +81,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Define Oauth2-proxy URL
 */}}
 {{- define "oauth2_proxy.Url" -}}
-{{- printf "oauth-%s.%s" .Values.global.edpName .Values.global.dnsWildCard  }}
+{{- printf "oauth-%s.%s" .Release.Namespace .Values.global.dnsWildCard  }}
 {{- end }}
 
 Return the appropriate apiVersion for ingress.

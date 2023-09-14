@@ -1,9 +1,6 @@
 global:
   gitProvider: gitlab
-  edpName: "stub-namespace"
   dnsWildCard:
-  webConsole:
-    url:
   platform: openshift
   admins: [stub_user_one@example.com]
   developers: [stub_user_one@example.com]
