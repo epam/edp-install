@@ -72,9 +72,7 @@ A Helm chart for EDP Install
 | global.gerritSSHPort | string | `"22"` | Gerrit SSH node port |
 | global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |
 | global.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
-| global.nexusUrl | string | `""` | Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port> |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.sonarUrl | string | `""` | Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http(s)://<endpoint> |
 | global.version | string | `"3.5.0-SNAPSHOT"` | EDP version |
 | keycloak-operator.enabled | bool | `true` |  |
 | nexus-operator.enabled | bool | `true` |  |

@@ -23,10 +23,6 @@ global:
   gerritSSHPort: "22"
   # -- Keycloak URL
   keycloakUrl: https://keycloak.example.com
-  # -- Optional parameter. Link to use custom sonarqube. Format: http://<service-name>.<sonarqube-namespace>:9000 or http(s)://<endpoint>
-  sonarUrl: ""
-  # -- Optional parameter. Link to use custom nexus. Format: http://<service-name>.<nexus-namespace>:8081 or http://<ip-address>:<port>
-  nexusUrl: ""
   dockerRegistry:
     # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor
     type: "ecr"
