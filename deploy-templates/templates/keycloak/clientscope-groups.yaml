@@ -1,3 +1,4 @@
+{{- if .Values.sso.enabled -}}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClientScope
 metadata:
@@ -19,3 +20,4 @@ spec:
         "full.path": "false"
         "id.token.claim": "true"
         "userinfo.token.claim": "true"
+{{ end }}

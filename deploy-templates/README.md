@@ -71,7 +71,6 @@ A Helm chart for EDP Install
 | global.dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
 | global.gerritSSHPort | string | `"22"` | Gerrit SSH node port |
 | global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |
-| global.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.5.0-SNAPSHOT"` | EDP version |
 | keycloak-operator.enabled | bool | `true` |  |
@@ -89,4 +88,6 @@ A Helm chart for EDP Install
 | oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
 | oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
 | sonar-operator.enabled | bool | `false` |  |
+| sso | object | `{"enabled":true,"keycloakUrl":"https://keycloak.example.com"}` | Enable SSO for EDP components. Required keycloak-operator deployment. Default: false |
+| sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
 

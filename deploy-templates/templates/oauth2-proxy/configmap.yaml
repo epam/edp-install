@@ -1,5 +1,5 @@
 {{- if .Values.oauth2_proxy.enabled -}}
-{{- $oidcIssueUrl := printf "%s/auth/realms/%s-main" .Values.global.keycloakUrl .Release.Namespace -}}
+{{- $oidcIssueUrl := printf "%s/auth/realms/%s-main" .Values.sso.keycloakUrl .Release.Namespace -}}
 {{- $domains := printf ".%s" .Values.global.dnsWildCard -}}
 apiVersion: v1
 kind: ConfigMap

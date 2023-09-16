@@ -1,3 +1,4 @@
+{{- if .Values.sso.enabled -}}
 apiVersion: v1.edp.epam.com/v1
 kind: Keycloak
 metadata:
@@ -5,5 +6,6 @@ metadata:
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
 spec:
-  url: {{ .Values.global.keycloakUrl }}
+  url: {{ .Values.sso.keycloakUrl }}
   secret: "keycloak"
+{{ end }}

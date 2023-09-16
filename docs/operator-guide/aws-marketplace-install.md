@@ -28,7 +28,7 @@ To deploy EPAM Delivery Platform from AWS Marketplace, follow the steps below:
       --set global.developers={"stub_user_one@example.com"} \
       --set global.gitProvider=gerrit \
       --set global.gerritSSHPort=30022 \
-      --set global.keycloakUrl=https://keycloak.example.com \
+      --set sso.keycloakUrl=https://keycloak.example.com \
       --set global.dockerRegistry.type=ecr \
       --set global.dockerRegistry.url=<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com \
       --set awsRegion=<AWS_REGION> \

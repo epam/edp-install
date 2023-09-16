@@ -1,3 +1,4 @@
+{{- if .Values.sso.enabled -}}
 {{- if .Values.oauth2_proxy.enabled -}}
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
@@ -12,4 +13,5 @@ spec:
     - edp
   targetRealm: "{{ .Release.Namespace }}-main"
   webUrl: "https://{{ include "oauth2_proxy.Url" . }}"
+{{ end }}
 {{ end }}
