@@ -63,7 +63,7 @@ A Helm chart for EDP Install
 | externalSecrets.secretProvider.aws.role | string | `nil` | IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME> |
 | externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
-| gerrit-operator.enabled | bool | `true` |  |
+| gerrit-operator.enabled | bool | `false` |  |
 | global.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
 | global.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
@@ -75,7 +75,7 @@ A Helm chart for EDP Install
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.5.0-SNAPSHOT"` | EDP version |
 | keycloak-operator.enabled | bool | `true` |  |
-| nexus-operator.enabled | bool | `true` |  |
+| nexus-operator.enabled | bool | `false` |  |
 | oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |
 | oauth2_proxy.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
 | oauth2_proxy.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
@@ -88,5 +88,5 @@ A Helm chart for EDP Install
 | oauth2_proxy.ingress.annotations | object | `{}` |  |
 | oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
 | oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
-| sonar-operator.enabled | bool | `true` |  |
+| sonar-operator.enabled | bool | `false` |  |
 

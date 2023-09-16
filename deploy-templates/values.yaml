@@ -98,7 +98,7 @@ cd-pipeline-operator:
   tenancyEngine: "none"
 
 nexus-operator:
-  enabled: true
+  enabled: false
   # image:
   #   repository: epamedp/nexus-operator
   #   tag:
@@ -114,7 +114,7 @@ nexus-operator:
   #     size: 10Gi
 
 sonar-operator:
-  enabled: true
+  enabled: false
 #  image:
 #    repository: epamedp/sonar-operator
 #    tag:
@@ -136,7 +136,7 @@ sonar-operator:
 #     basePath: ""
 
 gerrit-operator:
-  enabled: true
+  enabled: false
   # image:
   #   repository: epamedp/gerrit-operator
   #   tag:
