@@ -66,13 +66,13 @@ This section provides the details on the EDP upgrade to v3.4.1. Explore the acti
     ```
 
 
-4. (Optional) To integrate EDP with Jira, rename the default values from <epam-jira-user> to <jira-user> for a secret name. In case Jira is already integrated, it will continue working.
+4. (Optional) To integrate EDP with Jira, rename the default values from `epam-jira-user` to `jira-user` for a secret name. In case Jira is already integrated, it will continue working.
 
-        ```yaml
-        codebase-operator:
-          jira:
-            credentialName: "jira-user"
-        ```
+    ```yaml
+    codebase-operator:
+      jira:
+        credentialName: "jira-user"
+    ```
 
 5. (Optional) To switch to the Harbor registry, change the secret format for the external secret from [kaniko-docker-config v3.3.0](https://raw.githubusercontent.com/epam/edp-install/v3.3.0/deploy-templates/templates/external-secrets/externalsecret-kaniko.yaml) to [kaniko-docker-config v3.4.1](https://raw.githubusercontent.com/epam/edp-install/v3.4.0/deploy-templates/templates/external-secrets/externalsecret-kaniko.yaml):
 
