@@ -36,7 +36,7 @@ There are also options to sort the applications:
 
 ## Edit Existing Application
 
-EDP Portal provides the ability to enable, disable or edit the Jira Integration functionality for applications.R
+EDP Portal provides the ability to enable, disable or edit the Jira Integration functionality for applications.
 
 1. To edit an application directly from the Applications overview page or when viewing the application data:
 
