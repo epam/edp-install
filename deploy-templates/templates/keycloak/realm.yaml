@@ -11,12 +11,12 @@ spec:
   ssoRealmEnabled: true
   ssoRealmName: openshift
   users:
-  {{- range .Values.global.admins }}
+  {{- range .Values.sso.admins }}
   - username: {{.}}
     realmRoles:
       - administrator
   {{- end}}
-  {{- range .Values.global.developers }}
+  {{- range .Values.sso.developers }}
   - username: {{.}}
     realmRoles:
       - developer

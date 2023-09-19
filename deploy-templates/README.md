@@ -64,8 +64,6 @@ A Helm chart for EDP Install
 | externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
 | gerrit-operator.enabled | bool | `false` |  |
-| global.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
-| global.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.dockerRegistry.type | string | `"ecr"` | Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor |
 | global.dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
@@ -88,6 +86,8 @@ A Helm chart for EDP Install
 | oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
 | oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
 | sonar-operator.enabled | bool | `false` |  |
-| sso | object | `{"enabled":true,"keycloakUrl":"https://keycloak.example.com"}` | Enable SSO for EDP components. Required keycloak-operator deployment. Default: false |
+| sso | object | `{"admins":["stub_user_one@example.com"],"developers":["stub_user_one@example.com","stub_user_two@example.com"],"enabled":true,"keycloakUrl":"https://keycloak.example.com"}` | Enable SSO for EDP components. Required keycloak-operator deployment. Default: false |
+| sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
+| sso.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
 

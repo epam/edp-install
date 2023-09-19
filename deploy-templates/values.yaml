@@ -10,13 +10,6 @@ global:
   platform: "kubernetes"
   # -- a cluster DNS wildcard name
   dnsWildCard:
-  # -- Administrators of your tenant
-  admins:
-    - "stub_user_one@example.com"
-  # -- Developers of your tenant
-  developers:
-    - "stub_user_one@example.com"
-    - "stub_user_two@example.com"
   # -- Can be gerrit, github or gitlab. By default: gerrit
   gitProvider: gerrit
   # -- Gerrit SSH node port
@@ -35,6 +28,13 @@ sso:
   enabled: true
   # -- Keycloak URL
   keycloakUrl: https://keycloak.example.com
+  # -- Administrators of your tenant
+  admins:
+    - "stub_user_one@example.com"
+  # -- Developers of your tenant
+  developers:
+    - "stub_user_one@example.com"
+    - "stub_user_two@example.com"
 
 argocd:
   # -- Configure Argo CD for EDP platform.
