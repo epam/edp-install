@@ -91,7 +91,7 @@ codebase-operator:
   #   name: "jira"
   #   apiUrl: "https://jiraeu-api.example.com"
   #   rootUrl: "https://jiraeu.example.com"
-  #   credentialName: "jira-user"
+  #   credentialName: "ci-jira"
 
 cd-pipeline-operator:
   enabled: true
