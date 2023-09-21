@@ -1,6 +1,9 @@
 # SonarQube Integration
 
-This documentation guide provides comprehensive instructions for integrating external SonarQube with the EPAM Delivery Platform.
+This documentation guide provides comprehensive instructions for integrating SonarQube with the EPAM Delivery Platform.
+
+!!! info
+    In EDP release 3.5, we have changed the deployment strategy for the sonarqube-operator component, now it is not installed by default. The `sonarURL` parameter management has been transferred from the values.yaml file to Kubernetes secrets.
 
 ## Prerequisites
 
@@ -9,24 +12,9 @@ Before proceeding, ensure that you have the following prerequisites:
 * [Kubectl](https://v1-26.docs.kubernetes.io/releases/download/) version 1.26.0 is installed.
 * [Helm](https://helm.sh) version 3.12.0+ is installed.
 
-EDP includes a pre-installed SonarQube instance, which is ready to use with no extra configuration, delivering code analysis capabilities out of the box. Yet, EDP maintains the option to integrate external SonarQube instances tailored to specific project needs.
+## Installation
 
-## Switch to External Sonarqube
-
-1. To use external SonarQube in EDP, redefine the following parameters in the EDP-install [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file. In the `sonarUrl` parameter, input the appropriate values for your SonarQube service, namespace and a port `http://<service-name>.<sonarqube-namespace>:9000`. Alternatively, use the address and a port to external SonarQube `http(s)://<endpoint>` instead.
-
-  ```yaml
-  global:
-    sonarUrl: ""
-
-  sonar-operator:
-    enabled: false
-  ```
-
-2. Proceed with the installation of EDP by following the [Install EDP](../operator-guide/install-edp.md) guide.
-
-!!! note
-    You can install preconfigured SonarQube with edp-sonar-operator using [EDP addons](https://github.com/epam/edp-cluster-add-ons) approach.
+To install SonarQube with pre-defined templates, use the sonar-operator installed via [Cluster Add-Ons](https://github.com/epam/edp-cluster-add-ons) approach.
 
 ## Configuration
 
@@ -44,47 +32,48 @@ To establish robust authentication and precise access control, generating a Sona
 
   !![SonarQube token](../assets/operator-guide/sonar-copy-token.png "SonarQube token")
 
-4. Provision secrets using manifest, EDP Portal or with the externalSecrets operator
+4. Provision secrets using Manifest, EDP Portal or with the externalSecrets operator:
 
-=== "manifest"
+=== "EDP Portal"
+
+    Go to **EDP Portal** -> **EDP** -> **Configuration** -> **SonarQube**. Update or fill in the **URL** and **Token** fields and click the **Save** button:
+
+    !![SonarQube update manual secret](../assets/operator-guide/sonar-secret-password.png "SonarQube update manual secret")
+
+=== "Manifest"
 
     ```yaml
     apiVersion: v1
     kind: Secret
     metadata:
-      name: sonar-ciuser-token
+      name: ci-sonarqube
       namespace: edp
       labels:
         app.edp.epam.com/secret-type: sonar
     type: Opaque
     stringData:
-      secret: <sonarqube-token>
-      username: <username>
+      url: https://sonarqube.example.com
+      token: <sonarqube-token>
     ```
-
-=== "Manual Secret"
-
-    Go to the `EDP Portal UI` open `EDP` -> `Configuration` -> `Sonarqube Integration` change or apply `User` and `password` and click `save` button.
-
-    !![SonarQube update manual secret](../assets/operator-guide/sonar-secret-password.png "SonarQube update manual secret")
 
 === "External Secrets Operator"
 
-    ```yaml
-    "sonar-ciuser-token":
+    ```json
+    "ci-sonarqube":
     {
-      "username": "XXXXXXXXXXXX",
-      "secret": "XXXXXXXXXXXX"
+      "url": "https://sonarqube.example.com",
+      "token": "XXXXXXXXXXXX"
     },
     ```
 
-    Go to the `EDP Platform UI` open `EDP` -> `Configuration` -> `Sonarqube Integration` yo will se message `Managed by External Secret`.
+    Go to **EDP Portal** -> **EDP** -> **Configuration** -> **SonarQube** and see the `Managed by External Secret` message:
 
     !![SonarQube managed by external secret operator](../assets/operator-guide/sonar-externalsecret-password.png "SonarQube managed by external secret operator")
 
-    More detail of External Secrets Operator Integration can found on [the following page](https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration/)
+    More details about External Secrets Operator integration can be found in the [External Secrets Operator Integration](https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration/) page.
 
 ## Related Articles
 * [Install EDP With Values File](install-edp.md)
 * [Install External Secrets Operator](install-external-secrets-operator.md)
 * [External Secrets Operator Integration](external-secrets-operator-integration.md)
+* [Cluster Add-Ons Overview](add-ons-overview.md)
