@@ -228,40 +228,43 @@ To prepare DefectDojo for integration with EDP, follow the steps below:
 
   * Copy the API key.
 
-3. Provision secrets using kubectl, EDP Portal UI or with the `externalSecrets` operator:
+3. Provision the secret using `EDP Portal`, `Manifest` or with the `externalSecrets` operator:
 
-=== "kubectl"
+=== "EDP Portal"
 
-    ```bash
-    kubectl -n edp create secret generic defectdojo-ciuser-token \
-    --from-literal=token=<dd_token_of_dd_user> \
-    --from-literal=url="<defectdojo_url>"
-    ```
-
-    After creating the secret, it is necessary to attach a label to it. This will allow to see and manage the secret through the EDP Portal UI.
-
-    ```bash
-    kubectl -n edp label secret defectdojo-ciuser-token "app.edp.epam.com/secret-type=defectdojo"
-    ```
-
-=== "EDP Portal UI"
-
-    Go to the `EDP Portal UI` open `EDP` -> `Configuration` -> `DefectDojo` change `URL` and `Token` and click `save` button.
+    Go to **EDP Portal** -> **EDP** -> **Configuration** -> **DefectDojo**. Update or fill in the **URL** and **Token** and click the **Save** button.
 
     !![DefectDojo update manual secret](../assets/operator-guide/defectdojo-token.png "DefectDojo update manual secret")
+
+=== "Manifest"
+
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: ci-defectdojo
+      namespace: edp
+      labels:
+        app.edp.epam.com/secret-type: defectdojo
+    stringData:
+      url: https://defectdojo.example.com
+      token: <token>
+    ```
 
 === "External Secrets Operator"
 
     Store defectdojo URL and Token in AWS Parameter Store with following format:
-    ```bash
-    "defectdojo-ciuser-token":
-    {
-      "token": "XXXXXXXXXXXX",
-      "url": "https://defectdojo.example.com"
-    },
-    ```
 
-    More detail of External Secrets Operator Integration can found on [the following page](external-secrets-operator-integration.md)
+    ```json
+    "ci-defectdojo":
+    {
+      "url": "https://defectdojo.example.com",
+      "token": "XXXXXXXXXXXX"
+    }
+    ```
+    Go to **EDP Portal** -> **EDP** -> **Configuration** -> **DefectDojo** and see the `Managed by External Secret` message.
+
+    More details about the External Secrets Operator integration procedure can be found in the [External Secrets Operator Integration](external-secrets-operator-integration.md) page.
 
 After following the instructions provided, you should be able to integrate your DefectDojo with the EPAM Delivery Platform using one of the few available scenarios.
 
