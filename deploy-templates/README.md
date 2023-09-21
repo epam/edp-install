@@ -65,10 +65,10 @@ A Helm chart for EDP Install
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
 | gerrit-operator.enabled | bool | `false` |  |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
+| global.dockerRegistry | object | `{"type":"ecr","url":"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"}` | Gerrit SSH node port gerritSSHPort: "22" |
 | global.dockerRegistry.type | string | `"ecr"` | Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor |
 | global.dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
-| global.gerritSSHPort | string | `"22"` | Gerrit SSH node port |
-| global.gitProvider | string | `"gerrit"` | Can be gerrit, github or gitlab. By default: gerrit |
+| global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.5.0-SNAPSHOT"` | EDP version |
 | keycloak-operator.enabled | bool | `true` |  |

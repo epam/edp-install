@@ -10,10 +10,10 @@ global:
   platform: "kubernetes"
   # -- a cluster DNS wildcard name
   dnsWildCard:
-  # -- Can be gerrit, github or gitlab. By default: gerrit
-  gitProvider: gerrit
+  # -- Can be gerrit, github or gitlab. By default: github
+  gitProvider: github
   # -- Gerrit SSH node port
-  gerritSSHPort: "22"
+  # gerritSSHPort: "22"
   dockerRegistry:
     # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor
     type: "ecr"
