@@ -21,14 +21,14 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.15.0 |
-| @epamedp | codebase-operator | 2.17.0 |
+| @epamedp | cd-pipeline-operator | 2.16.0 |
+| @epamedp | codebase-operator | 2.18.0 |
 | @epamedp | edp-component-operator | 0.13.0 |
-| @epamedp | edp-headlamp | 0.8.0 |
-| @epamedp | edp-tekton | 0.6.0 |
-| @epamedp | gerrit-operator | 2.16.0 |
-| @epamedp | keycloak-operator | 1.17.0 |
-| @epamedp | nexus-operator | 2.16.0 |
+| @epamedp | edp-headlamp | 0.9.0 |
+| @epamedp | edp-tekton | 0.7.0 |
+| @epamedp | gerrit-operator | 2.17.0 |
+| @epamedp | keycloak-operator | 1.18.0 |
+| @epamedp | nexus-operator | 2.17.0 |
 | @epamedp | sonar-operator | 2.14.1 |
 
 ## Values
@@ -70,7 +70,7 @@ A Helm chart for EDP Install
 | global.dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"3.5.0-SNAPSHOT"` | EDP version |
+| global.version | string | `"3.5.0"` | EDP version |
 | keycloak-operator.enabled | bool | `true` |  |
 | nexus-operator.enabled | bool | `false` |  |
 | oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |
