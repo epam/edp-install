@@ -18,31 +18,41 @@ Teams can utilize these fields to enhance their work prioritization, identify de
 
 ## Integration Procedure
 
-In order to adjust the Jira server integration, first add JiraServer CR by performing the following:
+In order to adjust the Jira server integration, add the JiraServer CR by performing the following:
 
-1. Create the secret in the edp namespace for Jira Server account. Fill in the **username** and **password** fields with your own values:
+1. Provision the secret using `EDP Portal`, `Manifest` or with the `externalSecrets` operator:
 
-  === "External Secret Operator"
+  === "EDP Portal"
 
-      By default, EDP allows to get a value from the [SecretStore](./external-secrets-operator-integration.md#step 2), in which the value of `jira-user`:
+      Go to **EDP Portal** -> **EDP** -> **Configuration** -> **Jira**. Update or fill in the **URL**, **User**, **Password** fields and click the **Save** button:
 
-      ```json title="/edp/deploy-secrets"
-      {
-        "jira-user": { "username": "usernameInBase64", "password": "passwordInBase64" }
-      }
-      ```
+      !![Jira update manual secret](../assets/operator-guide/jira-edp-portal-secret.png "Jira update manual secret")
 
-  === "Manually"
+  === "Manifest"
 
       ```yaml
       apiVersion: v1
-      data:
-        password: passwordInBase64
-        username: usernameInBase64
       kind: Secret
       metadata:
-        name: jira-user
-      type: kubernetes.io/basic-auth
+        name: ci-jira
+        namespace: edp
+        labels:
+          app.edp.epam.com/secret-type=jira
+      stringData:
+        url: https://jira.example.com
+        username: username
+        password: password
+      ```
+
+  === "External Secrets Operator"
+
+      ```json
+      "ci-jira":
+      {
+        "url": "https://jira.example.com",
+        "username": "username",
+        "password": "password"
+      }
       ```
 
 2. Create JiraServer CR in the OpenShift/Kubernetes namespace with the **apiUrl**, **credentialName** and **rootUrl** fields:
@@ -53,7 +63,7 @@ In order to adjust the Jira server integration, first add JiraServer CR by perfo
         name: jira-server
       spec:
         apiUrl: 'https://jira-api.example.com'
-        credentialName: jira-user
+        credentialName: ci-jira
         rootUrl: 'https://jira.example.com'
 
   !!! note
