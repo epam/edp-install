@@ -1,6 +1,9 @@
 # Nexus Sonatype Integration
 
-This documentation guide provides comprehensive instructions for integrating external Nexus with the EPAM Delivery Platform.
+This documentation guide provides comprehensive instructions for integrating Nexus with the EPAM Delivery Platform.
+
+!!! info
+    In EDP release 3.5, we have changed the deployment strategy for the nexus-operator component, now it is not installed by default. The `nexusURL` parameter management has been transferred from the values.yaml file to Kubernetes secrets.
 
 ## Prerequisites
 
@@ -9,24 +12,9 @@ Before proceeding, ensure that you have the following prerequisites:
 * [Kubectl](https://v1-26.docs.kubernetes.io/releases/download/) version 1.26.0 is installed.
 * [Helm](https://helm.sh) version 3.12.0+ is installed.
 
-EDP includes a pre-configured Nexus Sonatype instance, eliminating the need for extra setup and enabling immediate, hassle-free artifact management. Nevertheless, EDP also provides the versatility to incorporate external Nexus Sonatype instances, finely tuned to meet project-specific demands.
+## Installation
 
-## Switch to External Nexus
-
-1. To use external Nexus in EDP, redefine the following parameters in the EDP-install [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file before installation. In the `nexusUrl` parameter, input the appropriate values for Nexus service, namespace and a port `http://<service-name>.<nexus-namespace>:8081`. Alternatively, use the address and a port to external Nexus `http(s)://<endpoint>` instead.
-
-  ```yaml
-  global:
-    nexusUrl: ""
-
-  nexus-operator:
-    enabled: false
-  ```
-
-2. Proceed with the installation of EDP by following the [Install EDP](../operator-guide/install-edp.md) guide.
-
-!!! note
-    You can install preconfigured nexus with edp-nexus-operator using [EDP addons](https://github.com/epam/edp-cluster-add-ons) approach.
+To install Nexus with pre-defined templates, use the nexus-operator installed via [Cluster Add-Ons](https://github.com/epam/edp-cluster-add-ons) approach.
 
 ## Configuration
 
@@ -93,39 +81,41 @@ To create the Nexus `ci.user`and define repository parameters follow the steps b
 
 4. Provision secrets using manifest, EDP Portal or with the externalSecrets operator
 
-=== "manifest"
+=== "EDP Portal"
+
+    Go to **EDP Portal** -> **EDP** -> **Configuration** -> **Nexus**. Update or fill in the **URL**, **nexus-user-id**, **nexus-user-password** and click the **Save** button:
+
+    !![Nexus update manual secret](../assets/operator-guide/nexus-secret-password.png "Nexus update manual secret")
+
+=== "Manifest"
 
     ```yaml
     apiVersion: v1
     kind: Secret
     metadata:
-      name: nexus-ci.user
+      name: ci-nexus
       namespace: edp
       labels:
         app.edp.epam.com/secret-type: nexus
     type: Opaque
     stringData:
-      password: <nexus-user-password>
+      url: https://nexus.example.com
       username: <nexus-user-id>
+      password: <nexus-user-password>
     ```
-
-=== "EDP Portal UI"
-
-    Go to the `EDP Platform` open `EDP` -> `Configuration` -> `Nexus Integration` change `<nexus-user-id>` and `<nexus-user-password>` and click `save` button.
-
-    !![Nexus update manual secret](../assets/operator-guide/nexus-secret-password.png "Nexus update manual secret")
 
 === "External Secrets Operator"
 
-    ```yaml
-    "nexus-ci.user":
+    ```json
+    "ci-nexus":
     {
-      "nexus-user-id": "XXXXXXX",
-      "nexus-user-password": "XXXXXXX"
+      "url": "https://nexus.example.com",
+      "username": "XXXXXXX",
+      "password": "XXXXXXX"
     },
     ```
 
-    Go to the `EDP Platform` open `EDP` -> `Configuration` -> `Nexus Integration` yo will see message `Managed by External Secret`.
+    Go to **EDP Portal** -> **EDP** -> **Configuration** -> **Nexus** and see `Managed by External Secret` message.
 
     !![Nexus managed by external secret operator](../assets/operator-guide/nexus-externalsecret-password.png "Nexus managed by external secret operator")
 
@@ -135,3 +125,4 @@ To create the Nexus `ci.user`and define repository parameters follow the steps b
 * [Install EDP With Values File](install-edp.md)
 * [Install External Secrets Operator](install-external-secrets-operator.md)
 * [External Secrets Operator Integration](external-secrets-operator-integration.md)
+* [Cluster Add-Ons Overview](add-ons-overview.md)
