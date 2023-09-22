@@ -69,29 +69,6 @@ dependencies:
 annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/operator: "true"
-  artifacthub.io/images: |
-    - name: keycloak-operator:1.18.0
-      image: epamedp/keycloak-operator:1.18.0
-    - name: codebase-operator:2.18.0
-      image: epamedp/codebase-operator:2.18.0
-    - name: cd-pipeline-operator:2.18.0
-      image: epamedp/cd-pipeline-operator:2.18.0
-    - name: nexus-operator:2.17.0
-      image: epamedp/nexus-operator:2.17.0
-    - name: sonar-operator:2.14.1
-      image: epamedp/sonar-operator:2.14.1
-    - name: gerrit-operator:2.17.0
-      image: epamedp/gerrit-operator:2.17.0
-    - name: edp-headlamp:0.9.0
-      image: epamedp/edp-headlamp:0.9.0
-    - name: postgres:9.6
-      image: postgres:9.6
-    - name: executor:v1.12.1-debug
-      image: gcr.io/kaniko-project/executor:v1.12.1-debug
-    - name: busybox:1.35.0
-      image: busybox:1.35.0
-    - name: aws-cli:2.9.4
-      image: amazon/aws-cli:2.9.4
   artifacthub.io/operatorCapabilities: Full Lifecycle
   artifacthub.io/links: |
     - name: EDP Documentation
