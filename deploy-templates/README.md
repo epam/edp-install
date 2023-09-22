@@ -70,8 +70,8 @@ A Helm chart for EDP Install
 | global.dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"3.5.0"` | EDP version |
-| keycloak-operator.enabled | bool | `true` |  |
+| global.version | string | `"3.5.2"` | EDP version |
+| keycloak-operator.enabled | bool | `false` |  |
 | nexus-operator.enabled | bool | `false` |  |
 | oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |
 | oauth2_proxy.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
@@ -86,7 +86,7 @@ A Helm chart for EDP Install
 | oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
 | oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
 | sonar-operator.enabled | bool | `false` |  |
-| sso | object | `{"admins":["stub_user_one@example.com"],"developers":["stub_user_one@example.com","stub_user_two@example.com"],"enabled":true,"keycloakUrl":"https://keycloak.example.com"}` | Enable SSO for EDP components. Required keycloak-operator deployment. Default: false |
+| sso | object | `{"admins":["stub_user_one@example.com"],"developers":["stub_user_one@example.com","stub_user_two@example.com"],"enabled":false,"keycloakUrl":"https://keycloak.example.com"}` | Enable SSO for EDP components. Required keycloak-operator deployment. Default: false |
 | sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
 | sso.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
