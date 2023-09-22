@@ -11,12 +11,11 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.5.1"></a>
-## v3.5.1 - 2023-09-22
+<a name="v3.5.2"></a>
+## v3.5.2 - 2023-09-22
 ### Routine
 
-- Remove artifacthub annotations related to images ([#85](https://github.com/epam/edp-install/issues/85))
-- Update CHANGELOG.md ([#85](https://github.com/epam/edp-install/issues/85))
+- Disable SSO integration by default ([#89](https://github.com/epam/edp-install/issues/89))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.5.1...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.5.2...HEAD
