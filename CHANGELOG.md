@@ -10,6 +10,31 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Routine
+
+- Disable SSO integration by default ([#89](https://github.com/epam/edp-install/issues/89))
+- Remove artifacthub annotations related to images ([#85](https://github.com/epam/edp-install/issues/85))
+- Update current development version ([#85](https://github.com/epam/edp-install/issues/85))
+
+### Documentation
+
+- Upgrade EDP to v3.3 to 3.4 hot fix ([#63](https://github.com/epam/edp-install/issues/63))
+
+
+<a name="v3.5.2"></a>
+## [v3.5.2] - 2023-09-22
+### Routine
+
+- Disable SSO integration by default ([#89](https://github.com/epam/edp-install/issues/89))
+
+
+<a name="v3.5.1"></a>
+## [v3.5.1] - 2023-09-22
+### Routine
+
+- Remove artifacthub annotations related to images ([#85](https://github.com/epam/edp-install/issues/85))
+- Update CHANGELOG.md ([#85](https://github.com/epam/edp-install/issues/85))
+
 
 <a name="v3.5.0"></a>
 ## [v3.5.0] - 2023-09-21
@@ -79,7 +104,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.5.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.5.2...HEAD
+[v3.5.2]: https://github.com/epam/edp-install/compare/v3.5.1...v3.5.2
+[v3.5.1]: https://github.com/epam/edp-install/compare/v3.5.0...v3.5.1
 [v3.5.0]: https://github.com/epam/edp-install/compare/v3.4.1...v3.5.0
 [v3.4.1]: https://github.com/epam/edp-install/compare/v3.4.0...v3.4.1
 [v3.4.0]: https://github.com/epam/edp-install/compare/v3.3.0...v3.4.0
