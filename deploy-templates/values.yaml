@@ -25,7 +25,7 @@ awsRegion:
 
 # -- Enable SSO for EDP components. Required keycloak-operator deployment. Default: false
 sso:
-  enabled: true
+  enabled: false
   # -- Keycloak URL
   keycloakUrl: https://keycloak.example.com
   # -- Administrators of your tenant
@@ -70,7 +70,7 @@ externalSecrets:
 annotations: {}
 
 keycloak-operator:
-  enabled: true
+  enabled: false
   # image:
   #   repository: epamedp/keycloak-operator
   #   tag:
