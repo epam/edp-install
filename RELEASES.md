@@ -3,16 +3,19 @@
 ## Overview
 
 Get acquainted with the latest EDP releases.
+* [Version 3.5.2](#3.5.2)
+* [Version 3.5.1](#3.5.1)
+* [Version 3.5.0](#3.5.0)
 * [Version 3.4.1](#3.4.1)
 * [Version 3.4.0](#3.4.0)
 * [Version 3.3.0](#3.3.0)
-* [Version 3.2.2](#3.2.2)
-* [Version 3.2.1](#3.2.1)
-* [Version 3.2.0](#3.2.0)
 
 <details>
   <summary>Earlier Versions</summary>
 
+* [Version 3.2.2](#3.2.2)
+* [Version 3.2.1](#3.2.1)
+* [Version 3.2.0](#3.2.0)
 * [Version 3.1.0](#3.1.0)
 * [Version 3.0.0](#3.0.0)
 * [Version 2.12.2](#2.12.2)
@@ -42,6 +45,100 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.5.2 <a name="3.5.2"></a> (September 22, 2023)
+
+### Enhancements
+
+* We've streamlined the installation process by disabling SSO integration and excluding the edp-keycloak-operator installation by default, reducing initial setup prerequisites.
+
+
+## Version 3.5.1 <a name="3.5.1"></a> (September 22, 2023)
+
+### Routine
+
+* The Artifact Hub annotations related to container images have been removed from the [Chart.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/Chart.yaml) file to prevent redundant checks.
+
+
+## Version 3.5.0 <a name="3.5.0"></a> (September 21, 2023)
+
+## What's new
+
+In this release, we've streamlined EDP installation. The EDP installer now focuses on setting up only core components like edp-headlamp, edp-tekton, codebase-operator, and cd-pipeline-operator. Additional resources, such as Nexus and SonarQube operators can be installed separately. Moreover, the edp-sonar-operator is now accessible as a standalone solution on [OperatorHub](https://operatorhub.io/operator/sonar-operator).
+
+To enhance the security of your software delivery process, we present a new feature: Security Supply Chain with Tekton Chains. It allows for securely capturing and verifying metadata, including source code, dependencies, containers, infrastructure, and applications. With the help of Tekton Chains, users can sign software artifacts with cryptographic keys (e.g., x509 or KMS) and store them in various backends like Tekton Results API or OCI registries. This feature also ensures compliance with [SLSA](https://slsa.dev/spec/v1.0/requirements) L2 and L3 provenance standards.
+
+We've significantly restructured our secret management process. Currently, this updated secret approach has been implemented for the components, such as Jira, DefectDojo, DependencyTrack, Nexus, and SonarQube. EDP Portal has been equipped with the ability to both create and manage these secrets.
+
+We've introduced [Capsule](https://capsule.clastix.io/) support to enhance our CI/CD platform, bringing tenant management benefits to our users. One of the key advantages of integrating Capsule is its multi-tenancy capabilities. With Capsule, we can now efficiently manage multiple tenants in our platform, isolating their environments, resources, and data. This means improved security, scalability, and resource allocation, ensuring a smoother experience for everyone using our platform.
+
+The Configuration section has a new view, with redesigned Container Registry tab. Now, you can create integration secrets for Harbor or AWS ECR directly in the EDP Portal UI. Additionally, the Configuration section has two new tabs: GitOps and Links. In the GitOps tab, you have the flexibility to customize the default [values.yaml](https://github.com/epam/edp-install/blob/release/3.5/deploy-templates/values.yaml) file. Plus, you are able to create or edit EDP components from the Overview page using the Links section.
+
+### New Functionality
+
+* The `Values override` checkbox has been added to the CD pipelines in the Environments section. When this option is enabled, default values are overwritten with custom one when deploying a stage.
+* The edp-keycloak-operator now supports setting multiple equally accessible URLs for one application. The edp-keycloak-operator version v1.17.1 has been published on OperatorHub.
+* The `edpName` value has been removed from the values.yaml file. Now the default Helm values are used instead.
+* The cd-pipeline operator now can use the Capsule tool capabilities to provide multi-tenancy.
+* The `kioskEnabled` parameter has been removed from the values.yaml file. To enable Kiosk, use the `--set global.tenancyEngine=kiosk` parameter instead.
+* Nexus-operator has been aligned to work with the LTS Nexus 3.58.1 version.
+* The method Uint32 for generating cryptographic values has been replaced with the crypto/rand method to improve overall security.
+* The `sonar_url` and `nexus_url` parameters have been deprecated in the values.yaml file and migrated to appropriate secrets.
+* Now EDP Portal notifies users if no namespace is set in the EDP Portal settings.
+* Now the Create button in the Components section is hidden in case if no Git Server or GitOps repository is connected.
+* The link that refers to a newly created application is now displayed if it was successfully created in Marketplace.
+* The Git Server provisioning has been modified. Now users can provision only one Git Server.
+* The required fields for most tabs in the Configuration section have been redesigned.
+* A new tab called GitOps has been added to the Configuration section. It is designed to create a repository that follows the GitOps approach where the parameter are stored. These parameters can override the default values of the CD application. GitOps entities in the contain a link to the values.yaml files from CD Stage.
+* The DependencyTrack tab has been added to the Configuration section. It allows to add the DependencyTrack stage into pipelines to have an additional security scanner.
+* The Configuration section now contains a new tab called Links. It enables users to create or edit EDP components that are usually shown in the Overview page of the EDP Portal UI.
+
+### Enhancements
+
+* The SonarQube scanner now uses Java11 to work with Java8 applications.
+* The default host for the GitLab server is now set to `gitlab.com`.
+* To make the UI more interactive, clicking on the Deploy/Update/Uninstall buttons in the Environments section is now accompanied by corresponding notifications.
+* The `keycloakUrl` parameter has been moved to the OIDC section.
+* The `admins` and `developers` fields for Keycloak users have been moved to the sso subsection.
+* The `sso.enabled` parameter has been added to allow user to manage edp-keycloak-operator resource creation for Argo CD.
+* The secret name pattern for Version Control Systems has been modified for GitHub and GitLab. The current secret name is `ci-github` and `ci-gitlab`.
+* The docker-registry component has been renamed to container-registry in the Overview page.
+* The `validateMaintainers` parameter is now disabled by default for the Chart Testing linter.
+
+### Fixed Issues
+
+* Fixed security issue when the NuGet token was shown in output logs.
+* Fixed issue with external component logic when necessary secrets weren't mounted to Tekton tasks.
+* The default versioning type on longer relies on the application version to prevent Jira integration issues.
+* Fixed issue when Build pipeline failed for Go operator SDK on  the `sonar` step.
+* Fixed issue when incorrect properties were set for the Git Server resource.
+* Fixed incorrect the execution sequence in the update-build-number and SAST tasks for NPM.
+* Fixed issue when the "Push" task pushed incorrect Java, C#, and Python application version into Nexus.
+* Fixed unexpected Review pipeline failure on the `sonar` stage for Maven autotest codebase type if Clone or Import strategy is used.
+
+### Documentation
+
+The [Getting Started](https://epam.github.io/edp-install/overview/) section is updated with the following:
+  * The [Supported Versions and Compatibility](https://epam.github.io/edp-install/supported-versions/) page has been updated.
+
+The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+  * The [Adjust Jira Integration](https://epam.github.io/edp-install/operator-guide/jira-integration/) page has been updated.
+  * The [Install DependencyTrack](https://epam.github.io/edp-install/operator-guide/dependency-track/) page has been added.
+  * The [Install via AWS Marketplace](https://epam.github.io/edp-install/operator-guide/aws-marketplace-install/) page has been added.
+  * The [Cluster Add-Ons Overview](https://epam.github.io/edp-install/operator-guide/add-ons-overview/) page has been added.
+  * The [Upgrade EDP v3.3 to 3.4](https://epam.github.io/edp-install/operator-guide/upgrade-edp-3.4/) page has been added.
+  * The [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/) page has been updated.
+  * The [Integrate Harbor With EDP Pipelines](https://epam.github.io/edp-install/operator-guide/container-registry-harbor-integration-tekton-ci/) page has been updated.
+  * The [Install DefectDojo](https://epam.github.io/edp-install/operator-guide/install-defectdojo/) page has been updated.
+  * The [SonarQube Integration](https://epam.github.io/edp-install/operator-guide/sonarqube/) page has been updated.
+  * The [Nexus Sonatype Integration](https://epam.github.io/edp-install/operator-guide/nexus-sonatype/) page has been updated.
+
+The [Developer Guide](https://epam.github.io/edp-install/developer-guide/) is updated with the following:
+  * The [EDP Project Rules. Working Process](https://epam.github.io/edp-install/operator-guide/nexus-sonatype/) page has been updated.
+
+Other:
+  * The edp namespace name has been changed to `edp` throughout the whole documentation.
+  * The URL for the EDP documentation has been changed.
 
 
 ## Version 3.4.1 <a name="3.4.1"></a> (August 28, 2023)
@@ -106,7 +203,7 @@ To strengthen security measures, we're [expanding our security checks by integra
 * User interface has been significantly refactored. The Headlamp UI has been renamed to EDP Portal.
 * The Keycloak user password can also be set from secret.
 * The ability to configure SubComponent of component in a realm has been added.
-* The edp-keycloak-operator is now provided with CI/CD established on Github.
+* The edp-keycloak-operator is now provided with CI/CD established on GitHub.
 * The codebase-operator now requires the helm-docks stage to ensure documentation updates with chart changes.
 * Since EDP v3.4.0, the Jenkins deploy scenario is concidered deprecated.
 * Users can now provide credentials of private registry into any CD namespace.
