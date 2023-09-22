@@ -32,11 +32,9 @@ kubectl apply -f https://raw.githubusercontent.com/epam/edp-gerrit-operator/v2.1
 <span class=w>    </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class=s>&quot;ecr&quot;</span>
 <span class=w>    </span><span class=c1># -- Docker Registry endpoint</span>
 <span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=s>&quot;&lt;AWS_ACCOUNT_ID&gt;.dkr.ecr.&lt;AWS_REGION&gt;.amazonaws.com&quot;</span>
-</code></pre></div> </li> <li> <p>(Optional) To integrate EDP with Jira, rename the default values from <epam-jira-user> to <jira-user> for a secret name. In case Jira is already integrated, it will continue working.</p> <div class=codehilite><pre><span></span><code>  ```yaml
-  codebase-operator:
-    jira:
-      credentialName: &quot;jira-user&quot;
-  ```
+</code></pre></div> </li> <li> <p>(Optional) To integrate EDP with Jira, rename the default values from <code>epam-jira-user</code> to <code>jira-user</code> for a secret name. In case Jira is already integrated, it will continue working.</p> <div class=highlight><pre><span></span><code><span class=nt>codebase-operator</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>jira</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>credentialName</span><span class=p>:</span><span class=w> </span><span class=s>&quot;jira-user&quot;</span>
 </code></pre></div> </li> <li> <p>(Optional) To switch to the Harbor registry, change the secret format for the external secret from <a href=https://raw.githubusercontent.com/epam/edp-install/v3.3.0/deploy-templates/templates/external-secrets/externalsecret-kaniko.yaml>kaniko-docker-config v3.3.0</a> to <a href=https://raw.githubusercontent.com/epam/edp-install/v3.4.0/deploy-templates/templates/external-secrets/externalsecret-kaniko.yaml>kaniko-docker-config v3.4.1</a>:</p> <details> <summary><b>View: old format</b></summary> <div class=highlight><pre><span></span><code><span class=w> </span><span class=nt>&quot;kaniko-docker-config&quot;</span><span class=p>:</span><span class=w> </span><span class=p>{</span><span class=s2>&quot;secret-string&quot;</span><span class=p>}</span><span class=w> </span><span class=c1>//base64 format</span>
 </code></pre></div> </details> <details> <summary><b>View: new format</b></summary> <div class=highlight><pre><span></span><code><span class=nt>&quot;kaniko-docker-config&quot;</span><span class=p>:</span><span class=w> </span><span class=p>{</span>
 <span class=w>  </span><span class=nt>&quot;auths&quot;</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=p>{</span>
