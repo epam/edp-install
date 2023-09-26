@@ -67,10 +67,10 @@ by taking the steps below.
 
       * Click the **Create project access token** button.
 
-3. Create a secret in the `edp-project` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. Take the following template as an example (use github instead of gitlab for GitHub):
+3. Create a secret in the `edp-project` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. Take the following template as an example (use ci-github instead of ci-gitlab for GitHub):
 
     ```yaml
-    kubectl create secret generic gitlab -n edp \
+    kubectl create secret generic ci-gitlab -n edp \
     --from-file=id_rsa=id_rsa \
     --from-literal=username=git \
     --from-literal=token=your_gitlab_access_token
