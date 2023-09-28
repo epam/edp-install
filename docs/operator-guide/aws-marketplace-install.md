@@ -2,6 +2,8 @@
 
 This documentation provides the detailed instructions on how to install the EPAM Delivery Platform from the AWS marketplace.
 
+![type:video](https://www.youtube.com/embed/0YBLhCfc3Yc)
+
 ## Prerequisites
 
 Please familiarize yourself with the [Prerequisites](prerequisites.md) page before deploying the product. To perform a minimal installation, ensure that you meet the following requirements:
