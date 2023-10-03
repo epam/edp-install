@@ -10,8 +10,8 @@ There are two recommended ways to deploy EPAM Delivery Platform:
     The installation process below is given for a Kubernetes cluster. The steps that differ for an OpenShift cluster are
     indicated in the notes.
 
-!!! note
-    "edp" is the name of the EDP tenant in all the following steps.
+!!! Disclaimer
+    EDP is aligned with industry standards for storing and managing sensitive data, ensuring optimal security. However, the use of custom solutions introduces uncertainties, thus the responsibility for the safety of your data is totally covered by platform administrator.
 
 1. EDP manages secrets via External Secret Operator to integrate with a multitude of utilities. For insights into the secrets in use and their utilization, refer to the provided [External Secrets Operator Integration](./external-secrets-operator-integration.md).
 

@@ -1,8 +1,13 @@
 # Install via AWS Marketplace
 
-This documentation provides the detailed instructions on how to install the EPAM Delivery Platform from the AWS marketplace.
+This documentation provides the detailed instructions on how to install the EPAM Delivery Platform via the AWS Marketplace.
+
+To initiate the installation process, navigate to our dedicated [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-u7xcz6pvwwwoa#pdp-overview) page and commence the deployment of EPAM Delivery Platform.
 
 ![type:video](https://www.youtube.com/embed/0YBLhCfc3Yc)
+
+!!! Disclaimer
+    EDP is aligned with industry standards for storing and managing sensitive data, ensuring optimal security. However, the use of custom solutions introduces uncertainties, thus the responsibility for the safety of your data is totally covered by platform administrator.
 
 ## Prerequisites
 
@@ -71,6 +76,7 @@ As a result, you will get access to EPAM Delivery Platform components via EDP Po
 
 ## Related Articles
 
+* [EPAM Delivery Platform on AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-u7xcz6pvwwwoa#pdp-overview)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
 * [Set Up Kubernetes](kubernetes-cluster-settings.md)
 * [Set Up OpenShift](openshift-cluster-settings.md)

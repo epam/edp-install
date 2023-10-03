@@ -2,14 +2,17 @@
 
 This article provides the instruction on how to deploy EDP and components in Kubernetes using [Helmfile](https://github.com/helmfile/helmfile) that is intended for deploying Helm charts. Helmfile templates are available in [GitHub repository](https://github.com/epam/edp-install/tree/master/helmfiles).
 
+!!! Important
+    The Helmfile installation method for EPAM Delivery Platform (EDP) is currently not actively maintained. We strongly recommend exploring alternative installation options for the most up-to-date and well-supported deployment experience. You may consider using the [Add-Ons approach](../operator-guide/add-ons-overview.md) or opting for installation via the [AWS Marketplace](aws-marketplace-install.md) to ensure a reliable and secure deployment of EDP.
+
 ## Prerequisites
 
 The following tools and plugins must be installed:
 
-* [Kubectl version 1.23.0](https://v1-23.docs.kubernetes.io/releases/download/)
-* [Helm version 3.10.0+](https://github.com/helm/helm/releases/tag/v3.10.0)
-* [Helmfile version 0.144.0](https://github.com/helmfile/helmfile)
-* [Helm diff plugin version 3.6.0](https://github.com/databus23/helm-diff)
+* [Kubectl version 1.23.0](https://v1-23.docs.kubernetes.io/releases/download/);
+* [Helm version 3.10.0+](https://github.com/helm/helm/releases/tag/v3.10.0);
+* [Helmfile version 0.144.0](https://github.com/helmfile/helmfile);
+* [Helm diff plugin version 3.6.0](https://github.com/databus23/helm-diff).
 
 ## Helmfile Structure
 
