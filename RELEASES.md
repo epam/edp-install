@@ -3,6 +3,7 @@
 ## Overview
 
 Get acquainted with the latest EDP releases.
+* [Version 3.5.3](#3.5.3)
 * [Version 3.5.2](#3.5.2)
 * [Version 3.5.1](#3.5.1)
 * [Version 3.5.0](#3.5.0)
@@ -45,6 +46,31 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.5.3 <a name="3.5.3"></a> (September 28, 2023)
+
+### Upgrades
+
+* The Go language is upgraded to the [1.20](https://tip.golang.org/doc/go1.20) version.
+
+### New Functionality
+
+* Added two new buttons, "Show Logs" and "Show Terminal" to the Environments stage within the EDP Portal UI. These buttons empower users to effortlessly access logs and directly log into the associated pod, improving visibility and control during the deployment process.
+* Implemented the capability to sign images when pushing them to Harbor. This added layer of security ensures that your images are signed and verified, enhancing the trustworthiness of your deployments.
+
+### Enhancements
+
+* Updated the Argo CD application creation process. The 'namespace' field in the 'destination' section of the Application resource is now sourced from the 'Stage.spec' resource.
+
+#### Breaking Changes
+
+* The Git Server status now provides a comprehensive error message when failing. If your cluster hosts multiple EDP environments, it is required to update the edp-codebase-operator. However, if you have only one EDP environment in the cluster, applying these changes is unnecessary.
+
+### Fixed Issues
+
+* Fixed issue when Build pipeline failed on sonar step for Go operator SDK.
+* Fixed issue when the update-build-number-gradle task updated all the version keys presented in the build.gradle file.
+* Fixed issue when successful codebase creation notification couldn't appear.
 
 ## Version 3.5.2 <a name="3.5.2"></a> (September 22, 2023)
 
@@ -205,7 +231,7 @@ To strengthen security measures, we're [expanding our security checks by integra
 * The ability to configure SubComponent of component in a realm has been added.
 * The edp-keycloak-operator is now provided with CI/CD established on GitHub.
 * The codebase-operator now requires the helm-docks stage to ensure documentation updates with chart changes.
-* Since EDP v3.4.0, the Jenkins deploy scenario is concidered deprecated.
+* Since EDP v3.4.0, the Jenkins deploy scenario is considered deprecated.
 * Users can now provide credentials of private registry into any CD namespace.
 * The codebase status tooltip has become interactive. Users can copy status message.
 * The links to corresponding documentation has been added throughout the whole EDP Portal.
@@ -215,7 +241,7 @@ To strengthen security measures, we're [expanding our security checks by integra
 * The `el-listener-app-tls` endpoint now supports TLS connection for better security.
 * The `branchVersionPostfix` field is no longer mandatory when creating release branches.
 * Manual/auto trigger type labels are displayed nearly the stage name in CD Pipelines.
-* The CD pipline page has been redesigned.
+* The CD Pipeline page has been redesigned.
 * The labels for DefectDojo and Jira secrets have been added to EDP Portal.
 * An example of values.yaml file with custom certs support has been provided.
 * The `nexusUrl` parameter has been added to the global section.
@@ -332,7 +358,7 @@ Lastly, users can easily check their applications for bugs or other issues using
 * Custom certificates are now also supported by Headlamp to make Headlamp UI more secure.
 * Nexus proxy usage is implemented for the NPM package manager. This feature will increase Nexus flexibility.
 * Code review pipelines can now be re-triggered manually to force their runs by sending "/recheck" reply message. This might be helpful if the code review process is stuck.
-* Autotests as a Quality Gates are now displayed in the CD Pipelines menu for Tekton deploy scenario. This allows users to monitor run status for autotests. By running the appropriate autotests, users can ensure if the application functions properly. Autotest are to also provided with clickable links to have to the possibility to observe pipeline runs.
+* Autotests as a Quality Gates are now displayed in the CD Pipelines menu for Tekton deploy scenario. This allows users to monitor run status for autotests. By running the appropriate autotests, users can ensure if the application functions properly. Autotests are to also provided with clickable links to have to the possibility to observe pipeline runs.
 * GitLab and GitHub now support Create and Clone strategies. This improvement provides increased flexibility for onboarding applications in EDP.
 * New type of component called Infrastructure is added to Headlamp. It allows users to create cloud infrastructures powered by AWS from scratch.
 * Vue, Angular and Express frameworks support is added for JavaScript language.
