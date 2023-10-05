@@ -15,10 +15,10 @@ global:
   # -- Gerrit SSH node port
   # gerritSSHPort: "22"
   dockerRegistry:
-    # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor
+    # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor, dockerhub
     type: "ecr"
-    # -- Docker Registry endpoint
-    url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
+    # -- Docker Registry endpoint. In dockerhub case the URL must be specified in accordance with the Kaniko name convention (docker.io/<registry_space>)
+    url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/<registry_space>"
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
