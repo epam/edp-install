@@ -1,10 +1,12 @@
 # Integrate GitHub/GitLab in Tekton
 
-This page describes how to integrate EDP with GitLab or GitHub in case of following the Tekton deploy scenario.
+This page describes how to integrate EDP with GitLab or GitHub Version Control System.
+
+![type:video](https://www.youtube.com/embed/pzheGwBLZvU)
 
 ## Integration Procedure
 
-To start from, it is required to add both Secret with SSH key and GitServer custom resources
+To start from, it is required to add both Secret with SSH key, API token, and [GitServer](../user-guide/add-git-server.md) resources
 by taking the steps below.
 
 1. Generate an SSH key pair and add a public key to [GitLab](https://docs.gitlab.com/ee/ssh/)
@@ -55,7 +57,7 @@ by taking the steps below.
       !!! note
           Make sure to save the access token as there will not be any ability to access it once again.
 
-      In case you want to create a project access token instead of a personal one, the GitLab Jenkins plugin will be able to accept payloads from webhooks for the project only:
+      In case you want to create a project access token instead of a personal one, take the following steps:
 
       * Log in to GitLab and navigate to the project.
       * On the **User Settings** menu, select *Access Tokens*.
@@ -67,7 +69,7 @@ by taking the steps below.
 
       * Click the **Create project access token** button.
 
-3. Create a secret in the `edp-project` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. Take the following template as an example (use ci-github instead of ci-gitlab for GitHub):
+3. Create a secret in the `edp` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. Take the following template as an example (use ci-github instead of ci-gitlab for GitHub):
 
     ```yaml
     kubectl create secret generic ci-gitlab -n edp \

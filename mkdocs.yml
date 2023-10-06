@@ -300,7 +300,7 @@ nav:
         - user-guide/add-quality-gate.md
     - Configuration:
       - Git Server:
-          - user-guide/add-git-server.md
+          #- user-guide/add-git-server.md
           - Manage Git Servers: user-guide/git-server-overview.md
       - Cluster:
           - user-guide/add-cluster.md

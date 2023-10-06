@@ -1,25 +1,20 @@
 # Manage Git Servers
 
-Git Server is a custom resource that is required for using the import strategy when creating a new component, whether it is an application, library, autotest or infrastructure.
+Git Server is responsible for integration with Version Control System, whether it is GitHub, Gitlab or Gerrit.
 
-Under the hood, Git server in EDP Portal is a Kubernetes secret that stores credentials to the remote Git server.
+![type:video](https://www.youtube.com/embed/pzheGwBLZvU)
 
-The added application will be listed in the Applications list allowing you to do the following:
+The Git Server is set via the **global.gitProvider** parameter of the [values.yaml](https://github.com/epam/edp-install/blob/release/3.5/deploy-templates/values.yaml#L14) file.
+
+To view the current Git Server, you can open `EDP` -> `Configuration` -> `Git Servers` and inspect the following properties:
 
 !![Git Server menu](../assets/user-guide/edp-portal-git-server-overview.png "Git Server menu")
 
-* **Git Server status** - displays the Git Server status. Can be red or green depending on if the EDP Portal managed to connect to the Git Server with the specified credentials or not.
+* **Git Server status and name** - displays the Git Server status, which depends on the Git Server integration status (Success/Failed).
 
-* **Git Server name** - displays the Git Server name set during the Git Server creation.
+* **Git Server properties** - displays the Git Server type, its host address, username, SSH/HTTPS port, and name of the secret that contains SSH key.
 
-* **Open documentation** - opens the documentation that leads to this page.
-
-* **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
-
-* **Create new Git Server** - displays the **Create Git Server** menu.
-
-!!! note
-    Git Server can't be deleted via the EDP Portal UI. Use the `kubectl delete GitServer <Git_server_name> -n edp` command to delete the GitServer custom resource.
+* **Open documentation** - opens the "Manage Git Servers" documentation page.
 
 ## View Authentication Data
 
@@ -40,3 +35,4 @@ To remove a Git Server from the Git Servers list, utilize the `kubectl delete` c
 # Related Articles
 
 * [Add Git Server](../user-guide/add-git-server.md)
+* [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
