@@ -32,7 +32,7 @@ To remove a Git Server from the Git Servers list, utilize the `kubectl delete` c
   kubectl delete GitServer git_server_name -n edp
   ```
 
-# Related Articles
+## Related Articles
 
 * [Add Git Server](../user-guide/add-git-server.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)

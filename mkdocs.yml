@@ -172,9 +172,11 @@ nav:
         - Install ReportPortal: operator-guide/install-reportportal.md
         - Install Argo CD: operator-guide/install-argocd.md
         - Install Tekton: operator-guide/install-tekton.md
-        - Kiosk:
-            - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
-            - Set Up Kiosk: operator-guide/install-kiosk.md
+        - Multi-Tenancy:
+          - Capsule: operator-guide/capsule.md
+          - Kiosk:
+              - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
+              - Set Up Kiosk: operator-guide/install-kiosk.md
         - Install Harbor: operator-guide/install-harbor.md
       - Install EDP: operator-guide/install-edp.md
       - Install via Helmfile: operator-guide/install-via-helmfile.md
