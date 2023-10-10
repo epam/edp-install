@@ -50,13 +50,9 @@ Mind the parameters in the EDP installation chart. For details, please refer to 
 Find below the example of the installation command:
 
         helm install edp epamedp/edp-install --wait --timeout=900s \
-        --version <edp_version> \
         --set global.dnsWildCard=<cluster_DNS_wilcdard> \
         --set global.platform=<platform_type> \
         --set awsRegion=<region> \
-        --set global.dockerRegistry.url=<aws_account_id>.dkr.ecr.<region>.amazonaws.com \
-        --set keycloak-operator.keycloak.url=<keycloak_endpoint> \
-        --set global.gerritSSHPort=<gerrit_ssh_port> \
         --namespace edp
 
 !!! warning
