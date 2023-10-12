@@ -17,8 +17,12 @@ global:
   dockerRegistry:
     # -- Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor, dockerhub
     type: "ecr"
-    # -- Docker Registry endpoint. In dockerhub case the URL must be specified in accordance with the Kaniko name convention (docker.io/<registry_space>)
-    url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/<registry_space>"
+    # -- Docker Registry endpoint.
+    url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
+    # -- Container registry space
+    # -- In Dockerhub - account/organization username, in Harbor - project
+    # -- In Openshift registry - project, in ECR - repository group
+    space: "<registry_space>"
 
 # -- AWS Region, e.g. "eu-central-1"
 awsRegion:
