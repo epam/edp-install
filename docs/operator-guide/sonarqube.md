@@ -2,6 +2,8 @@
 
 This documentation guide provides comprehensive instructions for integrating SonarQube with the EPAM Delivery Platform.
 
+![type:video](https://www.youtube.com/embed/0duxqmIKFpQ)
+
 !!! info
     In EDP release 3.5, we have changed the deployment strategy for the sonarqube-operator component, now it is not installed by default. The `sonarURL` parameter management has been transferred from the values.yaml file to Kubernetes secrets.
 
