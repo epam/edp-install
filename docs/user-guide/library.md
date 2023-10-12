@@ -6,19 +6,18 @@ This section describes the subsequent possible actions that can be performed wit
 
 As soon as the library is successfully provisioned, the following will be created:
 
-- Code Review and Build pipelines in Jenkins/Tekton for this library. The Build pipeline will be triggered automatically if at least one environment is already added.
-- A new project in Gerrit or another VCS.
-- SonarQube integration will be available after the Build pipeline in Jenkins/Tekton is passed.
-- Nexus Repository Manager will be available after the Build pipeline in Jenkins/Tekton is passed as well.
+- A Library Codebase type will appear in the Codebase list of the Components section.
+- With the **Create** strategy, a new project will be generated on GitHub or another integrated VCS. When **Clone** is chosen, the repository will be forked from the original and copied to the EDP-integrated repository. If **Import** is selected, the platform connects to the chosen repository.
+
 
 !!! info
-    To navigate quickly to OpenShift, Jenkins/Tekton, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
+    To navigate quickly to OpenShift, Tekton, Gerrit, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
 
 The added library will be listed in the Libraries list allowing to do the following:
 
 !![Library menu](../assets/user-guide/edp-portal-library-page.png "Library menu")
 
-1. Create another library by clicking the plus sign icon in the lower-right corner of the screen and performing the same steps as described on the [Add Library](add-library.md) page.
+1. Create another library by clicking the plus sign icon on the right side of the screen and performing the same steps as described on the [Add Library](add-library.md) page.
 
 2. Open library data by clicking its link name. Once clicked, the following blocks will be displayed:
 
@@ -28,7 +27,7 @@ The added library will be listed in the Libraries list allowing to do the follow
 * **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
 * **Create new library** - displays the **Create new component** menu.
 * **Edit library** - edit the library by selecting the options icon next to its name in the libraries list, and then selecting **Edit**. For details see the [Edit Existing Library](#edit-existing-library) section.
-* **Delete Library** - remove library with the corresponding database and Jenkins/Tekton pipelines by selecting the options icon next to its name in the libraries list, and then selecting **Delete**.
+* **Delete Library** - remove library by clicking the vertical ellipsis button and then selecting **Delete**.
 
   !!! note
       The library that is used in a CD pipeline cannot be removed.
@@ -56,19 +55,15 @@ EDP Portal provides the ability to enable, disable or edit the Jira Integration 
 
    !![Edit library](../assets/user-guide/edp-portal-edit-library-jira.png "Edit library")
 
-   a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see steps d-h on the [Add Library page](add-library.md#the-advanced-settings-menu).
+   a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see the steps d-h of the [Add Library](add-library.md#the-advanced-settings-menu) page.
 
    b. Select the **Apply** button to apply the changes.
-
-   c. Navigate to Jenkins/Tekton and add the _create-jira-issue-metadata_ stage in the Build pipeline. Also add the _commit-validate_ stage in the Code Review pipeline.
 
 3. To disable Jira integration, in the **Edit Library** dialog do the following:
 
    a. Uncheck the **Integrate with Jira server** check box.
 
    b. Select the **Apply** button to apply the changes.
-
-   c. Navigate to Jenkins/Tekton and remove the _create-jira-issue-metadata_ stage in the Build pipeline. Also remove the _commit-validate_ stage in the Code Review pipeline.
 
   As a result, the necessary changes will be applied.
 

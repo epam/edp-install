@@ -1,8 +1,8 @@
 # Add Infrastructure
 
-EDP Portal allows to create, clone and import an infrastructure. Its functionality is to create resources in cloud provider.
+EDP Portal allows you to create an application, clone an existing repository with the application to your Version Control System (VCS), or using an external repository and importing an application to the environment. When an application is created or cloned, the system automatically generates a corresponding repository within the integrated Version Control System. The functionality of the Infrastructure codebase type is to create resources in cloud provider.
 
-To add an application, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create new component** dialog will appear, then select **Application** and choose one of the strategies which will be described later in this page. You can create an Application [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
+To add an application, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon on the right side of the screen). Once clicked, the **Create new component** dialog will appear, then select **Application** and choose one of the strategies which will be described later in this page. You can create an Application [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
 ## Create Infrastructure in YAML <a name="YAML"></a>
 
@@ -33,10 +33,10 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
 
 * **Create from template** – creates a project on the pattern in accordance with an infrastructure language, a build tool, and a framework.
 
-* **Import project** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
+* **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
 
   !!! note
-      In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
+      In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
 
 * **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field as well:
 
@@ -65,7 +65,7 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
         The **Select Build Tool** field disposes of the default tools and can be changed in accordance with the selected code language.
 
 
-  ### Advanced Settings Menu
+### Advanced Settings Menu
 
 The **Advanced Settings** menu should look similar to the picture below:
 
@@ -136,9 +136,6 @@ h. Click the **Apply** button to add the application to the Applications list.
 !!! note
     After the complete adding of the application, inspect the [Application Overview](application.md) part.
 
-!!! note
-    Since EDP v3.3.0, the **CI tool** field has been hidden. Now EDP Portal automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, EDP Portal chooses Tekton by default. To define the CI tool manually, operate with the **spec.ciTool** parameters.
-
 ## Related Articles
 
 * [Application Overview](application.md)
@@ -147,6 +144,4 @@ h. Click the **Apply** button to add the application to the Applications list.
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
 * [Enable VCS Import Strategy](../operator-guide/import-strategy.md)
-* [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
-* [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Perf Server Integration](../operator-guide/perf-integration.md)

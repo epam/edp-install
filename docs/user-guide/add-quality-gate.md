@@ -16,7 +16,7 @@ Quality gate pipeline is a usual Tekton pipeline but with a specific label: `app
     metadata:
       name: <name-of-quality-gate>
     ```
-  3. Ensure the task `promote-images` contains steps and logic to apply to the project. Also ensure that the last task is `promote-images` which parameters are mandatory.
+  3. Ensure the task `promote-images` contains steps and logic to apply to the project. Also ensure that the last task is `promote-images` which parameters are mandatory:
     ```
     spec:
       params:
@@ -47,7 +47,7 @@ Quality gate pipeline is a usual Tekton pipeline but with a specific label: `app
     ```
   4. Create a new pipeline with a unique name or modify your created pipeline with the command below. Please be aware that the ‹edp-project› value is the name of the EDP tenant:
       ```
-      kubectl apply -f <file>.yaml -namespace ‹edp-project›
+      kubectl apply -f <file>.yaml --namespace edp
       ```
    <details>
    <summary><b>Example: file.yaml</b></summary>
@@ -109,8 +109,7 @@ Before running the quality gate, first of all, ensure that the environment has d
 
     !![CD pipeline stage overview](../assets/user-guide/qg_cd_status.png "CD pipeline stage overview")
 
-2. Select the `<name-of-quality-gate>` of `Quality gates` from the drop-down list and click the `RUN` button.<br>The execution process should be started in the `Pipelines` menu:
-
+2. Select the name-of-quality-gate of `Quality gates` from the drop-down list and click the `RUN` button.<br>The execution process should be started in the `Pipelines` menu:
 
     !![Quality gate pipeline status](../assets/user-guide/qg_stage_status.png "Quality gate pipeline status")
 
@@ -129,4 +128,5 @@ As a result, after the quality gate is successfully passed, the projected image 
 
 ## Related Articles
 
+* [Manage Environments](../user-guide/manage-environments.md)
 * [Add CD Pipeline](../user-guide/add-cd-pipeline.md)

@@ -1,6 +1,6 @@
 # Manage Git Servers
 
-Git Server is responsible for integration with Version Control System, whether it is GitHub, Gitlab or Gerrit.
+Git Server is responsible for integration with Version Control System, whether it is GitHub, GitLab or Gerrit.
 
 ![type:video](https://www.youtube.com/embed/pzheGwBLZvU)
 

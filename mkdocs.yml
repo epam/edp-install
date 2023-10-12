@@ -301,6 +301,7 @@ nav:
       - Manage Branches: user-guide/manage-branches.md
     - Environments:
         - user-guide/add-cd-pipeline.md
+        - user-guide/manage-environments.md
         - user-guide/add-quality-gate.md
     - Configuration:
       - Git Server:

@@ -1,8 +1,8 @@
 # Add Application
 
-Portal allows to create, clone and import an application and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins/Tekton.
+EDP Portal allows you to create an application, clone an existing repository with the application to your Version Control System (VCS), or using an external repository and importing an application to the environment. When an application is created or cloned, the system automatically generates a corresponding repository within the integrated Version Control System.
 
-To add an application, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create new component** dialog will appear, then select **Application** and choose one of the strategies which will be described later in this page. You can create an Application [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
+To add an application, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon on the right side of the screen). Once clicked, the **Create new component** dialog will appear, then select **Application** and choose one of the strategies which will be described later in this page. You can create an Application [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
 ## Create Application in YAML <a name="YAML"></a>
 
@@ -34,10 +34,10 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
 
 * **Create from template** – creates a project on the pattern in accordance with an application language, a build tool, and a framework. This strategy is recommended for projects that start developing their applications from scratch.
 
-* **Import project** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
+* **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
 
   !!! note
-      In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
+      In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
 
 * **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field as well:
 
@@ -124,15 +124,11 @@ c. Specify the pattern to validate a commit message. Use regular expression to i
 d. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
 
 !!! note
-    To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page, and setup the [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md). Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
+    To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page.
 
 e. In the **Jira Server** field, select the Jira server.
 
 f. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira. Combine several variables to obtain the desired value.
-
-!!! note
-    The GitLab CI tool is available only with the **Import** strategy and makes the **Jira integration** feature unavailable.
-
 
   !![Mapping field name](../assets/user-guide/edp-portal-advanced-mapping.png "Mapping fields")
 
@@ -156,9 +152,6 @@ h. Click the **Apply** button to add the application to the Applications list.
 !!! note
     After the complete adding of the application, inspect the [Application Overview](application.md) part.
 
-!!! note
-    Since EDP v3.3.0, the **CI tool** field has been hidden. Now EDP Portal automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, EDP Portal chooses Tekton by default. To define the CI tool manually, operate with the **spec.ciTool** parameters.
-
 ## Related Articles
 
 * [Manage Applications](application.md)
@@ -166,8 +159,5 @@ h. Click the **Apply** button to add the application to the Applications list.
 * [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
-* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
-* [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
-* [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Perf Server Integration](../operator-guide/perf-integration.md)

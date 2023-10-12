@@ -1,8 +1,8 @@
 # Add Library
 
-Portal helps to create, clone and import a library and add it to the environment. It can also be deployed in Gerrit (if the Clone or Create strategy is used) with the Code Review and Build pipelines built in Jenkins/Tekton.
+EDP Portal allows you to create a library, clone an existing repository with the library to your Version Control System (VCS), or using an external repository and importing a library to the environment. When a library is created or cloned, the system automatically generates a corresponding repository within the integrated VCS.
 
-To add a library, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create new component** dialog will appear, then select **Library** and choose one of the strategies which will be described later in this page. You can create a library [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
+To add a library, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon on the right side of the screen). Once clicked, the **Create new component** dialog will appear, then select **Library** and choose one of the strategies which will be described later in this page. You can create a library [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
   !![Edit YAML](../assets/user-guide/headlamp_new_component_library.png "Create new component menu")
 
@@ -33,10 +33,10 @@ The **Create Library** dialog contains the two steps:
 
   * **Create from template** – creates a project on the pattern in accordance with a library language, a build tool, and a framework.
 
-  * **Import project** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
+  * **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
 
     !!! note
-        In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
+        In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
 
   * **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field as well:
 
@@ -139,9 +139,6 @@ h. Click the **Apply** button to add the library to the Libraries list.
 !!! note
     After the complete adding of the library, inspect the [Library Overview](library.md) part.
 
-!!! note
-    Since EDP v3.3.0, the **CI tool** field has been hidden. Now EDP Portal automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, EDP Portal chooses Tekton by default. To define the CI tool manually, operate with the **spec.ciTool** parameters.
-
 ## Related Articles
 
 * [Manage Libraries](library.md)
@@ -149,10 +146,7 @@ h. Click the **Apply** button to add the library to the Libraries list.
 * [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
-* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
-* [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
-* [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Perf Server Integration](../operator-guide/perf-integration.md)
 
 [//]: # (* [Use Terraform Library in EDP]&#40;terraform-stages.md&#41;)

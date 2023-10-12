@@ -6,10 +6,8 @@ This section describes the subsequent possible actions that can be performed wit
 
 As soon as the application is successfully provisioned, the following will be created:
 
-- Code Review and Build pipelines in Jenkins/Tekton for this application. The Build pipeline will be triggered automatically if at least one environment is already added.
-- A new project in Gerrit or another VCS.
-- SonarQube integration will be available after the Build pipeline in Jenkins/Tekton is passed.
-- Nexus Repository Manager will be available after the Build pipeline in Jenkins/Tekton is passed as well.
+- An Application Codebase type will appear in the Codebase list of the Components section.
+- With the **Create** strategy, a new project will be generated on GitHub or another integrated VCS. When **Clone** is chosen, the repository will be forked from the original and copied to the EDP-integrated repository. If **Import** is selected, the platform connects to the chosen repository.
 
 The added application will be listed in the Applications list allowing you to do the following:
 
@@ -21,7 +19,7 @@ The added application will be listed in the Applications list allowing you to do
 * **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
 * **Create new application** - displays the **Create new component** menu.
 * **Edit application** - edit the application by selecting the options icon next to its name in the applications list, and then selecting **Edit**. For details see the [Edit Existing Application](#edit-existing-application) section.
-* **Delete application** - remove application by selecting the options icon next to its name in the applications list, and then selecting **Delete**.
+* **Delete application** - remove application by clicking the vertical ellipsis button and then selecting **Delete**.
 
   !!! note
       The application that is used in a CD pipeline cannot be removed.
@@ -56,15 +54,11 @@ EDP Portal provides the ability to enable, disable or edit the Jira Integration 
 
    b. Select the **Apply** button to apply the changes.
 
-   c. (Optional) Enable commit validation mechanism by navigating to Jenkins/Tekton and adding the _commit-validate_ stage in the Code Review pipeline to have your commits reviewed.
-
 3. To disable Jira integration, in the **Edit Application** dialog do the following:
 
    a. Uncheck the **Integrate with Jira server** check box.
 
    b. Select the **Apply** button to apply the changes.
-
-   c. (Optional) Disable commit validation mechanism by navigating to Jenkins/Tekton and removing the _commit-validate_ stage in the Code Review pipeline to have your commits reviewed.
 
 4. To create, edit and delete application branches, please refer to the [Manage Branches](../user-guide/manage-branches.md) page.
 

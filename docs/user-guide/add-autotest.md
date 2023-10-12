@@ -1,13 +1,12 @@
 # Add Autotest
 
-Portal enables to clone or import an autotest, add it to the environment with its subsequent deployment in Gerrit (in case the Clone strategy is used) and building of the Code Review pipeline in Jenkins/Tekton, as well as to use it for work with an application under development.
- It is also possible to use autotests as quality gates in a newly created CD pipeline.
+EDP Portal allows you to clone an existing repository with the autotest to your Version Control System (VCS), or using an external repository and adding an autotest for further running in stages or using them as quality gates for applications. When an autotest is cloned, the system automatically generates a corresponding repository within the integrated VCS.
 
 !!! info
     Please refer to the [Add Application](add-application.md) section for the details on how to add an application codebase type.
-    For the details on how to use autotests as quality gates, please refer to the [Stages Menu](add-cd-pipeline.md#the-stages-menu) section of the [Add CD Pipeline](add-cd-pipeline.md) documentation.
+    For the details on how to use autotests as quality gates, please refer to the [Stages Menu](add-cd-pipeline.md#the-stages-menu) section of the [Add Environment](add-cd-pipeline.md) documentation.
 
-To add an autotest, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon in the lower-right corner of the screen). Once clicked, the **Create new component** dialog will appear, then select **Autotest** and choose one of the strategies which will be described later in this page. You can create an autotest [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
+To add an autotest, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon on the right side of the screen). Once clicked, the **Create new component** dialog will appear, then select **Autotest** and choose one of the strategies which will be described later in this page. You can create an autotest [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
 ## Create Autotest in YAML <a name="YAML"></a>
 
@@ -34,14 +33,14 @@ There are two available strategies: clone and import.
 
   !![Create new component menu](../assets/user-guide/create_new_autotest.png "Create new component menu")
 
-2. In the **Repository onboarding strategy** field, select the necessary configuration strategy:
+2. In the **Create new component** menu, select the necessary configuration strategy. The choice will define the parameters you will need to specify:
 
   * **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field as well.
 
-  * **Import project** - allows configuring a replication from the Git server. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
+  * **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
 
     !!! note
-        In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
+        In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
 
     In our example, we will use the **Clone project** strategy:
 
@@ -131,9 +130,6 @@ h. Click the **Apply** button to add the library to the Libraries list.
 !!! note
     After the complete adding of the autotest, inspect the [Autotest Overview](autotest.md) part.
 
-!!! note
-    Since EDP v3.3.0, the **CI tool** field has been hidden. Now EDP Portal automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, EDP Portal chooses Tekton by default. To define the CI tool manually, operate with the **spec.ciTool** parameters.
-
 ## Related Articles
 
 * [Manage Autotests](autotest.md)
@@ -142,8 +138,5 @@ h. Click the **Apply** button to add the library to the Libraries list.
 * [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
-* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
-* [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)
-* [Manage Jenkins Agent](../operator-guide/add-jenkins-agent.md)
 * [Perf Server Integration](../operator-guide/perf-integration.md)

@@ -2,6 +2,12 @@
 
 Adding other clusters allows deploying applications to several clusters when creating a stage of CD pipeline in EDP Portal.
 
+!!! note
+    Before proceeding with the content on this documentation page, it's essential to ensure that Argo CD is integrated into the same cluster with an identical name. At present, EDP operates with the shared Argo CD, necessitating the copying of the secret to the namespace where Argo CD is installed. The command sample is below:
+    ```bash
+    kubectl get secret <SECRET_NAME> --namespace=edp -o yaml | sed 's/namespace: .*/namespace: argocd/' | kubectl apply -f -
+    ```
+
 To add a cluster, follow the steps below:
 
 1. Navigate to the **Configuration** section on the navigation bar and select **Clusters**. The appearance differs depending on the chosen display option:
@@ -38,19 +44,11 @@ To add a cluster, follow the steps below:
 
     * To add a new cluster via the dialog menu, fill in the following fields in the **Create New Cluster** dialog:
 
-      * **Cluster Name** - enter a cluster name;
-      * **Cluster Host** - enter a cluster host;
-      * **Cluster Token** - enter a cluster token;
-      * **Cluster Certificate** - enter a cluster certificate.
-
     !![Add Cluster](../assets/user-guide/edp-portal-add-cluster.png "Add Cluster")
 
     * Click the **Apply** button to add the cluster to the clusters list.
 
 As a result, the [Kubernetes secret](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) will be created for further integration.
-
-!!! warning ""
-    Currently, the EDP uses the shared Argo CD and the secret needs to be copied to the namespace where the Argo CD is installed.
 
 ## Related Articles
 
