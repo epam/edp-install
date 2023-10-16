@@ -308,6 +308,8 @@ nav:
       - Cluster:
           - user-guide/add-cluster.md
           - Manage Clusters: user-guide/cluster.md
+      - GitOps:
+          - user-guide/gitops.md
   - Developer Guide:
     - developer-guide/index.md
     - developer-guide/local-development.md
