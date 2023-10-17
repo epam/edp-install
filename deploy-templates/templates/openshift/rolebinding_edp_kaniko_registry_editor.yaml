@@ -9,7 +9,7 @@ roleRef:
   kind: ClusterRole
   name: registry-editor
 subjects:
-  - kind: ServiceAccount
-    name: edp-kaniko
-    namespace: {{ .Release.Namespace }}
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: kaniko-push
 {{- end -}}
