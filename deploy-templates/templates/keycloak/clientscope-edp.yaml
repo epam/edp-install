@@ -11,18 +11,6 @@ spec:
   description: "default edp scope required for admin console, nexus and oauth2-proxy"
   protocol: openid-connect
   protocolMappers:
-    - name: nexus-audience
-      protocol: openid-connect
-      protocolMapper: "oidc-audience-mapper"
-      config:
-        "access.token.claim": "true"
-        "included.client.audience": "nexus"
-    - name: admin-console-client-audience
-      protocol: openid-connect
-      protocolMapper: "oidc-audience-mapper"
-      config:
-        "access.token.claim": "true"
-        "included.client.audience": "admin-console-client"
     - name: oauth2-proxy-audience
       protocol: openid-connect
       protocolMapper: "oidc-audience-mapper"
