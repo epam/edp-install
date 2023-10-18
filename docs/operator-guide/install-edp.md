@@ -1,6 +1,6 @@
 # Install EDP
 
-Inspect the main steps to install EPAM Delivery Platform. Please check the [Prerequisites Overview](prerequisites.md) page before starting the installation.
+Inspect the main steps to install EPAM Delivery Platform. Please check the [Prerequisites Overview](prerequisites.md) page before starting the installation. Also to authenticate each of the release artifacts, please refer to the  [Verification of EDP Artifacts](artifacts_verification.md) guide.
 There are two recommended ways to deploy EPAM Delivery Platform:
 
 * Using Helm (see below);
@@ -225,3 +225,4 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 * [Set Up OpenShift](openshift-cluster-settings.md)
 * [EDP Installation Prerequisites Overview](prerequisites.md)
 * [Headlamp OIDC Integration](headlamp-oidc.md)
+* [Verification of EDP Artifacts](artifacts_verification.md)
