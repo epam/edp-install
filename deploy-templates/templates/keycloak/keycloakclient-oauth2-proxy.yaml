@@ -11,7 +11,9 @@ spec:
   public: false
   defaultClientScopes:
     - edp
-  targetRealm: "{{ .Release.Namespace }}-main"
+  realmRef:
+    kind: KeycloakRealm
+    name: main
   webUrl: "https://{{ include "oauth2_proxy.Url" . }}"
 {{ end }}
 {{ end }}
