@@ -9,9 +9,6 @@ global:
     url: image-registry.openshift-image-registry.svc:5000
 externalSecrets:
   enabled: false
-argocd:
-  enabled: false
-  url:
 edp-headlamp:
   extraVolumes:
   - name: custom-ca

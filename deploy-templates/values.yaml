@@ -40,14 +40,6 @@ sso:
     - "stub_user_one@example.com"
     - "stub_user_two@example.com"
 
-argocd:
-  # -- Configure Argo CD for EDP platform.
-  enabled: false
-  # -- Custom secret name for argo-cd keycloak client. Ignored if external secret enabled.
-  oidcSecretName:
-  # -- @default -- `""` (defaults to https://argocd.{{ .Values.global.dnsWildCard }})
-  url:
-
 # Configure External Secrets Operator to provision secrets for Platform and/or EDP
 # https://external-secrets.io/latest/provider-aws-secrets-manager/
 externalSecrets:

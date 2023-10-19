@@ -37,9 +37,6 @@ A Helm chart for EDP Install
 |-----|------|---------|-------------|
 | EDPComponents | object | `{}` |  |
 | annotations | object | `{}` |  |
-| argocd.enabled | bool | `false` | Configure Argo CD for EDP platform. |
-| argocd.oidcSecretName | string | `nil` | Custom secret name for argo-cd keycloak client. Ignored if external secret enabled. |
-| argocd.url | string | `nil` |  |
 | awsRegion | string | `nil` | AWS Region, e.g. "eu-central-1" |
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | cd-pipeline-operator.tenancyEngine | string | `"none"` | defines the type of the tenant engine that can be "none", "kiosk" or "capsule" |
