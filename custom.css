@@ -1,0 +1,3 @@
+table tr:nth-child(3n+2) {
+    border-top: none;
+}

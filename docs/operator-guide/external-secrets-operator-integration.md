@@ -7,38 +7,33 @@ There are [multiple Secrets Providers](https://external-secrets.io/latest/introd
 * [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
 * [AWS Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
 
-EDP uses various secrets to integrate various applications. Below is a list of secrets that are used in the EDP platform and their description.
+EDP uses various secrets to integrate various applications. Below is a list of secrets that are used in the EPAM Delivery Platform and their description. All the secrets are encoded in Base64 format.
 
-|Secret Name|Field|Description|
-|:-|:-|:-|
-|keycloak|username|Admin username for keycloak, used by keycloak operator|
-|keycloak|password|Admin password for keycloak, used by keycloak operator|
-|defectdojo-ciuser-token|token|Defectdojo token with admin permissions|
-|defectdojo-ciuser-token|url|Defectdojo url|
-|kaniko-docker-config|registry.com|Change to registry url|
-|kaniko-docker-config|username|Registry username|
-|kaniko-docker-config|password|Registry password|
-|kaniko-docker-config|auth|Base64 encoded 'user:secret' string|
-|regcred|registry.com|Change to registry url|
-|regcred|username|Registry username|
-|regcred|password|Registry password|
-|regcred|auth|Base64 encoded 'user:secret' string|
-|github-config|id_rsa|Private key from github repo in base64|
-|github-config|token|Api token|
-|github-config|secretString|Random string|
-|gitlab-config|id_rsa|Private key from gitlab repo in base64|
-|gitlab-config|token|Api token|
-|gitlab-config|secretString|Random string|
-|jira-user|username|Jira username in base64|
-|jira-user|password|Jira password in base64|
-|sonar-ciuser-token|username|Sonar service account username|
-|sonar-ciuser-token|secret|Sonar service account secret|
-|nexus-ci-user|username|Nexus service account username|
-|nexus-ci-user|password|Nexus service accountpassword|
-|oauth2-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
-|nexus-proxy-cookie-secret|cookie-secret|Secret key for keycloak client in base64|
-|keycloak-client-headlamp-secret||Secret key for keycloak client in base64|
-|keycloak-client-argo-secret||Secret key for keycloak client in base64|
+|Secret Name|Fields|Description|Used by|
+|:-|:-|:-|:-|
+|keycloak|username<br><br>password|Username and password with [specific rights](../install-keycloak/#configuration) for EDP tenant in Keycloak|keycloak-operator|
+|ci-defectdojo|token<br><br>url|DefectDojo token<br><br>DefectDojo URL|edp-tekton|
+|kaniko-docker-config|.dockerconfigjson|Serialized JSON that follows docker config patterns|edp-tekton|
+|regcred|.dockerconfigjson|Serialized JSON that follows docker config patterns|cd-pipeline-operator|
+|ci-github|id_rsa<br><br>token<br><br>secretString|Private key from github repo <br><br>API token<br><br>Random string|edp-tekton|
+|ci-gitlab|id_rsa<br><br>token<br><br>secretString|Private key from gitlab repo <br><br>API token<br><br>Random string|edp-tekton|
+|ci-jira|username<br><br>password|Jira username <br><br>Jira password|edp-codebase-operator|
+|ci-sonarqube|token<br><br>url|SonarQube token<br><br>SonarQube URL|edp-tekton|
+|ci-nexus|username<br><br>password<br><br>url|Nexus username<br><br>Nexus password<br><br>Nexus URL|edp-tekton|
+|ci-dependency-track|token<br><br>url<br>|Dependency-Track token<br><br>Dependency-Track URL<br><br>|edp-tekton|
+|oauth2-proxy-cookie-secret|cookie-secret|Secret key for oauth2-proxy|edp-install|
+|keycloak-client-headlamp-secret|clientSecret|Secret key for keycloak client |keycloak-operator|
+
+
+## EDP Core Secrets
+
+The list below represents the baseline required for full operation within EDP:
+
+* kaniko-docker-config: Used for pushing docker images to a specific registry.
+* ci-sonarqube: Used in the CI process for SonarQube integration.
+* ci-nexus: Used for pushing artifacts to the Nexus storage.
+
+These secrets are mandatory for Tekton pipelines to work properly.
 
 ## Kubernetes Provider
 
