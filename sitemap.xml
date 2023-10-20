@@ -191,11 +191,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://epam.github.io/edp-install/operator-guide/gitlabci-integration/</loc>
-         <lastmod>2023-10-20</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://epam.github.io/edp-install/operator-guide/harbor-oidc/</loc>
          <lastmod>2023-10-20</lastmod>
          <changefreq>daily</changefreq>
@@ -652,11 +647,6 @@
     </url>
     <url>
          <loc>https://epam.github.io/edp-install/user-guide/customize-ci-pipeline/</loc>
-         <lastmod>2023-10-20</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://epam.github.io/edp-install/user-guide/d-d-diagram/</loc>
          <lastmod>2023-10-20</lastmod>
          <changefreq>daily</changefreq>
     </url>
