@@ -157,14 +157,13 @@ h. Click the **Apply** button to add the application to the Applications list.
     After the complete adding of the application, inspect the [Application Overview](application.md) part.
 
 !!! note
-    Since EDP v3.3.0, the **CI tool** field has been hidden. Now EDP Portal automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, EDP Portal chooses Tekton by default. To define the CI tool manualy, operate with the **spec.ciTool** parameters.
+    Since EDP v3.3.0, the **CI tool** field has been hidden. Now EDP Portal automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, EDP Portal chooses Tekton by default. To define the CI tool manually, operate with the **spec.ciTool** parameters.
 
 ## Related Articles
 
 * [Manage Applications](application.md)
 * [Add CD Pipeline](add-cd-pipeline.md)
 * [Add Other Code Language](../operator-guide/add-other-code-language.md)
-* [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
 * [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)

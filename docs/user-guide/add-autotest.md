@@ -121,7 +121,7 @@ g. In the **Advanced Mapping** section, specify the names of the Jira fields tha
 
   * For the **Fix Version/s** field, select the **EDP_VERSION** variable that represents an EDP upgrade version, as in _2.7.0-SNAPSHOT_.
   Combine variables to make the value more informative. For example, the pattern **EDP_VERSION-EDP_COMPONENT** will be displayed as _2.7.0-SNAPSHOT-nexus-operator_ in Jira.
-  * For the **Component/s** field select the **EDP_COMPONENT** variable that defines the name of the existing repository. For fexample, _nexus-operator_.
+  * For the **Component/s** field select the **EDP_COMPONENT** variable that defines the name of the existing repository. For example, _nexus-operator_.
   * For the **Labels** field select the **EDP_GITTAG**variable that defines a tag assigned to the commit in Git Hub. For example, _build/2.7.0-SNAPSHOT.59_.
 
 4. Click the bin icon to remove the Jira field name.
@@ -132,7 +132,7 @@ h. Click the **Apply** button to add the library to the Libraries list.
     After the complete adding of the autotest, inspect the [Autotest Overview](autotest.md) part.
 
 !!! note
-    Since EDP v3.3.0, the **CI tool** field has been hidden. Now EDP Portal automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, EDP Portal chooses Tekton by default. To define the CI tool manualy, operate with the **spec.ciTool** parameters.
+    Since EDP v3.3.0, the **CI tool** field has been hidden. Now EDP Portal automatically defines the CI tool depending on which one is deployed with EDP. If both Jenkins and Tekton are deployed, EDP Portal chooses Tekton by default. To define the CI tool manually, operate with the **spec.ciTool** parameters.
 
 ## Related Articles
 
@@ -140,7 +140,6 @@ h. Click the **Apply** button to add the library to the Libraries list.
 * [Add Application](add-application.md)
 * [Add CD Pipelines](add-cd-pipeline.md)
 * [Add Other Code Language](../operator-guide/add-other-code-language.md)
-* [Adjust GitLab CI Tool](../operator-guide/gitlabci-integration.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
 * [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)

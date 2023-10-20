@@ -13,7 +13,27 @@ The purpose of the Build pipeline contains the following points:
 
 Find below the functional diagram of the Build pipeline with the default stages:
 
-!![build-pipeline](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/build-pipeline.puml)
+```mermaid
+---
+title: gitlab-gradle-java17-app-build-edp
+---
+flowchart TD
+   build --> get-nexus-repository-url
+   compile --> test
+   start([fa:fa-circle]) --> fetch-repository
+   fetch-repository --> init-values
+   get-nexus-repository-url --> push
+   get-version --> update-build-number
+   git-tag --> update-cbis
+   init-values --> get-version
+   kaniko-build --> git-tag
+   push --> kaniko-build
+   sast --> compile
+   sonar --> build
+   test --> sonar
+   update-build-number --> sast
+   update-cbis --> stop([fa:fa-circle])
+```
 
 ## Build Pipeline for Application and Library
 

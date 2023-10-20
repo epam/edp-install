@@ -60,7 +60,7 @@ The corresponding item appears on the **Tekton Dashboard** in the **PipelineRuns
 
 In order to delete the added branch with the corresponding record in the EDP Portal database, do the following:
 
-1. Navigate to the **Branches** block by clicking the component name link in the compoents list.
+1. Navigate to the **Branches** block by clicking the component name link in the components list.
 2. Select the options icon related to the necessary branch and then select **Delete**:
 
   !![Delete branch](../assets/user-guide/edp-portal-delete-branch.png "Delete branch")

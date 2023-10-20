@@ -41,7 +41,7 @@ To enable EDP Add-Ons, it is necessary to have the configured Argo CD, and conne
 
 4. In the appeared window, fill in the following fields and click the **Connect** button:
 
-  * Name - select the namespace where the project is going to be depolyed;
+  * Name - select the namespace where the project is going to be deployed;
   * Choose your connection method - choose Via SSH;
   * Type - choose Helm;
   * Repository URL - enter the URL of your forked repository.
@@ -60,7 +60,7 @@ To enable EDP Add-Ons, it is necessary to have the configured Argo CD, and conne
 7. Fill in the required fields:
 
   * Application Name - addons-demo;
-  * Project name - select the namespace where the project is going to be depolyed;
+  * Project name - select the namespace where the project is going to be deployed;
   * Sync policy - select **Manual**;
   * Repository URL - enter the URL of your forked repository;
   * Revision - **Head**;

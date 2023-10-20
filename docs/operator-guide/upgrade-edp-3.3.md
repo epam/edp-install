@@ -10,21 +10,21 @@ This section provides the details on the EDP upgrade to v3.3.0. Explore the acti
 
 1. Update Custom Resource Definitions (CRDs). Run the following command to apply all necessary CRDs to the cluster:
 
-  ```
+  ```bash
   kubectl apply -f https://raw.githubusercontent.com/epam/edp-codebase-operator/v2.16.0/deploy-templates/crds/v2.edp.epam.com_codebases.yaml
   kubectl apply -f https://raw.githubusercontent.com/epam/edp-jenkins-operator/v2.15.0/deploy-templates/crds/v2.edp.epam.com_jenkins.yaml
   ```
 
 2. If you use Gerrit VCS, delete the corresponding resource due to changes in annotations:
 
-  ```
+  ```bash
   kubectl -n edp delete EDPComponent gerrit
   ```
   The deployment will create a new EDPComponent called `gerrit` instead.
 
 3. To upgrade EDP to the v3.3.0, run the following command:
 
-  ```
+  ```bash
   helm upgrade edp epamedp/edp-install -n edp --values values.yaml --version=3.3.0
   ```
 

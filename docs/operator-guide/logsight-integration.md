@@ -4,7 +4,7 @@
 
 ## Overview
 
-In order to understand if a microservice or a component is ready for the deployment, EDP suggests analysing logs via Logsight to decide if the deployment is risky or not.
+In order to understand if a microservice or a component is ready for the deployment, EDP suggests analyzing logs via Logsight to decide if the deployment is risky or not.
 
 Please find more about Logsight in the official documentation:
 
@@ -21,7 +21,7 @@ Logsight can be configured in two ways:
 * **SAAS** - online system; for this solution a connection string is required.
 * **Self-deployment** - local installation.
 
-To work with Logsight, a new **Deployment Risk stage** must be added to the pipeline. On this stage, the logs are analysed with the help of Logsight mechanisms.
+To work with Logsight, a new **Deployment Risk stage** must be added to the pipeline. On this stage, the logs are analyzed with the help of Logsight mechanisms.
 
 On the **verification screen** of Logsight, continuous verification of the application deployment can be monitored, and tests can be compared for detecting test flakiness.
 
@@ -141,7 +141,7 @@ If the deployment risk is above 70%, the red state of the pipeline is expected.
 EDP consists of a set of containerized components. For the convenience of tracking the risk deployment trend for each component, this data is stored as Jenkins artifacts.
 
 If the deployment risk is higher than the threshold of 70%, the EDP promotion of artifacts for the next environments does not pass.
-The deployment risk report can be analysed in order to avoid the potential problems with updating the components.
+The deployment risk report can be analyzed in order to avoid the potential problems with updating the components.
 
 To study the report in detail, use the link from the Jenkins pipeline to the Logsight verification screen:
 

@@ -1,6 +1,6 @@
 # Deploy AWS EKS Cluster
 
-This instruction provides detailed information on the Amazon Elastic Kubernetes Service cluster deployment and contains the additional setup such as Argo CD installation and EDP addons usage for the infrastructure managment.
+This instruction provides detailed information on the Amazon Elastic Kubernetes Service cluster deployment and contains the additional setup such as Argo CD installation and EDP addons usage for the infrastructure management.
 
 ## Prerequisites
 

@@ -342,8 +342,8 @@ Perform the below steps to merge new code (Merge Request) that passes the Code R
 
 9. Check the pipelines in the Tekton dashboard:
 
-  !![Tekton custom piplines](../assets/use-cases/tekton-custom/tekton-custom05.png "Tekton custom piplines")
-  !![Tekton custom piplines](../assets/use-cases/tekton-custom/tekton-custom06.png "Tekton custom piplines")
+  !![Tekton custom pipelines](../assets/use-cases/tekton-custom/tekton-custom05.png "Tekton custom pipelines")
+  !![Tekton custom pipelines](../assets/use-cases/tekton-custom/tekton-custom06.png "Tekton custom pipelines")
 
 What happens under the hood:<br>
   1) Gerrit sends a payload during Merge Request event to the Tekton EventListener;<br>

@@ -7,9 +7,10 @@ This section provides detailed instructions for upgrading EPAM Delivery Platform
 
 1. Update Custom Resource Definitions (CRDs). Run the following command to apply all necessary CRDs to the cluster:
 
-  ```
+  ```bash
   kubectl apply -f https://raw.githubusercontent.com/epam/edp-codebase-operator/v2.19.0/deploy-templates/crds/v2.edp.epam.com_gitservers.yaml
   ```
+
   !!! danger
       Codebase-operator v2.19.0 is not compatible with the previous versions. Please become familiar with the [breaking change](https://github.com/epam/edp-codebase-operator/commit/67ed1e336b7b185aba03992fd1c4fbebcd33941d) in Git Server Custom Resource Definition.
 

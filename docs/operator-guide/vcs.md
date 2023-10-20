@@ -2,7 +2,6 @@
 
 The Version Control Systems (VCS) section is dedicated to delivering comprehensive information on VCS within the EPAM Delivery Platform. This section comprises detailed descriptions of all the deployment strategies, along with valuable recommendations for their optimal usage, and the list of supported VCS, facilitating seamless integration with EDP.
 
-
 ## Supported VCS
 
 EDP can be integrated with the following Version Control Systems:

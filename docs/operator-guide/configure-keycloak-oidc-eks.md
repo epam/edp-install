@@ -18,7 +18,6 @@ To follow the instruction, check the following prerequisites:
 !!! note
     To connect OIDC with a cluster, install and configure the [kubelogin](https://github.com/int128/kubelogin) plugin. For Windows, it is recommended to download the kubelogin as a binary and add it to your PATH.
 
-
 ## Solution Overview
 
 The solution includes three types of the resources - AWS (EKS), Keycloak, Kubernetes.
@@ -28,7 +27,6 @@ The most crucial from Kubernetes permissions are Kubernetes RoleBindings and Clu
 Roles present a set of permissions, in turn RoleBindings map Kubernetes Role to representative Keycloak groups, so a group member can have just appropriate permissions.
 
 !![EKS Keycloak OIDC](../assets/operator-guide/oidc_eks.drawio.png)
-
 
 ## Keycloak Configuration
 
@@ -225,7 +223,7 @@ kind: Config
 clusters:
 - cluster:
     server: https://<eks_url>.eks.amazonaws.com
-    certificate-authority-data: <certificate_authtority_data>
+    certificate-authority-data: <certificate_authority_data>
   name: <cluster_name>
 
 contexts:

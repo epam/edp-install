@@ -60,7 +60,7 @@ and type (code-review, build).
 in the Pipeline.
 
 8. Each `Task` is executed as a Pod on the Kubernetes cluster.
-Also, Tasks can have a different number of steps that are executed as a Сontainer in Pod.
+Also, Tasks can have a different number of steps that are executed as a Container in Pod.
 
 9. The Kubernetes native approach allows the creation of PipelineRun either with the kubectl tool or
 using the [EDP Portal UI](../../user-guide/application/#build-branch).

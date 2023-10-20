@@ -10,7 +10,7 @@ This section provides the details on the EDP upgrade to v3.4.1. Explore the acti
 
 1. Update Custom Resource Definitions (CRDs). Run the following command to apply all necessary CRDs to the cluster:
 
-  ```
+  ```bash
   kubectl apply -f https://raw.githubusercontent.com/epam/edp-cd-pipeline-operator/v2.15.0/deploy-templates/crds/v2.edp.epam.com_cdpipelines.yaml
   kubectl apply -f https://raw.githubusercontent.com/epam/edp-cd-pipeline-operator/v2.15.0/deploy-templates/crds/v2.edp.epam.com_stages.yaml
   kubectl apply -f https://raw.githubusercontent.com/epam/edp-keycloak-operator/v1.17.0/deploy-templates/crds/v1.edp.epam.com_clusterkeycloakrealms.yaml

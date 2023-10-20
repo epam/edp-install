@@ -7,7 +7,7 @@ The CD pipeline can include the essential set of applications with its specific 
 In other words, the CD pipeline allows the selected image stream (Docker container in Kubernetes terms) to pass a set of stages for the verification process (SIT - system integration testing with the automatic type of a quality gate, QA - quality assurance, UAT - user acceptance testing with the manual testing).
 
 !!! note
-    It is possible to change the image stream for the application in the CD pipeline. Please refer to the [Edit CD Pipeline](add-cd-pipeline.md#edit-cd-pipeline) section for the details. 
+    It is possible to change the image stream for the application in the CD pipeline. Please refer to the [Edit CD Pipeline](add-cd-pipeline.md#edit-cd-pipeline) section for the details.
 
 A CI/CD pipeline helps to automate steps in a software delivery process, such as the code build initialization, automated tests running, and deploying to a staging or production environment.
 Automated pipelines remove manual errors, provide standardized development feedback cycle, and enable the fast product iterations. To get more information on the CI pipeline, please refer to the [CI Pipeline Details](ci-pipeline-details.md) chapter.

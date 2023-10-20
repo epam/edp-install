@@ -14,8 +14,7 @@ Ensure the following values are set first before starting the Portal OIDC config
 
 3. `keycloak_client_key`= **keycloak_client_secret_key** (received from: `Openshift realm` -> `clients` -> `kubernetes` -> `Credentials` -> `Client secret`)
 
-4. `group` = **`edp-oidc-admins`, `edp-oidc-builders`, `edp-oidc-deployers`, 
-`edp-oidc-developers`, `edp-oidc-viewers`** (Should be created manually in the realm from point 1)
+4. `group` = **`edp-oidc-admins`, `edp-oidc-builders`, `edp-oidc-deployers`, `edp-oidc-developers`, `edp-oidc-viewers`** (Should be created manually in the realm from point 1)
 
 !!! note
     The values indicated above are the result of the Keycloak configuration as an OIDC identity provider.

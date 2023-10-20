@@ -22,7 +22,7 @@ To view the details of a marketplace item, simply click on its name:
 
 !![Item details](../assets/user-guide/edp-portal-marketplace-item-details.png "Item details")
 
-The details window shows suplemental information, such as item's author, keywords, release version and the link to the repository it is located in. The window also contains the **Create from template** button that allows users to create the component by the chosen template. The procedure of creating new components is described in the [Add Component via Marketplace](add-marketplace.md) page.
+The details window shows supplemental information, such as item's author, keywords, release version and the link to the repository it is located in. The window also contains the **Create from template** button that allows users to create the component by the chosen template. The procedure of creating new components is described in the [Add Component via Marketplace](add-marketplace.md) page.
 
 ## Related Articles
 

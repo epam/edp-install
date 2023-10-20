@@ -14,7 +14,6 @@ To install the Capsule tool, use the [Cluster Add-Ons](https://github.com/epam/e
 
 To use Capsule in EDP, follow the steps below:
 
-
 1. Run the command below to upgrade EDP with Capsule capabilities:
 
   ```bash

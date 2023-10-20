@@ -193,7 +193,6 @@ nav:
             - Debug GitHub Webhooks in Jenkins: operator-guide/github-debug-webhooks.md
           - GitLab:
             - GitLab Webhook Configuration: operator-guide/gitlab-integration.md
-            - Adjust GitLab CI Tool: operator-guide/gitlabci-integration.md
             - Debug GitLab Webhooks in Jenkins: operator-guide/gitlab-debug-webhooks.md
         - Tekton Scenario:
           - Integrate GitHub/GitLab in Tekton: operator-guide/import-strategy-tekton.md

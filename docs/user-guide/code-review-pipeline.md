@@ -13,7 +13,27 @@ The purpose of the Code Review pipeline contains the following points:
 
 Find below the functional diagram of the Code Review pipeline with the default stages:
 
-!![Code review pipeline stages](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/epam/edp-install/master/docs/user-guide/code-review-pipeline.puml)
+```mermaid
+---
+title: gitlab-gradle-java17-app-review
+---
+flowchart TD
+   build --> dockerbuild-verify
+   compile --> test
+   dockerbuild-verify --> stop([fa:fa-circle])
+   dockerfile-lint --> dockerbuild-verify
+   fetch-repository --> init-values
+   fetch-repository --> helm-docs
+   fetch-repository --> dockerfile-lint
+   fetch-repository --> helm-lint
+   helm-docs --> stop([fa:fa-circle])
+   helm-lint --> stop([fa:fa-circle])
+   init-values --> compile
+   start([fa:fa-circle]) --> report-pipeline-start-to-gitlab
+   report-pipeline-start-to-gitlab --> fetch-repository
+   sonar --> build
+   test --> sonar
+```
 
 ## Code Review Pipeline for Applications and Libraries
 

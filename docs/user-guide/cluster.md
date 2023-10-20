@@ -2,7 +2,7 @@
 
 This section describes the subsequent possible actions that can be performed with the newly added or existing clusters.
 
-In a nutshell, cluster in EDP Portal is a Kubernetes secret that stores credentials and enpoint to connect to the another cluster. Adding new clusters allows users to deploy applications in several clusters, thus improving flexibilty of your infrastructure.
+In a nutshell, cluster in EDP Portal is a Kubernetes secret that stores credentials and endpoint to connect to the another cluster. Adding new clusters allows users to deploy applications in several clusters, thus improving flexibility of your infrastructure.
 
 The added cluster will be listed in the clusters list allowing you to do the following:
 

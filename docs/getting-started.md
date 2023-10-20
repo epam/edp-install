@@ -6,7 +6,7 @@
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/){target=_blank} tool;
 - [Helm 3.10.x+](https://helm.sh/docs/intro/install/){target=_blank};
 - [Keycloak 18.0+](https://www.keycloak.org){target=_blank};
-- [Kiosk 0.2.11](https://github.com/loft-sh/kiosk){target=_blank}.
+- (Optional) [Kiosk 0.2.11](https://github.com/loft-sh/kiosk){target=_blank}.
 
 ## Minimal Hardware Requirements
 
@@ -31,12 +31,12 @@ EPAM Delivery Platform supports the following tools:
 |Documentation as Code|MkDocs, Antora (AsciiDoc)|
 |Infrastructure as Code|Terraform, TFLint, Terraform Docs, Crossplane, AWS Controllers for Kubernetes|
 |Kubernetes Deployment|Kubectl, Helm, Helm Docs, Chart Testing, Argo CD, Argo Rollout|
-|Kubernetes Multitenancy|Kiosk|
+|Kubernetes Multitenancy|Kiosk, Capsule|
 |Logging|OpenSearch, EFK, ELK, Loki, Splunk|
 |Monitoring|Prometheus, Grafana, VictoriaMetrics|
-|Pipeline Orchestration|Tekton, Jenkins|
+|Pipeline Orchestration|Tekton|
 |Policies/Rules|Open Policy Agent|
-|Secrets Management|External Secret Operator, Vault|
+|Secrets Management|External Secret Operator, Vault, AWS Parameter Store|
 |Secure Development|SonarQube, DefectDojo, Dependency Track,  Semgrep, Grype, Trivy, Clair, GitLeaks, CycloneDX Generator, tfsec, checkov|
 |SSO|Keycloak, oauth2-proxy|
 |Test Report Tool|ReportPortal, Allure|
@@ -50,7 +50,7 @@ Mind the parameters in the EDP installation chart. For details, please refer to 
 Find below the example of the installation command:
 
         helm install edp epamedp/edp-install --wait --timeout=900s \
-        --set global.dnsWildCard=<cluster_DNS_wilcdard> \
+        --set global.dnsWildCard=<cluster_DNS_wildcard> \
         --set global.platform=<platform_type> \
         --set awsRegion=<region> \
         --namespace edp
@@ -59,4 +59,5 @@ Find below the example of the installation command:
     Please be aware that the command above is an example.
 
 ## Related Articles
+
 [Getting Started](overview.md)

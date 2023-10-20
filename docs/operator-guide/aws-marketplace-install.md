@@ -21,6 +21,7 @@ Please familiarize yourself with the [Prerequisites](prerequisites.md) page befo
 To deploy the platform, follow the steps below:
 
 1. To apply Tekton stack, deploy Tekton resources by executing the command below:
+
   ```bash
    kubectl create ns tekton-pipelines
    kubectl create ns tekton-chains
@@ -59,6 +60,7 @@ To deploy the platform, follow the steps below:
   ```
 
 4. (Optional) To get access to EDP Portal, run the port-forwarding command:
+
   ```bash
    kubectl port-forward service/edp-headlamp 59480:80 -n edp
   ```

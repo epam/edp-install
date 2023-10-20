@@ -23,7 +23,6 @@ This page is intended for developers with the aim to share details on how to set
 !!! note
     Make sure GOPATH and GOROOT environment variables are added in PATH.
 
-
 ## Environment Setup
 
 Set up your environment by following the steps below.

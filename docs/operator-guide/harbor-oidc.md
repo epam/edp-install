@@ -2,7 +2,6 @@
 
 This page provides instructions for configuring [OIDC authorization](https://openid.net/connect/) for Harbor. This enables the use of Single Sign-On (SSO) for authorization in Harbor and allows centralized control over user access and rights through a single configuration point.
 
-
 ## Prerequisites
 
 Before the beginning, ensure your cluster meets the following requirements:
