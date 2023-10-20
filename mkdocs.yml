@@ -79,10 +79,11 @@ theme:
     - search.suggest
 
 plugins:
-  - mkdocs-video
-  - search
   - awesome-pages
   - charts
+  - meta-descriptions
+  - mkdocs-video
+  - search
   - minify:
       minify_html: true
   - redirects:
@@ -210,9 +211,9 @@ nav:
     - Integration:
       - Cluster Add-Ons: operator-guide/add-ons-overview.md
       - Tekton:
-          Overview: operator-guide/tekton-overview.md
-          Monitoring: operator-guide/tekton-monitoring.md
-          MS Teams Notification: operator-guide/notification-msteams.md
+          - Overview: operator-guide/tekton-overview.md
+          - Monitoring: operator-guide/tekton-monitoring.md
+          - MS Teams Notification: operator-guide/notification-msteams.md
       - Container Registry:
           - Harbor:
               - Harbor Integration: operator-guide/container-registry-harbor-integration-tekton-ci.md
