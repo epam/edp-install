@@ -285,6 +285,7 @@ nav:
         - Marketplace Overview: user-guide/marketplace.md
         - user-guide/add-marketplace.md
     - Components:
+      - user-guide/components.md
       - Application:
           - user-guide/add-application.md
           - Manage Applications: user-guide/application.md
