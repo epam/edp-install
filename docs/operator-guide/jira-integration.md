@@ -16,11 +16,11 @@ Enabling Jira integration allows for the automatic population of three fields in
 
 Teams can utilize these fields to enhance their work prioritization, identify dependencies, improve collaboration, and ultimately achieve faster software delivery.
 
-## Integration Procedure
+## Integration Procedure<a name="integration-procedure"></a>
 
 In order to adjust the Jira server integration, add the JiraServer CR by performing the following:
 
-1. Provision the secret using `EDP Portal`, `Manifest` or with the `externalSecrets` operator:
+1. Provision the **ci-jira** secret using `EDP Portal`, `Manifest` or with the `externalSecrets` operator:
 
   === "EDP Portal"
 
@@ -39,7 +39,6 @@ In order to adjust the Jira server integration, add the JiraServer CR by perform
         labels:
           app.edp.epam.com/secret-type=jira
       stringData:
-        url: https://jira.example.com
         username: username
         password: password
       ```
@@ -49,11 +48,22 @@ In order to adjust the Jira server integration, add the JiraServer CR by perform
       ```json
       "ci-jira":
       {
-        "url": "https://jira.example.com",
         "username": "username",
         "password": "password"
       }
       ```
+
+  !!! note "Required Permissions for Issue Management"
+
+      To manage issue labels, components, and add links in Jira, please make sure the user has the following permissions:
+
+      1. **Edit Issues:** This permission is necessary to modify issue fields, including adding or removing labels and components.
+
+      2. **Link Issues:** You must have this permission to create and manage links between issues.
+
+      3. **Add Comments:** Required for adding external links and comments to issues.
+
+
 
 2. Create JiraServer CR in the OpenShift/Kubernetes namespace with the **apiUrl**, **credentialName** and **rootUrl** fields:
 
@@ -69,23 +79,56 @@ In order to adjust the Jira server integration, add the JiraServer CR by perform
   !!! note
       The value of the **credentialName** property is the name of the Secret, which is indicated in the first point above.
 
-3. In the EDP Portal UI, navigate to the **Advanced Settings** menu to check that the **Integrate with Jira server** check box appeared:
+## Enable Jira Using Helm Chart
 
-    !![Advanced settings](../assets/operator-guide/jira_integration_ac.png "Advanced settings")
+There is also a possibility to set up Jira integration when deploying EPAM Delivery Platform. To follow this approach, please familiarize yourself with the following parameters of the [values.yaml](https://github.com/epam/edp-install/blob/release/3.5/deploy-templates/values.yaml#L89) file in the EDP installer. Enabling the `jira.integration` parameter creates the following custom resources:
 
-  !!! note
+* EDPComponent;
+* JiraServer;
+* External Secrets Operator (in case it is used).
 
-      There are four predefined variables with the respective values that can be specified singly or as a combination:
+To set up Jira integration along with EDP, follow the steps below:
 
-      **EDP_COMPONENT** – returns application-name<br>
-      **EDP_VERSION** – returns 0.0.0-SNAPSHOT or 0.0.0-RC<br>
-      **EDP_SEM_VERSION** – returns 0.0.0<br>
-      **EDP_GITTAG** – returns build/0.0.0-SNAPSHOT.2 or build/0.0.0-RC.2<br>
+1. Create the **ci-jira** secret in the `edp` namespace as it's described [above](#integration-procedure).
 
-      There are no character restrictions when combining the variables, combination samples:<br>
-      EDP_SEM_VERSION-EDP_COMPONENT or <br>EDP_COMPONENT-hello-world/EDP_VERSION, etc.
+2. Deploy the platform with the `jira.integration` parameter set to `true` in the [values.yaml](https://github.com/epam/edp-install/blob/release/3.5/deploy-templates/values.yaml) file.
 
-    As a result of successful Jira integration, the additional information will be added to tickets.
+
+## Jira Integration Usage
+
+To use Jira integration, you need to set up your codebases accordingly.
+
+When creating a codebase, navigate to the **Advanced Settings** tab. Select the **Integrate with Jira server** check box and fill in the required fields:
+
+  !![Advanced settings](../assets/operator-guide/jira_integration_ac.png "Advanced settings")
+
+There are four predefined variables with the respective values that can be specified singly or as a combination. These variables show different data depending on which versioning type is currently used:
+
+If the EDP versioning type is used:
+
+* **EDP_COMPONENT** – returns application-name;
+* **EDP_VERSION** – returns 0.0.0-SNAPSHOT or 0.0.0-RC;
+* **EDP_SEM_VERSION** – returns 0.0.0;
+* **EDP_GITTAG** – returns build/0.0.0-SNAPSHOT.2 or build/0.0.0-RC.2.
+
+If the default versioning type is used:
+
+* **EDP_COMPONENT** – returns application-name;
+* **EDP_VERSION** – returns the date when the application was tagged. (Example: 20231023-131217);
+* **EDP_SEM_VERSION** – returns the date when the application was tagged. (Example: 20231023-131217);
+* **EDP_GITTAG** – returns the date when the application was tagged. (Example: 20231023-131217).
+
+!!! note
+    There are no character restrictions when combining the variables. You can concatenate them using the dash sign. Combination samples:<br>
+    **EDP_SEM_VERSION-EDP_COMPONENT**;<br>
+    **EDP_COMPONENT-hello-world/EDP_VERSION**;<br>
+    etc.
+
+If the Jira integration is set up correctly, you will start seeing additional metadata in the tickets:
+
+  !![Supplemental information](../assets/operator-guide/jira_versioning_type_example.png "Supplemental information")
+
+If metadata is not visible in a Jira ticket, check the status field of the **JiraIssueMetadata** Custom Resources in the **edp** namespace. The codebase operator deletes this resource after successful processing, but in case of an error, the 'JiraIssueMetadata' resource may still exist within the namespace.
 
 ## Related Articles
 
