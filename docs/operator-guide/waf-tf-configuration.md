@@ -52,7 +52,7 @@ resource "aws_wafv2_regex_pattern_set" "common" {
 
   /*
    regular_expression {
-      regex_string = "^.*(jenkins).*((.edp-epam)+)\\.com$"
+      regex_string = "^.*(keycloak).*((.edp-epam)+)\\.com$"
    }
    */
 

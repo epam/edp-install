@@ -317,6 +317,5 @@ providerSpec:
 ## Related Articles
 
 * [Deploy AWS EKS Cluster](deploy-aws-eks.md)
-* [Manage Jenkins Agent](add-jenkins-agent.md)
 * [Associate IAM Roles With Service Accounts](enable-irsa.md)
 * [Deploy OKD 4.9 Cluster](deploy-okd.md)

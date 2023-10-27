@@ -14,43 +14,27 @@ EDP consists of the following:
 
 ## Features
 
-- Deployed and configured CI/CD toolset ([Tekton](https://tekton.dev/){target=_blank}, [ArgoCD](https://argoproj.github.io/cd/){target=_blank}, [Jenkins](https://www.jenkins.io/){target=_blank}, [Nexus](https://help.sonatype.com/repomanager3){target=_blank}, [SonarQube](https://www.sonarqube.org/){target=_blank}, [DefectDojo](https://www.defectdojo.org/){target=_blank})
-- [Gerrit](https://www.gerritcodereview.com/), [GitLab](https://about.gitlab.com/features/) or [GitHub](https://about.gitlab.com/features/) as a version control system for your code
-- [Tekton](./operator-guide/install-tekton.md) is a **default** pipeline orchestrator
-- [Jenkins](./operator-guide/overview-manage-jenkins-pipelines.md) is an optional pipeline orchestrator
+- Deployed and configured CI/CD toolset ([Tekton](https://tekton.dev/){target=_blank}, [ArgoCD](https://argoproj.github.io/cd/){target=_blank}, [Nexus](https://help.sonatype.com/repomanager3){target=_blank}, [SonarQube](https://www.sonarqube.org/){target=_blank}, [DefectDojo](https://www.defectdojo.org/){target=_blank})
+- [GitHub](https://about.gitlab.com/features/)(by default), [GitLab](https://about.gitlab.com/features/) or [Gerrit](https://www.gerritcodereview.com/) as a version control system for your code
+- [Tekton](./operator-guide/install-tekton.md) is a pipeline orchestrator
 - [CI pipelines](./user-guide/index.md)
 
-  === "Tekton (by default)"
+  |Language|Framework|Build Tool|Application|Library|Autotest|
+  |:-|:-:|:-:|:-:|:-:|:-:|
+  |Java|Java 8, Java 11, Java 17|Gradle, Maven|:material-check:|:material-check:|:material-check:|
+  |Python|Python 3.8, FastAPI, Flask|Python|:material-check:|:material-check:||
+  |C#|.Net 3.1, .Net 6.0|.Net|:material-check:|:material-check:||
+  |Go|Beego, Gin, Operator SDK|Go|:material-check:|||
+  |JavaScript|React, Vue, Angular, Express, Next.js, Antora|NPM|:material-check:|:material-check:||
+  |HCL|Terraform|Terraform||:material-check:||
+  |Helm|Helm, Pipeline|Helm||:material-check:||
+  |Groovy|Codenarc|Codenarc||:material-check:||
+  |Rego|OPA|OPA||:material-check:||
+  |Container|Docker|Kaniko||:material-check:||
 
-      |Language|Framework|Build Tool|Application|Library|Autotest|
-      |:-|:-:|:-:|:-:|:-:|:-:|
-      |Java|Java 8, Java 11, Java 17|Gradle, Maven|:material-check:|:material-check:|:material-check:|
-      |Python|Python 3.8, FastAPI, Flask|Python|:material-check:|:material-check:||
-      |C#|.Net 3.1, .Net 6.0|.Net|:material-check:|:material-check:||
-      |Go|Beego, Gin, Operator SDK|Go|:material-check:|||
-      |JavaScript|React, Vue, Angular, Express, Next.js, Antora|NPM|:material-check:|:material-check:||
-      |HCL|Terraform|Terraform||:material-check:||
-      |Helm|Helm, Pipeline|Helm||:material-check:||
-      |Groovy|Codenarc|Codenarc||:material-check:||
-      |Rego|OPA|OPA||:material-check:||
-      |Container|Docker|Kaniko||:material-check:||
-
-  === "Jenkins (optional)"
-
-      |Language|Framework|Build Tool|Application|Library|Autotest|
-      |:-|:-:|:-:|:-:|:-:|:-:|
-      |Java|Java 8, Java 11|Gradle, Maven|:material-check:|:material-check:|:material-check:|
-      |Python|Python 3.8|Python|:material-check:|:material-check:||
-      |.Net|.Net 3.1|.Net|:material-check:|:material-check:||
-      |Go|Beego, Operator SDK|Go|:material-check:||||
-      |JavaScript|React|NPM|:material-check:|:material-check:||
-      |HCL|Terraform|Terraform||:material-check:||
-      |Groovy|Codenarc|Codenarc||:material-check:||
-      |Rego|OPA|OPA||:material-check:||
-      |Container|Docker|Kaniko||:material-check:||
 
 - [Portal UI](./user-guide/index.md) as a single entry point
-- [CD pipeline](./user-guide/add-cd-pipeline.md) for Microservice Deployment
+- [Environments](./user-guide/add-cd-pipeline.md) for Microservice Deployment
 - Kubernetes native approach ([CRD, CR](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/){target=_blank}) to declare CI/CD pipelines
 
 ## What's Inside

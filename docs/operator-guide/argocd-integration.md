@@ -1,8 +1,7 @@
 # Argo CD Integration
 
-EDP uses Jenkins Pipeline as a [part of the Continues Delivery/Continues Deployment](../user-guide/cd-pipeline-details.md)
-implementation. Another approach is to use [Argo CD tool](https://argo-cd.readthedocs.io/en/stable/) as an alternative to Jenkins.
-Argo CD follows the best GitOps practices, uses Kubernetes native approach for the Deployment Management, has rich UI and
+EDP uses Argo CD as a [part of the Continues Delivery/Continues Deployment](../user-guide/cd-pipeline-details.md)
+implementation. Argo CD follows the best GitOps practices, uses Kubernetes native approach for the Deployment Management, has rich UI and
 required RBAC capabilities.
 
 ## Argo CD Deployment Approach in EDP

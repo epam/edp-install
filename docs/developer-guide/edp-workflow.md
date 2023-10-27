@@ -111,15 +111,15 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
 
    `!`: (added to other commit types to mark breaking changes) For example:
 
-      feat!: Job provisioner is responsible for the formation of Jenkinsfile (#26)
+      feat!: Add ingress links column into Applications table on stage page (#77)
 
-      BREAKING CHANGE: Job provisioner creates Jenkinsfile and configures it in Jenkins pipeline as a pipeline script.
+      BREAKING CHANGE: Ingress links column has been added into the Applications table on the stage details page
 
    b. Commit message:
 
    * brief, for example:
 
-      ``fix: Fix Gerrit plugin for Jenkins provisioning (#62)``
+      ``fix: Remove secretKey duplication from registry secrets (#63)``
 
     or
 
@@ -137,9 +137,9 @@ With EDP, the main workflow is based on the getting a Jira task and creating a M
 !!! note
     Make sure there is a descriptive commit message for a breaking change Merge Request. For example:
 
-    feat!: Job provisioner is responsible for the formation of Jenkinsfile<br>
+      feat!: Add ingress links column into Applications table on stage page (#77)
 
-    BREAKING CHANGE: Job provisioner creates Jenkinsfile and configures it in Jenkins pipeline as a pipeline script.
+      BREAKING CHANGE: Ingress links column has been added into the Applications table on the stage details page
 
 !!! note
     If a Merge Request contains both new functionality and breaking changes, make sure the functionality description is placed before the breaking changes. For example:

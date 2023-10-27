@@ -11,6 +11,6 @@ You can use the Velero tool to restore a EDP tenant. Explore the main steps for 
 
 3. Remove all locks for operators. Delete all config maps that have **&#8249;OPERATOR_NAME&#8250;-operator-lock** names. Then restart all pods with operators, or simply run the following command:
 
-           kubectl -n edp delete cm $(kubectl -n edp get cm | grep 'operator-lock' | awk '{print $1}')
+      kubectl -n edp delete cm $(kubectl -n edp get cm | grep 'operator-lock' | awk '{print $1}')
 
 4. Recreate the admin password and delete the Jenkins pod. Or change the script to update the admin password in Jenkins every time when the pod is updated.

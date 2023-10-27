@@ -155,5 +155,4 @@ Optionally, use the [Lens](https://k8slens.dev/) tool for further work with the 
 ## Related Articles
 
 * [Deploy AWS EKS Cluster](deploy-aws-eks.md)
-* [Manage Jenkins Agent](add-jenkins-agent.md)
 * [Deploy OKD 4.10 Cluster](deploy-okd-4.10.md)

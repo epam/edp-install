@@ -117,6 +117,11 @@ Creating custom certificates is a necessary but not sufficient condition for app
   ...
   ```
 
+!!! note
+    Before moving ahead, be aware that starting from version 3.3.0, our development team has officially deprecated the Jenkins deploy scenario. This means that as of version 3.3.0 and in all subsequent versions (3.3.x and above), the Jenkins deploy scenario is no longer supported or actively maintained.<br>
+    For users running versions 3.3.x and below, the Jenkins deploy scenario remains available. However, we encourage you to plan for the transition to a supported deployment method to ensure continued compatibility and access to the latest features and enhancements. To perform migration, please familiarize yourself with the [Migrate CI Pipelines From Jenkins to Tekton](../migrate-ci-pipelines-from-jenkins-to-tekton.md).<br>
+    For those who still use EDP v3.3.x and below, the information below remains valid and applicable.
+
 3. For Sonar, Jenkins and Gerrit, change the flag in the `caCerts.enabled` field to `true`. Also, change the name of the secret in the `caCerts.secret` field to `custom-ca-certificates`.
 
   Example of specifying custom certificates for `Gerrit` via the `gerrit-operator` helm chart values:
@@ -135,6 +140,7 @@ Creating custom certificates is a necessary but not sufficient condition for app
         secret: custom-ca-certificates
   ...
   ```
+
 
 ## Integrate Custom Certificates Into Jenkins Agents
 

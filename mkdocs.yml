@@ -187,21 +187,7 @@ nav:
       # - Add Other Code Language: operator-guide/add-other-code-language.md
       - Version Control Systems:
         - Overview: operator-guide/vcs.md
-        - Jenkins Scenario:
-          - Integrate GitHub/GitLab in Jenkins: operator-guide/import-strategy-jenkins.md
-          - GitHub:
-            - GitHub Webhook Configuration: operator-guide/github-integration.md
-            - Debug GitHub Webhooks in Jenkins: operator-guide/github-debug-webhooks.md
-          - GitLab:
-            - GitLab Webhook Configuration: operator-guide/gitlab-integration.md
-            - Debug GitLab Webhooks in Jenkins: operator-guide/gitlab-debug-webhooks.md
-        - Tekton Scenario:
-          - Integrate GitHub/GitLab in Tekton: operator-guide/import-strategy-tekton.md
-      - Manage Jenkins Pipelines:
-        - Overview: operator-guide/overview-manage-jenkins-pipelines.md
-        - Manage Jenkins CI Pipeline Job Provisioner: operator-guide/manage-jenkins-ci-job-provision.md
-        - Manage Jenkins CD Pipeline Job Provisioner: operator-guide/manage-jenkins-cd-job-provision.md
-        - Delete Jenkins Job Provision: operator-guide/delete-jenkins-job-provision.md
+        - Integrate GitHub/GitLab in Tekton: operator-guide/import-strategy-tekton.md
       - Headlamp OIDC: operator-guide/headlamp-oidc.md
       - Manage Namespace: operator-guide/namespace-management.md
       - EKS OIDC Integration: operator-guide/eks-oidc-integration.md
@@ -226,7 +212,6 @@ nav:
         - IAM Roles for Velero Service Accounts: operator-guide/velero-irsa.md
         - IAM Roles for Loki Service Accounts: operator-guide/loki-irsa.md
         - EKS OIDC With Keycloak: operator-guide/configure-keycloak-oidc-eks.md
-      - Perf Server Integration: operator-guide/perf-integration.md
       - ReportPortal:
           - Keycloak Integration: operator-guide/reportportal-keycloak.md
           - Integration With Tekton: operator-guide/report-portal-integration-tekton.md
@@ -275,8 +260,6 @@ nav:
       - Deploy OKD 4.9 Cluster: operator-guide/deploy-okd.md
       - Deploy OKD 4.10 Cluster: operator-guide/deploy-okd-4.10.md
       - Use Cert-Manager in OpenShift: operator-guide/ssl-automation-okd.md
-      - Manage Jenkins Agent: operator-guide/add-jenkins-agent.md
-      - Aggregate Application Logs Using EFK Stack: operator-guide/kibana-ilm-rollover.md
       - Migrate CI Pipelines From Jenkins to Tekton: operator-guide/migrate-ci-pipelines-from-jenkins-to-tekton.md
       - Uninstall EDP: operator-guide/delete-edp.md
   - User Guide:
