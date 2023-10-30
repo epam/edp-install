@@ -119,7 +119,7 @@ Creating custom certificates is a necessary but not sufficient condition for app
 
 !!! note
     Before moving ahead, be aware that starting from version 3.3.0, our development team has officially deprecated the Jenkins deploy scenario. This means that as of version 3.3.0 and in all subsequent versions (3.3.x and above), the Jenkins deploy scenario is no longer supported or actively maintained.<br>
-    For users running versions 3.3.x and below, the Jenkins deploy scenario remains available. However, we encourage you to plan for the transition to a supported deployment method to ensure continued compatibility and access to the latest features and enhancements. To perform migration, please familiarize yourself with the [Migrate CI Pipelines From Jenkins to Tekton](../migrate-ci-pipelines-from-jenkins-to-tekton.md).<br>
+    For users running versions 3.3.x and below, the Jenkins deploy scenario remains available. However, we encourage you to plan for the transition to a supported deployment method to ensure continued compatibility and access to the latest features and enhancements. To perform migration, please familiarize yourself with the [Migrate CI Pipelines From Jenkins to Tekton](migrate-ci-pipelines-from-jenkins-to-tekton.md).<br>
     For those who still use EDP v3.3.x and below, the information below remains valid and applicable.
 
 3. For Sonar, Jenkins and Gerrit, change the flag in the `caCerts.enabled` field to `true`. Also, change the name of the secret in the `caCerts.secret` field to `custom-ca-certificates`.
@@ -157,7 +157,7 @@ EDP Jenkins agents keep keystore files in two places:
 
 1. Copy the files in `/etc/ssl/certs/java` and `/opt/java/openjdk/lib/security` directories from Jenkins agent pod to the local `tmp` folder.<br>
 There is a `copy_certs.sh` script below that can manage this. It copies the files in `/etc/ssl/certs/java` and `/opt/java/openjdk/lib/security` directories from Jenkins agent pod to the local `tmp` folder
-and imports the custom certificate into the keystore files, after which it creates the 
+and imports the custom certificate into the keystore files, after which it creates the
 `jenkins-agent-opt-java-openjdk-lib-security-cacerts` and `jenkins-agent-etc-ssl-certs-java-cacerts` secrets from updated keystore files in EDP namespace.
 Also, the `jenkins-agent-opt-java-openjdk-lib-security-cacerts` secret contains three additional files: `blocked.certs`, `default.policy` and `public_suffix_list.dat` which managed by the `copy_certs.sh` script as well. Expand the drop-down button below to see the contents of the `copy_certs.sh` script.
 
