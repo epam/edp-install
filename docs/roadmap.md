@@ -44,6 +44,12 @@ Another artifact aggregator which is used by EDP - [ArtifactHub](https://artifac
 
 Multiple instances of EDP are run in a single Kubernetes cluster. One way to achieve this is to use [Multitenancy](https://github.com/kubernetes-sigs/multi-tenancy){target=_blank}. Initially, [Kiosk](https://github.com/loft-sh/kiosk){target=_blank} was selected as tools that provides this capability. An alternative option that EDP Team took into consideration is [Capsule](https://github.com/clastix/capsule){target=_blank}. Another tool which goes far beyond multitenancy is [vcluster](https://github.com/loft-sh/vcluster){target=_blank} going a good candidate for *e2e testing* scenarios where one needs simple *lightweight kubernetes cluster* in CI pipelines.
 
+!!! success "EDP Release 3.5.3"
+    The EPAM Delivery Platform (EDP) has added [Capsule](./operator-guide/capsule.md) as a general tenant management solution for Kubernetes. Capsule is an open-source operator that enables you to create and manage multiple tenants on a shared Kubernetes cluster, while ensuring resource isolation, security, and governance.
+
+!!! success "EDP Release 3.5.3"
+    Vcluster is actively used in EDP for [e2e testing](https://github.com/epam/edp-tekton/blob/master/charts/custom-pipelines/templates/tasks/e2e.yaml) purposes.
+
 ### Microservice Reference Architecture Framework
 
 EDP provides basic *Application Templates* for a number of technology stacks (Java, .Net, NPM, Python) and [Helm](https://helm.sh/){target=_blank} is used as a deployment tool. The goal is to extend this library and provide: *Application Templates* which are built on pre-defined architecture patterns (e.g., Microservice, API Gateway, Circuit Breaker, CQRS, Event Driven) and *Deployment Approaches*: Canary, Blue/Green. This requires additional tools installation on cluster as well.
@@ -66,19 +72,7 @@ EDP should provide secrets management as a part of platform. There are multiple 
 
 ### Kubernetes Native CI/CD Pipelines
 
-EDP uses [Jenkins](https://www.jenkins.io/) as Pipeline Orchestrator. Jenkins runs workload for CI and CD parts. There is also basic support for [GitLab CI](https://docs.gitlab.com/ee/ci/){target=_blank}, but it provides Docker image build functionality only. EDP works on providing an alternative to Jenkins and use Kubernetes Native Approach for pipeline management. There are a number of tools, which provides such capability:
-
-* [Argo CD](https://argo-cd.readthedocs.io/en/stable/){target=_blank}
-* [Argo Workflows](https://argoproj.github.io/argo-workflows/){target=_blank}
-* [Argo Rollouts](https://argoproj.github.io/argo-rollouts/){target=_blank}
-* [Tekton](https://tekton.dev/){target=_blank}
-* [Drone](https://www.drone.io/){target=_blank}
-* [Flux](https://fluxcd.io/){target=_blank}
-
-This list is under investigation and solution is going to be implemented in two steps:
-
-1. Introduce tool that provide *Continues Delivery/Deployment* approach. Argo CD is one of the best to go with.
-2. Integrate EDP with tool that provides *Continues Integration* capabilities.
+EDP has deprecated [Jenkins](https://www.jenkins.io/) in favour of [Tekton](https://tekton.dev). Jenkins is no longer available since EDP v3.4.4.
 
 !!! success "EDP Release 2.12.x"
     [Argo CD](./operator-guide/argocd-integration.md) is suggested as a solution providing the `Continuous Delivery` capabilities.
