@@ -9,18 +9,19 @@ The `cd-pipeline-operator` should have the permissions to automatically create n
 
 ## Disable Automatic Namespace Creation
 
-Occasionally, there are cases when automatic creation of namespaces is not allowed. For example, due to security reasons of the project, EDP user may need to disable this setting. This option is manipulated by the `manageNamespace` parameter which is located in the [values.yaml](https://github.com/epam/edp-cd-pipeline-operator/blob/release/2.14/deploy-templates/values.yaml#L30) file.
+Occasionally, there are cases when automatic creation of namespaces is not allowed. For example, due to security reasons of the project, EDP user may need to disable this setting. This option is manipulated by the `manageNamespace` parameter which is located in the [values.yaml](https://github.com/epam/edp-cd-pipeline-operator/blob/release/2.16/deploy-templates/values.yaml#L31) file.
 The `manageNamespace` parameter is set to `true` by default, but it can be changed to false. As an aftermath, after setting the `manageNamespace` parameter users are supposed to face the problem that they can not deploy their application in EDP Portal UI because of permission restrictions:
 
   !![Namespace creation error](../assets/operator-guide/failed_cd_pipeline_creation.png)
 
-The error message shown above says that user needs to create the namespace in the `edp-<application-name>-<stage-name>` format first before creating stages. In addition to it, the `cd-pipeline-operator` must be granted with the administrator permissions to have the ability to manage this namespace.
-The manual namespace creation procedure does not depend on the deployment scenario whether Jenkins or Tekton is used. To create namespace manually, follow the steps below:
+The error message shown above says that user needs to create the namespace in the `edp-<application-name>-<stage-name>` format first before creating stages. In addition to it, the `cd-pipeline-operator` must be granted with the administrator permissions to have the ability to manage this namespace. To create namespace manually, follow the steps below:
 
 1. Create the namespace by running the command below:
 
        kubectl create namespace edp-<pipelineName>-<stageName>
 
+  !!! note
+      The `edp-<pipelineName>-<stageName>` format for namespaces is set by default but is not mandatory. You can set your custom namespace when creating an Environment.
 
 2. Create the administrator RoleBinding resource by applying the file below with the `kubectl apply -f grant_admin_permissions.yaml` command:
 

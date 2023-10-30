@@ -2,7 +2,7 @@
 
 EDP uses two different methods to regulate access to resources, each tailored to specific scenarios:
 
-* The initial method involves `roles` and `groups` in Keycloak and is used for SonarQube, Jenkins and partly for Nexus.
+* The initial method involves `roles` and `groups` in Keycloak and is used for SonarQube and partly for Nexus.
 
 * The second method of resource access control in EDP involves `EDP custom resources`. This approach requires modifying custom resources that outline the required access privileges for every user or group and is used to govern access to Gerrit, Nexus, EDP Portal, EKS Cluster and Argo CD.
 
@@ -18,11 +18,11 @@ This section explains what realm roles and realm groups are and how they functio
 The Keycloak realm of `edp` has two realm roles with a composite types named `administrator` and `developer`:
 
 * The `administrator` realm role is designed for users who need administrative access to the tools used in the project.
-This realm role contains two roles: `jenkins-administrators` and `sonar-administrators`.
+This realm role contains the `sonar-administrators` role.
 Users who are assigned the `administrator` realm role will be granted these two roles automatically.
 
 * The `developer` realm role, on the other hand, is designed for users who need access to the development tools used in the project.
-This realm role also contains two roles: `jenkins-users` and `sonar-developers`.
+This realm role also contains the `sonar-developers` role.
 Users who are assigned the `developer` realm role will be granted these two roles automatically.
 
 These realm roles have been defined to make it easier to assign groups of rights to users.
@@ -33,8 +33,6 @@ The table below shows the realm roles and the composite types they relate to.
 | - | :-: | :-: |
 | administrator | | :material-check: |
 | developer | | :material-check: |
-| jenkins-administrators | :material-check: | |
-| jenkins-users | :material-check: | |
 | sonar-administrators | :material-check: | |
 | sonar-developers | :material-check: | |
 
