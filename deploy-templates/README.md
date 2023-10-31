@@ -59,10 +59,9 @@ A Helm chart for EDP Install
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
 | gerrit-operator.enabled | bool | `false` |  |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
-| global.dockerRegistry | object | `{"space":"<registry_space>","type":"ecr","url":"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"}` | Gerrit SSH node port gerritSSHPort: "22" |
-| global.dockerRegistry.space | string | `"<registry_space>"` | In Openshift registry - project, in ECR - repository group |
-| global.dockerRegistry.type | string | `"ecr"` | Define Image Registry that will to be used in Pipelines. Can be ecr (default), harbor, dockerhub |
-| global.dockerRegistry.url | string | `"<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"` | Docker Registry endpoint. |
+| global.dockerRegistry.space | string | `""` |  |
+| global.dockerRegistry.type | string | `""` |  |
+| global.dockerRegistry.url | string | `""` |  |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.6.0-SNAPSHOT"` | EDP version |
