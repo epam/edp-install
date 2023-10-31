@@ -21,11 +21,6 @@ sources:
   - https://github.com/epam/edp-install
 
 dependencies:
-- name: keycloak-operator
-  repository: "@epamedp"
-  version: "1.18.0"
-  condition: keycloak-operator.enabled
-
 - name: codebase-operator
   repository: "@epamedp"
   version: "2.18.0"
@@ -50,16 +45,6 @@ dependencies:
   repository: "@epamedp"
   version: "2.16.0"
   condition: cd-pipeline-operator.enabled
-
-- name: nexus-operator
-  repository: "@epamedp"
-  version: "2.17.0"
-  condition: nexus-operator.enabled
-
-- name: sonar-operator
-  repository: "@epamedp"
-  version: "2.14.1"
-  condition: sonar-operator.enabled
 
 - name: gerrit-operator
   repository: "@epamedp"

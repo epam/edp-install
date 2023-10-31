@@ -65,12 +65,6 @@ externalSecrets:
 
 annotations: {}
 
-keycloak-operator:
-  enabled: false
-  # image:
-  #   repository: epamedp/keycloak-operator
-  #   tag:
-
 codebase-operator:
   enabled: true
   # image:
@@ -96,44 +90,6 @@ cd-pipeline-operator:
   #   tag:
   # -- defines the type of the tenant engine that can be "none", "kiosk" or "capsule"
   tenancyEngine: "none"
-
-nexus-operator:
-  enabled: false
-  # image:
-  #   repository: epamedp/nexus-operator
-  #   tag:
-  # nexus:
-  #   deploy: true
-  #   name: "nexus"
-  #   image: "sonatype/nexus3"
-  #   version:
-  #   basePath: ""
-  #   imagePullSecrets:
-  #   storage:
-  #     class: gp2
-  #     size: 10Gi
-
-sonar-operator:
-  enabled: false
-#  image:
-#    repository: epamedp/sonar-operator
-#    tag:
-#  sonar:
-#    deploy: true
-#    name: "sonar"
-#    image: "sonarqube"
-#    version:
-#    initImage: "busybox"
-#    dbImage: "postgres:9.6"
-#    storage:
-#      data:
-#        class: gp2
-#        size: 1Gi
-#      database:
-#        class: gp2
-#        size: 1Gi
-#     imagePullSecrets:
-#     basePath: ""
 
 gerrit-operator:
   enabled: false

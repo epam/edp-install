@@ -1,7 +1,4 @@
 dependencies:
-- name: keycloak-operator
-  repository: https://epam.github.io/edp-helm-charts/stable
-  version: 1.18.0
 - name: codebase-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.18.0
@@ -17,14 +14,8 @@ dependencies:
 - name: cd-pipeline-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.16.0
-- name: nexus-operator
-  repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.17.0
-- name: sonar-operator
-  repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.14.1
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.17.0
-digest: sha256:6eddf1a51c4a80b51c4dba042b069c82a2c96049994589377bcdc9af6b9b3176
-generated: "2023-09-21T23:16:53.753165+03:00"
+digest: sha256:b20562a4b72149be07a631103ee1e0a6e16d8d1ef05d3786616309ada27e98dd
+generated: "2023-10-31T11:47:47.732701+02:00"

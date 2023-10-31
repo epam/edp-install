@@ -27,9 +27,6 @@ A Helm chart for EDP Install
 | @epamedp | edp-headlamp | 0.9.0 |
 | @epamedp | edp-tekton | 0.7.0 |
 | @epamedp | gerrit-operator | 2.17.0 |
-| @epamedp | keycloak-operator | 1.18.0 |
-| @epamedp | nexus-operator | 2.17.0 |
-| @epamedp | sonar-operator | 2.14.1 |
 
 ## Values
 
@@ -69,8 +66,6 @@ A Helm chart for EDP Install
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.6.0-SNAPSHOT"` | EDP version |
-| keycloak-operator.enabled | bool | `false` |  |
-| nexus-operator.enabled | bool | `false` |  |
 | oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |
 | oauth2_proxy.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
 | oauth2_proxy.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
@@ -83,7 +78,6 @@ A Helm chart for EDP Install
 | oauth2_proxy.ingress.annotations | object | `{}` |  |
 | oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
 | oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
-| sonar-operator.enabled | bool | `false` |  |
 | sso | object | `{"admins":["stub_user_one@example.com"],"developers":["stub_user_one@example.com","stub_user_two@example.com"],"enabled":false,"keycloakUrl":"https://keycloak.example.com"}` | Enable SSO for EDP components. Required keycloak-operator deployment. Default: false |
 | sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
 | sso.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
