@@ -43,23 +43,6 @@ oauth2_proxy:
       readOnly: true
       subPath: ca.crt
 
-keycloak-operator:
-  enabled: true
-
-  # -- Additional volumes to be added to the pod
-  extraVolumes:
-    - name: custom-ca
-      secret:
-        defaultMode: 420
-        secretName: custom-ca-certificates
-
-  # -- Additional volumeMounts to be added to the container
-  extraVolumeMounts:
-    - name: custom-ca
-      mountPath: /etc/ssl/certs/ca.crt
-      readOnly: true
-      subPath: ca.crt
-
 gerrit-operator:
   enabled: false
   gerrit:
@@ -70,46 +53,6 @@ gerrit-operator:
       image: adoptopenjdk/openjdk11:alpine
       # -- Name of the secret containing additional CA certificates
       secret: custom-ca-certificates
-
-sonar-operator:
-  # -- Additional volumes to be added to the pod
-  extraVolumes:
-  - name: custom-ca
-    secret:
-      defaultMode: 420
-      secretName: custom-ca-certificates
-
-  # -- Additional volumeMounts to be added to the container
-  extraVolumeMounts:
-  - name: custom-ca
-    mountPath: /etc/ssl/certs/ca.crt
-    readOnly: true
-    subPath: ca.crt
-
-  sonar:
-    caCerts:
-      # -- Flag for enabling additional CA certificates
-      enabled: true
-      # -- Change init CA certificates container image
-      image: adoptopenjdk/openjdk11:alpine
-      # -- Name of the secret containing additional CA certificates
-      secret: custom-ca-certificates
-
-nexus-operator:
-  oauth2_proxy:
-    # -- Additional volumes to be added to the oauth2-proxy pod
-    extraVolumes:
-    - name: custom-ca
-      secret:
-        defaultMode: 420
-        secretName: custom-ca-certificates
-
-    # -- Additional volumeMounts to be added to the oauth2-proxy container
-    extraVolumeMounts:
-    - name: custom-ca
-      mountPath: /etc/ssl/certs/ca.crt
-      readOnly: true
-      subPath: ca.crt
 
 edp-tekton:
   dashboard:
