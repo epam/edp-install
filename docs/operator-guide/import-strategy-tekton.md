@@ -72,10 +72,18 @@ by taking the steps below.
 3. Create a secret in the `edp` namespace for the Git account with the **id_rsa**, **username**, and **token** fields. Take the following template as an example (use ci-github instead of ci-gitlab for GitHub):
 
     ```yaml
-    kubectl create secret generic ci-gitlab -n edp \
-    --from-file=id_rsa=id_rsa \
-    --from-literal=username=git \
-    --from-literal=token=your_gitlab_access_token
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: ci-gitlab
+      namespace: edp
+      labels:
+        app.edp.epam.com/secret-type: repository
+    type: Opaque
+    stringData:
+      id_rsa: <id_rsa_data>
+      username: git
+      token: <your_gitlab_access_token>
     ```
 
 ## Related Articles
