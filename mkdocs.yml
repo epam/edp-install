@@ -227,7 +227,7 @@ nav:
         - External Secrets Operator Integration: operator-guide/external-secrets-operator-integration.md
       - DevSecOps:
         - Secure Delivery: operator-guide/overview-devsecops.md
-        - Verification of EDP Artifacts: operator-guide/artifacts_verification.md
+        - Verification of EDP Artifacts: operator-guide/artifacts-verification.md
       - Backup With Velero:
           - Install Velero: operator-guide/install-velero.md
           - Restore EDP Tenant With Velero: operator-guide/restore-edp-with-velero.md
