@@ -3,17 +3,18 @@
 ## Overview
 
 Get acquainted with the latest EDP releases.
+* [Version 3.6.0](#3.6.0)
 * [Version 3.5.3](#3.5.3)
 * [Version 3.5.2](#3.5.2)
 * [Version 3.5.1](#3.5.1)
 * [Version 3.5.0](#3.5.0)
 * [Version 3.4.1](#3.4.1)
 * [Version 3.4.0](#3.4.0)
-* [Version 3.3.0](#3.3.0)
 
 <details>
   <summary>Earlier Versions</summary>
 
+* [Version 3.3.0](#3.3.0)
 * [Version 3.2.2](#3.2.2)
 * [Version 3.2.1](#3.2.1)
 * [Version 3.2.0](#3.2.0)
@@ -46,6 +47,104 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.6.0 <a name="3.6.0"></a> (November 3, 2023)
+
+## What's New
+
+Exciting news! Our platform is now available on the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-u7xcz6pvwwwoa), providing users with an additional free installation option [via AWS Marketplace](https://epam.github.io/edp-install/operator-guide/aws-marketplace-install/).
+
+In this release, we've significantly extended the Overview page, introducing various valuable enhancements. Alongside dynamic widgets displaying key metrics, such as CD Pipelines, Stages, Branches, Codebases, and Tekton Pipeline runs, the page now also features a user-friendly list of recent pipeline runs. These pipeline runs are thoughtfully designed with clickable links, enabling swift navigation to their corresponding details in Tekton. This major update offers a detailed view of your deployment processes and provides easy access to essential information, making pipeline management easier.
+
+EDP Portal now offers a simplified and efficient way for registries integrating and managing . This improvement simplifies the process of registry integration and management, allowing you to focus on what matters most.
+
+Introducing digital signatures using [cosign](https://github.com/sigstore/cosign) for all artifacts within the platform. This significant security enhancement strengthens the overall safety of the platform.
+
+We've implemented the Tree Diagram window for pipelines in both the Component details menu and the Overview page. This feature provides users with a comprehensive real-time view of the pipeline directly from the EDP Portal. Users can navigate to each pipeline task by clicking its name and zoom in or out for better observability.
+
+We've also optimized the task sequence to reduce execution time, significantly boosting the overall performance of pipelines by decreasing the time required for pipelines to run.
+
+In addition, The SSO Integration tab has been introduced in the Configuration section. Users can integrate a platform with the Keycloak identity provider in this tab.
+
+### Upgrades
+
+* EDP portal is now based on Headlamp version 0.20.0 ([#62](https://github.com/epam/edp-headlamp/issues/62))
+
+### New Functionality
+
+* Git Servers and Clusters are now editable directly in EDP Portal.  ([#82](https://github.com/epam/edp-headlamp/issues/82))
+* The ability to watch application logs has been added to the stage menu. ([#83](https://github.com/epam/edp-headlamp/issues/83))
+* The application terminal feature has been added directly in the stage menu of EDP Portal.
+* The ability to open application URL form the stage menu has been added to EDP Portal. ([#77](https://github.com/epam/edp-headlamp/issues/77))
+* The Container Registry page of the Configuration section has been updated. Now users can perform a hot switch between container registries eliminating the need to redeploy the platform. ([#20](https://github.com/epam/edp-headlamp/issues/20))
+* The Tree Diagram window for pipelines has been added both Component details menu and Overview page. ([#66](https://github.com/epam/edp-headlamp/issues/66))
+* The SSO Integration page has been added to the Configuration section. ([#57](https://github.com/epam/edp-headlamp/issues/57))
+
+### Enhancements
+
+* The pull request template has been updated. ([#107](https://github.com/epam/edp-install/issues/107))
+* The text field of password type have been provided with the show/hide button to reveal the password. ([#84](https://github.com/epam/edp-headlamp/issues/84))
+* Users can now specify a custom namespace when creating or updating a stage for Environment. ([#75](https://github.com/epam/edp-headlamp/issues/75))
+* Now users can start Build pipelines only if the branch status is in green state. ([#78](https://github.com/epam/edp-headlamp/issues/78))
+* Filters on the Overview page now cache previous filtering settings ([#74](https://github.com/epam/edp-headlamp/issues/74))
+* The unused URL field has been removed from the Jira integration secret form. ([#67](https://github.com/epam/edp-headlamp/issues/67)).
+* The ability to set resource limits for the Tekton dashboard and Tekton event listener resources has been added to the values.yaml file. ([#54](https://github.com/epam/edp-tekton/issues/54))
+
+### Fixed issues
+
+* Removed extra "secretKey" field from the kaniko-docker-config secret. ([#63](https://github.com/epam/edp-install/issues/63))
+* Fixed issue when the auto deploy feature doesn't work if [GitOps approach](https://epam.github.io/edp-install/user-guide/gitops/) is used. ([#23](https://github.com/epam/edp-codebase-operator/issues/23))
+* Fixed improper cobebase status filtering in the Components list. ([#73](https://github.com/epam/edp-headlamp/issues/73))
+* Fixed improper GitOps repo status handling. ([#65](https://github.com/epam/edp-headlamp/issues/65))
+
+### Documentation
+
+The [Getting Started](https://epam.github.io/edp-install/overview/) section is updated with the following:
+  * The [Supported Versions and Compatibility](https://epam.github.io/edp-install/supported-versions/) page has been updated.
+  * The [Glossary](https://epam.github.io/edp-install/glossary/) page has been updated.
+
+The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+  * The [External Secrets Operator Integration](https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration/) page has been updated. ([#106](https://github.com/epam/edp-install/issues/106))
+  * The [Upgrade EDP from v3.4 to v3.5](https://epam.github.io/edp-install/operator-guide/upgrade-edp-3.5/) page has been added. ([#94](https://github.com/epam/edp-install/issues/94))
+  * The [Nexus Sonatype Integration](https://epam.github.io/edp-install/operator-guide/nexus-sonatype/) page has been updated.
+  * The [Adjust Jira Integration](https://epam.github.io/edp-install/operator-guide/jira-integration/) page has been updated. ([#65](https://github.com/epam/edp-install/issues/65))
+  * The [Deploy AWS EKS Cluster](https://epam.github.io/edp-install/operator-guide/deploy-aws-eks/) page has been updated.
+  * The [SonarQube Integration](https://epam.github.io/edp-install/operator-guide/sonarqube/) page has been updated. ([#88](https://github.com/epam/edp-install/issues/88))
+  * The [Verification of EDP Artifacts](https://epam.github.io/edp-install/operator-guide/artifacts-verification/) page has been added.
+  * The [Install DefectDojo](https://epam.github.io/edp-install/operator-guide/install-defectdojo/) page has been updated. ([#65](https://github.com/epam/edp-install/issues/65))
+  * The [Install via AWS Marketplace](https://epam.github.io/edp-install/operator-guide/aws-marketplace-install/) page has been updated. ([#75](https://github.com/epam/edp-install/issues/75))
+  * The [Capsule Integration](https://epam.github.io/edp-install/operator-guide/capsule/) page has been updated. ([#93](https://github.com/epam/edp-install/issues/93))
+  * The [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/) page has been updated. ([#95](https://github.com/epam/edp-install/issues/95))
+  * The [Install via Helmfile](https://epam.github.io/edp-install/operator-guide/install-via-helmfile/) page has been updated. ([#95](https://github.com/epam/edp-install/issues/95))
+  * The [Secure Delivery on the Platform](https://epam.github.io/edp-install/operator-guide/overview-devsecops/) page has been updated.
+  * The [Nexus Sonatype Integration](https://epam.github.io/edp-install/operator-guide/nexus-sonatype/) page has been updated. ([#99](https://github.com/epam/edp-install/issues/99))
+  * The [Integrate GitHub/GitLab in Tekton](https://epam.github.io/edp-install/operator-guide/import-strategy-tekton/) page has been updated. ([#96](https://github.com/epam/edp-install/issues/96))
+
+The [User Guide](https://epam.github.io/edp-install/user-guide/) is updated with the following:
+  * The [Components Overview](https://epam.github.io/edp-install/user-guide/components/) page has been added. ([#100](https://github.com/epam/edp-install/issues/100))
+  * The [Manage GitOps](https://epam.github.io/edp-install/user-guide/gitops/) page has been added.
+  * The [Overview](https://epam.github.io/edp-install/user-guide/) page has been updated.
+  * The [Add Application](https://epam.github.io/edp-install/user-guide/add-application/) page has been updated.
+  * The [Manage Applications](https://epam.github.io/edp-install/user-guide/application/) page has been updated.
+  * The [Add Autotest](https://epam.github.io/edp-install/user-guide/add-autotest/) page has been updated.
+  * The [Manage Autotests](https://epam.github.io/edp-install/user-guide/autotest/) page has been updated.
+  * The [Add Library](https://epam.github.io/edp-install/user-guide/add-library/) page has been updated.
+  * The [Manage Libaries](https://epam.github.io/edp-install/user-guide/library/) page has been updated.
+  * The [Add Infrastructure](https://epam.github.io/edp-install/user-guide/add-infrastructure/) page has been updated.
+  * The [Manage Infrastructures](https://epam.github.io/edp-install/user-guide/infrastructure/) page has been updated.
+  * The [Manage Branches](https://epam.github.io/edp-install/user-guide/manage-branches/) page has been updated.
+  * The [Add Environment](https://epam.github.io/edp-install/user-guide/add-cd-pipeline/) page has been updated.
+  * The [Manage Environments](https://epam.github.io/edp-install/user-guide/manage-environments/) page has been updated.
+  * The [Add Quality Gate](https://epam.github.io/edp-install/user-guide/add-quality-gate/) page has been updated.
+  * The [Manage Git Servers](https://epam.github.io/edp-install/user-guide/git-server-overview/) page has been updated. ([#102](https://github.com/epam/edp-install/issues/102))
+
+The [Developer Guide](https://epam.github.io/edp-install/developer-guide/) is updated with the following:
+  * The [EDP Project Rules. Working Process](https://epam.github.io/edp-install/developer-guide/edp-workflow/) page has been updated.
+
+Other:
+  * The [RoadMap](https://epam.github.io/edp-install/roadmap/) page has been updated.
+  * The [README.md](https://github.com/epam/edp-install/blob/master/README.md) file has been updated. ([#47](https://github.com/epam/edp-install/issues/47))
+
 
 ## Version 3.5.3 <a name="3.5.3"></a> (September 28, 2023)
 
