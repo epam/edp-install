@@ -352,7 +352,7 @@ What happens under the hood:<br>
 
 The detailed scheme is shown below:
 
-``` mermaid
+```mermaid
 graph LR;
     A[Gerrit events] --> |Payload| B(Tekton EventListener) --> C(Tekton Interceptor CEL filter) --> D(TriggerTemplate)--> E(PipelineRun)
 ```

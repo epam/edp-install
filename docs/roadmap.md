@@ -45,7 +45,7 @@ Another artifact aggregator which is used by EDP - [ArtifactHub](https://artifac
 Multiple instances of EDP are run in a single Kubernetes cluster. One way to achieve this is to use [Multitenancy](https://github.com/kubernetes-sigs/multi-tenancy){target=_blank}. Initially, [Kiosk](https://github.com/loft-sh/kiosk){target=_blank} was selected as tools that provides this capability. An alternative option that EDP Team took into consideration is [Capsule](https://github.com/clastix/capsule){target=_blank}. Another tool which goes far beyond multitenancy is [vcluster](https://github.com/loft-sh/vcluster){target=_blank} going a good candidate for *e2e testing* scenarios where one needs simple *lightweight kubernetes cluster* in CI pipelines.
 
 !!! success "EDP Release 3.5.3"
-    The EPAM Delivery Platform (EDP) has added [Capsule](./operator-guide/capsule.md) as a general tenant management solution for Kubernetes. Capsule is an open-source operator that enables you to create and manage multiple tenants on a shared Kubernetes cluster, while ensuring resource isolation, security, and governance.
+    The EPAM Delivery Platform (EDP) has added [Capsule](operator-guide/capsule.md) as a general tenant management solution for Kubernetes. Capsule is an open-source operator that enables you to create and manage multiple tenants on a shared Kubernetes cluster, while ensuring resource isolation, security, and governance.
 
 !!! success "EDP Release 3.5.3"
     Vcluster is actively used in EDP for [e2e testing](https://github.com/epam/edp-tekton/blob/master/charts/custom-pipelines/templates/tasks/e2e.yaml) purposes.
@@ -64,7 +64,7 @@ EDP uses [Open Policy Agent](https://www.openpolicyagent.org/){target=_blank} (f
 EDP should provide secrets management as a part of platform. There are multiple tools providing secrets management capabilities. The aim is to be aligned with GitOps and [Operator Pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/){target=_blank} approaches so [HashiCorp Vault](https://www.vaultproject.io/docs/platform/k8s){target=_blank}, [Banzaicloud Bank Vaults](https://github.com/banzaicloud/bank-vaults){target=_blank}, [Bitnami Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets){target=_blank} are currently used for internal projects and some of them should be made publicly available - as a part of EDP Deployment.
 
 !!! success "EDP Release 2.12.x"
-    [External Secret Operator](./operator-guide/external-secrets-operator-integration.md) is a recommended secret management tool for the EDP components.
+    [External Secret Operator](operator-guide/external-secrets-operator-integration.md) is a recommended secret management tool for the EDP components.
 
 ### Release Management
 
@@ -75,10 +75,10 @@ EDP should provide secrets management as a part of platform. There are multiple 
 EDP has deprecated [Jenkins](https://www.jenkins.io/) in favour of [Tekton](https://tekton.dev). Jenkins is no longer available since EDP v3.4.4.
 
 !!! success "EDP Release 2.12.x"
-    [Argo CD](./operator-guide/argocd-integration.md) is suggested as a solution providing the `Continuous Delivery` capabilities.
+    [Argo CD](operator-guide/argocd-integration.md) is suggested as a solution providing the `Continuous Delivery` capabilities.
 
 !!! success "EDP Release 3.0"
-    [Tekton](./operator-guide/install-tekton.md) is used as a CI/CD pipelines orchestration tool on the platform. Review [edp-tekton](http://github.com/epam/edp-tekton) GitHub repository that keeps all the logic behind this solution on the EDP (Pipelines, Tasks, TriggerTemplates, Interceptors, etc). Get acquainted with the series of publications on our [Medium Page](https://medium.com/epam-delivery-platform/part-1-tekton-adoption-d5d47bf1bfc0).
+    [Tekton](operator-guide/install-tekton.md) is used as a CI/CD pipelines orchestration tool on the platform. Review [edp-tekton](http://github.com/epam/edp-tekton) GitHub repository that keeps all the logic behind this solution on the EDP (Pipelines, Tasks, TriggerTemplates, Interceptors, etc). Get acquainted with the series of publications on our [Medium Page](https://medium.com/epam-delivery-platform/part-1-tekton-adoption-d5d47bf1bfc0).
 
 ### Advanced EDP Role-based Model
 
@@ -104,11 +104,11 @@ Persistent layer, which is based on [edp-db](https://github.com/epam/edp-install
 * Onboard SAST/DAST tool as a part of CI pipelines and Non-Functional Testing activities
 
 !!! success "EDP Release 2.12.x"
-    [SAST](./operator-guide/overview-sast.md) is introduced as a mandatory part of the [CI Pipelines](./user-guide/ci-pipeline-details.md). The [list of currently supported SAST scanners](https://epam.github.io/edp-install/operator-guide/overview-sast/#supported-languages) and the [instruction on how to add them](./operator-guide/add-security-scanner.md) are also available.
+    [SAST](operator-guide/overview-sast.md) is introduced as a mandatory part of the [CI Pipelines](user-guide/ci-pipeline-details.md). The [list of currently supported SAST scanners](https://epam.github.io/edp-install/operator-guide/overview-sast/#supported-languages) and the [instruction on how to add them](./operator-guide/add-security-scanner.md) are also available.
 
 ### Infrastructure as Code
 
-EDP Target tool for Infrastructure as Code (IaC) is [Terraform](https://www.terraform.io/){target=_blank}. EDP sees two CI/CD scenarios while working with IaC: *Module Development* and *Live Environment Deployment*. Today, EDP provides [basic capabilities (CI Pipelines)](./user-guide/terraform-stages.md) for *Terraform Module Development*. At the same time, currently EDP doesn't provide Deployment pipelines for *Live Environments* and the feature is under development. [Terragrunt](https://terragrunt.gruntwork.io/){target=_blank} is an option to use in *Live Environment* deployment. Another Kubernetes Native approach to provision infrastructure components is [Crossplane](https://crossplane.io/){taget=_blank}.
+EDP Target tool for Infrastructure as Code (IaC) is [Terraform](https://www.terraform.io/){target=_blank}. EDP sees two CI/CD scenarios while working with IaC: *Module Development* and *Live Environment Deployment*. Today, EDP provides [basic capabilities (CI Pipelines)](user-guide/terraform-stages.md) for *Terraform Module Development*. At the same time, currently EDP doesn't provide Deployment pipelines for *Live Environments* and the feature is under development. [Terragrunt](https://terragrunt.gruntwork.io/){target=_blank} is an option to use in *Live Environment* deployment. Another Kubernetes Native approach to provision infrastructure components is [Crossplane](https://crossplane.io/){taget=_blank}.
 
 ### Database Schema Management
 
@@ -116,14 +116,14 @@ One of the challenges for Application running in Kubernetes is to manage databas
 
 ### Open Policy Agent
 
-[Open Policy Agent](https://www.openpolicyagent.org/){target=_blank} is introduced in version [2.8.0](./user-guide/opa-stages.md). EDP now supports CI for [Rego Language](https://www.openpolicyagent.org/docs/latest/#rego){target=_blank}, so you can develop your own policies. The next goal is to provide pipeline steps for running compliance policies check for Terraform, Java, Helm Chart as a part of CI process.
+[Open Policy Agent](https://www.openpolicyagent.org/){target=_blank} is introduced in version [2.8.0](user-guide/opa-stages.md). EDP now supports CI for [Rego Language](https://www.openpolicyagent.org/docs/latest/#rego){target=_blank}, so you can develop your own policies. The next goal is to provide pipeline steps for running compliance policies check for Terraform, Java, Helm Chart as a part of CI process.
 
 ### Report Portal
 
 EDP uses [Allure Framework](https://github.com/allure-framework/allure2){target=_blank} as a *Test Report tool*. Another option is to integrate [Report Portal](https://reportportal.io/){target=_blank} into EDP ecosystem.
 
 !!! success "EDP Release 3.0"
-    Use [ReportPortal](./operator-guide/install-reportportal.md) to consolidate and analyze your Automation tests results. Consult our pages on how to perform [reporting](./operator-guide/report-portal-integration-tekton.md) and [Keycloak integration](./operator-guide/reportportal-keycloak.md).
+    Use [ReportPortal](operator-guide/install-reportportal.md) to consolidate and analyze your Automation tests results. Consult our pages on how to perform [reporting](operator-guide/report-portal-integration-tekton.md) and [Keycloak integration](operator-guide/reportportal-keycloak.md).
 
 ### Carrier
 
@@ -134,7 +134,7 @@ EDP uses [Allure Framework](https://github.com/allure-framework/allure2){target=
 EDP supports two LTS versions of Java: 8 and 11. The goal is to provide [Java 17 (LTS)](https://jdk.java.net/17/){target=_blank} support.
 
 !!! success "EDP Release 3.2.1"
-    CI Pipelines for [Java 17](./features.md) is available in EDP.
+    CI Pipelines for [Java 17](features.md) is available in EDP.
 
 ### Velero
 
@@ -153,7 +153,7 @@ EDP supports two LTS versions of Java: 8 and 11. The goal is to provide [Java 17
 EDP supports the [OpenShift 4.9](https://docs.openshift.com/container-platform/4.9/welcome/index.html) platform.
 
 !!! success "EDP Release 2.12.x"
-    EDP Platform runs on the latest OKD versions: [4.9](./operator-guide/deploy-okd.md) and [4.10](./operator-guide/deploy-okd-4.10.md). [Creating the IAM Roles for Service Account](https://docs.openshift.com/container-platform/4.10/authentication/managing_cloud_provider_credentials/cco-mode-sts.html#sts-mode-installing-manual-run-installer_cco-mode-sts) is a recommended way to work with AWS Resources from the OKD cluster.
+    EDP Platform runs on the latest OKD versions: [4.9](operator-guide/deploy-okd.md) and [4.10](operator-guide/deploy-okd-4.10.md). [Creating the IAM Roles for Service Account](https://docs.openshift.com/container-platform/4.10/authentication/managing_cloud_provider_credentials/cco-mode-sts.html#sts-mode-installing-manual-run-installer_cco-mode-sts) is a recommended way to work with AWS Resources from the OKD cluster.
 
 ## IV. Admin Console (UI)
 
@@ -164,7 +164,7 @@ EDP supports the [OpenShift 4.9](https://docs.openshift.com/container-platform/4
 * Enrich with traceability metrics for products
 
 !!! success "EDP Release 2.12.x"
-    EDP Team has introduced a new UI component called [EDP Headlamp](https://github.com/epam/edp-headlamp), which will replace the [EDP Admin Console](./user-guide/index.md) in future releases. EDP Headlamp is based on the [Kinvolk Headlamp UI Client](https://github.com/kinvolk/headlamp).
+    EDP Team has introduced a new UI component called [EDP Headlamp](https://github.com/epam/edp-headlamp), which will replace the [EDP Admin Console](user-guide/index.md) in future releases. EDP Headlamp is based on the [Kinvolk Headlamp UI Client](https://github.com/kinvolk/headlamp).
 
 !!! success "EDP Release 3.0"
     [EDP Headlamp](https://github.com/epam/edp-headlamp) is used as a Control Plane UI on the platform.
@@ -178,14 +178,14 @@ EDP uses [Keycloak](https://www.keycloak.org/){target=_blank} as an Identity and
 
 ### The Delivery Pipelines Dashboard
 
-The [CD Pipeline section](./user-guide/add-cd-pipeline.md) in EDP Portal provides basic information, such as environments, artifact versions deployed per each environment, and direct links to the namespaces. One option is to enrich this panel with metrics from the Prometheus, custom resources, or events. Another option is to use the existing dashboards and expose EDP metrics to them, for example, [plugin for Lens](https://github.com/lensapp/lens-extensions){target=_blank} or [OpenShift UI Console](https://github.com/openshift/console){target=_blank}.
+The [CD Pipeline section](user-guide/add-cd-pipeline.md) in EDP Portal provides basic information, such as environments, artifact versions deployed per each environment, and direct links to the namespaces. One option is to enrich this panel with metrics from the Prometheus, custom resources, or events. Another option is to use the existing dashboards and expose EDP metrics to them, for example, [plugin for Lens](https://github.com/lensapp/lens-extensions){target=_blank} or [OpenShift UI Console](https://github.com/openshift/console){target=_blank}.
 
 ### Split Jira and Commit Validation Sections
 
-[Commit Validate step](../user-guide/pipeline-stages/#stages-description) was initially designed to be aligned with [Jira Integration](./operator-guide/jira-integration.md) and cannot be used as single feature. Target state is to ensure features *CommitMessage Validation* and *Jira Integration* both can be used independently. We also want to add support for [Conventional Commits](https://www.conventionalcommits.org){target=_blank}.
+[Commit Validate step](user-guide/pipeline-stages.md#stages-description) was initially designed to be aligned with [Jira Integration](operator-guide/jira-integration.md) and cannot be used as single feature. Target state is to ensure features *CommitMessage Validation* and *Jira Integration* both can be used independently. We also want to add support for [Conventional Commits](https://www.conventionalcommits.org){target=_blank}.
 
 !!! success "EDP Release 3.2.0"
-    [EDP Portal](https://github.com/epam/edp-headlamp) has separate sections for [Jira Integration](./operator-guide/jira-integration.md) and CommitMessage Validation step.
+    [EDP Portal](https://github.com/epam/edp-headlamp) has separate sections for [Jira Integration](operator-guide/jira-integration.md) and CommitMessage Validation step.
 
 ## V. Documentation as Code
 

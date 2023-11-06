@@ -67,7 +67,7 @@ dependency:
   **Requirements**: [helm-docs v1.10.0](https://github.com/norwoodj/helm-docs/releases/tag/v1.10.0)
 
   !!! Note
-      The **helm-docs** stage is optional. To extend the pipeline with an additional stage, please refer to the [Configure Code Review Pipeline](../code-review-pipeline/#configure-code-review-pipeline) page.
+      The **helm-docs** stage is optional. To extend the pipeline with an additional stage, please refer to the [Configure Code Review Pipeline](code-review-pipeline.md#configure-code-review-pipeline) page.
 
   !![Helm docs](../assets/user-guide/helm-docs.png)
 

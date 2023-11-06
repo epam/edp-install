@@ -2,7 +2,7 @@ site_name: EPAM Delivery Platform
 repo_url: https://github.com/epam/edp-install
 site_url: https://epam.github.io/edp-install
 edit_uri: ""
-site_description: EPAM Delivery Platform
+site_description: EPAM Delivery Platform is a cloud-native solution for software delivery automation. It offers various tools and features for creating, managing, and deploying applications.
 
 # Copyright
 copyright: Copyright &copy; 2018 - 2023 EPAM Delivery Platform -
@@ -17,25 +17,20 @@ markdown_extensions:
   - codehilite
   - mdx_truly_sane_lists
   - meta
-  - plantuml_markdown:
-      server: http://www.plantuml.com/plantuml
   - toc:
       permalink: ⚓︎
   - pymdownx.details
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.superfences:
       preserve_tabs: true
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-        - name: vegalite
-          class: vegalite
-          format: !!python/name:mkdocs_charts_plugin.fences.fence_vegalite
 
 extra_css:
   - https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css
@@ -80,8 +75,8 @@ theme:
 
 plugins:
   - awesome-pages
-  - charts
-  - meta-descriptions
+  - meta-descriptions:
+      trim: true
   - mkdocs-video
   - search
   - minify:

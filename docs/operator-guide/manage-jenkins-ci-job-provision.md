@@ -809,7 +809,7 @@ To create a new job provision for work with GitLab, take the following steps:
 
   * Select **Add build step**;
 
-  * Choose **Process Job DSLs**; 
+  * Choose **Process Job DSLs**;
 
   * Select the **Use the provided DSL script** check box:
 
@@ -1163,7 +1163,7 @@ def getSecretValue(name) {
 
 ## Related Articles
 
-* [CI Pipeline for Container](../../user-guide/container-stages)
+* [CI Pipeline for Container](../user-guide/container-stages.md)
 * [GitLab Webhook Configuration](../operator-guide/gitlab-integration.md)
 * [GitHub Webhook Configuration](../operator-guide/github-integration.md)
 * [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)

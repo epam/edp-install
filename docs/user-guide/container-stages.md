@@ -50,7 +50,7 @@ stage for building container images on the Kubernetes platform and the [`build-i
 
 In order to change a build tool for the OpenShift Platform from the default `buildConfig` object to the Kaniko tool, perform the following steps:
 
-1. Modify or update a job provisioner logic, follow the instructions on the [Manage Jenkins CI Pipeline Job Provisioner](../../operator-guide/manage-jenkins-ci-job-provision/#custom-custom-defaultgithubgitlab) page.
+1. Modify or update a job provisioner logic, follow the instructions on the [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md#custom-custom-defaultgithubgitlab) page.
 2. Update the required parameters for a new provisioner.
    For example, if it is necessary to change the build tool for Container build pipeline, update the list of stages:
 
@@ -67,4 +67,4 @@ In order to change a build tool for the OpenShift Platform from the default `bui
 ## Related Articles
 
 - [Use Dockerfile Linters for Code Review Pipeline](dockerfile-stages.md)
-- [Manage Jenkins CI Pipeline Job Provisioner](../../operator-guide/manage-jenkins-ci-job-provision)
+- [Manage Jenkins CI Pipeline Job Provisioner](../operator-guide/manage-jenkins-ci-job-provision.md)

@@ -14,9 +14,6 @@ The purpose of the Build pipeline contains the following points:
 Find below the functional diagram of the Build pipeline with the default stages:
 
 ```mermaid
----
-title: gitlab-gradle-java17-app-build-edp
----
 flowchart TD
    build --> get-nexus-repository-url
    compile --> test

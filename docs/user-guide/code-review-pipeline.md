@@ -14,9 +14,6 @@ The purpose of the Code Review pipeline contains the following points:
 Find below the functional diagram of the Code Review pipeline with the default stages:
 
 ```mermaid
----
-title: gitlab-gradle-java17-app-review
----
 flowchart TD
    build --> dockerbuild-verify
    compile --> test

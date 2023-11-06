@@ -105,7 +105,7 @@ This section provides the details on upgrading EDP to 3.0. Explore the actions a
        --patch="{\"data\": { \"username\": \"$(echo -n edp-ci |base64 -w0)\" }}" -oyaml
 
 !!! Warning
-    In EDP v.3.0.x, [Admin Console](../../user-guide/#admin-console) is deprecated, and EDP interface is available only via [EDP Portal](../../user-guide/#overview).
+    In EDP v.3.0.x, [Admin Console](../user-guide/index.md#admin-console) is deprecated, and EDP interface is available only via [EDP Portal](../user-guide/index.md#overview).
 
 ## Related Articles
 * [Migrate CI Pipelines From Jenkins to Tekton](migrate-ci-pipelines-from-jenkins-to-tekton.md)

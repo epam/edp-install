@@ -103,7 +103,7 @@ Quality gate pipeline is a usual Tekton pipeline but with a specific label: `app
 
 ## Run Quality Gate
 
-Before running the quality gate, first of all, ensure that the environment has deployed the [created CD pipeline](../add-cd-pipeline/#create-cd-pipeline-in-the-dialog) and then ensure that the application is successfully deployed and ready to run the quality gate. To run quality gate, please follow the steps below:
+Before running the quality gate, first of all, ensure that the environment has deployed the [created CD pipeline](add-cd-pipeline.md#create-cd-pipeline-in-the-dialog) and then ensure that the application is successfully deployed and ready to run the quality gate. To run quality gate, please follow the steps below:
 
 1. Check the CD pipeline status. To do this, open the created CD pipeline, select `Image stream version`, click `DEPLOY` button and wait until `Applications`, `Health` and `Sync` statuses become `green`. This implies that the application is successfully deployed and ready to run the quality gate.
 
@@ -115,7 +115,7 @@ Before running the quality gate, first of all, ensure that the environment has d
 
 ## Add Stage for Quality Gate
 
-For a better understanding of this section, please read the documentation about how to [add a new stage for quality gate](../add-cd-pipeline/#add-a-new-stage).<br>
+For a better understanding of this section, please read the documentation about how to [add a new stage for quality gate](add-cd-pipeline.md#add-a-new-stage).<br>
 The scheme below illustrates two approaches of adding quality gates:
 
 !![Quality gate promote a scheme](../assets/user-guide/qg_promote_shema.png "Types of adding quality gate")

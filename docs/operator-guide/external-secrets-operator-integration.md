@@ -11,7 +11,7 @@ EDP uses various secrets to integrate various applications. Below is a list of s
 
 |Secret Name|Fields|Description|Used by|
 |:-|:-|:-|:-|
-|keycloak|username<br><br>password|Username and password with [specific rights](../install-keycloak/#configuration) for EDP tenant in Keycloak|keycloak-operator|
+|keycloak|username<br><br>password|Username and password with [specific rights](install-keycloak.md#configuration) for EDP tenant in Keycloak|keycloak-operator|
 |ci-defectdojo|token<br><br>url|DefectDojo token<br><br>DefectDojo URL|edp-tekton|
 |kaniko-docker-config|.dockerconfigjson|Serialized JSON that follows docker config patterns|edp-tekton|
 |regcred|.dockerconfigjson|Serialized JSON that follows docker config patterns|cd-pipeline-operator|

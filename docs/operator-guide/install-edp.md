@@ -1,6 +1,6 @@
 # Install EDP
 
-Inspect the main steps to install EPAM Delivery Platform. Please check the [Prerequisites Overview](prerequisites.md) page before starting the installation. Also to authenticate each of the release artifacts, please refer to the  [Verification of EDP Artifacts](artifacts_verification.md) guide.
+Inspect the main steps to install EPAM Delivery Platform. Please check the [Prerequisites Overview](prerequisites.md) page before starting the installation. Also to authenticate each of the release artifacts, please refer to the  [Verification of EDP Artifacts](artifacts-verification.md) guide.
 There are two recommended ways to deploy EPAM Delivery Platform:
 
 * Using Helm (see below);
@@ -59,7 +59,6 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 
   !!! note
       It is highly recommended to use the latest released version.
-
 
 6. EDP can be integrated with the following version control systems:
 
@@ -129,6 +128,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
   Since EDP v3.4.0, we enabled users to configure Harbor registry instead of AWS ECR and Openshift-registry. We recommend installing Harbor using our [edp-cluster-add-ons](https://github.com/epam/edp-cluster-add-ons/blob/main/chart/values.yaml#L53) although you can install it any other way. To integrate EDP with Harbor, see [Harbor integration](container-registry-harbor-integration-tekton-ci.md) page.
 
   To enable Harbor as a registry storage, use the values below:
+
   ```yaml
   global:
     dockerRegistry:
@@ -201,18 +201,19 @@ There are two recommended ways to deploy EPAM Delivery Platform:
   !!! info
       The full installation with integration between tools will take at least 10 minutes.
 
-
-12.  To check if the installation is successful, run the command below:
+12. To check if the installation is successful, run the command below:
 
     ```bash
     helm status edp -n edp
     ```
+
     You can also check ingress endpoints to get EDP Portal endpoint to enter EDP Portal UI:
+
     ```bash
     kubectl describe ingress -n edp
     ```
 
-13.  Once EDP is successfully installed, you can navigate to our [Use Cases](../use-cases/index.md) to try out EDP functionality.
+13. Once EDP is successfully installed, you can navigate to our [Use Cases](../use-cases/index.md) to try out EDP functionality.
 
 ## Related Articles
 
@@ -225,4 +226,4 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 * [Set Up OpenShift](openshift-cluster-settings.md)
 * [EDP Installation Prerequisites Overview](prerequisites.md)
 * [Headlamp OIDC Integration](headlamp-oidc.md)
-* [Verification of EDP Artifacts](artifacts_verification.md)
+* [Verification of EDP Artifacts](artifacts-verification.md)
