@@ -56,7 +56,7 @@ Exciting news! Our platform is now available on the [AWS Marketplace](https://aw
 
 In this release, we've significantly extended the Overview page, introducing various valuable enhancements. Alongside dynamic widgets displaying key metrics, such as CD Pipelines, Stages, Branches, Codebases, and Tekton Pipeline runs, the page now also features a user-friendly list of recent pipeline runs. These pipeline runs are thoughtfully designed with clickable links, enabling swift navigation to their corresponding details in Tekton. This major update offers a detailed view of your deployment processes and provides easy access to essential information, making pipeline management easier.
 
-EDP Portal now offers a simplified and efficient way for registries integrating and managing . This improvement simplifies the process of registry integration and management, allowing you to focus on what matters most.
+EDP Portal now offers a simplified and efficient way for registries integrating and managing. This improvement simplifies the process of registry integration and management, allowing you to focus on what matters most.
 
 Introducing digital signatures using [cosign](https://github.com/sigstore/cosign) for all artifacts within the platform. This significant security enhancement strengthens the overall safety of the platform.
 
@@ -64,11 +64,11 @@ We've implemented the Tree Diagram window for pipelines in both the Component de
 
 We've also optimized the task sequence to reduce execution time, significantly boosting the overall performance of pipelines by decreasing the time required for pipelines to run.
 
-In addition, The SSO Integration tab has been introduced in the Configuration section. Users can integrate a platform with the Keycloak identity provider in this tab.
+In addition, the SSO Integration tab has been introduced in the Configuration section. Users can integrate a platform with the Keycloak identity provider in this tab.
 
 ### Upgrades
 
-* EDP portal is now based on Headlamp version 0.20.0 ([#62](https://github.com/epam/edp-headlamp/issues/62))
+* EDP Portal is now based on Headlamp version [0.20.0](https://github.com/headlamp-k8s/headlamp/releases/tag/v0.20.0). ([#62](https://github.com/epam/edp-headlamp/issues/62))
 
 ### New Functionality
 
@@ -86,8 +86,8 @@ In addition, The SSO Integration tab has been introduced in the Configuration se
 * The text field of password type have been provided with the show/hide button to reveal the password. ([#84](https://github.com/epam/edp-headlamp/issues/84))
 * Users can now specify a custom namespace when creating or updating a stage for Environment. ([#75](https://github.com/epam/edp-headlamp/issues/75))
 * Now users can start Build pipelines only if the branch status is in green state. ([#78](https://github.com/epam/edp-headlamp/issues/78))
-* Filters on the Overview page now cache previous filtering settings ([#74](https://github.com/epam/edp-headlamp/issues/74))
-* The unused URL field has been removed from the Jira integration secret form. ([#67](https://github.com/epam/edp-headlamp/issues/67)).
+* Filters on the Overview page now cache previous filtering settings. ([#74](https://github.com/epam/edp-headlamp/issues/74))
+* The unused "URL" field has been removed from the Jira integration secret form. ([#67](https://github.com/epam/edp-headlamp/issues/67)).
 * The ability to set resource limits for the Tekton dashboard and Tekton event listener resources has been added to the values.yaml file. ([#54](https://github.com/epam/edp-tekton/issues/54))
 
 ### Fixed issues
