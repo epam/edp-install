@@ -63,7 +63,7 @@ Verification for [epamedp/codebase-operator:2.20.0](https://hub.docker.com/layer
 
 ## Verify Container Image With SLSA Attestations
 
-An [SLSA](https://slsa.dev/) Level 3 provenance is verified using "INSERT OUT TOOL (SEEMS TO BE COSIGN VERIFY)". The following (SEEMS TO BE COSIGN VERIFY) command will verify the signature of an attestation and how it was issued. It will contain the payloadType, payload, and signature.
+An [SLSA](https://slsa.dev/) Level 3 provenance is verified using. The following command will verify the signature of an attestation and how it was issued. It will contain the payloadType, payload, and signature.
 
 Run the `cosign verify-attestation` command using the [cosign.pub](https://raw.githubusercontent.com/epam/edp-install/master/cosign.pub):
 
