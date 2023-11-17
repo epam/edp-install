@@ -80,20 +80,26 @@ by taking the steps below.
 
   === "kubectl"
 
-      ```yaml
-      apiVersion: v1
-      kind: Secret
-      metadata:
-        name: ci-github
-        namespace: edp
-        labels:
-          app.edp.epam.com/secret-type: repository
-      type: Opaque
-      stringData:
-        id_rsa: <id_rsa_data>
-        username: git
-        token: <your_github_access_token>
+      Create a manifest file called secret.yaml with the following content filled in:
+
+      ```bash
+      kubectl apply -f - <<EOF
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: ci-github
+              namespace: edp
+              labels:
+                app.edp.epam.com/secret-type: repository
+            type: Opaque
+            stringData:
+              id_rsa: <id_rsa_data>
+              username: git
+              token: <your_github_access_token>
+      EOF
       ```
+
+As a result, you will be able to create codebases using an integrated Version Control System.
 
 ## Related Articles
 
