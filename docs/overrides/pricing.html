@@ -1,0 +1,470 @@
+<!-- Custom HTML site displayed as the Home chapter -->
+
+{% extends "main.html" %}
+{% block tabs %}
+{{ super() }}
+<style>
+    .md-header--shadow {
+        box-shadow: 0 0 0.2rem #0000, 0 0.2rem 0.4rem #0000;
+    }
+
+    .section--pricing {
+        flex-grow: 1;
+        padding-bottom: 100px;
+    }
+
+    .section--pricing .section__content {
+        padding: 0 20px;
+    }
+
+    .pricing-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-bottom: 100px;
+    }
+
+    .pricing-grid__item {
+        flex: 1 1 0;
+        min-width: 300px;
+    }
+
+    .pricing-card {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: var(--md-default-bg-color);
+        box-shadow: 0 12px 50px -12px rgba(0,0,0,0.25);
+        height: 100%;
+        position: relative;
+    }
+
+    .pricing-card__label {
+        background: linear-gradient(to bottom, var(--md-primary-fg-color), var(--md-accent-fg-color) 100%);
+        position: absolute;
+        top: 0;
+        padding: 5px 20px;
+        border-radius: 2px;
+        color: white;
+        text-transform: uppercase;
+        font-size: 13px;
+        left: 50%;
+        translate: -50% -50%;
+    }
+
+    .pricing-card__content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .pricing-card__footer {
+        margin-top: auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pricing-card__name {
+        font-size: 32px;
+        font-weight: 300;
+    }
+
+    .pricing-card__price {
+        font-size: 40px;
+        font-weight: bold;
+        display: flex;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .pricing-card__price span {
+        font-size: 16px;
+    }
+
+    .pricing-card__description {
+        font-size: 17px;
+        line-height: 1.3em;
+        height: 6.5em;
+    }
+
+    .pricing-card__features {
+        padding-left: 20px;
+    }
+
+    .pricing-card__feature {
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 35px;
+    }
+
+    .pricing-card__feature::marker {
+        content: '';
+    }
+
+    .pricing-card__feature-marker {
+        display: inline-block;
+        width: 20px;
+    }
+
+    .pricing-card__feature-marker svg {
+        fill: var(--md-primary-fg-color);
+    }
+
+    .button {
+        background-color: var(--md-primary-fg-color);
+        padding: 10px 30px;
+        font-size: 14px;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: background-color 300ms ease-out;
+    }
+
+    .button:hover {
+        background-position:100px;
+        background-color: var(--md-accent-fg-color);
+    }
+
+    .h1 {
+        font-size: 38px;
+    }
+
+    .page-description {
+        font-size: 20px;
+        margin-bottom: 50px;
+    }
+
+    .pricing-card--recommended {
+        border: 1px solid var(--md-accent-fg-color);
+    }
+
+    .pricing-card--free .button {
+        background-color: var(--md-accent-fg-color);
+    }
+
+    .pricing-card--free svg {
+        fill: var(--md-accent-fg-color)
+    }
+
+    @media screen and (min-width: 76.25em) {
+        /*hide mobile nav on desktop size*/
+        .md-main {
+            display: none;
+        }
+    }
+</style>
+
+<style>
+    .table-wrapper {
+        overflow-x: auto;
+        margin: 100px 0;
+        box-shadow: 0 12px 50px -12px rgba(0,0,0,0.25);
+    }
+
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        border-radius: 10px;
+        table-layout: fixed;
+    }
+
+    .table td, .table th {
+        padding: 30px;
+        text-align: left;
+    }
+
+
+    .table th {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .table td {
+        font-size: 16px;
+    }
+
+    .table--services th:first-child, .table--services td:first-child {
+        border-left: none;
+        width: 20%;
+    }
+
+    .table--services th:last-child, .table--services td:last-child {
+        width: 25%;
+        border-right: none;
+    }
+
+    .table--services th:nth-child(2), .table--services td:nth-child(2) {
+        min-width: 500px;
+        width: 500px;
+    }
+
+    .table--services td:last-child {
+        text-align: center;
+    }
+
+    .table--services .table__cell-label {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .table--services th, .table--services td {
+        border: 1px solid #efefef;
+    }
+
+    .definition {
+        font-size: 16px;
+        font-style: italic;
+        line-height: 1.5em;
+    }
+</style>
+
+<section class="section section--pricing gradient-to-bottom">
+    <div class="md-grid">
+        <div class="section__content">
+            <h1 class="h1">Professional Service Pricing</h1>
+            <p class="page-description">Experience the flexibility of deploying the EPAM Delivery Platform on your on-premises infrastructure or in the Cloud.
+                Your valuable data stays securely within your perimeter, ensuring uncompromising security at every step.
+            </p>
+
+            <div class="pricing-grid">
+                <div class="pricing-grid__item">
+                    <div class="pricing-card pricing-card--free">
+                        <div class="pricing-card__content">
+                            <div class="pricing-card__name">
+                                Open Source
+                            </div>
+                            <div class="pricing-card__price">
+                                Free
+                            </div>
+                            <div class="pricing-card__description">
+                                Enjoy essential features at no cost, perfect for getting started.
+                            </div>
+                            <ul class="pricing-card__features">
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    Community support</li>
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    EDP on any Kubernetes cluster</li>
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    CI pipelines for polyglot microservices</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card__footer">
+                            <a href="/edp-install/getting-started" class="button">start</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing-grid__item">
+                    <div class="pricing-card pricing-card--recommended">
+                        <div class="pricing-card__label">recommended</div>
+                        <div class="pricing-card__content">
+                            <div class="pricing-card__name">
+                                Team
+                            </div>
+                            <div class="pricing-card__price">
+                                $3,000
+                                <span>/month</span>
+                            </div>
+                            <div class="pricing-card__description">
+                                Boost teamwork with a plan tailored for small to medium-sized teams.
+                            </div>
+                            <ul class="pricing-card__features">
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    25 professional service hours <sup>*</sup></li>
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    3 months minimum commitment <sup>**</sup></li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card__footer">
+                            <a href="mailto:SupportEPMD-EDP@epam.com" class="button">contact us</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing-grid__item">
+                    <div class="pricing-card">
+                        <div class="pricing-card__content">
+                            <div class="pricing-card__name">
+                                Scale
+                            </div>
+                            <div class="pricing-card__price">
+                                $6,000
+                                <span>/month</span>
+                            </div>
+                            <div class="pricing-card__description">
+                                Access advanced features and scalability options to meet the evolving needs of your growing enterprise.
+                            </div>
+                            <ul class="pricing-card__features">
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    60 professional service hours <sup>*</sup></li>
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    3 months minimum commitment <sup>**</sup></li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card__footer">
+                            <a href="mailto:SupportEPMD-EDP@epam.com" class="button">contact us</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing-grid__item">
+                    <div class="pricing-card">
+                        <div class="pricing-card__content">
+                            <div class="pricing-card__name">
+                                Enterprise
+                            </div>
+                            <div class="pricing-card__price">
+                                $13,000
+                                <span>/month</span>
+                            </div>
+                            <div class="pricing-card__description">
+                                For mission-critical projects and extensive organizational needs, it delivers top-tier features, priority support, and customizable solutions.
+                            </div>
+                            <ul class="pricing-card__features">
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    160 professional service hours <sup>*</sup></li>
+                                <li class="pricing-card__feature">
+                                    <span class="twemoji pricing-card__feature-marker" style="width: 20px; height: 20px;">
+                                        {% include ".icons/material/check-bold.svg" %}
+                                    </span>
+                                    3 months minimum commitment <sup>**</sup></li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card__footer">
+                            <a href="mailto:SupportEPMD-EDP@epam.com" class="button">contact us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="definition">
+                <sup>*</sup>
+                Professional service hours are versatile, blended hours bundled within your subscription plan. They encompass expertise from diverse specialists, including business analysts, architects, lead automation engineers, DevOps (System Engineers), and performance engineers. These multi-functional hours cater to EDP installation, configuration, integration, customization, feature implementation, updates, and use case implementation. They empower you to leverage a range of expertise for various aspects of optimizing and enhancing your EDP experience.
+            </p>
+            <p class="definition">
+                <sup>**</sup>
+                A minimum time commitment is required for the use of a certain subscription plan.
+            </p>
+
+            <div class="table-wrapper">
+                <table class="table table--services">
+                    <thead>
+                    <tr>
+                        <th>Service Category</th>
+                        <th>Description</th>
+                        <th>Professional Service Hours*</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td rowspan="7">
+                            <div class="table__cell-label">
+                                Deployment, Installation, Configuration
+                            </div>
+                        </td>
+                        <td>Deploy the platform in an empty AWS account, including components such as infrastructure, CI/CD, SSO integration, SonarQube, DependencyTrack, Nexus Repository, DefectDojo, logging, monitoring, Docker Registry, and Observability.</td>
+                        <td>60</td>
+                    </tr>
+                    <tr>
+                        <td>Deploy the platform with minimum components set in the existing Kubernetes cluster, including CI/CD, integration with the existing SonarQube, Repository Manager, and Container Registry.</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Traceability and Observability customization: Storage backend configuration, performance tunning.</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>Monitoring stack customization: Custom Dashboards, Alerts, Notifications.</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>Logging stack customization: Custom filters and processing for Fluent Bit, logs rotation policy tunning.</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>SonarQube Quality Gate and Quality Profile configuration.</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Security (SAST/SCA) report analysis per single codebase.</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">
+                            <div class="table__cell-label">
+                                Framework/Language
+                            </div>
+                        </td>
+                        <td>Onboard new Framework or Build tool with CI Pipelines: Implement EDP standard CI Pipeline steps (build, test, lint, push).</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>Marketplace Template Development: Create a new template, Implement EDP standard CI Pipeline steps (build, test, lint, push).</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">
+                            <div class="table__cell-label">
+                                Custom Tool Integration
+                            </div>
+                        </td>
+                        <td>Integrate custom tool with CI Pipeline over API.</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Integrate custom tool with EDP Portal UI over Kubernetes API.</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>Integrate custom tool with EDP Portal UI over API.</td>
+                        <td>80</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="table__cell-label">
+                                Target Deployment Platform Customization
+                            </div>
+                        </td>
+                        <td>Add Custom Deployment Platform: Implement custom CD Pipeline.</td>
+                        <td>80</td>
+                    </tr>
+                    <tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="definition">
+                <sup>*</sup>
+                The values presented in the table are provided for reference purposes only and are subject to change based on the final scope of the work. Please note that these figures serve as estimates and may be adjusted accordingly as the project details are finalized.
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
