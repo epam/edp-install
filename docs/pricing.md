@@ -4,3 +4,5 @@ title: Pricing
 hide:
   - navigation
 ---
+
+## Pricing
