@@ -1,4 +1,4 @@
-FROM squidfunk/mkdocs-material:9.4.8
+FROM squidfunk/mkdocs-material:9.4.14
 
 RUN pip install \
     fancyboxmd==1.1.0 \
