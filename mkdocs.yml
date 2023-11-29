@@ -259,6 +259,7 @@ nav:
       - Use Cert-Manager in OpenShift: operator-guide/ssl-automation-okd.md
       - Migrate CI Pipelines From Jenkins to Tekton: operator-guide/migrate-ci-pipelines-from-jenkins-to-tekton.md
       - Uninstall EDP: operator-guide/delete-edp.md
+    - FAQ: faq.md
   - User Guide:
     - user-guide/index.md
     - Marketplace:
@@ -303,7 +304,6 @@ nav:
     - Deploy Application With Custom Build Tool/Framework: use-cases/tekton-custom-pipelines.md
     - Secured Secrets Management for Application Deployment: use-cases/external-secrets.md
     - Autotest as a Quality Gate: use-cases/autotest-as-quality-gate.md
-  - FAQ: faq.md
   - Pricing: pricing.md
   - RoadMap: roadmap.md
   - Releases ⧉: https://github.com/epam/edp-install/blob/master/RELEASES.md
