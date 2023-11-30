@@ -161,8 +161,19 @@ nav:
   - Home: index.md
   - Getting Started:
     - overview.md
+    - Quick Start:
+      - CI Pipelines - Build:
+        - Install EDP: quick-start/platform-installation.md
+        - Integrate Tools:
+          - Integrate SonarQube: quick-start/integrate-sonarcloud.md
+          - Integrate GitHub: quick-start/integrate-github.md
+          - Integrate DockerHub: quick-start/integrate-container-registry.md
+        - Create Application: quick-start/create-application.md
+      - CD Pipelines -  Deploy:
+        - Integrate Argo CD: quick-start/integrate-argocd.md
+        - Deploy Application: quick-start/deploy-application.md
     - features.md
-    - getting-started.md
+    #- getting-started.md
     - glossary.md
     - supported-versions.md
     - compliance.md
