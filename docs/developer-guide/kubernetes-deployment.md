@@ -13,7 +13,7 @@ The following deployment diagram illustrates the platform's core components, whi
 * **Tekton Stack:** Includes Tekton pipelines, triggers, dashboard, chains, etc.
 * **ArgoCD:** Responsible for GitOps deployment.
 
-![EPAM Delivery Platform Deployment Diagram](../assets/developer-guide/architecture/deployment-diagram.png){ width="100%" }
+!![EPAM Delivery Platform Deployment Diagram](../assets/developer-guide/architecture/deployment-diagram.png)
 
 * **Codebase Operator:** Responsible for managing git repositories, versioning, and branching. It also implements Jira integration controller.
 * **CD Pipeline Operator:** Manages Continuous Delivery (CD) pipelines and CD stages (which is an abstraction of Kubernetes Namespace). Operator acts as the bridge between the artifact and deployment tools, like Argo CD. It defines the CD pipeline structure, artifacts promotion logic and triggers the pipeline execution.
