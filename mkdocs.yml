@@ -66,6 +66,7 @@ theme:
   features:
     - announce.dismiss
     - content.code.copy
+    - navigation.footer
     - navigation.sections
     - navigation.tabs
     - navigation.top
@@ -294,10 +295,24 @@ nav:
       - GitOps:
           - user-guide/gitops.md
   - Developer Guide:
-    - developer-guide/index.md
-    - developer-guide/local-development.md
-    - developer-guide/mk-docs-development.md
-    - developer-guide/edp-workflow.md
+    - Overview: developer-guide/index.md
+    - Reference Architecture: developer-guide/reference-architecture.md
+    - Kubernetes Deployment Diagram: developer-guide/kubernetes-deployment.md
+    - Reference CI/CD Pipeline: developer-guide/reference-cicd-pipeline.md
+    - Cloud Providers:
+      - AWS:
+        - AWS Reference Architecture: developer-guide/aws-reference-architecture.md
+        - AWS Deployment Diagram: developer-guide/aws-deployment-diagram.md
+      # - Azure:
+      #   - Azure Reference Architecture: developer-guide/azure_reference.md
+      #   - Azure Deployment Diagram: developer-guide/azure_deployment.md
+      # - GCP:
+      #   - GCP Reference Architecture: developer-guide/gcp_reference.md
+      #   - GCP Deployment Diagram: developer-guide/gcp_deployment.md
+    - Development:
+      - Operator Development: developer-guide/local-development.md
+      - Working with Documentation: developer-guide/mk-docs-development.md
+      - Contribution Guide: developer-guide/edp-workflow.md
   - Use Cases:
     - use-cases/index.md
     - Scaffold and Deploy FastAPI Application: use-cases/application-scaffolding.md
