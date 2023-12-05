@@ -2,13 +2,35 @@ global:
   gitProvider: gitlab
   dnsWildCard:
   platform: openshift
-  admins: [stub_user_one@example.com]
-  developers: [stub_user_one@example.com]
-  keycloakUrl: https://keycloak.example.com
+
+  # Define the Image Registry that will be used in Pipelines.
+  # This section is optional, and users can configure the registry within the EDP Portal user interface.
+  #
+  # Platform supports several types of registries, such as 'ecr', 'harbor', 'dockerhub' and 'openshift'.
+  # 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'
+  #
+  # Below is an example of endpoint values for each registry type:
+  # type:      | url
+  # =============================
+  # ecr        | <aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com
+  # harbor     | <registry.example.com>
+  # dockerhub  | 'docker.io'
+  # openshift  | <image-registry.openshift-image-registry.svc:5000>
+  #
+  # For example to integrate platform with dockerhub and publish image under 'my_user' account:
+  # dockerRegistry:
+  #   type: "dockerhub"
+  #   url: "docker.io"
+  #   space: "my_user"
+  # As a result all image artifacts are published under https://hub.docker.com/repository/docker/my_user
   dockerRegistry:
-    url: image-registry.openshift-image-registry.svc:5000
+    type: ""
+    url: ""
+    space: ""
+
 externalSecrets:
   enabled: false
+
 edp-headlamp:
   extraVolumes:
   - name: custom-ca
@@ -63,3 +85,16 @@ edp-tekton:
         nginx.ingress.kubernetes.io/auth-url: http://oauth2-proxy.edp.svc.cluster.local:8080/oauth2/auth
   gitlab:
     host: gitlab.com
+
+# -- Enable SSO for EDP components. Required keycloak-operator deployment. Default: false
+sso:
+  enabled: false
+  # -- Keycloak URL
+  keycloakUrl: https://keycloak.example.com
+  # -- Administrators of your tenant
+  admins:
+    - "stub_user_one@example.com"
+  # -- Developers of your tenant
+  developers:
+    - "stub_user_one@example.com"
+    - "stub_user_two@example.com"

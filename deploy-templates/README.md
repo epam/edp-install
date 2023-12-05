@@ -34,7 +34,6 @@ A Helm chart for EDP Install
 |-----|------|---------|-------------|
 | EDPComponents | object | `{}` |  |
 | annotations | object | `{}` |  |
-| awsRegion | string | `nil` | AWS Region, e.g. "eu-central-1" |
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | cd-pipeline-operator.tenancyEngine | string | `"none"` | defines the type of the tenant engine that can be "none", "kiosk" or "capsule" |
 | codebase-operator.enabled | bool | `true` |  |
@@ -44,7 +43,6 @@ A Helm chart for EDP Install
 | edp-headlamp.config.oidc.enabled | bool | `false` |  |
 | edp-headlamp.config.oidc.issuerRealm | string | `"openshift"` |  |
 | edp-headlamp.enabled | bool | `true` |  |
-| edp-tekton.ctLint.validateMaintainers | bool | `false` | Config block. |
 | edp-tekton.dashboard.enabled | bool | `true` | Deploy EDP Dashboard as a part of pipeline library when true. Default: true |
 | edp-tekton.dashboard.ingress.annotations | object | `{}` | Annotations for Ingress resource |
 | edp-tekton.dashboard.openshift_proxy | object | `{"enabled":false}` | https://epam.github.io/edp-install/operator-guide/oauth2-proxy/?h=#enable-oauth2-proxy-on-tekton-dashboard |
@@ -59,9 +57,6 @@ A Helm chart for EDP Install
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
 | gerrit-operator.enabled | bool | `false` |  |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
-| global.dockerRegistry.space | string | `""` |  |
-| global.dockerRegistry.type | string | `""` |  |
-| global.dockerRegistry.url | string | `""` |  |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.7.0-SNAPSHOT"` | EDP version |

@@ -1,8 +1,8 @@
 apiVersion: v1
 data:
-  container_registry_space: {{ .Values.global.dockerRegistry.space }}
-  container_registry_host: {{ .Values.global.dockerRegistry.url }}
-  container_registry_type: {{ .Values.global.dockerRegistry.type }}
+  container_registry_space: {{ default "" (.Values.global.dockerRegistry).space }}
+  container_registry_host: {{ default "" (.Values.global.dockerRegistry).url }}
+  container_registry_type: {{ default "" (.Values.global.dockerRegistry).type }}
   platform: {{ .Values.global.platform }}
   {{- if .Values.awsRegion }}
   aws_region: {{ .Values.awsRegion }}
