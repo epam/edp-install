@@ -71,6 +71,7 @@ To make EDP and Harbor project interact with each other, set up a robot account:
           namespace: edp
           labels:
             app.edp.epam.com/secret-type: registry
+            app.edp.epam.com/integration-secret: true
         type: kubernetes.io/dockerconfigjson
         stringData:
           .dockerconfigjson: |
@@ -137,6 +138,7 @@ To make EDP and Harbor project interact with each other, set up a robot account:
         namespace: edp
         labels:
           app.edp.epam.com/secret-type: registry
+          app.edp.epam.com/integration-secret: true
       type: kubernetes.io/dockerconfigjson
       stringData:
         .dockerconfigjson: |

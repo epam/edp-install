@@ -39,6 +39,7 @@ To install DependencyTrack use [EDP addons](add-ons-overview.md) approach.
       namespace: <edp>
       labels:
         app.edp.epam.com/secret-type: dependency-track
+        app.edp.epam.com/integration-secret: true
     stringData:
       token: <dependency-track-token>
       url: <dependency-track-api-url>

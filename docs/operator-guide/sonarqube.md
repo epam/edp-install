@@ -52,6 +52,7 @@ To establish robust authentication and precise access control, generating a Sona
       namespace: edp
       labels:
         app.edp.epam.com/secret-type: sonar
+        app.edp.epam.com/integration-secret: true
     type: Opaque
     stringData:
       url: https://sonarqube.example.com

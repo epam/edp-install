@@ -99,6 +99,7 @@ To create the Nexus `ci.user`and define repository parameters follow the steps b
       namespace: edp
       labels:
         app.edp.epam.com/secret-type: nexus
+        app.edp.epam.com/integration-secret: true
     type: Opaque
     stringData:
       url: https://nexus.example.com
