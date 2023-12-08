@@ -138,6 +138,10 @@ edp-headlamp:
 edp-tekton:
   enabled: true
 
+  tekton-cache:
+    enabled: true
+    url: http://edp-tekton-tekton-cache:8080
+
   dashboard:
     # -- Deploy EDP Dashboard as a part of pipeline library when true. Default: true
     enabled: true
