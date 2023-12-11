@@ -246,7 +246,7 @@ To prepare DefectDojo for integration with EDP, follow the steps below:
       namespace: edp
       labels:
         app.edp.epam.com/secret-type: defectdojo
-        app.edp.epam.com/integration-secret: true
+        app.edp.epam.com/integration-secret: "true"
     stringData:
       url: https://defectdojo.example.com
       token: <token>
