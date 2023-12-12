@@ -31,11 +31,11 @@ The EPAM Delivery Platform implements IAM Roles for Service Accounts (IRSA) to p
 
 ## SSL Certificates
 
-The architecture uses the AWS Certificate Manager (ACM) to secure communication between services to provide SSL certificates. ACM eliminates the need to manually manage SSL/TLS certificates, automating the renewal and deployment process. The EPAM Delivery Platform ensures secure and encrypted traffic within its environment by leveraging ACM.
+The architecture uses the AWS Certificate Manager (ACM) to secure communication between services to provide SSL certificates. ACM eliminates the need to manually manage SSL/TLS certificates, automating the renewal and deployment process. The EDP ensures secure and encrypted traffic within its environment by leveraging ACM.
 
 ## AWS WAF
 
-The architecture's external Application Load Balancer (ALB) endpoint is protected by the AWS Web Application Firewall (WAF). WAF protects against common web exploits and ensures the security and availability of the applications hosted within the EPAM Delivery Platform. It offers regular rule updates and easy integration with other AWS services.
+The architecture's external Application Load Balancer (ALB) endpoint is protected by the AWS Web Application Firewall (WAF). WAF protects against common web exploits and ensures the security and availability of the applications hosted within the EDP. It offers regular rule updates and easy integration with other AWS services.
 
 ## Parameter Store and Secrets Manager
 

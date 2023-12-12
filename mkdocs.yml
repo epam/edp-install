@@ -297,12 +297,12 @@ nav:
   - Developer Guide:
     - Overview: developer-guide/index.md
     - Reference Architecture: developer-guide/reference-architecture.md
-    - Kubernetes Deployment Diagram: developer-guide/kubernetes-deployment.md
+    - Kubernetes Deployment: developer-guide/kubernetes-deployment.md
     - Reference CI/CD Pipeline: developer-guide/reference-cicd-pipeline.md
     - Cloud Providers:
       - AWS:
-        - AWS Reference Architecture: developer-guide/aws-reference-architecture.md
-        - AWS Deployment Diagram: developer-guide/aws-deployment-diagram.md
+        - EDP Reference Architecture on AWS: developer-guide/aws-reference-architecture.md
+        - EDP Deployment on AWS: developer-guide/aws-deployment-diagram.md
       # - Azure:
       #   - Azure Reference Architecture: developer-guide/azure_reference.md
       #   - Azure Deployment Diagram: developer-guide/azure_deployment.md
@@ -311,8 +311,8 @@ nav:
       #   - GCP Deployment Diagram: developer-guide/gcp_deployment.md
     - Development:
       - Operator Development: developer-guide/local-development.md
-      - Working with Documentation: developer-guide/mk-docs-development.md
-      - Contribution Guide: developer-guide/edp-workflow.md
+      - Working With Documentation: developer-guide/mk-docs-development.md
+      - EDP Project Rules. Working Process: developer-guide/edp-workflow.md
   - Use Cases:
     - use-cases/index.md
     - Scaffold and Deploy FastAPI Application: use-cases/application-scaffolding.md

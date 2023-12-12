@@ -1,4 +1,4 @@
-# Workspace Setup Manual
+# Operator Development
 
 This page is intended for developers with the aim to share details on how to set up the local environment and start coding in Go language for EPAM Delivery Platform.
 
