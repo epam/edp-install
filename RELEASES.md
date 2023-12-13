@@ -3,17 +3,19 @@
 ## Overview
 
 Get acquainted with the latest EDP releases.
+
+* [Version 3.7.0](#3.7.0)
 * [Version 3.6.0](#3.6.0)
 * [Version 3.5.3](#3.5.3)
 * [Version 3.5.2](#3.5.2)
 * [Version 3.5.1](#3.5.1)
 * [Version 3.5.0](#3.5.0)
-* [Version 3.4.1](#3.4.1)
-* [Version 3.4.0](#3.4.0)
 
 <details>
   <summary>Earlier Versions</summary>
 
+* [Version 3.4.1](#3.4.1)
+* [Version 3.4.0](#3.4.0)
 * [Version 3.3.0](#3.3.0)
 * [Version 3.2.2](#3.2.2)
 * [Version 3.2.1](#3.2.1)
@@ -47,6 +49,87 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.7.0 <a name="3.7.0"></a> (December 15, 2023)
+
+## What's new
+
+In this release, we introduce DependencyTrack and SonarQube widgets on the application details page, enhancing observability. The SonarQube widget provides essential information on bugs, vulnerabilities,  code smells, coverage, and duplications. Whereas DependencyTrack widget highlights potential security risks with severity levels.
+With these widgets, it is getting much easier to monitor application's quality.
+
+We've invested considerable effort in major user interface enhancements to make your navigation seamless. In the Configuration section, tabs are now intelligently categorized for an intuitive experience, each equipped with status indicators for easy integration tracking.
+We have elevated the overall user experience to a more sophisticated standard, underscoring our commitment to providing a refined and intuitive interface. Additionally, we've included comprehensive descriptions for all sections, simplifying your navigation journey.
+
+Originally developed to meet the specific requirements of internal EDP use, the Nexus operator has undergone a redesign to embrace general use cases. We are pleased to announce its availability on OperatorHub, allowing users to deploy this versatile operator independently for an enhanced experience.
+Now, users can effortlessly leverage this independent component to enhance their experience with Nexus.
+
+In our commitment to optimizing your workflow, we've implemented Tekton cache support for CI pipelines. Jointly with pipeline dependency reorganization, this feature results in significant time savings.
+Expect a remarkable improvement in the overall performance of Tekton pipelines, ensuring valuable time efficiency.
+
+### Upgrades
+
+* EDP Portal is now based on Headlamp [0.21.0](https://github.com/headlamp-k8s/headlamp/releases/tag/v0.21.0) version. ([#99](https://github.com/epam/edp-headlamp/issues/99))
+* mkdocs has been updated to the [9.4.8](https://github.com/squidfunk/mkdocs-material/releases/tag/9.4.8) version. ([#113](https://github.com/epam/edp-install/issues/113))
+
+
+### New Functionality
+
+* Now EDP Portal displays the secret creation status for component integration. ([#122](https://github.com/epam/edp-install/issues/122))
+* An integration status identifier has been added for DefectDojo, Dependency-Track, Registry, Nexus, and SonarQube tabs in the Configuration section. ([#29](https://github.com/epam/edp-headlamp/issues/29))
+* Passwords and tokens are now hidden in EDP Portal, and users can reveal the hidden values by clicking the crossed eye button. ([#104](https://github.com/epam/edp-headlamp/issues/104))
+
+### Enhancements
+
+* The Tekton resource pruner has been updated to prune only Pods and PVCs, preserving the history of Pipeline Runs in Tekton Dashboard. ([#45](https://github.com/epam/edp-tekton/pull/45))
+* The versioning of the codebase has been adjusted to be independent of the codebase type. ([#74](https://github.com/epam/edp-install/issues/74))
+* Tekton cache support has been implemented for CI pipelines, with the option to enable it directly in the [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) file. ([#74](https://github.com/epam/edp-install/issues/74))
+* To streamline EDP deployment, the minimal set of mandatory parameters has been decreased. ([#121](https://github.com/epam/edp-install/issues/121))
+* The KeycloakRealmIdentityProvider resource now supports Kubernetes secret reference, allowing users to specify a Kubernetes secret in the "config.clientSecret" parameter. ([#21](https://github.com/epam/edp-keycloak-operator/issues/21))
+* EDP Portal labels have been updated for a better user experience, including tooltips for buttons, fields, and descriptions. ([#113](https://github.com/epam/edp-headlamp/issues/113))
+* The Configuration section of the EDP Portal has been updated, categorizing internal tabs. ([#111](https://github.com/epam/edp-headlamp/issues/111))
+* The Deployment type field has been removed from the Create CD Pipeline menu. ([#109](https://github.com/epam/edp-headlamp/issues/109))
+* An ingress controller is no longer required for application deployment. ([#101](https://github.com/epam/edp-headlamp/issues/101))
+* Git Server integration no longer requires creating secrets. All necessary data can be created via UI. ([#100](https://github.com/epam/edp-headlamp/issues/100))
+* EDP Portal now automatically encodes sensitive data (e.g., SSH keys, tokens) when users input it in the corresponding fields. ([#97](https://github.com/epam/edp-headlamp/issues/97))
+* To expedite CI pipelines, Tekton cache support has been implemented. ([#74](https://github.com/epam/edp-tekton/issues/74))
+* To accelerate pipelines execution, the number of independent tasks has been decreased. ([#68] (https://github.com/epam/edp-tekton/issues/68))
+* Now EDP uses branches as version baselines for Dependency-Track reports. ([#71](https://github.com/epam/edp-tekton/issues/71))
+* We are continuously working on to create the best CI/CD platform ever made. To help ourselves achieve this aim, we enabled basic anonymous telemetry throughout the platform. It doesn't collect sensitive data, it aims to collect patterns of user behavior within our platform only. ([#112](https://github.com/epam/edp-install/issues/112))
+
+### Fixed Issues
+
+* Fixed issue when EDP deployment fails if the dockerRegistry.url parameter is not set. ([#118](https://github.com/epam/edp-install/issues/118))
+* Fixed issue when the default Keycloak realm role didn't function properly. ([#22](https://github.com/epam/edp-keycloak-operator/issues/22))
+* Fixed issue when the KeycloakRealm resource renaming caused resource deletion. ([#18](https://github.com/epam/edp-keycloak-operator/issues/18))
+* Fixed issue when the catalog filter was shown improperly. ([#113](https://github.com/epam/edp-headlamp/issues/113))
+* Fixed issue when Dependency-Track didn't setup project name for GoLang codebases. ([#70](https://github.com/epam/edp-tekton/issues/70))
+
+### Documentation
+
+General:
+  * The new tab called [Pricing](https://epam.github.io/edp-install/pricing/) has been added to the mkdocs. In this page, users can see the support plans offered by the EDP team.
+  * The [Platform Multitenancy! Learn How We Adopt Capsule to Give Our Developers More Freedom 🚀](https://medium.com/epam-delivery-platform/platform-multitenancy-learn-how-we-adtopt-capsule-to-give-our-developers-more-freedom-ade7a8d84a33) article has been published on the Medium blog.
+  * The [Elevating CI/CD Security with Supply Chains](https://solutionshub.epam.com/blog/post/ci_cd_security) article has been published on the SolutionsHub blog.
+  * The [README.md](https://github.com/epam/edp-headlamp/blob/master/README.md) file of the [edp-headlamp](https://github.com/epam/edp-headlamp) operator has been updated with the new description and introduction video.
+  * The [README.md](https://github.com/epam/edp-sonar-operator/blob/master/README.md) file of the [edp-sonar-operator](https://github.com/epam/edp-sonar-operator) has been updated. ([#3](https://github.com/epam/edp-sonar-operator/issues/3))
+
+The [Getting Started](https://epam.github.io/edp-install/overview/) section is updated with the following:
+  * The [Supported Versions and Compatibility](https://epam.github.io/edp-install/supported-versions/) page has been updated. ([#116](https://github.com/epam/edp-install/issues/116))
+  * The [Glossary](https://epam.github.io/edp-install/glossary/) page has been updated.
+
+The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+  * The [Upgrade EDP v3.5 to v3.6](https://epam.github.io/edp-install/operator-guide/upgrade-edp-3.6/) page has been added. ([#115](https://github.com/epam/edp-install/issues/115))
+  * The [Integrate GitHub/GitLab in Tekton](https://epam.github.io/edp-install/operator-guide/import-strategy-tekton/) page has been updated. ([#116](https://github.com/epam/edp-install/issues/116))
+  * The [Verification of EDP Artifacts](https://epam.github.io/edp-install/operator-guide/artifacts-verification/) page has been updated. ([#117](https://github.com/epam/edp-install/issues/117))
+
+The [Developer Guide](https://epam.github.io/edp-install/developer-guide/) is updated with the following:
+  * The [Overview](https://epam.github.io/edp-install/developer-guide/) page has been added.
+  * The [Reference Architecture](https://epam.github.io/edp-install/developer-guide/reference-architecture/) page has been added. ([#120](https://github.com/epam/edp-install/issues/120))
+  * The [Kubernetes Deployment](https://epam.github.io/edp-install/developer-guide/kubernetes-deployment/) page has been added. ([#120](https://github.com/epam/edp-install/issues/120))
+  * The [Reference CI/CD Pipeline](https://epam.github.io/edp-install/developer-guide/reference-cicd-pipeline/) page has been added. ([#120](https://github.com/epam/edp-install/issues/120))
+  * The [EDP Reference Architecture on AWS](https://epam.github.io/edp-install/developer-guide/aws-reference-architecture/) page has been added. ([#120](https://github.com/epam/edp-install/issues/120))
+  * The [EDP Deployment on AWS](https://epam.github.io/edp-install/developer-guide/aws-deployment-diagram/) page has been added. ([#120](https://github.com/epam/edp-install/issues/120))
+
 
 ## Version 3.6.0 <a name="3.6.0"></a> (November 3, 2023)
 
