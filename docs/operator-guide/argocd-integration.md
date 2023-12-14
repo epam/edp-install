@@ -42,60 +42,39 @@ edp-grub
 ├── apps-configs
 │   └── grub
 │       ├── argocd            ### Argo CD resources definition
-│       │   ├── team-bar.yaml
-│       │   └── team-foo.yaml
+│       │   └── edp.yaml
 │       └── keycloak          ### Keycloak resources definition
-│           ├── team-bar.yaml
-│           └── team-foo.yaml
+│           └── edp.yaml
 ├── bootstrap
 │   └── root.yaml             ### Root application in App of Apps, which provision Applications from /apps
 └── examples                  ### Examples
     └── tenant
-        └── foo-petclinic.yaml
+        └── edp-petclinic.yaml
 ```
 
 The Root Application must be created under the `control-plane` scope.
 
 ## Configuration
 
-!!! note
-      Make sure that both [EDP](./install-edp.md) and [Argo CD are installed](./install-argocd.md), and that SSO is enabled.
-
-To start using Argo CD with EDP, perform the following steps:
-
-### Keycloak
-
-1. Create a Keycloak Group.
-
-  ```yaml
-  apiVersion: v1.edp.epam.com/v1
-  kind: KeycloakRealmGroup
-  metadata:
-    name: argocd-team-foo-users
-  spec:
-    name: ArgoCD-team-foo-users
-    realm: main
-  ```
-
-2. In Keycloak, add users to the `ArgoCD-team-foo-users` Keycloak Group.
-
 ### Argo CD
 
-1. Add a [credential template](https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#private-repositories)
-for Gerrit, GitHub, GitLab integrations. The credential template must be created for each Git server.
+1. Modify the `argocd-cmd-params-cm` ConfigMap in the `argocd` namespace and add the `application.namespaces` parameter to the subsection data:
 
-  === "Gerrit"
+=== "kubectl"
 
-      Copy existing SSH private key for Gerrit to Argo CD namespace
+    ```bash
+    kubectl patch configmap argocd-cmd-params-cm -n argocd --type merge -p '{"data":{"application.namespaces":"edp"}}'
+    ```
 
-      ```bash
-      EDP_NAMESPACE=<EPD_NAMESPACE>
-      GERRIT_PORT=$(kubectl get gerrit gerrit -n ${EDP_NAMESPACE} -o jsonpath='{.spec.sshPort}')
-      GERRIT_ARGOCD_SSH_KEY_NAME="gerrit-argocd-sshkey"
-      GERRIT_URL=$(echo "ssh://argocd@gerrit.${EDP_NAMESPACE}:${GERRIT_PORT}" | base64)
-      kubectl get secret ${GERRIT_ARGOCD_SSH_KEY_NAME} -n ${EDP_NAMESPACE} -o json | jq 'del(.data.username,.metadata.annotations,.metadata.creationTimestamp,.metadata.labels,.metadata.resourceVersion,.metadata.uid,.metadata.ownerReferences)' | jq '.metadata.namespace = "argocd"' | jq --arg name "${EDP_NAMESPACE}" '.metadata.name = $name' | jq --arg url "${GERRIT_URL}" '.data.url = $url' | jq '.data.sshPrivateKey = .data.id_rsa' | jq 'del(.data.id_rsa,.data."id_rsa.pub")' | kubectl apply -f -
-      kubectl label --overwrite secret ${EDP_NAMESPACE} -n argocd "argocd.argoproj.io/secret-type=repo-creds"
-      ```
+=== "manifest"
+
+    ```yaml
+    data:
+      application.namespaces: edp
+    ```
+
+2. Add a [credential template](https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#private-repositories)
+for GitHub, GitLab, Gerrit integrations. The credential template must be created for each Git server.
 
   === "GitHub/GitLab"
 
@@ -114,7 +93,7 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
       Copy SSH private key to Argo CD namespace
 
       ```bash
-      EDP_NAMESPACE=<EDP_NAMESPACE>
+      EDP_NAMESPACE="edp"
       VCS_HOST="<github.com_or_gitlab.com>"
       ACCOUNT_NAME="<ACCOUNT_NAME>"
       URL="ssh://git@${VCS_HOST}:22/${ACCOUNT_NAME}"
@@ -127,31 +106,29 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
 
       Add public SSH key to GitHub/GitLab account.
 
-2. Add [SSH Known hosts](https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#unknown-ssh-hosts)
-   for Gerrit, GitHub, GitLab integration.
-
   === "Gerrit"
 
-      Add Gerrit host to Argo CD config map with known hosts
+      Copy existing SSH private key for Gerrit to Argo CD namespace
 
       ```bash
-      EDP_NAMESPACE=<EDP_NAMESPACE>
-      KNOWN_HOSTS_FILE="/tmp/ssh_known_hosts"
-      ARGOCD_KNOWN_HOSTS_NAME="argocd-ssh-known-hosts-cm"
+      EDP_NAMESPACE="edp"
       GERRIT_PORT=$(kubectl get gerrit gerrit -n ${EDP_NAMESPACE} -o jsonpath='{.spec.sshPort}')
-
-      rm -f ${KNOWN_HOSTS_FILE}
-      kubectl get cm ${ARGOCD_KNOWN_HOSTS_NAME} -n argocd -o jsonpath='{.data.ssh_known_hosts}' > ${KNOWN_HOSTS_FILE}
-      kubectl exec -it deployment/gerrit -n ${EDP_NAMESPACE} -- ssh-keyscan -p ${GERRIT_PORT} gerrit.${EDP_NAMESPACE} >> ${KNOWN_HOSTS_FILE}
-      kubectl create configmap ${ARGOCD_KNOWN_HOSTS_NAME} -n argocd --from-file ${KNOWN_HOSTS_FILE} -o yaml --dry-run=client | kubectl apply -f -
+      GERRIT_ARGOCD_SSH_KEY_NAME="gerrit-argocd-sshkey"
+      GERRIT_URL=$(echo "ssh://argocd@gerrit.${EDP_NAMESPACE}:${GERRIT_PORT}" | base64)
+      kubectl get secret ${GERRIT_ARGOCD_SSH_KEY_NAME} -n ${EDP_NAMESPACE} -o json | jq 'del(.data.username,.metadata.annotations,.metadata.creationTimestamp,.metadata.labels,.metadata.resourceVersion,.metadata.uid,.metadata.ownerReferences)' | jq '.metadata.namespace = "argocd"' | jq --arg name "${EDP_NAMESPACE}" '.metadata.name = $name' | jq --arg url "${GERRIT_URL}" '.data.url = $url' | jq '.data.sshPrivateKey = .data.id_rsa' | jq 'del(.data.id_rsa,.data."id_rsa.pub")' | kubectl apply -f -
+      kubectl label --overwrite secret ${EDP_NAMESPACE} -n argocd "argocd.argoproj.io/secret-type=repo-creds"
       ```
+
+
+3. Add [SSH Known hosts](https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#unknown-ssh-hosts)
+   for Gerrit, GitHub, GitLab integration.
 
   === "GitHub/GitLab"
 
       Add GitHub/GitLab host to Argo CD config map with known hosts
 
       ```bash
-      EDP_NAMESPACE=<EPD_NAMESPACE>
+      EDP_NAMESPACE="edp"
       VCS_HOST="<VCS_HOST>"
       KNOWN_HOSTS_FILE="/tmp/ssh_known_hosts"
       ARGOCD_KNOWN_HOSTS_NAME="argocd-ssh-known-hosts-cm"
@@ -162,41 +139,40 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
       kubectl create configmap ${ARGOCD_KNOWN_HOSTS_NAME} -n argocd --from-file ${KNOWN_HOSTS_FILE} -o yaml --dry-run=client | kubectl apply -f -
       ```
 
-3. Create an Argo CD Project (EDP Tenant), for example, with the `team-foo` name:
+  === "Gerrit"
+
+      Add Gerrit host to Argo CD config map with known hosts
+
+      ```bash
+      EDP_NAMESPACE="edp"
+      KNOWN_HOSTS_FILE="/tmp/ssh_known_hosts"
+      ARGOCD_KNOWN_HOSTS_NAME="argocd-ssh-known-hosts-cm"
+      GERRIT_PORT=$(kubectl get gerrit gerrit -n ${EDP_NAMESPACE} -o jsonpath='{.spec.sshPort}')
+
+      rm -f ${KNOWN_HOSTS_FILE}
+      kubectl get cm ${ARGOCD_KNOWN_HOSTS_NAME} -n argocd -o jsonpath='{.data.ssh_known_hosts}' > ${KNOWN_HOSTS_FILE}
+      kubectl exec -it deployment/gerrit -n ${EDP_NAMESPACE} -- ssh-keyscan -p ${GERRIT_PORT} gerrit.${EDP_NAMESPACE} >> ${KNOWN_HOSTS_FILE}
+      kubectl create configmap ${ARGOCD_KNOWN_HOSTS_NAME} -n argocd --from-file ${KNOWN_HOSTS_FILE} -o yaml --dry-run=client | kubectl apply -f -
+      ```
+
+
+4. Create an Argo CD Project (EDP Tenant), for example, with the `edp` name:
 
   ```yaml title="AppProject"
   apiVersion: argoproj.io/v1alpha1
   kind: AppProject
   metadata:
-    name: team-foo
+    name: edp
     namespace: argocd
     # Finalizer that ensures that project is not deleted until it is not referenced by any application
     finalizers:
       - resources-finalizer.argocd.argoproj.io
   spec:
-    description: CD pipelines for team-foo
-    roles:
-      - name: developer
-        description: Users for team-foo tenant
-        policies:
-          - p, proj:team-foo:developer, applications, create, team-foo/*, allow
-          - p, proj:team-foo:developer, applications, delete, team-foo/*, allow
-          - p, proj:team-foo:developer, applications, get, team-foo/*, allow
-          - p, proj:team-foo:developer, applications, override, team-foo/*, allow
-          - p, proj:team-foo:developer, applications, sync, team-foo/*, allow
-          - p, proj:team-foo:developer, applications, update, team-foo/*, allow
-          - p, proj:team-foo:developer, repositories, create, team-foo/*, allow
-          - p, proj:team-foo:developer, repositories, delete, team-foo/*, allow
-          - p, proj:team-foo:developer, repositories, update, team-foo/*, allow
-          - p, proj:team-foo:developer, repositories, get, team-foo/*, allow
-        groups:
-          # Keycloak Group name
-          - ArgoCD-team-foo-users
     destinations:
-      # ensure we can deploy to ns with tenant prefix
-      - namespace: 'team-foo-*'
+      # by default edp work with 'edp-*' namespace
+      - namespace: 'edp-*'
       # allow to deploy to specific server (local in our case)
-        server: https://kubernetes.default.svc
+        name: in-cluster
     # Deny all cluster-scoped resources from being created, except for Namespace
     clusterResourceWhitelist:
     - group: ''
@@ -213,34 +189,15 @@ for Gerrit, GitHub, GitLab integrations. The credential template must be created
     namespaceResourceWhitelist:
     - group: '*'
       kind: '*'
-    # enable access only for specific git server. The example below 'team-foo' - it is namespace where EDP deployed
+    # enable access only for specific git server. The example below 'edp' - it is namespace where EDP deployed
     sourceRepos:
-      - ssh://argocd@gerrit.team-foo:30007/*
+      - ssh://git@github.com/*
     # enable capability to deploy objects from namespaces
     sourceNamespaces:
-      - team-foo
+      - edp
   ```
 
-4. Optional: if the Argo CD controller has not been enabled to manage the Application resources in the specific namespaces
-   (`team-foo`, in our case) in the [Install Argo CD](install-argocd.md#install-with-helm), modify the `argocd-cmd-params-cm`
-   ConfigMap in the Argo CD namespace and add the `application.namespaces` parameter to the subsection data:
-
-  ```yaml title="argocd-cmd-params-cm"
-  ...
-  data:
-    application.namespaces: team-foo
-  ...
-  ```
-
-  ```yaml title="values.yaml file"
-  ...
-  configs:
-    params:
-      application.namespaces: team-foo
-  ...
-  ```
-
-5. Check that your new Repository, Known Hosts, and AppProject are added to the Argo CD UI.
+4. Check that your new Repository, Known Hosts, and AppProject are added to the Argo CD UI.
 
 Once Argo CD is successfully integrated, EDP user can utilize Argo CD to deploy [CD pipelines](../user-guide/add-cd-pipeline.md#deploy-application).
 
@@ -248,7 +205,7 @@ Once Argo CD is successfully integrated, EDP user can utilize Argo CD to deploy 
 
 This section provides the information on how to test the integration with Argo CD and is not mandatory to be followed.
 
-1. Follow the [Add Application](../user-guide/add-application.md#create-application-in-yaml) instruction to deploy a test EDP application with the `demo` name, which should be stored in a Gerrit private repository:
+1. Add application:
 
   ??? Note "Example: Argo CD Application "
       ```yaml
@@ -257,9 +214,9 @@ This section provides the information on how to test the integration with Argo C
       metadata:
         name: demo
       spec:
-        project: team-foo
+        project: edp
         destination:
-          namespace: team-foo-demo
+          namespace: edp-demo
           server: https://kubernetes.default.svc
         source:
           helm:
@@ -269,7 +226,9 @@ This section provides the information on how to test the integration with Argo C
               - name: image.repository
                 value: image-repo
           path: deploy-templates
-          repoURL: ssh://argocd@gerrit.team-foo:30007/demo.git
+          # github/gitlab example ssh://git@github.com/<github_account_name>/<repository_name>.git
+          # gerrit example ssh://<gerrit_user>@gerrit.edp:30007/<repository_name>.git
+          repoURL: ssh://git@github.com/edp/demo.git
           targetRevision: master
         syncPolicy:
           syncOptions:
@@ -279,7 +238,227 @@ This section provides the information on how to test the integration with Argo C
             prune: true
       ```
 
-2. Check that your new Application is added to the Argo CD UI under the `team-foo` Project scope.
+2. Check that your new Application is added to the Argo CD UI under the `edp` Project scope.
+
+## Argo CD deploy application to remote cluster (Optional)
+
+1. Create `ServiceAccount` `ClusterRoleBinding` and `Secret` for that `ServiceAccount`.
+
+2. Receive bearer token:
+
+   BEAR_TOKEN=$(kubectl get secret <serviceAccount-secret-name> -o jsonpath='{.data.token}' | base64 --decode)
+
+3. Create ArgoCD secret for remote cluster:
+
+  ```yaml title="manifest"
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: edp-remote-cluster
+    namespace: argocd
+  data:
+    # Remote cluster config
+    config: {"bearerToken":"<BEAR_TOKEN>","tlsClientConfig":{"insecure":false,"caData":"<certificate-authority-data>"}}
+    # Remote cluster name
+    name: "edp-remote-cluster"
+    # Cluster endpoint URL
+    server: "https://xxxxxxxxxxxxxxxxxxxx.sk1.eu-central-1.eks.amazonaws.com"
+  type: stringData
+  ```
+
+4. Create an Argo CD Project (EDP Tenant), for example, with the `edp-remote` name:
+
+  ```yaml title="AppProject"
+  apiVersion: argoproj.io/v1alpha1
+  kind: AppProject
+  metadata:
+    name: edp-remote
+    namespace: argocd
+    # Finalizer that ensures that project is not deleted until it is not referenced by any application
+    finalizers:
+      - resources-finalizer.argocd.argoproj.io
+  spec:
+    destinations:
+      - namespace: 'edp-remote-*'
+        # allow to deploy to specific server (remote in our case)
+        name: edp-remote-cluster
+    # Deny all cluster-scoped resources from being created, except for Namespace
+    clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+    # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+    namespaceResourceBlacklist:
+    - group: ''
+      kind: ResourceQuota
+    - group: ''
+      kind: LimitRange
+    - group: ''
+      kind: NetworkPolicy
+    # we are ok to create any resources inside namespace
+    namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+    # enable access only for specific git server. The example below 'edp' - it is namespace where EDP deployed
+    sourceRepos:
+      - ssh://git@github.com/*
+    # enable capability to deploy objects from namespaces
+    sourceNamespaces:
+      - edp
+  ```
+
+5. Add application:
+
+  ??? Note "Example: Argo CD Application "
+      ```yaml
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: demo
+      spec:
+        project: edp-remote
+        destination:
+          namespace: edp-remote-demo
+          name: edp-remote-cluster
+        source:
+          helm:
+            parameters:
+              - name: image.tag
+                value: master-0.1.0-1
+              - name: image.repository
+                value: image-repo
+          path: deploy-templates
+          # github/gitlab example ssh://git@github.com/<github_account_name>/<repository_name>.git
+          # gerrit example ssh://<gerrit_user>@gerrit.edp:30007/<repository_name>.git
+          repoURL: ssh://git@github.com/edp/demo.git
+          targetRevision: master
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
+      ```
+
+6. Check that your new Application is added to the Argo CD UI under the `edp-remote` Project scope.
+
+## Keycloak integration (Optional)
+
+!!! Note
+    For the create resources in keycloak we used edp-keycloak-operator.
+
+1. Create secret `keycloak-client-argocd-secret`.
+
+  ```bash
+  kubectl create secret generic keycloak-client-argocd-secret \
+  --from-literal=clientSecret=$(openssl rand -base64 32) \
+  --namespace=argocd
+  ```
+
+2. Update configmap `argocd-cm`.
+
+=== "kubectl"
+
+    ```bash
+    kubectl patch configmap argocd-cm -n argocd --patch "$(cat <<EOF
+    data:
+      oidc.config: |
+        name: Keycloak
+        issuer: https://<keycloakEndpoint>/auth/realms/edp
+        clientID: argocd-tenant
+        clientSecret: $keycloak-client-argocd-secret:clientSecret
+        requestedScopes:
+          - openid
+          - profile
+          - email
+          - groups
+    EOF
+    )"
+    ```
+
+=== "manifest" title="argocd-cm"
+
+    ```yaml
+    data:
+      oidc.config:
+        url: "https://argocd.<.Values.global.dnsWildCard>"
+        application.instanceLabelKey: argocd.argoproj.io/instance-edp
+        oidc.config: |
+          name: Keycloak
+          issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/edp
+          clientID: argocd-tenant
+          clientSecret: $keycloak-client-argocd-secret:clientSecret
+          requestedScopes:
+            - openid
+            - profile
+            - email
+            - groups
+    ```
+
+3. Create a Keycloak Group:
+
+  ```yaml
+  apiVersion: v1.edp.epam.com/v1
+  kind: KeycloakRealmGroup
+  metadata:
+    name: argocd-edp-users
+  spec:
+    name: ArgoCD-edp-users
+    realm: main
+  ```
+
+4. Create a Keycloak Client:
+
+  ```yaml
+  apiVersion: v1.edp.epam.com/v1
+  kind: KeycloakClient
+  metadata:
+    name: argocd
+    namespace: argocd
+  spec:
+    advancedProtocolMappers: true
+    attributes:
+      post.logout.redirect.uris: +
+    clientId: argocd-tenant
+    defaultClientScopes:
+      - groups
+    realmRef:
+      kind: ClusterKeycloakRealm
+      name: main
+    secret: keycloak-client-argocd-secret
+    webUrl: "https://argocd.<.Values.global.dnsWildCard>"
+  ```
+
+5. In Keycloak, add users to the `ArgoCD-edp-users` Keycloak Group.
+
+6. Update spec in project:
+
+  ```yaml title="AppProject"
+  spec:
+    description: CD pipelines for edp
+    roles:
+      - name: developer
+        description: Users for edp tenant
+        policies:
+          - p, proj:edp:developer, applications, create, edp/*, allow
+          - p, proj:edp:developer, applications, delete, edp/*, allow
+          - p, proj:edp:developer, applications, get, edp/*, allow
+          - p, proj:edp:developer, applications, override, edp/*, allow
+          - p, proj:edp:developer, applications, sync, edp/*, allow
+          - p, proj:edp:developer, applications, update, edp/*, allow
+          - p, proj:edp:developer, repositories, create, edp/*, allow
+          - p, proj:edp:developer, repositories, delete, edp/*, allow
+          - p, proj:edp:developer, repositories, update, edp/*, allow
+          - p, proj:edp:developer, repositories, get, edp/*, allow
+        groups:
+          # Keycloak Group name
+          - ArgoCD-edp-users
+  ```
+
+7. Then restart the deployment:
+
+  ```bash
+  kubectl -n argocd rollout restart deployment argo-argocd-server
+  ```
 
 ## Related Articles
 

@@ -6,36 +6,26 @@ Inspect the prerequisites and the main steps to perform for enabling Argo CD in 
 
 The following tools must be installed:
 
-* [Keycloak](./install-keycloak.md)
 * [EDP](./install-edp.md)
 * [Kubectl version 1.23.0](https://v1-23.docs.kubernetes.io/releases/download/)
 * [Helm version 3.10.0](https://github.com/helm/helm/releases/tag/v3.10.0)
+* [Keycloak](./install-keycloak.md) (optional)
 
 ## Installation
 
 Argo CD enablement for EDP consists of two major steps:
 
-* Argo CD integration with EDP (SSO enablement, codebase onboarding, etc.)
 * Argo CD installation
+* Argo CD integration with EDP (SSO enablement, codebase onboarding, etc.)
 
-!!! info
-    It is also possible to install Argo CD using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md#deploy-argo-cd) page.
-
-### Integrate With EDP
-
-To enable Argo CD integration, ensure that the `argocd.enabled` flag [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml) is set to `true`
+Argo CD can be installed in several ways, please follow the [official documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/) for more details. It is also possible to install Argo CD using the `edp-cluster-add-ons`(https://github.com/epam/edp-cluster-add-ons).
 
 ### Install With Helm
 
-Argo CD can be installed in several ways, please follow the [official documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/) for more details.
-
 Follow the steps below to install Argo CD using Helm:
 
-!!! warning "For the OpenShift users:"
+??? warning "For the OpenShift users:"
     When using the OpenShift platform, apply the `SecurityContextConstraints` resource. Change the namespace in the `users` section if required.
-
-    <details>
-    <summary><b>View: argocd-scc.yaml</b></summary>
 
     ```yaml
     allowHostDirVolumePlugin: false
@@ -91,7 +81,6 @@ Follow the steps below to install Argo CD using Helm:
     - projected
     - secret
     ```
-    </details>
 
 1. Check out the *values.yaml* file sample of the Argo CD customization, which is based on the `HA mode without autoscaling`:
 
@@ -116,20 +105,7 @@ Follow the steps below to install Argo CD using Helm:
       enabled: true
       hosts:
         - "argocd.<Values.global.dnsWildCard>"
-    config:
-      # required when SSO is enabled
-      url: "https://argocd.<.Values.global.dnsWildCard>"
-      application.instanceLabelKey: argocd.argoproj.io/instance-edp
-      oidc.config: |
-        name: Keycloak
-        issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/edp-main
-        clientID: argocd
-        clientSecret: $oidc.keycloak.clientSecret
-        requestedScopes:
-          - openid
-          - profile
-          - email
-          - groups
+
     rbacConfig:
       # users may be still be able to login,
       # but will see no apps, projects, etc...
@@ -139,14 +115,10 @@ Follow the steps below to install Argo CD using Helm:
         # default global admins
         g, ArgoCDAdmins, role:admin
 
-  configs:
-    params:
-      application.namespaces: edp
-
   repoServer:
     replicas: 2
 
-  # we use Keycloak so no DEX is required
+  # Deploy without sso
   dex:
     enabled: false
 
@@ -179,20 +151,7 @@ Follow the steps below to install Argo CD using Helm:
       hostname: "argocd.<.Values.global.dnsWildCard>"
       termination_type: edge
       termination_policy: Redirect
-    config:
-      # required when SSO is enabled
-      url: "https://argocd.<.Values.global.dnsWildCard>"
-      application.instanceLabelKey: argocd.argoproj.io/instance-edp
-      oidc.config: |
-        name: Keycloak
-        issuer: https://<.Values.global.keycloakEndpoint>/auth/realms/edp-main
-        clientID: argocd
-        clientSecret: $oidc.keycloak.clientSecret
-        requestedScopes:
-          - openid
-          - profile
-          - email
-          - groups
+
     rbacConfig:
       # users may be still be able to login,
       # but will see no apps, projects, etc...
@@ -202,14 +161,10 @@ Follow the steps below to install Argo CD using Helm:
         # default global admins
         g, ArgoCDAdmins, role:admin
 
-  configs:
-    params:
-      application.namespaces: edp
-
   repoServer:
     replicas: 2
 
-  # we use Keycloak so no DEX is required
+  # Deploy without sso
   dex:
     enabled: false
 
@@ -220,12 +175,6 @@ Follow the steps below to install Argo CD using Helm:
 
   </details>
 
-    Populate Argo CD values with the values from the EDP [values.yaml](https://github.com/epam/edp-install/blob/master/deploy-templates/values.yaml):
-
-  * <.Values.global.dnsWildCard> is the EDP DNS WildCard.
-  * <.Values.global.keycloakEndpoint> is the Keycloak Hostname.
-  * We use `edp` namespace.
-
 2. Run the installation:
 
   ```bash
@@ -234,16 +183,6 @@ Follow the steps below to install Argo CD using Helm:
   helm install argo --version 5.33.1 argo/argo-cd -f values.yaml -n argocd
   ```
 
-3. Update the `argocd-secret` secret in the `argocd` namespace by providing the correct Keycloak client secret (`oidc.keycloak.clientSecret`)
-   with the value from the `keycloak-client-argocd-secret` secret in the EDP namespace. Then restart the deployment:
-
-  ```bash
-  ARGOCD_CLIENT=$(kubectl -n edp get secret keycloak-client-argocd-secret  -o jsonpath='{.data.clientSecret}')
-  kubectl -n argocd patch secret argocd-secret -p="{\"data\":{\"oidc.keycloak.clientSecret\": \"${ARGOCD_CLIENT}\"}}" -v=1
-  kubectl -n argocd rollout restart deployment argo-argocd-server
-  ```
-
 ## Related Articles
 
 * [Argo CD Integration](argocd-integration.md)
-* [Install via Helmfile](./install-via-helmfile.md#deploy-argo-cd)
