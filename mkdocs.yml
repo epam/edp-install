@@ -32,6 +32,12 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
 
 extra_css:
   - https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css
@@ -62,7 +68,9 @@ theme:
         name: Switch to light mode
   features:
     - announce.dismiss
+    - content.code.annotate
     - content.code.copy
+    - content.code.select
     - navigation.footer
     - navigation.sections
     - navigation.tabs
@@ -192,7 +200,7 @@ nav:
         - Install Tekton: operator-guide/install-tekton.md
         - Multi-Tenancy:
           - Overview: operator-guide/overview-multi-tenancy.md
-          - Capsule: operator-guide/capsule.md
+          - Integrate Capsule: operator-guide/capsule.md
           - Kiosk:
               - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
               - Set Up Kiosk: operator-guide/install-kiosk.md
