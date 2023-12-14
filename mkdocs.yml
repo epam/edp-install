@@ -170,6 +170,7 @@ nav:
         - Install Argo CD: operator-guide/install-argocd.md
         - Install Tekton: operator-guide/install-tekton.md
         - Multi-Tenancy:
+          - Overview: operator-guide/overview-multi-tenancy.md
           - Capsule: operator-guide/capsule.md
           - Kiosk:
               - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md

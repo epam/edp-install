@@ -1,0 +1,5 @@
+# Overview
+
+The EDP leverages the multi-tenancy approach to deliver a business-centric solution for managing containerized applications. The essence of this approach lies in using the additional tools for efficient resource allocation in a Kubernetes cluster. This approach grants tenants a considerable level of autonomy without risking the overall system's security and stability. It allows different users or teams to share the resources of a single Kubernetes cluster while keeping their workloads isolated. The resulting benefits include cost reduction, increased efficiency, improved scalability, and enhanced system resilience.
+
+The EDP project inherently can work with Capsule and Kiosk, two tools that enable managing multi-tenancy. While Kiosk empowers the creation of isolated environments within a Kubernetes cluster, Capsule extends these capabilities further by imposing restrictions on resource usage. Through effective use of these tools, the EDP project offers a robust multi-tenancy model that ensures optimal resource utilization and secure separation of responsibilities.
