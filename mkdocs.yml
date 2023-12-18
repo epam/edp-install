@@ -314,6 +314,7 @@ nav:
       - Operator Development: developer-guide/local-development.md
       - Working With Documentation: developer-guide/mk-docs-development.md
       - EDP Project Rules. Working Process: developer-guide/edp-workflow.md
+    - Telemetry: developer-guide/telemetry.md
   - Use Cases:
     - use-cases/index.md
     - Scaffold and Deploy FastAPI Application: use-cases/application-scaffolding.md
