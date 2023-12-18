@@ -11,8 +11,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.7.0"></a>
-## v3.7.0 - 2023-12-18
+<a name="v3.7.1"></a>
+## v3.7.1 - 2023-12-18
 ### Features
 
 - Update secret labels type ([#74](https://github.com/epam/edp-install/issues/74))
@@ -43,6 +43,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update release version to 3.7.1 ([#126](https://github.com/epam/edp-install/issues/126))
 - Align helm charts versions ([#126](https://github.com/epam/edp-install/issues/126))
 - Minimize mandatory parameters in values.yaml ([#121](https://github.com/epam/edp-install/issues/121))
 - Update current development version ([#110](https://github.com/epam/edp-install/issues/110))
@@ -155,4 +156,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.1...HEAD
