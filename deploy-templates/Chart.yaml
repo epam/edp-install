@@ -3,8 +3,8 @@ description: A Helm chart for EDP Install
 home: https://epam.github.io/edp-install/
 name: edp-install
 type: application
-version: 3.6.0-SNAPSHOT
-appVersion: 3.6.0-SNAPSHOT
+version: 3.8.0-SNAPSHOT
+appVersion: 3.8.0-SNAPSHOT
 icon: https://epam.github.io/edp-install/assets/logo.png
 keywords:
   - edp
@@ -23,7 +23,7 @@ sources:
 dependencies:
 - name: codebase-operator
   repository: "@epamedp"
-  version: "2.20.0"
+  version: "2.21.0"
   condition: codebase-operator.enabled
 
 - name: edp-component-operator
@@ -33,22 +33,22 @@ dependencies:
 
 - name: edp-headlamp
   repository: "@epamedp"
-  version: "0.11.0"
+  version: "0.12.0"
   condition: edp-headlamp.enabled
 
 - name: edp-tekton
   repository: "@epamedp"
-  version: "0.9.0"
+  version: "0.10.1"
   condition: edp-tekton.enabled
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.17.0"
+  version: "2.18.0"
   condition: cd-pipeline-operator.enabled
 
 - name: gerrit-operator
   repository: "@epamedp"
-  version: "2.18.0"
+  version: "2.19.0"
   condition: gerrit-operator.enabled
 
 annotations:

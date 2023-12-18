@@ -10,6 +10,70 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Bug Fixes
+
+- Align tekton edpoint to service name ([#126](https://github.com/epam/edp-install/issues/126))
+
+
+<a name="v3.7.2"></a>
+## [v3.7.2] - 2023-12-18
+### Bug Fixes
+
+- Align tekton edpoint to service name ([#126](https://github.com/epam/edp-install/issues/126))
+
+### Routine
+
+- Update release version to 3.7.2 ([#126](https://github.com/epam/edp-install/issues/126))
+
+
+<a name="v3.7.1"></a>
+## [v3.7.1] - 2023-12-18
+### Routine
+
+- Update release version to 3.7.1 ([#126](https://github.com/epam/edp-install/issues/126))
+
+
+<a name="v3.7.0"></a>
+## [v3.7.0] - 2023-12-18
+### Features
+
+- Update secret labels type ([#74](https://github.com/epam/edp-install/issues/74))
+- Make it possible to change tekton-cache parameters from edp-install chart ([#74](https://github.com/epam/edp-install/issues/74))
+- Add connection status to the integration secret annotation ([#122](https://github.com/epam/edp-install/issues/122))
+
+### Bug Fixes
+
+- Update docker registry component creation condition ([#118](https://github.com/epam/edp-install/issues/118))
+
+### Routine
+
+- Align helm charts versions ([#126](https://github.com/epam/edp-install/issues/126))
+- Minimize mandatory parameters in values.yaml ([#121](https://github.com/epam/edp-install/issues/121))
+- Update current development version ([#110](https://github.com/epam/edp-install/issues/110))
+
+### Documentation
+
+- Add Telemetry section ([#123](https://github.com/epam/edp-install/issues/123))
+- Update the RELEASES.md file ([#123](https://github.com/epam/edp-install/issues/123))
+- Add overview page for multi-tenancy ([#124](https://github.com/epam/edp-install/issues/124))
+- Align developer Guide page titles ([#119](https://github.com/epam/edp-install/issues/119))
+- Update deployment diagram section ([#120](https://github.com/epam/edp-install/issues/120))
+- Update reference architecture document ([#120](https://github.com/epam/edp-install/issues/120))
+- Add reference architecture documents ([#120](https://github.com/epam/edp-install/issues/120))
+- Fix Document is empty issue for price page ([#108](https://github.com/epam/edp-install/issues/108))
+- Move FAQ section under Operator Guide ([#108](https://github.com/epam/edp-install/issues/108))
+- Add pricing page ([#108](https://github.com/epam/edp-install/issues/108))
+- Update docs framework to the latest stable version ([#31](https://github.com/epam/edp-install/issues/31))
+- Upgrade EDP from v3.5 to v3.6 ([#115](https://github.com/epam/edp-install/issues/115))
+- Tekton VCS integration hot fix ([#116](https://github.com/epam/edp-install/issues/116))
+- Update the Supported Versions page ([#116](https://github.com/epam/edp-install/issues/116))
+- Align VCS integration in mkdocs ([#116](https://github.com/epam/edp-install/issues/116))
+- Artifacts Verification page hot fix ([#117](https://github.com/epam/edp-install/issues/117))
+- Fix typos in RELEASES md ([#112](https://github.com/epam/edp-install/issues/112))
+- Move Google Analytics code injection to build phase ([#112](https://github.com/epam/edp-install/issues/112))
+- Update the RELEASES md file ([#112](https://github.com/epam/edp-install/issues/112))
+- Update mkdocs to version 9.4.8 ([#113](https://github.com/epam/edp-install/issues/113))
+
 
 <a name="v3.6.0"></a>
 ## [v3.6.0] - 2023-11-03
@@ -175,7 +239,10 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.6.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.2...HEAD
+[v3.7.2]: https://github.com/epam/edp-install/compare/v3.7.1...v3.7.2
+[v3.7.1]: https://github.com/epam/edp-install/compare/v3.7.0...v3.7.1
+[v3.7.0]: https://github.com/epam/edp-install/compare/v3.6.0...v3.7.0
 [v3.6.0]: https://github.com/epam/edp-install/compare/v3.5.3...v3.6.0
 [v3.5.3]: https://github.com/epam/edp-install/compare/v3.5.2...v3.5.3
 [v3.5.2]: https://github.com/epam/edp-install/compare/v3.5.1...v3.5.2

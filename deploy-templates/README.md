@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.6.0-SNAPSHOT](https://img.shields.io/badge/Version-3.6.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.6.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.6.0--SNAPSHOT-informational?style=flat-square)
+![Version: 3.8.0-SNAPSHOT](https://img.shields.io/badge/Version-3.8.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.8.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.8.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for EDP Install
 
@@ -21,12 +21,12 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.17.0 |
-| @epamedp | codebase-operator | 2.20.0 |
+| @epamedp | cd-pipeline-operator | 2.18.0 |
+| @epamedp | codebase-operator | 2.21.0 |
 | @epamedp | edp-component-operator | 0.13.0 |
-| @epamedp | edp-headlamp | 0.11.0 |
-| @epamedp | edp-tekton | 0.9.0 |
-| @epamedp | gerrit-operator | 2.18.0 |
+| @epamedp | edp-headlamp | 0.12.0 |
+| @epamedp | edp-tekton | 0.10.1 |
+| @epamedp | gerrit-operator | 2.19.0 |
 
 ## Values
 
@@ -60,7 +60,7 @@ A Helm chart for EDP Install
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"3.7.0-SNAPSHOT"` | EDP version |
+| global.version | string | `"3.8.0-SNAPSHOT"` | EDP version |
 | oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |
 | oauth2_proxy.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
 | oauth2_proxy.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
