@@ -25,7 +25,7 @@ A Helm chart for EDP Install
 | @epamedp | codebase-operator | 2.21.0 |
 | @epamedp | edp-component-operator | 0.13.0 |
 | @epamedp | edp-headlamp | 0.12.0 |
-| @epamedp | edp-tekton | 0.10.0 |
+| @epamedp | edp-tekton | 0.10.1 |
 | @epamedp | gerrit-operator | 2.19.0 |
 
 ## Values
@@ -61,7 +61,7 @@ A Helm chart for EDP Install
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"3.7.0"` | EDP version |
+| global.version | string | `"3.7.1"` | EDP version |
 | oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |
 | oauth2_proxy.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
 | oauth2_proxy.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
