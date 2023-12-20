@@ -238,11 +238,12 @@ nav:
           - Protect Endpoints: operator-guide/oauth2-proxy.md
     - Upgrade:
       - EDP:
+          - v3.6 to 3.7: operator-guide/upgrade-edp-3.7.md
           - v3.5 to 3.6: operator-guide/upgrade-edp-3.6.md
           - v3.4 to 3.5: operator-guide/upgrade-edp-3.5.md
           - v3.3 to 3.4: operator-guide/upgrade-edp-3.4.md
-          - v3.2 to 3.3: operator-guide/upgrade-edp-3.3.md
           - Older Versions:
+            - v3.2 to 3.3: operator-guide/upgrade-edp-3.3.md
             - v3.1 to 3.2: operator-guide/upgrade-edp-3.2.md
             - v3.0 to 3.1: operator-guide/upgrade-edp-3.1.md
             - v2.12 to 3.0: operator-guide/upgrade-edp-3.0.md
@@ -250,7 +251,6 @@ nav:
             - v2.10 to 2.11: operator-guide/upgrade-edp-2.11.md
             - v2.9 to 2.10: operator-guide/upgrade-edp-2.10.md
             - v2.8 to 2.9: operator-guide/upgrade-edp-2.9.md
-            - v2.7 to 2.8: operator-guide/upgrade-edp-2.8.md
       - Keycloak:
           - v17.0 to 19.0: operator-guide/upgrade-keycloak-19.0.md
     - Tutorials:
