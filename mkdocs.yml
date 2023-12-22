@@ -321,6 +321,7 @@ nav:
       - Working With Documentation: developer-guide/mk-docs-development.md
       - EDP Project Rules. Working Process: developer-guide/edp-workflow.md
     - Telemetry: developer-guide/telemetry.md
+    - Annotations and Labels: developer-guide/annotations-and-labels.md
   - Use Cases:
     - use-cases/index.md
     - Scaffold and Deploy FastAPI Application: use-cases/application-scaffolding.md
