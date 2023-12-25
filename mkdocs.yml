@@ -156,6 +156,7 @@ nav:
     - getting-started.md
     - glossary.md
     - supported-versions.md
+    - compliance.md
   - Operator Guide:
     - operator-guide/index.md
     - Installation:
