@@ -5,3 +5,8 @@
 .openshift {
   color: #EE0000;
 }
+
+.md-typeset .grid {
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  font-size: 0.7rem;
+}
