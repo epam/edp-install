@@ -19,4 +19,4 @@ Get acquainted with the list of the latest releases and component versions on wh
 |<span style="color: gray;">3.3 </span> |<span style="color: gray;">May 25, 2023</span>|<span style="color: gray;">1.26</span>|<span style="color: gray;">4.12</span>|
 |<span style="color: gray;">3.2 </span> |<span style="color: gray;">Mar 26, 2023</span>|<span style="color: gray;">1.23</span>|<span style="color: gray;">4.10</span>|
 |<span style="color: gray;">3.1 </span> |<span style="color: gray;">Jan 24, 2023</span>|<span style="color: gray;">1.23</span>|<span style="color: gray;">4.10</span>|
-|<span style="color: gray;">3.0 </span> |<span style="color: gray;">Dec 19, 2023</span>|<span style="color: gray;">1.23</span>|<span style="color: gray;">4.10</span>|
+|<span style="color: gray;">3.0 </span> |<span style="color: gray;">Dec 19, 2022</span>|<span style="color: gray;">1.23</span>|<span style="color: gray;">4.10</span>|
