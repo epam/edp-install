@@ -189,8 +189,12 @@ The [CD Pipeline section](user-guide/add-cd-pipeline.md) in EDP Portal provides 
 
 ## V. Documentation as Code
 
-*Goal:*
+*Goals:*
 
 * Transparent documentation and clear development guidelines for EDP customization.
+* Components that provide Documentation as Code feature should be integrated into EDP.
+
+!!! success "EDP Release 3.4.0"
+    Antora was introduced as framework that provides Documentation as Code capabilities.
 
 Consolidate documentation in a single repository [edp-install](https://github.com/epam/edp-install/docs), use `mkdocs` tool to generate docs and GitHub Pages as a hosting solution.
