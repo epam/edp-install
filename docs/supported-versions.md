@@ -5,7 +5,7 @@ hide:
 
 # Supported Versions and Compatibility
 
-At the EPAM Delivery Platform (EDP), our commitment to providing a robust and reliable service involves supporting the latest innovations while ensuring stability and security. To maintain this balance, we focus our active **support on our platform's three most** recent versions.
+At the EPAM Delivery Platform, our commitment to providing a robust and reliable service involves supporting the latest innovations while ensuring stability and security. To maintain this balance, we focus our active **support on our platform's three most** recent versions.
 This approach allows us to dedicate our resources to delivering cutting-edge features, enhancing performance, and fortifying security measures while ensuring a consistent and optimized user experience across the platform.
 
 ``` mermaid

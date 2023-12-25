@@ -72,10 +72,13 @@ theme:
 
 plugins:
   - awesome-pages
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - git-committers:
+      repository: epam/edp-install
   - meta-descriptions:
       trim: true
   - mkdocs-video
-  - search
   - minify:
       minify_html: true
   - redirects:
@@ -103,6 +106,7 @@ plugins:
         operator-guide/upgrade-edp-2.10.x-to-2.11.x.md: operator-guide/upgrade-edp-2.11.md
         operator-guide/upgrade-edp-2.11.x-to-2.12.x.md: operator-guide/upgrade-edp-2.12.md
         operator-guide/upgrade-keycloak-17.0.x-legacy-to-19.0.x.md: operator-guide/upgrade-keycloak-19.0.md
+  - search
 
 extra:
   analytics:
