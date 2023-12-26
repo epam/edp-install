@@ -74,7 +74,8 @@ theme:
 plugins:
   - awesome-pages
   - git-revision-date-localized:
-      enable_creation_date: true
+      enable_creation_date: false
+      fallback_to_build_date: true
       enabled: !ENV [CI, false]
   - git-committers:
       repository: epam/edp-install
