@@ -83,7 +83,7 @@ This section describes the application deployment approach from the latest branc
 
 - Build the initial version (generated from the template) of the application from the last commit of the `main` branch.
 
-- Create a `CD Pipeline` to establish continuous delivery to the development environment. 
+- Create a `CD Pipeline` to establish continuous delivery to the development environment.
 
 - Deploy the initial version to the development env.
 

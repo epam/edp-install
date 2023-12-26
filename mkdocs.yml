@@ -82,7 +82,11 @@ plugins:
       enabled: !ENV [CI, false]
   - meta-descriptions:
       trim: true
-  - mkdocs-video
+  - mkdocs-video:
+      css_style:
+          width: "100%"
+          height: "22.172vw"
+          min-height: "300px"
   - minify:
       minify_html: true
   - redirects:
