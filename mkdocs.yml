@@ -2,10 +2,10 @@ site_name: EPAM Delivery Platform
 repo_url: https://github.com/epam/edp-install
 site_url: https://epam.github.io/edp-install
 edit_uri: ""
-site_description: EPAM Delivery Platform is a cloud-native solution for software delivery automation. It offers various tools and features for creating, managing, and deploying applications.
+site_description: Experience seamless software delivery with EPAM Delivery Platform, your go-to cloud-native solution. Leverage our Kubernetes Native approach for efficient creation, management, and deployment of applications.
 
 # Copyright
-copyright: Copyright &copy; 2018 - 2023 EPAM Delivery Platform -
+copyright: Copyright &copy; 2018 - 2024 EPAM Delivery Platform -
   <a href="#__consent">Change cookie settings</a>
 
 # Extensions
@@ -109,7 +109,8 @@ plugins:
         operator-guide/upgrade-edp-2.10.x-to-2.11.x.md: operator-guide/upgrade-edp-2.11.md
         operator-guide/upgrade-edp-2.11.x-to-2.12.x.md: operator-guide/upgrade-edp-2.12.md
         operator-guide/upgrade-keycloak-17.0.x-legacy-to-19.0.x.md: operator-guide/upgrade-keycloak-19.0.md
-  - search
+  - search:
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
 
 extra:
   analytics:
