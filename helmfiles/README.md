@@ -250,13 +250,13 @@ To install DefectDojo via Helmfile, follow the steps below:
   ```
 
   > **NOTES**:
-  > 
-  > The `dd_admin_password` password must be 22 characters long. 
-  > 
+  >
+  > The `dd_admin_password` password must be 22 characters long.
+  >
   > The `dd_secret_key` password must be 128 characters long.
-  > 
-  > The `dd_credential_aes_256_key` password must be 128 characters long. 
-  > 
+  >
+  > The `dd_credential_aes_256_key` password must be 128 characters long.
+  >
   > The `metric_http_auth_password` password must be 32 characters long.
 
 5. In the `envs/platform.yaml` file, set the `dnsWildCard` parameter.

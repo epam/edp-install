@@ -1,7 +1,7 @@
 # Debug GitLab Webhooks in Jenkins
 
 A webhook enables third-party services like GitLab to send real-time updates to the application. Updates are triggered by an event or action by the webhook provider (for example, a push to a repository, a Merge Request creation), and pushed to the application via the HTTP requests, namely, Jenkins.<br>
-The GitLab Jenkins job provisioner creates a webhook in the GitLab repository during the **Create release** pipeline once the [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md) is enabled and the [GitLab Integration](gitlab-integration.md) is completed.
+The GitLab Jenkins job provisioner creates a webhook in the GitLab repository during the **Create release** pipeline once the `Integrate GitHub/GitLab in Jenkins` is enabled and the `GitLab Integration` is completed.
 
 The Jenkins setup in EDP uses the [GitLab](https://plugins.jenkins.io/gitlab-plugin/) plugin responsible for listening on GitLab webhook Push and Merge Request events.
 
@@ -89,9 +89,6 @@ In case of any issues with webhooks, try the following solutions:
 ### Related Articles
 
 * [GitLab Webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html)
-* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
 * [Jenkins Integration With GitLab](https://docs.gitlab.com/ee/integration/jenkins.html)
-* [GitLab Integration](gitlab-integration.md)
-* [Manage Jenkins CI Pipeline Job Provision](manage-jenkins-ci-job-provision.md)
 * [GitLab Plugin](https://plugins.jenkins.io/gitlab-plugin/)

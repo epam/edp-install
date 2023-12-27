@@ -24,4 +24,3 @@ There are three codebase types in EPAM Delivery Platform:
 * [Autotest as Quality Gate](../use-cases/autotest-as-quality-gate.md)
 * [Build Pipeline](build-pipeline.md)
 * [Code Review Pipeline](code-review-pipeline.md)
-* [Pipeline Stages](pipeline-stages.md)

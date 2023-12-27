@@ -1333,7 +1333,7 @@ With the version 2.8.0, EDP offers a number of breaking changes making the work 
 Keycloak is set for work in multi-tenancy mode allowing to work on a set project without interrupting the work of others.
 Within the version 2.8.0, it is also possible to create an application with an empty repository and create
 namespaces using Kiosk API. The third-party service provision functionality and Exposing Info tab were removed from Admin
-Console. Besides, the initial structure for a new documentation framework is added to GitHub. 
+Console. Besides, the initial structure for a new documentation framework is added to GitHub.
 
 There are enhancements in the EDP CI/CD framework, such as CI pipeline availability for Open Policy Agent (OPA), CI
 pipelines defined for groovy-pipelines, and the possibility to apply a specific logic and customize the Init stage of

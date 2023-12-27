@@ -36,7 +36,7 @@ They are going to be created them using Kibana Dev Tools.
   !!! Note
       This policy can also be created in GUI in `Management` → `Stack Management` → `Index Lifecycle Policies`.
 
-  [Index Lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-index-lifecycle.html) has several phases: Hot, Warm, Cold, Frozen, Delete. Indices also have different [priorities](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-set-priority.html) in each phase. The warmer the phase, the higher the priority is supposed to be, e.g., 100 for the hot phase, 50 for the warm phase, and 0 for the cold phase. 
+  [Index Lifecycle](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-index-lifecycle.html) has several phases: Hot, Warm, Cold, Frozen, Delete. Indices also have different [priorities](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-set-priority.html) in each phase. The warmer the phase, the higher the priority is supposed to be, e.g., 100 for the hot phase, 50 for the warm phase, and 0 for the cold phase.
 
   In this Use Case, only the Hot and Delete phases are configured. So an index will be created, rolled over to a new index when 1gb in size or 1day in time and deleted in 7 days.
   The rollover may not happen exactly at 1GB because it depends on how often Kibana checks the index size. Kibana usually checks the index size every 10 minutes but this can be changed by setting the [indices.lifecycle.poll_interval](https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-settings.html) monitoring timer.
@@ -286,7 +286,7 @@ When you create an empty index that corresponds to the pattern indicated in the 
 
 It is also possible to manage index lifecycle without rollover indicated in the policy. If this is the case, this section will explain how to refactor the index to make it look that way: `fluent-bit-kube-2023.03.18`.
 
-!!! Note 
+!!! Note
     The main drawback of this method is that the indices can be managed only by their creation date.
 
 To manage index lifecycle without rollover policy, follow the steps below:

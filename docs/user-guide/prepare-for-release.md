@@ -116,4 +116,3 @@ As a result, the team will have the same abilities to verify the code changes wh
 * [Autotest as Quality Gate](../use-cases/autotest-as-quality-gate.md)
 * [Build Pipeline](build-pipeline.md)
 * [CD Pipeline Details](cd-pipeline-details.md)
-* [Customize CD Pipeline](customize-cd-pipeline.md)

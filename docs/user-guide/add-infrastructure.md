@@ -140,8 +140,5 @@ h. Click the **Apply** button to add the application to the Applications list.
 
 * [Application Overview](application.md)
 * [Add CD Pipelines](add-cd-pipeline.md)
-* [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
-* [Enable VCS Import Strategy](../operator-guide/import-strategy.md)
-* [Perf Server Integration](../operator-guide/perf-integration.md)

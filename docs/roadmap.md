@@ -104,7 +104,7 @@ Persistent layer, which is based on [edp-db](https://github.com/epam/edp-install
 * Onboard SAST/DAST tool as a part of CI pipelines and Non-Functional Testing activities
 
 !!! success "EDP Release 2.12.x"
-    [SAST](operator-guide/overview-sast.md) is introduced as a mandatory part of the [CI Pipelines](user-guide/ci-pipeline-details.md). The [list of currently supported SAST scanners](https://epam.github.io/edp-install/operator-guide/overview-sast/#supported-languages) and the [instruction on how to add them](./operator-guide/add-security-scanner.md) are also available.
+    [SAST](operator-guide/overview-sast.md) is introduced as a mandatory part of the [CI Pipelines](user-guide/ci-pipeline-details.md). The [list of currently supported SAST scanners](https://epam.github.io/edp-install/operator-guide/overview-sast/#supported-languages).
 
 ### Infrastructure as Code
 
@@ -182,7 +182,7 @@ The [CD Pipeline section](user-guide/add-cd-pipeline.md) in EDP Portal provides 
 
 ### Split Jira and Commit Validation Sections
 
-[Commit Validate step](user-guide/pipeline-stages.md#stages-description) was initially designed to be aligned with [Jira Integration](operator-guide/jira-integration.md) and cannot be used as single feature. Target state is to ensure features *CommitMessage Validation* and *Jira Integration* both can be used independently. We also want to add support for [Conventional Commits](https://www.conventionalcommits.org){target=_blank}.
+`Commit Validate step` was designed to be aligned with [Jira Integration](operator-guide/jira-integration.md) and cannot be used as single feature. Target state is to ensure features *CommitMessage Validation* and *Jira Integration* both can be used independently. We also want to add support for [Conventional Commits](https://www.conventionalcommits.org){target=_blank}.
 
 !!! success "EDP Release 3.2.0"
     [EDP Portal](https://github.com/epam/edp-headlamp) has separate sections for [Jira Integration](operator-guide/jira-integration.md) and CommitMessage Validation step.

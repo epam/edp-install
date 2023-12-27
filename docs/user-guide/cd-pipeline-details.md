@@ -48,6 +48,4 @@ Find below the functional diagram of the Deploy pipeline with the default stages
 * [CI Pipeline Details](ci-pipeline-details.md)
 * [CI/CD Overview](cicd-overview.md)
 * [EDP Glossary](../glossary.md)
-* [EDP Pipeline Framework](pipeline-framework.md)
-* [EDP Pipeline Stages](pipeline-stages.md)
 * [Prepare for Release](prepare-for-release.md)

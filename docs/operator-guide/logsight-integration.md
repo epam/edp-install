@@ -154,5 +154,4 @@ The environment on which the analysis is performed can exist for different time 
 
 ## Related Articles
 
-* [Customize CD Pipeline](../user-guide/customize-cd-pipeline.md)
 * [Adjust Jira Integration](jira-integration.md)

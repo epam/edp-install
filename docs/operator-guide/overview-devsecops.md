@@ -24,7 +24,6 @@ For better visualization, see the scheme below:
 
   !![Security tools in EDP](../assets/operator-guide/security-tools.png "Security tools in EDP")
 
-
 ## Integrated Tools
 
 For obtaining and managing report post scanning, deployment of various vulnerability management systems and security tools is required. These include:

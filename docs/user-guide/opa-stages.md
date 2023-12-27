@@ -19,7 +19,7 @@ In the **Code Review** pipeline, the following stages are available:
 
   2.2. Converts OPA test results into JUnit format.
 
-  2.3. Publishes JUnit-formatted results to Jenkins.
+  2.3. Publishes JUnit-formatted results.
 
 ## Build Pipeline Stages
 
@@ -36,10 +36,6 @@ In the **Build** pipeline, the following stages are available:
 3. **tests** stage containing a script that performs the following actions:
   3.1. Runs [policy tests](https://www.openpolicyagent.org/docs/latest/policy-testing/).
   3.2. Converts OPA test results into JUnit format.
-  3.3. Publishes JUnit-formatted results to Jenkins.
+  3.3. Publishes JUnit-formatted results.
 
 4. **git-tag** stage, a standard step where git branch is tagged with a version.
-
-### Related Articles
-
-- [EDP Pipeline Framework](pipeline-framework.md)

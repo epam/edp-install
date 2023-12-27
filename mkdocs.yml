@@ -109,10 +109,6 @@ plugins:
         headlamp-user-guide/git-server-overview.md: user-guide/git-server-overview.md
         headlamp-user-guide/add-cluster.md: user-guide/add-cluster.md
         headlamp-user-guide/cluster.md: user-guide/cluster.md
-        operator-guide/upgrade-edp-2.7.8-to-2.8.4.md: operator-guide/upgrade-edp-2.8.md
-        operator-guide/upgrade-edp-2.8.4-to-2.9.0.md: operator-guide/upgrade-edp-2.9.md
-        operator-guide/upgrade-edp-2.10.x-to-2.11.x.md: operator-guide/upgrade-edp-2.11.md
-        operator-guide/upgrade-edp-2.11.x-to-2.12.x.md: operator-guide/upgrade-edp-2.12.md
         operator-guide/upgrade-keycloak-17.0.x-legacy-to-19.0.x.md: operator-guide/upgrade-keycloak-19.0.md
   - search:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
@@ -191,7 +187,6 @@ nav:
       - Install via AWS Marketplace: operator-guide/aws-marketplace-install.md
     - Configuration:
       - EDP Access Model: operator-guide/edp-access-model.md
-      # - Add Other Code Language: operator-guide/add-other-code-language.md
       - Version Control Systems:
         - Overview: operator-guide/vcs.md
         - Integrate GitHub/GitLab in Tekton: operator-guide/import-strategy-tekton.md
@@ -257,10 +252,6 @@ nav:
             - v3.1 to 3.2: operator-guide/upgrade-edp-3.2.md
             - v3.0 to 3.1: operator-guide/upgrade-edp-3.1.md
             - v2.12 to 3.0: operator-guide/upgrade-edp-3.0.md
-            - v2.11 to 2.12: operator-guide/upgrade-edp-2.12.md
-            - v2.10 to 2.11: operator-guide/upgrade-edp-2.11.md
-            - v2.9 to 2.10: operator-guide/upgrade-edp-2.10.md
-            - v2.8 to 2.9: operator-guide/upgrade-edp-2.9.md
       - Keycloak:
           - v17.0 to 19.0: operator-guide/upgrade-keycloak-19.0.md
     - Tutorials:
@@ -298,8 +289,8 @@ nav:
         - user-guide/add-quality-gate.md
     - Configuration:
       - Git Server:
-          #- user-guide/add-git-server.md
           - Manage Git Servers: user-guide/git-server-overview.md
+          - Add Git Server: user-guide/add-git-server.md
       - Cluster:
           - user-guide/add-cluster.md
           - Manage Clusters: user-guide/cluster.md

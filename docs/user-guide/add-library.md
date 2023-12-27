@@ -55,17 +55,16 @@ The **Create Library** dialog contains the two steps:
       * Java – selecting specific Java version available.
       * JavaScript - selecting JavaScript allows using the NPM tool.
       * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask.
-      * Groovy-pipeline - selecting Groovy-pipeline allows having the ability to customize a stages logic. For details,
-        please refer to the [Customize CD Pipeline](../user-guide/customize-cd-pipeline.md) page.
+      * Groovy-pipeline - selecting Groovy-pipeline allows having the ability to customize a stages logic.
       * Terraform - selecting Terraform allows using the Terraform different versions via the **Terraform version manager** ([tfenv](https://github.com/tfutils/tfenv#usage)).
         EDP supports all actions available in Terraform, thus providing the ability to modify the virtual infrastructure and launch some checks with the help of linters.
         For details, please refer to the [Use Terraform Library in EDP](../user-guide/terraform-stages.md) page.
       * Rego - this option allows using Rego code language with an Open Policy Agent (OPA) Library. For details, please
         refer to the [Use Open Policy Agent](../user-guide/opa-stages.md) page.
-      * Container - this option allows using the Kaniko tool for building the container images from a Dockerfile. For details, please refer to the [CI Pipeline for Container](../user-guide/container-stages.md) page.
+      * Container - this option allows using the Kaniko tool for building the container images from a Dockerfile.
       * Helm - this option allows using the [chart testing lint](https://github.com/helm/chart-testing) (Pipeline) for Helm charts or using Helm chart as a set of other Helm charts organized according to the [example](https://github.com/argoproj/argo-helm/tree/main).
       * C# - selecting C# allows using .Net v.3.1 and .Net v.6.0.
-      * Other - selecting Other allows extending the default code languages when creating a codebase with the Clone/Import strategy. To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) page.
+      * Other - selecting Other allows extending the default code languages when creating a codebase with the Clone/Import strategy.
 
       !!! note
           The **Create** strategy does not allow to customize the default code language set.
@@ -143,11 +142,9 @@ h. Click the **Apply** button to add the library to the Libraries list.
 
 * [Manage Libraries](library.md)
 * [Add CD Pipeline](add-cd-pipeline.md)
-* [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
-* [Perf Server Integration](../operator-guide/perf-integration.md)
 
 [//]: # (* [Use Terraform Library in EDP]&#40;terraform-stages.md&#41;)
 

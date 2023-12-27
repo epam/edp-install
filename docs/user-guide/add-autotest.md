@@ -56,7 +56,7 @@ There are two available strategies: clone and import.
 
     5. Type the necessary description in the **Description** field.
 
-    6. In the **Autotest code language** field, select the Java code language with its framework (specify Java 8 or Java 11 to be used) and get the default Maven build tool OR add another code language. Selecting **Other** allows extending the default code languages and get the necessary build tool, for details, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
+    6. In the **Autotest code language** field, select the Java code language with its framework (specify Java 8 or Java 11 to be used) and get the default Maven build tool OR add another code language. Selecting **Other** allows extending the default code languages and get the necessary build tool.
 
       !!! note
           Using the **Create** strategy does not allow to customize the default code language set.
@@ -135,8 +135,6 @@ h. Click the **Apply** button to add the library to the Libraries list.
 * [Manage Autotests](autotest.md)
 * [Add Application](add-application.md)
 * [Add CD Pipelines](add-cd-pipeline.md)
-* [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
-* [Perf Server Integration](../operator-guide/perf-integration.md)

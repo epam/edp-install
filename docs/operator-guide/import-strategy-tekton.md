@@ -105,5 +105,3 @@ As a result, you will be able to create codebases using an integrated Version Co
 
 * [Add Git Server](../user-guide/add-git-server.md)
 * [Add Application](../user-guide/add-application.md)
-* [GitHub WebHook Configuration](github-integration.md)
-* [GitLab WebHook Configuration](gitlab-integration.md)

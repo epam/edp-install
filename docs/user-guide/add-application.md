@@ -63,7 +63,7 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
     * Go - selecting Go allows using the Beego, Gin and Operator SDK frameworks.
     * C# - selecting C# allows using the .Net v.3.1 and .Net v.6.0 frameworks.
     * Helm - selecting Helm allows using the Helm framework.
-    * Other - selecting Other allows extending the default code languages when creating a codebase with the clone/import strategy. To add another code language, inspect the [Add Other Code Language](../operator-guide/add-other-code-language.md) section.
+    * Other - selecting Other allows extending the default code languages when creating a codebase with the clone/import strategy.
     !!! note
         The **Create from template** strategy does not allow to customize the default code language set.
 
@@ -156,8 +156,6 @@ h. Click the **Apply** button to add the application to the Applications list.
 
 * [Manage Applications](application.md)
 * [Add CD Pipeline](add-cd-pipeline.md)
-* [Add Other Code Language](../operator-guide/add-other-code-language.md)
 * [Adjust Jira Integration](../operator-guide/jira-integration.md)
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
-* [Perf Server Integration](../operator-guide/perf-integration.md)

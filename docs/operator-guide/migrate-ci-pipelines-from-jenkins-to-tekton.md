@@ -68,7 +68,7 @@ To use Tekton pipelines, add the configuration to the corresponding Gerrit proje
 [remote "patchsetcreated"]
   url = http://el-gerrit-listener:8080
   event = patchset-created
-  
+
 ```
 
 ## Switch CI Tool for Codebase(s)

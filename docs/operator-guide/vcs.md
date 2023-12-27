@@ -25,7 +25,7 @@ EDP offers the following strategies to work with repositories:
 * **Import project** - enables working with the repository located in the added [Git server](../user-guide/add-git-server.md). This scenario is preferred when the users already have an application stored in their own pre-configured repository and intends to continue working with their repository while also utilizing EDP simultaneously.
 
 !!! note
-    In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md) or [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md) page.
+    In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md) page.
     The **Import project** strategy is not applicable for Gerrit.
     Also, it is impossible to choose the **Empty project** field when using the **Import project** strategy while [creating appication](../user-guide/add-application.md) since it is implied that you already have a ready-to-work application in your own repository, whereas the "Empty project" option creates a repository but doesn't put anything in it.
 
@@ -35,5 +35,4 @@ EDP offers the following strategies to work with repositories:
 
 * [Add Git Server](../user-guide/add-git-server.md)
 * [Add Application](../user-guide/add-application.md)
-* [Integrate GitHub/GitLab in Jenkins](../operator-guide/import-strategy-jenkins.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)

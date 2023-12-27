@@ -220,8 +220,6 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 * [Quick Start](../getting-started.md)
 * [Install EDP via Helmfile](install-via-helmfile.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
-* [GitHub Webhook Configuration](github-integration.md)
-* [GitLab Webhook Configuration](gitlab-integration.md)
 * [Set Up Kubernetes](kubernetes-cluster-settings.md)
 * [Set Up OpenShift](openshift-cluster-settings.md)
 * [EDP Installation Prerequisites Overview](prerequisites.md)
