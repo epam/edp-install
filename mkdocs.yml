@@ -74,9 +74,13 @@ theme:
 plugins:
   - awesome-pages
   - git-revision-date-localized:
-      enable_creation_date: false
-      fallback_to_build_date: true
       enabled: !ENV [CI, false]
+      enable_creation_date: true
+      fallback_to_build_date: true
+      locale: en
+      exclude:
+        - index.md
+        - pricing.md
   - git-committers:
       repository: epam/edp-install
       enabled: !ENV [CI, false]
