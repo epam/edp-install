@@ -10,3 +10,7 @@
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   font-size: 0.7rem;
 }
+
+.md-footer-copyright {
+  font-size: .64rem;
+}
