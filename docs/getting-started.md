@@ -6,7 +6,6 @@
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/){target=_blank} tool;
 - [Helm 3.10.x+](https://helm.sh/docs/intro/install/){target=_blank};
 - [Keycloak 18.0+](https://www.keycloak.org){target=_blank};
-- (Optional) [Kiosk 0.2.11](https://github.com/loft-sh/kiosk){target=_blank}.
 
 ## Minimal Hardware Requirements
 
@@ -17,7 +16,7 @@ The system should have the following specifications to run properly:
 
 ## EDP Toolset
 
-EPAM Delivery Platform supports the following tools:
+EPAM Delivery Platform operates the following tools and solutions:
 
 |Domain|Related Tools/Solutions|
 |- |- |
