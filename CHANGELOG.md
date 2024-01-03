@@ -14,6 +14,38 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 - Align tekton edpoint to service name ([#126](https://github.com/epam/edp-install/issues/126))
 
+### Routine
+
+- Update current development version ([#126](https://github.com/epam/edp-install/issues/126))
+
+### Documentation
+
+- Reduct fontsize for footer ([#119](https://github.com/epam/edp-install/issues/119))
+- Update quickstart guide ([#119](https://github.com/epam/edp-install/issues/119))
+- Update mkdocs-material to v9.5.3 ([#119](https://github.com/epam/edp-install/issues/119))
+- Tune git-revision-date-localized plugin ([#119](https://github.com/epam/edp-install/issues/119))
+- Completly remove Jenkins materials from docs ([#119](https://github.com/epam/edp-install/issues/119))
+- Tune video size in documentation ([#119](https://github.com/epam/edp-install/issues/119))
+- Disable creation date parsing for pages ([#119](https://github.com/epam/edp-install/issues/119))
+- Update home page description ([#119](https://github.com/epam/edp-install/issues/119))
+- Update roadmap section ([#119](https://github.com/epam/edp-install/issues/119))
+- Refactor Use-cases page ([#119](https://github.com/epam/edp-install/issues/119))
+- Add page contributors information ([#119](https://github.com/epam/edp-install/issues/119))
+- Fix mermaid extention ([#119](https://github.com/epam/edp-install/issues/119))
+- Fix versions page for the release 3.0.0 ([#119](https://github.com/epam/edp-install/issues/119))
+- Update supported versions section ([#119](https://github.com/epam/edp-install/issues/119))
+- Add compliance section to documentation ([#119](https://github.com/epam/edp-install/issues/119))
+- Align ArgoCD integration with EDP ([#125](https://github.com/epam/edp-install/issues/125))
+- Update mkdocs framework version to the latest stable ([#119](https://github.com/epam/edp-install/issues/119))
+- Add upgrade guide for 3.7.x version ([#127](https://github.com/epam/edp-install/issues/127))
+
+
+<a name="v3.7.3"></a>
+## [v3.7.3] - 2024-01-03
+### Routine
+
+- Update release version to 3.7.3 ([#129](https://github.com/epam/edp-install/issues/129))
+
 
 <a name="v3.7.2"></a>
 ## [v3.7.2] - 2023-12-18
@@ -239,7 +271,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.2...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.3...HEAD
+[v3.7.3]: https://github.com/epam/edp-install/compare/v3.7.2...v3.7.3
 [v3.7.2]: https://github.com/epam/edp-install/compare/v3.7.1...v3.7.2
 [v3.7.1]: https://github.com/epam/edp-install/compare/v3.7.0...v3.7.1
 [v3.7.0]: https://github.com/epam/edp-install/compare/v3.6.0...v3.7.0

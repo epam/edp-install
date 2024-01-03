@@ -33,7 +33,7 @@ dependencies:
 
 - name: edp-headlamp
   repository: "@epamedp"
-  version: "0.12.0"
+  version: "0.13.0"
   condition: edp-headlamp.enabled
 
 - name: edp-tekton
