@@ -207,6 +207,7 @@ nav:
           - Monitoring: operator-guide/tekton-monitoring.md
           - MS Teams Notification: operator-guide/notification-msteams.md
       - Container Registry:
+          - Overview: operator-guide/container-registries.md
           - Harbor:
               - Harbor Integration: operator-guide/container-registry-harbor-integration-tekton-ci.md
               - OIDC in Harbor: operator-guide/harbor-oidc.md
