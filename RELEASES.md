@@ -4,6 +4,9 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 3.7.3](#3.7.3)
+* [Version 3.7.2](#3.7.2)
+* [Version 3.7.1](#3.7.1)
 * [Version 3.7.0](#3.7.0)
 * [Version 3.6.0](#3.6.0)
 * [Version 3.5.3](#3.5.3)
@@ -50,6 +53,38 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.0](#2.6.0)
 </details>
 
+## Version 3.7.3 <a name="3.7.3"></a> (January 3, 2024)
+
+### New Functionality
+
+* In the SonarQube widget, quality gates have been provided with the Failed and Passed statuses of quality gate runs.
+
+### Enhancements
+
+* The system codebase icon has been updated. ([#127](https://github.com/epam/edp-headlamp/issues/127))
+* No secrets found messages have been added to the Configuration page list. ([#118](https://github.com/epam/edp-headlamp/issues/118))
+
+### Fixed Issues
+
+* Fixed incorrect SonarQube widget loading status when there was no SonarQube component integrated. ([#118](https://github.com/epam/edp-headlamp/issues/118))
+
+## Version 3.7.2 <a name="3.7.2"></a> (December 18, 2023)
+
+### New Functionality
+
+* Integration status has been provided for registry integration. Additionally, integration status can now display the connection error status. ([#29](https://github.com/epam/edp-codebase-operator/issues/29))
+
+### Fixed Issues
+
+* Fixed wrong Tekton cache service endpoint. ([#89](https://github.com/epam/edp-tekton/issues/89))
+* Fixed improper telemetry work. ([#31](https://github.com/epam/edp-codebase-operator/issues/31))
+
+## Version 3.7.1 <a name="3.7.1"></a> (December 18, 2023)
+
+### Fixed Issues
+
+* Fixed issue that prevented environment stage deletion if external cluster configuration was incorrect. ([#10](https://github.com/epam/edp-cd-pipeline-operator/issues/10))
+
 ## Version 3.7.0 <a name="3.7.0"></a> (December 15, 2023)
 
 ## What's new
@@ -92,7 +127,7 @@ Expect a remarkable improvement in the overall performance of Tekton pipelines, 
 * Git Server integration no longer requires creating secrets. All necessary data can be created via UI. ([#100](https://github.com/epam/edp-headlamp/issues/100))
 * EDP Portal now automatically encodes sensitive data (e.g., SSH keys, tokens) when users input it in the corresponding fields. ([#97](https://github.com/epam/edp-headlamp/issues/97))
 * To expedite CI pipelines, Tekton cache support has been implemented. ([#74](https://github.com/epam/edp-tekton/issues/74))
-* To accelerate pipelines execution, the number of independent tasks has been decreased. ([#68] (https://github.com/epam/edp-tekton/issues/68))
+* To accelerate pipelines execution, the number of independent tasks has been decreased. ([#68](https://github.com/epam/edp-tekton/issues/68))
 * Now EDP uses branches as version baselines for Dependency-Track reports. ([#71](https://github.com/epam/edp-tekton/issues/71))
 * We are continuously working on to create the best CI/CD platform ever made. To help ourselves achieve this aim, we enabled basic anonymous telemetry throughout the platform. It doesn't collect sensitive data, it aims to collect patterns of user behavior within our platform only. ([#112](https://github.com/epam/edp-install/issues/112))
 
