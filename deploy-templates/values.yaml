@@ -215,15 +215,22 @@ oauth2_proxy:
     #    hosts:
     #      - chart-example.local
 
-# define EDPComponents, more details: https://github.com/epam/edp-component-operator/
-EDPComponents: {}
+# define platform Quick Links, more details: https://github.com/epam/edp-component-operator/
+# quickLinks:
+#   argocd: ""
+#   defectdojo: ""
+#   dependency_track: ""
+#   docker_registry: ""
+#   grafana: ""
+#   kibana: ""
+#   nexus: ""
+#   sonar: ""
+
+# define extra Quick Links, more details: https://github.com/epam/edp-component-operator/
+extraquickLinks: {}
   # - prometheus:
   #     url: https://ingress-prometheus.example.com
   #     visible: true
-  #     icon: icon_in_base64
-  # - kibana:
-  #     url: https://ingress-kibana.example.com
-  #     visible: false
   #     icon: icon_in_base64
   # - another_tool:
   #     url: https://ingress-anothertool.example.com

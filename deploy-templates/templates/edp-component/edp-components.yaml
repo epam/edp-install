@@ -1,5 +1,5 @@
 {{- $edpComponentLables := include "edp-install.labels" . -}}
-{{- range $key, $value := index .Values.EDPComponents }}
+{{- range $key, $value := index .Values.extraquickLinks }}
 ---
 {{- range $elem, $elemVal := $value }}
 apiVersion: v1.edp.epam.com/v1
