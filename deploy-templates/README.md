@@ -55,7 +55,7 @@ A Helm chart for EDP Install
 | externalSecrets.secretProvider.aws.role | string | `nil` | IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME> |
 | externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
-| extraquickLinks | object | `{}` |  |
+| extraQuickLinks | object | `{}` |  |
 | gerrit-operator.enabled | bool | `false` |  |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. By default: github |

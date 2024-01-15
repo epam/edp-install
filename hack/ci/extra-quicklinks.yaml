@@ -1,4 +1,4 @@
-EDPComponents:
+extraQuickLinks:
   - prometheus:
       type: prometheus
       url: https://ingress-prometheus.example.com

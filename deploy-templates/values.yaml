@@ -227,7 +227,7 @@ oauth2_proxy:
 #   sonar: ""
 
 # define extra Quick Links, more details: https://github.com/epam/edp-component-operator/
-extraquickLinks: {}
+extraQuickLinks: {}
   # - prometheus:
   #     url: https://ingress-prometheus.example.com
   #     visible: true
