@@ -2,7 +2,7 @@
 
 In EDP, all software components, such as applications, libraries, Terraform infrastructures, and automated tests, are termed as codebases. EDP provides flexible methods for scaffolding these components.
 
-This guide will lead you through creating a Go application using the Gin framework. The  EDP Marketplace  will be utilized to streamline the application creation process.
+This guide will lead you through creating a Go application using the Gin framework. The [EDP Marketplace](../user-guide/marketplace.md) will be utilized to streamline the application creation process.
 
 ## Application Onboarding
 
@@ -14,7 +14,15 @@ To create the first application, complete the instructions below:
 
   !![Marketplace applications](../assets/quick-start/marketplace_application.png "Marketplace applications")
 
-3. In the appeared window, fill in the required fields (ensure Git repo relative path is defined in the `github_username/repo_name` format and doesn't exist):
+3. In the appeared window, define the following values and click **Apply**:
+
+  * Component name: `my-go-gin-app`<br>
+  * Description: `My first application`<br>
+  * Git server: `github`<br>
+  * Repository name: `<github_account_name>/my-go-gin-app`<br>
+  * Codebase versioning type: `edp`<br>
+  * Start version from: `0.1.0`<br>
+  * Suffix: `SNAPSHOT`
 
   !![Application blank](../assets/quick-start/add_marketplace_app.png "Application blank")
 
@@ -26,17 +34,17 @@ To create the first application, complete the instructions below:
 
 Having created the Go application, proceed to build it by performing the following actions:
 
-1. In the component details page, expand the application and click the "Go to the Source Code" button:
+1. In the component details page, expand the application and click the **Go to the Source Code** button:
 
   !![Marketplace notification](../assets/quick-start/go_to_source_code.png "Application details")
 
 2. In the opened Source Code, create new branch called **test**.
 
-3. In the SonarCloud project page, copy the value of the SonarCloud organization name:
+3. In the SonarCloud organization page, copy the value of the SonarCloud organization name:
 
-  !![Setting SonarCloud organization](../assets/quick-start/sonarcloud_organization.png "Setting SonarCloud organization")
+  !![Organization key](../assets/quick-start/check_organization.png "Organization key")
 
-4. In the **test** branch in GitHub, open the `sonar-project.properties` file and include the `sonar.organization` parameter that is equal to the value copied in the previous step, resulting in the following configuration:
+4. In the **test** branch in GitHub, open the `sonar-project.properties` file and include the `sonar.language=go`, `sonar.scanner.force-deprecated-java-version=true`, and `sonar.organization` parameters where `sonar.organization` is equal to the value copied in the previous step, resulting in the following configuration:
 
     ```bash
     sonar.projectKey=my-go-gin-app
@@ -45,10 +53,11 @@ Having created the Go application, proceed to build it by performing the followi
     sonar.test.inclusions=**/*_test.go
     sonar.exclusions=**/cmd/**,**/deploy/**,**/deploy-templates/**,**/*.groovy,**/config/**
     sonar.language=go
-    sonar.organization=organization-name
+    sonar.organization=<organization-key>
+    sonar.scanner.force-deprecated-java-version=true
     ```
 
-  !![Enable ingress](../assets/quick-start/set_organization.png "Specifying organization")
+  !![Specifying parameters](../assets/quick-start/set_organization.png "Specifying parameters")
 
 5. Commit the changes.
 
@@ -65,23 +74,31 @@ Having created the Go application, proceed to build it by performing the followi
       kubectl port-forward service/edp-headlamp 64372:80 -n edp
 
   !!! note
-      If the port is already in use, please select another available port. Use the `ss -tuln` or `netstat -tuln` command to see the ports at your disposal.
+      If the port is already in use, run the command below to check for the currently allocated ports in the range from 30000 to 32767 and specify another available port:
+      ```bash
+      kubectl get svc --all-namespaces -o 'go-template={{range .items}}{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{" "}}{{end}}{{end}}{{end}}'
+      ```
 
-9. To monitor the build pipeline status, click the pipeline run name in the application details window:
+9. To observe the build pipeline status, click the tree diagram icon in the Diagram column:
+
+  !![Tree diagram window](../assets/quick-start/tree_diagram.png "Tree diagram window")
+
+
+10. Once the build is failed, click the failed stage name to open the Tekton pipeline run:
 
   !![Failure details](../assets/quick-start/failure_details.png "Failure details")
 
-  The initial pipeline is expected to fail, primarily due to SonarCloud intricacies. It is imperative to set a Quality Gate in SonarCloud after the initial pipeline run and subsequently re-trigger the build pipeline.
+  The initial pipeline is expected to fail, primarily due to SonarCloud intricacies. It is imperative to set a Quality Gate in SonarCloud after the initial pipeline run and subsequently re-trigger the build pipeline. After the pipeline failure, a new project is expected to appear in the organization.
 
-10. In the SonarCloud project, click the **Set New Code Definition** button:
+11. In the SonarCloud organization, select the newly appeared project and click the **Set New Code Definition** button:
 
-  !![New code definition](../assets/quick-start/set_new_code-definition1.png "New code definition")
+  !![New code definition](../assets/quick-start/set_new_code_definition.png "New code definition")
 
-11. In the **New Code** page, set the **Previous version** option and click **Save**:
+12. In the **New Code** page, set the **Previous version** option and click **Save**:
 
-  !![New Code page](../assets/quick-start/setting_definition.png "New Code page")
+  !![New Code page](../assets/quick-start/previous_version.png "New Code page")
 
-12. In EDP Portal, trigger build pipeline run one more time and wait until the pipeline run is finished.
+13. In EDP Portal, trigger build pipeline run one more time and wait until the pipeline run is finished.
 
 Build pipelines are designed to generate an executable image of an application. Once built, the image can be run in a target environment.
 

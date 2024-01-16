@@ -29,18 +29,26 @@ To integrate EDP with GitHub, follow the steps below:
   2. Click the profile account and navigate to **Settings** -> **Developer Settings**.
   3. Select *Personal access tokens (classic)* and generate a new token with the following parameters:
 
-  !![Repo permission](../assets/operator-guide/github-scopes-1.png "Repo permission")
+    !![Repo permission](../assets/operator-guide/github-scopes-1.png "Repo permission")
 
-  !!! note
-      The following (Admin:repo, Admin:org, and User) access is necessary for the GitHub Pull Request Builder plugin to retrieve Pull Request commits, their status, and author information.
+    !!! note
+        The following (Admin:repo, Admin:org, and User) access is necessary for the GitHub Pull Request Builder plugin to retrieve Pull Request commits, their status, and author information.
 
-  !![Admin:repo permission](../assets/operator-guide/github-scopes-2.png "Admin:repo permission")
-  !![Admin:org permission](../assets/operator-guide/github-scopes-4.png "Admin:org permission")
-  !![User permission](../assets/operator-guide/github-scopes-3.png "User permission")
+    !![Admin:repo permission](../assets/operator-guide/github-scopes-2.png "Admin:repo permission")
+    !![Admin:org permission](../assets/operator-guide/github-scopes-4.png "Admin:org permission")
+    !![User permission](../assets/operator-guide/github-scopes-3.png "User permission")
 
   4. Save a new personal access token.
 
-4. In EDP Portal, navigate to `EDP` -> `Configuration` -> `Git Servers`. Fill in the required fields:
+4. In EDP Portal, navigate to `EDP` -> `Configuration` -> `Git Servers`. Define the following values and click **Save**:
+
+  * Git provider: select `GitHub`<br>
+  * Host: `github.com`<br>
+  * User: `Git`<br>
+  * SSH port: `22`<br>
+  * HTTPS port: `443`<br>
+  * Private SSH key: `your generated SSH private key`<br>
+  * Access token: `your account token generated in GitHub`
 
   !![Git Server configuration](../assets/quick-start/github_integration.png "Git Server configuration")
 

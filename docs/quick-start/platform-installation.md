@@ -1,4 +1,4 @@
-# Platform Installation
+# Install EDP
 
 This page serves as the starting point for the quick start guide, where we will install Tekton as a prerequisite and then proceed to install the EPAM Delivery Platform itself.
 
@@ -38,11 +38,18 @@ To deploy the platform, follow the steps below:
   ```
 
   !!! note
-      If the port is already in use, check for available ports using the `ss -tuln` or `netstat -tuln` command, and select an alternative port if needed.
+      If the port is already in use, run the command below to check for the currently allocated ports in the range from 30000 to 32767 and specify another available port:
+      ```bash
+      kubectl get svc --all-namespaces -o 'go-template={{range .items}}{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{" "}}{{end}}{{end}}{{end}}'
+      ```
 
-4. Enter **localhost:59480** in your browser to access the login menu:
+4. Enter the localhost in your browser to access the login menu:
 
-  !![EDP Portal login menu](../assets/quick-start/edp_portal_login_menu.png "EDP Portal login menu")
+    ```bash
+    localhost:59480
+    ```
+
+    !![EDP Portal login menu](../assets/quick-start/edp_portal_login_menu.png "EDP Portal login menu")
 
 5. Create the edp-admin service account and generate an access token to open the EDP Portal:
 
@@ -58,8 +65,14 @@ To deploy the platform, follow the steps below:
 
   !![Specify namespaces](../assets/quick-start/edp_portal_ui.png "Specify namespaces")
 
-8. In the **Cluster Settings** page, enter the `edp` namespace in both the default and allowed namespaces. Remember to click the **+** icon when adding the allowed namespace:
+8. In the **Cluster Settings** page, define the following for fields:
+
+  * Default namespace: `edp`<br>
+  * Allowed namespaces: `edp`
 
   !![Cluster Settings menu](../assets/quick-start/cluster_settings.png "Cluster Settings menu")
+
+!!! note
+    Remember to click the **+** icon when adding the allowed namespace.
 
 After completing these steps, you will get access to EPAM Delivery Platform components through the EDP Portal UI. You can now proceed with the integration steps, starting with the [SonarQube](integrate-sonarcloud.md) integration.

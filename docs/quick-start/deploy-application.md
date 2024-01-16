@@ -10,7 +10,11 @@ As a prerequisite, create a GitOps repository in your GitHub account. EDP Portal
 
   !![GitOps tab](../assets/quick-start/gitops_section.png "GitOps tab")
 
-2. Fill in the Git repo relative path (account name) and repository name fields and click **Save**:
+2. Define the following values and click **Save**:
+
+  * Git server: `github`<br>
+  * Git repo relative path: `github_account_name`<br>
+  * Repository Name: `edp-gitops`
 
   !![Add GitOps repository](../assets/quick-start/add_gitops.png "Add GitOps repository")
 
@@ -32,7 +36,15 @@ To create an environment, follow the steps below:
 
 4. In the **Stages** tab, click the **Add Stage** button.
 
-5. Fill in the required fields and click the **Apply** button:
+5. Define the following values and click **Apply**:
+
+  * Cluster: `in-cluster`<br>
+  * Stage name: `dev`<br>
+  * Namespace: `edp-my-go-gin-app-dev`<br>
+  * Description: `Development stage`<br>
+  * Trigger type: `Manual`<br>
+  * Quality gate type: `Manual`<br>
+  * Step name: `dev`
 
   !![Create Stage window](../assets/quick-start/stages_tab.png "Create Stage window")
 
@@ -61,5 +73,3 @@ To Deploy application, follow the steps below:
 Congratulations! You have passed the Quick Start guide! We hope you enjoyed this journey.
 
 Now that you have a good understanding of how EDP works, you can further enhance its capabilities by integrating it with [Nexus](../operator-guide/nexus-sonatype.md). Additionally, explore other functionalities detailed in our [Use Cases](../use-cases/index.md) section. If you're eager to unlock the full potential of EDP, navigate to the [Operator Guide](../operator-guide/index.md) to fine-tune your EDP for optimal performance!
-
-  !![Good luck!](../assets/quick-start/Rocket.gif)

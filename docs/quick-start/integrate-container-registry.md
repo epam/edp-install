@@ -20,7 +20,13 @@ To integrate EPAM Delivery Platform with DockerHub, complete the guidelines belo
 
 6. In EDP Portal, navigate to `EDP` -> `Configuration` -> `Registry` and click the **Add Registry** button.
 
-7. In the **Registry Provider** field, select DockerHub. Paste the token and other credentials in the required fields and click **Save**:
+7. In the **Registry Provider** field, select DockerHub. Define the following values and click **Save**:
+
+  * Registry Endpoint: `https://docker.io`<br>
+  * Registry Space: `DockerHub account name`<br>
+  * User: `DockerHub account name`<br>
+  * Password/Token: `Your generated access token`<br>
+  * Use the Push Account's credentials: `check`
 
   !![DockerHub integration](../assets/quick-start/integrate_docker.png "DockerHub integration")
 
