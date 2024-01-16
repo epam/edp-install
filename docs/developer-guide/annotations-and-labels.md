@@ -31,11 +31,12 @@ pipeline
 
 | Secret Name          | Labels                                                                                     |
 | :------------------- | :----------------------------------------------------------------------------------------- |
+| ci-argocd            | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=argocd           |
+| ci-defectdojo        | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=defectdojo       |
+| ci-dependency-track  | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=dependency-track |
 | ci-jira              | app.edp.epam.com/secret-type=jira                                                          |
 | ci-nexus             | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=nexus            |
 | ci-sonarqube         | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=sonar            |
-| ci-defectdojo        | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=defectdojo       |
-| ci-dependency-track  | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=dependency-track |
 | gerrit-ciuser-sshkey | app.edp.epam.com/secret-type=repository                                                    |
 | kaniko-docker-config | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=registry         |
 | regcred              | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=registry         |
