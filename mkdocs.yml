@@ -228,7 +228,7 @@ nav:
           - Monitoring: operator-guide/tekton-monitoring.md
           - MS Teams Notification: operator-guide/notification-msteams.md
       - Container Registry:
-          - Overview: operator-guide/container-registries.md
+          - Change Container Registry: operator-guide/container-registries.md
           - Harbor:
               - Harbor Integration: operator-guide/container-registry-harbor-integration-tekton-ci.md
               - OIDC in Harbor: operator-guide/harbor-oidc.md
@@ -322,6 +322,8 @@ nav:
           - Manage Clusters: user-guide/cluster.md
       - GitOps:
           - user-guide/gitops.md
+      - Container Registry:
+          - Manage Registries: user-guide/manage-container-registries.md
   - Developer Guide:
     - Overview: developer-guide/index.md
     - Reference Architecture: developer-guide/reference-architecture.md
