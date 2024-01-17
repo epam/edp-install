@@ -58,8 +58,8 @@ The required fields vary depending on which container registry is chosen:
       |:-|:-|
       |Registry Endpoint|Enter Harbor registry endpoint URL, for example, registry.example.com.|
       |Registry Space|The project name in registry.|
-      |User|Provide the [robot account](../container-registry-harbor-integration-tekton-ci/#set-up-robot-account) name with with push permissions.|
-      |Password/Token|Provide the [secret](../container-registry-harbor-integration-tekton-ci/#set-up-robot-account) corresponding to your harbor account.|
+      |User|Provide the [robot account](container-registry-harbor-integration-tekton-ci.md/#set-up-robot-account) name with with push permissions.|
+      |Password/Token|Provide the [secret](container-registry-harbor-integration-tekton-ci.md/#set-up-robot-account) corresponding to your harbor account.|
       |Checkbox/Use the Push Account's credentials|Check this to use the same account for pulling and pushing operations. Provide the robot account name with with pull permissions.|
 
 === "OpenShift"
