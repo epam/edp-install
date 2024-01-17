@@ -92,6 +92,8 @@ plugins:
   - git-committers:
       repository: epam/edp-install
       enabled: !ENV [CI, false]
+  - inline-svg:
+      extension: ".inline.svg"
   - meta-descriptions:
       trim: true
   - mkdocs-video:
