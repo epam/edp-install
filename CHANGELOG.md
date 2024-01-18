@@ -10,16 +10,36 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+
+- Enable ci-argocd secret provisioning by eso ([#134](https://github.com/epam/edp-install/issues/134))
+- Deploy default EDP components out of the box ([#133](https://github.com/epam/edp-install/issues/133))
+
 ### Bug Fixes
 
+- Fix ESO key path for argocd-ci ([#134](https://github.com/epam/edp-install/issues/134))
 - Align tekton edpoint to service name ([#126](https://github.com/epam/edp-install/issues/126))
 
 ### Routine
 
+- Align ESO Parameter Store path for argocd-ci ([#134](https://github.com/epam/edp-install/issues/134))
+- Temporary use hardcoded values for ESO ci-argocd ([#134](https://github.com/epam/edp-install/issues/134))
+- Align variable usage for extraQuickLinks ([#133](https://github.com/epam/edp-install/issues/133))
+- Update current development version ([#129](https://github.com/epam/edp-install/issues/129))
 - Update current development version ([#126](https://github.com/epam/edp-install/issues/126))
 
 ### Documentation
 
+- Update the Quick Start guide ([#119](https://github.com/epam/edp-install/issues/119))
+- Fix warning with the correct link ([#135](https://github.com/epam/edp-install/issues/135))
+- Align component diagram to the dark theme ([#135](https://github.com/epam/edp-install/issues/135))
+- Add component diagram to the Developer Guide ([#135](https://github.com/epam/edp-install/issues/135))
+- Update Capsule integration guide ([#124](https://github.com/epam/edp-install/issues/124))
+- Create the Quick Start guide ([#119](https://github.com/epam/edp-install/issues/119))
+- Update the EDP logo for Capsule adopters ([#132](https://github.com/epam/edp-install/issues/132))
+- Create EDP labels documentation for mkdocs ([#128](https://github.com/epam/edp-install/issues/128))
+- Container registry integration ([#131](https://github.com/epam/edp-install/issues/131))
+- Update the RELEASES md file with 3.7.3 changes ([#130](https://github.com/epam/edp-install/issues/130))
 - Reduct fontsize for footer ([#119](https://github.com/epam/edp-install/issues/119))
 - Update quickstart guide ([#119](https://github.com/epam/edp-install/issues/119))
 - Update mkdocs-material to v9.5.3 ([#119](https://github.com/epam/edp-install/issues/119))
@@ -38,6 +58,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align ArgoCD integration with EDP ([#125](https://github.com/epam/edp-install/issues/125))
 - Update mkdocs framework version to the latest stable ([#119](https://github.com/epam/edp-install/issues/119))
 - Add upgrade guide for 3.7.x version ([#127](https://github.com/epam/edp-install/issues/127))
+
+
+<a name="v3.7.4"></a>
+## [v3.7.4] - 2024-01-18
+### Routine
+
+- Update release version to 3.7.4 ([#137](https://github.com/epam/edp-install/issues/137))
 
 
 <a name="v3.7.3"></a>
@@ -271,7 +298,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.3...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.4...HEAD
+[v3.7.4]: https://github.com/epam/edp-install/compare/v3.7.3...v3.7.4
 [v3.7.3]: https://github.com/epam/edp-install/compare/v3.7.2...v3.7.3
 [v3.7.2]: https://github.com/epam/edp-install/compare/v3.7.1...v3.7.2
 [v3.7.1]: https://github.com/epam/edp-install/compare/v3.7.0...v3.7.1
