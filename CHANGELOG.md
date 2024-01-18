@@ -11,6 +11,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v3.7.4"></a>
+## [v3.7.4] - 2024-01-18
+### Routine
+
+- Update release version to 3.7.4 ([#137](https://github.com/epam/edp-install/issues/137))
+
+
 <a name="v3.7.3"></a>
 ## [v3.7.3] - 2024-01-03
 ### Routine
@@ -242,7 +249,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.3...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.4...HEAD
+[v3.7.4]: https://github.com/epam/edp-install/compare/v3.7.3...v3.7.4
 [v3.7.3]: https://github.com/epam/edp-install/compare/v3.7.2...v3.7.3
 [v3.7.2]: https://github.com/epam/edp-install/compare/v3.7.1...v3.7.2
 [v3.7.1]: https://github.com/epam/edp-install/compare/v3.7.0...v3.7.1
