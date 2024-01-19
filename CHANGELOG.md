@@ -11,6 +11,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v3.7.5"></a>
+## [v3.7.5] - 2024-01-19
+### Routine
+
+- Release 3.7.5 with extraline in private ssh key fix ([#138](https://github.com/epam/edp-install/issues/138))
+
+
 <a name="v3.7.4"></a>
 ## [v3.7.4] - 2024-01-18
 ### Routine
@@ -249,7 +256,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.4...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.5...HEAD
+[v3.7.5]: https://github.com/epam/edp-install/compare/v3.7.4...v3.7.5
 [v3.7.4]: https://github.com/epam/edp-install/compare/v3.7.3...v3.7.4
 [v3.7.3]: https://github.com/epam/edp-install/compare/v3.7.2...v3.7.3
 [v3.7.2]: https://github.com/epam/edp-install/compare/v3.7.1...v3.7.2
