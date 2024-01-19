@@ -28,7 +28,7 @@ To deploy the platform, follow the steps below:
 2. Deploy the platform using the `helm install` command:
 
   ```bash
-  helm install edp epmdedp/edp-install --version 3.7.3 --create-namespace --atomic -n edp --values edp-values.yaml --set global.dnsWildCard=example.com
+  helm install edp epamedp/edp-install --version 3.7.4 --create-namespace --atomic -n edp --set global.dnsWildCard=example.com
   ```
 
 3. Upon successful deployment of the EDP Helm Chart, run the `kubectl port-forward` command:
@@ -36,12 +36,6 @@ To deploy the platform, follow the steps below:
   ```bash
   kubectl port-forward service/edp-headlamp 59480:80 -n edp
   ```
-
-  !!! note
-      If the port is already in use, run the command below to check for the currently allocated ports in the range from 30000 to 32767 and specify another available port:
-      ```bash
-      kubectl get svc --all-namespaces -o 'go-template={{range .items}}{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{" "}}{{end}}{{end}}{{end}}'
-      ```
 
 4. Enter the localhost in your browser to access the login menu:
 
