@@ -71,13 +71,11 @@ Having created the Go application, proceed to build it by performing the followi
 
 8. Enable port-forwarding for the edp-tekton-dashboard service (in case ingress is not deployed):
 
-      kubectl port-forward service/edp-headlamp 64372:80 -n edp
+      kubectl port-forward service/edp-tekton-dashboard 64372:80 -n edp
 
-  !!! note
-      If the port is already in use, run the command below to check for the currently allocated ports in the range from 30000 to 32767 and specify another available port:
-      ```bash
-      kubectl get svc --all-namespaces -o 'go-template={{range .items}}{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{" "}}{{end}}{{end}}{{end}}'
-      ```
+    ```bash
+    localhost:64372
+    ```
 
 9. To observe the build pipeline status, click the tree diagram icon in the Diagram column:
 
