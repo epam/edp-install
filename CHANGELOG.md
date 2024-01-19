@@ -22,6 +22,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#137](https://github.com/epam/edp-install/issues/137))
 - Align ESO Parameter Store path for argocd-ci ([#134](https://github.com/epam/edp-install/issues/134))
 - Temporary use hardcoded values for ESO ci-argocd ([#134](https://github.com/epam/edp-install/issues/134))
 - Align variable usage for extraQuickLinks ([#133](https://github.com/epam/edp-install/issues/133))
@@ -30,6 +31,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Fix port-forward command in QS guide ([#119](https://github.com/epam/edp-install/issues/119))
+- Fix helm repo name in Quick Start guide ([#119](https://github.com/epam/edp-install/issues/119))
 - Update the Quick Start guide ([#119](https://github.com/epam/edp-install/issues/119))
 - Fix warning with the correct link ([#135](https://github.com/epam/edp-install/issues/135))
 - Align component diagram to the dark theme ([#135](https://github.com/epam/edp-install/issues/135))
@@ -58,6 +61,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align ArgoCD integration with EDP ([#125](https://github.com/epam/edp-install/issues/125))
 - Update mkdocs framework version to the latest stable ([#119](https://github.com/epam/edp-install/issues/119))
 - Add upgrade guide for 3.7.x version ([#127](https://github.com/epam/edp-install/issues/127))
+
+
+<a name="v3.7.5"></a>
+## [v3.7.5] - 2024-01-19
+### Routine
+
+- Release 3.7.5 with extraline in private ssh key fix ([#138](https://github.com/epam/edp-install/issues/138))
 
 
 <a name="v3.7.4"></a>
@@ -298,7 +308,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.4...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.5...HEAD
+[v3.7.5]: https://github.com/epam/edp-install/compare/v3.7.4...v3.7.5
 [v3.7.4]: https://github.com/epam/edp-install/compare/v3.7.3...v3.7.4
 [v3.7.3]: https://github.com/epam/edp-install/compare/v3.7.2...v3.7.3
 [v3.7.2]: https://github.com/epam/edp-install/compare/v3.7.1...v3.7.2
