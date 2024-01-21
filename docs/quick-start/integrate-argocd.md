@@ -83,10 +83,7 @@ The next step is to integrate Argo CD with EDP. Proceed with the instructions be
 
 3. Add GitHub host to the Argo CD config map with known hosts:
 
-      EDP_NAMESPACE=edp
       VCS_HOST="github.com"
-      ACCOUNT_NAME="<github_account>"
-      URL="ssh://git@${VCS_HOST}:22/${ACCOUNT_NAME}"
       KNOWN_HOSTS_FILE="/tmp/ssh_known_hosts"
       ARGOCD_KNOWN_HOSTS_NAME="argocd-ssh-known-hosts-cm"
       rm -f ${KNOWN_HOSTS_FILE}
