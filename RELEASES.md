@@ -4,6 +4,8 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 3.7.5](#3.7.5)
+* [Version 3.7.4](#3.7.4)
 * [Version 3.7.3](#3.7.3)
 * [Version 3.7.2](#3.7.2)
 * [Version 3.7.1](#3.7.1)
@@ -52,6 +54,18 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.7.5 <a name="3.7.5"></a> (January 19, 2024)
+
+### Enhancements
+
+* SSH private key format has been aligned for CI pipelines.
+
+## Version 3.7.4 <a name="3.7.4"></a> (January 18, 2024)
+
+### Enhancements
+
+* Users can now modify the Version Control System integration secret in the EDP Portal, even if the Git Server has already been onboarded.
 
 ## Version 3.7.3 <a name="3.7.3"></a> (January 3, 2024)
 
