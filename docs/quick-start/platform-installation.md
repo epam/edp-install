@@ -2,6 +2,8 @@
 
 This page serves as the starting point for the quick start guide, where we will install Tekton as a prerequisite and then proceed to install the EPAM Delivery Platform itself.
 
+![type:video](https://www.youtube.com/embed/ILlY4niCWeU)
+
 ## Install Tekton
 
 EPAM Delivery Platform relies on Tekton resources, including Tasks, Pipelines, Triggers, and Interceptors to execute CI/CD pipelines.
