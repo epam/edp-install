@@ -314,6 +314,9 @@ nav:
         - user-guide/manage-environments.md
         - user-guide/add-quality-gate.md
     - Configuration:
+      - Configuration Overview: user-guide/configuration-overview.md
+      - Links:
+          - Manage Quick Links: user-guide/quick-links.md
       - Git Server:
           - Manage Git Servers: user-guide/git-server-overview.md
           - Add Git Server: user-guide/add-git-server.md
