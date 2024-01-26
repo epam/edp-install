@@ -4,7 +4,7 @@ Git Server is responsible for integration with Version Control System, whether i
 
 ![type:video](https://www.youtube.com/embed/pzheGwBLZvU)
 
-The Git Server is set via the **global.gitProvider** parameter of the [values.yaml](https://github.com/epam/edp-install/blob/release/3.5/deploy-templates/values.yaml#L14) file.
+The Git Server is set via the **global.gitProvider** parameter of the [values.yaml](https://github.com/epam/edp-install/blob/release/3.7/deploy-templates/values.yaml#L14) file.
 
 To view the current Git Server, you can open `EDP` -> `Configuration` -> `Git Servers` and inspect the following properties:
 

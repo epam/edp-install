@@ -54,7 +54,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
   ```bash
   helm search repo epamedp/edp-install
   NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-  epamedp/edp-install     3.5.3           3.5.3           A Helm chart for EDP Install
+  epamedp/edp-install     3.7.5           3.7.5           A Helm chart for EDP Install
   ```
 
   !!! note
@@ -136,7 +136,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
       url: "harbor.example.com"
   ```
 
-10. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/v3.5.3/deploy-templates/values.yaml) file.
+10. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/v3.7.5/deploy-templates/values.yaml) file.
 
 11. Install EDP in the **edp** namespace with the Helm tool:
 
