@@ -1,4 +1,4 @@
-{{- if .Values.oauth2_proxy.enabled -}}
+{{- if .Values.sso.enabled -}}
 {{ if eq .Values.global.platform "openshift" }}
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -6,7 +6,7 @@ metadata:
   labels:
     app: oauth2-proxy
     {{- include "edp-install.labels" . | nindent 4 }}
-  {{- with .Values.oauth2_proxy.ingress.annotations }}
+  {{- with .Values.sso.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}

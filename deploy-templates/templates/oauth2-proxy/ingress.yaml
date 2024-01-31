@@ -1,9 +1,9 @@
-{{- if .Values.oauth2_proxy.enabled -}}
+{{- if .Values.sso.enabled -}}
 {{ if eq .Values.global.platform "kubernetes" }}
 {{- $ingressApiIsStable := eq (include "oauth2_proxy.ingress.isStable" .) "true" -}}
 {{- $ingressSupportsIngressClassName := eq (include "oauth2_proxy.ingress.supportsIngressClassName" .) "true" -}}
 {{- $ingressSupportsPathType := eq (include "oauth2_proxy.ingress.supportsPathType" .) "true" -}}
-{{- $ingressPathType := .Values.oauth2_proxy.ingress.pathType -}}
+{{- $ingressPathType := .Values.sso.ingress.pathType -}}
 kind: Ingress
 apiVersion: {{ include "oauth2_proxy.ingress.apiVersion" . }}
 metadata:
@@ -11,17 +11,17 @@ metadata:
   labels:
     app: oauth2-proxy
     {{- include "edp-install.labels" . | nindent 4 }}
-  {{- with .Values.oauth2_proxy.ingress.annotations }}
+  {{- with .Values.sso.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and $ingressSupportsIngressClassName .Values.oauth2_proxy.ingress.ingressClassName }}
-  ingressClassName: {{ .Values.oauth2_proxy.ingress.ingressClassName }}
+  {{- if and $ingressSupportsIngressClassName .Values.sso.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.sso.ingress.ingressClassName }}
   {{- end }}
-{{- if .Values.oauth2_proxy.ingress.tls }}
+{{- if .Values.sso.ingress.tls }}
   tls:
-{{ tpl (toYaml .Values.oauth2_proxy.ingress.tls) $ | indent 4 }}
+{{ tpl (toYaml .Values.sso.ingress.tls) $ | indent 4 }}
 {{- end }}
   rules:
     - host: {{ include "oauth2_proxy.Url" . }}

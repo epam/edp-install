@@ -1,4 +1,4 @@
-{{- if .Values.oauth2_proxy.enabled -}}
+{{- if and .Values.sso.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,12 +22,12 @@ spec:
       serviceAccountName: oauth2-proxy
       containers:
         - name: oauth2-proxy
-          image: "{{ .Values.oauth2_proxy.image.repository }}:{{ .Values.oauth2_proxy.image.tag  }}"
+          image: "{{ .Values.sso.image.repository }}:{{ .Values.sso.image.tag  }}"
           args:
             - --http-address=0.0.0.0:4180
             - --config=/etc/oauth2_proxy/oauth2_proxy.cfg
-          {{- if kindIs "map" .Values.oauth2_proxy.extraArgs }}
-            {{- range $key, $value := .Values.oauth2_proxy.extraArgs }}
+          {{- if kindIs "map" .Values.sso.extraArgs }}
+            {{- range $key, $value := .Values.sso.extraArgs }}
             {{- if $value }}
             - --{{ $key }}={{ tpl ($value | toString) $ }}
             {{- else }}
@@ -45,11 +45,11 @@ spec:
             - name: OAUTH2_PROXY_COOKIE_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.oauth2_proxy.existingSecret.secretName }}
-                  key: {{ .Values.oauth2_proxy.existingSecret.secretKey }}
+                  name: {{ .Values.sso.existingSecret.secretName }}
+                  key: {{ .Values.sso.existingSecret.secretKey }}
 
-          {{- if .Values.oauth2_proxy.extraEnv }}
-  {{ tpl (toYaml .Values.oauth2_proxy.extraEnv) . | indent 10 }}
+          {{- if .Values.sso.extraEnv }}
+  {{ tpl (toYaml .Values.sso.extraEnv) . | indent 10 }}
           {{- end }}
           ports:
             - containerPort: 4180
@@ -72,31 +72,31 @@ spec:
             successThreshold: 1
             periodSeconds: 10
           resources:
-{{ toYaml .Values.oauth2_proxy.resources | indent 12 }}
+{{ toYaml .Values.sso.resources | indent 12 }}
           volumeMounts:
             - mountPath: /etc/oauth2_proxy/oauth2_proxy.cfg
               name: configmain
               subPath: oauth2_proxy.cfg
-          {{- if .Values.oauth2_proxy.extraVolumeMounts }}
-            {{- toYaml .Values.oauth2_proxy.extraVolumeMounts | nindent 12 }}
+          {{- if .Values.sso.extraVolumeMounts }}
+            {{- toYaml .Values.sso.extraVolumeMounts | nindent 12 }}
           {{- end }}
       volumes:
         - configMap:
             defaultMode: 420
             name: oauth2-proxy-config
           name: configmain
-      {{- if .Values.oauth2_proxy.extraVolumes }}
-        {{- toYaml .Values.oauth2_proxy.extraVolumes | nindent 8 }}
+      {{- if .Values.sso.extraVolumes }}
+        {{- toYaml .Values.sso.extraVolumes | nindent 8 }}
       {{- end }}
 
-    {{- if .Values.oauth2_proxy.affinity }}
+    {{- if .Values.sso.affinity }}
       affinity:
-{{ toYaml .Values.oauth2_proxy.affinity | indent 8 }}
+{{ toYaml .Values.sso.affinity | indent 8 }}
     {{- end }}
-    {{- if .Values.oauth2_proxy.nodeSelector }}
+    {{- if .Values.sso.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.oauth2_proxy.nodeSelector | indent 8 }}
+{{ toYaml .Values.sso.nodeSelector | indent 8 }}
     {{- end }}
       tolerations:
-{{ toYaml .Values.oauth2_proxy.tolerations | indent 8 }}
+{{ toYaml .Values.sso.tolerations | indent 8 }}
 {{ end }}

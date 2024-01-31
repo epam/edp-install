@@ -37,21 +37,9 @@ global:
   #   url: ""
   #   space: ""
 
-# -- AWS Region, e.g. "eu-central-1". Mandatory if global.dockerRegistry.type=ecr for kaniko build-task. https://github.com/epam/edp-tekton/blob/release/0.9/charts/pipelines-library/templates/tasks/kaniko.yaml#L73
-# awsRegion:
-
-# -- Enable SSO for EDP oauth2-proxy. Default: false
-sso:
-  enabled: false
-  # -- Keycloak URL
-  keycloakUrl: https://keycloak.example.com
-  # -- Administrators of your tenant
-  admins:
-    - "stub_user_one@example.com"
-  # -- Developers of your tenant
-  developers:
-    - "stub_user_one@example.com"
-    - "stub_user_two@example.com"
+# -- AWS Region name, e.g. "eu-central-1".
+# Mandatory if global.dockerRegistry.type=ecr for kaniko build-task. https://github.com/epam/edp-tekton/blob/release/0.9/charts/pipelines-library/templates/tasks/kaniko.yaml#L73
+# awsRegion: ""
 
 # Configure External Secrets Operator to provision secrets for Platform and/or EDP
 # https://external-secrets.io/latest/provider-aws-secrets-manager/
@@ -101,7 +89,7 @@ cd-pipeline-operator:
   # image:
   #   repository: epamedp/cd-pipeline-operator
   #   tag:
-  # -- defines the type of the tenant engine that can be "none", "kiosk" or "capsule";
+  # -- Defines the type of the tenant engine that can be "none", "kiosk" or "capsule";
   # for Stages with external cluster tenancyEngine will be ignored. Default: none
   tenancyEngine: "none"
   # -- Required tenancyEngine: capsule. Specify Capsule Tenant specification for Environments.
@@ -252,22 +240,34 @@ edp-tekton:
         # nginx.ingress.kubernetes.io/auth-signin: 'https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri'
         # nginx.ingress.kubernetes.io/auth-url: 'http://oauth2-proxy.edp.svc.cluster.local:8080/oauth2/auth'
 
-# Proxy configuration section
-oauth2_proxy:
-  # oauth2-proxy requires keycloak to be configured properly before deployment
-  # you can set enable: true, when your platform is deployed and keycloak is
-  # configured.
-  # -- Install oauth2-proxy as a part of EDP deployment. Default: false
-  enabled: false
+# SSO (OAuth2-proxy) configuration section
+# OAuth2-proxy requires Keycloak and Keycloak-operator are properly configured before deployment.
+# Ref:
+# - https://epam.github.io/edp-install/operator-guide/install-keycloak/
+# - https://github.com/epam/edp-cluster-add-ons
+# - https://github.com/epam/edp-keycloak-operator
+sso:
+  # -- Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment.
+  enabled: true
+  # -- Keycloak URL.
+  keycloakUrl: https://keycloak.example.com
+  # -- Administrators of your tenant.
+  admins:
+    - "stub_user_one@example.com"
+  # -- Developers of your tenant
+  developers:
+    - "stub_user_one@example.com"
+    - "stub_user_two@example.com"
 
+  # Oauth2-proxy image
   image:
-    # -- oauth2-proxy image repository
+    # -- OAuth2-proxy image repository
     repository: quay.io/oauth2-proxy/oauth2-proxy
-    # -- oauth2-proxy image tag
+    # -- OAuth2-proxy image tag
     tag: v7.4.0
 
-  # Create a cookie-secret with the following command
-  # openssl rand -base64 32 | head -c 32 | base64
+  # Create a cookie-secret with the following command:
+  # 'openssl rand -base64 32 | head -c 32 | base64'
   # Use an existing secret for OAuth2 cookie-secret
   existingSecret:
     # -- Secret name which stores cookie-secret
@@ -275,17 +275,19 @@ oauth2_proxy:
     # -- Secret key which stores cookie-secret
     secretKey: cookie-secret
 
+  # -- Additional container environment variables
   extraEnv: []
+  # -- Extra arguments to provide to the OAuth2-proxy
   extraArgs: {}
 
-  # -- Additional volumes to be added to the oauth2-proxy pod
+  # -- Additional volumes to be added to the OAuth2-proxy pod
   extraVolumes: []
   #  - name: custom-ca
   #    secret:
   #      defaultMode: 420
   #      secretName: custom-ca
 
-  # -- Additional volumeMounts to be added to the oauth2-proxy container
+  # -- Additional volumeMounts to be added to the OAuth2-proxy container
   extraVolumeMounts: []
   #  - name: custom-ca
   #    mountPath: /etc/ssl/certs/CA.crt
@@ -293,12 +295,16 @@ oauth2_proxy:
   #    subPath: CA.crt
 
   ingress:
+    # -- Additional ingress annotations
     annotations: {}
-    # -- pathType is only for k8s >= 1.1=
+    # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
     pathType: Prefix
-    # -- For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-    # -- See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    # ingressClassName: nginx
+
+    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+    # Ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+    # -- Defines which ingress controller will implement the resource, e.g. nginx
+    ingressClassName: ""
+    # -- Ingress TLS configuration
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:

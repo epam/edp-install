@@ -1,4 +1,4 @@
-{{- if .Values.oauth2_proxy.enabled -}}
+{{- if and .Values.sso.enabled -}}
 {{- $oidcIssueUrl := printf "%s/auth/realms/%s-main" .Values.sso.keycloakUrl .Release.Namespace -}}
 {{- $domains := printf ".%s" .Values.global.dnsWildCard -}}
 apiVersion: v1

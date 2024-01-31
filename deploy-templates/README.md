@@ -37,7 +37,7 @@ A Helm chart for EDP Install
 | cd-pipeline-operator.capsuleTenant.manageNamespace | bool | `true` | should the operator manage(create/delete) namespaces for stages |
 | cd-pipeline-operator.capsuleTenant.secretManager | string | `"none"` | flag that indicates whether the operator should manage secrets for stages; values: own/eso/none. own - just copy secrets; eso - secrete will be managed by External Secrets Operator(operator should be installed in the cluster); none - not enable secrets management logic; |
 | cd-pipeline-operator.enabled | bool | `true` |  |
-| cd-pipeline-operator.tenancyEngine | string | `"none"` | defines the type of the tenant engine that can be "none", "kiosk" or "capsule"; for Stages with external cluster tenancyEngine will be ignored. Default: none |
+| cd-pipeline-operator.tenancyEngine | string | `"none"` | Defines the type of the tenant engine that can be "none", "kiosk" or "capsule"; for Stages with external cluster tenancyEngine will be ignored. Default: none |
 | codebase-operator.enabled | bool | `true` |  |
 | edp-headlamp.config.baseURL | string | `""` | base url path at which headlamp should run |
 | edp-headlamp.config.oidc.clientID | string | `""` | OIDC client ID |
@@ -55,6 +55,7 @@ A Helm chart for EDP Install
 | edp-tekton.dashboard.readOnly | bool | `false` | Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false. |
 | edp-tekton.enabled | bool | `true` |  |
 | edp-tekton.tekton-cache.enabled | bool | `true` |  |
+| externalSecrets | object | `{"enabled":false,"manageEDPInstallSecrets":true,"manageEDPInstallSecretsName":"/edp/deploy-secrets","secretProvider":{"aws":{"region":"eu-central-1","role":null,"service":"ParameterStore"}}}` | AWS Region name, e.g. "eu-central-1". Mandatory if global.dockerRegistry.type=ecr for kaniko build-task. https://github.com/epam/edp-tekton/blob/release/0.9/charts/pipelines-library/templates/tasks/kaniko.yaml#L73 awsRegion: "" Configure External Secrets Operator to provision secrets for Platform and/or EDP https://external-secrets.io/latest/provider-aws-secrets-manager/ |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore. Default: false |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for EDP installation, using External Secret Operator |
 | externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |
@@ -68,20 +69,20 @@ A Helm chart for EDP Install
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.8.0-SNAPSHOT"` | EDP version |
-| oauth2_proxy.enabled | bool | `false` | Install oauth2-proxy as a part of EDP deployment. Default: false |
-| oauth2_proxy.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
-| oauth2_proxy.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
-| oauth2_proxy.extraArgs | object | `{}` |  |
-| oauth2_proxy.extraEnv | list | `[]` |  |
-| oauth2_proxy.extraVolumeMounts | list | `[]` | Additional volumeMounts to be added to the oauth2-proxy container |
-| oauth2_proxy.extraVolumes | list | `[]` | Additional volumes to be added to the oauth2-proxy pod |
-| oauth2_proxy.image.repository | string | `"quay.io/oauth2-proxy/oauth2-proxy"` | oauth2-proxy image repository |
-| oauth2_proxy.image.tag | string | `"v7.4.0"` | oauth2-proxy image tag |
-| oauth2_proxy.ingress.annotations | object | `{}` |  |
-| oauth2_proxy.ingress.pathType | string | `"Prefix"` | pathType is only for k8s >= 1.1= |
-| oauth2_proxy.ingress.tls | list | `[]` | See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress ingressClassName: nginx |
-| sso | object | `{"admins":["stub_user_one@example.com"],"developers":["stub_user_one@example.com","stub_user_two@example.com"],"enabled":false,"keycloakUrl":"https://keycloak.example.com"}` | Enable SSO for EDP oauth2-proxy. Default: false |
-| sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant |
+| sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant. |
 | sso.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
-| sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
+| sso.enabled | bool | `true` | Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment. |
+| sso.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
+| sso.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
+| sso.extraArgs | object | `{}` | Extra arguments to provide to the OAuth2-proxy |
+| sso.extraEnv | list | `[]` | Additional container environment variables |
+| sso.extraVolumeMounts | list | `[]` | Additional volumeMounts to be added to the OAuth2-proxy container |
+| sso.extraVolumes | list | `[]` | Additional volumes to be added to the OAuth2-proxy pod |
+| sso.image.repository | string | `"quay.io/oauth2-proxy/oauth2-proxy"` | OAuth2-proxy image repository |
+| sso.image.tag | string | `"v7.4.0"` | OAuth2-proxy image tag |
+| sso.ingress.annotations | object | `{}` | Additional ingress annotations |
+| sso.ingress.ingressClassName | string | `""` | Defines which ingress controller will implement the resource, e.g. nginx |
+| sso.ingress.pathType | string | `"Prefix"` | Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific` |
+| sso.ingress.tls | list | `[]` | Ingress TLS configuration |
+| sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL. |
 
