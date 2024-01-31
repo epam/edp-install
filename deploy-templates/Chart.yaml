@@ -26,11 +26,6 @@ dependencies:
   version: "2.21.0"
   condition: codebase-operator.enabled
 
-- name: edp-component-operator
-  repository: "@epamedp"
-  version: "0.13.0"
-  condition: edp-component-operator.enabled
-
 - name: edp-headlamp
   repository: "@epamedp"
   version: "0.13.1"
