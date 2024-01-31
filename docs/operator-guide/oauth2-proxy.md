@@ -55,6 +55,7 @@ The example below illustrates how to use OAuth2-Proxy in practice when using the
     ```
 
 ## Related Articles
-[Keycloak Installation](install-keycloak.md)
-[Keycloak OIDC Installation](configure-keycloak-oidc-eks.md)
-[Tekton Installation](install-tekton.md)
+
+* [Keycloak Installation](install-keycloak.md)
+* [Keycloak OIDC Installation](configure-keycloak-oidc-eks.md)
+* [Tekton Installation](install-tekton.md)

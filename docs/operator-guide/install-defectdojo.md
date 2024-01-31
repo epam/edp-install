@@ -28,60 +28,57 @@ To install DefectDojo, follow the steps below:
   !!! warning "For the OpenShift users:"
       When using the OpenShift platform, install the `SecurityContextConstraints` resource. In case of using a custom namespace for `defectdojo`, change the namespace in the `users` section.<br>
 
-      <details>
-      <summary><b>View: defectdojo-scc.yaml</b></summary>
-
-      ```yaml
-      allowHostDirVolumePlugin: false
-      allowHostIPC: false
-      allowHostNetwork: false
-      allowHostPID: false
-      allowHostPorts: false
-      allowPrivilegeEscalation: true
-      allowPrivilegedContainer: false
-      allowedCapabilities: null
-      apiVersion: security.openshift.io/v1
-      allowedFlexVolumes: []
-      defaultAddCapabilities: []
-      fsGroup:
-        type: MustRunAs
-        ranges:
-          - min: 999
-            max: 65543
-      groups: []
-      kind: SecurityContextConstraints
-      metadata:
-        annotations:
-            "helm.sh/hook": "pre-install"
-        name: defectdojo
-      priority: 1
-      readOnlyRootFilesystem: false
-      requiredDropCapabilities:
-      - KILL
-      - MKNOD
-      - SETUID
-      - SETGID
-      runAsUser:
-        type: MustRunAsRange
-        uidRangeMin: 1
-        uidRangeMax: 65543
-      seLinuxContext:
-        type: MustRunAs
-      supplementalGroups:
-        type: RunAsAny
-      users:
-      - system:serviceaccount:defectdojo:defectdojo
-      - system:serviceaccount:defectdojo:defectdojo-rabbitmq
-      - system:serviceaccount:defectdojo:default
-      volumes:
-      - configMap
-      - downwardAPI
-      - emptyDir
-      - persistentVolumeClaim
-      - projected
-      - secret
-      ```
-      </details>
+      ??? note "defectdojo-scc.yaml"
+          ```yaml
+          allowHostDirVolumePlugin: false
+          allowHostIPC: false
+          allowHostNetwork: false
+          allowHostPID: false
+          allowHostPorts: false
+          allowPrivilegeEscalation: true
+          allowPrivilegedContainer: false
+          allowedCapabilities: null
+          apiVersion: security.openshift.io/v1
+          allowedFlexVolumes: []
+          defaultAddCapabilities: []
+          fsGroup:
+            type: MustRunAs
+            ranges:
+              - min: 999
+                max: 65543
+          groups: []
+          kind: SecurityContextConstraints
+          metadata:
+            annotations:
+                "helm.sh/hook": "pre-install"
+            name: defectdojo
+          priority: 1
+          readOnlyRootFilesystem: false
+          requiredDropCapabilities:
+          - KILL
+          - MKNOD
+          - SETUID
+          - SETGID
+          runAsUser:
+            type: MustRunAsRange
+            uidRangeMin: 1
+            uidRangeMax: 65543
+          seLinuxContext:
+            type: MustRunAs
+          supplementalGroups:
+            type: RunAsAny
+          users:
+          - system:serviceaccount:defectdojo:defectdojo
+          - system:serviceaccount:defectdojo:defectdojo-rabbitmq
+          - system:serviceaccount:defectdojo:default
+          volumes:
+          - configMap
+          - downwardAPI
+          - emptyDir
+          - persistentVolumeClaim
+          - projected
+          - secret
+          ```
 
 2. Add a chart repository:
 

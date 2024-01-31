@@ -18,7 +18,7 @@ Argo CD enablement for EDP consists of two major steps:
 * Argo CD installation
 * Argo CD integration with EDP (SSO enablement, codebase onboarding, etc.)
 
-Argo CD can be installed in several ways, please follow the [official documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/) for more details. It is also possible to install Argo CD using the `edp-cluster-add-ons`(https://github.com/epam/edp-cluster-add-ons).
+Argo CD can be installed in several ways, please follow the [official documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/) for more details. It is also possible to install Argo CD using the [edp-cluster-add-ons](https://github.com/epam/edp-cluster-add-ons).
 
 ### Install With Helm
 

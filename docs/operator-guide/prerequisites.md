@@ -2,7 +2,7 @@
 
 Before installing EDP:
 
-* Install and configure [Kubernetes](kubernetes-cluster-settings.md) or [OpenShift](openshift-cluster-settings.md) cluster.
+* Install and configure [Kubernetes](kubernetes-cluster-settings.md) or [OpenShift](openshift-cluster-settings.md) cluster;
 * Install EDP components for the selected EDP installation scenario.
 
 ## EDP Core Components
@@ -27,7 +27,7 @@ Find below the list of the key components used by EPAM Delivery Platform:
     OpenShift cluster uses Routes to provide access to pods from external resources.
 
 !!! note
-    Alternatively, use [Helmfiles](install-via-helmfile.md#deploy-components) to install the EDP components.
+    Alternatively, use the [Cluster Add-Ons](add-ons-overview.md) approach to install the EDP components.
 
 After setting up the cluster and installing EDP components according to the selected scenario, proceed to the [EDP installation](install-edp.md).
 
