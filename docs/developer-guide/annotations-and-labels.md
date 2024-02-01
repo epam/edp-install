@@ -15,16 +15,9 @@ The EDP uses labels to interact with various resources in a Kubernetes cluster. 
 | app.edp.epam.com/parentPipelineRun  | Pipelinerun          | `<cd-pipeline-autotest-runner-name>`                                    | Used by the EDP portal to to display autotests status(on Deploy environment) |
 | app.edp.epam.com/stage              | Pipelinerun, Taskrun | `<stage_name>`                                                          | Used by the EDP portal to to display autotests status(on Deploy environment) |
 | app.edp.epam.com/branch             | Pipelinerun          | `<branch_name>`                                                         | Identifies the branch associated with the PipelineRun.                       |
+| app.edp.epam.com/codebaseType       | Codebase             | `system`,`application`                                                  | Identify the type of the codebase.                                           |
+| app.edp.epam.com/systemType         | Codebase             | `gitops`                                                                | Identify system repositories.                                                |
 
-
-
-pipeline
-pipelinetype in headlamp for search task run for QG
-
-
-parentPipelineRun stream autotest pipeline run (list of autotest pipelinerun in headlamp )
-stage
-pipeline
 
 
 ### Labels usage in Secrets
