@@ -49,22 +49,6 @@ edp-headlamp:
       enabled: true
       clientID: "client"
 
-oauth2_proxy:
-  enabled: false
-  # -- Additional volumes to be added to the oauth2-proxy pod
-  extraVolumes:
-    - name: custom-ca
-      secret:
-        defaultMode: 420
-        secretName: custom-ca
-
-  # -- Additional volumeMounts to be added to the oauth2-proxy container
-  extraVolumeMounts:
-    - name: custom-ca
-      mountPath: /etc/ssl/certs/ca.crt
-      readOnly: true
-      subPath: ca.crt
-
 gerrit-operator:
   enabled: false
   gerrit:
@@ -98,3 +82,17 @@ sso:
   developers:
     - "stub_user_one@example.com"
     - "stub_user_two@example.com"
+
+   # -- Additional volumes to be added to the OAuth2-proxy pod
+  extraVolumes:
+    - name: custom-ca
+      secret:
+        defaultMode: 420
+        secretName: custom-ca
+
+  # -- Additional volumeMounts to be added to the OAuth2-proxy container
+  extraVolumeMounts:
+    - name: custom-ca
+      mountPath: /etc/ssl/certs/ca.crt
+      readOnly: true
+      subPath: ca.crt
