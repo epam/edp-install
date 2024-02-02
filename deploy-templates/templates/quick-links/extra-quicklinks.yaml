@@ -1,4 +1,5 @@
 {{- $edpComponentLables := include "edp-install.labels" . -}}
+{{- $quickLinkLables := include "edp-install.labels" . -}}
 {{- range $key, $value := index .Values.extraQuickLinks }}
 ---
 {{- range $elem, $elemVal := $value }}
@@ -13,5 +14,17 @@ spec:
   url: {{ .url }}
   visible: {{ .visible }}
   icon: {{ .icon }}
-  {{ end }}
+---
+apiVersion: v2.edp.epam.com/v1
+kind: QuickLink
+metadata:
+  labels:
+    {{- $quickLinkLables | nindent 4 }}
+  name: {{ $elem }}
+spec:
+  type: "default"
+  url: {{ .url }}
+  visible: {{ .visible }}
+  icon: {{ .icon }}
+{{ end }}
 {{ end }}

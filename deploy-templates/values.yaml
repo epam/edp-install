@@ -310,8 +310,9 @@ sso:
     #    hosts:
     #      - chart-example.local
 
-# define platform Quick Links, more details: https://github.com/epam/edp-component-operator/
-# quickLinks:
+# -- Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/
+# @default -- ``
+quickLinks:
 #   argocd: ""
 #   defectdojo: ""
 #   dependency_track: ""
@@ -321,7 +322,7 @@ sso:
 #   nexus: ""
 #   sonar: ""
 
-# define extra Quick Links, more details: https://github.com/epam/edp-component-operator/
+# -- Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/
 extraQuickLinks: {}
   # - prometheus:
   #     url: https://ingress-prometheus.example.com

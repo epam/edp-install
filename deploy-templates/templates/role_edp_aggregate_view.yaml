@@ -60,6 +60,7 @@ rules:
       - perfdatasourcejenkinses
       - perfdatasourcesonars
       - perfservers
+      - quicklinks
       - sonargroups
       - sonarpermissiontemplates
       - sonars

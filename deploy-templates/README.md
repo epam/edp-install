@@ -62,12 +62,13 @@ A Helm chart for EDP Install
 | externalSecrets.secretProvider.aws.role | string | `nil` | IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME> |
 | externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
-| extraQuickLinks | object | `{}` |  |
+| extraQuickLinks | object | `{}` | Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | gerrit-operator.enabled | bool | `false` |  |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.8.0-SNAPSHOT"` | EDP version |
+| quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant. |
 | sso.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | sso.enabled | bool | `true` | Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment. |
