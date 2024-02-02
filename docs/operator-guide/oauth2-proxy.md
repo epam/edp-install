@@ -11,12 +11,13 @@ In the context of EDP, it has integration with the Keycloak OIDC provider, enabl
 ## Prerequisites
 
 * [Keycloak](install-keycloak.md) with OIDC authentication is installed.
+* [Keycloak operator](add-ons-overview.md) is installed.
 
 ## Enable OAuth2-Proxy
 
 Enabling OAuth2-Proxy implies the following general steps:
 
-1. Update your EDP deployment using command `--set 'oauth2_proxy.enabled=true'` **or** the `--values` file by enabling the oauth2_proxy parameter.
+1. Update your EDP deployment using command `--set 'sso.enabled=true'` **or** the `--values` file by enabling the sso parameter.
 2. Check that OAuth2-Proxy is deployed successfully.
 3. Enable authentication for your Ingress by adding `auth-signin` and `auth-url` of OAuth2-Proxy to its annotation.
 
