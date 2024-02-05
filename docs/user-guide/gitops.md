@@ -6,10 +6,6 @@ This page is dedicated to the GitOps section of the Configuration tab, the proce
 
 The purpose of the GitOps section is to provide users with the ability to customize the state of their environments with the help of GitOps approach that enables you to store your entire deployment configuration in a Git repository, providing version control for changes, consistent collaboration, and automated deployments. Enforcing GitOps allows you to declaratively define and automate your configurations, ensuring consistency, version control, and collaboration within your team.
 
-To open the GitOps subsection, navigate to `EDP Portal` -> `EDP` -> `Components` -> `GitOps`:
-
-  !![GitOps section](../assets/user-guide/gitops_overview.png "GitOps section")
-
 ## Add GitOps Repository
 
 To add a GitOps repository, follow the steps below:

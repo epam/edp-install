@@ -3,7 +3,7 @@
 The EDP Marketplace offers a range of Templates, predefined tools and settings for creating software. These Templates speed up development, minimize errors, and ensure consistency.
 A key EDP Marketplace feature is customization. Organizations can create and share their own Templates, finely tuned to their needs. Each Template serves as a tailored blueprint of tools and settings.
 
-These tailored Templates include preset CI/CD pipelines, automating your development workflows. From initial integration to final deployment, these processes are efficiently managed. Whether for new applications or existing ones, these templates enhance processes, save time, and ensure consistency.
+These tailored Templates include preset CI/CD pipelines, automating your development workflows. From initial integration to final deployment, these processes are efficiently managed. Whether for new applications or existing ones, these Templates enhance processes, save time, and ensure consistency.
 
 To see the Marketplace section, navigate to the **Main menu** -> **EDP** -> **Marketplace**. General look of the Marketplace section is described below:
 

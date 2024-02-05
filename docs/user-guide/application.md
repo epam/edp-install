@@ -56,7 +56,7 @@ EDP Portal provides the ability to enable, disable or edit the Jira Integration 
 
 3. To disable Jira integration, in the **Edit Application** dialog do the following:
 
-   a. Uncheck the **Integrate with Jira server** check box.
+   a. Clear the **Integrate with Jira server** check box.
 
    b. Select the **Apply** button to apply the changes.
 

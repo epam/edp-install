@@ -1,6 +1,6 @@
 # Components Overview
 
-In this section, we will introduce you to the different types of codebases and strategies for onboarding codebases onto the EDP platform.
+In this section, we will introduce you to the different types of codebases and strategies for onboarding codebases onto the EDP.
 
 ## Component and Codebase
 

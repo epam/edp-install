@@ -35,7 +35,7 @@ To create an environment, follow the steps below:
 
   !![Environments menu](../assets/user-guide/edp-portal-create-new-pipeline.png "Environments menu")
 
-2. The **Pipeline** tab of the **Create CD Pipeline** menu should look like the picture below:
+2. The **Pipeline** tab of the **Create CD Pipeline** menu is presented below:
 
   !![Create CD pipeline](../assets/user-guide/edp-portal-pipeline-menu.png "Create CD pipeline")
 
@@ -61,7 +61,7 @@ the lower-case letters, numbers and inner dashes.
 
 ### The Applications Menu
 
-The **Pipeline** tab of the **Create CD Pipeline** menu should look like the picture below:
+The **Pipeline** tab of the **Create CD Pipeline** menu is presented below:
 
   !![Environment applications](../assets/user-guide/edp-portal-cd-pipeline-applications.png "Environment applications")
 

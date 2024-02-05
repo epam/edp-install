@@ -1,11 +1,27 @@
 # Add Application
 
-EDP Portal allows you to create an application, clone an existing repository with the application to your Version Control System (VCS), or using an external repository and importing an application to the environment. When an application is created or cloned, the system automatically generates a corresponding repository within the integrated Version Control System.
+EDP Portal allows you to create an application, clone an existing repository with the application to your Version Control System (VCS), or using an external repository and importing an application to the environment. When an application is created or cloned, the system automatically generates a corresponding repository within the integrated Version Control System. You can create an Application [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
-To add an application, navigate to the **Components** section on the navigation bar and click **Create** (the plus sign icon on the right side of the screen). Once clicked, the **Create new component** dialog will appear, then select **Application** and choose one of the strategies which will be described later in this page. You can create an Application [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
+To add an application, navigate to the **Components** section on the navigation bar and click **+ Create**:
+
+  !![Create new application](../assets/user-guide/create_new_codebase.png "Create new application")
+
+Once clicked, the **Create new component** dialog will appear, then select **Application** and choose one of the strategies:
+
+   !![Application info](../assets/user-guide/create-new-component.png)
+
+* **Create from template** – creates a project on the pattern in accordance with an application language, a build tool, and a framework. This strategy is recommended for projects that start developing their applications from scratch.
+
+* **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `epmd-edp/python-python-flask`.
+
+  !!! note
+      In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub in Tekton](../operator-guide/import-strategy-tekton.md) page.
+
+* **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field and specify the credentials if needed:
+
+  !![Clone application](../assets/user-guide/edp-portal-clone-application.png "Clone application")
 
 ## Create Application in YAML <a name="YAML"></a>
-
 
 Click **Edit YAML** in the upper-right corner of the **Create Application** dialog to open the YAML editor and create the Application.
 
@@ -17,7 +33,7 @@ To save the changes, select the **Save & Apply** button.
 
 ## Create Application via UI <a name="menu"></a>
 
-The **Create Application** dialog contains the two steps:
+The **Create Application** dialog contains two steps:
 
 * The Codebase Info Menu
 * The Advanced Settings Menu
@@ -26,36 +42,21 @@ The **Create Application** dialog contains the two steps:
 
 Follow the instructions below to fill in the fields of the **Codebase Info** menu:
 
-1. In the **Create new component** menu, select **Application**:
-
-   !![Application info](../assets/user-guide/create-new-component.png)
-
-2. Select the necessary configuration strategy. There are three configuration strategies:
-
-* **Create from template** – creates a project on the pattern in accordance with an application language, a build tool, and a framework. This strategy is recommended for projects that start developing their applications from scratch.
-
-* **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as */epmd-edp/examples/basic/edp-auto-tests-simple-example*.
-
-  !!! note
-      In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
-
-* **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field as well:
-
-  !![Clone application](../assets/user-guide/edp-portal-clone-application.png "Clone application")
-
   In our example, we will use the **Create from template** strategy:
 
   !![Create application](../assets/user-guide/edp-portal-create-application.png "Create application")
 
-  1. Select the Git server from the drop-down list and define the relative path to the repository, such as `/epmd-edp/examples/basic/edp-auto-tests-simple-example`.
+1. Select all the settings that define how the application will be added to Git server:
 
-  2. Type the name of the application in the Component name field by entering at least two characters and by using the lower-case letters, numbers and inner dashes.
+  * **Git server** - the pre-configured server where the component will be hosted. Select one from the from the drop-down list. Please refer to the [Manage Git Servers](git-server-overview.md) page to learn how to create the one.
+  * **Repository name** - the relative path to the repository, such as `epmd-edp/python-python-flask`.
+  * **Component name** - the name of the application. Must be at least two characters using the lower-case letters, numbers and inner dashes.
+  * **Description** - brief and concise description that explains the purpose of the application.
+  * **Empty project** - check this box to create a application with an empty repository. The empty repository option is available only for the **Create from template** strategy.
 
-  3. Type the application description.
+2. Specify the application language properties:
 
-  4. To create an application with an empty repository in Gerrit, select the Empty project check box.
-
-  5. Select any of the supported application languages with their providers in the **Application Code Language** field:
+  - **Application Code Language** - defines the code language with its supported frameworks:
 
     * Java – selecting specific Java version (8,11,17 are available).
     * JavaScript - selecting JavaScript allows using React, Vue, Angular, Express, Next.js and Antora frameworks.
@@ -67,9 +68,8 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
     !!! note
         The **Create from template** strategy does not allow to customize the default code language set.
 
-  6. Select necessary **Language version/framework** depending on the **Application code language** field.
-
-  7. Choose the necessary build tool in the **Build Tool** field:
+  - **Language version/framework** - defines the specific framework or language version of the application. The field depends on the selected code language.
+  - **Select Build Tool** -  allows to choose the build tool to use. A set tools and can be changed in accordance with the selected code language.
 
     * Java - selecting Java allows using the Gradle or Maven tool.
     * JavaScript - selecting JavaScript allows using the NPM tool.
@@ -87,70 +87,59 @@ Follow the instructions below to fill in the fields of the **Codebase Info** men
 
 ### Advanced Settings Menu
 
-The **Advanced Settings** menu should look similar to the picture below:
+In the **Advanced Settings** menu, specify the branch options and define the Jira settings:
 
   !![Advanced settings](../assets/user-guide/edp-portal-application-advanced-settings.png "Advanced settings")
 
-Follow the instructions below to fill in the fields of the **Advanced Setting** menu:
+* **Default branch** - the name of the branch where you want the development to be performed.
 
-a. Specify the name of the **Default branch** where you want the development to be performed.
+  !!! note
+      The default branch cannot be deleted.
 
-!!! note
-    The default branch cannot be deleted. For the **Clone project** and **Import project** strategies: if you want to use the existing branch, enter its name into this field.
+* **Codebase versioning type** - defines how will the application tag be changed once the new image version is built. There are two versioning types:
+  * **default**: Using the default versioning type, in order to specify the version of the current artifacts, images, and tags in the Version Control System, a developer should navigate to the corresponding file and change the version **manually**.
+  * **edp**: Using the edp versioning type, a developer indicates the version number from which all the artifacts will be versioned and, as a result, **automatically** registered in the corresponding file (e.g. pom.xml). When selecting the edp versioning type, the extra fields will appear, type the version number from which you want the artifacts to be versioned:
 
-b. Select the necessary codebase versioning type:
+      !![Edp versioning](../assets/user-guide/edp-portal-edp-versioning-application.png "Edp versioning")
 
-* **default** - using the default versioning type, in order to specify the version of the current artifacts, images,
-and tags in the Version Control System, a developer should navigate to the corresponding file
-and change the version **manually**.
+    !!! note
+        The **Start Version From** field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
 
-* **edp** - using the edp versioning type, a developer indicates the version number that will be used for all the artifacts stored
-in artifactory: binaries, pom.xml, metadata, etc. The version stored in repository (e.g. pom.xml) will not be affected or used.
-Using this versioning overrides any version stored in the repository files without changing actual file.
-
-  When selecting the edp versioning type, the extra field will appear:
-
-  !![Edp versioning](../assets/user-guide/edp-portal-edp-versioning-application.png "Edp versioning")
-
-Type the version number from which you want the artifacts to be versioned.
-
-!!! note
-    The **Start Version From** field should be filled out in compliance with the semantic versioning rules, e.g. 1.2.3 or 10.10.10. Please refer to the [Semantic Versioning](https://semver.org/) page for details.
-
-c. Specify the pattern to validate a commit message. Use regular expression to indicate the pattern that is followed on the project to validate a commit message in the code review pipeline. An example of the pattern: `^[PROJECT_NAME-d{4}]:.*$`.
+* **Specify the pattern to validate a commit message** - the regular expression used to indicate the pattern that is followed on the project to validate a commit message in the code review pipeline. An example of the pattern: `^[PROJECT_NAME-d{4}]:.*$`.
 
   !![JIRA integration](../assets/user-guide/edp-portal-integrate-jira-server.png "JIRA integration")
 
-d. Select the **Integrate with Jira Server** check box in case it is required to connect Jira tickets with the commits and have a respective label in the Fix Version field.
+* **Integrate with Jira server** - this check box is used in case it is required to connect Jira tickets with the commits
+and have a respective label in the **Fix Version** field.
 
 !!! note
-    To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page.
+    To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) page,
+    and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md).
 
-e. In the **Jira Server** field, select the Jira server.
+* **Jira Server** - the integrated Jira server with related Jira tasks.
 
-f. Specify the pattern to find a Jira ticket number in a commit message. Based on this pattern, the value from EDP will be displayed in Jira. Combine several variables to obtain the desired value.
+* **Specify the pattern to find a Jira ticket number in a commit message** - based on this pattern, the value from EDP will be displayed in Jira.
 
   !![Mapping field name](../assets/user-guide/edp-portal-advanced-mapping.png "Mapping fields")
 
-g. In the **Mapping field name** section, specify the names of the Jira fields that should be filled in with attributes from EDP:
+* **Mapping field name** - the section where the additional Jira fields are specified the names of the Jira fields that should be filled in with attributes from EDP:
 
-1. Select the name of the field in a Jira ticket from the **Mapping field name** drop-down menu. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
+  * Select the name of the field in a Jira ticket. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 
-2. Click the **Add** button to add the mapping field name.
+  * Click the **Add** button to add the mapping field name.
 
-3. Enter Jira pattern for the field name:
+  * Enter Jira pattern for the field name:
 
-  * For the **Fix Version/s** field, select the **EDP_VERSION** variable that represents an EDP upgrade version,
-  as in _2.7.0-SNAPSHOT_. Combine variables to make the value more informative. For example, the pattern **EDP_VERSION-EDP_COMPONENT** will be displayed as _2.7.0-SNAPSHOT-nexus-operator_ in Jira.
-  * For the **Component/s** field, select the **EDP_COMPONENT** variable that defines the name of the existing repository. For example, _nexus-operator_.
-  * For the **Labels** field, select the **EDP_GITTAG** variable that defines a tag assigned to the commit in GitHub. For example, _build/2.7.0-SNAPSHOT.59_.
+    * For the **Fix Version/s** field, select the **EDP_VERSION** variable that represents an EDP upgrade version, as in _2.7.0-SNAPSHOT_.Combine variables to make the value more informative. For example, the pattern **EDP_VERSION-EDP_COMPONENT** will be displayed as _2.7.0-SNAPSHOT-nexus-operator_ in Jira.
+    * For the **Component/s** field select the **EDP_COMPONENT** variable that defines the name of the existing repository. For example, _nexus-operator_.
+    * For the **Labels** field select the **EDP_GITTAG**variable that defines a tag assigned to the commit in Git Hub. For example, _build/2.7.0-SNAPSHOT.59_.
 
-4. Click the bin icon to remove the Jira field name.
+  * Click the bin icon to remove the Jira field name.
 
-h. Click the **Apply** button to add the application to the Applications list.
+Click the **Apply** button to add the application to the Components list.
 
 !!! note
-    After the complete adding of the application, inspect the [Application Overview](application.md) part.
+    After the complete adding of the application, inspect the [Manage Applications](application.md) page to learn how you can operate applications.
 
 ## Related Articles
 

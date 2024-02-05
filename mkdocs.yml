@@ -320,7 +320,6 @@ nav:
           - Manage Quick Links: user-guide/quick-links.md
       - Git Server:
           - Manage Git Servers: user-guide/git-server-overview.md
-          - Add Git Server: user-guide/add-git-server.md
       - Cluster:
           - user-guide/add-cluster.md
           - Manage Clusters: user-guide/cluster.md

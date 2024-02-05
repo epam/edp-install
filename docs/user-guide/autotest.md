@@ -51,29 +51,22 @@ EDP Portal provides the ability to enable, disable or edit the Jira Integration 
 
     !![Edit autotest when viewing the autotest data](../assets/user-guide/edp-portal-edit-autotest-2.png "Edit autotest when viewing the autotest data")
 
-  - The Edit Autotest dialog opens.
-
 2. To enable Jira integration, on the **Edit Autotest** page do the following:
 
    !![Edit autotest](../assets/user-guide/edp-portal-edit-autotest-jira.png "Edit library")
 
    a. Mark the **Integrate with Jira server** check box and fill in the necessary fields. Please see steps d-h on the [Add Autotests](add-autotest.md#the-advanced-settings-menu) page.
 
-   b. Select the **Apply** button to apply the changes.
-
-  !!! note
-      Pay attention that the Jira integration feature is not available when using the GitLab CI tool.
+   b. Click the **Apply** button to apply the changes.
 
   !!! note
       To adjust the Jira integration functionality, first apply the necessary changes described on the [Adjust Jira Integration](../operator-guide/jira-integration.md) and [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md) pages.
 
 3. To disable Jira integration, in the **Edit Autotest** dialog do the following:
 
-   a. Uncheck the **Integrate with Jira server** check box.
+   - Clear the **Integrate with Jira server** check box.
 
-   b. Select the **Apply** button to apply the changes.
-
-  As a result, the necessary changes will be applied.
+   - Click the **Apply** button to apply the changes.
 
 4. To create, edit and delete application branches, please refer to the [Manage Branches](../user-guide/manage-branches.md) page.
 
