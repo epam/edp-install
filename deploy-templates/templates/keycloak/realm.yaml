@@ -9,7 +9,7 @@ spec:
   keycloakOwner: main
   realmName: {{ .Release.Namespace }}-main
   ssoRealmEnabled: true
-  ssoRealmName: openshift
+  ssoRealmName: {{ .Values.sso.realmName }}
   users:
   {{- range .Values.sso.admins }}
   - username: {{.}}

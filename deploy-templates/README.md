@@ -85,4 +85,5 @@ A Helm chart for EDP Install
 | sso.ingress.pathType | string | `"Prefix"` | Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific` |
 | sso.ingress.tls | list | `[]` | Ingress TLS configuration |
 | sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL. |
+| sso.realmName | string | `"broker"` | Defines Keycloak realm name that is used as the Identity Provider (IdP) realm |
 

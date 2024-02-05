@@ -241,6 +241,11 @@ edp-tekton:
         # nginx.ingress.kubernetes.io/auth-url: 'http://oauth2-proxy.edp.svc.cluster.local:8080/oauth2/auth'
 
 # SSO (OAuth2-proxy) configuration section
+# The section configures the OAuth2-proxy for single Sign-On (SSO) protection of application endpoints.
+#
+# More details on setup and deployment:
+# - https://epam.github.io/edp-install/operator-guide/oauth2-proxy/
+#
 # OAuth2-proxy requires Keycloak and Keycloak-operator are properly configured before deployment.
 # Ref:
 # - https://epam.github.io/edp-install/operator-guide/install-keycloak/
@@ -249,6 +254,8 @@ edp-tekton:
 sso:
   # -- Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment.
   enabled: true
+   # -- Defines Keycloak realm name that is used as the Identity Provider (IdP) realm
+  realmName: "broker"
   # -- Keycloak URL.
   keycloakUrl: https://keycloak.example.com
   # -- Administrators of your tenant.
