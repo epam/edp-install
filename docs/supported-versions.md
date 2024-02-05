@@ -14,13 +14,13 @@ gantt
     title Release Schedule and Lifecycle
 
     section (Supported)
-    EDP 3.7 Release: crit, r37, 2023-12-15, 47d
+    EDP 3.7 Release: crit, r37, 2023-12-15, 97d
 
     section (Supported)
-    EDP 3.6 Release: active, r36, 2023-11-03, 89d
+    EDP 3.6 Release: active, r36, 2023-11-03, 139d
 
     section (Supported)
-    EDP 3.5 Release: active, r35, 2023-09-21, 133d
+    EDP 3.5 Release: active, r35, 2023-09-21, 183d
 
     section (Unsupported)
     EDP 3.4 Release: r34, 2023-07-18, 2023-12-15
