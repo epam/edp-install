@@ -210,6 +210,7 @@ nav:
       - Install EDP: operator-guide/install-edp.md
       - Install via Helmfile: operator-guide/install-via-helmfile.md
       - Install via AWS Marketplace: operator-guide/aws-marketplace-install.md
+      - Install via Civo: operator-guide/install-via-civo.md
     - Configuration:
       - EDP Access Model: operator-guide/edp-access-model.md
       - Version Control Systems:
