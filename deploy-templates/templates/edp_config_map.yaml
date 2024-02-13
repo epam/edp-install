@@ -4,8 +4,8 @@ data:
   container_registry_host: {{ default "" (.Values.global.dockerRegistry).url }}
   container_registry_type: {{ default "" (.Values.global.dockerRegistry).type }}
   platform: {{ .Values.global.platform }}
-  {{- if .Values.awsRegion }}
-  aws_region: {{ .Values.awsRegion }}
+  {{- if .Values.global.dockerRegistry.awsRegion }}
+  aws_region: {{ .Values.global.dockerRegistry.awsRegion }}
   {{- end }}
   edp_name: {{ .Release.Namespace }}
   edp_version: {{.Values.global.version}}

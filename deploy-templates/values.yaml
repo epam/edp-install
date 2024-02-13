@@ -12,19 +12,25 @@ global:
   dnsWildCard:
   # -- Can be gerrit, github or gitlab. Default: github
   gitProvider: github
+
   # Define the Image Registry that will be used in Pipelines.
   # This section is optional, and users can configure the registry within the EDP Portal user interface.
+  # Ref: https://epam.github.io/edp-install/user-guide/manage-container-registries/#add-container-registry
   #
-  # Platform supports several types of registries, such as 'ecr', 'harbor', 'dockerhub' and 'openshift'.
-  # 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'
+  # For example to integrate platform with ecr and publish image under 'edp' prefix:
+  # dockerRegistry:
+  #   type: "ecr"
+  #   url: "<aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com"
+  #   space: "edp"
+  #   awsRegion: "eu-central-1"
+  # As a result all image artifacts are published under "<aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com/edp/simple-project:0.1.0-SNAPSHOT.1"
   #
-  # Below is an example of endpoint values for each registry type:
-  # type:      | url
-  # =============================
-  # ecr        | <aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com
-  # harbor     | <registry.example.com>
-  # dockerhub  | 'docker.io'
-  # openshift  | <image-registry.openshift-image-registry.svc:5000>
+  # For example to integrate platform with harbor and publish image under 'edp' project name:
+  # dockerRegistry:
+  #   type: "harbor"
+  #   url: "registry.example.com"
+  #   space: "edp"
+  # As a result all image artifacts are published under https://registry.example.com/edp/simple-project
   #
   # For example to integrate platform with dockerhub and publish image under 'my_user' account:
   # dockerRegistry:
@@ -32,14 +38,41 @@ global:
   #   url: "docker.io"
   #   space: "my_user"
   # As a result all image artifacts are published under https://hub.docker.com/repository/docker/my_user
+  #
+  # For example to integrate platform with openshift and publish image under 'edp' project name:
   # dockerRegistry:
-  #   type: ""
-  #   url: ""
-  #   space: ""
-
-# -- AWS Region name, e.g. "eu-central-1".
-# Mandatory if global.dockerRegistry.type=ecr for kaniko build-task. https://github.com/epam/edp-tekton/blob/release/0.9/charts/pipelines-library/templates/tasks/kaniko.yaml#L73
-# awsRegion: ""
+  #   type: "openshift"
+  #   url: "image-registry.openshift-image-registry.svc:5000"
+  #   space: "edp"
+  # By default, Kubernetes Service Account has the ability to push images to the registry
+  # within the namespace where EDP is installed.
+  # Ref: https://github.com/epam/edp-tekton/blob/master/charts/pipelines-library/templates/resources/rolebinding-tekton-registry-editor.yaml
+  dockerRegistry:
+    # -- Defines type of registry. One of `ecr`, `harbor`, `dockerhub` or `openshift`.
+    # 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'.
+    type: ""
+    # Below is an example of endpoint values for each registry type:
+    # type:      | url
+    # =============================
+    # ecr        | <aws_account_id>.dkr.ecr.<aws_region>.amazonaws.com
+    # harbor     | <registry.example.com>
+    # dockerhub  | 'docker.io'
+    # openshift  | <image-registry.openshift-image-registry.svc:5000>
+    # -- Defines registry endpoint URL.
+    url: ""
+    # Below is a description of space values for each registry type:
+    # type:      | description
+    # =================================================
+    # ecr        | The suffix project name in registry.
+    # harbor     | The project name in registry.
+    # dockerhub  | The user account id or community user account id with push permission.
+    # openshift  | The project name in registry.
+    # -- Defines project name.
+    space: ""
+    # -- Defines the geographic area where the (AWS) Elastic Container Registry repository is hosted (optional). E.g. "eu-central-1".
+    # Mandatory if global.dockerRegistry.type=ecr for kaniko build-task.
+    # Ref: https://github.com/epam/edp-tekton/blob/release/0.10/charts/pipelines-library/templates/tasks/kaniko.yaml#L73
+    awsRegion: ""
 
 # Configure External Secrets Operator to provision secrets for Platform and/or EDP
 # https://external-secrets.io/latest/provider-aws-secrets-manager/

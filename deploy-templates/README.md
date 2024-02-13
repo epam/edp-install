@@ -54,7 +54,6 @@ A Helm chart for EDP Install
 | edp-tekton.dashboard.readOnly | bool | `false` | Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false. |
 | edp-tekton.enabled | bool | `true` |  |
 | edp-tekton.tekton-cache.enabled | bool | `true` |  |
-| externalSecrets | object | `{"enabled":false,"manageEDPInstallSecrets":true,"manageEDPInstallSecretsName":"/edp/deploy-secrets","secretProvider":{"aws":{"region":"eu-central-1","role":null,"service":"ParameterStore"}}}` | AWS Region name, e.g. "eu-central-1". Mandatory if global.dockerRegistry.type=ecr for kaniko build-task. https://github.com/epam/edp-tekton/blob/release/0.9/charts/pipelines-library/templates/tasks/kaniko.yaml#L73 awsRegion: "" Configure External Secrets Operator to provision secrets for Platform and/or EDP https://external-secrets.io/latest/provider-aws-secrets-manager/ |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore. Default: false |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for EDP installation, using External Secret Operator |
 | externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |
@@ -65,6 +64,10 @@ A Helm chart for EDP Install
 | extraQuickLinks | object | `{}` | Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | gerrit-operator.enabled | bool | `false` |  |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
+| global.dockerRegistry.awsRegion | string | `""` | Defines the geographic area where the (AWS) Elastic Container Registry repository is hosted (optional). E.g. "eu-central-1". Mandatory if global.dockerRegistry.type=ecr for kaniko build-task. Ref: https://github.com/epam/edp-tekton/blob/release/0.10/charts/pipelines-library/templates/tasks/kaniko.yaml#L73 |
+| global.dockerRegistry.space | string | `""` | Defines project name. |
+| global.dockerRegistry.type | string | `""` | Defines type of registry. One of `ecr`, `harbor`, `dockerhub` or `openshift`. 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'. |
+| global.dockerRegistry.url | string | `""` | Defines registry endpoint URL. |
 | global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.8.0-SNAPSHOT"` | EDP version |
