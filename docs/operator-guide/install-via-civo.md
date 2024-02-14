@@ -6,7 +6,7 @@ This documentation provides the detailed instructions on how to install the EPAM
 
 ## Launch cluster
 
-The first step of the installation procedure is to launch the cluster. Please refer to the [official instructions](https://www.civo.com/docs/kubernetes/create-a-cluster) that describe this process in details. To succeed, follow the steps below:
+The first step of the installation procedure is to launch the cluster. Please refer to the [official instructions](https://www.civo.com/docs/kubernetes/create-a-cluster) that describe this process in detail. To succeed, follow the steps below:
 
 1. Log in to the personal account.
 
@@ -39,7 +39,7 @@ The first step of the installation procedure is to launch the cluster. Please re
       kubectl get pods -n tekton-pipelines
       kubectl get pods -n argocd
 
-  !![Download kubeconfig](../assets/operator-guide/check-ns-and-pods.png "Download kubeconfig")
+  !![Verify installation](../assets/operator-guide/check-ns-and-pods.png "Verify installation")
 
 ## Install EDP
 
@@ -53,11 +53,11 @@ As soon as the cluster is deployed, it is time to install the EDP application.
 
   !![Add EDP](../assets/operator-guide/civo-add-edp.png "Add EDP")
 
-3. Wait till the EDP app will appear in the **Installed applications** list:
+3. Wait till the EDP app appears in the **Installed applications** list:
 
   !![EDP installed](../assets/operator-guide/civo-edp-installed.png "EDP installed")
 
-4. Wait till all the pods will be up and running. Use the `kubectl get pods` command to check the status of the pods:
+4. Wait till all the pods are up and running. Use the `kubectl get pods` command to check the status of the pods:
 
       kubectl get pods -n edp
 

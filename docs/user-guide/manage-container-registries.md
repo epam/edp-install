@@ -45,7 +45,7 @@ The required fields vary depending on which container registry is chosen:
       |Fields|Description|
       |:-|:-|
       |Registry Space|The unique identifier/name of the user or company linked to your DockerHub account.|
-      |Registry Space|The user account id or community user account id with push permission.|
+      |User|The user account id or community user account id with push permission.|
       |Password/Token|Provide the [Password/Token](https://docs.docker.com/security/for-developers/access-tokens/) corresponding to your docker hub account. It is recommended to use Token for security purposes.|
       |Checkbox/Use the Push Account's credentials|Check this to use the same account for pulling and pushing operations. If unchecked, please enter the user account id and Password/Token for your DockerHub account or community user account id with pull permission.|
 
