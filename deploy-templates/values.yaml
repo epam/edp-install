@@ -80,6 +80,8 @@ global:
 externalSecrets:
   # -- Configure External Secrets for EDP platform. Deploy SecretStore. Default: false
   enabled: false
+  # -- Defines provider type. One of `aws` or `gcpsm`
+  type: "aws"
   secretProvider:
     aws:
       # -- Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager
@@ -88,6 +90,10 @@ externalSecrets:
       role:
       # -- AWS Region where secrets are stored, e.g. eu-central-1
       region: eu-central-1
+
+    gcpsm:
+      # -- Defines GCP project ID.
+      projectID: ""
 
   # When installing EDP, three secrets must be created: ci-argocd, ci-defectdojo, ci-dependency-track, kaniko-docker-config and other.
   # see https://github.com/epam/edp-install/tree/master/deploy-templates/templates/external-secrets, https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration

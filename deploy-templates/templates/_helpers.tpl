@@ -65,9 +65,14 @@ Create the name of the service account to use
 Create the name of the secretstore to use
 */}}
 {{- define "edp-install.secretStoreName" -}}
-{{- if .Values.externalSecrets.enabled }}
-{{- printf "%s-%s" "aws" .Values.externalSecrets.secretProvider.aws.service | lower }}
-{{- end }}
+  {{- if .Values.externalSecrets.enabled }}
+    {{- if eq .Values.externalSecrets.type "aws" }}
+      {{- printf "%s-%s" "aws" .Values.externalSecrets.secretProvider.aws.service | lower }}
+    {{- end }}
+    {{- if eq .Values.externalSecrets.type "gcpsm" }}
+      {{- printf "%s-%s" "gcp" "secretmanager" }}
+    {{- end }}
+  {{- end }}
 {{- end }}
 
 Selector labels for oauth2-proxy

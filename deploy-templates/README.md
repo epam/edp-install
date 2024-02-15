@@ -65,6 +65,8 @@ A Helm chart for EDP Install
 | externalSecrets.secretProvider.aws.region | string | `"eu-central-1"` | AWS Region where secrets are stored, e.g. eu-central-1 |
 | externalSecrets.secretProvider.aws.role | string | `nil` | IAM Role to be used for Accessing AWS either Parameter Store or Secret Manager. Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME> |
 | externalSecrets.secretProvider.aws.service | string | `"ParameterStore"` | Use AWS as a Secret Provider. Can be ParameterStore or SecretsManager |
+| externalSecrets.secretProvider.gcpsm.projectID | string | `""` | Defines GCP project ID. |
+| externalSecrets.type | string | `"aws"` | Defines provider type. One of `aws` or `gcpsm` |
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
 | extraQuickLinks | object | `{}` | Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | gerrit-operator.enabled | bool | `false` |  |
