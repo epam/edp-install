@@ -22,7 +22,7 @@ To create a link to Incoming Webhook for the Microsoft Teams channel, follow the
   5. Create a secret with the <WebHookURL> within the edp namespace.
 
   ```yaml
-    kubectl -n edp create secret generic microsoft-teams-webhook-url \
+    kubectl -n edp create secret generic microsoft-teams-webhook-url-secret \
     --from-literal=url=<webhookURL>
   ```
 
@@ -45,7 +45,7 @@ To make notification message informative, relevant text should be added to the m
     - name: 'microsoft-teams-pipeline-status-notification-failed
       params:
       - name: webhook-url-secret
-        value: microsoft-teams-webhook-url
+        value: microsoft-teams-webhook-url-secret
       - name: webhook-url-secret-key
         value: url
       - name: message
