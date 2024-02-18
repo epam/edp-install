@@ -34,7 +34,7 @@ A Helm chart for EDP Install
 | annotations | object | `{}` |  |
 | cd-pipeline-operator.capsuleTenant | object | `{"create":true,"manageNamespace":true,"secretManager":"none","spec":null}` | Required tenancyEngine: capsule. Specify Capsule Tenant specification for Environments. |
 | cd-pipeline-operator.capsuleTenant.manageNamespace | bool | `true` | should the operator manage(create/delete) namespaces for stages |
-| cd-pipeline-operator.capsuleTenant.secretManager | string | `"none"` | flag that indicates whether the operator should manage secrets for stages; values: own/eso/none. own - just copy secrets; eso - secrete will be managed by External Secrets Operator(operator should be installed in the cluster); none - not enable secrets management logic; |
+| cd-pipeline-operator.capsuleTenant.secretManager | string | `"none"` | flag that indicates whether the operator should manage secrets for stages; values: own/eso/none. own - just copy secrets; eso - secrete will be managed by External Secrets Operator(operator should be installed in the cluster: https://epam.github.io/edp-install/operator-guide/install-external-secrets-operator/); none - not enable secrets management logic; |
 | cd-pipeline-operator.enabled | bool | `true` |  |
 | cd-pipeline-operator.tenancyEngine | string | `"none"` | Defines the type of the tenant engine that can be "none", "kiosk" or "capsule"; for Stages with external cluster tenancyEngine will be ignored. Default: none |
 | codebase-operator.enabled | bool | `true` |  |

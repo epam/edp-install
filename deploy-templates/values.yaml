@@ -74,8 +74,9 @@ global:
     # Ref: https://github.com/epam/edp-tekton/blob/release/0.10/charts/pipelines-library/templates/tasks/kaniko.yaml#L73
     awsRegion: ""
 
-# Configure External Secrets Operator to provision secrets for Platform and/or EDP
+# Configure External Secrets Operator to provision secrets for Platform and/or EDP. Required External Secrets Operator deployment: https://epam.github.io/edp-install/operator-guide/install-external-secrets-operator/
 # https://external-secrets.io/latest/provider-aws-secrets-manager/
+# Description of secrets that can be created using this approach - available in the documentation: https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration/
 externalSecrets:
   # -- Configure External Secrets for EDP platform. Deploy SecretStore. Default: false
   enabled: false
@@ -193,7 +194,7 @@ cd-pipeline-operator:
     # -- flag that indicates whether the operator should manage secrets for stages;
     # values: own/eso/none.
     # own - just copy secrets;
-    # eso - secrete will be managed by External Secrets Operator(operator should be installed in the cluster);
+    # eso - secrete will be managed by External Secrets Operator(operator should be installed in the cluster: https://epam.github.io/edp-install/operator-guide/install-external-secrets-operator/);
     # none - not enable secrets management logic;
     secretManager: none
 
