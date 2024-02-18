@@ -217,9 +217,37 @@ gerrit-operator:
   #   storage:
   #     size: 1Gi
   #     class: gp2
+  # gerrit:
+  #   # Provide external endpoint access. Default Ingress/Route host pattern: gerrit-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
+  #   ingress:
+  #     # -- Enable external endpoint access. Default Ingress/Route host pattern: gerrit-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
+  #     annotations: {}
+  #     # --  pathType is only for k8s >= 1.1=
+  #     pathType: Prefix
+  #     # --  For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+  #     # --  See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+  #     # ingressClassName: nginx
+  #     tls: []
+  #     #  - secretName: chart-example-tls
+  #     #    hosts:
+  #     #      - gerrit-edp.example.com
 
 edp-headlamp:
   enabled: true
+  ingress:
+    # -- Enable external endpoint access. Default Ingress/Route host pattern: portal-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
+    enabled: true
+    # -- Annotations for Ingress resource
+    annotations:
+      {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    # -- Hostname(s) for the Ingress resource
+    # -- Ingress TLS configuration
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - portal-edp.example.com
   config:
     # -- base url path at which headlamp should run
     baseURL: ""
@@ -273,11 +301,17 @@ edp-tekton:
       enabled: false
 
     ingress:
+      # -- Enable external endpoint access. Default Ingress/Route host pattern: tekton-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
+      enabled: true
       # -- Annotations for Ingress resource
       annotations: {}
         # -- Uncomment it to enable tekton-dashboard OIDC on EKS cluster
         # nginx.ingress.kubernetes.io/auth-signin: 'https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri'
         # nginx.ingress.kubernetes.io/auth-url: 'http://oauth2-proxy.edp.svc.cluster.local:8080/oauth2/auth'
+      tls: []
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - tekton-edp.example.com
 
 # SSO (OAuth2-proxy) configuration section
 # The section configures the OAuth2-proxy for single Sign-On (SSO) protection of application endpoints.
