@@ -23,7 +23,7 @@ EDP uses various secrets to integrate various applications. Below is a list of s
 |ci-dependency-track|token<br><br>url<br>|Dependency-Track token<br><br>Dependency-Track URL<br><br>|edp-tekton|
 |oauth2-proxy-cookie-secret|cookie-secret|Secret key for oauth2-proxy|edp-install|
 |keycloak-client-headlamp-secret|clientSecret|Secret key for keycloak client |keycloak-operator|
-
+|ci-argocd|token<br><br>url<br>|Argo CD token<br><br>Argo CD URL<br><br>|edp-tekton|
 
 ## EDP Core Secrets
 
@@ -232,7 +232,7 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
           "username": "keycloak-username",
           "password": "keycloak-password"
         },
-        "defectdojo-ciuser-token":
+        "ci-defectdojo":
         {
           "token": "XXXXXXXXXXXX",
           "url": "https://defectdojo.example.com"
@@ -259,29 +259,48 @@ In order to [install EDP](./install-edp.md), a list of passwords must be created
                 "auth":"<base64 encoded 'user:secret' string>"
               }
         }},
-        "github-config":
+        "ci-github":
         {
           "id_rsa": "id-rsa-key",
           "token": "github-token",
           "secretString": "XXXXXXXXXXXX"
         },
-        "gitlab-config":
+        "ci-gitlab":
         {
           "id_rsa": "id-rsa-key",
           "token": "gitlab-token",
           "secretString": "XXXXXXXXXXXX"
         },
-        "jira-user":
+        "ci-jira":
         {
           "username": "jira-username",
           "password": "jira-password"
         },
-        "sonar-ciuser-token": { "username": "<ci-user>",  "secret": "<secret>" },
-        "nexus-ci-user": { "username": "<ci.user>",  "password": "<secret>" },
-        "oauth2-proxy-cookie-secret": { "cookie-secret": "XXXXXXXXXXXX" },
-        "nexus-proxy-cookie-secret": { "cookie-secret": "XXXXXXXXXXXX" },
+        "ci-sonarqube": 
+        { 
+          "username": "<ci-user>",
+          "secret": "<secret>" 
+        },
+        "ci-nexus":
+        {
+          "username": "<ci.user>",
+          "password": "<secret>"
+        },
+        "oauth2-proxy-cookie-secret":
+        {
+          "cookie-secret": "XXXXXXXXXXXX"
+        },
         "keycloak-client-headlamp-secret":  "XXXXXXXXXXXX",
-        "keycloak-client-argo-secret":  "XXXXXXXXXXXX"
+        "ci-argocd":
+        {
+          "token": "argocd-token",
+          "url": "https://argocd.example.com"
+        },
+        "ci-dependency-track":
+        {
+          "token": "dependency-track-token",
+          "url": "https://dependency-track.example.com"
+        }
       }
       ```
 
