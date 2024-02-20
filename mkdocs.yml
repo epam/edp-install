@@ -345,6 +345,7 @@ nav:
       - Operator Development: developer-guide/local-development.md
       - Working With Documentation: developer-guide/mk-docs-development.md
       - EDP Project Rules. Working Process: developer-guide/edp-workflow.md
+    - Quality Control: developer-guide/autotest-coverage.md
     - Telemetry: developer-guide/telemetry.md
     - Annotations and Labels: developer-guide/annotations-and-labels.md
   - Use Cases:
