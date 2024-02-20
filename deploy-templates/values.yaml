@@ -200,7 +200,9 @@ cd-pipeline-operator:
     #       externalName: false
     #       loadBalancer: false
     #       nodePort: false
+
     # -- should the operator manage(create/delete) namespaces for stages
+    # Refer to the guide for managing namespace (https://epam.github.io/edp-install/operator-guide/namespace-management/)
     manageNamespace: true
 
     # -- Flag indicating whether the operator should manage secrets for stages.
