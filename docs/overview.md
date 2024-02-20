@@ -79,7 +79,7 @@ There is no limitation to run EDP on vanilla Kubernetes.
 
 ## Related Articles
 
-* [Quick Start](getting-started.md)
+* [Quick Start](quick-start/platform-installation.md)
 * [Basic Concepts](features.md)
 * [Glossary](glossary.md)
 * [Supported Versions and Compatibility](supported-versions.md)

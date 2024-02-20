@@ -183,7 +183,6 @@ nav:
         - Integrate Argo CD: quick-start/integrate-argocd.md
         - Deploy Application: quick-start/deploy-application.md
     - features.md
-    #- getting-started.md
     - glossary.md
     - supported-versions.md
     - compliance.md

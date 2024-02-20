@@ -217,7 +217,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 
 ## Related Articles
 
-* [Quick Start](../quick-start/platform-installation.md)
+* [Quick Start](quick-start/platform-installation.md)
 * [Install EDP via Helmfile](install-via-helmfile.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
 * [Set Up Kubernetes](kubernetes-cluster-settings.md)
