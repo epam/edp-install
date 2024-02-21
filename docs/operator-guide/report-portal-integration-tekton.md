@@ -129,6 +129,6 @@ For integration, take the following steps:
 
 ## Related Articles
 
-* [ReportPortal Installation](install-reportportal.md)
+* [Install ReportPortal](install-reportportal.md)
 * [Keycloak Integration](reportportal-keycloak.md)
 * [Pytest Integration With ReportPortal](https://github.com/reportportal/agent-python-pytest)

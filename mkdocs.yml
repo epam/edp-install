@@ -189,27 +189,32 @@ nav:
   - Operator Guide:
     - operator-guide/index.md
     - Installation:
-      - Prerequisites:
-        - Overview: operator-guide/prerequisites.md
-        - Set Up Kubernetes: operator-guide/kubernetes-cluster-settings.md
-        - Set Up OpenShift: operator-guide/openshift-cluster-settings.md
-        - Install NGINX Ingress Controller: operator-guide/install-ingress-nginx.md
-        - Install Keycloak: operator-guide/install-keycloak.md
-        - Install DefectDojo: operator-guide/install-defectdojo.md
-        - Install ReportPortal: operator-guide/install-reportportal.md
-        - Install Argo CD: operator-guide/install-argocd.md
-        - Install Tekton: operator-guide/install-tekton.md
+      - Overview: operator-guide/installation-overview.md
+      - Install via Add-Ons: operator-guide/add-ons-overview.md
+      - Install via Helm Chart:
+        - Prerequisites:
+          - Overview: operator-guide/prerequisites.md
+          - Setup Cluster:
+            - Set Up Kubernetes: operator-guide/kubernetes-cluster-settings.md
+            - Set Up OpenShift: operator-guide/openshift-cluster-settings.md
+            - Install NGINX Ingress Controller: operator-guide/install-ingress-nginx.md
+          - Install Argo CD: operator-guide/install-argocd.md
+          - Install Tekton: operator-guide/install-tekton.md
+        - Install EDP: operator-guide/install-edp.md
+      - Install via AWS: operator-guide/aws-marketplace-install.md
+      - Install via Civo: operator-guide/install-via-civo.md
+      - Advanced Installation:
+        - Overview: operator-guide/advanced-installation-overview.md
+        - Install Harbor: operator-guide/install-harbor.md
         - Multi-Tenancy:
           - Overview: operator-guide/overview-multi-tenancy.md
           - Integrate Capsule: operator-guide/capsule.md
           - Kiosk:
-              - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
-              - Set Up Kiosk: operator-guide/install-kiosk.md
-        - Install Harbor: operator-guide/install-harbor.md
-      - Install EDP: operator-guide/install-edp.md
-      - Install via Helmfile: operator-guide/install-via-helmfile.md
-      - Install via AWS Marketplace: operator-guide/aws-marketplace-install.md
-      - Install via Civo: operator-guide/install-via-civo.md
+            - Set Up Kiosk: operator-guide/install-kiosk.md
+            - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
+        - Install Keycloak: operator-guide/install-keycloak.md
+        - Install DefectDojo: operator-guide/install-defectdojo.md
+        - Install ReportPortal: operator-guide/install-reportportal.md
     - Configuration:
       - EDP Access Model: operator-guide/edp-access-model.md
       - Version Control Systems:
@@ -222,7 +227,6 @@ nav:
         - Adjust Jira Integration: operator-guide/jira-integration.md
         - Adjust VCS Integration With Jira: operator-guide/jira-gerrit-integration.md
     - Integration:
-      - Cluster Add-Ons: operator-guide/add-ons-overview.md
       - Tekton:
           - Overview: operator-guide/tekton-overview.md
           - Monitoring: operator-guide/tekton-monitoring.md

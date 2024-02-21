@@ -226,5 +226,4 @@ To uninstall EDP, perform the following steps:
 
 ## Related Articles
 * [Install EDP](install-edp.md)
-* [Install EDP via Helmfile](install-via-helmfile.md)
 * [Keycloak Integration](reportportal-keycloak.md)

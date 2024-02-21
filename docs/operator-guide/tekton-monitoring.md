@@ -79,4 +79,3 @@ As soon as the dashboard procedure is completed, you can track the newcoming met
 
 * [Install Tekton](install-tekton.md)
 * [Install EDP](install-edp.md)
-* [Install via Helmfile](install-via-helmfile.md#deploy-monitoring)

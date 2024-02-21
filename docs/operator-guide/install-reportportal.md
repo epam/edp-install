@@ -2,9 +2,6 @@
 
 Inspect the prerequisites and the main steps to perform for installing ReportPortal.
 
-!!! info
-    It is also possible to install ReportPortal using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md##deploy-reportportal) page.
-
 ## Prerequisites
 
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/) version 1.23.0 is installed. Please refer to the [Kubernetes official website](https://v1-23.docs.kubernetes.io/releases/download/) for details.
@@ -655,6 +652,12 @@ spec:
     For admin access: superadmin/erebus<br>
     Please refer to the [ReportPortal.io](https://reportportal.io/installation) page for details.
 
+!!! note
+    It is also possible to install ReportPortal via cluster add-ons. For details, please refer to the [Install via Add-Ons](add-ons-overview.md) page.
+
 ## Related Articles
 
-* [Install via Helmfile](install-via-helmfile.md)
+* [Install EDP](install-edp.md)
+* [Install via AWS Marketplace](aws-marketplace-install.md)
+* [Install via Civo](install-via-civo.md)
+* [Install via Add-Ons](add-ons-overview.md)

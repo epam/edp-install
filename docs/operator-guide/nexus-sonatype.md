@@ -125,6 +125,7 @@ To create the Nexus `ci.user`and define repository parameters follow the steps b
     More detail of External Secrets Operator Integration can found on [the following page](https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration/)
 
 ## Related Articles
+
 * [Install EDP With Values File](install-edp.md)
 * [Install External Secrets Operator](install-external-secrets-operator.md)
 * [External Secrets Operator Integration](external-secrets-operator-integration.md)

@@ -2,10 +2,13 @@
 
 Follow the steps below to integrate the ReportPortal with Keycloak.
 
+!!! info
+    It is also possible to install ReportPortal using the cluster add-ons. For details, please refer to the [Install via Add-Ons](add-ons-overview.md) page.
+
 ## Prerequisites
 
-* Installed Keycloak. Please follow the [instruction](install-keycloak.md) for details.
-* Installed ReportPortal. Please follow the instruction to install it from [Helmfile](install-via-helmfile.md##deploy-reportportal) or using the [Helm Chart](install-reportportal.md).
+* Keycloak is installed. For detailed instructions, please refer to the provided [documentation](install-keycloak.md).
+* ReportPortal is installed. To install it using the Helm Chart, please follow the instructions outlined in the corresponding [documentation](install-reportportal.md).
 
 ## Keycloak Configuration
 
@@ -69,5 +72,5 @@ Follow the steps below to integrate the ReportPortal with Keycloak.
 
 ## Related Articles
 
-* [ReportPortal Installation](install-reportportal.md)
+* [Install ReportPortal](install-reportportal.md)
 * [Integration With Tekton](report-portal-integration-tekton.md)

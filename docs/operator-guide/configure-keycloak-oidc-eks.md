@@ -307,8 +307,8 @@ rm -rf ~/.kube/cache
 To access the Kubernetes cluster via [Lens](https://k8slens.dev/), follow the steps below to configure it:
 
 * Add a new kubeconfig to the location where Lens has access. The default location of the kubeconfig is **~/.kube/config** but it can be changed by navigating to **File** -> **Preferences** -> **Kubernetes** -> **Kubeconfig Syncs**;
-* (Optional) Using Windows, it is recommended to reboot the system after adding a new kubeconfig.
-* Authenticate on the Keycloak login page to be able to access the cluster;
+* (Optional) Using Windows, it is recommended to reboot the system after adding a new kubeconfig;
+* Authenticate on the Keycloak login page to be able to access the cluster.
 
 !!! note
     Lens does not add namespaces of the project automatically, so it is necessary to add them manually, simply go to **Settings** -> **Namespaces** and add the namespaces of a project.

@@ -9,7 +9,6 @@ To configure the multitenant logging, it is necessary to deploy the following co
 * [Grafana](https://grafana.com/)
 * [Loki](https://grafana.com/oss/loki/)
 * [Logging-operator](https://banzaicloud.com/docs/one-eye/logging-operator/)
-* [Logging-operator stack-fluentbit](https://banzaicloud.com/docs/one-eye/logging-operator/)
 
 In Grafana, every tenant represents an organization, i.e. it is necessary to create an organization for every namespace in the cluster.
 To get more details regarding the architecture of the Logging Operator, please review the Diagram 1.

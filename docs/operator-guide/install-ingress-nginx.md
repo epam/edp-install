@@ -9,9 +9,6 @@ Inspect the prerequisites and the main steps to perform for installing [Install 
 
 ## Installation
 
-!!! info
-    It is also possible to install NGINX Ingress Controller using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md#deploy-nginx-ingress-controller) page.
-
 To install the ingress-nginx chart, follow the steps below:
 
 1. Create an ingress-nginx namespace:
@@ -84,3 +81,11 @@ serviceAccount:
 
 !!! warning
     Align value **controller.config.proxy-real-ip-cidr** with [AWS VPC CIDR](https://kubernetes.github.io/ingress-nginx/user-guide/miscellaneous/#source-ip-address).
+
+!!! note
+    It is also possible to install the ingress controller via cluster add-ons. For details, please refer to the [Install via Add-Ons](add-ons-overview.md) page.
+
+## Related Articles
+
+* [Install via Add-Ons](add-ons-overview.md)
+* [Install EDP](install-edp.md)

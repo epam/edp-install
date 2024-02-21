@@ -16,7 +16,7 @@ Inspect the prerequisites and the main steps to perform for installing Keycloak.
     Before installing Keycloak, it is necessary to install a [PostgreSQL database](https://www.postgresql.org/download/).
 
 !!! info
-    It is also possible to install Keycloak using the Helmfile. For details, please refer to the [Install via Helmfile](./install-via-helmfile.md#deploy-keycloak) page.
+    It is also possible to install Keycloak using the cluster add-ons. For details, please refer to the [Install via Add-Ons](add-ons-overview.md) page.
 
 ## PostgreSQL Installation
 
@@ -346,7 +346,7 @@ To prepare Keycloak for integration with EDP, follow the steps below:
 2. Create the `edp_<EDP_PROJECT>` user and set the password in the `Master` realm.
 
   !!! note
-      This user should be used by EDP to access Keycloak. Please refer to the [Install EDP](install-edp.md) and [Install EDP via Helmfile](install-via-helmfile.md) sections for details.
+      This user should be used by EDP to access Keycloak. Please refer to the [Install EDP](install-edp.md) page for details.
 
 3. In the `Role Mapping` tab, assign the proper roles to the user:
 
@@ -373,5 +373,5 @@ To prepare Keycloak for integration with EDP, follow the steps below:
 ## Related Articles
 
 * [Install EDP](install-edp.md)
-* [Install via Helmfile](install-via-helmfile.md)
 * [Install Harbor](install-harbor.md)
+* [Install via Add-Ons](add-ons-overview.md)

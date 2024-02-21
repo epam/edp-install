@@ -21,6 +21,9 @@ Inspect the main steps to set up Kiosk for the proceeding EDP installation.
 * Kubectl version 1.18.0 is installed. Please refer to the [Kubernetes official website](https://v1-18.docs.kubernetes.io/docs/setup/release/notes/) for details.
 * [Helm](https://helm.sh) version 3.6.0 is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.6.0) on GitHub for details.
 
+!!! note
+    This tool needs to be installed in advance before deploying EDP.
+
 ## Installation
 
 * Deploy Kiosk version 0.2.11 in the cluster. To install it, run the following command:

@@ -14,7 +14,6 @@ Before the OKD cluster deployment and configuration, make sure to check the prer
 
    * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
    * [OpenShift CLI](https://docs.openshift.com/container-platform/4.9/cli_reference/openshift_cli/getting-started-cli.html)
-   * [Lens](https://k8slens.dev/) (optional)
 
 2. Create the AWS IAM user with [the required permissions](https://docs.okd.io/4.9/installing/installing_aws/installing-aws-account.html#installation-aws-permissions_installing-aws-account). Make sure the AWS account is active, and the user doesn't have a permission boundary. Remove any Service Control Policy (SCP) restrictions from the AWS account.
 
@@ -146,11 +145,6 @@ INFO Time elapsed: 36m22s:
 To log into the cluster, export the `kubeconfig`:
 
       export KUBECONFIG=<installation_directory>/auth/kubeconfig
-
-Optionally, use the [Lens](https://k8slens.dev/) tool for further work with the Kubernetes cluster.
-
-!!! note
-    To install and manage the cluster, refer to [Lens documentation](https://docs.k8slens.dev/main/).
 
 ## Related Articles
 

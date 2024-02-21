@@ -1,4 +1,4 @@
-# Cluster Add-Ons Overview
+# Install via Add-Ons
 
 This page describes the entity of Cluster Add-Ons for EPAM Delivery Platform, as well as their purpose, benefits and usage.
 
