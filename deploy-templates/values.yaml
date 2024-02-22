@@ -403,6 +403,12 @@ sso:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+  # -- Node labels for pod assignment
+  nodeSelector: {}
+  # -- Toleration labels for pod assignment
+  tolerations: []
+  # -- Affinity settings for pod assignment
+  affinity: {}
 
 # -- Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/
 # @default -- ``

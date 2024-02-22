@@ -81,6 +81,7 @@ A Helm chart for EDP Install
 | global.version | string | `"3.8.0-SNAPSHOT"` | EDP version |
 | quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant. |
+| sso.affinity | object | `{}` | Affinity settings for pod assignment |
 | sso.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
 | sso.enabled | bool | `true` | Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment. |
 | sso.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
@@ -96,5 +97,7 @@ A Helm chart for EDP Install
 | sso.ingress.pathType | string | `"Prefix"` | Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific` |
 | sso.ingress.tls | list | `[]` | Ingress TLS configuration |
 | sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL. |
+| sso.nodeSelector | object | `{}` | Node labels for pod assignment |
 | sso.realmName | string | `"broker"` | Defines Keycloak realm name that is used as the Identity Provider (IdP) realm |
+| sso.tolerations | list | `[]` | Toleration labels for pod assignment |
 
