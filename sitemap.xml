@@ -56,6 +56,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://epam.github.io/edp-install/developer-guide/autotest-coverage/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://epam.github.io/edp-install/developer-guide/aws-deployment-diagram/</loc>
          <lastmod>2024-02-22</lastmod>
          <changefreq>daily</changefreq>
