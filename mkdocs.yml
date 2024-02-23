@@ -172,6 +172,7 @@ nav:
   - Getting Started:
     - overview.md
     - Quick Start:
+      - Overview: quick-start/quick-start-overview.md
       - CI Pipelines - Build:
         - Install EDP: quick-start/platform-installation.md
         - Integrate Tools:
@@ -179,7 +180,7 @@ nav:
           - Integrate GitHub: quick-start/integrate-github.md
           - Integrate DockerHub: quick-start/integrate-container-registry.md
         - Create Application: quick-start/create-application.md
-      - CD Pipelines -  Deploy:
+      - CD Pipelines - Deploy:
         - Integrate Argo CD: quick-start/integrate-argocd.md
         - Deploy Application: quick-start/deploy-application.md
     - features.md

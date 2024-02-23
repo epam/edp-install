@@ -65,11 +65,34 @@ Having created the Go application, proceed to build it by performing the followi
 
   !![Pull request](../assets/quick-start/pull_request.png "Pull request")
 
-7. In the component details page, click the **Trigger build pipeline run** button:
+7. Run the `kubectl edit task` command to update the version of the image that is used in the **sonarqube-scanner** task from `4.7` to `5.0.1`:
+
+  ```bash
+  kubectl edit task sonarqube-scanner -n edp
+  ```
+
+  ```yaml
+      - image: sonarsource/sonar-scanner-cli:5.0.1
+      name: sonar-scanner
+      workingDir: $(workspaces.source.path)
+      env:
+        - name: SONAR_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: $(params.ci-sonarqube)
+              key: token
+      command:
+        - sonar-scanner
+  ```
+
+  !!! note
+      This step is necessary due to SonarCloud's discontinuation of support for Java 11, which is utilized in the sonarqube-scanner image. This solution is designed specifically for the EDP 3.7.x and lower versions. Users of EDP 3.8.x and higher versions can skip this step.
+
+8. In the component details page, click the **Trigger build pipeline run** button:
 
   !![Triggering pipeline run](../assets/quick-start/trigger_pipeline_run.png "Triggering pipeline run")
 
-8. Enable port-forwarding for the edp-tekton-dashboard service (in case ingress is not deployed):
+9. Enable port-forwarding for the edp-tekton-dashboard service (in case ingress is not deployed):
 
       kubectl port-forward service/edp-tekton-dashboard 64372:8080 -n edp
 
@@ -77,26 +100,26 @@ Having created the Go application, proceed to build it by performing the followi
     localhost:64372
     ```
 
-9. To observe the build pipeline status, click the tree diagram icon in the Diagram column:
+10. To observe the build pipeline status, click the tree diagram icon in the Diagram column:
 
   !![Tree diagram window](../assets/quick-start/tree_diagram.png "Tree diagram window")
 
 
-10. Once the build is failed, click the failed stage name to open the Tekton pipeline run:
+11. Once the build is failed, click the failed stage name to open the Tekton pipeline run:
 
   !![Failure details](../assets/quick-start/failure_details.png "Failure details")
 
   The initial pipeline is expected to fail, primarily due to SonarCloud intricacies. It is imperative to set a Quality Gate in SonarCloud after the initial pipeline run and subsequently re-trigger the build pipeline. After the pipeline failure, a new project is expected to appear in the organization.
 
-11. In the SonarCloud organization, select the newly appeared project and click the **Set New Code Definition** button:
+12. In the SonarCloud organization, select the newly appeared project and click the **Set New Code Definition** button:
 
   !![New code definition](../assets/quick-start/set_new_code_definition.png "New code definition")
 
-12. In the **New Code** page, set the **Previous version** option and click **Save**:
+13. In the **New Code** page, set the **Previous version** option and click **Save**:
 
   !![New Code page](../assets/quick-start/previous_version.png "New Code page")
 
-13. In EDP Portal, trigger build pipeline run one more time and wait until the pipeline run is finished.
+14. In EDP Portal, trigger build pipeline run one more time and wait until the pipeline run is finished.
 
 Build pipelines are designed to generate an executable image of an application. Once built, the image can be run in a target environment.
 
