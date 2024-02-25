@@ -76,7 +76,7 @@ A Helm chart for EDP Install
 | global.dockerRegistry.space | string | `""` | Defines project name. |
 | global.dockerRegistry.type | string | `""` | Defines type of registry. One of `ecr`, `harbor`, `dockerhub` or `openshift`. 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'. |
 | global.dockerRegistry.url | string | `""` | Defines registry endpoint URL. |
-| global.gitProvider | string | `"github"` | Can be gerrit, github or gitlab. Default: github |
+| global.gitProviders | list | `["github"]` | Can be gerrit, github or gitlab. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.version | string | `"3.8.0-SNAPSHOT"` | EDP version |
 | quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |

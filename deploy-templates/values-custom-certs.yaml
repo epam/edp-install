@@ -1,5 +1,6 @@
 global:
-  gitProvider: gitlab
+  gitProviders:
+    - gitlab
   dnsWildCard:
   platform: openshift
 

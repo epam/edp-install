@@ -11,7 +11,10 @@ global:
   # -- a cluster DNS wildcard name
   dnsWildCard:
   # -- Can be gerrit, github or gitlab. Default: github
-  gitProvider: github
+  gitProviders:
+    - github
+    # - gitlab
+    # - gerrit
 
   # Define the Image Registry that will be used in Pipelines.
   # This section is optional, and users can configure the registry within the EDP Portal user interface.
