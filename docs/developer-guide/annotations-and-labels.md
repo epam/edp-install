@@ -1,26 +1,28 @@
-# Annotations and Labels used by EDP
+# Annotations and Labels
 
-The EDP uses labels to interact with various resources in a Kubernetes cluster. This guide details the resources, annotations and labels used by the platform to streamline operations, enhance monitoring, and enforce governance.
+EPAM Delivery Platform uses labels to interact with various resources in a Kubernetes cluster. This guide details the resources, annotations, and labels used by the platform to streamline operations, enhance monitoring, and enforce governance.
 
 ## Labels
 
-| Labels key                          | Target resource(es)  | Possible values                                                         | Description                                                                  |
+The table below contains all the labels used in EDP:
+
+| Label Key                          | Target Resources  | Possible Values                                                         | Description                                                                  |
 | :---------------------------------- | :------------------- | :---------------------------------------------------------------------- | :--------------------------------------------------------------------------- |
 | app.edp.epam.com/secret-type        | Secrets              | `jira`, `nexus`, `sonar`, `defectdojo`, `dependency-track`,`repository` | Identifies the type of the secret.                                           |
 | app.edp.epam.com/integration-secret | Secrets              | `true`                                                                  | Indicates if the secret is used for integration.                             |
-| app.edp.epam.com/codebase           | Pipelinerun          | `<codebase_name>`                                                       | Identifies the codebase associated with the PipelineRun.                     |
-| app.edp.epam.com/codebasebranch     | Pipelinerun          | `<codebase_name>-<branch_name>`                                         | Identifies the codebase branch associated with the PipelineRun.              |
-| app.edp.epam.com/pipeline           | Pipelinerun, Taskrun | `<environment_name>`                                                    | Used by the EDP portal to to display autotests status(on Deploy environment) |
-| app.edp.epam.com/pipelinetype       | Pipelinerun, Taskrun | `autotestRunner`, `build`, `review`                                     | Identifies the type of the Pipeline.                                         |
-| app.edp.epam.com/parentPipelineRun  | Pipelinerun          | `<cd-pipeline-autotest-runner-name>`                                    | Used by the EDP portal to to display autotests status(on Deploy environment) |
-| app.edp.epam.com/stage              | Pipelinerun, Taskrun | `<stage_name>`                                                          | Used by the EDP portal to to display autotests status(on Deploy environment) |
-| app.edp.epam.com/branch             | Pipelinerun          | `<branch_name>`                                                         | Identifies the branch associated with the PipelineRun.                       |
+| app.edp.epam.com/codebase           | PipelineRun          | `<codebase_name>`                                                       | Identifies the codebase associated with the PipelineRun.                     |
+| app.edp.epam.com/codebasebranch     | PipelineRun          | `<codebase_name>-<branch_name>`                                         | Identifies the codebase branch associated with the PipelineRun.              |
+| app.edp.epam.com/pipeline           | PipelineRun, Taskrun | `<environment_name>`                                                    | Used by the EDP Portal to display autotests status(on Deploy environment) |
+| app.edp.epam.com/pipelinetype       | PipelineRun, Taskrun | `autotestRunner`, `build`, `review`                                     | Identifies the type of the Pipeline.                                         |
+| app.edp.epam.com/parentPipelineRun  | PipelineRun          | `<cd-pipeline-autotest-runner-name>`                                    | Used by the EDP Portal to display autotests status(on Deploy environment) |
+| app.edp.epam.com/stage              | PipelineRun, Taskrun | `<stage_name>`                                                          | Used by the EDP Portal to display autotests status(on Deploy environment) |
+| app.edp.epam.com/branch             | PipelineRun          | `<branch_name>`                                                         | Identifies the branch associated with the PipelineRun.                       |
 | app.edp.epam.com/codebaseType       | Codebase             | `system`,`application`                                                  | Identify the type of the codebase.                                           |
 | app.edp.epam.com/systemType         | Codebase             | `gitops`                                                                | Identify system repositories.                                                |
 
+### Labels Usage in Secrets
 
-
-### Labels usage in Secrets
+The table below shows what labels are used by specific secrets:
 
 | Secret Name          | Labels                                                                                     |
 | :------------------- | :----------------------------------------------------------------------------------------- |
@@ -34,20 +36,20 @@ The EDP uses labels to interact with various resources in a Kubernetes cluster. 
 | kaniko-docker-config | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=registry         |
 | regcred              | app.edp.epam.com/integration-secret=true<br> app.edp.epam.com/secret-type=registry         |
 
+### Labels Usage in Tekton Pipeline Runs
 
-
-### Labels usage in Tekton Pipeline Runs
+The table below displays what labels are used in specific Tekton pipelines:
 
 | PipelineRun              | Labels                                                                                                                                                                                                                                      |
 | :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| review-pipeline          | app.edp.epam.com/codebase: `<codebase_name>` <br> app.edp.epam.com/codebasebranch: `<codebase_name>`-`<branch_name>`<br> app.edp.epam.com/pipelinetype: `rewiew`                                                                            |
+| review-pipeline          | app.edp.epam.com/codebase: `<codebase_name>` <br> app.edp.epam.com/codebasebranch: `<codebase_name>`-`<branch_name>`<br> app.edp.epam.com/pipelinetype: `review`                                                                            |
 | build-pipeline           | app.edp.epam.com/codebase: `<codebase_name>` <br> app.edp.epam.com/codebasebranch: `<codebase_name>`-`<branch_name>`<br> app.edp.epam.com/pipelinetype: `build`                                                                             |
 | autotest-runner-pipeline | app.edp.epam.com/pipeline: `<pipeline_name>`<br> app.edp.epam.com/pipelinetype: `autotestRunner` <br> app.edp.epam.com/stage: `<stage>`                                                                                                     |
 | autotest-pipeline        | app.edp.epam.com/branch: `<branch>`<br> app.edp.epam.com/codebase: `<codebase_name>`<br> app.edp.epam.com/parentPipelineRun: `<cd_pipeline>`-`<stage>`<br> app.edp.epam.com/pipeline: `<cd_pipeline>`<br> app.edp.epam.com/stage: `<stage>` |
 
-### Pipeline usage example
+### Pipeline Usage Example
 
-To demonstrate label usage in EDP Tekton pipelines, here are a several simple EDP resources examples:
+To demonstrate label usage in the EDP Tekton pipelines, find below some EDP resource examples:
 
   ```yaml title="Codebase specification"
   metadata:
@@ -88,16 +90,16 @@ To demonstrate label usage in EDP Tekton pipelines, here are a several simple ED
     ...
   ```
 
-Pipelines associated to `demo` codebase:
+The table below shows all the pipelines associated with the `demo` codebase:
 
 | Pipeline Name                      | Type   | Labels                                                                                                                                                                                                    |
 | :--------------------------------- | :----- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| gerrit-npm-react-app-review        | Rewiew | app.edp.epam.com/codebase: demo<br> app.edp.epam.com/codebasebranch: demo-main<br> app.edp.epam.com/pipelinetype: rewiew                                                                                  |
+| gerrit-npm-react-app-review        | Review | app.edp.epam.com/codebase: demo<br> app.edp.epam.com/codebasebranch: demo-main<br> app.edp.epam.com/pipelinetype: review                                                                                  |
 | gerrit-npm-react-app-build-default | Build  | app.edp.epam.com/codebase: demo<br> app.edp.epam.com/codebasebranch: demo-main<br> app.edp.epam.com/pipelinetype: build                                                                                   |
 | autotest-runner                    | Deploy | app.edp.epam.com/pipeline: mypipe<br> app.edp.epam.com/pipelinetype: autotestRunner<br> app.edp.epam.com/stage: dev                                                                                       |
 | autotests-gradle, autotests-maven  | Deploy | app.edp.epam.com/branch: master<br> app.edp.epam.com/codebase: autotests<br> app.edp.epam.com/parentPipelineRun: mypipe-dev-<hash\><br> app.edp.epam.com/pipeline: mypipe<br> app.edp.epam.com/stage: dev |
 
-Tasks associated to `demo` codebase:
+The list of all the tasks associated with the `demo` codebase is presented below:
 
 | Task Name          | Labels                                                                                                                                                                                                    |
 | :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -1,10 +1,10 @@
-# Install EDP with Civo
+# Install EDP via Civo
 
 This documentation provides the detailed instructions on how to install the EPAM Delivery Platform via [Civo Marketplace](https://www.civo.com/marketplace/edp). As a prerequisite, ensure to [sign up](https://dashboard.civo.com/signup) in Civo.
 
 ![type:video](https://www.youtube.com/embed/QjZoPnIKDtA)
 
-## Launch cluster
+## Launch Cluster
 
 The first step of the installation procedure is to launch the cluster. Please refer to the [official instructions](https://www.civo.com/docs/kubernetes/create-a-cluster) that describe this process in detail. To succeed, follow the steps below:
 
