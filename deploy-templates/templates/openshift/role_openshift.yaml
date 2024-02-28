@@ -228,9 +228,6 @@ rules:
   - keycloakrealms
   - keycloakrealms/finalizers
   - keycloakrealms/status
-  - edpcomponents
-  - edpcomponents/finalizers
-  - edpcomponents/status
   - projectrequests
   - projects
   - projects/finalizers

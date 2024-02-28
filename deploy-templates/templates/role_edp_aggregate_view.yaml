@@ -8,7 +8,6 @@ rules:
   - apiGroups:
       - v1.edp.epam.com
     resources:
-      - edpcomponents
       - keycloakauthflows
       - keycloakclients
       - keycloakclientscopes
