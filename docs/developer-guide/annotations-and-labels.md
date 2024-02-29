@@ -6,19 +6,20 @@ EPAM Delivery Platform uses labels to interact with various resources in a Kuber
 
 The table below contains all the labels used in EDP:
 
-| Label Key                          | Target Resources  | Possible Values                                                         | Description                                                                  |
-| :---------------------------------- | :------------------- | :---------------------------------------------------------------------- | :--------------------------------------------------------------------------- |
-| app.edp.epam.com/secret-type        | Secrets              | `jira`, `nexus`, `sonar`, `defectdojo`, `dependency-track`,`repository` | Identifies the type of the secret.                                           |
-| app.edp.epam.com/integration-secret | Secrets              | `true`                                                                  | Indicates if the secret is used for integration.                             |
-| app.edp.epam.com/codebase           | PipelineRun          | `<codebase_name>`                                                       | Identifies the codebase associated with the PipelineRun.                     |
-| app.edp.epam.com/codebasebranch     | PipelineRun          | `<codebase_name>-<branch_name>`                                         | Identifies the codebase branch associated with the PipelineRun.              |
+| Label Key                           | Target Resources     | Possible Values                                                         | Description                                                               |
+|:------------------------------------|:---------------------|:------------------------------------------------------------------------|:--------------------------------------------------------------------------|
+| app.edp.epam.com/secret-type        | Secrets              | `jira`, `nexus`, `sonar`, `defectdojo`, `dependency-track`,`repository` | Identifies the type of the secret.                                        |
+| app.edp.epam.com/integration-secret | Secrets              | `true`                                                                  | Indicates if the secret is used for integration.                          |
+| app.edp.epam.com/codebase           | PipelineRun          | `<codebase_name>`                                                       | Identifies the codebase associated with the PipelineRun.                  |
+| app.edp.epam.com/codebasebranch     | PipelineRun          | `<codebase_name>-<branch_name>`                                         | Identifies the codebase branch associated with the PipelineRun.           |
 | app.edp.epam.com/pipeline           | PipelineRun, Taskrun | `<environment_name>`                                                    | Used by the EDP Portal to display autotests status(on Deploy environment) |
-| app.edp.epam.com/pipelinetype       | PipelineRun, Taskrun | `autotestRunner`, `build`, `review`                                     | Identifies the type of the Pipeline.                                         |
+| app.edp.epam.com/pipelinetype       | PipelineRun, Taskrun | `autotestRunner`, `build`, `review`                                     | Identifies the type of the Pipeline.                                      |
 | app.edp.epam.com/parentPipelineRun  | PipelineRun          | `<cd-pipeline-autotest-runner-name>`                                    | Used by the EDP Portal to display autotests status(on Deploy environment) |
 | app.edp.epam.com/stage              | PipelineRun, Taskrun | `<stage_name>`                                                          | Used by the EDP Portal to display autotests status(on Deploy environment) |
-| app.edp.epam.com/branch             | PipelineRun          | `<branch_name>`                                                         | Identifies the branch associated with the PipelineRun.                       |
-| app.edp.epam.com/codebaseType       | Codebase             | `system`,`application`                                                  | Identify the type of the codebase.                                           |
-| app.edp.epam.com/systemType         | Codebase             | `gitops`                                                                | Identify system repositories.                                                |
+| app.edp.epam.com/branch             | PipelineRun          | `<branch_name>`                                                         | Identifies the branch associated with the PipelineRun.                    |
+| app.edp.epam.com/codebaseType       | Codebase             | `system`,`application`                                                  | Identify the type of the codebase.                                        |
+| app.edp.epam.com/systemType         | Codebase             | `gitops`                                                                | Identify system repositories.                                             |
+| app.edp.epam.com/gitServer          | Ingress              | `<gitServer_name>`                                                      | Identifies the ingress associated with the GitServer.                     |
 
 ### Labels Usage in Secrets
 
