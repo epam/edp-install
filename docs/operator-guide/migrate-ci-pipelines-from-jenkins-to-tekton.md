@@ -68,7 +68,21 @@ To use Tekton pipelines, add the configuration to the corresponding Gerrit proje
 [remote "patchsetcreated"]
   url = http://el-gerrit-listener:8080
   event = patchset-created
+[remote "commentadded"]
+  url = http://el-gerrit-listener:8080
+  event = comment-added
 
+```
+
+Configure webhooks plugin in Gerrit configuration (typically located at  **/var/gerrit/review_site/etc/gerrit.config**):
+
+```yaml title="gerrit.config"
+[plugin "webhooks"]
+        connectionTimeout = 3000
+        socketTimeout = 2500
+        maxTries = 1
+        retryInterval = 5000
+        threadPoolSize = 3
 ```
 
 ## Switch CI Tool for Codebase(s)
