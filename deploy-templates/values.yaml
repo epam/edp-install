@@ -338,6 +338,106 @@ edp-tekton:
       #  - secretName: chart-example-tls
       #    hosts:
       #      - tekton-edp.example.com
+  # GitServers configuration section
+  # GitServer creation depends on the gitProviders configuration, if gitProvider is not enabled,
+  # the GitServer will not be created.
+  gitServers: {}
+  #   my-github:
+  #     gitProvider: github
+  #     host: github.com
+  #     webhook:
+  #       skipWebhookSSLVerification: false
+  #     eventListener:
+  #       # -- Enable EventListener
+  #       enabled: true
+  #       # -- EventListener resources
+  #       resources:
+  #         requests:
+  #           memory: "64Mi"
+  #           cpu: "50m"
+  #         limits:
+  #           memory: "128Mi"
+  #           cpu: "500m"
+  #       # -- Node labels for EventListener pod assignment
+  #       nodeSelector: {}
+  #       # -- Tolerations for EventListener pod assignment
+  #       tolerations: []
+  #       # -- Affinity for EventListener pod assignment
+  #       affinity: {}
+
+  #       ingress:
+  #         # -- Enable ingress controller resource
+  #         enabled: true
+  #         # -- Ingress annotations
+  #         annotations: {}
+  #         # -- Ingress TLS configuration
+  #         tls: []
+
+  #   my-gitlab:
+  #     gitProvider: gitlab
+  #     host: gitlab.com
+  #     webhook:
+  #       skipWebhookSSLVerification: false
+  #     eventListener:
+  #       # -- Enable EventListener
+  #       enabled: true
+  #       # -- EventListener resources
+  #       resources:
+  #         requests:
+  #           memory: "64Mi"
+  #           cpu: "50m"
+  #         limits:
+  #           memory: "128Mi"
+  #           cpu: "500m"
+  #       # -- Node labels for EventListener pod assignment
+  #       nodeSelector: {}
+  #       # -- Tolerations for EventListener pod assignment
+  #       tolerations: []
+  #       # -- Affinity for EventListener pod assignment
+  #       affinity: {}
+
+  #       ingress:
+  #         # -- Enable ingress controller resource
+  #         enabled: true
+  #         # -- Ingress annotations
+  #         annotations: {}
+  #         # -- Ingress TLS configuration
+  #         tls: []
+
+  #   my-gerrit:
+  #     gitProvider: gerrit
+  #     host: gerrit.example.com
+  #     gitUser: ci-user
+  #     httpsPort: 443
+  #     nameSshKeySecret: gerrit-ciuser-sshkey
+  #     sshPort: 30022
+  #     webhook:
+  #       skipWebhookSSLVerification: false
+  #     eventListener:
+  #       # -- Enable EventListener
+  #       enabled: true
+  #       # -- EventListener resources
+  #       resources:
+  #         requests:
+  #           memory: "64Mi"
+  #           cpu: "50m"
+  #         limits:
+  #           memory: "128Mi"
+  #           cpu: "500m"
+  #       # -- Node labels for EventListener pod assignment
+  #       nodeSelector: {}
+  #       # -- Tolerations for EventListener pod assignment
+  #       tolerations: []
+  #       # -- Affinity for EventListener pod assignment
+  #       affinity: {}
+
+  #       ingress:
+  #         # -- Enable ingress controller resource
+  #         enabled: true
+  #         # -- Ingress annotations
+  #         annotations: {}
+  #         # -- Ingress TLS configuration
+  #         tls: []
 
 # SSO (OAuth2-proxy) configuration section
 # The section configures the OAuth2-proxy for single Sign-On (SSO) protection of application endpoints.

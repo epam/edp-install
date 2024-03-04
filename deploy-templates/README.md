@@ -58,6 +58,7 @@ A Helm chart for EDP Install
 | edp-tekton.dashboard.openshift_proxy.enabled | bool | `false` | Enable oauth-proxy to include authorization layer on tekton-dashboard. Default: flase |
 | edp-tekton.dashboard.readOnly | bool | `false` | Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false. |
 | edp-tekton.enabled | bool | `true` |  |
+| edp-tekton.gitServers | object | `{}` |  |
 | edp-tekton.tekton-cache.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore. Default: false |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for EDP installation, using External Secret Operator |
