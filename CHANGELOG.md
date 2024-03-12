@@ -10,18 +10,47 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.8.0"></a>
+## [v3.8.0] - 2024-03-12
 ### Features
 
+- Deploy Tekton resources for multiple Git Providers ([#166](https://github.com/epam/edp-install/issues/166))
+- Add nodeSelector, affinity, tolerations ([#164](https://github.com/epam/edp-install/issues/164))
+- Add option to parametrize the ssoRealmName value([#149](https://github.com/epam/edp-install/issues/149))
+- Add QuickLink Custom Resources ([#147](https://github.com/epam/edp-install/issues/147))
 - Enable ci-argocd secret provisioning by eso ([#134](https://github.com/epam/edp-install/issues/134))
 - Deploy default EDP components out of the box ([#133](https://github.com/epam/edp-install/issues/133))
 
 ### Bug Fixes
 
+- Fix ingress annotation in Tekton dashboard ([#143](https://github.com/epam/edp-install/issues/143))
 - Fix ESO key path for argocd-ci ([#134](https://github.com/epam/edp-install/issues/134))
 - Align tekton edpoint to service name ([#126](https://github.com/epam/edp-install/issues/126))
 
+### Code Refactoring
+
+- Remove edp-component-operator post EDPComponent CRD migration ([#144](https://github.com/epam/edp-install/issues/144))
+- Align values file for custom certificates ([#145](https://github.com/epam/edp-install/issues/145))
+- Merge sso and oauth2_proxy sections ([#145](https://github.com/epam/edp-install/issues/145))
+
 ### Routine
 
+- Update current development version ([#172](https://github.com/epam/edp-install/issues/172))
+- Align sonar quick link icon ([#171](https://github.com/epam/edp-install/issues/171))
+- Align gitServer structure ([#163](https://github.com/epam/edp-install/issues/163))
+- Align creation of external secret resources ([#166](https://github.com/epam/edp-install/issues/166))
+- Remove EDPComponent CRs ([#168](https://github.com/epam/edp-install/issues/168))
+- Add main-keycloak QuickLink ([#168](https://github.com/epam/edp-install/issues/168))
+- Add Nexus container registry example ([#167](https://github.com/epam/edp-install/issues/167))
+- Add link to guide for managing namespace ([#162](https://github.com/epam/edp-install/issues/162))
+- Add generic secretStore resource to use different ESO providers ([#155](https://github.com/epam/edp-install/issues/155))
+- Align external-secret to previus pattern ([#160](https://github.com/epam/edp-install/issues/160))
+- Add provider type for ESO SecretStore ([#155](https://github.com/epam/edp-install/issues/155))
+- Move awsRegion to dockerRegistry section ([#154](https://github.com/epam/edp-install/issues/154))
+- Do not create kaniko eso object if ecr registry([#153](https://github.com/epam/edp-install/issues/153))
+- Align values.yaml parameters ([#142](https://github.com/epam/edp-install/issues/142))
+- Update current development version ([#138](https://github.com/epam/edp-install/issues/138))
 - Update current development version ([#137](https://github.com/epam/edp-install/issues/137))
 - Align ESO Parameter Store path for argocd-ci ([#134](https://github.com/epam/edp-install/issues/134))
 - Temporary use hardcoded values for ESO ci-argocd ([#134](https://github.com/epam/edp-install/issues/134))
@@ -31,6 +60,38 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update the annotation and labels page ([#128](https://github.com/epam/edp-install/issues/128))
+- Add description for OIDC section in Portal ([#170](https://github.com/epam/edp-install/issues/170))
+- Align migration from Jenkins to Tekton ([#163](https://github.com/epam/edp-install/issues/163))
+- Update the QS guide as per feedback ([#165](https://github.com/epam/edp-install/issues/165))
+- Update the installation flow ([#163](https://github.com/epam/edp-install/issues/163))
+- Add label to associate an ingress with a specific GitServer ([#166](https://github.com/epam/edp-install/issues/166))
+- Update documentaton pages ([#163](https://github.com/epam/edp-install/issues/163))
+- Create the autotest coverage page ([#161](https://github.com/epam/edp-install/issues/161))
+- Update links for quickstart ([#119](https://github.com/epam/edp-install/issues/119))
+- Fix link for the Quick Start ([#119](https://github.com/epam/edp-install/issues/119))
+- Define name convention for ingress objects ([#159](https://github.com/epam/edp-install/issues/159))
+- Add description for secretManager parameter ([#158](https://github.com/epam/edp-install/issues/158))
+- Align ESO integration secrets list ([#26](https://github.com/epam/edp-install/issues/26))
+- Add a link to the ESO configuration in the values.yaml file ([#157](https://github.com/epam/edp-install/issues/157))
+- Quick Start link fix ([#119](https://github.com/epam/edp-install/issues/119))
+- Fix microsoft-teams-webhook-url-secret secret name ([#156](https://github.com/epam/edp-install/issues/156))
+- Update User Guide ([#148](https://github.com/epam/edp-install/issues/148))
+- Civo guide and registry minors ([#152](https://github.com/epam/edp-install/issues/152))
+- Create the Civo install guide  ([#152](https://github.com/epam/edp-install/issues/152))
+- Describe platform and subcomponents release channels ([#151](https://github.com/epam/edp-install/issues/151))
+- Update mkdocs-material version ([#146](https://github.com/epam/edp-install/issues/146))
+- Align OAuth2-Proxy page ([#145](https://github.com/epam/edp-install/issues/145))
+- Expand Configuration docs ([#141](https://github.com/epam/edp-install/issues/141))
+- Update Annotations and labels section with GitOps codebase ([#146](https://github.com/epam/edp-install/issues/146))
+- Bring minor fixes due to feedback ([#141](https://github.com/epam/edp-install/issues/141))
+- Update edp version in docs ([#141](https://github.com/epam/edp-install/issues/141))
+- Update the RELEASES md file ([#139](https://github.com/epam/edp-install/issues/139))
+- Add Quick Start video part 1 ([#140](https://github.com/epam/edp-install/issues/140))
+- How to restore CI CD after change registry ([#136](https://github.com/epam/edp-install/issues/136))
+- Remove extra variable from QS guide ([#119](https://github.com/epam/edp-install/issues/119))
+- Fix tekton-dashboard port in QS guide ([#119](https://github.com/epam/edp-install/issues/119))
+- Bump EDP version in QS guide ([#119](https://github.com/epam/edp-install/issues/119))
 - Fix port-forward command in QS guide ([#119](https://github.com/epam/edp-install/issues/119))
 - Fix helm repo name in Quick Start guide ([#119](https://github.com/epam/edp-install/issues/119))
 - Update the Quick Start guide ([#119](https://github.com/epam/edp-install/issues/119))
@@ -308,7 +369,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.5...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.8.0...HEAD
+[v3.8.0]: https://github.com/epam/edp-install/compare/v3.7.5...v3.8.0
 [v3.7.5]: https://github.com/epam/edp-install/compare/v3.7.4...v3.7.5
 [v3.7.4]: https://github.com/epam/edp-install/compare/v3.7.3...v3.7.4
 [v3.7.3]: https://github.com/epam/edp-install/compare/v3.7.2...v3.7.3
