@@ -84,7 +84,7 @@ A Helm chart for EDP Install
 | sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant. |
 | sso.affinity | object | `{}` | Affinity settings for pod assignment |
 | sso.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
-| sso.enabled | bool | `true` | Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment. |
+| sso.enabled | bool | `false` | Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment. |
 | sso.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
 | sso.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
 | sso.extraArgs | object | `{}` | Extra arguments to provide to the OAuth2-proxy |
