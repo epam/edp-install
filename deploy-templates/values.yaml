@@ -277,6 +277,8 @@ edp-headlamp:
   config:
     # -- base url path at which headlamp should run
     baseURL: ""
+    # -- Ensure that the specified client is associated with cluster OIDC integration.
+    # -- For detailed instructions, refer to: https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/, https://epam.github.io/edp-install/operator-guide/headlamp-oidc/
     oidc:
       # Enable OIDC integration. Default: false
       enabled: false

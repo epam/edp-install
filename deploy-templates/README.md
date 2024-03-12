@@ -39,10 +39,10 @@ A Helm chart for EDP Install
 | cd-pipeline-operator.tenancyEngine | string | `"none"` | Defines the type of the tenant engine that can be "none", "kiosk" or "capsule"; for Stages with external cluster tenancyEngine will be ignored. Default: none |
 | codebase-operator.enabled | bool | `true` |  |
 | edp-headlamp.config.baseURL | string | `""` | base url path at which headlamp should run |
+| edp-headlamp.config.oidc | object | `{"clientID":"","clientSecretKey":"clientSecret","clientSecretName":"keycloak-client-headlamp-secret","enabled":false,"issuerRealm":"","keycloakUrl":"https://keycloak.example.com","scopes":""}` | For detailed instructions, refer to: https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/, https://epam.github.io/edp-install/operator-guide/headlamp-oidc/ |
 | edp-headlamp.config.oidc.clientID | string | `""` | OIDC client ID |
 | edp-headlamp.config.oidc.clientSecretKey | string | `"clientSecret"` | OIDC client secret key |
 | edp-headlamp.config.oidc.clientSecretName | string | `"keycloak-client-headlamp-secret"` | OIDC client secret name |
-| edp-headlamp.config.oidc.enabled | bool | `false` |  |
 | edp-headlamp.config.oidc.issuerRealm | string | `""` | OIDC issuer realm |
 | edp-headlamp.config.oidc.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL |
 | edp-headlamp.config.oidc.scopes | string | `""` | OIDC scopes to be used |
