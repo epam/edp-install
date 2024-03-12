@@ -13,13 +13,15 @@ The table below contains all the labels used in EDP:
 | app.edp.epam.com/codebase           | PipelineRun          | `<codebase_name>`                                                       | Identifies the codebase associated with the PipelineRun.                  |
 | app.edp.epam.com/codebasebranch     | PipelineRun          | `<codebase_name>-<branch_name>`                                         | Identifies the codebase branch associated with the PipelineRun.           |
 | app.edp.epam.com/pipeline           | PipelineRun, Taskrun | `<environment_name>`                                                    | Used by the EDP Portal to display autotests status(on Deploy environment) |
-| app.edp.epam.com/pipelinetype       | PipelineRun, Taskrun | `autotestRunner`, `build`, `review`                                     | Identifies the type of the Pipeline.                                      |
+| app.edp.epam.com/pipelinetype       | PipelineRun, Taskrun | `autotestRunner`, `build`, `review`, `deploy`                           | Identifies the type of the Pipeline.                                      |
 | app.edp.epam.com/parentPipelineRun  | PipelineRun          | `<cd-pipeline-autotest-runner-name>`                                    | Used by the EDP Portal to display autotests status(on Deploy environment) |
 | app.edp.epam.com/stage              | PipelineRun, Taskrun | `<stage_name>`                                                          | Used by the EDP Portal to display autotests status(on Deploy environment) |
 | app.edp.epam.com/branch             | PipelineRun          | `<branch_name>`                                                         | Identifies the branch associated with the PipelineRun.                    |
 | app.edp.epam.com/codebaseType       | Codebase             | `system`,`application`                                                  | Identify the type of the codebase.                                        |
 | app.edp.epam.com/systemType         | Codebase             | `gitops`                                                                | Identify system repositories.                                             |
 | app.edp.epam.com/gitServer          | Ingress              | `<gitServer_name>`                                                      | Identifies the ingress associated with the GitServer.                     |
+| app.edp.epam.com/cdpipeline         | PipelineRun, Taskrun | `<cdpipeline>`                                                          | Identify cd pipeline associated with the PipelineRun                      |
+| app.edp.epam.com/cdstage            | PipelineRun, Taskrun | `<cd_stage_name>`                                                       | Identify cd stage associated with the PipelineRun                         |
 
 ### Labels Usage in Secrets
 
@@ -47,6 +49,7 @@ The table below displays what labels are used in specific Tekton pipelines:
 | build-pipeline           | app.edp.epam.com/codebase: `<codebase_name>` <br> app.edp.epam.com/codebasebranch: `<codebase_name>`-`<branch_name>`<br> app.edp.epam.com/pipelinetype: `build`                                                                             |
 | autotest-runner-pipeline | app.edp.epam.com/pipeline: `<pipeline_name>`<br> app.edp.epam.com/pipelinetype: `autotestRunner` <br> app.edp.epam.com/stage: `<stage>`                                                                                                     |
 | autotest-pipeline        | app.edp.epam.com/branch: `<branch>`<br> app.edp.epam.com/codebase: `<codebase_name>`<br> app.edp.epam.com/parentPipelineRun: `<cd_pipeline>`-`<stage>`<br> app.edp.epam.com/pipeline: `<cd_pipeline>`<br> app.edp.epam.com/stage: `<stage>` |
+| deploy                   | app.edp.epam.com/cdpipeline: `<cd_pipeline>`<br> app.edp.epam.com/cdstage: `<cd_stage_name>`<br> app.edp.epam.com/pipelinetype: `deploy`                                                                                                    |
 
 ### Pipeline Usage Example
 
@@ -99,6 +102,7 @@ The table below shows all the pipelines associated with the `demo` codebase:
 | gerrit-npm-react-app-build-default | Build  | app.edp.epam.com/codebase: demo<br> app.edp.epam.com/codebasebranch: demo-main<br> app.edp.epam.com/pipelinetype: build                                                                                   |
 | autotest-runner                    | Deploy | app.edp.epam.com/pipeline: mypipe<br> app.edp.epam.com/pipelinetype: autotestRunner<br> app.edp.epam.com/stage: dev                                                                                       |
 | autotests-gradle, autotests-maven  | Deploy | app.edp.epam.com/branch: master<br> app.edp.epam.com/codebase: autotests<br> app.edp.epam.com/parentPipelineRun: mypipe-dev-<hash\><br> app.edp.epam.com/pipeline: mypipe<br> app.edp.epam.com/stage: dev |
+| deploy                             | Deploy | app.edp.epam.com/cdpipeline: deploy<br>app.edp.epam.com/cdstage: deploy-dev<br> app.edp.epam.com/pipelinetype: deploy<br>                                                                                 |
 
 The list of all the tasks associated with the `demo` codebase is presented below:
 
