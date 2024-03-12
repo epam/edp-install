@@ -21,11 +21,11 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.18.0 |
-| @epamedp | codebase-operator | 2.21.0 |
-| @epamedp | edp-headlamp | 0.13.1 |
-| @epamedp | edp-tekton | 0.10.2 |
-| @epamedp | gerrit-operator | 2.19.0 |
+| @epamedp | cd-pipeline-operator | 2.19.0 |
+| @epamedp | codebase-operator | 2.22.1 |
+| @epamedp | edp-headlamp | 0.14.0 |
+| @epamedp | edp-tekton | 0.11.0 |
+| @epamedp | gerrit-operator | 2.20.1 |
 
 ## Values
 
@@ -79,7 +79,7 @@ A Helm chart for EDP Install
 | global.dockerRegistry.url | string | `""` | Defines registry endpoint URL. |
 | global.gitProviders | list | `["github"]` | Can be gerrit, github or gitlab. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"3.8.0-SNAPSHOT"` | EDP version |
+| global.version | string | `"3.8.0"` | EDP version |
 | quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant. |
 | sso.affinity | object | `{}` | Affinity settings for pod assignment |
