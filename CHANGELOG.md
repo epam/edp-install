@@ -10,6 +10,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.8.0"></a>
+## [v3.8.0] - 2024-03-12
 ### Features
 
 - Deploy Tekton resources for multiple Git Providers ([#166](https://github.com/epam/edp-install/issues/166))
@@ -33,6 +36,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#172](https://github.com/epam/edp-install/issues/172))
 - Align sonar quick link icon ([#171](https://github.com/epam/edp-install/issues/171))
 - Align gitServer structure ([#163](https://github.com/epam/edp-install/issues/163))
 - Align creation of external secret resources ([#166](https://github.com/epam/edp-install/issues/166))
@@ -365,7 +369,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.7.5...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.8.0...HEAD
+[v3.8.0]: https://github.com/epam/edp-install/compare/v3.7.5...v3.8.0
 [v3.7.5]: https://github.com/epam/edp-install/compare/v3.7.4...v3.7.5
 [v3.7.4]: https://github.com/epam/edp-install/compare/v3.7.3...v3.7.4
 [v3.7.3]: https://github.com/epam/edp-install/compare/v3.7.2...v3.7.3
