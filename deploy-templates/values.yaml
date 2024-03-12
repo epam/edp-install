@@ -454,7 +454,7 @@ edp-tekton:
 # - https://github.com/epam/edp-keycloak-operator
 sso:
   # -- Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment.
-  enabled: true
+  enabled: false
    # -- Defines Keycloak realm name that is used as the Identity Provider (IdP) realm
   realmName: "broker"
   # -- Keycloak URL.
