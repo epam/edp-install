@@ -11,6 +11,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v3.8.1"></a>
+## [v3.8.1] - 2024-03-12
+### Routine
+
+- Disable sso by default ([#172](https://github.com/epam/edp-install/issues/172))
+
+
 <a name="v3.8.0"></a>
 ## [v3.8.0] - 2024-03-12
 ### Features
@@ -369,7 +376,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.8.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.8.1...HEAD
+[v3.8.1]: https://github.com/epam/edp-install/compare/v3.8.0...v3.8.1
 [v3.8.0]: https://github.com/epam/edp-install/compare/v3.7.5...v3.8.0
 [v3.7.5]: https://github.com/epam/edp-install/compare/v3.7.4...v3.7.5
 [v3.7.4]: https://github.com/epam/edp-install/compare/v3.7.3...v3.7.4
