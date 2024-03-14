@@ -8,7 +8,7 @@ data:
   aws_region: {{ .Values.global.dockerRegistry.awsRegion }}
   {{- end }}
   edp_name: {{ .Release.Namespace }}
-  edp_version: {{.Values.global.version}}
+  edp_version: {{.Chart.Version}}
   dns_wildcard: {{ .Values.global.dnsWildCard }}
 kind: ConfigMap
 metadata:

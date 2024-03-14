@@ -4,8 +4,6 @@
 ##
 
 global:
-  # -- EDP version
-  version: "3.9.0-SNAPSHOT"
    # -- platform type that can be "kubernetes" or "openshift"
   platform: "kubernetes"
   # -- a cluster DNS wildcard name

@@ -79,7 +79,6 @@ A Helm chart for EDP Install
 | global.dockerRegistry.url | string | `""` | Defines registry endpoint URL. |
 | global.gitProviders | list | `["github"]` | Can be gerrit, github or gitlab. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
-| global.version | string | `"3.9.0-SNAPSHOT"` | EDP version |
 | quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant. |
 | sso.affinity | object | `{}` | Affinity settings for pod assignment |
