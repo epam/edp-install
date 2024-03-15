@@ -31,7 +31,7 @@ The example below illustrates how to use OAuth2-Proxy in practice when using the
 
     1. Run `helm upgrade` to update edp-install release:
     ```bash
-    helm upgrade --version <version> --set 'oauth2_proxy.enabled=true' edp-install --namespace edp
+    helm upgrade --version <version> --set 'sso.enabled=true' edp-install --namespace edp
     ```
     2. Check that OAuth2-Proxy is deployed successfully.
     3. Edit the Tekton dashboard Ingress annotation by adding `auth-signin` and `auth-url` of oauth2-proxy by `kubectl` command:

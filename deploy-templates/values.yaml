@@ -308,7 +308,7 @@ edp-tekton:
   dashboard:
     # -- Deploy Tekton Dashboard as a part of pipeline library when true. Default: true
     # -- WARNING: Default deployment of the dashboard does not involve any proxy and may be accessible to the public.
-    # -- To enable proxy protect use openshift_proxy or oauth2_proxy sections.
+    # -- To enable proxy protect use openshift_proxy or sso.enabled sections.
     # -- More details:
     # -- https://epam.github.io/edp-install/operator-guide/oauth2-proxy/
     enabled: true
@@ -318,8 +318,7 @@ edp-tekton:
 
     # -- Make it possible to use openshift as OIDC provider to hide tekton-dashboard.
     # -- Only for openshift deploy scenario,
-    # -- For EKS scenario - uncomment dashboard.ingress.annotations block and
-    # -- set the value of the oauth2_proxy.enable to true
+    # -- For EKS scenario - uncomment dashboard.ingress.annotations block
     # -- More details:
     # -- https://epam.github.io/edp-install/operator-guide/oauth2-proxy/?h=#enable-oauth2-proxy-on-tekton-dashboard
     openshift_proxy:
