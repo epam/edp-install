@@ -161,7 +161,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
       ...
       ```
 
-  Internal Gerrit server can be deployed as a result of EDP deployment. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the [Integrate GitHub/GitLab in Tekton](./import-strategy-tekton.md) page.
+  Internal Gerrit server can be deployed as a result of EDP deployment when the Gerrit is selected. For more details on how to integrate EDP with GitLab or GitHub instead of Gerrit, please refer to the [Integrate GitHub/GitLab in Tekton](./import-strategy-tekton.md) page.
 
 7. (Optional) Integrate platform with SonarQube:
 
