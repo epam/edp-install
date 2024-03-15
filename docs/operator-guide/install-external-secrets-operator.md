@@ -4,8 +4,8 @@ Inspect the prerequisites and the main steps to perform for enabling [External S
 
 ## Prerequisites
 
-* Kubectl version 1.23.0 is installed. Please refer to the [Kubernetes official website](https://v1-23.docs.kubernetes.io/releases/download/) for details.
-* [Helm](https://helm.sh) version 3.10.0+ is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases/tag/v3.10.2) on GitHub for details.
+* Kubectl version 1.29.0+ is installed. Please refer to the [Kubernetes official website](https://kubernetes.io/releases/download/) for details.
+* [Helm](https://helm.sh) version 3.14.0+ is installed. Please refer to the [Helm page](https://github.com/helm/helm/releases) on GitHub for details.
 
 ## Installation
 
@@ -16,7 +16,7 @@ helm repo add external-secrets https://charts.external-secrets.io
 
 helm install external-secrets \
    external-secrets/external-secrets \
-    --version 0.8.3 \
+    --version 0.9.9 \
     -n external-secrets \
     --create-namespace
 ```
