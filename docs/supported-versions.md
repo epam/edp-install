@@ -14,13 +14,16 @@ gantt
     title Release Schedule and Lifecycle
 
     section (Supported)
-    EDP 3.7 Release: crit, r37, 2023-12-15, 97d
+    KubeRocketCI 3.8 Release: active, r38, 2024-3-12, 64d
 
     section (Supported)
-    EDP 3.6 Release: active, r36, 2023-11-03, 139d
+    EDP 3.7 Release: crit, r37, 2023-12-15, 152d
 
     section (Supported)
-    EDP 3.5 Release: active, r35, 2023-09-21, 183d
+    EDP 3.6 Release: active, r36, 2023-11-03, 194d
+
+    section (Unsupported)
+    EDP 3.5 Release: r35, 2023-09-21, 174d
 
     section (Unsupported)
     EDP 3.4 Release: r34, 2023-07-18, 2023-12-15
@@ -31,8 +34,6 @@ gantt
     section (Unsupported)
     EDP 3.2 Release: r32, 2023-03-08, 2023-09-21
 
-    section (Unsupported)
-    EDP 3.1 Release: r31, 2023-01-11, 2023-07-18
 ```
 
 By concentrating our support on the last three versions, we prioritize staying current with evolving technology landscapes. This enables us to swiftly adapt to advancements in Kubernetes and OpenShift environments, incorporating the latest enhancements, fixes, and optimizations into our platform.
@@ -46,6 +47,7 @@ Get acquainted with the list of the latest releases and component versions on wh
 
 |[EDP Release Version](https://github.com/epam/edp-install/blob/master/RELEASES.md)|Release Date|[EKS Version](https://aws.amazon.com/eks/)|[OpenShift Version](https://github.com/okd-project/okd/releases)|
 |:-:|:-:|:-:|:-:|
+|3.8 |Mar 12, 2024|1.26|4.12|
 |3.7 |Dec 15, 2023|1.26|4.12|
 |3.6 |Nov 03, 2023|1.26|4.12|
 |3.5 |Sep 21, 2023|1.26|4.12|
