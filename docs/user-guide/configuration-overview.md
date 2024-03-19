@@ -1,6 +1,6 @@
 # Configuration Overview
 
-The Configuration tab of the EDP Portal is designed to integrate EPAM Delivery Platform with third-party components. In this page you will get a brief overview of all the sections presented in the Configuration tab.
+The Configuration tab of the KubeRocketCI portal is designed to integrate KubeRocketCI with third-party components. In this page you will get a brief overview of all the sections presented in the Configuration tab.
 
 ## Configuration Features
 

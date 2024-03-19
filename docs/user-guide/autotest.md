@@ -7,7 +7,7 @@ This section describes the subsequent possible actions that can be performed wit
 As soon as the autotest is successfully provisioned, the following will be created:
 
 - An Autotest Codebase type will appear in the Codebase list of the Components section.
-- With the **Create** strategy, a new project will be generated on GitHub or another integrated VCS. When **Clone** is chosen, the repository will be forked from the original and copied to the EDP-integrated repository. If **Import** is selected, the platform connects to the chosen repository.
+- With the **Create** strategy, a new project will be generated on GitHub or another integrated VCS. When **Clone** is chosen, the repository will be forked from the original and copied to the KubeRocketCI-integrated repository. If **Import** is selected, the platform connects to the chosen repository.
 
 !!! info
     To navigate quickly to Tekton, Version Control System, SonarQube, Nexus, and other resources, click the **Overview** section on the navigation bar and hit the necessary link.
@@ -16,24 +16,18 @@ The added autotest will be listed in the Autotests list allowing you to do the f
 
 !![Autotests page](../assets/user-guide/edp-portal-inspect-autotest-menu.png "Autotests page")
 
-* **Autotest status** - displays the Git Server status. Can be red or green depending on EDP Portal managed to connect to the Git Server with the specified credentials or not.
-
-* **Autotest name (clickable)** - displays the Git Server name set during the Git Server creation.
-
-* **Open documentation** - opens the documentation that leads to this page.
-
-* **Enable filtering** - enables filtering by Git Server name and namespace where this custom resource is located in.
-
+* **Autotest status** - displays the autotest status. Can be red or green depending on KubeRocketCI portal managed to connect to the Git Server with the specified credentials or not.
+* **Autotest name (clickable)** - displays the autotest name set during the autotest creation.
+* **Open documentation** - opens the autotest related documentation page.
+* **Enable filtering** - enables filtering by autotest name and namespace where this custom resource is located in.
 * **Create new autotest** - displays the **Create new component** menu.
-
 * **Edit autotest** - edit the autotest by selecting the options icon next to its name in the autotests list, and then selecting **Edit**. For details see the [Edit Existing Autotest](#edit-existing-autotest) section.
-
 * **Delete autotest** - remove autotest by clicking the vertical ellipsis button and then selecting **Delete**.
 
   !!! note
       The autotest that is used in a CD pipeline cannot be removed.
 
-There are also options to sort the applications:
+There are also options to sort the autotests:
 
 * Sort the existing autotests in a table by clicking the sorting icons in the table header. Sort the autotests alphabetically by their name, language, build tool, framework, and CI tool. You can also sort the autotests by their status: Created, Failed, or In progress.
 
@@ -41,7 +35,7 @@ There are also options to sort the applications:
 
 ## Edit Existing Autotest
 
-EDP Portal provides the ability to enable, disable or edit the Jira Integration functionality for autotests.
+KubeRocketCI portal provides the ability to enable, disable or edit the Jira Integration functionality for autotests.
 
 1. To edit an autotest directly from the Autotests overview page or when viewing the autotest data:
 

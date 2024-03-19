@@ -1,12 +1,12 @@
 # Add Autotest
 
-EDP Portal allows you to clone an existing repository with the autotest to your Version Control System (VCS), or using an external repository and adding an autotest for further running in stages or using them as quality gates for applications. When an autotest is cloned, the system automatically generates a corresponding repository within the integrated VCS. You can create an autotest [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
+KubeRocketCI portal allows you to clone an existing repository with the autotest to your Version Control System (VCS), or using an external repository and adding an autotest for further running in stages or using them as quality gates for applications. When an autotest is cloned, the system automatically generates a corresponding repository within the integrated VCS. You can create an autotest [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
 !!! info
     Please refer to the [Add Application](add-application.md) section for the details on how to add an application codebase type.
     For the details on how to use autotests as quality gates, please refer to the [Stages Menu](add-cd-pipeline.md#the-stages-menu) section of the [Add Environment](add-cd-pipeline.md) documentation.
 
-To add an autotest, navigate to the **Components** section on the navigation bar and click **+ Create**:
+To add an autotest, navigate to the **Components** section on the navigation bar and click **+ Create component**:
 
   !![Create new autotest](../assets/user-guide/create_new_codebase.png "Create new autotest")
 
@@ -14,9 +14,9 @@ Once clicked, the **Create new component** dialog will appear, then select **Aut
 
   !![Create new autotest](../assets/user-guide/create_new_autotest.png "Create new autotest")
 
-* **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field and specify the credentials if needed.
+* **Clone project** – clones the indicated repository into KubeRocketCI. While cloning the existing repository, it is required to fill in the **Repository URL** field and specify the credentials if needed.
 
-* **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `/epmd-edp/examples/basic/edp-auto-tests-simple-example`.
+* **Import project** - allows using existing VCS repository to integrate with KubeRocketCI. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `/epmd-edp/examples/basic/edp-auto-tests-simple-example`.
 
   !!! note
       In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
@@ -94,11 +94,11 @@ and have a respective label in the **Fix Version** field.
 
 * **Jira Server** - the integrated Jira server with related Jira tasks.
 
-* **Specify the pattern to find a Jira ticket number in a commit message** - based on this pattern, the value from EDP will be displayed in Jira.
+* **Specify the pattern to find a Jira ticket number in a commit message** - based on this pattern, the value from KubeRocketCI will be displayed in Jira.
 
   !![Mapping field name](../assets/user-guide/edp-portal-autotest-advanced-mapping.png "Mapping field name")
 
-* **Mapping field name** - the section where the additional Jira fields are specified the names of the Jira fields that should be filled in with attributes from EDP:
+* **Mapping field name** - the section where the additional Jira fields are specified the names of the Jira fields that should be filled in with attributes from KubeRocketCI:
 
   * Select the name of the field in a Jira ticket. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 
@@ -106,7 +106,7 @@ and have a respective label in the **Fix Version** field.
 
   * Enter Jira pattern for the field name:
 
-    * For the **Fix Version/s** field, select the **EDP_VERSION** variable that represents an EDP upgrade version, as in _2.7.0-SNAPSHOT_.Combine variables to make the value more informative. For example, the pattern **EDP_VERSION-EDP_COMPONENT** will be displayed as _2.7.0-SNAPSHOT-nexus-operator_ in Jira.
+    * For the **Fix Version/s** field, select the **EDP_VERSION** variable that represents an KubeRocketCI upgrade version, as in _2.7.0-SNAPSHOT_.Combine variables to make the value more informative. For example, the pattern **EDP_VERSION-EDP_COMPONENT** will be displayed as _2.7.0-SNAPSHOT-nexus-operator_ in Jira.
     * For the **Component/s** field select the **EDP_COMPONENT** variable that defines the name of the existing repository. For example, _nexus-operator_.
     * For the **Labels** field select the **EDP_GITTAG**variable that defines a tag assigned to the commit in Git Hub. For example, _build/2.7.0-SNAPSHOT.59_.
 

@@ -1,6 +1,6 @@
 # Components Overview
 
-In this section, we will introduce you to the different types of codebases and strategies for onboarding codebases onto the EDP.
+In this section, we will introduce you to the different types of codebases and strategies for onboarding codebases onto the KubeRocketCI.
 
 ## Component and Codebase
 
@@ -18,7 +18,7 @@ Codebases are Kubernetes custom resources (CR) that represent the state of the c
 
 ## Types
 
-EDP accommodates a variety of codebase types, each serving a specific purpose in the development process. The codebase types available in EDP are:
+KubeRocketCI accommodates a variety of codebase types, each serving a specific purpose in the development process. The codebase types available in KubeRocketCI are:
 
 - **Application**: the codebase that contains the source code and manifests of application that can be deployed to Kubernetes clusters. One can use different languages, frameworks, and build tools to develop application.
 
@@ -32,12 +32,12 @@ EDP accommodates a variety of codebase types, each serving a specific purpose in
 
 The platform supports the following strategies to onboard codebases on the platform:
 
-- **Create** from template - This strategy allows to create a new codebase from a predefined template that matches application language, build tool, and framework. One can choose from a variety of templates that cover different technologies and use cases. This strategy is recommended for projects that start developing their applications from scratch or want to follow the best practices of EDP.
+- **Create** from template - This strategy allows to create a new codebase from a predefined template that matches application language, build tool, and framework. One can choose from a variety of templates that cover different technologies and use cases. This strategy is recommended for projects that start developing their applications from scratch or want to follow the best practices of KubeRocketCI.
 
-- **Import** project - This strategy allows to import an existing codebase from a Git server that is integrated with EDP. One can select the Git server and the repository to import, and EDP will replicate it to the platform and perform configure. This strategy is suitable for projects that already have a codebase on a Git server and want to leverage the benefits of EDP.
+- **Import** project - This strategy allows to import an existing codebase from a Git server that is integrated with KubeRocketCI. One can select the Git server and the repository to import, and KubeRocketCI will replicate it to the platform and perform configure. This strategy is suitable for projects that already have a codebase on a Git server and want to leverage the benefits of KubeRocketCI.
 
-- **Clone** project – This strategy allows to clone an existing codebase from any Git repository that is accessible via HTTPS. One can provide the repository URL and EDP will clone it to the platform and configure it. This strategy is useful for projects that want to copy a codebase from an external source and customize it for their needs.
+- **Clone** project – This strategy allows to clone an existing codebase from any Git repository that is accessible via HTTPS. One can provide the repository URL and KubeRocketCI will clone it to the platform and configure it. This strategy is useful for projects that want to copy a codebase from an external source and customize it for their needs.
 
 ## Codebase Operator
 
-The [codebase-operator](https://github.com/epam/edp-codebase-operator) is responsible for creating and managing the codebase custom resource on the EPAM Delivery Platform. The codebase CR defines the metadata and configuration of the codebase, such as the name, description, type, repository URL, branch, path, CD tool, etc. The codebase-operator watches for changes in the codebase CR and synchronizes them with the corresponding Git repository and EDP components. [Learn more](https://github.com/epam/edp-codebase-operator/blob/master/docs/api.md) about the codebase-operator and the custom resource (CR) API.
+The [codebase-operator](https://github.com/epam/edp-codebase-operator) is responsible for creating and managing the codebase custom resource on the  KubeRocketCI. The codebase CR defines the metadata and configuration of the codebase, such as the name, description, type, repository URL, branch, path, CD tool, etc. The codebase-operator watches for changes in the codebase CR and synchronizes them with the corresponding Git repository and KubeRocketCI components. [Learn more](https://github.com/epam/edp-codebase-operator/blob/master/docs/api.md) about the codebase-operator and the custom resource (CR) API.

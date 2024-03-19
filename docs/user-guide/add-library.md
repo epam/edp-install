@@ -1,8 +1,8 @@
 # Add Library
 
-EDP Portal allows you to create a library, clone an existing repository with the library to your Version Control System (VCS), or using an external repository and importing a library to the environment. When a library is created or cloned, the system automatically generates a corresponding repository within the integrated VCS. You can create a library [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
+KubeRocketCI portal allows you to create a library, clone an existing repository with the library to your Version Control System (VCS), or using an external repository and importing a library to the environment. When a library is created or cloned, the system automatically generates a corresponding repository within the integrated VCS. You can create a library [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
-To add a library, navigate to the **Components** section on the navigation bar and click **+ Create**:
+To add a library, navigate to the **Components** section on the navigation bar and click **+ Create component**:
 
   !![Create new library](../assets/user-guide/create_new_codebase.png "Create new library")
 
@@ -14,12 +14,12 @@ In the **Create new component** menu, select the necessary configuration strateg
 
 * **Create from template** – creates a project on the pattern in accordance with a library language, a build tool, and a framework.
 
-* **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `epmd-edp/python-python-flask`.
+* **Import project** - allows using existing VCS repository to integrate with KubeRocketCI. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `epmd-edp/python-python-flask`.
 
 !!! note
     In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
 
-* **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field and specify the **Repository credentials** field if needed:
+* **Clone project** – clones the indicated repository into KubeRocketCI. While cloning the existing repository, it is required to fill in the **Repository URL** field and specify the **Repository credentials** field if needed:
 
   !![Clone library](../assets/user-guide/edp-portal-clone-library.png "Clone library")
 
@@ -63,8 +63,8 @@ In our example, we will use the **Create from template** strategy:
     * Python - selecting Python allows using the Python v.3.8, FastAPI, Flask.
     * Groovy-pipeline - selecting Groovy-pipeline allows having the ability to customize a stages logic.
     * Terraform - selecting Terraform allows using the Terraform different versions via the **Terraform version manager** ([tfenv](https://github.com/tfutils/tfenv#usage)).
-        EDP supports all actions available in Terraform, thus providing the ability to modify the virtual infrastructure and launch some checks with the help of linters.
-        For details, please refer to the [Use Terraform Library in EDP](../user-guide/terraform-stages.md) page.
+        KubeRocketCI supports all the actions available in Terraform, thus providing the ability to modify the virtual infrastructure and launch some checks with the help of linters.
+        For details, please refer to the [Use Terraform Library in KubeRocketCI](../user-guide/terraform-stages.md) page.
     * Rego - this option allows using Rego code language with an Open Policy Agent (OPA) Library. For details, please refer to the [Use Open Policy Agent](../user-guide/opa-stages.md) page.
     * Container - this option allows using the Kaniko tool for building the container images from a Dockerfile.
     * Helm - this option allows using the [chart testing lint](https://github.com/helm/chart-testing) (Pipeline) for Helm charts or using Helm chart as a set of other Helm charts organized according to the [example](https://github.com/argoproj/argo-helm/tree/main).
@@ -112,11 +112,11 @@ and have a respective label in the **Fix Version** field.
 
 * **Jira Server** - the integrated Jira server with related Jira tasks.
 
-* **Specify the pattern to find a Jira ticket number in a commit message** - based on this pattern, the value from EDP will be displayed in Jira.
+* **Specify the pattern to find a Jira ticket number in a commit message** - based on this pattern, the value from KubeRocketCI will be displayed in Jira.
 
   !![Mapping fields](../assets/user-guide/edp-portal-library-advanced-mapping.png "Mapping fields")
 
-* **Mapping field name** - the section where the additional Jira fields are specified the names of the Jira fields that should be filled in with attributes from EDP:
+* **Mapping field name** - the section where the additional Jira fields are specified the names of the Jira fields that should be filled in with attributes from KubeRocketCI:
 
   * Select the name of the field in a Jira ticket. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 
@@ -142,6 +142,6 @@ After the complete adding of the library, inspect the [Library Overview](library
 * [Adjust VCS Integration With Jira](../operator-guide/jira-gerrit-integration.md)
 * [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md)
 
-[//]: # (* [Use Terraform Library in EDP]&#40;terraform-stages.md&#41;)
+[//]: # (* [Use Terraform Library in KubeRocketCI]&#40;terraform-stages.md&#41;)
 
 [//]: # (* [Use Open Policy Agent Library in EDP]&#40;opa-stages.md&#41;)

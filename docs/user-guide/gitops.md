@@ -8,17 +8,13 @@ The purpose of the GitOps section is to provide users with the ability to custom
 
 ## Add GitOps Repository
 
-To add a GitOps repository, follow the steps below:
+GitOps repository is added in two steps:
 
-1. Navigate to `EDP` -> `Components` -> `GitOps`. Click the **+ Add GitOps Repository** button:
-
-  !![Add GitOps repository](../assets/user-guide/add_new_gitops_repo.png "Add GitOps repository")
-
-2. Fill in the required fields (in case VCS supports nesting) and click **Save**:
+1. Navigate to **KubeRocketCI** -> **Components** -> **GitOps**. Fill in the required fields (in case VCS supports nesting) and click **Save**:
 
   !![Required fields](../assets/user-guide/gitops_required_fields.png "Required fields")
 
-3. Check the GitOps repository connected to the platform:
+2. Check the GitOps repository connected to the platform:
 
   !![System Codebase](../assets/user-guide/gitops_repo_added.png "System Codebase")
 

@@ -8,6 +8,12 @@ The added cluster will be listed in the clusters list allowing you to do the fol
 
 !![Clusters list](../assets/user-guide/edp-portal-cluster-overview.png "Clusters list")
 
+* **Cluster status** - displays the cluster status. Can be red or green depending on if the KubeRocketCI portal managed to connect to the cluster host with the specified credentials or not.
+* **Open documentation** - opens the cluster related documentation page.
+* **Add a new cluster** - displays the cluster creation form.
+* **Cluster properties** - shows the specified cluster properties.
+* **Delete cluster** - remove cluster by clicking the recycle bin icon.
+
 ## View Authentication Data
 
 To view authentication data that is used to log in to the cluster, run the `kubectl describe` command:

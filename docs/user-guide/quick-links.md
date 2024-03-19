@@ -1,12 +1,12 @@
 # Manage Quick Links
 
-The Links section is designed to store all the component references in one place. Additional feature is to display these references directly in the [Overview](index.md) page of the EDP Portal. Some of the links are also located in the application details and stage details pages. Integrating some of the tools will also make these links clickable.
+The Links section is designed to store all the component references in one place. Additional feature is to display these references directly in the [Overview](index.md) page of the KubeRocketCI portal. Some of the links are also located in the application details and stage details pages. Integrating some of the tools will also make these links clickable.
 
 ## Add Quick Link
 
 To create a Quick Link, follow the steps below:
 
-1. Navigate to `EDP Portal` -> `EDP` -> `Configuration` -> `Links` and click the **+ Create** button:
+1. Navigate to **KubeRocketCI** -> **Configuration** -> **Links** and click the **+ Create Link** button:
 
   !![Links section](../assets/user-guide/links_section.png "Links section")
 
@@ -22,7 +22,7 @@ To create a Quick Link, follow the steps below:
 
 To edit a Quick Link, follow the steps below:
 
-1. Navigate to `EDP Portal` -> `EDP` -> `Configuration` -> `Links`. Click the three-dot menu and select **Edit**:
+1. Navigate to **KubeRocketCI** -> **Configuration** -> **Links**. Click the three-dot menu and select **Edit**:
 
   !![Edit link button](../assets/user-guide/edit_link_button.png "Edit link button")
 
@@ -34,7 +34,7 @@ To edit a Quick Link, follow the steps below:
 
 Quick Links are deleted the following way:
 
-1. Navigate to `EDP Portal` -> `EDP` -> `Configuration` -> `Links`. Click the three-dot menu and select **Delete**:
+1. Navigate to **KubeRocketCI** -> **Configuration** -> **Links**. Click the three-dot menu and select **Delete**:
 
   !![Delete link button](../assets/user-guide/delete_link_button.png "Delete link button")
 

@@ -1,8 +1,8 @@
 # Add Infrastructure
 
-EDP Portal allows you to create an application, clone an existing repository with the application to your Version Control System (VCS), or using an external repository and importing an application to the environment. When an application is created or cloned, the system automatically generates a corresponding repository within the integrated Version Control System. The functionality of the Infrastructure codebase type is to create resources in cloud provider. You can create an Infrastructure [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
+KubeRocketCI portal allows you to create an application, clone an existing repository with the application to your Version Control System (VCS), or using an external repository and importing an application to the environment. When an application is created or cloned, the system automatically generates a corresponding repository within the integrated Version Control System. The functionality of the Infrastructure codebase type is to create resources in cloud provider. You can create an Infrastructure [in YAML](#YAML) or [via the two-step menu](#menu) in the dialog.
 
-To add an infrastructure, navigate to the **Components** section on the navigation bar and click **+ Create**:
+To add an infrastructure, navigate to the **Components** section on the navigation bar and click **+ Create component**:
 
   !![Create new infrastructure](../assets/user-guide/create_new_codebase.png "Create new infrastructure")
 
@@ -14,12 +14,12 @@ In the **Create new component** menu, select the necessary configuration strateg
 
 * **Create from template** – creates a project on the pattern in accordance with an infrastructure language, a build tool, and a framework.
 
-* **Import project** - allows using existing VCS repository to integrate with EDP. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `epmd-edp/python-python-flask`.
+* **Import project** - allows using existing VCS repository to integrate with KubeRocketCI. While importing the existing repository, select the Git server from the drop-down list and define the relative path to the repository, such as `epmd-edp/python-python-flask`.
 
 !!! note
     In order to use the **Import project** strategy, make sure to adjust it with the [Integrate GitLab/GitHub With Tekton](../operator-guide/import-strategy-tekton.md) page.
 
-* **Clone project** – clones the indicated repository into EPAM Delivery Platform. While cloning the existing repository, it is required to fill in the **Repository URL** field and specify the **Repository credentials** field if needed:
+* **Clone project** – clones the indicated repository into KubeRocketCI. While cloning the existing repository, it is required to fill in the **Repository URL** field and specify the **Repository credentials** field if needed:
 
   !![Clone infrastructure](../assets/user-guide/clone_infrastructure.png "Clone infrastructure")
 
@@ -95,11 +95,11 @@ and have a respective label in the **Fix Version** field.
 
 - **Jira Server** - the integrated Jira server with related Jira tasks.
 
-- **Specify the pattern to find a Jira ticket number in a commit message** - based on this pattern, the value from EDP will be displayed in Jira.
+- **Specify the pattern to find a Jira ticket number in a commit message** - based on this pattern, the value from KubeRocketCI will be displayed in Jira.
 
   !![Mapping field name](../assets/user-guide/edp-portal-advanced-mapping-infrastructure.png "Mapping fields")
 
-- **Mapping field name** - the section where the additional Jira fields are specified the names of the Jira fields that should be filled in with attributes from EDP:
+- **Mapping field name** - the section where the additional Jira fields are specified the names of the Jira fields that should be filled in with attributes from KubeRocketCI:
 
   * Select the name of the field in a Jira ticket. The available fields are the following: *Fix Version/s*, *Component/s* and *Labels*.
 

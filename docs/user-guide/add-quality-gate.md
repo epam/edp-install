@@ -1,6 +1,6 @@
 # Add Quality Gate
 
-This section describes how to use quality gate in EDP and how to customize the quality gate for the CD pipeline with the selected build version of the promoted application between stages.
+This section describes how to use quality gate in KubeRocketCI and how to customize the quality gate for the CD pipeline with the selected build version of the promoted application between stages.
 
 ## Apply New Quality Gate to Pipelines
 Quality gate pipeline is a usual Tekton pipeline but with a specific label: `app.edp.epam.com/pipelinetype: deploy`. To add and apply the quality gate to your pipelines, follow the steps below:

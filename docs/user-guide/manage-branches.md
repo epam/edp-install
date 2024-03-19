@@ -48,7 +48,7 @@ In order to build branch from the latest commit, do the following:
 
 The pipeline run status is displayed near the branch name in the **Branches** block:
 
-  !![Pipeline run status in EDP Portal](../assets/user-guide/edp-portal-pipeline-run-status.png "Pipeline run status in EDP Portal")
+  !![Pipeline run status in KubeRocketCI portal](../assets/user-guide/edp-portal-pipeline-run-status.png "Pipeline run status in KubeRocketCI portal")
 
 The corresponding item appears on the **Tekton Dashboard** in the **PipelineRuns** section:
 
@@ -67,7 +67,7 @@ The tree diagram window is presented below:
 !!! note
     The default **master/main** branch cannot be removed.
 
-In order to delete the added branch with the corresponding record in the EDP Portal database, do the following:
+In order to delete the added branch with the corresponding record in the KubeRocketCI portal database, do the following:
 
 1. Navigate to the **Branches** block by clicking the component name link in the components list.
 2. Select the **Actions** icon related to the necessary branch and then click **Delete**:

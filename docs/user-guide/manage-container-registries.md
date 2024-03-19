@@ -1,6 +1,6 @@
 # Manage Container Registries
 
-This guide provides instructions on integrating the container registry with the EPAM Delivery Platform.
+This guide provides instructions on integrating the container registry with the KubeRocketCI.
 
 ## Supported Registry Providers
 
@@ -12,12 +12,13 @@ The following table displays the registry services supported for both OpenShift 
 |DockerHub|+|+|
 |Harbor|+|+|
 |OpenShift (OCR)|+|-|
+|Nexus|+|+|
 
 ## Add Container Registry
 
-Follow a three-step process to integrate a container registry in EDP:
+Follow a three-step process to integrate a container registry in KubeRocketCI:
 
-1. In the `EDP Portal` main menu, navigate to `EDP` -> `Configuration` -> `Registry`:
+1. In the **KubeRocketCI** -> **Configuration** -> **Registry**:
 
   !![Registry settings](../assets/operator-guide/container-registry-list.png "Registry settings")
 
@@ -47,7 +48,7 @@ The required fields vary depending on which container registry is chosen:
       |Registry Space|The unique identifier/name of the user or company linked to your DockerHub account.|
       |User|The user account id or community user account id with push permission.|
       |Password/Token|Provide the [Password/Token](https://docs.docker.com/security/for-developers/access-tokens/) corresponding to your docker hub account. It is recommended to use Token for security purposes.|
-      |Checkbox/Use the Push Account's credentials|Check this to use the same account for pulling and pushing operations. If unchecked, please enter the user account id and Password/Token for your DockerHub account or community user account id with pull permission.|
+      |Checkbox/Use the Push Account's credentials|Check this to use the same account for pulling and pushing operations. If unchecked, please enter the user account ID and Password/Token for your DockerHub account or community user account ID with pull permission.|
 
 === "Harbor"
 
@@ -57,9 +58,9 @@ The required fields vary depending on which container registry is chosen:
       |:-|:-|
       |Registry Endpoint|Enter Harbor registry endpoint URL, for example, registry.example.com.|
       |Registry Space|The project name in registry.|
-      |User|Provide the [robot account](../operator-guide/container-registry-harbor-integration-tekton-ci.md#set-up-robot-account) name with with push permissions.|
+      |User|Provide the [robot account](../operator-guide/container-registry-harbor-integration-tekton-ci.md#set-up-robot-account) name with push permissions.|
       |Password/Token|Provide the [secret](../operator-guide/container-registry-harbor-integration-tekton-ci.md#set-up-robot-account) corresponding to your harbor account.|
-      |Checkbox/Use the Push Account's credentials|Check this to use the same account for pulling and pushing operations. Provide the robot account name with with pull permissions.|
+      |Checkbox/Use the Push Account's credentials|Check this to use the same account for pulling and pushing operations. Provide the account name with pull permissions.|
 
 === "OpenShift"
 
@@ -71,14 +72,25 @@ The required fields vary depending on which container registry is chosen:
       |Project|The project name in registry.|
       |Password/Token|Supply the [password](https://docs.openshift.com/container-platform/4.2/authentication/identity_providers/configuring-htpasswd-identity-provider.html#identity-provider-htpasswd-update-users_configuring-htpasswd-identity-provider) for the user who has pull authorization privileges in your OpenShift container image registry.|
 
+=== "Nexus"
+
+      !![Nexus settings](../assets/operator-guide/container-registry-nexus.png "Nexus settings")
+
+      |Fields|Description|
+      |:-|:-|
+      |Registry Endpoint|Nexus service registry endpoint URL (e.g., image-registry.nexus-image-registry.svc:5000).|
+      |Repository|Specify the Nexus repository that corresponds to your project.|
+      |User|Provide the username with push permissions.|
+      |Password/Token|Enter the confidential combination used for authenticating your access to the container registry.|
+
 ## Remove Container Registry
 
-To remove container registry integration from EDP, follow the steps below:
+To remove container registry integration from KubeRocketCI, follow the steps below:
 
 !!! warning
     Proceed with caution, removing registry settings might disrupt your CI/CD process. All new components created after changing the registry such as Components and Environments will start working out of the box. To work with existing codebases and pipelines familiarize with the [change container registry guide](../operator-guide/container-registries.md).
 
-  1. In the `EDP Portal` main menu, navigate to `EDP` -> `Configuration` -> `Registry`.
+  1. In the **KubeRocketCI** -> **Configuration** -> **Registry**.
 
   2. Click the `Reset registry` button, type the `confirm` word and then click `Confirm`:
 

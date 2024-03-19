@@ -1,6 +1,6 @@
 # Package Registry
 
-This pages describes the supported package registry providers and provides detailed instruction on how to adjust configurations to work properly with these package registry providers.
+This page describes the supported package registry providers and provides detailed instruction on how to adjust configurations to work properly with these package registry providers.
 
 ## Supported Package Registry Providers
 
