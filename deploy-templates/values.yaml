@@ -500,6 +500,8 @@ sso:
   #    subPath: CA.crt
 
   ingress:
+    # -- Enable ingress controller resource
+    enabled: true
     # -- Additional ingress annotations
     annotations: {}
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`

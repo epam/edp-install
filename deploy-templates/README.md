@@ -93,6 +93,7 @@ A Helm chart for EDP Install
 | sso.image.repository | string | `"quay.io/oauth2-proxy/oauth2-proxy"` | OAuth2-proxy image repository |
 | sso.image.tag | string | `"v7.4.0"` | OAuth2-proxy image tag |
 | sso.ingress.annotations | object | `{}` | Additional ingress annotations |
+| sso.ingress.enabled | bool | `true` | Enable ingress controller resource |
 | sso.ingress.ingressClassName | string | `""` | Defines which ingress controller will implement the resource, e.g. nginx |
 | sso.ingress.pathType | string | `"Prefix"` | Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific` |
 | sso.ingress.tls | list | `[]` | Ingress TLS configuration |
