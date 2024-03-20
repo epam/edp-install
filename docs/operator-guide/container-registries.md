@@ -51,6 +51,12 @@ The EPAM Delivery Platform uses `CodebaseImageStream` custom resource to define 
         kubectl patch codebaseimagestream <name> -n edp --type='json' -p='[{"op": "replace", "path": "/spec/imageName", "value": "<Registry Endpoint>/<Project>/<codebase name>}"}]'
         ```
 
+  === "Nexus"
+
+        ```bash
+        kubectl patch codebaseimagestream <name> -n edp --type='json' -p='[{"op": "replace", "path": "/spec/imageName", "value": "<Registry Endpoint>/<Registry Space>/<codebase name>}]'
+        ```
+
 If necessary, update the registry credentials for the existing `CD pipelines` by copying the `regcred` secret from the `edp` namespace to all the namespaces managed by the platform. To get the list of the namespaces, run the following command:
 
 ```bash
