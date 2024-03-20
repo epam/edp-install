@@ -9,8 +9,13 @@ To initiate the installation process, navigate to our dedicated [AWS Marketplace
 
 ## Prerequisites
 
+!!! Notice
+    - A basic understanding of AWS services and navigation is preferred to facilitate smoother setup and deployment processes. If you are new to AWS, please refer to the [AWS Documentation](https://docs.aws.amazon.com/index.html) for detailed information on the services and their usage.
+    - Understanding of Kubernetes: Knowledge of Kubernetes concepts and architecture is recommended for effective management and operation of clusters.
+
 Please familiarize yourself with the [Prerequisites](prerequisites.md) page before deploying the product. To perform a minimal installation, ensure that you meet the following requirements:
 
+* The AWS Elastic Kubernetes Service (EKS) cluster is available for deployment. For detailed instructions on creating a new cluster, please consult the [AWS EKS Cluster Creation Guide](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html). Additionally, you can refer to our [EKS Deployment Guide](deploy-aws-eks.md) for step-by-step instructions tailored to your specific requirements.
 * The domain name is available and associated with the ingress object in cluster.
 * Cluster administrator access.
 * The [Tekton](install-tekton.md) resources are deployed.
@@ -66,6 +71,7 @@ To deploy the platform, follow the steps below:
   ```
 
 5. (Optional) To open EDP Portal, navigate to the `http://localhost:59480`.
+
 6. (Optional) To get admin token to sign in to EDP Portal:
 
    ```bash

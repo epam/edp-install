@@ -21,7 +21,7 @@ Each account serves specific purposes:
 
 Infrastructure as Code (IaC) is a key principle in the EPAM Delivery Platform architecture. Terraform is the IaC tool to provision and manage all services in each account. AWS S3 and AWS DynamoDB serve as the backend for Terraform state, ensuring consistency and reliability in the deployment process. This approach enables the architecture to be version-controlled and allows for easy replication and reproducibility of environments.
 
-## Docker Registry
+## Container Registry
 
 The architecture utilizes AWS Elastic Container Registry (ECR) as a Docker Registry for container image management. ECR offers a secure, scalable, and reliable solution for storing and managing container images. It integrates seamlessly with other AWS services and provides a highly available and durable storage solution for containers in the CI/CD pipeline.
 
@@ -40,6 +40,18 @@ The architecture's external Application Load Balancer (ALB) endpoint is protecte
 ## Parameter Store and Secrets Manager
 
 The architecture leverages the AWS Systems Manager Parameter Store and Secrets Manager to securely store and manage all secrets and parameters utilized within the EKS clusters—parameter Store stores general configuration information, such as database connection strings and API keys. In contrast, Secrets Manager securely stores sensitive information, such as passwords and access tokens. By centralizing secrets management, the architecture ensures proper access control and reduces the risk of unauthorized access.
+
+## Observability and Monitoring
+
+For observability and monitoring, the EDP leverages a suite of AWS Managed Services designed to provide comprehensive insights into the performance and health of applications and infrastructure:
+
+**AWS CloudWatch** is utilized for monitoring and observability, offering detailed insights into application and infrastructure performance. It enables real-time monitoring of logs, metrics, and events, facilitating proactive issue resolution and performance optimization.
+
+**AWS OpenSearch Service** (successor to Amazon Elasticsearch Service) provides powerful search and analytics capabilities. It allows for the analysis of log data and metrics, supporting enhanced application monitoring and user experience optimization.
+
+**AWS Managed Grafana** offers a scalable, secure, and fully managed Grafana service, enabling developers to create and share dashboards for visualizing real-time data.
+
+**AWS Prometheus Service**, a managed Prometheus-compatible monitoring service, is used for monitoring Kubernetes and container environments. It supports powerful queries and provides detailed insights into container and microservices architectures.
 
 ## Summary
 

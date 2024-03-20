@@ -1,8 +1,19 @@
 # Deploy AWS EKS Cluster
 
-This instruction provides detailed information on the Amazon Elastic Kubernetes Service cluster deployment.
+This instruction offers a comprehensive guide on deploying an Amazon Elastic Kubernetes Service (EKS) cluster, ensuring a scalable and secure Kubernetes environment on AWS. For those looking to optimize their EKS cluster configurations, it is highly recommended to consult the [AWS EKS Best Practices](https://aws.github.io/aws-eks-best-practices/) guide. This resource covers a wide range of topics crucial for the successful deployment and operation of your EKS clusters, including:
+
+- **Security**: Best practices for securing your EKS clusters, including IAM roles, network policies, and secrets management.
+- **Networking**: Guidance on setting up VPCs, subnets, and load balancers to ensure efficient and secure network traffic.
+- **Monitoring and Logging**: Strategies for implementing comprehensive monitoring and logging solutions using AWS CloudWatch and other tools to maintain visibility into cluster performance and operational health.
+- **Performance**: Tips for optimizing cluster performance through the proper selection of EC2 instances, efficient load balancing, and autoscaling configurations.
+- **Cost Optimization**: Techniques for managing and reducing costs associated with running EKS clusters, including instance selection and resource allocation strategies.
+
+By adhering to these best practices, developers and system administrators can ensure that their AWS EKS clusters are robust, secure, and cost-effective, facilitating a smooth and efficient CI/CD pipeline for software development.
 
 ## Prerequisites
+
+!!! note
+    Our approach to deploying the AWS EKS Cluster is based on the widely-used [terraform-aws-eks module](https://github.com/terraform-aws-modules/terraform-aws-eks) from the Terraform AWS Modules community. This module facilitates the creation of AWS Elastic Kubernetes Service (EKS) resources with best practices in mind. We encourage users to review the module's documentation to fully understand its capabilities and how it aligns with the requirements of your specific deployment scenario.
 
 Before the EKS cluster deployment and configuration, make sure to check the prerequisites. Install the required tools listed below:
 
@@ -19,6 +30,9 @@ terraform version
 aws --version
 tfenv --version
 ```
+
+!!! note
+    Before initiating the deployment, it is crucial to consult the [AWS Service Limits](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) documentation. Please review and adjust these limits as necessary to ensure your deployment proceeds smoothly without hitting service constraints.
 
 ## Terraform Backend
 
@@ -168,7 +182,7 @@ Insert the missing fields in the file `vpc/providers.tf`.
   ...
   ```
 
-3. Fill in the input variables for Terraform run in the `vpc/template.tfvars` file. Use the [vpc/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/vpc/example.tfvars) as an example. 
+3. Fill in the input variables for Terraform run in the `vpc/template.tfvars` file. Use the [vpc/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/vpc/example.tfvars) as an example.
 Please find the detailed description of the variables in the [vpc/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/vpc/variables.tf) file.
 
   ```tf title="vpc/template.tfvars"
@@ -251,7 +265,7 @@ Insert the missing fields in the file `eks/providers.tf`.
   ...
   ```
 
-3. Fill in the input variables for Terraform run in the `eks/template.tfvars` file. Use the [eks/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/eks/example.tfvars) as an example. 
+3. Fill in the input variables for Terraform run in the `eks/template.tfvars` file. Use the [eks/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/eks/example.tfvars) as an example.
 Please find the detailed description of the variables in the [eks/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/eks/variables.tf) file.
 
   ```tf title="eks/providers.tf"
