@@ -36,15 +36,15 @@ tfenv --version
 
 ## Terraform Backend
 
-This step will do the following:
+This step covers the following topics:
 
-* Create S3 bucket with policy to store terraform states.
-* Create DynamoDB to support state locking and consistency checking.
+* Create S3 bucket with policy to store terraform states
+* Create DynamoDB to support state locking and consistency checking
 
-To create the required resources, do the following:
+To create the required resources, follow the steps below:
 
 1. Fork and clone git repo with project [edp-terraform-aws-platform](https://github.com/epmd-edp/edp-terraform-aws-platform.git),
-rename it in the correspondence with project name.
+rename it in the correspondence with project name:
 
   ```bash
   git clone https://github.com/epmd-edp/edp-terraform-aws-platform.git
@@ -52,7 +52,7 @@ rename it in the correspondence with project name.
   cd edp-terraform-aws-platform-edp/s3-backend
   ```
 
-2. Fill the input variables for Terraform run in the `s3-backend/template.tfvars` file, refer to the [s3-backend/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/s3-backend/example.tfvars) as an example.
+2. Fill in the input variables for Terraform run in the `s3-backend/template.tfvars` file, refer to the [s3-backend/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/s3-backend/example.tfvars) as an example:
 
   ```tf title="s3-backend/template.tfvars"
   region = "eu-central-1"
@@ -66,7 +66,7 @@ rename it in the correspondence with project name.
 
   Find the detailed description of the variables in the [s3-backend/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/s3-backend/variables.tf) file.
 
-3. Run Terraform apply. Initialize the backend and apply the changes.
+3. Initialize the backend and apply the changes:
 
   ```bash
   terraform init
@@ -83,20 +83,16 @@ rename it in the correspondence with project name.
 
 ## AWS IAM Roles
 
-This step will do the following:
+This step covers the `EKSDeployerRole` AWS IAM role creation. To create the role, take the following steps:
 
-* Create the AWS IAM role EKSDeployerRole
-
-Take the following steps:
-
-1. Navigate to IAM module directory.
+1. Navigate to the IAM module directory:
 
   ```bash
   cd ../iam
   ```
 
 2. Setup backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
-Insert the missing fields in the file `iam/providers.tf`.
+Insert the missing fields in the `iam/providers.tf` file:
 
   ```tf title="iam/providers.tf"
   ...
@@ -111,8 +107,8 @@ Insert the missing fields in the file `iam/providers.tf`.
   ...
   ```
 
-3. Fill in the input variables for Terraform run in the `iam/template.tfvars` file. Use the [iam/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam/example.tfvars) as an example.
-Please find the detailed description of the variables in the [iam/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam/variables.tf) file.
+3. Fill in the input variables for Terraform run in the `iam/template.tfvars` file. Refer to the [iam/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam/example.tfvars) as an example.
+Please find the detailed description of the variables in the [iam/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam/variables.tf) file:
 
   ```tf title="iam/template.tfvars"
   create_iam_deployer = true
@@ -128,7 +124,7 @@ Please find the detailed description of the variables in the [iam/variables.tf](
   }
   ```
 
-4.  Initialize the backend and apply the changes.
+4. Initialize the backend and apply the changes:
 
   ```bash
   terraform init
@@ -152,22 +148,22 @@ Please find the detailed description of the variables in the [iam/variables.tf](
 
 ## AWS VPC configuration (Optional)
 
-This step will do the following:
+This step will cover the following topics:
 
 * Create the AWS VPC
 * Create the AWS VPC Subnets for instances and AWS ALB
 * Create the AWS VPC Routing
 
-Take the following steps:
+To accomplish the tasks outlined above, follow these steps:
 
-1. Navigate to VPC module directory.
+1. Navigate to the VPC module directory:
 
   ```bash
   cd ../vpc
   ```
 
 2. Setup backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
-Insert the missing fields in the file `vpc/providers.tf`.
+Insert the missing fields in the file `vpc/providers.tf`:
 
   ```tf title="vpc/providers.tf"
   ...
@@ -183,7 +179,7 @@ Insert the missing fields in the file `vpc/providers.tf`.
   ```
 
 3. Fill in the input variables for Terraform run in the `vpc/template.tfvars` file. Use the [vpc/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/vpc/example.tfvars) as an example.
-Please find the detailed description of the variables in the [vpc/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/vpc/variables.tf) file.
+Please find the detailed description of the variables in the [vpc/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/vpc/variables.tf) file:
 
   ```tf title="vpc/template.tfvars"
   region   = "eu-central-1"
@@ -207,7 +203,7 @@ Please find the detailed description of the variables in the [vpc/variables.tf](
   }
   ```
 
-4. Initialize the backend and apply the changes.
+4. Initialize the backend and apply the changes:
 
   ```bash
   terraform init
@@ -234,23 +230,23 @@ Please find the detailed description of the variables in the [vpc/variables.tf](
 
 ## Deploy and preconfigure AWS EKS
 
-This step will do the following:
+This step will cover the following topics:
 
 * Create the EKS Cluster
 * Create the AWS ASGs for the EKS Cluster
 * Create the AWS ALB
 * (Optional) Create the AWS IAM role Kaniko to use AWS ECR
 
-Take the following steps:
+To accomplish the tasks outlined above, follow these steps:
 
-1. Navigate to EKS module directory.
+1. Navigate to the EKS module directory:
 
   ```bash
   cd ../eks
   ```
 
 2. Setup backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
-Insert the missing fields in the file `eks/providers.tf`.
+Insert the missing fields in the file `eks/providers.tf`:
 
   ```tf title="eks/providers.tf"
   ...
@@ -266,7 +262,7 @@ Insert the missing fields in the file `eks/providers.tf`.
   ```
 
 3. Fill in the input variables for Terraform run in the `eks/template.tfvars` file. Use the [eks/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/eks/example.tfvars) as an example.
-Please find the detailed description of the variables in the [eks/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/eks/variables.tf) file.
+Please find the detailed description of the variables in the [eks/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/eks/variables.tf) file:
 
   ```tf title="eks/providers.tf"
   region               = "eu-central-1"
@@ -287,13 +283,13 @@ Please find the detailed description of the variables in the [eks/variables.tf](
   }
   ```
 
-4. (Optional) To create Kaniko AWS IAM Role, navigate to IAM module directory.
+4. (Optional) To create the Kaniko AWS IAM Role, navigate to the IAM module directory:
 
   ```bash
   cd ../iam
   ```
 
-  Fill in the input variables for Terraform run in the `iam/template.tfvars` file. Use the [iam/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam/example.tfvars) as an example.
+  Fill in the input variables for Terraform run in the `iam/template.tfvars` file. Refer to the [iam/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam/example.tfvars) file as an example.
 
   Please find the detailed description of the variables in the [iam/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/iam/variables.tf) file.
 
