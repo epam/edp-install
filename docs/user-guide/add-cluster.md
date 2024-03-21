@@ -1,16 +1,16 @@
 # Add Cluster
 
-Adding other clusters allows deploying applications to several clusters when creating a stage of CD pipeline in EDP Portal.
+This page provides comprehensive instructions on how to integrate a new cluster into the KubeRocketCI workloads. By doing so, it creates an opportunity for users to employ multi-cluster deployment, thereby facilitating the segregation of different environments across various clusters.
 
-!!! note
-    Before proceeding with the content on this documentation page, it's essential to ensure that Argo CD is integrated into the same cluster with an identical name. At present, EDP operates with the shared Argo CD, necessitating the copying of the secret to the namespace where Argo CD is installed. The command sample is below:
-    ```bash
-    kubectl get secret <SECRET_NAME> --namespace=edp -o yaml | sed 's/namespace: .*/namespace: argocd/' | kubectl apply -f -
-    ```
+## Prerequisites
 
-To add a cluster, follow the steps below:
+Before moving ahead, ensure you have already performed the guidelines outlined in the [Argo CD Integration](../operator-guide/argocd-integration.md#deploy-argo-cd-application-to-remote-cluster-optional) page.
 
-1. Navigate to the `EDP` -> `Configuration` -> `Clusters` and click the **+ Add cluster** button:
+## Deploy to Remote Cluster
+
+To deploy an application to a remote cluster, follow the steps below:
+
+1. Navigate to `KubeRocketCI portal` -> `Configuration` -> `Clusters` and click the **+ Add cluster** button:
 
   !![Clusters menu](../assets/user-guide/add_new_cluster.png "Clusters menu")
 
@@ -19,18 +19,23 @@ To add a cluster, follow the steps below:
   * **Cluster Name** - a unique and descriptive name for the new cluster;
   * **Cluster Host** - the cluster’s endpoint URL (e.g., example-cluster-domain.com);
   * **Cluster Token** - a Kubernetes token with permissions to access the cluster. This token is required for proper authorization;
+  * **Skip TLS verification** - allows connect to cluster without cluster certificate verification;
   * **Cluster Certificate** - a Kubernetes certificate essential for authentication. Obtain this certificate from the configuration file of the user account you intend to use for accessing the cluster.
 
-    !![Add Cluster](../assets/user-guide/edp-portal-add-cluster.png "Add Cluster")
+  !!! note
+      The `Cluster Certificate` field is hidden if the `skip TLS verification` option is enabled.
+
+  !![Add cluster](../assets/user-guide/edp-portal-add-cluster.png "Add cluster")
 
 3. Click the **Apply** button to add the cluster.
 
-As a result, the [Kubernetes secret](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) will be created for further integration and you will be able to select the integrated cluster when creating a new stage:
+As a result, the Kubernetes secret will be created for further integration and you will be able to select the integrated cluster when creating a new stage:
 
   !![Select cluster](../assets/user-guide/select-cluster.png "Select cluster")
 
 ## Related Articles
 
+* [Argo CD Integration](../operator-guide/argocd-integration.md)
 * [Add Application](add-application.md)
 * [Add Library](add-library.md)
 * [Add Autotest](add-autotest.md)
