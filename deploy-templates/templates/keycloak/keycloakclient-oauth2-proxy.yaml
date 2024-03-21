@@ -7,7 +7,6 @@ spec:
   advancedProtocolMappers: true
   clientId: oauth2-proxy
   directAccess: true
-  public: false
   defaultClientScopes:
     - edp
   realmRef:
