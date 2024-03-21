@@ -251,7 +251,9 @@ nav:
           - Integration With Tekton: operator-guide/report-portal-integration-tekton.md
       - Logsight Integration: operator-guide/logsight-integration.md
       - DependencyTrack: operator-guide/dependency-track.md
-      - SonarQube: operator-guide/sonarqube.md
+      - SonarQube:
+          - SonarQube Integration: operator-guide/sonarqube.md
+          - SonarQube Project Visibility: operator-guide/sonarqube-visibility.md
       - Nexus Sonatype: operator-guide/nexus-sonatype.md
     - Platform Capabilities:
       - GitOps:
