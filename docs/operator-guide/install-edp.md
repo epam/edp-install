@@ -54,7 +54,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
   ```bash
   helm search repo epamedp/edp-install
   NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-  epamedp/edp-install     3.7.5           3.7.5           A Helm chart for EDP Install
+  epamedp/edp-install     3.8.1           3.8.1           A Helm chart for EDP Install
   ```
 
   !!! note
@@ -66,23 +66,44 @@ There are two recommended ways to deploy EPAM Delivery Platform:
   * [GitHub](https://docs.github.com/en) (by default)
   * [GitLab](https://docs.gitlab.com/)
 
-  This integration implies in what system the development of the application will be or is already being carried out. The `global.gitProvider` flag in the edp-install controls this integration:
+  This integration implies in what system the development of the application will be or is already being carried out. The `global.gitProviders` flag in the edp-install controls this integration:
 
-  === "Gerrit"
+  Global VCS configuration (can be multimple values):
+
+  ``` yaml title="values.yaml"
+  ...
+  global:
+    gitProviders:
+      - gerrit
+      - github
+      - gitlab
+  ...
+  ```
+
+  Tekton event listner configuration:
+
+  === "GitHub"
 
       ``` yaml title="values.yaml"
       ...
-      global:
-        gitProvider: gerrit
-      ...
-      ```
-
-  === "GitHub (by default)"
-
-      ``` yaml title="values.yaml"
-      ...
-      global:
-        gitProvider: github
+      edp-tekton:
+        gitServers:
+          github:
+            gitProvider: github
+            host: github.com
+            webhook:
+              skipWebhookSSLVerification: false
+            eventListener:
+              enabled: true
+              resources:
+                requests:
+                  memory: "64Mi"
+                  cpu: "50m"
+                limits:
+                  memory: "128Mi"
+                  cpu: "500m"
+              ingress:
+                enabled: true
       ...
       ```
 
@@ -90,8 +111,53 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 
       ``` yaml title="values.yaml"
       ...
-      global:
-        gitProvider: gitlab
+      edp-tekton:
+        gitServers:
+          gitlab:
+            gitProvider: gitlab
+            host: gitlab.com
+            webhook:
+              skipWebhookSSLVerification: false
+            eventListener:
+              enabled: true
+              resources:
+                requests:
+                  memory: "64Mi"
+                  cpu: "50m"
+                limits:
+                  memory: "128Mi"
+                  cpu: "500m"
+              ingress:
+                enabled: true
+      ...
+      ```
+  === "Gerrit"
+
+      ``` yaml title="values.yaml"
+      ...
+      edp-tekton:
+        gitServers:
+          gerrit:
+            eventListener:
+              enabled: true
+              ingress:
+                enabled: false
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 128Mi
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+            gitProvider: gerrit
+            gitUser: edp-ci
+            host: gerrit.edp
+            nameSshKeySecret: gerrit-ciuser-sshkey
+            quickLink:
+              host: gerrit.example.com
+            sshPort: <gerrit_port>
+            webhook:
+              skipWebhookSSLVerification: false
       ...
       ```
 
@@ -136,7 +202,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
       url: "harbor.example.com"
   ```
 
-10. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/v3.7.5/deploy-templates/values.yaml) file.
+10. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/v3.8.1/deploy-templates/values.yaml) file.
 
 11. Install EDP in the **edp** namespace with the Helm tool:
 
@@ -157,7 +223,8 @@ There are two recommended ways to deploy EPAM Delivery Platform:
     dnsWildCard: "example.com"
     # -- Administrators of your tenant
     # -- Can be gerrit, github or gitlab. By default: github
-    gitProvider: github
+    gitProviders:
+      - github
     dockerRegistry:
       # -- Docker Registry endpoint
       url: "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com"
@@ -176,18 +243,28 @@ There are two recommended ways to deploy EPAM Delivery Platform:
   # AWS Region, e.g. "eu-central-1"
   awsRegion:
 
-  argocd:
-    # -- Enable ArgoCD integration
-    enabled: true
-    # -- ArgoCD URL in format schema://URI
-    # -- By default, https://argocd.{{ .Values.global.dnsWildCard }}
-    url: ""
-
   edp-tekton:
     # Tekton Kaniko configuration section
     kaniko:
       # -- AWS IAM role to be used for kaniko pod service account (IRSA). Format: arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_IAM_ROLE_NAME>
       roleArn:
+    gitServers:
+      github:
+        gitProvider: github
+        host: github.com
+        webhook:
+          skipWebhookSSLVerification: false
+        eventListener:
+          enabled: true
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ingress:
+            enabled: true
 
   edp-headlamp:
     config:
