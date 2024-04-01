@@ -7,9 +7,9 @@ metadata:
     {{- include "edp-install.labels" . | nindent 4 }}
 spec:
   keycloakOwner: main
-  realmName: {{ .Release.Namespace }}-main
+  realmName: {{ default .Release.Namespace .Values.sso.realmName }}
   ssoRealmEnabled: true
-  ssoRealmName: {{ .Values.sso.realmName }}
+  ssoRealmName: {{ .Values.sso.ssoRealmName }}
   users:
   {{- range .Values.sso.admins }}
   - username: {{.}}

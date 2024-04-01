@@ -452,8 +452,10 @@ edp-tekton:
 sso:
   # -- Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment.
   enabled: false
-   # -- Defines Keycloak realm name that is used as the Identity Provider (IdP) realm
-  realmName: "broker"
+  # -- Defines the Keycloak realm name, which by default is named after the namespace where EDP is deployed.
+  # realmName: edp
+  # -- Defines Keycloak sso realm name that is used as the Identity Provider (IdP) realm
+  ssoRealmName: "broker"
   # -- Keycloak URL.
   keycloakUrl: https://keycloak.example.com
   # -- Administrators of your tenant.

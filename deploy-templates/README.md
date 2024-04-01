@@ -99,6 +99,6 @@ A Helm chart for EDP Install
 | sso.ingress.tls | list | `[]` | Ingress TLS configuration |
 | sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL. |
 | sso.nodeSelector | object | `{}` | Node labels for pod assignment |
-| sso.realmName | string | `"broker"` | Defines Keycloak realm name that is used as the Identity Provider (IdP) realm |
+| sso.ssoRealmName | string | `"broker"` | Defines Keycloak sso realm name that is used as the Identity Provider (IdP) realm |
 | sso.tolerations | list | `[]` | Toleration labels for pod assignment |
 
