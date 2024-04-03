@@ -30,7 +30,7 @@ To integrate SonarCloud with the platform, follow the steps below:
 
   !![Create organization](../assets/quick-start/generate_token.png "Generate token")
 
-5. In EDP Portal, navigate to `EDP` -> `Configuration` -> `SonarQube`. Define the following values and click **Save**:
+5. In EDP Portal, navigate to `EDP` -> `Configuration` -> `Code Quality`. Define the following values and click **Save**:
 
   * URL: `https://sonarcloud.io`<br>
   * Token: `account token generated in SonarCloud`

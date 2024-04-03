@@ -6,7 +6,7 @@ Now, proceed to deploy our first application. This page provides comprehensive i
 
 As a prerequisite, create a GitOps repository in your GitHub account. EDP Portal adheres to the GitOps approach when working with environments. In a GitOps repository, values are saved to redefine the default behavior (parameters) of deployment for each environment. The creation of a GitOps repository involves the following two steps:
 
-1. In EDP Portal, navigate to `EDP` -> `Configuration` -> `GitOps` and click the **+ Add GitOps Repository** button:
+1. In EDP Portal, navigate to `EDP` -> `Configuration` -> `Deployment` -> `GitOps`:
 
   !![GitOps tab](../assets/quick-start/gitops_section.png "GitOps tab")
 
@@ -43,6 +43,7 @@ To create an environment, follow the steps below:
   * Namespace: `edp-my-go-gin-app-dev`<br>
   * Description: `Development stage`<br>
   * Trigger type: `Manual`<br>
+  * Pipeline template: `deploy`<br>
   * Quality gate type: `Manual`<br>
   * Step name: `dev`
 
