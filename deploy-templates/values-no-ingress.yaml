@@ -1,0 +1,133 @@
+# This configuration file is designed for deploying and configuring the EPAM Delivery Platform (EDP) on Kubernetes.
+# It includes settings for global properties, CD pipeline operator, Portal (a UI component), and Tekton for CI/CD.
+# The configuration demonstrates a use-case where ingress is disabled, preferring alternative traffic routing solutions.
+# Consult the EDP documentation (https://epam.github.io/edp-install/) for more information on configuration options and deployment strategies.
+
+
+global:
+  # Specifies the version of EDP to be installed.
+  version: "3.8.1"
+  # The target platform for the EDP installation. In this case, Kubernetes.
+  platform: "kubernetes"
+  # The wildcard DNS to be used for all EDP services.
+  dnsWildCard: "example.com"
+  # List of supported Git providers. Additional providers can be added as needed.
+  gitProviders:
+    - gitlab
+  # Configuration for the Docker registry to be used with EDP.
+  dockerRegistry:
+    url: "registry.example.com"
+    type: "harbor"
+    # Defines the namespace or "space" within the Docker registry where EDP-related images are stored.
+    space: "edp"
+
+# Configuration for the CD pipeline operator, responsible for managing CD pipelines within EDP.
+cd-pipeline-operator:
+  # Specifies the tenancy engine to be used. In this case, "capsule" for Kubernetes namespace management.
+  tenancyEngine: "capsule"
+  # Determines whether the operator should manage Kubernetes namespaces.
+  manageNamespace: true
+  # Defines the secret manager to be used. Here, "own" indicates CDPipeline Operator will perform this action.
+  secretManager: "own"
+
+# Configuration for EDP Headlamp, the user interface component of EDP.
+edp-headlamp:
+  # Enables the EDP Headlamp component.
+  enabled: true
+  ingress:
+    # Disables the default ingress for EDP Headlamp, allowing for alternative traffic routing methods.
+    enabled: false
+  config:
+    # Configuration for OpenID Connect (OIDC) authentication.
+    oidc:
+      enabled: true
+      # The URL of the Keycloak server used for OIDC authentication.
+      keycloakUrl: "https://keycloak.example.com"
+      # The client ID for EDP Headlamp registered in Keycloak.
+      clientID: "edp"
+      # The Kubernetes secret containing the OIDC client secret.
+      clientSecretName: "keycloak-client-headlamp-secret"
+      # The key within the Kubernetes secret where the client secret is stored.
+      clientSecretKey: "clientSecret"
+      # The Keycloak realm to use for authentication.
+      issuerRealm: "broker"
+
+# Configuration for Tekton, used for continuous integration and delivery within EDP.
+edp-tekton:
+  dashboard:
+    ingress:
+      # Disables the default ingress for the Tekton Dashboard, again allowing for alternative traffic routing methods.
+      enabled: false
+  gitServers:
+    gitlab:
+      gitProvider: gitlab
+      host: git.example.com
+      webhook:
+        # The URL where GitLab webhooks should be sent. This should be routed appropriately in your environment.
+        url: https://event-listener-gitlab.example.com
+        # Determines whether SSL verification should be skipped for webhooks. For production, it's recommended to enable verification.
+        skipWebhookSSLVerification: false
+      eventListener:
+        # Enables the Tekton EventListener, which triggers pipelines based on GitLab webhook events.
+        enabled: true
+        resources:
+          # Specifies the resource requests and limits for the EventListener pod.
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ingress:
+          # Disables default ingress for the EventListener, necessitating alternative routing strategies.
+          enabled: false
+
+# -- Array of extra K8s manifests to deploy
+extraObjects:
+- apiVersion: gateway.networking.k8s.io/v1beta1
+  kind: HTTPRoute
+  metadata:
+    name: event-listener-gitlab
+  spec:
+    hostnames:
+      - event-listener-gitlab.example.com
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: internal
+        namespace: your-gateway-ns
+    rules:
+      - backendRefs:
+          - group: ''
+            kind: Service
+            name: el-edp-gitlab
+            port: 8080
+            weight: 1
+        matches:
+          - path:
+              type: PathPrefix
+              value: "/"
+
+- apiVersion: gateway.networking.k8s.io/v1beta1
+  kind: HTTPRoute
+  metadata:
+    name: portal
+  spec:
+    hostnames:
+      - portal.example.com
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: internal
+        namespace: your-gateway-ns
+    rules:
+      - backendRefs:
+          - group: ''
+            kind: Service
+            name: portal
+            port: 80
+            weight: 1
+        matches:
+          - path:
+              type: PathPrefix
+              value: "/"
