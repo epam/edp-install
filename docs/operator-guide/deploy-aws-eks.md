@@ -91,7 +91,7 @@ This step covers the `EKSDeployerRole` AWS IAM role creation. To create the role
   cd ../iam
   ```
 
-2. Setup backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
+2. Set up the backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
 Insert the missing fields in the `iam/providers.tf` file:
 
   ```tf title="iam/providers.tf"
@@ -146,7 +146,7 @@ Please find the detailed description of the variables in the [iam/variables.tf](
       ]
       ```
 
-## AWS VPC configuration (Optional)
+## AWS VPC Configuration (Optional)
 
 This step will cover the following topics:
 
@@ -162,7 +162,7 @@ To accomplish the tasks outlined above, follow these steps:
   cd ../vpc
   ```
 
-2. Setup backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
+2. Set up the backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
 Insert the missing fields in the file `vpc/providers.tf`:
 
   ```tf title="vpc/providers.tf"
@@ -228,7 +228,7 @@ Please find the detailed description of the variables in the [vpc/variables.tf](
       vpc_id = "vpc-012345678910"
       ```
 
-## Deploy and preconfigure AWS EKS
+## Deploy and Preconfigure AWS EKS
 
 This step will cover the following topics:
 
@@ -245,8 +245,8 @@ To accomplish the tasks outlined above, follow these steps:
   cd ../eks
   ```
 
-2. Setup backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
-Insert the missing fields in the file `eks/providers.tf`:
+2. Set up the backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
+Insert the missing fields in the `eks/providers.tf` file:
 
   ```tf title="eks/providers.tf"
   ...
@@ -325,6 +325,152 @@ Please find the detailed description of the variables in the [eks/variables.tf](
   ```
 
 6. Once AWS EKS Cluster is successfully deployed, you can navigate to our [EDP addons](add-ons-overview.md) to install and manage cluster applications using the GitOps approach.
+
+## Argo CD Configuration (Optional)
+
+This section covers configuring Argo CD for further integrating with an external EKS cluster. This integration necessitates creating two AWS IAM roles:
+
+* `AWSIRSA_Test_ArgoCDMaster` AWS IAM role - for setting up IRSA annotations for the Argo CD application;
+* `EDPArgoCDClusterAdmin` AWS IAM role - for working with external EKS clusters and further adding them (please refer to the [Add Cluster](../user-guide/add-cluster.md) page for details).
+
+### Argo CD IAM Role for Shared EKS Cluster
+
+This step covers the `AWSIRSA_Test_ArgoCDMaster` AWS IAM role creation procedure. To create the role, take the following steps:
+
+1. Navigate to the Argo CD module directory:
+
+  ```bash
+  cd ../argo-cd
+  ```
+
+2. Set up the backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
+Insert the missing fields in the `argo-cd/providers.tf` file:
+
+  ```tf title="argo-cd/providers.tf"
+  ...
+    backend "s3" {
+      bucket         = "terraform-states-012345678910"
+      key            = "eu-central-1/test/argo-cd/terraform.tfstate"
+      region         = "eu-central-1"
+      acl            = "bucket-owner-full-control"
+      dynamodb_table = "terraform_locks"
+      encrypt        = true
+    }
+  ...
+  ```
+
+3. Fill in the input variables for Terraform run in the `argo-cd/template.tfvars` file. Refer to the [argo-cd/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/argo-cd/example.tfvars) as an example.
+Please find the detailed description of the variables in the [argo-cd/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/argo-cd/variables.tf) file:
+
+  ```tf title="argo-cd/template.tfvars"
+  argocd_master_enabled = true
+  argocd_master_role_name_list = [
+    "arn:aws:iam::012345678910:role/EDPArgoCDClusterAdmin",
+  ]
+  oidc_provider_arn = "arn:aws:iam::012345678910:oidc-provider/oidc.eks.eu-central-1.amazonaws.com/id/9876543210"
+
+  platform_name                 = "test"
+  region                        = "eu-central-1"
+  role_arn                      = "arn:aws:iam::012345678910:role/EKSDeployerRole"
+  role_permissions_boundary_arn = "arn:aws:iam::012345678910:policy/eo_role_boundary"
+  tags = {
+    "SysName"      = "Terraform-Backend"
+    "SysOwner"     = "owner@example.com"
+    "Environment"  = "EKS-TEST-CLUSTER"
+  }
+  ```
+
+4. Initialize the backend and apply the changes:
+
+  ```bash
+  terraform init
+  terraform apply
+  ```
+
+  !!! note "View: Terraform output example"
+      ```bash
+
+      Outputs:
+
+      argocd_agent_role_iam_role_arn = ""
+      argocd_irsa_iam_role_arn = "arn:aws:iam::012345678910:role/AWSIRSA_Test_ArgoCDMaster"
+      ```
+
+5. Once `AWSIRSA_Test_ArgoCDMaster` AWS IAM Role is successfully created, you can navigate to our [EDP addons](add-ons-overview.md) to set up IRSA annotations for the Argo CD application:
+
+    ```yaml title="add-ons/argo-cd/values.yaml"
+    argo-cd:
+      controller:
+        serviceAccount:
+          annotations:
+            eks.amazonaws.com/role-arn: "arn:aws:iam::012345678910:role/AWSIRSA_Test_ArgoCDMaster"
+
+      server:
+        serviceAccount:
+          annotations:
+            eks.amazonaws.com/role-arn: "arn:aws:iam::012345678910:role/AWSIRSA_Test_ArgoCDMaster"
+    ```
+
+### Argo CD IAM Role for External EKS Cluster
+
+This step covers the `EDPArgoCDClusterAdmin` AWS IAM role creation procedure. To create the role, take the following steps:
+
+1. Navigate to the Argo CD module directory:
+
+  ```bash
+  cd ../argo-cd
+  ```
+
+2. Set up the backend for store Terraform states remotely and support state locking and consistency checking via DynamoDB.
+Insert the missing fields in the `argo-cd/providers.tf` file:
+
+  ```tf title="argo-cd/providers.tf"
+  ...
+    backend "s3" {
+      bucket         = "terraform-states-012345678910"
+      key            = "eu-central-1/test/argo-cd/terraform.tfstate"
+      region         = "eu-central-1"
+      acl            = "bucket-owner-full-control"
+      dynamodb_table = "terraform_locks"
+      encrypt        = true
+    }
+  ...
+  ```
+
+3. Fill in the input variables for Terraform run in the `argo-cd/template.tfvars` file. Refer to the [argo-cd/example.tfvars](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/argo-cd/example.tfvars) as an example.
+Please find the detailed description of the variables in the [argo-cd/variables.tf](https://github.com/epmd-edp/edp-terraform-aws-platform/blob/main/argo-cd/variables.tf) file:
+
+  ```tf title="argo-cd/template.tfvars"
+
+  argocd_agent_enabled                = true
+  argocd_agent_argocd_master_role_arn = "arn:aws:iam::012345678910:role/AWSIRSA_Test_ArgoCDMaster"
+
+  platform_name                 = "test"
+  region                        = "eu-central-1"
+  role_arn                      = "arn:aws:iam::012345678910:role/EKSDeployerRole"
+  role_permissions_boundary_arn = "arn:aws:iam::012345678910:policy/eo_role_boundary"
+  tags = {
+    "SysName"      = "Terraform-Backend"
+    "SysOwner"     = "owner@example.com"
+    "Environment"  = "EKS-TEST-CLUSTER"
+  }
+  ```
+
+4. Initialize the backend and apply the changes:
+
+  ```bash
+  terraform init
+  terraform apply
+  ```
+
+  !!! note "View: Terraform output example"
+      ```bash
+
+      Outputs:
+
+      argocd_agent_role_iam_role_arn = "arn:aws:iam::012345678910:role/EDPArgoCDClusterAdmin"
+      argocd_irsa_iam_role_arn = ""
+      ```
 
 ## Related Articles
 
