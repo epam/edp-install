@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://epam.github.io/edp-install/sitemap.xml
