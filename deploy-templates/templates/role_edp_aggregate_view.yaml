@@ -64,6 +64,7 @@ rules:
       - sonarpermissiontemplates
       - sonars
       - stages
+      - templates
     verbs:
       - get
       - list
