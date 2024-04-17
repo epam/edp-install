@@ -1,8 +1,8 @@
-{{- if .Values.sso.enabled -}}
+{{- if and .Values.sso.enabled .Values.sso.keycloakOperatorResources.createKeycloakCR }}
 apiVersion: v1.edp.epam.com/v1
 kind: Keycloak
 metadata:
-  name: "main"
+  name: {{ .Values.sso.keycloakOperatorResources.name }}
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
 spec:
