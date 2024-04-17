@@ -97,6 +97,9 @@ A Helm chart for EDP Install
 | sso.ingress.ingressClassName | string | `""` | Defines which ingress controller will implement the resource, e.g. nginx |
 | sso.ingress.pathType | string | `"Prefix"` | Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific` |
 | sso.ingress.tls | list | `[]` | Ingress TLS configuration |
+| sso.keycloakOperatorResources.createKeycloakCR | bool | `true` |  |
+| sso.keycloakOperatorResources.kind | string | `"Keycloak"` |  |
+| sso.keycloakOperatorResources.name | string | `"main"` |  |
 | sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL. |
 | sso.nodeSelector | object | `{}` | Node labels for pod assignment |
 | sso.ssoRealmName | string | `"broker"` | Defines Keycloak sso realm name that is used as the Identity Provider (IdP) realm |

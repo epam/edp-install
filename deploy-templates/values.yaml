@@ -452,6 +452,19 @@ edp-tekton:
 sso:
   # -- Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment.
   enabled: false
+
+  keycloakOperatorResources:
+    # Set to false if using the add-ons approach (refer to https://github.com/epam/edp-cluster-add-ons)
+    # for EDP installation and if the extension-oidc is already installed.
+    # This prevents the creation of an additional Keycloak resource and secret.
+    # The 'kind' and 'name' must be specified in case of using an existing Keycloak/ClusterKeycloak resource.
+    # Create kind: Keycloak as a part of chart installation
+    createKeycloakCR: true
+    # Can be Keycloak or ClusterKeycloak.
+    kind: Keycloak
+    # Name of kind: Keycloak/ClusterKeycloak CR.
+    name: main
+
   # -- Defines the Keycloak realm name, which by default is named after the namespace where EDP is deployed.
   # realmName: edp
   # -- Defines Keycloak sso realm name that is used as the Identity Provider (IdP) realm
