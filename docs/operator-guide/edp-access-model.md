@@ -1,13 +1,6 @@
-# EDP Access Model
+# KubeRocketCI Access Model
 
-EDP uses two different methods to regulate access to resources, each tailored to specific scenarios:
-
-* The initial method involves `roles` and `groups` in Keycloak and is used for SonarQube and partly for Nexus.
-
-* The second method of resource access control in EDP involves `EDP custom resources`. This approach requires modifying custom resources that outline the required access privileges for every user or group and is used to govern access to Gerrit, Nexus, EDP Portal, EKS Cluster and Argo CD.
-
-!!! info
-    These two approaches are not interchangeable, as each has its unique capabilities.
+In KubeRocketCI, access control is implemented via authorisation methods. The regulation of both user and group permissions is facilitated through Keycloak, which in turn integrates with RBAC. Permissions for third-party tools are controlled using custom resources. This document describes the access management entities, including Kubernetes groups, custom resources, Keycloak realm roles, detailing their respective permissions and the tools they are applied to.
 
 ## Keycloak
 
@@ -38,25 +31,25 @@ The table below shows the realm roles and the composite types they relate to.
 
 ### Realm Groups
 
-EDP uses two different realms for group management, `edp` and `openshift`:
+KubeRocketCI uses two different realms for group management, `edp` and `broker`:
 
 * The `edp` realm contains two groups that are specifically used for controlling access to Argo CD. These groups are named `ArgoCDAdmins` and `ArgoCD-edp-users`.
 
-* The `openshift` realm contains five groups that are used for access control in both the EDP Portal and EKS cluster. These groups are named `edp-oidc-admins`, `edp-oidc-builders`, `edp-oidc-deployers`,`edp-oidc-developers` and `edp-oidc-viewers`.
+* The `broker` realm contains five groups that are used for access control in both the KubeRocketCI portal and EKS cluster. These groups are named `edp-oidc-admins`, `edp-oidc-builders`, `edp-oidc-deployers`,`edp-oidc-developers` and `edp-oidc-viewers`.
 
 | Realm Group Name | Realm Name |
 | - | - |
 | ArgoCDAdmins | `edp` |
 | `ArgoCD-edp-users` | `edp` |
-| `edp-oidc-admins` | openshift |
-| `edp-oidc-builders` | openshift |
-| `edp-oidc-deployers` | openshift |
-| `edp-oidc-developers` | openshift |
-| `edp-oidc-viewers` | openshift |
+| `edp-oidc-admins` | broker |
+| `edp-oidc-builders` | broker |
+| `edp-oidc-deployers` | broker |
+| `edp-oidc-developers` | broker |
+| `edp-oidc-viewers` | broker |
 
 ## SonarQube
 
-In the case of SonarQube, there are two ways to manage access: via Keycloak and via EDP approach. This sections describes both of the approaches.
+In the case of SonarQube, there are two ways to manage access: via Keycloak and via KubeRocketCI approach. This sections describes both of the approaches.
 
 ### Manage Access via Keycloak
 
@@ -66,9 +59,9 @@ To grant access, the corresponding role must be added to the user in Keycloak.
 
 For example, a user who needs developer access to SonarQube should be assigned the `sonar-developers` or `developer` composite role in Keycloak.
 
-### EDP Approach for Managing Access
+### KubeRocketCI Approach for Managing Access
 
-EDP provides its own SonarQube Permission Template, which is used to manage user access and permissions for SonarQube projects.
+KubeRocketCI provides its own SonarQube Permission Template, which is used to manage user access and permissions for SonarQube projects.
 
 The template is stored in the custom SonarQube resource of the operator, an example of a custom resource can be found below.
 
@@ -188,16 +181,17 @@ The ConfigMap below is an example of the `GerritGroupMember` resource:
 
 After the `GerritGroupMember` resource is created, the user will have the permissions and access levels associated with that group.
 
-## EDP Portal and EKS Cluster
+## KubeRocketCI Portal and EKS Cluster
 
 Both Portal and EKS Cluster use Keycloak groups for controlling access.
 Users need to be added to the required group in Keycloak to get access.
-The groups that are used for access control are in the `openshift` realm.
+The groups that are used for access control are in the `broker` realm.
 
 !!! note
-    The `openshift` realm is used because a Keycloak client for OIDC is in this realm.
+    The `broker` realm is used because a Keycloak client for OIDC is in this realm.
 
 ### Keycloak Groups
+
 There are two types of groups provided for users:
 
 - Independent group: provides the minimum required permission set.
@@ -216,16 +210,19 @@ For example, the `edp-oidc-viewers` group can be extended with rights from the `
 | Name | Action List |
 | - | - |
 | View | Getting of all namespaced resources |
-| Build | Starting a PipelineRun from EDP Portal UI |
+| Build | Starting a PipelineRun from KubeRocketCI portal |
 | Deploy | Deploying a new version of application via Argo CD Application |
 
 | Group Name | View | Build | Deploy | Full Namespace Access |
 | - | :-: | :-: | :-: | :-: |
 |`edp-oidc-admins`    | :material-check: | :material-check: | :material-check: | :material-check: |
-|`edp-oidc-developers`| :material-check: | :material-check: | :material-check: | |
+|`edp-oidc-developers`| | :material-check: | :material-check: | |
 |`edp-oidc-viewers`   | :material-check: | | | |
 |`edp-oidc-builders`  | | :material-check: | | |
 |`edp-oidc-deployers` | | | :material-check: | |
+
+!!! note
+    Originally, the `edp-oidc-developer` group members come solely with the permissions to initiate pipelines. Assigning them to the `edp-oidc-viewers` group grants necessary permissions to view pipelines in the KubeRocketCI portal.
 
 ### Cluster RBAC Resources
 
@@ -241,7 +238,7 @@ described above.
 | tenant-viewer | view | `edp-oidc-viewers` , `edp-oidc-developers` |
 
 !!! note
-    EDP provides an aggregate ClusterRole with permissions to view custom EDP resources. ClusterRole is named `edp-aggregate-view-edp`
+    KubeRocketCI provides an aggregate ClusterRole with permissions to view custom KubeRocketCI resources. ClusterRole is named `edp-aggregate-view-edp`
 
 !!! info
     The `tenant-admin` RoleBinding will be created in a created namespace by `cd-pipeline-operator`.<br>
@@ -262,6 +259,6 @@ in Keycloak. This ensures that only authorized users can access and modify appli
 
 ## Related Articles
 
-* [EDP Portal Overview](../user-guide/index.md)
+* [KubeRocketCI Portal Overview](../user-guide/index.md)
 * [EKS OIDC With Keycloak](configure-keycloak-oidc-eks.md)
 * [Argo CD Integration](argocd-integration.md)
