@@ -8,14 +8,20 @@ rules:
     resources:
       - applications
     verbs:
-      - list
       - get
-      - create
+      - list
       - watch
+      - create
       - update
   - apiGroups:
       - tekton.dev
     resources:
       - pipelineruns
+      - taskruns
+      - tasks
+      - pipelines
     verbs:
+      - get
+      - list
+      - watch
       - create
