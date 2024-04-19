@@ -36,7 +36,7 @@ To deploy the platform, follow the steps below:
 3. Upon successful deployment of the EDP Helm Chart, run the `kubectl port-forward` command:
 
   ```bash
-  kubectl port-forward service/edp-headlamp 59480:80 -n edp
+  kubectl port-forward service/portal 59480:80 -n edp
   ```
 
 4. Enter the localhost in your browser to access the login menu:
