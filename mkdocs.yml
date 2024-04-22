@@ -223,6 +223,7 @@ nav:
         - Integrate GitHub/GitLab in Tekton: operator-guide/import-strategy-tekton.md
       - Headlamp OIDC: operator-guide/headlamp-oidc.md
       - Manage Namespace: operator-guide/namespace-management.md
+      - Customize Deployment: operator-guide/customize_deployment.md
       - EKS OIDC Integration: operator-guide/eks-oidc-integration.md
       - Jira:
         - Adjust Jira Integration: operator-guide/jira-integration.md
