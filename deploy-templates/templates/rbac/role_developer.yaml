@@ -17,11 +17,5 @@ rules:
       - tekton.dev
     resources:
       - pipelineruns
-      - taskruns
-      - tasks
-      - pipelines
     verbs:
-      - get
-      - list
-      - watch
       - create
