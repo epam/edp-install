@@ -6,9 +6,13 @@ To add an infrastructure, navigate to the **Components** section on the navigati
 
   !![Create new infrastructure](../assets/user-guide/create_new_codebase.png "Create new infrastructure")
 
-Once clicked, the **Create new component** dialog will appear, then select **Infrastructure** and choose one of the strategies:
+Once clicked, the **Create new component** dialog will appear. Select **Infrastructure** and click **Next**:
 
    !![Infrastructure info](../assets/user-guide/create-new-infrastructure.png)
+
+Choose one of the strategies and click **Create**:
+
+   !![Select strategy](../assets/user-guide/select_strategy.png  "Select strategy")
 
 In the **Create new component** menu, select the necessary configuration strategy. The choice will define the parameters you will need to specify:
 

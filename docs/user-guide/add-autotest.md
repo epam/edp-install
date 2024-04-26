@@ -10,9 +10,13 @@ To add an autotest, navigate to the **Components** section on the navigation bar
 
   !![Create new autotest](../assets/user-guide/create_new_codebase.png "Create new autotest")
 
-Once clicked, the **Create new component** dialog will appear, then select **Autotest** and choose one of the strategies:
+Once clicked, the **Create new component** dialog will appear, then select **Autotest** and click **Next**:
 
   !![Create new autotest](../assets/user-guide/create_new_autotest.png "Create new autotest")
+
+Choose one of the strategies and click **Create**:
+
+   !![Select strategy](../assets/user-guide/select_strategy_autotest.png  "Select strategy")
 
 * **Clone project** – clones the indicated repository into KubeRocketCI. While cloning the existing repository, it is required to fill in the **Repository URL** field and specify the credentials if needed.
 
