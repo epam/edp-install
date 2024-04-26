@@ -6,9 +6,13 @@ To add an application, navigate to the **Components** section on the navigation 
 
   !![Create new application](../assets/user-guide/create_new_codebase.png "Create new application")
 
-Once clicked, the **Create new component** dialog will appear, then select **Application** and choose one of the strategies:
+Once clicked, the **Create new component** dialog will appear, then select **Application** and click **Next**:
 
-   !![Application info](../assets/user-guide/create-new-component.png)
+   !![Application info](../assets/user-guide/create-new-component.png "Application info")
+
+Choose one of the strategies and click **Create**:
+
+   !![Select strategy](../assets/user-guide/select_strategy.png  "Select strategy")
 
 * **Create from template** – creates a project on the pattern in accordance with an application language, a build tool, and a framework. This strategy is recommended for projects that start developing their applications from scratch.
 

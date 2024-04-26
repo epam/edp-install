@@ -6,9 +6,13 @@ To add a library, navigate to the **Components** section on the navigation bar a
 
   !![Create new library](../assets/user-guide/create_new_codebase.png "Create new library")
 
-Once clicked, the **Create new component** dialog will appear, then select **Library** and choose one of the strategies:
+Once clicked, the **Create new component** dialog will appear. Select **Library** and click **Next**:
 
   !![Edit YAML](../assets/user-guide/headlamp_new_component_library.png "Create new component menu")
+
+Choose one of the strategies and click **Create**:
+
+   !![Select strategy](../assets/user-guide/select_strategy.png  "Select strategy")
 
 In the **Create new component** menu, select the necessary configuration strategy. The choice will define the parameters you will need to specify:
 

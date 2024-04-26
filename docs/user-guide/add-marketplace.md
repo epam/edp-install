@@ -8,7 +8,7 @@ To create a component from template, follow the instructions below:
 
 1. Navigate to the **Marketplace** section on the navigation bar to see the Marketplace overview page.
 
-2. Click the component name to open its details window and click **Create from template**:
+2. Select the component, open its details window and click **Create from template**:
 
   !![Create from template](../assets/user-guide/edp-portal-marketplace-create-from-template.png "Create from template")
 
