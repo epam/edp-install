@@ -346,6 +346,7 @@ nav:
       - AWS:
         - EDP Reference Architecture on AWS: developer-guide/aws-reference-architecture.md
         - EDP Deployment on AWS: developer-guide/aws-deployment-diagram.md
+        - AWS Infrastructure Cost Estimation: developer-guide/aws-infrastructure-cost-estimation.md
       # - Azure:
       #   - Azure Reference Architecture: developer-guide/azure_reference.md
       #   - Azure Deployment Diagram: developer-guide/azure_deployment.md
