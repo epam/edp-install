@@ -109,4 +109,4 @@ That's it, you're all set! Good luck in coding!
 
 ## Related Articles
 
-* [EDP Project Rules. Working Process](https://epam.github.io/edp-install/developer-guide/edp-workflow/)
+* [KubeRocketCI Project Rules. Working Process](edp-workflow.md)
