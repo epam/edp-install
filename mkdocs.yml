@@ -353,7 +353,7 @@ nav:
       #   - GCP Reference Architecture: developer-guide/gcp_reference.md
       #   - GCP Deployment Diagram: developer-guide/gcp_deployment.md
     - Development:
-      - EDP Project Rules. Working Process: developer-guide/edp-workflow.md
+      - KubeRocketCI Project Rules. Working Process: developer-guide/edp-workflow.md
       - Operator Development: developer-guide/local-development.md
       - Working With Documentation: developer-guide/mk-docs-development.md
     - Quality Control: developer-guide/autotest-coverage.md
