@@ -1,0 +1,26 @@
+{{- if .Values.sso.enabled -}}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakAuthFlow
+metadata:
+  name: keycloakauthflow-browser
+spec:
+  realmRef:
+    kind: KeycloakRealm
+    name: main
+  alias: browsers
+  description: browser based authentication
+  providerId: basic-flow
+  topLevel: true
+  builtIn: false
+  authenticationExecutions:
+    - authenticator: "auth-cookie"
+      priority: 0
+      requirement: "ALTERNATIVE"
+    - authenticator: "identity-provider-redirector"
+      priority: 1
+      requirement: "ALTERNATIVE"
+      authenticatorConfig:
+        alias: EPAM-SSO
+        config:
+          "defaultProvider": "{{ .Values.sso.ssoRealmName }}"
+{{ end }}
