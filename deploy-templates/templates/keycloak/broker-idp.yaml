@@ -1,0 +1,63 @@
+{{- if .Values.sso.enabled -}}
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealmIdentityProvider
+metadata:
+  name: broker-idp
+spec:
+  realmRef:
+    kind: KeycloakRealm
+    name: main
+  alias: {{ .Values.sso.ssoRealmName }}
+  displayName: "{{ .Values.sso.ssoRealmName }}"
+  authenticateByDefault: false
+  enabled: true
+  firstBrokerLoginFlowAlias: "first broker login"
+  providerId: "keycloak-oidc"
+  config:
+    acceptsPromptNoneForwardFromClient: "false"
+    allowedClockSkew: "0"
+    authorizationUrl: "{{ .Values.sso.keycloakUrl }}/auth/realms/{{ .Values.sso.ssoRealmName }}/protocol/openid-connect/auth"
+    backchannelSupported: "false"
+    clientAuthMethod: "client_secret_post"
+    clientId: {{ .Values.sso.ssoClientName }}
+    clientSecret: "$keycloak-client-broker-secret:clientSecret"
+    defaultScope: ""
+    disableUserInfo: "false"
+    forwardParameters: ""
+    guiOrder: ""
+    hideOnLoginPage: "true"
+    issuer: "{{ .Values.sso.keycloakUrl }}/auth/realms/{{ .Values.sso.ssoRealmName }}"
+    jwksUrl: "{{ .Values.sso.keycloakUrl }}/auth/realms/{{ .Values.sso.ssoRealmName }}/protocol/openid-connect/certs"
+    loginHint: "false"
+    logoutUrl: "{{ .Values.sso.keycloakUrl }}/auth/realms/{{ .Values.sso.ssoRealmName }}/protocol/openid-connect/logout"
+    passMaxAge: "false"
+    pkceEnabled: "false"
+    prompt: ""
+    syncMode: "IMPORT"
+    tokenUrl: "{{ .Values.sso.keycloakUrl }}/auth/realms/{{ .Values.sso.ssoRealmName }}/protocol/openid-connect/token"
+    uiLocales: "false"
+    userInfoUrl: "{{ .Values.sso.keycloakUrl }}/auth/realms/{{ .Values.sso.ssoRealmName }}/protocol/openid-connect/userinfo"
+    validateSignature: "false"
+  mappers:
+    - name: "realm-management.realm-admin"
+      identityProviderMapper: "keycloak-oidc-role-to-role-idp-mapper"
+      identityProviderAlias: "{{ .Values.sso.ssoRealmName }}"
+      config:
+        external.role: "{{ .Values.sso.ssoClientName }}.administrator"
+        role: "realm-management.realm-admin"
+        syncMode: "INHERIT"
+    - name: "administrator"
+      identityProviderMapper: "keycloak-oidc-role-to-role-idp-mapper"
+      identityProviderAlias: "{{ .Values.sso.ssoRealmName }}"
+      config:
+        role: "administrator"
+        external.role: "{{ .Values.sso.ssoClientName }}.administrator"
+        syncMode: "INHERIT"
+    - name: "developer"
+      identityProviderMapper: "keycloak-oidc-role-to-role-idp-mapper"
+      identityProviderAlias: "{{ .Values.sso.ssoRealmName }}"
+      config:
+        external.role: "{{ .Values.sso.ssoClientName }}.developer"
+        role: "developer"
+        syncMode: "INHERIT"
+{{ end }}

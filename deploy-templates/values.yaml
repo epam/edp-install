@@ -478,6 +478,8 @@ sso:
   # realmName: edp
   # -- Defines Keycloak sso realm name that is used as the Identity Provider (IdP) realm
   ssoRealmName: "broker"
+  # -- Defines Keycloak client name that is used for the Identity Provider (IdP) client
+  ssoClientName: "edp"
   # -- Keycloak URL.
   keycloakUrl: https://keycloak.example.com
   # -- Administrators of your tenant.

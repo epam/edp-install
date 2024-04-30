@@ -10,17 +10,5 @@ spec:
     kind: {{ .Values.sso.keycloakOperatorResources.kind }}
     name: {{ .Values.sso.keycloakOperatorResources.name }}
   realmName: {{ default .Release.Namespace .Values.sso.realmName }}
-  ssoRealmEnabled: true
-  ssoRealmName: {{ .Values.sso.ssoRealmName }}
-  users:
-  {{- range .Values.sso.admins }}
-  - username: {{.}}
-    realmRoles:
-      - administrator
-  {{- end}}
-  {{- range .Values.sso.developers }}
-  - username: {{.}}
-    realmRoles:
-      - developer
-  {{- end}}
+  browserFlow: browsers
 {{- end }}
