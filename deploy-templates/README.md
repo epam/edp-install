@@ -49,11 +49,13 @@ A Helm chart for EDP Install
 | edp-headlamp.enabled | bool | `true` |  |
 | edp-headlamp.ingress.annotations | object | `{}` | Annotations for Ingress resource |
 | edp-headlamp.ingress.enabled | bool | `true` | Enable external endpoint access. Default Ingress/Route host pattern: portal-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }} |
+| edp-headlamp.ingress.host | string | `""` | If not specified the pattern "portal-[namespace].[global DNS wildcard]" will create a URL like "portal-namespace.example.com" |
 | edp-headlamp.ingress.tls | list | `[]` | Ingress TLS configuration |
 | edp-tekton.dashboard.enabled | bool | `true` | https://epam.github.io/edp-install/operator-guide/oauth2-proxy/ |
 | edp-tekton.dashboard.ingress.annotations | object | `{}` | Annotations for Ingress resource |
 | edp-tekton.dashboard.ingress.enabled | bool | `true` | Enable external endpoint access. Default Ingress/Route host pattern: tekton-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }} |
-| edp-tekton.dashboard.ingress.tls | list | `[]` | Uncomment it to enable tekton-dashboard OIDC on EKS cluster nginx.ingress.kubernetes.io/auth-signin: 'https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri' nginx.ingress.kubernetes.io/auth-url: 'http://oauth2-proxy.edp.svc.cluster.local:8080/oauth2/auth' |
+| edp-tekton.dashboard.ingress.host | string | `""` | If not specified the pattern "tekton-[namespace].[global DNS wildcard]" will create a URL like "tekton-namespace.example.com" |
+| edp-tekton.dashboard.ingress.tls | list | `[]` | Ingress TLS configuration |
 | edp-tekton.dashboard.openshift_proxy | object | `{"enabled":false}` | https://epam.github.io/edp-install/operator-guide/oauth2-proxy/?h=#enable-oauth2-proxy-on-tekton-dashboard |
 | edp-tekton.dashboard.openshift_proxy.enabled | bool | `false` | Enable oauth-proxy to include authorization layer on tekton-dashboard. Default: flase |
 | edp-tekton.dashboard.readOnly | bool | `false` | Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false. |
@@ -94,6 +96,7 @@ A Helm chart for EDP Install
 | sso.image.tag | string | `"v7.4.0"` | OAuth2-proxy image tag |
 | sso.ingress.annotations | object | `{}` | Additional ingress annotations |
 | sso.ingress.enabled | bool | `true` | Enable ingress controller resource |
+| sso.ingress.host | string | `""` | If not specified the pattern "oauth-[namespace].[global DNS wildcard]" will create a URL like "oauth-namespace.example.com" |
 | sso.ingress.ingressClassName | string | `""` | Defines which ingress controller will implement the resource, e.g. nginx |
 | sso.ingress.pathType | string | `"Prefix"` | Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific` |
 | sso.ingress.tls | list | `[]` | Ingress TLS configuration |
