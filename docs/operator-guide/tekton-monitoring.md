@@ -51,7 +51,7 @@ To create and apply the additional scrape config, follow the steps below:
         key: prometheus-additional-job.yaml
   ```
 
-4. Download the [EDP Tekton Pipeline](https://grafana.com/grafana/dashboards/18321) dashboard:
+4. Download the [KubeRocketCi](https://grafana.com/grafana/dashboards/18321) dashboard:
 
   !![Import dashboard grafana](../assets/operator-guide/grafana-tekton-dasboard-import.png "Import Grafana dashboard")
 
@@ -59,7 +59,7 @@ To create and apply the additional scrape config, follow the steps below:
 
     b. In the dropdown menu, click the `+ Import` button;
 
-    c. Select the created `edp-tekton-overview_rev1.json` file;
+    c. Select the created `18321_rev*.json` file;
 
   !![Import dashboard grafana options](../assets/operator-guide/grafana-tekton-dasboard-import-options.png "Import Grafana dashboard: Options")
 
