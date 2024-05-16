@@ -217,7 +217,7 @@ nav:
         - Install DefectDojo: operator-guide/install-defectdojo.md
         - Install ReportPortal: operator-guide/install-reportportal.md
     - Configuration:
-      - EDP Access Model: operator-guide/edp-access-model.md
+      - KubeRocketCI Access Model: operator-guide/edp-access-model.md
       - Version Control Systems:
         - Overview: operator-guide/vcs.md
         - Integrate GitHub/GitLab in Tekton: operator-guide/import-strategy-tekton.md
@@ -300,6 +300,13 @@ nav:
     - FAQ: faq.md
     - Troubleshooting:
       - Overview: operator-guide/troubleshooting/overview.md
+      - Container Registry Reset: operator-guide/troubleshooting/troubleshoot-container-registries.md
+      - Application Is Not Deployed: operator-guide/troubleshooting/troubleshoot-stages.md
+      - Codebase Creation Issue: operator-guide/troubleshooting/troubleshoot-git-server.md
+      - Resource Observability Issue: operator-guide/troubleshooting/resource-observability.md
+      - Application Already Exists Error (Gerrit VCS): operator-guide/troubleshooting/troubleshoot-applications.md
+      - Codebase Build Process is Failed: operator-guide/troubleshooting/application-not-built.md
+      - Invalid Codebase ID Issue (GitHub/GitLab VCS): operator-guide/troubleshooting/invalid-codebase-name.md
 
   - User Guide:
     - user-guide/index.md
