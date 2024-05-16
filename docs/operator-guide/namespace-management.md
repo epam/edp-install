@@ -56,5 +56,5 @@ The `manageNamespace` parameter also defines the resources that will be created 
 
 ## Related Articles
 
-* [EDP Access Model](edp-access-model.md)
+* [KubeRocketCI Access Model](edp-access-model.md)
 * [EKS OIDC With Keycloak](configure-keycloak-oidc-eks.md)
