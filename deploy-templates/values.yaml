@@ -63,7 +63,7 @@ global:
   #   space: "my_user"
   # As a result all image artifacts are published under https://github.com/users/my_user/packages/container/package/simple-project
   dockerRegistry:
-    # -- Defines type of registry. One of `ecr`, `harbor`, `dockerhub`, `openshift` or `nexus`.
+    # -- Defines type of registry. One of `ecr`, `harbor`, `dockerhub`, `openshift`, `nexus` or `ghcr`.
     # 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'.
     type: ""
     # Below is an example of endpoint values for each registry type:
@@ -74,6 +74,7 @@ global:
     # dockerhub  | 'docker.io'
     # openshift  | <image-registry.openshift-image-registry.svc:5000>
     # nexus      | <nexus-container.example.com>
+    # ghcr       | 'ghcr.io'
     # -- Defines registry endpoint URL.
     url: ""
     # Below is a description of space values for each registry type:
@@ -84,6 +85,7 @@ global:
     # dockerhub  | The user account id or community user account id with push permission.
     # openshift  | The project name in registry.
     # nexus      | The project name in registry.
+    # ghcr       | The user account id or community user account id with push permission.
     # -- Defines project name.
     space: ""
     # -- Defines the geographic area where the (AWS) Elastic Container Registry repository is hosted (optional). E.g. "eu-central-1".
