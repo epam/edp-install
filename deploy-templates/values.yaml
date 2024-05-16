@@ -55,6 +55,13 @@ global:
   #   url: "nexus-container.example.com"
   #   space: "edp"
   # As a result all image artifacts are published under https://nexus-container.example.com/edp
+  #
+  # For example to integrate platform with GitHub container registry and publish image under 'my_user' project name:
+  # dockerRegistry:
+  #   type: "ghcr"
+  #   url: "ghcr.io"
+  #   space: "my_user"
+  # As a result all image artifacts are published under https://github.com/users/my_user/packages/container/package/simple-project
   dockerRegistry:
     # -- Defines type of registry. One of `ecr`, `harbor`, `dockerhub`, `openshift` or `nexus`.
     # 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'.
