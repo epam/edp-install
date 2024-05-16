@@ -225,7 +225,7 @@ cd-pipeline-operator:
   #   - own: Copies the secret once from the parent namespace, without subsequent reconciliation. If updated in the parent namespace, manual updating in all created namespaces is required.
   #   - eso: The secret will be managed by the External Secrets Operator (requires installation and configuration in the cluster: https://epam.github.io/edp-install/operator-guide/install-external-secrets-operator/).
   #   - none: Disables secrets management logic.
-  secretManager: none
+  secretManager: own
 
 gerrit-operator:
   enabled: false
