@@ -13,6 +13,7 @@ The following table displays the registry services supported for both OpenShift 
 |Harbor|+|+|
 |OpenShift (OCR)|+|-|
 |Nexus|+|+|
+|GitHub (GHCR)|+|+|
 
 ## Add Container Registry
 
@@ -46,8 +47,8 @@ The required fields vary depending on which container registry is chosen:
       |Fields|Description|
       |:-|:-|
       |Registry Space|The unique identifier/name of the user or company linked to your DockerHub account.|
-      |User|The user account id or community user account id with push permission.|
-      |Password/Token|Provide the [Password/Token](https://docs.docker.com/security/for-developers/access-tokens/) corresponding to your docker hub account. It is recommended to use Token for security purposes.|
+      |User|The user account ID or community user account ID with push permission.|
+      |Password/Token|Provide the [Password/Token](https://docs.docker.com/security/for-developers/access-tokens/) corresponding to your DockerHub account. It is recommended to use Token for security purposes.|
       |Checkbox/Use the Push Account's credentials|Check this to use the same account for pulling and pushing operations. If unchecked, please enter the user account ID and Password/Token for your DockerHub account or community user account ID with pull permission.|
 
 === "Harbor"
@@ -82,6 +83,17 @@ The required fields vary depending on which container registry is chosen:
       |Repository|Specify the Nexus repository that corresponds to your project.|
       |User|Provide the username with push permissions.|
       |Password/Token|Enter the confidential combination used for authenticating your access to the container registry.|
+
+=== "GitHub"
+
+      !![GitHub container registry settings](../assets/operator-guide/container-registry-github.png "GitHub container registry settings")
+
+      |Fields|Description|
+      |:-|:-|
+      |Registry Space|The unique identifier/name of the user or company linked to your GitHub account.|
+      |User|The user account ID or community user account ID with push permission.|
+      |Password/Token|Provide the [Token](https://docs.github.com/en/enterprise-server@3.9/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) corresponding to your  GitHub account. The minimal set of permissions required for the token is described in the [Integrate GitHub/GitLab in Tekton](../operator-guide/import-strategy-tekton.md).|
+      |Checkbox/Use the Push Account's credentials|Check this to use the same account for pulling and pushing operations. If unchecked, please enter the user account ID and Token for your GitHub account or community user account ID with pull permission.|
 
 ## Remove Container Registry
 
