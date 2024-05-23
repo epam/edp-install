@@ -481,7 +481,7 @@ sso:
   # -- Defines Keycloak client name that is used for the Identity Provider (IdP) client
   ssoClientName: "edp"
   # -- Keycloak URL.
-  keycloakUrl: https://keycloak.example.com
+  keycloakUrl: https://keycloak.example.com/auth
   # -- Administrators of your tenant.
   admins:
     - "stub_user_one@example.com"

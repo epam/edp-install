@@ -100,7 +100,7 @@ A Helm chart for EDP Install
 | sso.keycloakOperatorResources.createKeycloakCR | bool | `true` |  |
 | sso.keycloakOperatorResources.kind | string | `"Keycloak"` |  |
 | sso.keycloakOperatorResources.name | string | `"main"` |  |
-| sso.keycloakUrl | string | `"https://keycloak.example.com"` | Keycloak URL. |
+| sso.keycloakUrl | string | `"https://keycloak.example.com/auth"` | Keycloak URL. |
 | sso.nodeSelector | object | `{}` | Node labels for pod assignment |
 | sso.ssoClientName | string | `"edp"` | Defines Keycloak client name that is used for the Identity Provider (IdP) client |
 | sso.ssoRealmName | string | `"broker"` | Defines Keycloak sso realm name that is used as the Identity Provider (IdP) realm |
