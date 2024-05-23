@@ -16,7 +16,7 @@ spec:
   config:
     acceptsPromptNoneForwardFromClient: "false"
     allowedClockSkew: "0"
-    authorizationUrl: "{{ .Values.sso.keycloakUrl }}/realms/{{ .Values.sso.ssoRealmName }}/protocol/openid-connect"
+    authorizationUrl: "{{ .Values.sso.keycloakUrl }}/realms/{{ .Values.sso.ssoRealmName }}/protocol/openid-connect/auth"
     backchannelSupported: "false"
     clientAuthMethod: "client_secret_post"
     clientId: {{ .Values.sso.ssoClientName }}
