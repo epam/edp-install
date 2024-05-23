@@ -1,4 +1,5 @@
 {{- if and .Values.sso.enabled -}}
+{{- $oidcIssueUrl := printf "%s/realms/%s" .Values.sso.keycloakUrl (default .Release.Namespace .Values.sso.realmName) -}}
 {{- $domains := printf ".%s" .Values.global.dnsWildCard -}}
 apiVersion: v1
 kind: ConfigMap
@@ -16,7 +17,7 @@ data:
     cookie_secure = "false"
     email_domains = [ "*" ]
     insecure_oidc_allow_unverified_email = "true"
-    oidc_issuer_url = "{{ .Values.sso.keycloakUrl }}/realms/{{ .Values.sso.realmName }}"
+    oidc_issuer_url = "{{ $oidcIssueUrl }}"
     pass_authorization_header = "true"
     pass_basic_auth = "false"
     provider="keycloak-oidc"
