@@ -13,11 +13,14 @@ gantt
     dateFormat  YYYY-MM-DD
     title Release Schedule and Lifecycle
 
-    section (Supported)
-    KubeRocketCI 3.8 Release: active, r38, 2024-3-12, 64d
+    section (Planned)
+    KubeRocketCI 3.9 Release: crit, r39, 2024-6-10, 20d
 
     section (Supported)
-    EDP 3.7 Release: crit, r37, 2023-12-15, 152d
+    KubeRocketCI 3.8 Release: crit, r38, 2024-3-12, 128d
+
+    section (Supported)
+    EDP 3.7 Release: active, r37, 2023-12-15, 152d
 
     section (Supported)
     EDP 3.6 Release: active, r36, 2023-11-03, 194d
