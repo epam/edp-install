@@ -23,6 +23,7 @@ data:
     provider="keycloak-oidc"
     redirect_url = "https://{{ include "oauth2_proxy.Url" . }}/oauth2/callback"
     reverse_proxy = "true"
+    silence_ping_logging = "true"
     skip_jwt_bearer_tokens = "true"
     skip_provider_button = "true"
     whitelist_domains = "{{ $domains }}"
