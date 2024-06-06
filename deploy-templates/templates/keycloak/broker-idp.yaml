@@ -9,7 +9,6 @@ spec:
     name: main
   alias: {{ .Values.sso.ssoRealmName }}
   displayName: "{{ .Values.sso.ssoRealmName }}"
-  authenticateByDefault: false
   enabled: true
   firstBrokerLoginFlowAlias: "first broker login"
   providerId: "keycloak-oidc"

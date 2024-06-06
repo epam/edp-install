@@ -1,12 +1,12 @@
 {{- if eq .Values.global.platform "openshift" -}}
 apiVersion: authorization.openshift.io/v1
+groupNames: null
 kind: RoleBinding
 metadata:
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
   name: edp-{{ .Release.Namespace }}
 roleRef:
-  kind: Role
   name: edp-{{ .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
 subjects:
@@ -15,5 +15,4 @@ subjects:
   namespace: {{ .Release.Namespace }}
 userNames:
 - system:serviceaccount:{{ .Release.Namespace }}:edp
-groupNames: []
 {{- end -}}

@@ -6,10 +6,8 @@ metadata:
     {{- include "edp-install.labels" . | nindent 4 }}
   name: edp-kaniko-registry-editor
 roleRef:
-  kind: ClusterRole
   name: registry-editor
 subjects:
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
+- kind: User
   name: kaniko-push
 {{- end -}}
