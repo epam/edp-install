@@ -11,10 +11,10 @@ roleRef:
 subjects:
 - kind: User
   name: admin
-- kind: User
-  name: system:serviceaccount:{{ .Release.Namespace }}:edp
+- kind: ServiceAccount
+  name: edp
+  namespace: {{ .Release.Namespace }}
 userNames:
 - admin
 - system:serviceaccount:{{ .Release.Namespace }}:edp
-groupNames: []
 {{- end -}}

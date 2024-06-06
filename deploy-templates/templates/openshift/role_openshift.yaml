@@ -1,5 +1,5 @@
 {{- if eq .Values.global.platform "openshift" -}}
-apiVersion: authorization.openshift.io/v1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: {{ .Release.Namespace }}
@@ -19,9 +19,9 @@ rules:
   resources:
   - namespaces
   verbs:
+  - create
   - get
   - list
-  - create
   - patch
 - apiGroups:
   - ""
@@ -29,8 +29,8 @@ rules:
   resources:
   - ""
   verbs:
-  - list
   - get
+  - list
 - apiGroups:
   - ""
   - network.openshift.io
@@ -72,26 +72,26 @@ rules:
 - apiGroups:
   - "*"
   resources:
-  - templates
-  - processedtemplates
-  - rolebindings
-  - roles
-  - clusterroles
+  - buildconfigs
   - clusterrolebindings
-  - projectrequests
-  - projects
+  - clusterroles
+  - configmaps
+  - groups
+  - imagestreams
+  - jobs
   - namespaces
   - pods
   - pods/exec
-  - groups
-  - users
-  - podsecuritypolicies
   - pods/portforward
-  - jobs
-  - configmaps
+  - podsecuritypolicies
+  - processedtemplates
+  - projectrequests
+  - projects
+  - rolebindings
+  - roles
   - routes
-  - imagestreams
-  - buildconfigs
+  - templates
+  - users
   verbs:
   - get
   - list
@@ -107,14 +107,14 @@ rules:
 - apiGroups:
   - '*'
   resources:
-  - configmaps
-  - routes
-  - imagestreams
   - buildconfigs
-  - jobs
+  - configmaps
   - groups
-  - users
+  - imagestreams
+  - jobs
   - podsecuritypolicies
+  - routes
+  - users
   verbs:
   - patch
   - update
@@ -123,12 +123,12 @@ rules:
   resources:
     - securitycontextconstraints
   verbs:
-    - patch
-    - update
+    - create
     - delete
     - get
     - list
-    - create
+    - patch
+    - update
 - apiGroups:
   - '*'
   resources:
@@ -144,17 +144,17 @@ rules:
 - apiGroups:
   - '*'
   resourceNames:
-  - vcs-autouser
+  - admin-console-client
+  - admin-console-db
   - gerrit-admin
+  - gerrit-project-creator
   - jenkins-token
+  - keycloak
   - keycloak-admin
   - keycloak-gerrit
-  - gerrit-project-creator
-  - keycloak
   - keycloak-parameters
-  - admin-console-client
   - super-admin-db
-  - admin-console-db
+  - vcs-autouser
   resources:
   - secrets
   verbs:
@@ -173,71 +173,71 @@ rules:
 - apiGroups:
   - '*'
   resources:
-  - gitservers
-  - gitservers/status
-  - gitservers/finalizers
-  - codebases
-  - codebases/status
-  - codebases/finalizers
-  - codebasebranches
-  - codebasebranches/status
-  - codebasebranches/finalizers
-  - codebaseimagestreams
-  - codebaseimagestreams/status
-  - codebaseimagestreams/finalizers
-  - cdpipelines
-  - cdpipelines/status
-  - cdpipelines/finalizers
-  - stages
-  - stages/status
-  - stages/finalizers
-  - sonars
-  - sonars/finalizers
-  - sonars/status
-  - nexuses
-  - nexuses/finalizers
-  - nexuses/status
   - adminconsoles
   - adminconsoles/finalizers
   - adminconsoles/status
+  - cdpipelines
+  - cdpipelines/finalizers
+  - cdpipelines/status
+  - codebasebranches
+  - codebasebranches/finalizers
+  - codebasebranches/status
+  - codebaseimagestreams
+  - codebaseimagestreams/finalizers
+  - codebaseimagestreams/status
+  - codebases
+  - codebases/finalizers
+  - codebases/status
+  - deployments/finalizers
+  - deployments/finalizers.extensions
+  - gerritreplicationconfigs
+  - gerritreplicationconfigs/status
   - gerrits
   - gerrits/finalizers
   - gerrits/status
+  - gitservers
+  - gitservers/finalizers
+  - gitservers/status
   - jenkins
   - jenkins/finalizers
   - jenkins/status
   - jenkinses
   - jenkinses/finalizers
   - jenkinses/status
-  - jenkinsserviceaccounts
-  - jenkinsserviceaccounts/finalizers
-  - jenkinsserviceaccounts/status
+  - jenkinsfolders
+  - jenkinsfolders/finalizers
+  - jenkinsfolders/status
   - jenkinsscripts
   - jenkinsscripts/finalizers
   - jenkinsscripts/status
-  - deployments/finalizers
-  - deployments/finalizers.extensions
-  - gerritreplicationconfigs
-  - gerritreplicationconfigs/status
-  - keycloaks
-  - keycloaks/finalizers
-  - keycloaks/status
+  - jenkinsserviceaccounts
+  - jenkinsserviceaccounts/finalizers
+  - jenkinsserviceaccounts/status
+  - jiraservers
+  - jiraservers/finalizers
+  - jiraservers/status
   - keycloakclients
   - keycloakclients/finalizers
   - keycloakclients/status
   - keycloakrealms
   - keycloakrealms/finalizers
   - keycloakrealms/status
+  - keycloaks
+  - keycloaks/finalizers
+  - keycloaks/status
+  - nexuses
+  - nexuses/finalizers
+  - nexuses/status
   - projectrequests
   - projects
   - projects/finalizers
   - projects/status
-  - jenkinsfolders
-  - jenkinsfolders/finalizers
-  - jenkinsfolders/status
-  - jiraservers
-  - jiraservers/finalizers
-  - jiraservers/status
+  - sonars
+  - sonars/finalizers
+  - sonars/status
+  - stages
+  - stages/finalizers
+  - stages/status
   verbs:
   - '*'
 {{ end }}
