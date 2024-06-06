@@ -25,10 +25,10 @@ To install Velero, follow the steps below:
        [Velero AWS Plugin](https://github.com/vmware-tanzu/velero-plugin-for-aws) requires access to AWS resources.
        To configure access, please refer to the [IRSA for Velero](./velero-irsa.md) documentation.
 
-3. Install **Velero v.2.14.13**:
+3. Install **Velero v.6.5.0**:
 
         helm install velero vmware-tanzu/velero \
-        --version 2.14.13 \
+        --version 6.5.0 \
         --values values.yaml \
         --namespace velero
 
@@ -39,9 +39,6 @@ To install Velero, follow the steps below:
    <summary><b>View: values.yaml</b></summary>
 
 ```yaml
-image:
-  repository: velero/velero
-  tag: v1.5.3
 securityContext:
   fsGroup: 65534
 restic:
@@ -51,24 +48,25 @@ serviceAccount:
   server:
     create: true
     name: edp-velero
-      annotations:
-        eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹VELERO_NAMESPACE›Velero"
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::<AWS_ACCOUNT_ID>:role/AWSIRSA‹CLUSTER_NAME›‹VELERO_NAMESPACE›Velero"
 credentials:
   useSecret: false
 configuration:
-  provider: aws
   backupStorageLocation:
-    name: default
+  - name: default
+    provider: aws
     bucket: velero-<CLUSTER_NAME>
     config:
       region: eu-central-1
   volumeSnapshotLocation:
-    name: default
+  - name: default
+    provider: aws
     config:
       region: <AWS_REGION>
 initContainers:
   - name: velero-plugin-for-aws
-    image: velero/velero-plugin-for-aws:v1.1.0
+    image: velero/velero-plugin-for-aws:v1.9.2
     volumeMounts:
       - mountPath: /target
         name: plugins
