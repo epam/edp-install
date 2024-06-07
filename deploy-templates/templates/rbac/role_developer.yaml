@@ -19,3 +19,9 @@ rules:
       - pipelineruns
     verbs:
       - create
+  - verbs:
+      - get
+    apiGroups:
+      - ''
+    resources:
+      - secrets
