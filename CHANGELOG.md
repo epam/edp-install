@@ -11,6 +11,87 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v3.9.0"></a>
+## [v3.9.0] - 2024-06-13
+### Features
+
+- enable silence ping logging in oauth2-proxy config ([#230](https://github.com/epam/edp-install/issues/230))
+- Align keycloakUrl parameter usage ([#208](https://github.com/epam/edp-install/issues/208))
+- Align keycloakUrl parameter usage ([#208](https://github.com/epam/edp-install/issues/208))
+- Migrate from SSORealm to idp resources ([#208](https://github.com/epam/edp-install/issues/208))
+- Developer role users can view portal resources([#191](https://github.com/epam/edp-install/issues/191))
+- Make keycloak realmName value configurable([#183](https://github.com/epam/edp-install/issues/183))
+- Add the parameter to manage outh2proxy ingress creation([#178](https://github.com/epam/edp-install/issues/178))
+
+### Bug Fixes
+
+- Add rbac for portal widgets([#237](https://github.com/epam/edp-install/issues/237))
+- Update keycloak secret definition ([#208](https://github.com/epam/edp-install/issues/208))
+- Fix indentation in values.yaml ([#169](https://github.com/epam/edp-install/issues/169))
+
+### Routine
+
+- Update release version to 3.9.0 ([#239](https://github.com/epam/edp-install/issues/239))
+- Update argocd diff ([#232](https://github.com/epam/edp-install/issues/232))
+- Add assets for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Align oauth2-proxy issuer url ([#208](https://github.com/epam/edp-install/issues/208))
+- Add eso objects for GHCR registry ([#218](https://github.com/epam/edp-install/issues/218))
+- Set Default Value of secretManager to own for Private Repositories ([#216](https://github.com/epam/edp-install/issues/216))
+- Switch to kind ClusterKeycloak in case if add-ons approach use([#188](https://github.com/epam/edp-install/issues/188))
+- Align rights excessive removed([#191](https://github.com/epam/edp-install/issues/191))
+- Add codeowners file to the repo ([#192](https://github.com/epam/edp-install/issues/192))
+- Remove unused flag ([#178](https://github.com/epam/edp-install/issues/178))
+- Set edp version in cm from Chart.yaml ([#173](https://github.com/epam/edp-install/issues/173))
+- Disable sso by default ([#172](https://github.com/epam/edp-install/issues/172))
+- Update current development version ([#172](https://github.com/epam/edp-install/issues/172))
+
+### Documentation
+
+- Update velero installation guide([#235](https://github.com/epam/edp-install/issues/235))
+- Add cases to Troubleshooting section ([#214](https://github.com/epam/edp-install/issues/214))
+- Update release timeline ([#187](https://github.com/epam/edp-install/issues/187))
+- Add GitHub container registry to documentation ([#223](https://github.com/epam/edp-install/issues/223))
+- Add description for GHCR registry integration ([#218](https://github.com/epam/edp-install/issues/218))
+- Align grafana tekton-dashboard integration documetation([#212](https://github.com/epam/edp-install/issues/212))
+- Describe custom pipeline deployment ([#197](https://github.com/epam/edp-install/issues/197))
+- Update team working flow ([#206](https://github.com/epam/edp-install/issues/206))
+- AWS Infrastructure Cost Estimation Page ([#202](https://github.com/epam/edp-install/issues/202))
+- Add upgrade edp 3.8 guide ([#199](https://github.com/epam/edp-install/issues/199))
+- Update user guide ([#204](https://github.com/epam/edp-install/issues/204))
+- Update the EDP Access Model page ([#175](https://github.com/epam/edp-install/issues/175))
+- Update the portal endpoint in quick guide ([#184](https://github.com/epam/edp-install/issues/184))
+- Configuration AWS components of the Argo CD ([#8](https://github.com/epam/edp-install/issues/8))
+- Deploy platform without Ingress objects ([#185](https://github.com/epam/edp-install/issues/185))
+- Update the Quick Start Guide ([#184](https://github.com/epam/edp-install/issues/184))
+- Update components versions within docs ([#175](https://github.com/epam/edp-install/issues/175))
+- Update screenshots in User Guide ([#175](https://github.com/epam/edp-install/issues/175))
+- Create Sonar project management page ([#180](https://github.com/epam/edp-install/issues/180))
+- Align add-cluster documentation ([#176](https://github.com/epam/edp-install/issues/176))
+- Different Registries Support as repository for artifacts ([#182](https://github.com/epam/edp-install/issues/182))
+- Add Nexus container registry in mkdocs ([#179](https://github.com/epam/edp-install/issues/179))
+- Align argocd integration documentation ([#176](https://github.com/epam/edp-install/issues/176))
+- Deploy AWS EKS Cluster page minors ([#174](https://github.com/epam/edp-install/issues/174))
+- Update EDP version in installation documentation ([#181](https://github.com/epam/edp-install/issues/181))
+- Add AI TechWriter assets ([#181](https://github.com/epam/edp-install/issues/181))
+- Add initial section for troubleshooting ([#177](https://github.com/epam/edp-install/issues/177))
+- Add AI assistance assets ([#181](https://github.com/epam/edp-install/issues/181))
+- Update documentation related to AWS Services ([#177](https://github.com/epam/edp-install/issues/177))
+- Align Deploy AWS EKS Cluster page ([#174](https://github.com/epam/edp-install/issues/174))
+- Update the Supported Versions file ([#175](https://github.com/epam/edp-install/issues/175))
+- Remove deprecated edp-component operator from readme ([#175](https://github.com/epam/edp-install/issues/175))
+- Update component versions on External Secrets Operator page ([#175](https://github.com/epam/edp-install/issues/175))
+- Align helm chart version in doc ([#173](https://github.com/epam/edp-install/issues/173))
+- Align values.yaml ([#173](https://github.com/epam/edp-install/issues/173))
+- Update the RELEASES md file ([#169](https://github.com/epam/edp-install/issues/169))
+
+
+<a name="v3.8.1"></a>
+## [v3.8.1] - 2024-03-13
+### Routine
+
+- Disable sso by default ([#172](https://github.com/epam/edp-install/issues/172))
+
+
 <a name="v3.8.0"></a>
 ## [v3.8.0] - 2024-03-12
 ### Features
@@ -369,7 +450,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.8.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.9.0...HEAD
+[v3.9.0]: https://github.com/epam/edp-install/compare/v3.8.1...v3.9.0
+[v3.8.1]: https://github.com/epam/edp-install/compare/v3.8.0...v3.8.1
 [v3.8.0]: https://github.com/epam/edp-install/compare/v3.7.5...v3.8.0
 [v3.7.5]: https://github.com/epam/edp-install/compare/v3.7.4...v3.7.5
 [v3.7.4]: https://github.com/epam/edp-install/compare/v3.7.3...v3.7.4
