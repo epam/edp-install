@@ -21,11 +21,11 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.19.0 |
-| @epamedp | codebase-operator | 2.22.1 |
-| @epamedp | edp-headlamp | 0.14.0 |
-| @epamedp | edp-tekton | 0.11.0 |
-| @epamedp | gerrit-operator | 2.20.1 |
+| @epamedp | cd-pipeline-operator | 2.20.0 |
+| @epamedp | codebase-operator | 2.23.0 |
+| @epamedp | edp-headlamp | 0.15.0 |
+| @epamedp | edp-tekton | 0.12.0 |
+| @epamedp | gerrit-operator | 2.21.0 |
 
 ## Values
 
