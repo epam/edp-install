@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.9.0-SNAPSHOT](https://img.shields.io/badge/Version-3.9.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.9.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.9.0--SNAPSHOT-informational?style=flat-square)
+![Version: 3.10.0-SNAPSHOT](https://img.shields.io/badge/Version-3.10.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.10.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.10.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for EDP Install
 
@@ -21,11 +21,11 @@ A Helm chart for EDP Install
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.19.0 |
-| @epamedp | codebase-operator | 2.22.1 |
-| @epamedp | edp-headlamp | 0.14.0 |
-| @epamedp | edp-tekton | 0.11.0 |
-| @epamedp | gerrit-operator | 2.20.1 |
+| @epamedp | cd-pipeline-operator | 2.20.0 |
+| @epamedp | codebase-operator | 2.23.0 |
+| @epamedp | edp-headlamp | 0.15.0 |
+| @epamedp | edp-tekton | 0.12.0 |
+| @epamedp | gerrit-operator | 2.21.0 |
 
 ## Values
 
