@@ -4,6 +4,7 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 3.9.0](#3.9.0)
 * [Version 3.8.0](#3.8.0)
 * [Version 3.7.5](#3.7.5)
 * [Version 3.7.4](#3.7.4)
@@ -11,12 +12,11 @@ Get acquainted with the latest EDP releases.
 * [Version 3.7.2](#3.7.2)
 * [Version 3.7.1](#3.7.1)
 * [Version 3.7.0](#3.7.0)
-* [Version 3.6.0](#3.6.0)
-
 
 <details>
   <summary>Earlier Versions</summary>
 
+* [Version 3.6.0](#3.6.0)
 * [Version 3.5.3](#3.5.3)
 * [Version 3.5.2](#3.5.2)
 * [Version 3.5.1](#3.5.1)
@@ -56,6 +56,149 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.9.0 <a name="3.9.0"></a> (June 13, 2024)
+
+## What's New
+
+We are introducing the built-in pipeline tracker. This new feature allows you to monitor Tekton pipeline runs directly within KubeRocketCI, removing the need to open extra tabs in your browser. With pipeline statuses and details readily accessible, your workflow becomes more streamlined and efficient.
+
+As usual, we are continuously working on refining the user interface. For better user experience, we've made a major contribution to optimizing KubeRocketCI. Changes affect almost all the aspects of using UI, whether it's codebase creation, deployment, third-party tool integration, platform settings, etc. Besides, now it features real-time pipelines within the KubeRocketCI so there is no need to navigate to Tekton to observe pipeline runs, their statuses are always at hand now.
+
+Apart from that, we implemented GitHub Container Registry (GHCR) support. Now you can seamlessly store your container images using a solution from GitHub. This enhancement will make our platform more flexible.
+
+Lastly, announce the Kiosk tool deprecation. For those who are looking for a tenancy management solution instead of an obsolete Kiosk, we encourage considering Capsule as a more flexible solution.
+
+### New Functionality
+
+* The developer role in KubeRocketCI now grants the ability to view the Kubernetes resources within the KubeRocketCIб such as codebases, environments, widgets, etc. ([#191](https://github.com/epam/edp-install/issues/191))
+* The Keycloak realm name value is now configurable. Now users can redefine the realm name, patterns no longer include '-main', and the namespace is used as the default realm name. ([#183](https://github.com/epam/edp-install/issues/183))
+* The `sso.ingress.enabled` parameter has been added to manipulate ingress creation for OAuth2-Proxy. ([#178](https://github.com/epam/edp-install/issues/178))
+* GitHub Container Registry support has been implemented. Now users have one another option for storing container images. ([#238](https://github.com/epam/edp-headlamp/issues/238))
+* Added the ability for KeycloakRealmRole custom resource to configure client roles alongside roles as composite roles. ([#44](https://github.com/epam/edp-keycloak-operator/issues/44))
+* The ability to configure Keycloak realm token settings has been added to the platform. ([#38](https://github.com/epam/edp-keycloak-operator/issues/38))
+* Added custom SSL/TLS certificate support for the Keycloak HTTPS connection. ([#36](https://github.com/epam/edp-keycloak-operator/issues/36))
+* The KeycloakClient custom resource now supports creating authorization policies and permissions for a client. ([#28](https://github.com/epam/edp-keycloak-operator/issues/28))
+* The GerritMergeRequest custom resource is now capable of removing the files in the repository. ([#30](https://github.com/epam/edp-gerrit-operator/issues/30))
+
+### Breaking Change
+
+* The Kiosk tenancy management tool has been deprecated. As an alternative, consider using [Capsule](https://epam.github.io/edp-install/operator-guide/capsule/). ([#55](https://github.com/epam/edp-cd-pipeline-operator/issues/55))
+
+### Enhancements
+
+* The SSO tab of the Configuration section has been improved. To simplify integration, now it contains a table of related ingresses. ([#173](https://github.com/epam/edp-headlamp/issues/173)) 
+* The Configuration section structure has been updated for better navigation. ([#192](https://github.com/epam/edp-headlamp/issues/192)) ([#194](https://github.com/epam/edp-headlamp/issues/194)) ([#188](https://github.com/epam/edp-headlamp/issues/188))
+* The codebase creation flow has been redesigned for simplicity. ([#177](https://github.com/epam/edp-headlamp/issues/177))
+* The procedure of deploying KubeRocketCI wothout ingress has been streamlined. ([#185](https://github.com/epam/edp-install/issues/185))
+* The KeycloakRealm custom resource has been updated to use separate CRs, KeycloakRealm and KeycloakRealmIdentityProvider, for a more flexible setup, and the deprecated SSO configuration has been removed. ([#47](https://github.com/epam/edp-keycloak-operator/issues/47))
+* The edp-keycloak-operator has been enhanced to support the reconciliation of user attributes, including FirstName, SecondName, and Email, with optional support for the Email-Verified field, ensuring consistency with the source of truth.  ([#45](https://github.com/epam/edp-keycloak-operator/issues/45))
+* The KeycloakClient custom resource has been provided with authorization settings to configure client scopes. ([#41](https://github.com/epam/edp-keycloak-operator/issues/41))
+* The KeycloakRealmComponent can now reference to secrets. Now users can create Keycloak realms that store their secret strings in a user-defined secret. ([#30](https://github.com/epam/edp-keycloak-operator/issues/30))
+* The KubeRocketCI UI has been significantly revamped. It concerns all the tabs and section, including notifications and UI settings. ([#258](https://github.com/epam/edp-headlamp/issues/258)) 
+* The Components section design has been refined. ([#252](https://github.com/epam/edp-headlamp/issues/252)) ([#253](https://github.com/epam/edp-headlamp/issues/253))
+* The **Actions** button Add permissions check for actions ([#249](https://github.com/epam/edp-headlamp/issues/249)) ([#250](https://github.com/epam/edp-headlamp/issues/250))
+* Tekton pipelines are now displayed in real-time mode within the KubeRocketCI UI directly. To see the these real-time pipeline details, simply click on any pipeline name. ([#225](https://github.com/epam/edp-headlamp/issues/225))
+* The ability to add custom webhooks via the `Webhook Url` field has been added to Git Servers. ([#242](https://github.com/epam/edp-headlamp/issues/242))
+* Tekton resources no longer appear as unsynchronized in Argo CD when KubeRocketCI has been deployed using the add-ons approach. ([#169](https://github.com/epam/edp-headlamp/issues/169))
+* The Configuration section structure has been updated for better navigation. ([#192](https://github.com/epam/edp-headlamp/issues/192)) ([#194](https://github.com/epam/edp-headlamp/issues/194)) ([#188](https://github.com/epam/edp-headlamp/issues/188))
+* GitOps approach can now be enabled for multiple applications separately within one stage. ([#180](https://github.com/epam/edp-headlamp/issues/180))
+* The Markeplace page has been updated. ([#178](https://github.com/epam/edp-headlamp/issues/178))
+* The URL field validation logic has been updated in the third-party tool integration forms of the Configuration section. ([#175](https://github.com/epam/edp-headlamp/issues/175))
+* The Overview page has been redesigned. Now it additionally displays widget status at the left border of each widget. ([#172](https://github.com/epam/edp-headlamp/issues/172))
+* The ability to delete multiple codebases at a time has been added to the Components section. ([#171](https://github.com/epam/edp-headlamp/issues/171))
+* The Environment details page has been significantly redesigned. Now it contains much more information, such as creation time, application image, promotion option. Besides, they contain quick links to Argo CD, Grafana, Kibana, application logs, etc.  ([#258](https://github.com/epam/edp-headlamp/issues/258))
+* Commit message validation is now applied to all of the pipeline runs from GitHub. Previously, commits were validated solely for pull requests. ([#193](https://github.com/epam/edp-tekton/issues/193))
+* Quality Gates are implemented in the review process that check for alignment between the Helm chart name and the codebase name. ([#191](https://github.com/epam/edp-tekton/issues/191))
+* In order to better manage and control distributed development, we facilitated the flexibility of using different package registries in our Gradle Tekton pipelines. User can now leverage different package registries, such as Nexus, GitLab, GitHub, and Azure DevOps Registries. ([#132](https://github.com/epam/edp-tekton/issues/132))              
+* Pipeline steps and task sequences were optimised by removing the `get-nexus-repository-url` step and adjusting task sequences for application and library codebase types for enhanced efficiency and streamlined processes. ([#132](https://github.com/epam/edp-tekton/issues/132)) ([#177](https://github.com/epam/edp-tekton/issues/177))
+* For better security, the permissions scope has been shrinked for the edp-cd-pipeline-operator. ([#52](https://github.com/epam/edp-cd-pipeline-operator/issues/52))
+* The SonarQube integration for new codebases now correctly uses 'master' as the default branch name, ensuring alignment between the codebase and SonarQube project configurations. ([#207](https://github.com/epam/edp-tekton/issues/207))
+* Redundant websockets for streaming pipelineruns were removed, leaving the only one with filtering by labels. ([#170](https://github.com/epam/edp-headlamp/issues/170))
+* The `helm-validate` step now uses Go cache for better performance. ([#44](https://github.com/epam/edp-cd-pipeline-operator/issues/44))
+* To reflect the latest best practices and features, we updated the chart templates within the edp-codebase-operator. ([#68](https://github.com/epam/edp-codebase-operator/issues/68))
+* Validation message for creating a new branch with an invalid name in a codebase have been updated. ([#240](https://github.com/epam/edp-headlamp/issues/240))
+
+### Fixed Issues
+
+* Fixed issue when users couldn't see the error messages in some pages. ([#183](https://github.com/epam/edp-headlamp/issues/183))
+* Fixed issue when users could create codebases with corrupted Git Servers. ([#179](https://github.com/epam/edp-headlamp/issues/179))
+* Fixed issue with various pop-ups throughout the entire Configuration section. ([#223](https://github.com/epam/edp-headlamp/issues/223))
+* Fixed issue when users had to double click the **Sign In** button to log into the KubeRocketCI user interface. ([#218](https://github.com/epam/edp-headlamp/issues/218))
+* Fixed issue when users couldn't see all of the application images in the stage details page if the promote option was disabled. ([#174](https://github.com/epam/edp-headlamp/issues/174))
+* Fixed issue when the **Go to source code** button in the stage details page led to the wrong endpoint. ([#198](https://github.com/epam/edp-headlamp/issues/198))
+* Fixed wrong namespace validation in the stage creation window. ([#155](https://github.com/epam/edp-headlamp/issues/155))
+* Fixed issue when the build pipelines interfered with each other. ([#71](https://github.com/epam/edp-codebase-operator/issues/71))
+* Fixed issue when the Tekton resource pruner didn't prune unused resources completely. ([#205](https://github.com/epam/edp-tekton/issues/205))
+* The deploy button has been fixed: it now correctly appears inactive in situations where its functionality is actually unavailable. ([#155](https://github.com/epam/edp-headlamp/issues/155))
+* Fixed issue when the deploy pipeline failed if the `ingress.enabled` parameter was set to `true`. ([#80](https://github.com/epam/edp-codebase-operator/issues/80))
+* The version conflict in the Added ability to KeycloakRealmRole CR configure client roles alongside roles as composite roles. FastAPI codebase build pipeline related to h11 and httpcore has been resolved by downgrading h11 to a version compatible with httpcore. ([#195](https://github.com/epam/edp-tekton/issues/195))
+* The `init-autotest` stage failure in the **deploy-with-autotests** pipeline template has been resolved, allowing the application to deploy successfully and initialize autotests. ([#199](https://github.com/epam/edp-tekton/issues/199))
+* The CreateContainerConfigError error in the `helm-push` step has been fixed for both Helm application and library codebase types. ([#184](https://github.com/epam/edp-tekton/issues/184))
+* Rudimentary workspaces and volumes have been removed from the `get-version`, `jira`, `commit-validate`, `getDefaultVersion`, and other related tasks. ([#78](https://github.com/epam/edp-tekton/issues/78))
+* Fixed issue when the edp-tekton component couldn't get deployed in the OpenShift cluster due to a misconfigured route resource.  ([#151](https://github.com/epam/edp-tekton/issues/151))
+* The build and review pipelines for a Next.js-based project now successfully complete the build step. ([#201](https://github.com/epam/edp-tekton/issues/201))
+* Fixed issue when users couldn't create multiple event listeners when deploying KubeRocketCI into the OpenShift cluster. ([#175](https://github.com/epam/edp-tekton/issues/175))
+
+### Documentation
+
+* The [Run KubeRocketCI on Kind Cluster](https://youtu.be/b9dpNSpq1AI?si=1KRIlaTKs8k71Cjg) guide is published in our YouTube channel.
+* The [Extending KubeRocketCI: Integrating Custom Build Tools, Frameworks, Languages, and Pipelines](https://youtu.be/HTEUI0Ynygc?si=CvMw_ivvWCiyNXW9) guide is published in our YouTube channel.
+
+The [Getting Started](https://epam.github.io/edp-install/overview/) section is updated with the following:
+  * The [Supported Versions and Compatibility](https://epam.github.io/edp-install/supported-versions/) page has been updated. ([#187](https://github.com/epam/edp-install/issues/187))
+  * The [Install EDP](https://epam.github.io/edp-install/quick-start/platform-installation/) page has been updated. ([#184](https://github.com/epam/edp-install/issues/184))
+
+The [Operator Guide](https://epam.github.io/edp-install/operator-guide/) is updated with the following:
+  * A new subsection called [Troubleshooting](https://epam.github.io/edp-install/operator-guide/troubleshooting/overview/) has been added. It aims to help users with the frequently asked questions: ([#177](https://github.com/epam/edp-install/issues/177))
+    * The [Container Registry Reset](https://epam.github.io/edp-install/operator-guide/troubleshooting/troubleshoot-container-registries/) page has been added.
+    * The [Application Is Not Deployed](https://epam.github.io/edp-install/operator-guide/troubleshooting/troubleshoot-stages/) page has been added. ([#177](https://github.com/epam/edp-install/issues/177))
+    * The [Codebase Creation Issue](https://epam.github.io/edp-install/operator-guide/troubleshooting/troubleshoot-git-server/) page has been added. ([#177](https://github.com/epam/edp-install/issues/177))
+    * The [Resource Observability Issue](https://epam.github.io/edp-install/operator-guide/troubleshooting/resource-observability/) page has been added. ([#177](https://github.com/epam/edp-install/issues/177))
+    * The [Application Already Exists Error (Gerrit VCS)](https://epam.github.io/edp-install/operator-guide/troubleshooting/troubleshoot-applications/) page has been added. ([#177](https://github.com/epam/edp-install/issues/177))
+    * The [Codebase Build Process is Failed](https://epam.github.io/edp-install/operator-guide/troubleshooting/application-not-built/) page has been added. ([#177](https://github.com/epam/edp-install/issues/177))
+    * The [Invalid Codebase ID Issue (GitHub/GitLab VCS)](https://epam.github.io/edp-install/operator-guide/troubleshooting/invalid-codebase-name/) page has been added. ([#177](https://github.com/epam/edp-install/issues/177))
+  * The [Upgrade KubeRocketCI v3.7 to 3.8](https://epam.github.io/edp-install/operator-guide/upgrade-edp-3.8/) page has been added. ([#199](https://github.com/epam/edp-install/issues/199))
+  * The [SonarQube Project Visibility](https://epam.github.io/edp-install/operator-guide/sonarqube-visibility/) page has been added. ([#180](https://github.com/epam/edp-install/issues/180))
+  * The [Package Registry](https://epam.github.io/edp-install/operator-guide/package-registry/) page has been added. ([#182](https://github.com/epam/edp-install/issues/182))
+  * The [Install Velero](https://epam.github.io/edp-install/operator-guide/install-velero) page has been updated. ([#235](https://github.com/epam/edp-install/issues/235))
+  * The [Monitoring](https://epam.github.io/edp-install/operator-guide/tekton-monitoring/) page has been updated. ([#212](https://github.com/epam/edp-install/issues/212))
+  * The [Customize Deployment](https://epam.github.io/edp-install/operator-guide/customize_deployment/) page has been updated. ([#197](https://github.com/epam/edp-install/issues/197))
+  * The [KubeRocketCI Access Model](https://epam.github.io/edp-install/operator-guide/edp-access-model/) page has been updated. ([#175](https://github.com/epam/edp-install/issues/175))
+  * The [Argo CD Integration](https://epam.github.io/edp-install/operator-guide/argocd-integration/) page has been updated. ([#176](https://github.com/epam/edp-install/issues/176))
+  * The [Deploy AWS EKS Cluster](https://epam.github.io/edp-install/operator-guide/deploy-aws-eks/) page has been updated. ([#174](https://github.com/epam/edp-install/issues/174))
+  * The [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/) page has been updated. ([#181](https://github.com/epam/edp-install/issues/181))
+
+The [Developer Guide](https://epam.github.io/edp-install/developer-guide/) is updated with the following:
+  * The [KubeRocketCI Project Rules. Working Process](https://epam.github.io/edp-install/developer-guide/edp-workflow/) page has been updated. ([#206](https://github.com/epam/edp-install/issues/206))
+  * The [AWS Infrastructure Cost Estimation](https://epam.github.io/edp-install/developer-guide/aws-infrastructure-cost-estimation/) page has been added. ([#202](https://github.com/epam/edp-install/issues/202))
+  * The [EDP Reference Architecture on AWS](https://epam.github.io/edp-install/developer-guide/aws-reference-architecture/) page has been updated. ([#177](https://github.com/epam/edp-install/issues/177))
+
+The [User Guide](https://epam.github.io/edp-install/user-guide/) has been updated with the following.
+  * The [Components Overview](https://epam.github.io/edp-install/user-guide/components/) page has been added. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage GitOps](https://epam.github.io/edp-install/user-guide/gitops/) page has been added. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Overview](https://epam.github.io/edp-install/user-guide/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Add Application](https://epam.github.io/edp-install/user-guide/add-application/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage Applications](https://epam.github.io/edp-install/user-guide/application/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Add Autotest](https://epam.github.io/edp-install/user-guide/add-autotest/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage Autotests](https://epam.github.io/edp-install/user-guide/autotest/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Add Library](https://epam.github.io/edp-install/user-guide/add-library/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage Libaries](https://epam.github.io/edp-install/user-guide/library/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Add Infrastructure](https://epam.github.io/edp-install/user-guide/add-infrastructure/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage Infrastructures](https://epam.github.io/edp-install/user-guide/infrastructure/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage Branches](https://epam.github.io/edp-install/user-guide/manage-branches/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Add Environment](https://epam.github.io/edp-install/user-guide/add-cd-pipeline/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage Environments](https://epam.github.io/edp-install/user-guide/manage-environments/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Add Quality Gate](https://epam.github.io/edp-install/user-guide/add-quality-gate/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage Git Servers](https://epam.github.io/edp-install/user-guide/git-server-overview/) page has been updated. ([#204](https://github.com/epam/edp-install/issues/204))
+  * The [Manage Container Registries](https://epam.github.io/edp-install/user-guide/manage-container-registries/) page has been updated. ([#223](https://github.com/epam/edp-install/issues/223))
+
+### Upgrades
+
+* The Go language is updated to the [1.22](https://tip.golang.org/doc/go1.22) version. ([#57](https://github.com/epam/edp-keycloak-operator/issues/57))
+* EDP Keycloak operator [v1.21.0](https://github.com/epam/edp-keycloak-operator/blob/master/CHANGELOG.md) has been published on [OperatorHub](https://operatorhub.io/operator/edp-keycloak-operator). ([#37](https://github.com/epam/edp-keycloak-operator/issues/37))
+* The alpine packages were updated to the [3.18.6](https://git.alpinelinux.org/aports/log/?h=v3.18.6) version. ([#49](https://github.com/epam/edp-gerrit-operator/issues/49))
+* The Tekton dashboard  is updated to the [v0.46.0](https://github.com/tektoncd/dashboard/releases/tag/v0.46.0) version. ([#180](https://github.com/epam/edp-tekton/issues/180))
 
 ## Version 3.8.0 <a name="3.8.0"></a> (March 12, 2024)
 
@@ -121,22 +264,21 @@ To showcase the platform's accessibility, we've published EDP on the Civo market
 
 ### Documentation
 
-General:
-  * The EPAM Delivery Platform has been included to the [Capsule adopters](https://github.com/projectcapsule/capsule/blob/main/ADOPTERS.md) list. ([#18](https://github.com/epam/edp-cd-pipeline-operator/issues/18))
-  * Both the Previous and Next navigation buttons have been added to mkdocs. ([#119](https://github.com/epam/edp-install/issues/119))
-  * The [Effortless CI/CD Mastery: Installing EPAM Delivery Platform with Civo Marketplace](https://medium.com/epam-delivery-platform/effortless-ci-cd-mastery-installing-epam-delivery-platform-with-civo-marketplace-01bbc63af7fb) article has been published to the Medium blog.
-  * The [Quick Start - Part 1](https://www.youtube.com/watch?v=ILlY4niCWeU) video tutorial has been published on our YouTube channel. ([#140](https://github.com/epam/edp-install/issues/140))
-  * The [Use Cases](https://epam.github.io/edp-install/use-cases/) section has been refactored. ([#119](https://github.com/epam/edp-install/issues/119))
-  * The [RoadMap](https://epam.github.io/edp-install/roadmap/) section has been updated. (([#119](https://github.com/epam/edp-install/issues/119)))
-  * The [Main Page](https://epam.github.io/edp-install/) of our documentation has been updated. (([#119](https://github.com/epam/edp-install/issues/119)))
-  * Documentation pages have been provided with widgets that display the page contibutors, the creation date, and the update dates. (([#119](https://github.com/epam/edp-install/issues/119)))
-  * The README.md file has been updated for the following repositories:
-    * [Keycloak Operator](https://github.com/epam/edp-keycloak-operator/blob/master/README.md) ([#132](https://github.com/epam/edp-keycloak-operator/issues/132))
-    * [EDP Portal](https://github.com/epam/edp-headlamp/blob/master/README.md) ([#132](https://github.com/epam/edp-headlamp/issues/132))
-    * [EDP Tekton](https://github.com/epam/edp-tekton/blob/master/README.md) ([#132](https://github.com/epam/edp-tekton/issues/132))
-    * [CD Pipeline Operator](https://github.com/epam/edp-cd-pipeline-operator/blob/master/README.md) ([#132](https://github.com/epam/edp-cd-pipeline-operator/issues/132))
-    * [Nexus Operator](https://github.com/epam/edp-nexus-operator/blob/master/README.md) ([#132](https://github.com/epam/edp-nexus-operator/issues/132))
-    * [Sonar Operator](https://github.com/epam/edp-sonar-operator/blob/master/README.md) ([#3](https://github.com/epam/edp-sonar-operator/issues/3))
+* The EPAM Delivery Platform has been included to the [Capsule adopters](https://github.com/projectcapsule/capsule/blob/main/ADOPTERS.md) list. ([#18](https://github.com/epam/edp-cd-pipeline-operator/issues/18))
+* Both the Previous and Next navigation buttons have been added to mkdocs. ([#119](https://github.com/epam/edp-install/issues/119))
+* The [Effortless CI/CD Mastery: Installing EPAM Delivery Platform with Civo Marketplace](https://medium.com/epam-delivery-platform/effortless-ci-cd-mastery-installing-epam-delivery-platform-with-civo-marketplace-01bbc63af7fb) article has been published to the Medium blog.
+* The [Quick Start - Part 1](https://www.youtube.com/watch?v=ILlY4niCWeU) video tutorial has been published on our YouTube channel. ([#140](https://github.com/epam/edp-install/issues/140))
+* The [Use Cases](https://epam.github.io/edp-install/use-cases/) section has been refactored. ([#119](https://github.com/epam/edp-install/issues/119))
+* The [RoadMap](https://epam.github.io/edp-install/roadmap/) section has been updated. (([#119](https://github.com/epam/edp-install/issues/119)))
+* The [Main Page](https://epam.github.io/edp-install/) of our documentation has been updated. (([#119](https://github.com/epam/edp-install/issues/119)))
+* Documentation pages have been provided with widgets that display the page contibutors, the creation date, and the update dates. (([#119](https://github.com/epam/edp-install/issues/119)))
+* The README.md file has been updated for the following repositories:
+  * [Keycloak Operator](https://github.com/epam/edp-keycloak-operator/blob/master/README.md) ([#132](https://github.com/epam/edp-keycloak-operator/issues/132))
+  * [EDP Portal](https://github.com/epam/edp-headlamp/blob/master/README.md) ([#132](https://github.com/epam/edp-headlamp/issues/132))
+  * [EDP Tekton](https://github.com/epam/edp-tekton/blob/master/README.md) ([#132](https://github.com/epam/edp-tekton/issues/132))
+  * [CD Pipeline Operator](https://github.com/epam/edp-cd-pipeline-operator/blob/master/README.md) ([#132](https://github.com/epam/edp-cd-pipeline-operator/issues/132))
+  * [Nexus Operator](https://github.com/epam/edp-nexus-operator/blob/master/README.md) ([#132](https://github.com/epam/edp-nexus-operator/issues/132))
+  * [Sonar Operator](https://github.com/epam/edp-sonar-operator/blob/master/README.md) ([#3](https://github.com/epam/edp-sonar-operator/issues/3))
 
 The [Getting Started](https://epam.github.io/edp-install/overview/) section is updated with the following:
   * The [Compliance](https://epam.github.io/edp-install/compliance/) page has been added. ([#119](https://github.com/epam/edp-install/issues/119))
@@ -276,12 +418,11 @@ Expect a remarkable improvement in the overall performance of Tekton pipelines, 
 
 ### Documentation
 
-General:
-  * The new tab called [Pricing](https://epam.github.io/edp-install/pricing/) has been added to the mkdocs. In this page, users can see the support plans offered by the EDP team.
-  * The [Platform Multitenancy! Learn How We Adopt Capsule to Give Our Developers More Freedom 🚀](https://medium.com/epam-delivery-platform/platform-multitenancy-learn-how-we-adtopt-capsule-to-give-our-developers-more-freedom-ade7a8d84a33) article has been published on the Medium blog.
-  * The [Elevating CI/CD Security with Supply Chains](https://solutionshub.epam.com/blog/post/ci_cd_security) article has been published on the SolutionsHub blog.
-  * The [README.md](https://github.com/epam/edp-headlamp/blob/master/README.md) file of the [edp-headlamp](https://github.com/epam/edp-headlamp) operator has been updated with the new description and introduction video.
-  * The [README.md](https://github.com/epam/edp-sonar-operator/blob/master/README.md) file of the [edp-sonar-operator](https://github.com/epam/edp-sonar-operator) has been updated. ([#3](https://github.com/epam/edp-sonar-operator/issues/3))
+* The new tab called [Pricing](https://epam.github.io/edp-install/pricing/) has been added to the mkdocs. In this page, users can see the support plans offered by the EDP team.
+* The [Platform Multitenancy! Learn How We Adopt Capsule to Give Our Developers More Freedom 🚀](https://medium.com/epam-delivery-platform/platform-multitenancy-learn-how-we-adtopt-capsule-to-give-our-developers-more-freedom-ade7a8d84a33) article has been published on the Medium blog.
+* The [Elevating CI/CD Security with Supply Chains](https://solutionshub.epam.com/blog/post/ci_cd_security) article has been published on the SolutionsHub blog.
+* The [README.md](https://github.com/epam/edp-headlamp/blob/master/README.md) file of the [edp-headlamp](https://github.com/epam/edp-headlamp) operator has been updated with the new description and introduction video.
+* The [README.md](https://github.com/epam/edp-sonar-operator/blob/master/README.md) file of the [edp-sonar-operator](https://github.com/epam/edp-sonar-operator) has been updated. ([#3](https://github.com/epam/edp-sonar-operator/issues/3))
 
 The [Getting Started](https://epam.github.io/edp-install/overview/) section is updated with the following:
   * The [Supported Versions and Compatibility](https://epam.github.io/edp-install/supported-versions/) page has been updated. ([#116](https://github.com/epam/edp-install/issues/116))
