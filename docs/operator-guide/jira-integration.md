@@ -81,7 +81,7 @@ In order to adjust the Jira server integration, add the JiraServer CR by perform
 
 ## Enable Jira Using Helm Chart
 
-There is also a possibility to set up Jira integration when deploying EPAM Delivery Platform. To follow this approach, please familiarize yourself with the following parameters of the [values.yaml](https://github.com/epam/edp-install/blob/release/3.8/deploy-templates/values.yaml#L138) file in the EDP installer. Enabling the `jira.integration` parameter creates the following custom resources:
+There is also a possibility to set up Jira integration when deploying EPAM Delivery Platform. To follow this approach, please familiarize yourself with the following parameters of the [values.yaml](https://github.com/epam/edp-install/blob/release/3.9/deploy-templates/values.yaml#L145) file in the EDP installer. Enabling the `jira.integration` parameter creates the following custom resources:
 
 * EDPComponent;
 * JiraServer;
@@ -91,7 +91,7 @@ To set up Jira integration along with EDP, follow the steps below:
 
 1. Create the **ci-jira** secret in the `edp` namespace as it's described [above](#integration-procedure).
 
-2. Deploy the platform with the `jira.integration` parameter set to `true` in the [values.yaml](https://github.com/epam/edp-install/blob/release/3.8/deploy-templates/values.yaml#L138) file.
+2. Deploy the platform with the `jira.integration` parameter set to `true` in the [values.yaml](https://github.com/epam/edp-install/blob/release/3.9/deploy-templates/values.yaml#L145) file.
 
 
 ## Jira Integration Usage
