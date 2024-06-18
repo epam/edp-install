@@ -65,7 +65,7 @@ We are introducing the built-in pipeline tracker. This new feature allows you to
 
 As usual, we are continuously working on refining the user interface. For better user experience, we've made a major contribution to optimizing KubeRocketCI. Changes affect almost all the aspects of using UI, whether it's codebase creation, deployment, third-party tool integration, platform settings, etc. Besides, now it features real-time pipelines within the KubeRocketCI so there is no need to navigate to Tekton to observe pipeline runs, their statuses are always at hand now.
 
-Apart from that, we implemented GitHub Container Registry (GHCR) support. Now you can seamlessly store your container images using a solution from GitHub. This enhancement will make our platform more flexible.
+Apart from that, we implemented GitHub Container Registry (GHCR) support. This allows you to seamlessly store your container images using GitHub's solution, offering more options for managing your container images.
 
 Lastly, announce the Kiosk tool deprecation. For those who are looking for a tenancy management solution instead of an obsolete Kiosk, we encourage considering Capsule as a more flexible solution.
 
