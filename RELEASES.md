@@ -63,15 +63,15 @@ Get acquainted with the latest EDP releases.
 
 We are introducing the built-in pipeline tracker. This new feature allows you to monitor Tekton pipeline runs directly within KubeRocketCI, removing the need to open extra tabs in your browser. With pipeline statuses and details readily accessible, your workflow becomes more streamlined and efficient.
 
-As usual, we are continuously working on refining the user interface. For better user experience, we've made a major contribution to optimizing KubeRocketCI. Changes affect almost all the aspects of using UI, whether it's codebase creation, deployment, third-party tool integration, platform settings, etc. Besides, now it features real-time pipelines within the KubeRocketCI so there is no need to navigate to Tekton to observe pipeline runs, their statuses are always at hand now.
+As usual, we are continuously working on refining the user interface. For better user experience, we've made a major contribution to optimizing KubeRocketCI. Changes affect almost all the aspects of using the UI, whether it's codebase creation, deployment, third-party tool integration, platform settings, etc. Besides, now it features real-time pipelines within KubeRocketCI so there is no need to navigate to Tekton to observe pipeline runs, their statuses are always at hand now.
 
-Apart from that, we implemented GitHub Container Registry (GHCR) support. Now you can seamlessly store your container images using a solution from GitHub. This enhancement will make our platform more flexible.
+Apart from that, we implemented GitHub Container Registry (GHCR) support. This allows you to seamlessly store your container images using GitHub's solution, offering more options for managing your container images.
 
-Lastly, announce the Kiosk tool deprecation. For those who are looking for a tenancy management solution instead of an obsolete Kiosk, we encourage considering Capsule as a more flexible solution.
+Lastly, we announce the Kiosk tool deprecation. For those who are looking for a tenancy management solution instead of an obsolete Kiosk, we encourage you to consider Capsule as a more flexible solution.
 
 ### New Functionality
 
-* The developer role in KubeRocketCI now grants the ability to view the Kubernetes resources within the KubeRocketCIб such as codebases, environments, widgets, etc. ([#191](https://github.com/epam/edp-install/issues/191))
+* The developer role in KubeRocketCI now grants the ability to view the Kubernetes resources within the KubeRocketCI, such as codebases, environments, widgets, etc. ([#191](https://github.com/epam/edp-install/issues/191))
 * The Keycloak realm name value is now configurable. Now users can redefine the realm name, patterns no longer include '-main', and the namespace is used as the default realm name. ([#183](https://github.com/epam/edp-install/issues/183))
 * The `sso.ingress.enabled` parameter has been added to manipulate ingress creation for OAuth2-Proxy. ([#178](https://github.com/epam/edp-install/issues/178))
 * GitHub Container Registry support has been implemented. Now users have one another option for storing container images. ([#238](https://github.com/epam/edp-headlamp/issues/238))
@@ -90,34 +90,33 @@ Lastly, announce the Kiosk tool deprecation. For those who are looking for a ten
 * The SSO tab of the Configuration section has been improved. To simplify integration, now it contains a table of related ingresses. ([#173](https://github.com/epam/edp-headlamp/issues/173)) 
 * The Configuration section structure has been updated for better navigation. ([#192](https://github.com/epam/edp-headlamp/issues/192)) ([#194](https://github.com/epam/edp-headlamp/issues/194)) ([#188](https://github.com/epam/edp-headlamp/issues/188))
 * The codebase creation flow has been redesigned for simplicity. ([#177](https://github.com/epam/edp-headlamp/issues/177))
-* The procedure of deploying KubeRocketCI wothout ingress has been streamlined. ([#185](https://github.com/epam/edp-install/issues/185))
+* The procedure of deploying KubeRocketCI without ingress has been streamlined. ([#185](https://github.com/epam/edp-install/issues/185))
 * The KeycloakRealm custom resource has been updated to use separate CRs, KeycloakRealm and KeycloakRealmIdentityProvider, for a more flexible setup, and the deprecated SSO configuration has been removed. ([#47](https://github.com/epam/edp-keycloak-operator/issues/47))
-* The edp-keycloak-operator has been enhanced to support the reconciliation of user attributes, including FirstName, SecondName, and Email, with optional support for the Email-Verified field, ensuring consistency with the source of truth.  ([#45](https://github.com/epam/edp-keycloak-operator/issues/45))
+* The edp-keycloak-operator has been enhanced to support the reconciliation of user attributes, including FirstName, LastName, and Email, with optional support for the Email-Verified field, ensuring consistency with the source of truth.  ([#45](https://github.com/epam/edp-keycloak-operator/issues/45))
 * The KeycloakClient custom resource has been provided with authorization settings to configure client scopes. ([#41](https://github.com/epam/edp-keycloak-operator/issues/41))
-* The KeycloakRealmComponent can now reference to secrets. Now users can create Keycloak realms that store their secret strings in a user-defined secret. ([#30](https://github.com/epam/edp-keycloak-operator/issues/30))
-* The KubeRocketCI UI has been significantly revamped. It concerns all the tabs and section, including notifications and UI settings. ([#258](https://github.com/epam/edp-headlamp/issues/258)) 
+* The KeycloakRealmComponent custom resource can now reference secrets. Now users can create Keycloak realms that store their secret strings in a user-defined secret. ([#30](https://github.com/epam/edp-keycloak-operator/issues/30))
+* The KubeRocketCI UI has been significantly revamped. It concerns all the tabs and sections, including notifications and UI settings. ([#258](https://github.com/epam/edp-headlamp/issues/258)) 
 * The Components section design has been refined. ([#252](https://github.com/epam/edp-headlamp/issues/252)) ([#253](https://github.com/epam/edp-headlamp/issues/253))
-* The **Actions** button Add permissions check for actions ([#249](https://github.com/epam/edp-headlamp/issues/249)) ([#250](https://github.com/epam/edp-headlamp/issues/250))
-* Tekton pipelines are now displayed in real-time mode within the KubeRocketCI UI directly. To see the these real-time pipeline details, simply click on any pipeline name. ([#225](https://github.com/epam/edp-headlamp/issues/225))
+* The **Actions** button now includes a permissions check for actions. ([#249](https://github.com/epam/edp-headlamp/issues/249)) ([#250](https://github.com/epam/edp-headlamp/issues/250))
+* Tekton pipelines are now displayed in real-time mode within the KubeRocketCI UI directly. To see these real-time pipeline details, simply click on any pipeline name. ([#225](https://github.com/epam/edp-headlamp/issues/225))
 * The ability to add custom webhooks via the `Webhook Url` field has been added to Git Servers. ([#242](https://github.com/epam/edp-headlamp/issues/242))
 * Tekton resources no longer appear as unsynchronized in Argo CD when KubeRocketCI has been deployed using the add-ons approach. ([#169](https://github.com/epam/edp-headlamp/issues/169))
-* The Configuration section structure has been updated for better navigation. ([#192](https://github.com/epam/edp-headlamp/issues/192)) ([#194](https://github.com/epam/edp-headlamp/issues/194)) ([#188](https://github.com/epam/edp-headlamp/issues/188))
 * GitOps approach can now be enabled for multiple applications separately within one stage. ([#180](https://github.com/epam/edp-headlamp/issues/180))
-* The Markeplace page has been updated. ([#178](https://github.com/epam/edp-headlamp/issues/178))
+* The Marketplace page has been updated. ([#178](https://github.com/epam/edp-headlamp/issues/178))
 * The URL field validation logic has been updated in the third-party tool integration forms of the Configuration section. ([#175](https://github.com/epam/edp-headlamp/issues/175))
 * The Overview page has been redesigned. Now it additionally displays widget status at the left border of each widget. ([#172](https://github.com/epam/edp-headlamp/issues/172))
 * The ability to delete multiple codebases at a time has been added to the Components section. ([#171](https://github.com/epam/edp-headlamp/issues/171))
 * The Environment details page has been significantly redesigned. Now it contains much more information, such as creation time, application image, promotion option. Besides, they contain quick links to Argo CD, Grafana, Kibana, application logs, etc.  ([#258](https://github.com/epam/edp-headlamp/issues/258))
 * Commit message validation is now applied to all of the pipeline runs from GitHub. Previously, commits were validated solely for pull requests. ([#193](https://github.com/epam/edp-tekton/issues/193))
 * Quality Gates are implemented in the review process that check for alignment between the Helm chart name and the codebase name. ([#191](https://github.com/epam/edp-tekton/issues/191))
-* In order to better manage and control distributed development, we facilitated the flexibility of using different package registries in our Gradle Tekton pipelines. User can now leverage different package registries, such as Nexus, GitLab, GitHub, and Azure DevOps Registries. ([#132](https://github.com/epam/edp-tekton/issues/132))              
+* In order to better manage and control distributed development, we facilitated the flexibility of using different package registries in our Gradle Tekton pipelines. Users can now leverage different package registries, such as Nexus, GitLab, GitHub, and Azure DevOps Registries. ([#132](https://github.com/epam/edp-tekton/issues/132))              
 * Pipeline steps and task sequences were optimised by removing the `get-nexus-repository-url` step and adjusting task sequences for application and library codebase types for enhanced efficiency and streamlined processes. ([#132](https://github.com/epam/edp-tekton/issues/132)) ([#177](https://github.com/epam/edp-tekton/issues/177))
-* For better security, the permissions scope has been shrinked for the edp-cd-pipeline-operator. ([#52](https://github.com/epam/edp-cd-pipeline-operator/issues/52))
+* For better security, the permissions scope has been shrunk for the edp-cd-pipeline-operator. ([#52](https://github.com/epam/edp-cd-pipeline-operator/issues/52))
 * The SonarQube integration for new codebases now correctly uses 'master' as the default branch name, ensuring alignment between the codebase and SonarQube project configurations. ([#207](https://github.com/epam/edp-tekton/issues/207))
 * Redundant websockets for streaming pipelineruns were removed, leaving the only one with filtering by labels. ([#170](https://github.com/epam/edp-headlamp/issues/170))
 * The `helm-validate` step now uses Go cache for better performance. ([#44](https://github.com/epam/edp-cd-pipeline-operator/issues/44))
 * To reflect the latest best practices and features, we updated the chart templates within the edp-codebase-operator. ([#68](https://github.com/epam/edp-codebase-operator/issues/68))
-* Validation message for creating a new branch with an invalid name in a codebase have been updated. ([#240](https://github.com/epam/edp-headlamp/issues/240))
+* Validation message for creating a new branch with an invalid name in a codebase has been updated. ([#240](https://github.com/epam/edp-headlamp/issues/240))
 
 ### Fixed Issues
 
@@ -132,7 +131,7 @@ Lastly, announce the Kiosk tool deprecation. For those who are looking for a ten
 * Fixed issue when the Tekton resource pruner didn't prune unused resources completely. ([#205](https://github.com/epam/edp-tekton/issues/205))
 * The deploy button has been fixed: it now correctly appears inactive in situations where its functionality is actually unavailable. ([#155](https://github.com/epam/edp-headlamp/issues/155))
 * Fixed issue when the deploy pipeline failed if the `ingress.enabled` parameter was set to `true`. ([#80](https://github.com/epam/edp-codebase-operator/issues/80))
-* The version conflict in the Added ability to KeycloakRealmRole CR configure client roles alongside roles as composite roles. FastAPI codebase build pipeline related to h11 and httpcore has been resolved by downgrading h11 to a version compatible with httpcore. ([#195](https://github.com/epam/edp-tekton/issues/195))
+* Added ability to KeycloakRealmRole CR configure client roles alongside roles as composite roles. FastAPI codebase build pipeline related to h11 and httpcore has been resolved by downgrading h11 to a version compatible with httpcore. ([#195](https://github.com/epam/edp-tekton/issues/195))
 * The `init-autotest` stage failure in the **deploy-with-autotests** pipeline template has been resolved, allowing the application to deploy successfully and initialize autotests. ([#199](https://github.com/epam/edp-tekton/issues/199))
 * The CreateContainerConfigError error in the `helm-push` step has been fixed for both Helm application and library codebase types. ([#184](https://github.com/epam/edp-tekton/issues/184))
 * Rudimentary workspaces and volumes have been removed from the `get-version`, `jira`, `commit-validate`, `getDefaultVersion`, and other related tasks. ([#78](https://github.com/epam/edp-tekton/issues/78))
