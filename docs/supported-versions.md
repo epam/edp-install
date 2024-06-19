@@ -14,16 +14,19 @@ gantt
     title Release Schedule and Lifecycle
 
     section (Planned)
-    KubeRocketCI 3.9 Release: crit, r39, 2024-6-10, 20d
+    KubeRocketCI 3.10 Release: crit, r40, 2024-9-10, 39d
 
     section (Supported)
-    KubeRocketCI 3.8 Release: crit, r38, 2024-3-12, 128d
+    KubeRocketCI 3.9 Release: crit, r39, 2024-6-13, 128d
 
     section (Supported)
-    EDP 3.7 Release: active, r37, 2023-12-15, 152d
+    KubeRocketCI 3.8 Release: active, r38, 2024-3-12, 221d
 
     section (Supported)
-    EDP 3.6 Release: active, r36, 2023-11-03, 194d
+    EDP 3.7 Release: active, r37, 2023-12-15, 270d
+
+    section (Unsupported)
+    EDP 3.6 Release: active, r36, 2023-11-03, 223d
 
     section (Unsupported)
     EDP 3.5 Release: r35, 2023-09-21, 174d
@@ -33,9 +36,6 @@ gantt
 
     section (Unsupported)
     EDP 3.3 Release: r33, 2023-05-13, 2023-11-03
-
-    section (Unsupported)
-    EDP 3.2 Release: r32, 2023-03-08, 2023-09-21
 
 ```
 
@@ -50,12 +50,12 @@ Get acquainted with the list of the latest releases and component versions on wh
 
 |[EDP Release Version](https://github.com/epam/edp-install/blob/master/RELEASES.md)|Release Date|[EKS Version](https://aws.amazon.com/eks/)|[OpenShift Version](https://github.com/okd-project/okd/releases)|
 |:-:|:-:|:-:|:-:|
+|3.9 |Jun 13, 2024|1.29|4.12|
 |3.8 |Mar 12, 2024|1.26|4.12|
 |3.7 |Dec 15, 2023|1.26|4.12|
 |3.6 |Nov 03, 2023|1.26|4.12|
-|3.5 |Sep 21, 2023|1.26|4.12|
+|<span style="color: gray;">3.5 </span> |<span style="color: gray;">Sep 21, 2023</span>|<span style="color: gray;">1.26</span>|<span style="color: gray;">4.12</span>|
 |<span style="color: gray;">3.4 </span> |<span style="color: gray;">Aug 18, 2023</span>|<span style="color: gray;">1.26</span>|<span style="color: gray;">4.12</span>|
 |<span style="color: gray;">3.3 </span> |<span style="color: gray;">May 25, 2023</span>|<span style="color: gray;">1.26</span>|<span style="color: gray;">4.12</span>|
 |<span style="color: gray;">3.2 </span> |<span style="color: gray;">Mar 26, 2023</span>|<span style="color: gray;">1.23</span>|<span style="color: gray;">4.10</span>|
 |<span style="color: gray;">3.1 </span> |<span style="color: gray;">Jan 24, 2023</span>|<span style="color: gray;">1.23</span>|<span style="color: gray;">4.10</span>|
-|<span style="color: gray;">3.0 </span> |<span style="color: gray;">Dec 19, 2022</span>|<span style="color: gray;">1.23</span>|<span style="color: gray;">4.10</span>|
