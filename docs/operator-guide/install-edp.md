@@ -1,4 +1,4 @@
-# Install EDP
+# Install KubeRocketCI
 
 Inspect the main steps to install EPAM Delivery Platform. Please check the [Prerequisites Overview](prerequisites.md) page before starting the installation. Also to authenticate each of the release artifacts, please refer to the  [Verification of EDP Artifacts](artifacts-verification.md) guide.
 There are two recommended ways to deploy EPAM Delivery Platform:
@@ -12,34 +12,19 @@ There are two recommended ways to deploy EPAM Delivery Platform:
     indicated in the notes.
 
 !!! Disclaimer
-    EDP is aligned with industry standards for storing and managing sensitive data, ensuring optimal security. However, the use of custom solutions introduces uncertainties, thus the responsibility for the safety of your data is totally covered by platform administrator.
+    KubeRocketCI is aligned with industry standards for storing and managing sensitive data, ensuring optimal security. However, the use of custom solutions introduces uncertainties, thus the responsibility for the safety of your data is totally covered by platform administrator.
 
-1. EDP manages secrets via External Secret Operator to integrate with a multitude of utilities. For insights into the secrets in use and their utilization, refer to the provided [External Secrets Operator Integration](./external-secrets-operator-integration.md).
+1. KubeRocketCI manages secrets via External Secret Operator to integrate with a multitude of utilities. For insights into the secrets in use and their utilization, refer to the provided [External Secrets Operator Integration](./external-secrets-operator-integration.md).
 
-2. Create an edp namespace or a Kiosk space depending on whether [Kiosk](./edp-kiosk-usage.md) is used or not.
-
-  * Without Kiosk, create a namespace:
+2. Create the edp namespace.
 
     ```bash
     kubectl create namespace edp
     ```
 
-    !!! note
-        For an OpenShift cluster, run the `oc` command instead of the `kubectl` one.
-
-  * With Kiosk, create a relevant space:
-
-    ```yaml
-    apiVersion: tenancy.kiosk.sh/v1alpha1
-    kind: Space
-    metadata:
-      name: edp
-    spec:
-      account: edp-admin
-    ```
-
   !!! note
-      Kiosk is mandatory for EDP v.2.8.x. It is not implemented for the previous versions, and is optional for EDP since v.2.9.x.
+      For an OpenShift cluster, run the `oc` command instead of the `kubectl` one.
+
 
 3. (Optional) Deploy and configure Keycloak to enable Single Sign-On approach. To see the details on how to configure Keycloak correctly, please refer to the [Install Keycloak](./install-keycloak.md#configuration) page.
 
@@ -60,7 +45,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
   !!! note
       It is highly recommended to use the latest released version.
 
-6. EDP can be integrated with the following version control systems:
+6. KubeRocketCI can be integrated with the following version control systems:
 
   * [Gerrit](https://gerrit-review.googlesource.com/Documentation/)
   * [GitHub](https://docs.github.com/en) (by default)
@@ -167,7 +152,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 
   * External SonarQube - any SonarQube that is installed separately from EDP. For example, SonarQube that is installed using [edp-cluster-add-ons](https://github.com/epam/edp-cluster-add-ons) or another public SonarQube server. For more details on how EDP recommends to configure SonarQube to work with the platform, please refer to the [SonarQube Integration](./sonarqube.md) page.
 
-  * Internal SonarQube - SonarQube that is installed along with EDP.
+  * Internal SonarQube - SonarQube that is installed along with KubeRocketCI.
 
       ``` yaml title="values.yaml"
       ...
@@ -178,9 +163,9 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 
 8. (Optional) Integrate platform with Nexus:
 
-  * External Nexus - any Nexus that is installed separately from EDP. For example, Nexus that installed using [edp-cluster-add-ons](https://github.com/epam/edp-cluster-add-ons/blob/main/chart/values.yaml#L82) or another public Nexus server. For more details on how EDP recommends to configure Nexus to work with the platform, please refer to the [Nexus Sonatype Integration](./nexus-sonatype.md) page.
+  * External Nexus - any Nexus that is installed separately from KubeRocketCI. For example, Nexus that installed using [edp-cluster-add-ons](https://github.com/epam/edp-cluster-add-ons/blob/main/chart/values.yaml#L82) or another public Nexus server. For more details on how KubeRocketCI recommends to configure Nexus to work with the platform, please refer to the [Nexus Sonatype Integration](./nexus-sonatype.md) page.
 
-  * Internal Nexus - Nexus that is installed along with EDP.
+  * Internal Nexus - Nexus that is installed along with KubeRocketCI.
 
       ``` yaml title="values.yaml"
       ...
@@ -191,7 +176,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
 
 9. (Optional) Configure Container Registry for image storage.
 
-  Since EDP v3.4.0, we enabled users to configure Harbor registry instead of AWS ECR and Openshift-registry. We recommend installing Harbor using our [edp-cluster-add-ons](https://github.com/epam/edp-cluster-add-ons/blob/main/chart/values.yaml#L53) although you can install it any other way. To integrate EDP with Harbor, see [Harbor integration](container-registry-harbor-integration-tekton-ci.md) page.
+  Since KubeRocketCI v3.4.0, we enabled users to configure Harbor registry instead of AWS ECR and Openshift-registry. We recommend installing Harbor using our [edp-cluster-add-ons](https://github.com/epam/edp-cluster-add-ons/blob/main/chart/values.yaml#L53) although you can install it any other way. To integrate KubeRocketCI with Harbor, see [Harbor integration](container-registry-harbor-integration-tekton-ci.md) page.
 
   To enable Harbor as a registry storage, use the values below:
 
@@ -202,9 +187,9 @@ There are two recommended ways to deploy EPAM Delivery Platform:
       url: "harbor.example.com"
   ```
 
-10. Check the parameters in the EDP installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/v3.8.1/deploy-templates/values.yaml) file.
+10. Check the parameters in the KubeRocketCI installation chart. For details, please refer to the [values.yaml](https://github.com/epam/edp-install/blob/v3.8.1/deploy-templates/values.yaml) file.
 
-11. Install EDP in the **edp** namespace with the Helm tool:
+11. Install KubeRocketCI in the **edp** namespace with the Helm tool:
 
   ```bash
   helm install edp epamedp/edp-install --wait --timeout=900s \
@@ -273,7 +258,7 @@ There are two recommended ways to deploy EPAM Delivery Platform:
   ```
 
   !!! note
-      Set `global.platform=openshift` while deploying EDP in OpenShift.
+      Set `global.platform=openshift` while deploying KubeRocketCI in OpenShift.
 
   !!! info
       The full installation with integration between tools will take at least 10 minutes.
@@ -284,13 +269,13 @@ There are two recommended ways to deploy EPAM Delivery Platform:
     helm status edp -n edp
     ```
 
-    You can also check ingress endpoints to get EDP Portal endpoint to enter EDP Portal UI:
+    You can also check ingress endpoints to enter KubeRocketCI user interface:
 
     ```bash
     kubectl describe ingress -n edp
     ```
 
-13. Once EDP is successfully installed, you can navigate to our [Use Cases](../use-cases/index.md) to try out EDP functionality.
+13. Once KubeRocketCI is successfully installed, you can navigate to our [Use Cases](../use-cases/index.md) to try out KubeRocketCI functionality.
 
 ## Related Articles
 

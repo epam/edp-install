@@ -201,7 +201,7 @@ nav:
             - Install NGINX Ingress Controller: operator-guide/install-ingress-nginx.md
           - Install Argo CD: operator-guide/install-argocd.md
           - Install Tekton: operator-guide/install-tekton.md
-        - Install EDP: operator-guide/install-edp.md
+        - Install KubeRocketCI: operator-guide/install-edp.md
       - Install via AWS: operator-guide/aws-marketplace-install.md
       - Install via Civo: operator-guide/install-via-civo.md
       - Advanced Installation:
@@ -210,9 +210,9 @@ nav:
         - Multi-Tenancy:
           - Overview: operator-guide/overview-multi-tenancy.md
           - Integrate Capsule: operator-guide/capsule.md
-          - Kiosk:
-            - Set Up Kiosk: operator-guide/install-kiosk.md
-            - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
+          # - Kiosk:
+          #   - Set Up Kiosk: operator-guide/install-kiosk.md
+          #   - EDP Kiosk Usage: operator-guide/edp-kiosk-usage.md
         - Install Keycloak: operator-guide/install-keycloak.md
         - Install DefectDojo: operator-guide/install-defectdojo.md
         - Install ReportPortal: operator-guide/install-reportportal.md
@@ -278,11 +278,12 @@ nav:
           - Protect Endpoints: operator-guide/oauth2-proxy.md
     - Upgrade:
       - EDP:
+          - v3.8 to 3.9: operator-guide/upgrade-edp-3.9.md
           - v3.7 to 3.8: operator-guide/upgrade-edp-3.8.md
           - v3.6 to 3.7: operator-guide/upgrade-edp-3.7.md
           - v3.5 to 3.6: operator-guide/upgrade-edp-3.6.md
-          - v3.4 to 3.5: operator-guide/upgrade-edp-3.5.md
           - Older Versions:
+            - v3.4 to 3.5: operator-guide/upgrade-edp-3.5.md
             - v3.3 to 3.4: operator-guide/upgrade-edp-3.4.md
             - v3.2 to 3.3: operator-guide/upgrade-edp-3.3.md
             - v3.1 to 3.2: operator-guide/upgrade-edp-3.2.md
