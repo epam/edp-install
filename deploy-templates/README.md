@@ -60,6 +60,7 @@ A Helm chart for EDP Install
 | edp-tekton.enabled | bool | `true` |  |
 | edp-tekton.gitServers | object | `{}` |  |
 | edp-tekton.tekton-cache.enabled | bool | `true` |  |
+| externalSecrets.codemieEDPInstallSecretsName | string | `"/edp/deploy-secrets"` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore. Default: false |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for EDP installation, using External Secret Operator |
 | externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |
