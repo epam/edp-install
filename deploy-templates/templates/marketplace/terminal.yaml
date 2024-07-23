@@ -1,0 +1,33 @@
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: Template
+metadata:
+  name: terminal
+spec:
+  buildTool: helm
+  category: api
+  description: >-
+    Deploy an interactive terminal, providing easy access to manage and 
+    interact with deployed namespaces. The terminal deploys as a kubectl pod, 
+    enabling the execution of commands, handling of resources, 
+    and troubleshooting of issues directly. It allows scale applications, 
+    view logs, and modify configurations efficiently to ensure smooth operations.
+  displayName: Terminal
+  framework: helm
+  icon:
+    - base64data: >-
+        PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNMSwxIEwyMywxIEwyMywyMyBMMSwyMyBMMSwxIFogTTEsNSBMMjMsNSBNNSwxIEw1LDUgTTExLDE2IEwxOSwxNiBNNSwxMCBMOCwxMyBMNSwxNiIvPgo8L3N2Zz4=
+      mediatype: image/svg+xml
+  keywords:
+    - api
+    - kubectl
+    - cli
+    - terminal
+  language: helm
+  maintainers:
+    - email: SupportEPMD-EDP@epam.com
+      name: SupportEPMD-EDP
+  maturity: stable
+  minEDPVersion: 3.4.0
+  source: https://github.com/KubeRocketCI/terminal
+  type: application
+  version: 0.1.0
