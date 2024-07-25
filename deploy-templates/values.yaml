@@ -347,6 +347,18 @@ edp-tekton:
       #  - secretName: chart-example-tls
       #    hosts:
       #      - tekton-edp.example.com
+  # -- Enable integration of tekton-pipelines metrics with Prometheus and Grafana monitoring stack
+  # -- More details:
+  # -- https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-monitoring
+  grafana:
+    enabled: false
+    # -- Labels applied to the ServiceMonitor resource.
+    # -- These labels are used by Prometheus to discover and integrate the ServiceMonitor into its configuration.
+    # -- The labels must match the Prometheus release labels.
+    # serviceMonitor:
+    #   prometheusReleaseLabels:
+    #     release: prom
+
   # GitServers configuration section
   # GitServer creation depends on the gitProviders configuration, if gitProvider is not enabled,
   # the GitServer will not be created.
