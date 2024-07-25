@@ -59,6 +59,7 @@ A Helm chart for EDP Install
 | edp-tekton.dashboard.readOnly | bool | `false` | Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false. |
 | edp-tekton.enabled | bool | `true` |  |
 | edp-tekton.gitServers | object | `{}` |  |
+| edp-tekton.grafana | object | `{"enabled":false}` | https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-monitoring |
 | edp-tekton.tekton-cache.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for EDP platform. Deploy SecretStore. Default: false |
 | externalSecrets.manageCodemieSecretsName | string | `"/edp/codemie-secrets"` |  |
