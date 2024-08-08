@@ -45,7 +45,7 @@ releases:
       image:
         tag: "20.0.3"
 
-      # start: create OpenShift realm which is required by EDP
+      # start: create OpenShift realm which is required by KRCI
       extraInitContainers: |
         - name: realm-provider
           image: busybox

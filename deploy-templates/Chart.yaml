@@ -1,11 +1,11 @@
 apiVersion: v2
-description: A Helm chart for EDP Install
-home: https://epam.github.io/edp-install/
+description: A Helm chart for KubeRocketCI Platform
+home: https://docs.kuberocketci.io/
 name: edp-install
 type: application
 version: 3.10.0-SNAPSHOT
 appVersion: 3.10.0-SNAPSHOT
-icon: https://epam.github.io/edp-install/assets/logo.png
+icon: https://docs.kuberocketci.io/img/logo.svg
 keywords:
   - edp
   - install
@@ -14,7 +14,7 @@ keywords:
 maintainers:
   - name: epmd-edp
     email: SupportEPMD-EDP@epam.com
-    url: https://solutionshub.epam.com/solution/epam-delivery-platform
+    url: https://solutionshub.epam.com/solution/kuberocketci
   - name: sergk
     url: https://github.com/SergK
 sources:
@@ -51,7 +51,7 @@ annotations:
   artifacthub.io/operator: "true"
   artifacthub.io/operatorCapabilities: Full Lifecycle
   artifacthub.io/links: |
-    - name: EDP Documentation
-      url: https://epam.github.io/edp-install/
+    - name: KubeRocketCI Documentation
+      url: https://docs.kuberocketci.io
     - name: EPAM SolutionHub
-      url: https://solutionshub.epam.com/solution/epam-delivery-platform
+      url: https://solutionshub.epam.com/solution/kuberocketci

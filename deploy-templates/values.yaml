@@ -15,8 +15,8 @@ global:
     # - gerrit
 
   # Define the Image Registry that will be used in Pipelines.
-  # This section is optional, and users can configure the registry within the EDP Portal user interface.
-  # Ref: https://epam.github.io/edp-install/user-guide/manage-container-registries/#add-container-registry
+  # This section is optional, and users can configure the registry within the KubeRocketCI Portal user interface.
+  # Ref: https://docs.kuberocketci.io/docs/user-guide/manage-container-registries#add-container-registry
   #
   # For example to integrate platform with ecr and publish image under 'edp' prefix:
   # dockerRegistry:
@@ -46,7 +46,7 @@ global:
   #   url: "image-registry.openshift-image-registry.svc:5000"
   #   space: "edp"
   # By default, Kubernetes Service Account has the ability to push images to the registry
-  # within the namespace where EDP is installed.
+  # within the namespace where KubeRocketCI is installed.
   # Ref: https://github.com/epam/edp-tekton/blob/master/charts/pipelines-library/templates/resources/rolebinding-tekton-registry-editor.yaml
   #
   # For example to integrate platform with nexus and publish image under 'edp' project name:
@@ -93,11 +93,11 @@ global:
     # Ref: https://github.com/epam/edp-tekton/blob/release/0.10/charts/pipelines-library/templates/tasks/kaniko.yaml#L73
     awsRegion: ""
 
-# Configure External Secrets Operator to provision secrets for Platform and/or EDP. Required External Secrets Operator deployment: https://epam.github.io/edp-install/operator-guide/install-external-secrets-operator/
+# Configure External Secrets Operator to provision secrets for Platform and/or KubeRocketCI. Required External Secrets Operator deployment: https://docs.kuberocketci.io/docs/operator-guide/secrets-management/install-external-secrets-operator
 # https://external-secrets.io/latest/provider-aws-secrets-manager/
-# Description of secrets that can be created using this approach - available in the documentation: https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration/
+# Description of secrets that can be created using this approach - available in the documentation: https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration
 externalSecrets:
-  # -- Configure External Secrets for EDP platform. Deploy SecretStore. Default: false
+  # -- Configure External Secrets for KubeRocketCI platform. Deploy SecretStore. Default: false
   enabled: false
   # -- Defines provider type. One of `aws` or `generic`.
   type: "aws"
@@ -120,11 +120,11 @@ externalSecrets:
         #  gcpsm:
         #    projectID: "alphabet-123"
 
-  # When installing EDP, three secrets must be created: ci-argocd, ci-defectdojo, ci-dependency-track, kaniko-docker-config and other.
-  # see https://github.com/epam/edp-install/tree/master/deploy-templates/templates/external-secrets, https://epam.github.io/edp-install/operator-guide/external-secrets-operator-integration
+  # When installing KubeRocketCI, three secrets must be created: ci-argocd, ci-defectdojo, ci-dependency-track, kaniko-docker-config and other.
+  # see https://github.com/epam/edp-install/tree/master/deploy-templates/templates/external-secrets, https://docs.kuberocketci.io/docs/operator-guide/secrets-management/external-secrets-operator-integration
   # manageEDPInstallSecrets creates required secrets using ExternalSecretOperator
   # Ensure external secret source is configured properly
-  # -- Create necessary secrets for EDP installation, using External Secret Operator
+  # -- Create necessary secrets for KubeRocketCI installation, using External Secret Operator
   manageEDPInstallSecrets: true
   # -- Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true
   manageEDPInstallSecretsName: /edp/deploy-secrets
@@ -222,7 +222,7 @@ cd-pipeline-operator:
     #       nodePort: false
 
   # -- should the operator manage(create/delete) namespaces for stages
-  # Refer to the guide for managing namespace (https://epam.github.io/edp-install/operator-guide/namespace-management/)
+  # Refer to the guide for managing namespace (https://docs.kuberocketci.io/docs/operator-guide/auth/namespace-management)
   manageNamespace: true
 
   # -- Flag indicating whether the operator should manage secrets for stages.
@@ -230,10 +230,10 @@ cd-pipeline-operator:
   # Set the parameter to "none" under the following conditions:
   #   - If 'global.dockerRegistry.type=ecr' and IRSA is enabled, or
   #   - If 'global.dockerRegistry.type=openshift'.
-  # For private registries, choose the most appropriate method to provide credentials to deployed environments. Refer to the guide for managing container registries (https://epam.github.io/edp-install/user-guide/manage-container-registries/).
+  # For private registries, choose the most appropriate method to provide credentials to deployed environments. Refer to the guide for managing container registries (https://docs.kuberocketci.io/docs/user-guide/manage-container-registries).
   # Possible values: own/eso/none.
   #   - own: Copies the secret once from the parent namespace, without subsequent reconciliation. If updated in the parent namespace, manual updating in all created namespaces is required.
-  #   - eso: The secret will be managed by the External Secrets Operator (requires installation and configuration in the cluster: https://epam.github.io/edp-install/operator-guide/install-external-secrets-operator/).
+  #   - eso: The secret will be managed by the External Secrets Operator (requires installation and configuration in the cluster: https://docs.kuberocketci.io/docs/operator-guide/secrets-management/install-external-secrets-operator).
   #   - none: Disables secrets management logic.
   secretManager: own
 
@@ -286,7 +286,7 @@ edp-headlamp:
     # -- base url path at which headlamp should run
     baseURL: ""
     # -- Ensure that the specified client is associated with cluster OIDC integration.
-    # -- For detailed instructions, refer to: https://epam.github.io/edp-install/operator-guide/configure-keycloak-oidc-eks/, https://epam.github.io/edp-install/operator-guide/headlamp-oidc/
+    # -- For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc
     oidc:
       # Enable OIDC integration. Default: false
       enabled: false
@@ -320,7 +320,7 @@ edp-tekton:
     # -- WARNING: Default deployment of the dashboard does not involve any proxy and may be accessible to the public.
     # -- To enable proxy protect use openshift_proxy or sso.enabled sections.
     # -- More details:
-    # -- https://epam.github.io/edp-install/operator-guide/oauth2-proxy/
+    # -- https://docs.kuberocketci.io/docs/operator-guide/auth/oauth2-proxy
     enabled: true
 
     # -- Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false.
@@ -330,7 +330,7 @@ edp-tekton:
     # -- Only for openshift deploy scenario,
     # -- For EKS scenario - uncomment dashboard.ingress.annotations block
     # -- More details:
-    # -- https://epam.github.io/edp-install/operator-guide/oauth2-proxy/?h=#enable-oauth2-proxy-on-tekton-dashboard
+    # -- https://docs.kuberocketci.io/docs/operator-guide/auth/oauth2-proxy#enable-oauth2-proxy-on-tekton-dashboard
     openshift_proxy:
       # -- Enable oauth-proxy to include authorization layer on tekton-dashboard. Default: flase
       enabled: false
@@ -452,20 +452,20 @@ edp-tekton:
 # The section configures the OAuth2-proxy for single Sign-On (SSO) protection of application endpoints.
 #
 # More details on setup and deployment:
-# - https://epam.github.io/edp-install/operator-guide/oauth2-proxy/
+# - https://docs.kuberocketci.io/docs/operator-guide/auth/oauth2-proxy#enable-oauth2-proxy
 #
 # OAuth2-proxy requires Keycloak and Keycloak-operator are properly configured before deployment.
 # Ref:
-# - https://epam.github.io/edp-install/operator-guide/install-keycloak/
+# - https://docs.kuberocketci.io/docs/operator-guide/auth/keycloak
 # - https://github.com/epam/edp-cluster-add-ons
 # - https://github.com/epam/edp-keycloak-operator
 sso:
-  # -- Install OAuth2-proxy and Keycloak CRs as a part of EDP deployment.
+  # -- Install OAuth2-proxy and Keycloak CRs as a part of KubeRocketCI deployment.
   enabled: false
 
   keycloakOperatorResources:
     # Set to false if using the add-ons approach (refer to https://github.com/epam/edp-cluster-add-ons)
-    # for EDP installation and if the extension-oidc is already installed.
+    # for KubeRocketCI installation and if the extension-oidc is already installed.
     # This prevents the creation of an additional Keycloak resource and secret.
     # The 'kind' and 'name' must be specified in case of using an existing Keycloak/ClusterKeycloak resource.
     # Create kind: Keycloak as a part of chart installation
@@ -475,7 +475,7 @@ sso:
     # Name of kind: Keycloak/ClusterKeycloak CR.
     name: main
 
-  # -- Defines the Keycloak realm name, which by default is named after the namespace where EDP is deployed.
+  # -- Defines the Keycloak realm name, which by default is named after the namespace where KubeRocketCI is deployed.
   # realmName: edp
   # -- Defines Keycloak sso realm name that is used as the Identity Provider (IdP) realm
   ssoRealmName: "broker"
