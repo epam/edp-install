@@ -1,32 +1,34 @@
-# EPAM Delivery Platform :rocket:
+# KubeRocketCI Platform :rocket:
 
- | :heavy_exclamation_mark: Please refer to [EDP documentation](https://epam.github.io/edp-install/) to get the notion of the main concepts and guidelines. |
- | --- |
+ | :heavy_exclamation_mark: Please refer to [KRCI documentation](https://docs.kuberocketci.io/) to get the notion of the main concepts and guidelines. |
+ |-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 
-**EPAM Delivery Platform (EDP)** is out of the box integrated ecosystem for software development connected to a local development environment.
+**KubeRocketCI (KRCI)** is out of the box integrated ecosystem for software development connected to a local development environment.
 
-EPAM Delivery Platform, which is also called **"The Rocket"**, is a platform that allows shortening the time that is passed before an active development can be started from several months to several hours.
+KubeRocketCI, which is also called **"The Rocket"**, is a platform that allows shortening the time that is passed before an active development can be started from several months to several hours.
 
-EDP consists of the following:
+The platform consists of the following:
 
 - The platform based on managed infrastructure and container orchestration;
 - Security covering authentication, authorization, and SSO for platform services;
 - Development and testing toolset;
 - Well-established engineering process and EPAM practices (EngX) reflected in CI/CD pipelines, and delivery analytics;
-- Local development with debug capabilities.
+- Local development with debug capabilities;
+- A set of pre-configured pipelines for different types of applications (polyglot microservices);
+- Observability stack.
 
-## EDP Installation
+## KubeRocketCI Installation
 
-EDP can be installed both on OpenShift and Kubernetes orchestration platforms. Please refer to the [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/) section of the Operator Guide
+KubeRocketCI can be installed both on OpenShift and Kubernetes orchestration platforms. Please refer to the [Install KubeRocketCI](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci) section of the Operator Guide
 for details and info on prerequisites.
 
->_**NOTE**: To get the notion of the most useful EDP terms, please refer to the [EDP Glossary](https://epam.github.io/edp-install/glossary/) page._
+>_**NOTE**: To get the notion of the most useful EDP terms, please refer to the [KRCI Glossary](https://docs.kuberocketci.io/docs/glossary) page._
 
-## EDP Repositories Description
+## KubeRocketCI Repositories Description
 
-EDP consists of the components that are presented as repositories. To find the necessary repository and get more details about its deployment and scheme, please refer to the Table 1.
+KubeRocketCI consists of the components that are presented as repositories. To find the necessary repository and get more details about its deployment and scheme, please refer to the Table 1.
 
-_Table 1. EDP Main Repositories._
+_Table 1. KRCI Main Repositories._
 
 | Repository             | Description                                                                                                              | Link                                                                                     |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|

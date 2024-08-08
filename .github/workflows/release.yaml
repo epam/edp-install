@@ -1,4 +1,4 @@
-name: Create EDP release
+name: Create KRCI release
 on:
   push:
     tags:

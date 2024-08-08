@@ -18,7 +18,7 @@
 
 # Install via Helmfile
 
-This article provides the instruction on how to deploy EDP and components in Kubernetes using [Helmfile](https://github.com/helmfile/helmfile) that is intended for deploying Helm charts. Helmfile templates are available in [GitHub repository](https://github.com/epam/edp-install/tree/master/helmfiles).
+This article provides the instruction on how to deploy KRCI and components in Kubernetes using [Helmfile](https://github.com/helmfile/helmfile) that is intended for deploying Helm charts. Helmfile templates are available in [GitHub repository](https://github.com/epam/edp-install/tree/master/helmfiles).
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ Using the Helmfile, the following components can be installed:
 
 * [NGINX Ingress Controller](https://github.com/kubernetes/ingress-nginx/tree/master/charts/ingress-nginx)
 * [Keycloak](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak)
-* [EPAM Delivery Platform](https://github.com/epam/edp-install/tree/master/deploy-templates)
+* [KubeRocketCI](https://github.com/epam/edp-install/tree/master/deploy-templates)
 * [Argo CD](https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd)
 * [External Secrets Operator](https://github.com/external-secrets/external-secrets/tree/main/deploy/charts/external-secrets)
 * [DefectDojo](https://github.com/DefectDojo/django-DefectDojo/tree/master/helm/defectdojo)
@@ -155,7 +155,7 @@ volumes:
 
 ### Deploy EPAM Delivery Platform
 
-To install EDP, follow the steps below:
+To install KRCI, follow the steps below:
 
 1. Create a `platform` namespace:
 
@@ -163,7 +163,7 @@ To install EDP, follow the steps below:
    kubectl create namespace platform
    ```
 
-2. For EDP, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](https://epam.github.io/edp-install/operator-guide/install-keycloak/#configuration) section.
+2. For KRCI, it is required to have Keycloak access to perform the integration. Create a secret with the user and password provisioned in the step 2 of the [Keycloak Configuration](https://docs.kuberocketci.io/docs/operator-guide/auth/keycloak#configuration) section.
 
    ```bash
    kubectl -n platform create secret generic keycloak \
@@ -175,7 +175,7 @@ To install EDP, follow the steps below:
 
 4. In the `releases/edp-install.yaml` file, check and fill in all values.
 
-5. Install EDP:
+5. Install KRCI:
 
    ```bash
    helmfile  --selector component=edp --environment platform -f helmfile.yaml apply
@@ -209,7 +209,7 @@ To install External Secrets Operator, follow the steps below:
 
 ### Deploy DefectDojo
 
-> **NOTE**: It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](https://epam.github.io/edp-install/operator-guide/install-defectdojo) page.
+> **NOTE**: It is also possible to install DefectDojo via Helm Chart. For details, please refer to the [Install DefectDojo](https://docs.kuberocketci.io/docs/operator-guide/devsecops/defectdojo) page.
 
 To install DefectDojo via Helmfile, follow the steps below:
 
@@ -269,7 +269,7 @@ To install DefectDojo via Helmfile, follow the steps below:
 
 ### Deploy ReportPortal
 
-> **NOTE**: It is also possible to install ReportPortal via Helm Chart. For details, please refer to the [Install ReportPortal](https://epam.github.io/edp-install/operator-guide/install-reportportal/) page.
+> **NOTE**: It is also possible to install ReportPortal via Helm Chart. For details, please refer to the [Install ReportPortal](https://docs.kuberocketci.io/docs/operator-guide/project-management-and-reporting/install-reportportal) page.
 
 ReportPortal requires third-party deployments: RabbitMQ, ElasticSearch, PostgreSQL, MinIO.
 
@@ -358,9 +358,9 @@ Pay attention to the following recommendations while working with the Helmfile:
 ### Related Articles
 
 - [Install via Helmfile](https://epam.github.io/edp-install/operator-guide/install-via-helmfile/)
-- [Install NGINX Ingress Controller](https://epam.github.io/edp-install/operator-guide/install-ingress-nginx/)
-- [Install Keycloak](https://epam.github.io/edp-install/operator-guide/install-keycloak/)
-- [Install EDP](https://epam.github.io/edp-install/operator-guide/install-edp/)
-- [Install Argo CD](https://epam.github.io/edp-install/operator-guide/install-argocd/)
-- [Install DefectDojo](https://epam.github.io/edp-install/operator-guide/install-defectdojo/)
-- [Install ReportPortal](https://epam.github.io/edp-install/operator-guide/install-reportportal/)
+- [Install NGINX Ingress Controller](https://docs.kuberocketci.io/docs/operator-guide/install-ingress-nginx)
+- [Install Keycloak](https://docs.kuberocketci.io/docs/operator-guide/auth/keycloak)
+- [Install KRCI](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci)
+- [Install Argo CD](https://docs.kuberocketci.io/docs/operator-guide/install-argocd)
+- [Install DefectDojo](https://docs.kuberocketci.io/docs/operator-guide/devsecops/defectdojo)
+- [Install ReportPortal](https://docs.kuberocketci.io/docs/operator-guide/project-management-and-reporting/install-reportportal)
