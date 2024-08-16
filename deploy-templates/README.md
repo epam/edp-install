@@ -50,7 +50,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-headlamp.ingress.annotations | object | `{}` | Annotations for Ingress resource |
 | edp-headlamp.ingress.enabled | bool | `true` | Enable external endpoint access. Default Ingress/Route host pattern: portal-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }} |
 | edp-headlamp.ingress.tls | list | `[]` | Ingress TLS configuration |
-| edp-tekton.dashboard.enabled | bool | `true` | https://docs.kuberocketci.io/docs/operator-guide/auth/oauth2-proxy |
+| edp-tekton.dashboard.enabled | bool | `false` | https://docs.kuberocketci.io/docs/operator-guide/auth/oauth2-proxy |
 | edp-tekton.dashboard.ingress.annotations | object | `{}` | Annotations for Ingress resource |
 | edp-tekton.dashboard.ingress.enabled | bool | `true` | Enable external endpoint access. Default Ingress/Route host pattern: tekton-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }} |
 | edp-tekton.dashboard.ingress.tls | list | `[]` | Uncomment it to enable tekton-dashboard OIDC on EKS cluster nginx.ingress.kubernetes.io/auth-signin: 'https://<oauth-ingress-host>/oauth2/start?rd=https://$host$request_uri' nginx.ingress.kubernetes.io/auth-url: 'http://oauth2-proxy.edp.svc.cluster.local:8080/oauth2/auth' |

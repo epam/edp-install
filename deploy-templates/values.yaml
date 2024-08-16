@@ -316,12 +316,12 @@ edp-tekton:
     # url: http://tekton-cache:8080
 
   dashboard:
-    # -- Deploy Tekton Dashboard as a part of pipeline library when true. Default: true
+    # -- Deploy Tekton Dashboard as a part of pipeline library when true. Default: false
     # -- WARNING: Default deployment of the dashboard does not involve any proxy and may be accessible to the public.
     # -- To enable proxy protect use openshift_proxy or sso.enabled sections.
     # -- More details:
     # -- https://docs.kuberocketci.io/docs/operator-guide/auth/oauth2-proxy
-    enabled: true
+    enabled: false
 
     # -- Define mode for Tekton Dashboard. Enable/disaable capability to create/modify/remove Tekton objects via Tekton Dashboard. Default: false.
     readOnly: false
