@@ -22,7 +22,7 @@ The platform consists of the following:
 KubeRocketCI can be installed both on OpenShift and Kubernetes orchestration platforms. Please refer to the [Install KubeRocketCI](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci) section of the Operator Guide
 for details and info on prerequisites.
 
->_**NOTE**: To get the notion of the most useful EDP terms, please refer to the [KRCI Glossary](https://docs.kuberocketci.io/docs/glossary) page._
+>_**NOTE**: To get the notion of the most useful KubeRocketCI terms, please refer to the [KRCI Glossary](https://docs.kuberocketci.io/docs/glossary) page._
 
 ## KubeRocketCI Repositories Description
 
