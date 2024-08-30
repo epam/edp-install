@@ -82,29 +82,4 @@ A Helm chart for KubeRocketCI Platform
 | global.gitProviders | list | `["github"]` | Can be gerrit, github or gitlab. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
-| sso.admins | list | `["stub_user_one@example.com"]` | Administrators of your tenant. |
-| sso.affinity | object | `{}` | Affinity settings for pod assignment |
-| sso.developers | list | `["stub_user_one@example.com","stub_user_two@example.com"]` | Developers of your tenant |
-| sso.enabled | bool | `false` | Install OAuth2-proxy and Keycloak CRs as a part of KubeRocketCI deployment. |
-| sso.existingSecret.secretKey | string | `"cookie-secret"` | Secret key which stores cookie-secret |
-| sso.existingSecret.secretName | string | `"oauth2-proxy-cookie-secret"` | Secret name which stores cookie-secret |
-| sso.extraArgs | object | `{}` | Extra arguments to provide to the OAuth2-proxy |
-| sso.extraEnv | list | `[]` | Additional container environment variables |
-| sso.extraVolumeMounts | list | `[]` | Additional volumeMounts to be added to the OAuth2-proxy container |
-| sso.extraVolumes | list | `[]` | Additional volumes to be added to the OAuth2-proxy pod |
-| sso.image.repository | string | `"quay.io/oauth2-proxy/oauth2-proxy"` | OAuth2-proxy image repository |
-| sso.image.tag | string | `"v7.4.0"` | OAuth2-proxy image tag |
-| sso.ingress.annotations | object | `{}` | Additional ingress annotations |
-| sso.ingress.enabled | bool | `true` | Enable ingress controller resource |
-| sso.ingress.ingressClassName | string | `""` | Defines which ingress controller will implement the resource, e.g. nginx |
-| sso.ingress.pathType | string | `"Prefix"` | Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific` |
-| sso.ingress.tls | list | `[]` | Ingress TLS configuration |
-| sso.keycloakOperatorResources.createKeycloakCR | bool | `true` |  |
-| sso.keycloakOperatorResources.kind | string | `"Keycloak"` |  |
-| sso.keycloakOperatorResources.name | string | `"main"` |  |
-| sso.keycloakUrl | string | `"https://keycloak.example.com/auth"` | Keycloak URL. |
-| sso.nodeSelector | object | `{}` | Node labels for pod assignment |
-| sso.ssoClientName | string | `"edp"` | Defines Keycloak client name that is used for the Identity Provider (IdP) client |
-| sso.ssoRealmName | string | `"broker"` | Defines Keycloak sso realm name that is used as the Identity Provider (IdP) realm |
-| sso.tolerations | list | `[]` | Toleration labels for pod assignment |
 
