@@ -10,6 +10,41 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+
+- Add the ability to enable tekton-pipelines monitoring ([#268](https://github.com/epam/edp-install/issues/268))
+- Enable onboarding of 'Echo-server' via Marketplace Section ([#265](https://github.com/epam/edp-install/issues/265))
+- Enable onboarding of 'Terminal' via Marketplace section ([#262](https://github.com/epam/edp-install/issues/262))
+- Enable eso for ci-codemie ([#252](https://github.com/epam/edp-install/issues/252))
+- Enable eso for ci-codemie ([#252](https://github.com/epam/edp-install/issues/252))
+
+### Routine
+
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Disable Tekton dashboard deployments([#276](https://github.com/epam/edp-install/issues/276))
+- Update KubeRocketCI names and documentation links ([#273](https://github.com/epam/edp-install/issues/273))
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Align label for chat secret ([#270](https://github.com/epam/edp-install/issues/270))
+- Align keycloakUrl example value for portal chart([#264](https://github.com/epam/edp-install/issues/264))
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Align EDP Install Documentation to 3.9.0 ([#244](https://github.com/epam/edp-install/issues/244))
+- Update current development version ([#239](https://github.com/epam/edp-install/issues/239))
+
+### Documentation
+
+- Update link to new docs ([#278](https://github.com/epam/edp-install/issues/278))
+- Replace EDP with KubeRocketCI in README md ([#278](https://github.com/epam/edp-install/issues/278))
+- Add annoounce for new documentation URL ([#177](https://github.com/epam/edp-install/issues/177))
+- Upgrade Documentation for KubeRocketCI 3.9.0 ([#248](https://github.com/epam/edp-install/issues/248))
+- Adjust the RELEASES md file ([#242](https://github.com/epam/edp-install/issues/242))
+- Adjust the RELEASES md file ([#242](https://github.com/epam/edp-install/issues/242))
+- Update the RELEASES md file ([#242](https://github.com/epam/edp-install/issues/242))
+
 
 <a name="v3.9.0"></a>
 ## [v3.9.0] - 2024-06-13
