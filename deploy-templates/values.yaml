@@ -573,6 +573,7 @@ quickLinks:
 #   kibana: ""
 #   nexus: ""
 #   sonar: ""
+#   codemie: ""
 
 # -- Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/
 extraQuickLinks: {}
