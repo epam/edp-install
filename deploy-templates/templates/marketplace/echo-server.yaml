@@ -27,6 +27,6 @@ spec:
       name: SupportEPMD-EDP
   maturity: stable
   minEDPVersion: 3.4.0
-  source: https://github.com/KubeRocketCI/echo-server
+  source: https://github.com/KubeRocketCI/template-echo-server
   type: application
   version: 0.1.0
