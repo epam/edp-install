@@ -19,6 +19,8 @@ rules:
       - keycloakrealms
       - keycloakrealmusers
       - keycloaks
+      - clusterkeycloaks
+      - clusterkeycloakrealms
     verbs:
       - get
       - list
@@ -26,7 +28,6 @@ rules:
   - apiGroups:
       - v2.edp.epam.com
     resources:
-      - adminconsoles
       - cdpipelines
       - cdstagedeployments
       - cdstagejenkinsdeployments
@@ -41,31 +42,45 @@ rules:
       - gerritreplicationconfigs
       - gerrits
       - gitservers
-      - jenkins
-      - jenkinsagents
-      - jenkinsauthorizationrolemappings
-      - jenkinsauthorizationroles
-      - jenkinsfolders
-      - jenkinsjobbuildruns
-      - jenkinsjobs
-      - jenkinsscripts
-      - jenkinsserviceaccounts
-      - jenkinssharedlibraries
       - jiraissuemetadatas
       - jiraservers
-      - nexuses
-      - nexususers
-      - perfdatasourcegitlabs
-      - perfdatasourcejenkinses
-      - perfdatasourcesonars
-      - perfservers
       - quicklinks
-      - sonargroups
-      - sonarpermissiontemplates
-      - sonars
       - stages
       - templates
     verbs:
       - get
       - list
+      - watch
+  - apiGroups:
+      - edp.epam.com
+    resources:
+      - sonargroups
+      - sonarpermissiontemplates
+      - sonars
+      - sonarusers
+      - sonarqualityprofiles
+      - sonarqualitygates
+      - nexususers
+      - nexusscripts
+      - nexusroles
+      - nexusrepositories
+      - nexuscleanuppolicies
+      - nexusblobstores
+      - nexuses
+      - codemieprojectsettings
+      - codemieprojects
+      - codemieapplications
+      - codemies
+      - approvaltasks
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - applications
+    verbs:
+      - list
+      - get
       - watch

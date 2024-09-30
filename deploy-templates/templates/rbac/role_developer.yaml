@@ -3,25 +3,21 @@ kind: Role
 metadata:
   name: tenant-developer
 rules:
+  # Allow developers to create, update and delete applications
+  # Since the platform use PipelineRuns for ArgoCD applications management, we also provide developers to directly create/update/delete ArgoCD applications
   - apiGroups:
       - argoproj.io
     resources:
       - applications
     verbs:
-      - get
-      - list
-      - watch
       - create
       - update
+      - delete
   - apiGroups:
       - tekton.dev
     resources:
       - pipelineruns
     verbs:
       - create
-  - verbs:
-      - get
-    apiGroups:
-      - ''
-    resources:
-      - secrets
+      - update
+      - delete
