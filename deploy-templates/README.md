@@ -79,7 +79,7 @@ A Helm chart for KubeRocketCI Platform
 | global.dockerRegistry.space | string | `""` | Defines project name. |
 | global.dockerRegistry.type | string | `""` | Defines type of registry. One of `ecr`, `harbor`, `dockerhub`, `openshift`, `nexus` or `ghcr`. 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'. |
 | global.dockerRegistry.url | string | `""` | Defines registry endpoint URL. |
-| global.gitProviders | list | `["github"]` | Can be gerrit, github or gitlab. Default: github |
+| global.gitProviders | list | `["github"]` | Can be gerrit, github, gitlab or bitbucket. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 

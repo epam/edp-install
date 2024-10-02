@@ -8,11 +8,12 @@ global:
   platform: "kubernetes"
   # -- a cluster DNS wildcard name
   dnsWildCard:
-  # -- Can be gerrit, github or gitlab. Default: github
+  # -- Can be gerrit, github, gitlab or bitbucket. Default: github
   gitProviders:
     - github
     # - gitlab
     # - gerrit
+    # - bitbucket
 
   # Define the Image Registry that will be used in Pipelines.
   # This section is optional, and users can configure the registry within the KubeRocketCI Portal user interface.
@@ -432,6 +433,37 @@ edp-tekton:
   #     httpsPort: 443
   #     nameSshKeySecret: gerrit-ciuser-sshkey
   #     sshPort: 30022
+  #     webhook:
+  #       skipWebhookSSLVerification: false
+  #     eventListener:
+  #       # -- Enable EventListener
+  #       enabled: true
+  #       # -- EventListener resources
+  #       resources:
+  #         requests:
+  #           memory: "64Mi"
+  #           cpu: "50m"
+  #         limits:
+  #           memory: "128Mi"
+  #           cpu: "500m"
+  #       # -- Node labels for EventListener pod assignment
+  #       nodeSelector: {}
+  #       # -- Tolerations for EventListener pod assignment
+  #       tolerations: []
+  #       # -- Affinity for EventListener pod assignment
+  #       affinity: {}
+
+  #       ingress:
+  #         # -- Enable ingress controller resource
+  #         enabled: true
+  #         # -- Ingress annotations
+  #         annotations: {}
+  #         # -- Ingress TLS configuration
+  #         tls: []
+
+  #   my-bitbucket:
+  #     gitProvider: bitbucket
+  #     host: bitbucket.org
   #     webhook:
   #       skipWebhookSSLVerification: false
   #     eventListener:
