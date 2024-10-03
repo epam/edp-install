@@ -130,6 +130,7 @@ externalSecrets:
   # -- Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true
   manageEDPInstallSecretsName: /edp/deploy-secrets
   manageCodemieSecretsName: /edp/codemie-secrets
+  manageGitProviderSecretsName: /edp/git-provider-secrets
 
 annotations: {}
 
