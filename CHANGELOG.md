@@ -12,14 +12,23 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Features
 
+- Add Support for BitBucket as GitProvider ([#306](https://github.com/epam/edp-install/issues/306))
 - Add the ability to enable tekton-pipelines monitoring ([#268](https://github.com/epam/edp-install/issues/268))
 - Enable onboarding of 'Echo-server' via Marketplace Section ([#265](https://github.com/epam/edp-install/issues/265))
 - Enable onboarding of 'Terminal' via Marketplace section ([#262](https://github.com/epam/edp-install/issues/262))
 - Enable eso for ci-codemie ([#252](https://github.com/epam/edp-install/issues/252))
 - Enable eso for ci-codemie ([#252](https://github.com/epam/edp-install/issues/252))
 
+### Bug Fixes
+
+- Align templates variables([#289](https://github.com/epam/edp-install/issues/289))
+
 ### Routine
 
+- Align kubernetes rbac ([#305](https://github.com/epam/edp-install/issues/305))
+- Align marketplace repository path([#301](https://github.com/epam/edp-install/issues/301))
+- Remove oauth2proxy resources from chart([#289](https://github.com/epam/edp-install/issues/289))
+- Validate 'type' field for QuickLink resources ([#294](https://github.com/epam/edp-install/issues/294))
 - Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
 - Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
 - Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
@@ -37,6 +46,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update KubeRocketCI logo ([#298](https://github.com/epam/edp-install/issues/298))
+- Update KRCI logo ([#298](https://github.com/epam/edp-install/issues/298))
+- Update CHANGELOG md file
 - Update link to new docs ([#278](https://github.com/epam/edp-install/issues/278))
 - Replace EDP with KubeRocketCI in README md ([#278](https://github.com/epam/edp-install/issues/278))
 - Add annoounce for new documentation URL ([#177](https://github.com/epam/edp-install/issues/177))
