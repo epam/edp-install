@@ -10,6 +10,7 @@ data:
   edp_name: {{ .Release.Namespace }}
   edp_version: {{.Chart.Version}}
   dns_wildcard: {{ .Values.global.dnsWildCard }}
+  api_gateway_url: {{ default "" .Values.global.apiGatewayUrl }}
 kind: ConfigMap
 metadata:
   labels:
