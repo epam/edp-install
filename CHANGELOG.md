@@ -10,6 +10,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Routine
+
+- Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
+
+
+<a name="v3.10.0"></a>
+## [v3.10.0] - 2024-10-18
 ### Features
 
 - Add Support for BitBucket as GitProvider ([#306](https://github.com/epam/edp-install/issues/306))
@@ -25,6 +32,11 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
+- Add apiGatewayUrl field to edp-config CM ([#316](https://github.com/epam/edp-install/issues/316))
+- Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
+- Enable permissions to configmaps for developers ([#313](https://github.com/epam/edp-install/issues/313))
+- Move Git Providers data to separate AWS PS object ([#309](https://github.com/epam/edp-install/issues/309))
 - Align kubernetes rbac ([#305](https://github.com/epam/edp-install/issues/305))
 - Align marketplace repository path([#301](https://github.com/epam/edp-install/issues/301))
 - Remove oauth2proxy resources from chart([#289](https://github.com/epam/edp-install/issues/289))
@@ -46,6 +58,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update changelog file for release notes ([#292](https://github.com/epam/edp-install/issues/292))
 - Update KubeRocketCI logo ([#298](https://github.com/epam/edp-install/issues/298))
 - Update KRCI logo ([#298](https://github.com/epam/edp-install/issues/298))
 - Update CHANGELOG md file
@@ -497,7 +510,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.9.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.0...HEAD
+[v3.10.0]: https://github.com/epam/edp-install/compare/v3.9.0...v3.10.0
 [v3.9.0]: https://github.com/epam/edp-install/compare/v3.8.1...v3.9.0
 [v3.8.1]: https://github.com/epam/edp-install/compare/v3.8.0...v3.8.1
 [v3.8.0]: https://github.com/epam/edp-install/compare/v3.7.5...v3.8.0
