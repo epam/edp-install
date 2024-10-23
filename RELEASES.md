@@ -1,21 +1,22 @@
-# EDP Releases
+# KubeRocketCI Releases
 
 ## Overview
 
 Get acquainted with the latest EDP releases.
 
+* [Version 3.10.0](#3.10.0)
 * [Version 3.9.0](#3.9.0)
 * [Version 3.8.0](#3.8.0)
+
+<details>
+  <summary>Earlier Versions</summary>
+
 * [Version 3.7.5](#3.7.5)
 * [Version 3.7.4](#3.7.4)
 * [Version 3.7.3](#3.7.3)
 * [Version 3.7.2](#3.7.2)
 * [Version 3.7.1](#3.7.1)
 * [Version 3.7.0](#3.7.0)
-
-<details>
-  <summary>Earlier Versions</summary>
-
 * [Version 3.6.0](#3.6.0)
 * [Version 3.5.3](#3.5.3)
 * [Version 3.5.2](#3.5.2)
@@ -57,6 +58,106 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.0](#2.6.0)
 </details>
 
+## Version 3.10.0 <a name="3.10.0"></a> (October 18, 2024)
+
+## What's New
+
+We are enhancing the platform towards new code storage and Version Control Systems support. We are pleased to introduce Bitbucket Cloud as a new Version Control System in KubeRocketCI.
+
+Our platform now integrates with Large Language Models, such as ChatGPT, as an intelligent [chat assistant](https://docs.kuberocketci.io/docs/next/user-guide/add-ai-assistant). Depending on your assistant's settings, it can perform a variety of tasks. We can also set up this assistant for you. Please contact our team for more details.
+
+A new release brings a new look. Check out our new [documentation site](https://docs.kuberocketci.io/), which features improved navigation and documentation versioning support.
+
+We have updated terminology within the platform. Environments are now referred to as Deployment Flows, and Stages are now Environments. These changes align our terminology with globally recognized terms, reducing user confusion. For more details, please refer to our updated [Glossary](https://docs.kuberocketci.io/docs/next/glossary).
+
+We have added the ability to specify custom build and review pipelines when editing or creating new codebase branches. This enhancement increases flexibility when working with codebases, allowing for easier modifications to pipeline logic based on specific requirements.
+
+Another significant enhancement is the introduction of a new section called Pipelines. This section centralizes pipeline observability by consolidating all pipelines in one place. We are continuing to migrate Tekton functionality into our platform. Consequently, we have consolidated our pipelines into a single location. The new Pipelines section displays the entire Tekton Pipeline Run history, simplifying pipeline management and observability.
+
+We are expanding the options for delivering applications. Users are now able to automate the deployment of their applications packaged as RPMs, utilizing Ansible for this process.
+
+As part of our expanding language support, we’ve added C and C++ to our CI/CD platform. This includes integration with the make and CMake build tools, enhancing the platform's capabilities for building and managing C/C++ projects.
+
+We have also introduced the ability to [customize Environment deletion](https://docs.kuberocketci.io/docs/next/operator-guide/cd/customize-environment-deletion). This feature is particularly useful for users with applications that have specific configurations or dependencies, e.g. database cleanup, infrastructure tearing down, etc. Customized clean flows make it easier to maintain components throughout their lifecycle.
+
+This release adds new functionality to deployment pipelines. A new tab, "Variables", has been added to the Environment details page (previously known as the Stage details page). In this tab, users can specify key-value pairs that will be injected into the deployment pipeline as environment variables. This enhancement allows users to configure application deployment settings directly within the KubeRocketCI portal, providing greater flexibility and control over the deployment process.
+
+We are pleased to introduce a new Manual Approval feature on the platform. This feature allows developers to incorporate an approval task within their custom deployment pipelines, requiring a manual review and approval before advancing to the next stage. While deployment pipelines are a primary use case for this capability, the approval task can also be leveraged in other workflows. This enhancement provides greater control and oversight, ensuring all processes meet required standards and criteria before progressing.
+
+We have added a new deployment strategy called "[Auto-stable](https://github.com/epam/edp-cd-pipeline-operator/blob/master/deploy-templates/crds/v2.edp.epam.com_stages.yaml#L161)" has been added to the platform. This strategy allows for creating an ordered queue of deploy Pipeline Runs, which will be launched sequentially once the previous one finishes. Unlike the "Auto" trigger type, where intermediate versions are skipped and only the latest versions are deployed, "Auto-stable" ensures that each version is deployed, making it easier to identify the exact application version that caused errors during deployment.
+
+### Upgrades
+
+* Tekton dashboard is updated to the [v0.50.0](https://github.com/tektoncd/dashboard/releases/tag/v0.50.0) version. ([#286](https://github.com/epam/edp-tekton/issues/286))
+* The platform has been verified on the [1.29](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1300) cluster version. ([#66](https://github.com/epam/edp-cd-pipeline-operator/issues/66))
+
+### New Functionality
+
+* Bitbucket Cloud support as a Git Server has been added to the platform. ([#306](https://github.com/epam/edp-install/issues/306))
+* The KubeRocketCI platform now provides Tekton monitoring via Grafana out of the box. To enable this functionality, set the `grafana.enabled` parameter to `true` in the `values.yaml` file when deploying or updating the platform. ([#268](https://github.com/epam/edp-install/issues/268))
+* Users can now set custom build and clean pipelines when creating Environments (formerly Stages). ([#66](https://github.com/epam/edp-cd-pipeline-operator/issues/66))
+* KubeRocketCI Marketplace has been embedded with the 'Echo-Server' application template. This application will be useful when testing and troubleshooting the networking capabilities of your primary application. ([#265](https://github.com/epam/edp-install/issues/265))
+* KubeRocketCI Marketplace has been embedded with the 'Terminal' application template. This application is designed as a secondary application for your Environment to serve as a full-fledged bash terminal. ([#262](https://github.com/epam/edp-install/issues/262))
+* The [Gen AI chatbot integration](https://docs.kuberocketci.io/docs/next/user-guide/add-ai-assistant) has been added to the platform. ([#270](https://github.com/epam/edp-install/issues/270))
+* A Tekton Configuration section has been added to the portal. In this section, users can see the list of all Tekton Pipelines and Tasks. By clicking on these resources, users can see the YAML configuration, associated Kubernetes labels, and pipeline diagram. ([#339](https://github.com/epam/edp-headlamp/issues/339))
+* Deploy pipelines now feature the ability for manual approval. When you create a custom deploy pipeline, you can create a checkpoint to prompt the user to approve or reject proceeding with the next step. ([#359](https://github.com/epam/edp-headlamp/issues/359))
+* To improve the flexibility and user experience of our onboarding process for new and existing codebases, we introduce new features that enable users to easily redefine and update pipeline configurations. ([#348](https://github.com/epam/edp-headlamp/issues/348))
+* A Pipelines section has been added to the platform. It serves as a centralized hub for all Pipeline Runs. ([#339](https://github.com/epam/edp-headlamp/issues/339))
+* C and C++ language support with Make and CMake build tools has been added to the platform. ([#335](https://github.com/epam/edp-headlamp/issues/335))
+* A new pipeline type called "clean" has been added to the platform. It allows for customizable application deletion logic. ([#319](https://github.com/epam/edp-headlamp/issues/319))
+* In this release, KubeRocketCI can now deploy RPM packages in addition to common Helm charts. ([#272](https://github.com/epam/edp-tekton/issues/272))
+* Ansible tool support has been added to the platform. In the context of the platform, this tool will serve as a means of deploying RPM packages. ([#311](https://github.com/epam/edp-headlamp/issues/311))
+* When creating codebases, users can now select a Deployment Option. It can be either a Helm chart or an RPM package. ([#363](https://github.com/epam/edp-headlamp/issues/363))
+* A new tab called "Variables" has been added to the Environment (formerly Stage) page. In this tab, users can set key-value variables to be injected into the application as environment variables. ([#404](https://github.com/epam/edp-headlamp/issues/404))
+* A new deployment trigger type called "[Auto-stable](https://github.com/epam/edp-cd-pipeline-operator/blob/master/deploy-templates/crds/v2.edp.epam.com_stages.yaml#L161)" has been added to the platform. ([#75](https://github.com/epam/edp-cd-pipeline-operator/issues/75))
+* KubeRocketCI now supports CodeMie as a chat assistant solution. Users can provide CodeMie chat assistants with codebase data when creating a codebase by enabling the "Integrate with CodeMie" checkbox. Contact the platform team for more details. ([#315](https://github.com/epam/edp-headlamp/issues/315))
+
+### Enhancements
+
+* Validation logic has been integrated with the Deployment Flow Create dialog. The validation ensures that the input cannot exceed 15 characters in length. ([#386](https://github.com/epam/edp-headlamp/issues/386))
+* The Deployment Flow (formerly Environment) creation flow has been refactored for a better user experience. ([#365](https://github.com/epam/edp-headlamp/issues/365))
+* Since Tekton pipelines were seamlessly integrated into the KubeRocketCI portal, the Tekton dashboard deployment is now disabled by default. ([#276](https://github.com/epam/edp-install/issues/276))
+* The SSO configuration section has been moved into several components. Now Single Sign-On is configured via [Add-Ons](https://docs.kuberocketci.io/docs/next/operator-guide/auth/oauth2-proxy). ([#351](https://github.com/epam/edp-headlamp/issues/351))
+* When users successfully create codebases and Deployment Flows, a success notification window appears with a resource link. ([#344](https://github.com/epam/edp-headlamp/issues/344))
+* Environment (formerly Stage) deletion now requires user confirmation. ([#321](https://github.com/epam/edp-headlamp/issues/321))
+* The account settings menu now displays user information: username, membership, and issuer URL. ([#395](https://github.com/epam/edp-headlamp/issues/395))
+* Tekton Task and Pipeline structures have been modified. This change aims to maintain consistency and enhance readability across our Tekton Tasks and Pipelines when working with custom Tekton Pipelines. ([#290](https://github.com/epam/edp-tekton/issues/290))
+* Build pipeline performance has been improved in the `get-cache` and `save-cache` tasks. ([#294](https://github.com/epam/edp-tekton/issues/294))
+* Review pipelines can now be triggered by the "/ok-to-test" message. It has the same effect as entering the "/recheck" message. ([#238](https://github.com/epam/edp-tekton/issues/238))
+* Users are now checked for codebase ownership when building applications. This check restricts users to building applications only if they are the owner of the codebase. This feature works only for codebases created in GitHub. ([#234](https://github.com/epam/edp-tekton/issues/234))
+* When Jira integration is enabled, Jira tickets are now provided with a Git commit URL instead of a Pipeline Run URL. ([#252](https://github.com/epam/edp-tekton/issues/252))
+* Permission checks have been improved when navigating the Configuration section. ([#384](https://github.com/epam/edp-headlamp/issues/384))
+* In the Environment (formerly Stage) page, the Pipelines tab now has a green circle that notifies users when a new deploy pipeline has started. ([#369](https://github.com/epam/edp-headlamp/issues/369))
+* An autocompletion feature has been added to the Deployment Flow (formerly Environment) creation flow. Now instead of selecting an application name and branch from a list, users can type them and get autocompletion suggestions. ([#284](https://github.com/epam/edp-headlamp/issues/284))
+* Notification message appearance has been updated. ([#268](https://github.com/epam/edp-headlamp/issues/268)) ([#269](https://github.com/epam/edp-headlamp/issues/269))
+
+### Fixed Issues
+
+* Fixed an issue where buttons were active when users didn't have permissions to update resources. ([#297](https://github.com/epam/edp-headlamp/issues/297))
+* Fixed an issue where integration status showed `Connected: true` when invalid credentials were provided. ([#105](https://github.com/epam/edp-codebase-operator/issues/105))
+* Fixed an issue where SonarQube widget metrics could show incorrect information. ([#397](https://github.com/epam/edp-headlamp/issues/397))
+* Fixed an issue where the Git Server connection status was green even when the integration had actually failed. ([#97](https://github.com/epam/edp-codebase-operator/issues/97))
+* Fixed an issue where the CodebaseImageStream Custom Resource wasn't deleted when deleting codebases. ([#60](https://github.com/epam/edp-cd-pipeline-operator/issues/60))
+* Fixed redundant code duplication in the `dockerbuild-verify` Tekton Task. ([#242](https://github.com/epam/edp-tekton/issues/242))
+* Fixed an issue where the `commit-validate` Tekton Task checked unnecessary data. ([#229](https://github.com/epam/edp-tekton/issues/229))
+* Fixed an issue where Jira integration showed a failed status when the integration was properly set up. ([#103](https://github.com/epam/edp-codebase-operator/issues/103))
+* Fixed an issue where build pipelines failed on the `push-python` step with the `KeyError: 'license'` message. ([#215](https://github.com/epam/edp-tekton/issues/215))
+* From now on, KubeRocketCI doesn't create an Ingress resource when the Webhook URL is specified in the Git Server. ([#95](https://github.com/epam/edp-codebase-operator/issues/95))
+
+### Documentation
+
+General:
+  * EDP has been renamed to KubeRocetCI throughout KubeRocketCi repositores. ([#278](https://github.com/epam/edp-install/issues/278))
+  * The README.md file of the edp-install repostory has been updated. ([#273](https://github.com/epam/edp-install/issues/273))
+  * Obsolete documentation site now contains an info message with a link to new [documentation site](https://docs.kuberocketci.io/). ([#278](https://github.com/epam/edp-install/issues/278))
+  * KubeRocketCI logo has been updated for [Capsule adopters](https://github.com/projectcapsule/capsule/blob/main/ADOPTERS.md). ([#298](https://github.com/epam/edp-install/issues/298))
+
+The [User Guide](https://docs.kuberocketci.io/docs/next/user-guide) section is updated with the following:
+  * The [Add Gen AI Assistant](https://docs.kuberocketci.io/docs/next/user-guide/add-ai-assistant) page has been added. ([#317](https://github.com/epam/edp-headlamp/issues/317))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/next/operator-guide) section is updated with the following:
+  * Troubleshooting section has been updated. ([#214](https://github.com/epam/edp-install/issues/214))
+
 ## Version 3.9.0 <a name="3.9.0"></a> (June 13, 2024)
 
 ## What's New
@@ -87,7 +188,7 @@ Lastly, we announce the Kiosk tool deprecation. For those who are looking for a 
 
 ### Enhancements
 
-* The SSO tab of the Configuration section has been improved. To simplify integration, now it contains a table of related ingresses. ([#173](https://github.com/epam/edp-headlamp/issues/173)) 
+* The SSO tab of the Configuration section has been improved. To simplify integration, now it contains a table of related ingresses. ([#173](https://github.com/epam/edp-headlamp/issues/173))
 * The Configuration section structure has been updated for better navigation. ([#192](https://github.com/epam/edp-headlamp/issues/192)) ([#194](https://github.com/epam/edp-headlamp/issues/194)) ([#188](https://github.com/epam/edp-headlamp/issues/188))
 * The codebase creation flow has been redesigned for simplicity. ([#177](https://github.com/epam/edp-headlamp/issues/177))
 * The procedure of deploying KubeRocketCI without ingress has been streamlined. ([#185](https://github.com/epam/edp-install/issues/185))
@@ -95,7 +196,7 @@ Lastly, we announce the Kiosk tool deprecation. For those who are looking for a 
 * The edp-keycloak-operator has been enhanced to support the reconciliation of user attributes, including FirstName, LastName, and Email, with optional support for the Email-Verified field, ensuring consistency with the source of truth.  ([#45](https://github.com/epam/edp-keycloak-operator/issues/45))
 * The KeycloakClient custom resource has been provided with authorization settings to configure client scopes. ([#41](https://github.com/epam/edp-keycloak-operator/issues/41))
 * The KeycloakRealmComponent custom resource can now reference secrets. Now users can create Keycloak realms that store their secret strings in a user-defined secret. ([#30](https://github.com/epam/edp-keycloak-operator/issues/30))
-* The KubeRocketCI UI has been significantly revamped. It concerns all the tabs and sections, including notifications and UI settings. ([#258](https://github.com/epam/edp-headlamp/issues/258)) 
+* The KubeRocketCI UI has been significantly revamped. It concerns all the tabs and sections, including notifications and UI settings. ([#258](https://github.com/epam/edp-headlamp/issues/258))
 * The Components section design has been refined. ([#252](https://github.com/epam/edp-headlamp/issues/252)) ([#253](https://github.com/epam/edp-headlamp/issues/253))
 * The **Actions** button now includes a permissions check for actions. ([#249](https://github.com/epam/edp-headlamp/issues/249)) ([#250](https://github.com/epam/edp-headlamp/issues/250))
 * Tekton pipelines are now displayed in real-time mode within the KubeRocketCI UI directly. To see these real-time pipeline details, simply click on any pipeline name. ([#225](https://github.com/epam/edp-headlamp/issues/225))
@@ -109,7 +210,7 @@ Lastly, we announce the Kiosk tool deprecation. For those who are looking for a 
 * The Environment details page has been significantly redesigned. Now it contains much more information, such as creation time, application image, promotion option. Besides, they contain quick links to Argo CD, Grafana, Kibana, application logs, etc.  ([#258](https://github.com/epam/edp-headlamp/issues/258))
 * Commit message validation is now applied to all of the pipeline runs from GitHub. Previously, commits were validated solely for pull requests. ([#193](https://github.com/epam/edp-tekton/issues/193))
 * Quality Gates are implemented in the review process that check for alignment between the Helm chart name and the codebase name. ([#191](https://github.com/epam/edp-tekton/issues/191))
-* In order to better manage and control distributed development, we facilitated the flexibility of using different package registries in our Gradle Tekton pipelines. Users can now leverage different package registries, such as Nexus, GitLab, GitHub, and Azure DevOps Registries. ([#132](https://github.com/epam/edp-tekton/issues/132))              
+* In order to better manage and control distributed development, we facilitated the flexibility of using different package registries in our Gradle Tekton pipelines. Users can now leverage different package registries, such as Nexus, GitLab, GitHub, and Azure DevOps Registries. ([#132](https://github.com/epam/edp-tekton/issues/132))
 * Pipeline steps and task sequences were optimised by removing the `get-nexus-repository-url` step and adjusting task sequences for application and library codebase types for enhanced efficiency and streamlined processes. ([#132](https://github.com/epam/edp-tekton/issues/132)) ([#177](https://github.com/epam/edp-tekton/issues/177))
 * For better security, the permissions scope has been shrunk for the edp-cd-pipeline-operator. ([#52](https://github.com/epam/edp-cd-pipeline-operator/issues/52))
 * The SonarQube integration for new codebases now correctly uses 'master' as the default branch name, ensuring alignment between the codebase and SonarQube project configurations. ([#207](https://github.com/epam/edp-tekton/issues/207))
@@ -810,7 +911,6 @@ To strengthen security measures, we're [expanding our security checks by integra
 * Other:
   * The Autodeploy feature description has been added to the [arch.md](https://github.com/epam/edp-cd-pipeline-operator/blob/master/docs/arch.md) file.
   * The [RoadMap](https://epam.github.io/edp-install/roadmap/) section has been updated.
-
 
 ## Version 3.3.0 <a name="3.3.0"></a> (May 25, 2023)
 
