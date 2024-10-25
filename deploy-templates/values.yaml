@@ -298,16 +298,17 @@ edp-headlamp:
     oidc:
       # Enable OIDC integration. Default: false
       enabled: false
-      # -- Keycloak URL
-      keycloakUrl: "https://keycloak.example.com/auth"
+      # -- OIDC Issuer URL for authentication.
+      # -- This URL identifies the OpenID Connect provider endpoint. Examples:
+      # -- Keycloak: https://keycloak.example.com/auth/realms/<realm-name>
+      # -- Azure Entra: https://sts.windows.net/<tenant-id>/
+      issuerUrl: ""
       # -- OIDC client ID
       clientID: ""
       # -- OIDC client secret name
       clientSecretName: "keycloak-client-headlamp-secret"
       # -- OIDC client secret key
       clientSecretKey: "clientSecret"
-      # -- OIDC issuer realm
-      issuerRealm: ""
       # -- OIDC scopes to be used
       scopes: ""
   # image:
