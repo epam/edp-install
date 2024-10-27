@@ -11,8 +11,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.10.0"></a>
-## v3.10.0 - 2024-10-18
+<a name="v3.10.1"></a>
+## v3.10.1 - 2024-10-27
 ### Features
 
 - Add Support for BitBucket as GitProvider ([#306](https://github.com/epam/edp-install/issues/306))
@@ -72,6 +72,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Add ApprovalTask CRD ([#318](https://github.com/epam/edp-install/issues/318))
 - Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
 - Add apiGatewayUrl field to edp-config CM ([#316](https://github.com/epam/edp-install/issues/316))
 - Add asset for the documentation ([#214](https://github.com/epam/edp-install/issues/214))
@@ -155,6 +156,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update RELEASES md file in 3_10 branch ([#311](https://github.com/epam/edp-install/issues/311))
 - Update changelog file for release notes ([#292](https://github.com/epam/edp-install/issues/292))
 - Update KubeRocketCI logo ([#298](https://github.com/epam/edp-install/issues/298))
 - Update KRCI logo ([#298](https://github.com/epam/edp-install/issues/298))
@@ -347,4 +349,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.1...HEAD
