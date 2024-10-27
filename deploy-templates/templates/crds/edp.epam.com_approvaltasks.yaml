@@ -1,0 +1,76 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.14.0
+  name: approvaltasks.edp.epam.com
+spec:
+  group: edp.epam.com
+  names:
+    kind: ApprovalTask
+    listKind: ApprovalTaskList
+    plural: approvaltasks
+    singular: approvaltask
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ApprovalTask is the Schema for the approvaltasks API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ApprovalTaskSpec defines the desired state of ApprovalTask
+            properties:
+              action:
+                default: Pending
+                description: Action is the action to be taken on the task.
+                enum:
+                - Pending
+                - Approved
+                - Rejected
+                - Canceled
+                type: string
+              approve:
+                description: Approve is the approval information.
+                properties:
+                  approvedBy:
+                    description: ApprovedBy is indicating the identity of the approver.
+                    type: string
+                  comment:
+                    description: Comment is the comment provided by the approver.
+                    type: string
+                required:
+                - approvedBy
+                type: object
+              description:
+                default: Proceed
+                description: Description that is shown to the user for the approval
+                  action.
+                type: string
+            type: object
+          status:
+            description: ApprovalTaskStatus defines the observed state of ApprovalTask
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
