@@ -27,3 +27,9 @@ rules:
       - configmaps
     verbs:
       - '*'
+  - verbs:
+      - update
+    apiGroups:
+      - edp.epam.com
+    resources:
+      - approvaltasks
