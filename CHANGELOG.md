@@ -12,7 +12,35 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Align permissions for developer to use approve feature ([#332](https://github.com/epam/edp-install/issues/332))
+- Update OIDC configuration for edp-headlamp ([#325](https://github.com/epam/edp-install/issues/325))
+- Update Pull Request Template ([#107](https://github.com/epam/edp-install/issues/107))
 - Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
+- Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
+
+### Documentation
+
+- Update RELEASES md file ([#311](https://github.com/epam/edp-install/issues/311))
+
+
+<a name="v3.10.2"></a>
+## [v3.10.2] - 2024-11-05
+### Routine
+
+- Update current development version ([#335](https://github.com/epam/edp-install/issues/335))
+- Align permissions for developer to use approve feature ([#332](https://github.com/epam/edp-install/issues/332))
+- Update OIDC configuration for edp-headlamp ([#325](https://github.com/epam/edp-install/issues/325))
+
+
+<a name="v3.10.1"></a>
+## [v3.10.1] - 2024-10-27
+### Routine
+
+- Add ApprovalTask CRD ([#318](https://github.com/epam/edp-install/issues/318))
+
+### Documentation
+
+- Update RELEASES md file in 3_10 branch ([#311](https://github.com/epam/edp-install/issues/311))
 
 
 <a name="v3.10.0"></a>
@@ -510,7 +538,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.2...HEAD
+[v3.10.2]: https://github.com/epam/edp-install/compare/v3.10.1...v3.10.2
+[v3.10.1]: https://github.com/epam/edp-install/compare/v3.10.0...v3.10.1
 [v3.10.0]: https://github.com/epam/edp-install/compare/v3.9.0...v3.10.0
 [v3.9.0]: https://github.com/epam/edp-install/compare/v3.8.1...v3.9.0
 [v3.8.1]: https://github.com/epam/edp-install/compare/v3.8.0...v3.8.1
