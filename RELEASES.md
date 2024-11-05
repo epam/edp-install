@@ -4,6 +4,8 @@
 
 Get acquainted with the latest EDP releases.
 
+* [Version 3.10.2](#3.10.2)
+* [Version 3.10.1](#3.10.1)
 * [Version 3.10.0](#3.10.0)
 * [Version 3.9.0](#3.9.0)
 * [Version 3.8.0](#3.8.0)
@@ -57,6 +59,23 @@ Get acquainted with the latest EDP releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.10.2 <a name="3.10.2"></a> (November 5, 2024)
+
+### New Functionality
+
+A new parameter called `issuerUrl` has been added to the KubeRocketCI portal, enabling integration with the arbitrary identity provider. ([#325](https://github.com/epam/edp-install/issues/325))
+
+### Fixed Issues
+
+* Fixed an issue where the default branch in the Сodebase did not align with the default branch in Bitbucket. ([#155](https://github.com/epam/edp-codebase-operator/pull/159))
+* Fixed an issue with insufficient permissions that prevented users with `developer` role from interacting with the `ApprovalTask` custom resource. ([#332](https://github.com/epam/edp-install/pull/336))
+
+## Version 3.10.1 <a name="3.10.1"></a> (October 27, 2024)
+
+### Fixed Issues
+
+Fixed an issue related to the missed `ApprovalTask` custom resource definition support. ([#318](https://github.com/epam/edp-install/pull/328))
 
 ## Version 3.10.0 <a name="3.10.0"></a> (October 18, 2024)
 
