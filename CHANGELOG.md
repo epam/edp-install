@@ -11,8 +11,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.10.1"></a>
-## v3.10.1 - 2024-10-27
+<a name="v3.10.2"></a>
+## v3.10.2 - 2024-11-05
 ### Features
 
 - Add Support for BitBucket as GitProvider ([#306](https://github.com/epam/edp-install/issues/306))
@@ -72,6 +72,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#335](https://github.com/epam/edp-install/issues/335))
+- Align permissions for developer to use approve feature ([#332](https://github.com/epam/edp-install/issues/332))
+- Update OIDC configuration for edp-headlamp ([#325](https://github.com/epam/edp-install/issues/325))
 - Add ApprovalTask CRD ([#318](https://github.com/epam/edp-install/issues/318))
 - Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
 - Add apiGatewayUrl field to edp-config CM ([#316](https://github.com/epam/edp-install/issues/316))
@@ -349,4 +352,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.1...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.2...HEAD
