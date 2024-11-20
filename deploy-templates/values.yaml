@@ -318,6 +318,52 @@ edp-headlamp:
 edp-tekton:
   enabled: true
 
+  pipelines:
+    image:
+      # -- Registry for tekton pipelines images. Default: docker.io
+      registry: "docker.io"
+
+    # -- This section contains the list of pipelines and tasks that will be installed.
+    deployableResources:
+      # -- This flag control the installation of the tasks.
+      tasks: true
+      # -- This flag control the installation of the Deploy pipelines.
+      deploy: true
+      # -- This section control the installation of the review and build pipelines.
+      c:
+        cmake: true
+        make: true
+      cs:
+        dotnet3.1: false
+        dotnet6.0: false
+      docker: true
+      groovy: true
+      go:
+        beego: true
+        gin: true
+        operatorsdk: true
+      helm: true
+      helm-pipeline: true
+      infrastructure: true
+      java:
+        java8: false
+        java11: true
+        java17: true
+      js:
+        angular: true
+        antora: true
+        express: true
+        next: true
+        react: true
+        vue: true
+      opa: false
+      python:
+        ansible: true
+        flask: true
+        fastapi: true
+        python3.8: false
+      terraform: true
+
   tekton-cache:
     # Deploy tekton-cache helm-chart.
     enabled: true
