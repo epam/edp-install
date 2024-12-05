@@ -2,7 +2,7 @@
 
 ## Overview
 
-Get acquainted with the latest EDP releases.
+Get acquainted with the latest KubeRocketCI releases.
 
 * [Version 3.10.2](#3.10.2)
 * [Version 3.10.1](#3.10.1)
@@ -233,7 +233,7 @@ Lastly, we announce the Kiosk tool deprecation. For those who are looking for a 
 * Pipeline steps and task sequences were optimised by removing the `get-nexus-repository-url` step and adjusting task sequences for application and library codebase types for enhanced efficiency and streamlined processes. ([#132](https://github.com/epam/edp-tekton/issues/132)) ([#177](https://github.com/epam/edp-tekton/issues/177))
 * For better security, the permissions scope has been shrunk for the edp-cd-pipeline-operator. ([#52](https://github.com/epam/edp-cd-pipeline-operator/issues/52))
 * The SonarQube integration for new codebases now correctly uses 'master' as the default branch name, ensuring alignment between the codebase and SonarQube project configurations. ([#207](https://github.com/epam/edp-tekton/issues/207))
-* Redundant websockets for streaming pipelineruns were removed, leaving the only one with filtering by labels. ([#170](https://github.com/epam/edp-headlamp/issues/170))
+* Redundant web sockets for streaming pipeline runs were removed, leaving the only one with filtering by labels. ([#170](https://github.com/epam/edp-headlamp/issues/170))
 * The `helm-validate` step now uses Go cache for better performance. ([#44](https://github.com/epam/edp-cd-pipeline-operator/issues/44))
 * To reflect the latest best practices and features, we updated the chart templates within the edp-codebase-operator. ([#68](https://github.com/epam/edp-codebase-operator/issues/68))
 * Validation message for creating a new branch with an invalid name in a codebase has been updated. ([#240](https://github.com/epam/edp-headlamp/issues/240))
