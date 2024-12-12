@@ -21,10 +21,10 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.21.0 |
+| @epamedp | cd-pipeline-operator | 2.22.0 |
 | @epamedp | codebase-operator | 2.24.1 |
-| @epamedp | edp-headlamp | 0.17.0 |
-| @epamedp | edp-tekton | 0.13.0 |
+| @epamedp | edp-headlamp | 0.18.0 |
+| @epamedp | edp-tekton | 0.14.0 |
 | @epamedp | gerrit-operator | 2.22.0 |
 
 ## Values
