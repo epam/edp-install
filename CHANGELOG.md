@@ -10,8 +10,14 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+
+- Enable configuration to disable pipeline by codebses ([#346](https://github.com/epam/edp-install/issues/346))
+
 ### Routine
 
+- Align ArgoCD diff for edp-config Config Map ([#344](https://github.com/epam/edp-install/issues/344))
+- Update current development version ([#335](https://github.com/epam/edp-install/issues/335))
 - Align permissions for developer to use approve feature ([#332](https://github.com/epam/edp-install/issues/332))
 - Update OIDC configuration for edp-headlamp ([#325](https://github.com/epam/edp-install/issues/325))
 - Update Pull Request Template ([#107](https://github.com/epam/edp-install/issues/107))
@@ -20,7 +26,17 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update redirect to new documentation site ([#352](https://github.com/epam/edp-install/issues/352))
+- Replace EDP With KubeRocketCI in RELEASES md ([#297](https://github.com/epam/edp-install/issues/297))
+- Add 3-10-1 and 3-10-2 releases to RELEASES md ([#339](https://github.com/epam/edp-install/issues/339))
 - Update RELEASES md file ([#311](https://github.com/epam/edp-install/issues/311))
+
+
+<a name="v3.10.3"></a>
+## [v3.10.3] - 2024-12-12
+### Routine
+
+- Update current development version ([#356](https://github.com/epam/edp-install/issues/356))
 
 
 <a name="v3.10.2"></a>
@@ -538,7 +554,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.2...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.3...HEAD
+[v3.10.3]: https://github.com/epam/edp-install/compare/v3.10.2...v3.10.3
 [v3.10.2]: https://github.com/epam/edp-install/compare/v3.10.1...v3.10.2
 [v3.10.1]: https://github.com/epam/edp-install/compare/v3.10.0...v3.10.1
 [v3.10.0]: https://github.com/epam/edp-install/compare/v3.9.0...v3.10.0

@@ -1,18 +1,18 @@
 dependencies:
 - name: codebase-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.24.1
+  version: 2.25.0
 - name: edp-headlamp
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.17.0
+  version: 0.18.0
 - name: edp-tekton
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.13.0
+  version: 0.14.0
 - name: cd-pipeline-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.21.0
+  version: 2.22.0
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.22.0
-digest: sha256:77f9af66cc34b209d6768d8d50f3811c477fd820eb0c011a0b9267a5f4238052
-generated: "2024-11-05T13:30:19.106495+02:00"
+digest: sha256:2e2ec1203045614f40df354e247c91e5de84715d80fa2b5c577ddec1f3fdf246
+generated: "2024-12-12T21:42:01.095001+02:00"
