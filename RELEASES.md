@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.10.3](#3.10.3)
 * [Version 3.10.2](#3.10.2)
 * [Version 3.10.1](#3.10.1)
 * [Version 3.10.0](#3.10.0)
@@ -59,6 +60,63 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.10.3 <a name="3.10.3"></a> (December 12, 2024)
+
+### Upgrades
+
+* KubeRocketCI has been verified on the [0.7.2](https://github.com/projectcapsule/capsule/releases) version of Capsule. ([#88](https://github.com/epam/edp-cd-pipeline-operator/issues/88))
+* KubeRocketCI has been verified on the [1.30](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1300) cluster version. ([#66](https://github.com/epam/edp-cd-pipeline-operator/issues/66))
+
+### Enhancements
+
+* A new compact deployment flow view mode has been added to the platform. To enable compact view mode, navigate to deployment flows details page and click **View less details** on the top right corner of the page. ([#511](https://github.com/epam/edp-headlamp/issues/511))
+* The ability to show pipeline run logs from long-term storages, such as [OpenSearch](https://opensearch.org/) has been added. It can be used when platform couldn't to retrieve these logs from Tekton. ([#505](https://github.com/epam/edp-headlamp/issues/505))
+* The ability to rerun deploy pipelines with variables has been added. ([#461](https://github.com/epam/edp-headlamp/issues/461))
+* The ability to specify a set pipelines and tasks has been added using the [deployableResources](https://github.com/epam/edp-tekton/blob/master/charts/pipelines-library/values.yaml#L14) section of the values.yaml file. ([#346](https://github.com/epam/edp-install/issues/346))
+* KubeRocketCI portal now shows user avatar in the profile icon. ([#509](https://github.com/epam/edp-headlamp/issues/509))
+* To prevent unintended deletions and potential impacts on environments, deploy pipelines now validate the environment namespace uniqueness. ([#91](https://github.com/epam/edp-cd-pipeline-operator/issues/91))
+* A resource quota widget was added to the platform. It displays platform usage and limits. This widget is accessible if the [Capsule](https://docs.kuberocketci.io/docs/next/operator-guide/advanced-installation/capsule) resource quotas are configured. ([#503](https://github.com/epam/edp-headlamp/issues/503))
+* The **Resource not found** errors are now displaying comprehensive notifications instead of infinite loading. ([#493](https://github.com/epam/edp-headlamp/issues/493))
+* Notification pop up logic has been refactored. ([#475](https://github.com/epam/edp-headlamp/issues/475))
+* The login process has been streamlined when using Keycloak as an OIDC provider. A separate browser tab is opened for OIDC login process instead of a separate window. ([#469](https://github.com/epam/edp-headlamp/issues/469))
+* To prevent security risks, autocomplete feature was disabled sensitive data fields in the Configuration section. ([#465](https://github.com/epam/edp-headlamp/issues/465)) ([#466](https://github.com/epam/edp-headlamp/issues/466))
+* Clean pipeline resource naming has been modified. Now it uses `CDSTAGE ($(tt.params.CDSTAGE))` and `CDPIPELINE ($(tt.params.CDPIPELINE))` resources. ([#463](https://github.com/epam/edp-headlamp/issues/463))
+
+### Fixed Issues
+
+* Fixed an issue when changing application Git Server didn't change it's configuration in environment where this application is included. ([#86](https://github.com/epam/edp-cd-pipeline-operator/issues/86))
+* Fixed an issue when tree diagram task links didn't lead to task run if user was on the pipeline run page. ([#475](https://github.com/epam/edp-headlamp/issues/475))
+* Fixed an issue when a user could log into the platform using invalid token. ([#516](https://github.com/epam/edp-headlamp/issues/516)) ([#517](https://github.com/epam/edp-headlamp/issues/517))
+* Fixed unexpected crash when editing codebase branch. ([#487](https://github.com/epam/edp-headlamp/issues/487))
+* Fixed an issue when pipeline task logs showed identical data when switching between tasks.  ([#485](https://github.com/epam/edp-headlamp/issues/485))
+* Fixed an issue when pages failed to load properly if the `tekton-custom-task` resource wasn't created in the platform. ([#481](https://github.com/epam/edp-headlamp/issues/481)) ([#482](https://github.com/epam/edp-headlamp/issues/482))
+* Fixed redundant websocket recreation when retrieving logs. ([#478](https://github.com/epam/edp-headlamp/issues/478))
+* Fixed an issue that blocked environment creation due to invalid namespace field. Even if the namespace had a valid pattern. ([#471](https://github.com/epam/edp-headlamp/issues/471))
+* Fixed an issue when users couldn't configure Microsoft Entra ID as an OIDC provider when installing KubeRocketCI from scratch. ([#325](https://github.com/epam/edp-install/issues/325))
+
+### Documentation
+
+General:
+* The obsolete documentation site is now redirected to a new one. ([#352](https://github.com/epam/edp-install/issues/352))
+
+The [Getting Started](https://epam.github.io/edp-install/overview/) section is updated with the following:
+  * The [Supported Versions and Compatibility](https://docs.kuberocketci.io/docs/next/supported-versions) page has been updated. ([#71](https://github.com/KubeRocketCI/docs/pull/71))
+  * The [Deploy Application](https://docs.kuberocketci.io/docs/next/quick-start/deploy-application) page has been updated. ([#95](https://github.com/KubeRocketCI/docs/pull/95))
+
+The [User Guide](https://docs.kuberocketci.io/docs/next/user-guide) section is updated with the following:
+  * The [Add Git Server](https://docs.kuberocketci.io/docs/user-guide/add-git-server) page has been updated. ([#82](https://github.com/KubeRocketCI/docs/pull/82))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/next/operator-guide) section is updated with the following:
+  * The [KrakenD Integration](https://docs.kuberocketci.io/docs/next/operator-guide/extensions/krakend) page has been updated. ([#102](https://github.com/KubeRocketCI/docs/pull/102))
+  * The [Install Keycloak](https://docs.kuberocketci.io/docs/next/operator-guide/auth/keycloak) page has been updated. ([#97](https://github.com/KubeRocketCI/docs/pull/97))
+  * The [Nexus Image Registry](https://docs.kuberocketci.io/docs/next/operator-guide/artifacts-management/nexus-image-registry) page has been updated. ([#103](https://github.com/KubeRocketCI/docs/pull/103))
+  * The [Deploy AWS EKS Cluster](https://docs.kuberocketci.io/docs/next/operator-guide/deploy-aws-eks) page has been updated. ([#106](https://github.com/KubeRocketCI/docs/pull/106))
+  * The [Sonatype Nexus Repository OSS Integration](https://docs.kuberocketci.io/docs/next/operator-guide/artifacts-management/nexus-sonatype) page has been updated. ([#107](https://github.com/KubeRocketCI/docs/pull/107))
+
+The [Use Cases](https://docs.kuberocketci.io/docs/next/use-cases) section is updated with the following:
+  The [Set Test Suite Parameters Using Environment Variables in CD Pipelines](https://docs.kuberocketci.io/docs/next/use-cases/cd-autotests-run-with-env-variables) page has been updated. ([#91](https://github.com/KubeRocketCI/docs/pull/91))
+  The [Deploy Application With Custom Build Tool/Framework](https://docs.kuberocketci.io/docs/next/use-cases/tekton-custom-pipelines) page has been updated. ([#83](https://github.com/KubeRocketCI/docs/pull/83))
 
 ## Version 3.10.2 <a name="3.10.2"></a> (November 5, 2024)
 
