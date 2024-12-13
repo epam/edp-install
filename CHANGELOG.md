@@ -12,7 +12,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Features
 
-- Enable configuration to disable pipeline by codebses ([#346](https://github.com/epam/edp-install/issues/346))
+- Enable configuration to disable pipeline by codebases ([#346](https://github.com/epam/edp-install/issues/346))
 
 ### Routine
 
