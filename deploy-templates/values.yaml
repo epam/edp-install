@@ -8,10 +8,10 @@ global:
   platform: "kubernetes"
   # -- a cluster DNS wildcard name
   dnsWildCard:
-  # API Gateway URL configuration for Widget Functionality
-  # This configuration specifies the URL of the API Gateway that is used by various widgets within the platform.
-  # The 'api_gateway_url' should be set to the ingress URL of the KrakenD API Gateway
-  # By default, this value is left empty, and widgets are disabled
+  # Specifies the URL of the API Gateway used by widgets in the platform.
+  # The 'apiGatewayUrl' should be set to the external URL of the KrakenD API Gateway exposed via Ingress.
+  # Example: https://api.domain.example.com
+  # By default, this value is left empty, and widgets are disabled.
   # -- API Gateway URL configuration for Widget Functionality
   apiGatewayUrl: ""
   # -- Can be gerrit, github, gitlab or bitbucket. Default: github
