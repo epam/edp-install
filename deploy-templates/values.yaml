@@ -508,7 +508,7 @@ quickLinks:
 #   dependency_track: ""
 #   docker_registry: ""
 #   grafana: ""
-#   kibana: ""
+#   opensearch: ""
 #   nexus: ""
 #   sonar: ""
 #   codemie: ""
