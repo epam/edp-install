@@ -1,18 +1,21 @@
 apiVersion: v1
-data:
-  container_registry_space: {{ default "" (.Values.global.dockerRegistry).space }}
-  container_registry_host: {{ default "" (.Values.global.dockerRegistry).url }}
-  container_registry_type: {{ default "" (.Values.global.dockerRegistry).type }}
-  platform: {{ .Values.global.platform }}
-  {{- if .Values.global.dockerRegistry.awsRegion }}
-  aws_region: {{ .Values.global.dockerRegistry.awsRegion }}
-  {{- end }}
-  edp_name: {{ .Release.Namespace }}
-  edp_version: {{.Chart.Version}}
-  dns_wildcard: {{ .Values.global.dnsWildCard }}
-  api_gateway_url: {{ default "" .Values.global.apiGatewayUrl | quote }}
 kind: ConfigMap
 metadata:
   labels:
     {{- include "edp-install.labels" . | nindent 4 }}
   name: edp-config
+data:
+  api_gateway_url: {{ default "" .Values.global.apiGatewayUrl | quote }}
+  {{- if .Values.global.availableClusters }}
+  available_clusters: {{ .Values.global.availableClusters }}
+  {{- end }}
+  container_registry_host: {{ default "" (.Values.global.dockerRegistry).url }}
+  container_registry_space: {{ default "" (.Values.global.dockerRegistry).space }}
+  container_registry_type: {{ default "" (.Values.global.dockerRegistry).type }}
+  dns_wildcard: {{ .Values.global.dnsWildCard }}
+  edp_name: {{ .Release.Namespace }}
+  edp_version: {{.Chart.Version}}
+  platform: {{ .Values.global.platform }}
+  {{- if .Values.global.dockerRegistry.awsRegion }}
+  aws_region: {{ .Values.global.dockerRegistry.awsRegion }}
+  {{- end }}
