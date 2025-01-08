@@ -14,6 +14,8 @@ global:
   # By default, this value is left empty, and widgets are disabled.
   # -- API Gateway URL configuration for Widget Functionality
   apiGatewayUrl: ""
+  # -- Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3"
+  availableClusters: ""
   # -- Can be gerrit, github, gitlab or bitbucket. Default: github
   gitProviders:
     - github
