@@ -366,6 +366,16 @@ edp-tekton:
         python3.8: false
       terraform: true
 
+    # -- This section allows to determine on which nodes to run tekton pipelines
+    podTemplate: []
+      # nodeSelector:
+      #   role: tekton
+      # tolerations:
+      #   - effect: NoSchedule
+      #     key: role
+      #     operator: Equal
+      #     value: tekton
+
   tekton-cache:
     # Deploy tekton-cache helm-chart.
     enabled: true
