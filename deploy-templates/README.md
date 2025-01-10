@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.10.3](https://img.shields.io/badge/Version-3.10.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.10.3](https://img.shields.io/badge/AppVersion-3.10.3-informational?style=flat-square)
+![Version: 3.10.4](https://img.shields.io/badge/Version-3.10.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.10.4](https://img.shields.io/badge/AppVersion-3.10.4-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
