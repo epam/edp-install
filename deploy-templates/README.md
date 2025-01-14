@@ -80,8 +80,10 @@ A Helm chart for KubeRocketCI Platform
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
 | extraQuickLinks | object | `{}` | Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | gerrit-operator.enabled | bool | `false` |  |
+| global.adminGroupName | string | `""` |  |
 | global.apiGatewayUrl | string | `""` | API Gateway URL configuration for Widget Functionality |
 | global.availableClusters | string | `""` | Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3" |
+| global.developerGroupName | string | `""` |  |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.dockerRegistry.awsRegion | string | `""` | Defines the geographic area where the (AWS) Elastic Container Registry repository is hosted (optional). E.g. "eu-central-1". Mandatory if 'global.dockerRegistry.type=ecr' for kaniko build-task. Ref: https://github.com/epam/edp-tekton/blob/release/0.10/charts/pipelines-library/templates/tasks/kaniko.yaml#L73 |
 | global.dockerRegistry.space | string | `""` | Defines project name. |
@@ -89,5 +91,6 @@ A Helm chart for KubeRocketCI Platform
 | global.dockerRegistry.url | string | `""` | Defines registry endpoint URL. |
 | global.gitProviders | list | `["github"]` | Can be gerrit, github, gitlab or bitbucket. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
+| global.viewerGroupName | string | `""` |  |
 | quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 
