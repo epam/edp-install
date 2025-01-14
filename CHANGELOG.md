@@ -10,25 +10,35 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
-### Features
-
-- Enable configuration to disable pipeline by codebases ([#346](https://github.com/epam/edp-install/issues/346))
-
 ### Routine
 
-- Align ArgoCD diff for edp-config Config Map ([#344](https://github.com/epam/edp-install/issues/344))
-- Update current development version ([#335](https://github.com/epam/edp-install/issues/335))
-- Align permissions for developer to use approve feature ([#332](https://github.com/epam/edp-install/issues/332))
-- Update OIDC configuration for edp-headlamp ([#325](https://github.com/epam/edp-install/issues/325))
-- Update Pull Request Template ([#107](https://github.com/epam/edp-install/issues/107))
-- Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
-- Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
+- Update current development version ([#376](https://github.com/epam/edp-install/issues/376))
 
 ### Documentation
 
+- Update RELEASES md file with 3-10-4 notes ([#380](https://github.com/epam/edp-install/issues/380))
 - Update redirect to new documentation site ([#352](https://github.com/epam/edp-install/issues/352))
+
+### Routine
+
+<a name="v3.10.4"></a>
+## [v3.10.4] - 2025-01-10
+### Features
+
+- Enable node selector for tekton pipelines ([#367](https://github.com/epam/edp-install/issues/367))
+
+### Routine
+
+- Disable CodeMie eso creation if path empty ([#369](https://github.com/epam/edp-install/issues/369))
+- Enable availableClusters parameter in edp-config configmap ([#365](https://github.com/epam/edp-install/issues/365))
+- Align ArgoCD diff for edp-config Config Map ([#344](https://github.com/epam/edp-install/issues/344))
+
+### Documentation
+
+- Make abstract quick links ([#362](https://github.com/epam/edp-install/issues/362))
+- Update releases md to 3.10.3 ([#360](https://github.com/epam/edp-install/issues/360))
 - Replace EDP With KubeRocketCI in RELEASES md ([#297](https://github.com/epam/edp-install/issues/297))
-- Add 3-10-1 and 3-10-2 releases to RELEASES md ([#339](https://github.com/epam/edp-install/issues/339))
+- Add 3.10.1 and 3.10.2 releases to RELEASES md ([#339](https://github.com/epam/edp-install/issues/339))
 - Update RELEASES md file ([#311](https://github.com/epam/edp-install/issues/311))
 
 
@@ -554,7 +564,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.3...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.4...HEAD
+[v3.10.4]: https://github.com/epam/edp-install/compare/v3.10.3...v3.10.4
 [v3.10.3]: https://github.com/epam/edp-install/compare/v3.10.2...v3.10.3
 [v3.10.2]: https://github.com/epam/edp-install/compare/v3.10.1...v3.10.2
 [v3.10.1]: https://github.com/epam/edp-install/compare/v3.10.0...v3.10.1

@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.10.4](#3.10.4)
 * [Version 3.10.3](#3.10.3)
 * [Version 3.10.2](#3.10.2)
 * [Version 3.10.1](#3.10.1)
@@ -61,6 +62,68 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.0](#2.6.0)
 </details>
 
+## Version 3.10.4 <a name="3.10.4"></a> (January 14, 2025)
+
+### Upgrades
+
+* Tekton Dashboard is updated to the [v0.52.0 LTS](https://github.com/tektoncd/dashboard/releases/tag/v0.52.0) version. ([#391](https://github.com/epam/edp-tekton/issues/391))
+
+### New Functionality
+
+* Tekton pipelines can now be executed on a concrete Kubernetes Node. This functionality is implemented using the [NodeSelector](https://github.com/epam/edp-install/blob/v3.10.4/deploy-templates/values.yaml#L369) attribute. This feature improves platform flexibility and allows to isolate CI/CD workloads on designated nodes. ([#367](https://github.com/epam/edp-install/issues/367))
+* The CI Voting feature has been extended to build pipelines. Previously available only for review pipelines, this feature now provides build pipeline status notifications after changes are merged. It enhances visibility and maintainability across the development workflow. ([#385](https://github.com/epam/edp-tekton/issues/385))
+* Users can now define parameters for build pipelines using the **Run with params** button in the codebase details page. ([#524](https://github.com/epam/edp-headlamp/issues/524))
+
+### Enhancements
+
+* User with developer access now have the ability to manage deployment flows targeting remote clusters. This functionality is implemented using an `available_clusters` parameter in the 'edp-config' ConfigMap. ([#365](https://github.com/epam/edp-install/issues/365))
+* The alert message for lost cluster connection has been redesigned. ([#540](https://github.com/epam/edp-headlamp/issues/540))
+* In KubeRocketCI portal, Grafana and Kibana links were renamed to "Monitoring" and "Logging" for a more generalized meaning. ([#534](https://github.com/epam/edp-headlamp/issues/534))
+* Codebase and the codebase branch name length are now restricted to 30 symbols. ([#528](https://github.com/epam/edp-headlamp/issues/528))
+* Git source URL has been updated for build pipelines. Now Git source URL is displayed in the `ssh://${gitUser}@${gitHost}:${sshPort}${codebaseGitUrlPath}` format. ([#532](https://github.com/epam/edp-headlamp/issues/532))
+* Nexus repository naming was changed. Now repositories have `krci` prefix instead of `edp`. ([#384](https://github.com/epam/edp-tekton/issues/384))
+
+### Fixed Issues
+
+* Disabled redundant secret creation for CodeMie integration when it is not needed. ([#369](https://github.com/epam/edp-install/issues/369))
+* Fixed rendering of the `edp-config` Config Map if the `apiGatewayUrl` parameter is left blank in the values.yaml file when deploying the platform. ([#344](https://github.com/epam/edp-install/issues/344))
+* Fixed an issue when Bitbucket pipeline (build and review) failed when branch name contained slashes (e.g. release/2.1). ([#395](https://github.com/epam/edp-tekton/issues/395))
+
+### Documentation
+
+* [Use Cases](https://docs.kuberocketci.io/docs/use-cases) preview has been added to the overview page. ([#109](https://github.com/KubeRocketCI/docs/pull/109))
+
+The [Getting Started](https://epam.github.io/edp-install/overview/) section is updated with the following:
+  * The [Supported Versions and Compatibility](https://docs.kuberocketci.io/docs/supported-versions) page has been updated. ([#71](https://github.com/KubeRocketCI/docs/pull/71))
+  * The [Deploy Application](https://docs.kuberocketci.io/docs/quick-start/deploy-application) page has been updated. ([#95](https://github.com/KubeRocketCI/docs/pull/95))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+  * The [Platform Cleanup Guide](https://docs.kuberocketci.io/docs/user-guide/platform-cleanup-guide) page has been added. ([#104](https://github.com/KubeRocketCI/docs/pull/104))
+  * The [KubeRocketCI: Tekton Overview](https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines) page has been added. ([#108](https://github.com/KubeRocketCI/docs/pull/108))
+  * The [Manage Branches](https://docs.kuberocketci.io/docs/user-guide/manage-branches) page has been updated. ([#85](https://github.com/KubeRocketCI/docs/pull/85))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+  * The [OIDC Authentication with Microsoft Entra: Overview](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/oidc-authentication-overview) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with Argo CD](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/argo-cd-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with Ansible AWX](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/awx-operator-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with AWS EKS & KubeRocketCI Portal](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/aws-eks-portal-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with Dependency-Track](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/dependency-track-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with DefectDojo](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/defectdojo-oidc-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with Grafana](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/grafana-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with Harbor](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/harbor-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with Nexus](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/nexus-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with OAuth2-proxy (Tekton Dashboard)](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/oauth2-proxy-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with OpenSearch](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/opensearch-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Guide: Microsoft Entra SSO integration with SonarQube](https://docs.kuberocketci.io/docs/operator-guide/microsoft-entra/sonar-oidc-authentication) page has been added.([#96](https://github.com/KubeRocketCI/docs/pull/96))
+  * The [Install Tekton](https://docs.kuberocketci.io/docs/operator-guide/install-tekton) page has been updated.([#122](https://github.com/KubeRocketCI/docs/pull/122))
+  * The [Sonatype Nexus Repository OSS Integration](https://docs.kuberocketci.io/docs/operator-guide/artifacts-management/nexus-sonatype) page has been updated. ([#118](https://github.com/KubeRocketCI/docs/pull/118))
+  * The [Package Registry](https://docs.kuberocketci.io/docs/operator-guide/artifacts-management/package-registry) page has been updated. ([#118](https://github.com/KubeRocketCI/docs/pull/118))
+  * The [IAM Roles for Kaniko Service Accounts](https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/aws/kaniko-irsa) page has been updated. ([#112](https://github.com/KubeRocketCI/docs/pull/112))
+  * The [Install KubeRocketCI](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci) page has been updated. ([#113](https://github.com/KubeRocketCI/docs/pull/113))
+  * The [Deploy RPM Packages](https://docs.kuberocketci.io/docs/operator-guide/cd/deploy-rpm) page has been added. ([#84](https://github.com/KubeRocketCI/docs/pull/84))
+  * The [Deployment Strategies Overview](https://docs.kuberocketci.io/docs/operator-guide/cd/auto-stable-trigger-type) page has been added. ([#93](https://github.com/KubeRocketCI/docs/pull/93))
+
+
 ## Version 3.10.3 <a name="3.10.3"></a> (December 12, 2024)
 
 ### Upgrades
@@ -115,14 +178,15 @@ The [Operator Guide](https://docs.kuberocketci.io/docs/next/operator-guide) sect
   * The [Sonatype Nexus Repository OSS Integration](https://docs.kuberocketci.io/docs/next/operator-guide/artifacts-management/nexus-sonatype) page has been updated. ([#107](https://github.com/KubeRocketCI/docs/pull/107))
 
 The [Use Cases](https://docs.kuberocketci.io/docs/next/use-cases) section is updated with the following:
-  The [Set Test Suite Parameters Using Environment Variables in CD Pipelines](https://docs.kuberocketci.io/docs/next/use-cases/cd-autotests-run-with-env-variables) page has been updated. ([#91](https://github.com/KubeRocketCI/docs/pull/91))
-  The [Deploy Application With Custom Build Tool/Framework](https://docs.kuberocketci.io/docs/next/use-cases/tekton-custom-pipelines) page has been updated. ([#83](https://github.com/KubeRocketCI/docs/pull/83))
+  * The [Set Test Suite Parameters Using Environment Variables in CD Pipelines](https://docs.kuberocketci.io/docs/next/use-cases/cd-autotests-run-with-env-variables) page has been updated. ([#91](https://github.com/KubeRocketCI/docs/pull/91))
+  * The [Deploy Application With Custom Build Tool/Framework](https://docs.kuberocketci.io/docs/next/use-cases/tekton-custom-pipelines) page has been updated. ([#83](https://github.com/KubeRocketCI/docs/pull/83))
 
 ## Version 3.10.2 <a name="3.10.2"></a> (November 5, 2024)
 
 ### New Functionality
 
-A new parameter called `issuerUrl` has been added to the KubeRocketCI portal, enabling integration with the arbitrary identity provider. ([#325](https://github.com/epam/edp-install/issues/325))
+* [Microsoft Azure Entra ID](https://docs.kuberocketci.io/docs/next/operator-guide/microsoft-entra/oidc-authentication-overview) support as an Identity Provider has been aligned. This feature will be useful for those who leverage Azure as a cloud provider. Configuring OIDC authentication with Microsoft Entra brings significant benefits, including improved security, simplified access management, and compliance with enterprise standards. ([#325](https://github.com/epam/edp-install/issues/325))
+* A new parameter called `issuerUrl` has been added to the KubeRocketCI portal, enabling integration with the arbitrary identity provider. ([#325](https://github.com/epam/edp-install/issues/325))
 
 ### Fixed Issues
 
@@ -133,7 +197,7 @@ A new parameter called `issuerUrl` has been added to the KubeRocketCI portal, en
 
 ### Fixed Issues
 
-Fixed an issue related to the missed `ApprovalTask` custom resource definition support. ([#318](https://github.com/epam/edp-install/pull/328))
+* Fixed an issue related to the missed `ApprovalTask` custom resource definition support. ([#318](https://github.com/epam/edp-install/pull/328))
 
 ## Version 3.10.0 <a name="3.10.0"></a> (October 18, 2024)
 
