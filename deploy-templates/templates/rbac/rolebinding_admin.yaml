@@ -9,4 +9,4 @@ roleRef:
 subjects:
   - apiGroup: rbac.authorization.k8s.io
     kind: Group
-    name: "{{ .Release.Namespace }}-oidc-admins"
+    name: {{ .Values.global.adminGroupName | default (printf "%s-oidc-admins" .Release.Namespace) | quote }}
