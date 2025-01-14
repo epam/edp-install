@@ -9,7 +9,7 @@ roleRef:
 subjects:
   - apiGroup: rbac.authorization.k8s.io
     kind: Group
-    name: "{{ .Release.Namespace }}-oidc-viewers"
+    name: {{ .Values.global.viewerGroupName | default (printf "%s-oidc-viewers" .Release.Namespace) | quote }}
   - apiGroup: rbac.authorization.k8s.io
     kind: Group
-    name: "{{ .Release.Namespace }}-oidc-developers"
+    name: {{ .Values.global.developerGroupName | default (printf "%s-oidc-developers" .Release.Namespace) | quote }}

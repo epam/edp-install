@@ -16,6 +16,12 @@ global:
   apiGatewayUrl: ""
   # -- Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3"
   availableClusters: ""
+  # Specify the admin OIDC group name. If empty, default {{ .Release.Namespace }}-oidc-admins.
+  adminGroupName: ""
+  # Specify the developer OIDC group name. If empty, default {{ .Release.Namespace }}-oidc-developers.
+  developerGroupName: ""
+  # Specify the viewers OIDC group name. If empty, default {{ .Release.Namespace }}-oidc-viewers.
+  viewerGroupName: ""
   # -- Can be gerrit, github, gitlab or bitbucket. Default: github
   gitProviders:
     - github
