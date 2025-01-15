@@ -55,10 +55,6 @@ edp-headlamp:
 
 # Configuration for Tekton, used for continuous integration and delivery within EDP.
 edp-tekton:
-  dashboard:
-    ingress:
-      # Disables the default ingress for the Tekton Dashboard, again allowing for alternative traffic routing methods.
-      enabled: false
   gitServers:
     gitlab:
       gitProvider: gitlab
