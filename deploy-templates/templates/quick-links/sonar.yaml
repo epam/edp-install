@@ -7,5 +7,5 @@ metadata:
 spec:
   icon: PHN2ZyBoZWlnaHQ9IjIzNzQiIHZpZXdCb3g9Ii4xIC0uMSA5NjAuMSA5MTEuNCIgd2lkdGg9IjI1MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTgzMi42IDkxMS4zaC01Mi42YzAtNDI0LjEtMzQ5LjktNzY5LjEtNzc5LjktNzY5LjF2LTUyLjZjNDU5IDAgODMyLjUgMzY4LjUgODMyLjUgODIxLjd6bTM2LjQtMjgyLjljLTYzLjItMjY2LTI3OC43LTQ4OC01NDktNTY1LjdsMTIuMS00Mi4yYzI4NS4zIDgyIDUxMi44IDMxNi41IDU3OS41IDU5Ny44em01OS4zLTI0OS43Yy02NS4xLTE0Mi0xNzYuMi0yNjUuOS0zMTIuNS0zNDguOGwxOC4zLTMwYzE0Mi4zIDg2LjYgMjU4IDIxNS44IDMyNi4xIDM2NC4yeiIgZmlsbD0iIzQ5OWNkMiIvPjwvc3ZnPg==
   type: system
-  url: {{ default "" (.Values.quickLinks).sonar }}
+  url: {{ default "" .Values.quickLinks.sonar }}
   visible: true

@@ -92,5 +92,7 @@ A Helm chart for KubeRocketCI Platform
 | global.gitProviders | list | `["github"]` | Can be gerrit, github, gitlab or bitbucket. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.viewerGroupName | string | `""` |  |
-| quickLinks | string | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
+| quickLinks | object | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ Example: "https://argocd.example.com" |
+| quickLinks.logging.provider | string | `""` | Define the provider name for correct URL generation. Available providers: "opensearch", "datadog". If the provider name is not specified, the base URL will be used. |
+| quickLinks.monitoring.provider | string | `""` | Define the provider name for correct URL generation. Available providers: "grafana", "datadog". If the provider name is not specified, the base URL will be used. |
 
