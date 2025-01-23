@@ -162,6 +162,9 @@ codebase-operator:
   # jira:
   #   integration: false
   #   name: "jira"
+  #   # -- Enable creation of QuickLink for Jira
+  #   quickLink:
+  #     enabled: true
   #   apiUrl: "https://jiraeu-api.example.com"
   #   rootUrl: "https://jiraeu.example.com"
   #   credentialName: "ci-jira"
@@ -267,7 +270,6 @@ gerrit-operator:
   #   storage:
   #     size: 1Gi
   #     class: gp2
-  # gerrit:
   #   # Provide external endpoint access. Default Ingress/Route host pattern: gerrit-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
   #   ingress:
   #     # -- Enable external endpoint access. Default Ingress/Route host pattern: gerrit-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
@@ -281,6 +283,33 @@ gerrit-operator:
   #     #  - secretName: chart-example-tls
   #     #    hosts:
   #     #      - gerrit-edp.example.com
+  #   # -- Additional environment variables
+  #   extraEnv: []
+  #     # - name: AUTH_TYPE
+  #     #   value: OAUTH
+  #     # - name: OAUTH_KEYCLOAK_CLIENT_ID
+  #     #   value: gerrit
+  #     # - name: OAUTH_KEYCLOAK_REALM
+  #     #   value: shared
+  #     # - name: OAUTH_KEYCLOAK_ROOT_URL
+  #     #   value: https://keycloak.example.com/auth
+  #     # - name: OAUTH_KEYCLOAK_CLIENT_SECRET
+  #     #   valueFrom:
+  #     #     secretKeyRef:
+  #     #       name: keycloak-client-gerrit-secret
+  #     #       key: clientSecret
+  #   sso:
+  #     # Create kind: KeycloakClient as a part of chart installation
+  #     enabled: true
+  #     # Enable creation of QuickLink for Keycloak
+  #     quickLink:
+  #       enabled: true
+  #     # Can be Realm or KeycloakRealm.
+  #     kind: KeycloakRealm
+  #     # Name of kind: Realm/KeycloakRealm CR.
+  #     name: main
+  #     # -- Keycloak URL.
+  #     keycloakUrl: https://keycloak.example.com/auth
 
 edp-headlamp:
   enabled: true
@@ -407,6 +436,9 @@ edp-tekton:
   #   my-github:
   #     gitProvider: github
   #     host: github.com
+  #     # -- Enable creation of QuickLink for GitHub
+  #     quickLink:
+  #       enabled: true
   #     webhook:
   #       skipWebhookSSLVerification: false
   #     eventListener:
@@ -438,6 +470,9 @@ edp-tekton:
   #   my-gitlab:
   #     gitProvider: gitlab
   #     host: gitlab.com
+  #     # -- Enable creation of QuickLink for GitLab
+  #     quickLink:
+  #       enabled: true
   #     webhook:
   #       skipWebhookSSLVerification: false
   #     eventListener:
@@ -469,6 +504,9 @@ edp-tekton:
   #   my-gerrit:
   #     gitProvider: gerrit
   #     host: gerrit.example.com
+  #     # -- Enable creation of QuickLink for Gerrit
+  #     quickLink:
+  #       enabled: true
   #     gitUser: ci-user
   #     httpsPort: 443
   #     nameSshKeySecret: gerrit-ciuser-sshkey
@@ -504,6 +542,9 @@ edp-tekton:
   #   my-bitbucket:
   #     gitProvider: bitbucket
   #     host: bitbucket.org
+  #     # -- Enable creation of QuickLink for Bitbucket
+  #     quickLink:
+  #       enabled: true
   #     webhook:
   #       skipWebhookSSLVerification: false
   #     eventListener:
