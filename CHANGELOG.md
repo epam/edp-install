@@ -11,10 +11,11 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.10.4"></a>
-## v3.10.4 - 2025-01-10
+<a name="v3.10.5"></a>
+## v3.10.5 - 2025-01-24
 ### Features
 
+- Enable flexible naming for default OIDC groups ([#378](https://github.com/epam/edp-install/issues/378))
 - Enable node selector for tekton pipelines ([#367](https://github.com/epam/edp-install/issues/367))
 - Add Support for BitBucket as GitProvider ([#306](https://github.com/epam/edp-install/issues/306))
 - Add the ability to enable tekton-pipelines monitoring ([#268](https://github.com/epam/edp-install/issues/268))
@@ -73,6 +74,10 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#390](https://github.com/epam/edp-install/issues/390))
+- Update values.yaml ([#384](https://github.com/epam/edp-install/issues/384))
+- Redesign Quick Links Installation ([#384](https://github.com/epam/edp-install/issues/384))
+- Remove Tekton Dashboard from edp-tekton ([#382](https://github.com/epam/edp-install/issues/382))
 - Update current development version ([#376](https://github.com/epam/edp-install/issues/376))
 - Disable CodeMie eso creation if path empty ([#369](https://github.com/epam/edp-install/issues/369))
 - Enable availableClusters parameter in edp-config configmap ([#365](https://github.com/epam/edp-install/issues/365))
@@ -359,4 +364,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.4...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.10.5...HEAD
