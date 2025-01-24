@@ -9,7 +9,7 @@ This guide aims to offer an in-depth look at the factors affecting AWS infrastru
 This section contains tables outlining the key components of our AWS infrastructure, including a brief description of each component's role, its purpose within our infrastructure, and an estimate of its monthly cost.
 
 !!! note
-    The costs mentioned below are estimates. For the most accurate and up-to-date pricing, please refer to the [AWS official documentation](productNameLowercase&aws-products-pricing.sort-order=asc&awsf.Free%20Tier%20Type=*all&awsf.tech-category=*all).
+    The costs mentioned below are estimates. For the most accurate and up-to-date pricing, please refer to the [AWS official documentation](https://aws.amazon.com/pricing/?aws-products-pricing.sort-by=item.additionalFields.productNameLowercase&aws-products-pricing.sort-order=asc&awsf.Free%20Tier%20Type=*all&awsf.tech-category=*all).
 
 The table below outlines key AWS infrastructure components for KubeRocketCI, detailing each component's role, purpose, and estimated monthly cost:
 
