@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.10.5](#3.10.5)
 * [Version 3.10.4](#3.10.4)
 * [Version 3.10.3](#3.10.3)
 * [Version 3.10.2](#3.10.2)
@@ -61,6 +62,33 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.10.5 <a name="3.10.5"></a> (January 24, 2025)
+
+### New Functionality
+
+* SonarQube integration has been improved. Now users can retrieve OIDC data from secrets instead of storing it directly in the configuration. ([#29](https://github.com/epam/edp-sonar-operator/pull/29))
+* Default OIDC group names are now configurable. If an identity provider uses different group names, they can be mapped in the platform using the `adminGroupName`, `developerGroupName`, and `viewerGroupName` parameters in the [values.yaml](https://github.com/epam/edp-install/blob/v3.10.5/deploy-templates/values.yaml#L20) file. ([#106](https://github.com/epam/edp-cd-pipeline-operator/issues/106))
+* A GitOps repository can now be onboarded in KubeRocketCI using an Import strategy. ([#566](https://github.com/epam/edp-headlamp/issues/566))
+* Now users can set default namespace in the `config.defaultNamespace` parameter. KubeRocketCI portal will retrieve this data to set it automatically. ([#564](https://github.com/epam/edp-headlamp/issues/564))
+* Pull request link has been added at the top right corner the pipeline run page. This link leads to a pull request in Version Control System. ([#562](https://github.com/epam/edp-headlamp/issues/562))
+
+### Enhancements
+
+* Quick link installation has become optional. Quick links are no longer created if the quick link for the tool is not specified. ([#168](https://github.com/epam/edp-codebase-operator/issues/168))
+* Resource filters can now search by Kubernetes labels. To search a resource by a label, type `label: <resource_name>` in the search field.  ([#550](https://github.com/epam/edp-headlamp/issues/550))
+* Large texts are now provided with tooltips that contain full text. This change will allow to handle large texts. ([#552](https://github.com/epam/edp-headlamp/issues/552))
+* Pipeline run results have been moved to a separate tab called **Results**. In this tab, users will be able to see the name of the new application image. ([#570](https://github.com/epam/edp-headlamp/issues/570))
+* Deployment Flows now have the **Description** field. This enhancement improves Deployment Flow management. ([#104](https://github.com/epam/edp-cd-pipeline-operator/issues/104))
+* GitOps repositories have been equipped with build and review pipelines. This change aligns code review process for GitOps repository. ([#415](https://github.com/epam/edp-tekton/issues/415))
+* The `APPLICATIONS_PAYLOAD` parameter has been added to the `deploy-app` step of the deploy pipeline. This parameter shows application image tags and custom values usage. ([#413](https://github.com/epam/edp-tekton/issues/413))
+* Tekton Dashboard migrated from edp-install to a separate [Helm chart](https://github.com/epam/edp-cluster-add-ons/tree/main/clusters/core/addons/tekton-dashboard). ([#406](https://github.com/epam/edp-tekton/issues/406))
+
+### Bug Fixes
+
+* Fixed an issue when users could proceed with creating a codebase using a clone strategy without specifying the repository credentials. ([#568](https://github.com/epam/edp-headlamp/issues/568))
+- Fixed an issue where the selected application version unexpectedly reset when deploying the application. ([#560](https://github.com/epam/edp-headlamp/issues/560))
+
 
 ## Version 3.10.4 <a name="3.10.4"></a> (January 14, 2025)
 
