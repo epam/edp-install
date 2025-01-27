@@ -6,58 +6,22 @@ This section provides details on edp-install release lifecycle.
 
 _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELEASES.md) page._
 
-
-<a name="unreleased"></a>
-## [Unreleased]
-
-### Features
-
-- Enable flexible naming for default OIDC groups ([#378](https://github.com/epam/edp-install/issues/378))
-- Enable node selector for tekton pipelines ([#367](https://github.com/epam/edp-install/issues/367))
-- Enable configuration to disable pipeline by codebses ([#346](https://github.com/epam/edp-install/issues/346))
-
-### Routine
-
-- Update values.yaml ([#384](https://github.com/epam/edp-install/issues/384))
-- Redesign Quick Links Installation ([#384](https://github.com/epam/edp-install/issues/384))
-- Remove Tekton Dashboard from edp-tekton ([#382](https://github.com/epam/edp-install/issues/382))
-- Disable CodeMie eso creation if path empty ([#369](https://github.com/epam/edp-install/issues/369))
-- Enable availableClusters parameter in edp-config configmap ([#365](https://github.com/epam/edp-install/issues/365))
-- Clarify apiGatewayUrl usage example ([#344](https://github.com/epam/edp-install/issues/344))
-- Update current development version ([#356](https://github.com/epam/edp-install/issues/356))
-- Align ArgoCD diff for edp-config Config Map ([#344](https://github.com/epam/edp-install/issues/344))
-- Update current development version ([#335](https://github.com/epam/edp-install/issues/335))
-- Align permissions for developer to use approve feature ([#332](https://github.com/epam/edp-install/issues/332))
-- Update OIDC configuration for edp-headlamp ([#325](https://github.com/epam/edp-install/issues/325))
-- Update Pull Request Template ([#107](https://github.com/epam/edp-install/issues/107))
-- Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
-- Update current development version ([#318](https://github.com/epam/edp-install/issues/318))
-
-### Documentation
-
-- Update redirect plugin to remove noindex tag ([#380](https://github.com/epam/edp-install/issues/380))
-- Update redirect url([#380](https://github.com/epam/edp-install/issues/380))
-- Update RELEASES md file with 3-10-4 notes ([#380](https://github.com/epam/edp-install/issues/380))
-- Make abstract quick links ([#362](https://github.com/epam/edp-install/issues/362))
-- Update releases md to 3-10-3 ([#360](https://github.com/epam/edp-install/issues/360))
-- Update redirect to new documentation site ([#352](https://github.com/epam/edp-install/issues/352))
-- Replace EDP With KubeRocketCI in RELEASES md ([#297](https://github.com/epam/edp-install/issues/297))
-- Add 3-10-1 and 3-10-2 releases to RELEASES md ([#339](https://github.com/epam/edp-install/issues/339))
-- Update RELEASES md file ([#311](https://github.com/epam/edp-install/issues/311))
-
-
 <a name="v3.10.5"></a>
 ## [v3.10.5] - 2025-01-24
 ### Features
 
 - Enable flexible naming for default OIDC groups ([#378](https://github.com/epam/edp-install/issues/378))
-
-### Routine
-
 - Update current development version ([#390](https://github.com/epam/edp-install/issues/390))
 - Update values.yaml ([#384](https://github.com/epam/edp-install/issues/384))
 - Redesign Quick Links Installation ([#384](https://github.com/epam/edp-install/issues/384))
 - Remove Tekton Dashboard from edp-tekton ([#382](https://github.com/epam/edp-install/issues/382))
+
+### Documentation
+
+- Publish release notes for 3.10.5 ([#397](https://github.com/epam/edp-install/issues/397))
+- Update redirect plugin to remove noindex tag ([#380](https://github.com/epam/edp-install/issues/380))
+- Update redirect url([#380](https://github.com/epam/edp-install/issues/380))
+- Update RELEASES md file with 3.10.4 notes ([#380](https://github.com/epam/edp-install/issues/380))
 
 
 <a name="v3.10.4"></a>
