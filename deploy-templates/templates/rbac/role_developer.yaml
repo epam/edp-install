@@ -33,3 +33,9 @@ rules:
       - edp.epam.com
     resources:
       - approvaltasks
+  - verbs:
+      - '*'
+    apiGroups:
+      - v2.edp.epam.com
+    resources:
+      - codebasebranches
