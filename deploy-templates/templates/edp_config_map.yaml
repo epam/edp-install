@@ -9,9 +9,9 @@ data:
   {{- if .Values.global.availableClusters }}
   available_clusters: {{ .Values.global.availableClusters }}
   {{- end }}
-  container_registry_host: {{ default "" (.Values.global.dockerRegistry).url }}
-  container_registry_space: {{ default "" (.Values.global.dockerRegistry).space }}
-  container_registry_type: {{ default "" (.Values.global.dockerRegistry).type }}
+  container_registry_host: {{ default "" (.Values.global.dockerRegistry).url | quote }}
+  container_registry_space: {{ default "" (.Values.global.dockerRegistry).space | quote }}
+  container_registry_type: {{ default "" (.Values.global.dockerRegistry).type | quote }}
   dns_wildcard: {{ .Values.global.dnsWildCard }}
   edp_name: {{ .Release.Namespace }}
   edp_version: {{.Chart.Version}}
