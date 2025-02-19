@@ -212,6 +212,9 @@ plugins:
         operator-guide/deploy-aws-eks.md: https://docs.kuberocketci.io/docs/operator-guide/deploy-aws-eks/
         operator-guide/deploy-okd.md: https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/okd/deploy-okd-4.9/
         operator-guide/deploy-okd-4.10.md: https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/okd/deploy-okd-4.10/
+        operator-guide/github-debug-webhooks.md: https://docs.kuberocketci.io/docs/user-guide/add-git-server/
+        operator-guide/logsight-integration.md: https://docs.kuberocketci.io/docs/next/operator-guide/monitoring-and-observability/kibana-ilm-rollover/#efk-stack-overview
+        operator-guide/install-kiosk.md: https://docs.kuberocketci.io/
         user-guide/marketplace.md: https://docs.kuberocketci.io/docs/user-guide/marketplace/
         user-guide/add-marketplace.md: https://docs.kuberocketci.io/docs/user-guide/add-marketplace/
         user-guide/components.md: https://docs.kuberocketci.io/docs/user-guide/components/
@@ -226,7 +229,7 @@ plugins:
         user-guide/manage-branches.md: https://docs.kuberocketci.io/docs/user-guide/manage-branches/
         user-guide/add-cd-pipeline.md: https://docs.kuberocketci.io/docs/user-guide/add-cd-pipeline/
         user-guide/manage-environments.md: https://docs.kuberocketci.io/docs/user-guide/manage-environments/
-        user-guide/add-quality-gate.md: https://docs.kuberocketci.io/
+        user-guide/add-quality-gate.md: https://docs.kuberocketci.io/docs/use-cases/autotest-as-quality-gate/
         user-guide/configuration-overview.md: https://docs.kuberocketci.io/docs/user-guide/configuration-overview/
         user-guide/quick-links.md: https://docs.kuberocketci.io/docs/user-guide/quick-links/
         user-guide/git-server-overview.md: https://docs.kuberocketci.io/docs/user-guide/git-server-overview/
@@ -234,6 +237,9 @@ plugins:
         user-guide/cluster.md: https://docs.kuberocketci.io/docs/user-guide/cluster/
         user-guide/gitops.md: https://docs.kuberocketci.io/docs/user-guide/gitops/
         user-guide/manage-container-registries.md: https://docs.kuberocketci.io/docs/user-guide/manage-container-registries/
+        user-guide/cicd-overview.md: https://docs.kuberocketci.io/docs/developer-guide/reference-cicd-pipeline/
+        user-guide/terraform-stages.md: https://docs.kuberocketci.io/docs/operator-guide/ci/ci-pipeline-terraform/
+        user-guide/opa-stages.md: https://docs.kuberocketci.io/docs/about-platform/
         developer-guide/index.md: https://docs.kuberocketci.io/docs/developer-guide/
         developer-guide/reference-architecture.md: https://docs.kuberocketci.io/docs/developer-guide/reference-architecture/
         developer-guide/kubernetes-deployment.md: https://docs.kuberocketci.io/docs/developer-guide/kubernetes-deployment/
@@ -254,6 +260,7 @@ plugins:
         use-cases/autotest-as-quality-gate.md: https://docs.kuberocketci.io/docs/use-cases/autotest-as-quality-gate/
         pricing.md: https://docs.kuberocketci.io/pricing/
         roadmap.md: https://docs.kuberocketci.io/
+        faq.md: https://docs.kuberocketci.io/docs/faq/artifacts/
 
   - search:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
