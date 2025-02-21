@@ -39,3 +39,16 @@ rules:
       - v2.edp.epam.com
     resources:
       - codebasebranches
+  - verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - v2.edp.epam.com
+    resources:
+      - stages
+      - cdpipelines
