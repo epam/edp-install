@@ -14,6 +14,12 @@ global:
   # By default, this value is left empty, and widgets are disabled.
   # -- API Gateway URL configuration for Widget Functionality
   apiGatewayUrl: ""
+  # The API endpoint for Kubernetes cluster. This should be the cluster's server endpoint
+  # in the format: https://<cluster-name>.<region>.eks.amazonaws.com.
+  # This parameter is used to generate the static kubeconfig for platform users.
+  # Example: "https://xxx.gr7.eu-central-1.eks.amazonaws.com"
+  # -- API Сluster Endpoint configuration for static kubeconfig generation
+  apiClusterEndpoint: ""
   # -- Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3"
   availableClusters: ""
   # Specify the admin OIDC group name. If empty, default {{ .Release.Namespace }}-oidc-admins.

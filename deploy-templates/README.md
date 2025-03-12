@@ -74,6 +74,7 @@ A Helm chart for KubeRocketCI Platform
 | extraQuickLinks | object | `{}` | Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | gerrit-operator.enabled | bool | `false` |  |
 | global.adminGroupName | string | `""` |  |
+| global.apiClusterEndpoint | string | `""` | API Сluster Endpoint configuration for static kubeconfig generation |
 | global.apiGatewayUrl | string | `""` | API Gateway URL configuration for Widget Functionality |
 | global.availableClusters | string | `""` | Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3" |
 | global.developerGroupName | string | `""` |  |
