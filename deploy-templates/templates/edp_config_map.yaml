@@ -6,7 +6,7 @@ metadata:
   name: edp-config
 data:
   api_gateway_url: {{ default "" .Values.global.apiGatewayUrl | quote }}
-  api_cluster_endpoint:: {{ default "" .Values.global.apiClusterEndpoint | quote }}
+  api_cluster_endpoint: {{ default "" .Values.global.apiClusterEndpoint | quote }}
   {{- if .Values.global.availableClusters }}
   available_clusters: {{ .Values.global.availableClusters }}
   {{- end }}
