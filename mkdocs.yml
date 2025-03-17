@@ -214,6 +214,16 @@ plugins:
         operator-guide/deploy-okd-4.10.md: https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/okd/deploy-okd-4.10
         operator-guide/github-debug-webhooks.md: https://docs.kuberocketci.io/docs/user-guide/add-git-server
         operator-guide/install-kiosk.md: https://docs.kuberocketci.io
+        operator-guide/migrate-ci-pipelines-from-jenkins-to-tekton.md: https://docs.kuberocketci.io/docs/operator-guide/upgrade/migrate-ci-pipelines-from-jenkins-to-tekton
+        operator-guide/ssl-automation-okd.md: https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/okd/ssl-automation-okd
+        operator-guide/gitlab-debug-webhooks.md: https://docs.kuberocketci.io/docs/user-guide/add-git-server
+        operator-guide/overview-sast.md: https://docs.kuberocketci.io/docs/operator-guide/devsecops/overview
+        operator-guide/troubleshooting/troubleshoot-git-server.md: https://docs.kuberocketci.io/docs/user-guide/add-git-server
+        operator-guide/edp-kiosk-usage.md: https://docs.kuberocketci.io
+        user-guide/cd-pipeline-details.md: https://docs.kuberocketci.io/docs/user-guide/add-cd-pipeline
+        user-guide/code-review-pipeline.md: https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines
+        user-guide/prepare-for-release.md: https://docs.kuberocketci.io/docs/developer-guide
+        user-guide/build-pipeline.md: https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines
         user-guide/marketplace.md: https://docs.kuberocketci.io/docs/user-guide/marketplace
         user-guide/add-marketplace.md: https://docs.kuberocketci.io/docs/user-guide/add-marketplace
         user-guide/components.md: https://docs.kuberocketci.io/docs/user-guide/components
@@ -259,7 +269,7 @@ plugins:
         use-cases/autotest-as-quality-gate.md: https://docs.kuberocketci.io/docs/use-cases/autotest-as-quality-gate
         pricing.md: https://docs.kuberocketci.io/pricing
         roadmap.md: https://docs.kuberocketci.io
-        faq.md: https://docs.kuberocketci.io/docs/faq/artifacts
+        faq.md: https://docs.kuberocketci.io/faq/general-questions
 
   - search:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
