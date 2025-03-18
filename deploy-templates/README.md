@@ -57,6 +57,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-tekton.pipelines.deployableResources.deploy | bool | `true` | This flag control the installation of the Deploy pipelines. |
 | edp-tekton.pipelines.deployableResources.tasks | bool | `true` | This flag control the installation of the tasks. |
 | edp-tekton.pipelines.image.registry | string | `"docker.io"` | Registry for tekton pipelines images. Default: docker.io |
+| edp-tekton.pipelines.imagePullSecrets | list | `[]` | List of image pull secrets used by the Tekton ServiceAccount for pulling images from private registries. Example: imagePullSecrets:   - name: regcred |
 | edp-tekton.pipelines.podTemplate | list | `[]` | This section allows to determine on which nodes to run tekton pipelines |
 | edp-tekton.tekton-cache.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for KubeRocketCI platform. Deploy SecretStore. Default: false |
