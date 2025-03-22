@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.11.0-SNAPSHOT](https://img.shields.io/badge/Version-3.11.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.11.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.11.0--SNAPSHOT-informational?style=flat-square)
+![Version: 3.12.0-SNAPSHOT](https://img.shields.io/badge/Version-3.12.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.12.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.12.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
@@ -21,10 +21,10 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.24.0 |
-| @epamedp | codebase-operator | 2.26.0 |
-| @epamedp | edp-headlamp | 0.20.0 |
-| @epamedp | edp-tekton | 0.16.0 |
+| @epamedp | cd-pipeline-operator | 2.25.0 |
+| @epamedp | codebase-operator | 2.27.0 |
+| @epamedp | edp-headlamp | 0.21.0 |
+| @epamedp | edp-tekton | 0.17.0 |
 | @epamedp | gerrit-operator | 2.23.0 |
 
 ## Values
