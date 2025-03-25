@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.11.0](#3.11.0)
 * [Version 3.10.5](#3.10.5)
 * [Version 3.10.4](#3.10.4)
 * [Version 3.10.3](#3.10.3)
@@ -11,11 +12,11 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 3.10.1](#3.10.1)
 * [Version 3.10.0](#3.10.0)
 * [Version 3.9.0](#3.9.0)
-* [Version 3.8.0](#3.8.0)
 
 <details>
   <summary>Earlier Versions</summary>
 
+* [Version 3.8.0](#3.8.0)
 * [Version 3.7.5](#3.7.5)
 * [Version 3.7.4](#3.7.4)
 * [Version 3.7.3](#3.7.3)
@@ -62,6 +63,82 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.11.0 <a name="3.11.0"></a> (March 22, 2025)
+
+### What's new
+
+To start from, we introduce the 'protected' label feature to enhance the manageability and integrity of our deployment workflows. When applied to Codebases, Deployment Flows or Environments, this label disables the ability to edit or delete them. This feature is intended to safeguard critical deployment workflows from accidental or unauthorized modifications. For example, to apply the label, add the **app.edp.epam.com/edit-protection: delete-update** label to the resource to deny the update and delete access.
+
+The differential approve feature has been added to the deploy pipelines. This feature allows to see Argo CD difference in application configuration before approving/rejecting them. To enable this feature, select the `diff-approve` deploy pipeline when creating or editing the Environment. This enhancement facilitates proper update validation and improves stability in application envrionments.
+
+Now users can integrate external clusters to the platform using IRSA. This change will come in handy for those who use AWS EKS cluster as additional workloads.
+
+Additionally, now users can delete Git Servers using KubeRocketCI portal. This change facilitates seamless Git Server management and improves user experience. To delete a Git Server from the portal, navigate to **Configuration** -> **Version Control System** and click the bin icon.
+
+This release also offers new Java 21 language version support. It includes updated review and build pipelines to simplify the integration of applications using Java 21.
+
+As usual, the KubeRocketCI portal has undergone several visual improvements. The chat assistant button has been moved to the top-right corner of the screen. The Tekton tab has been relocated from the Configuration section to the Pipelines section. Users can now customize the Components list view by showing or hiding selected columns and adjusting their width. Additionally, a new kubeconfig tab has been added to the Account settings window, allowing users to see the time remaining until session expiration and generate their kubeconfig file for using kubectl on their local machine.
+
+### Upgrades
+
+* Go language is updated to the [1.24](https://tip.golang.org/doc/go1.24) version. ([#444](https://github.com/epam/edp-tekton/issues/444))
+
+### New Functionality
+
+* Deploy pipelines now include a differential approve feature, allowing users to see Argo CD differences in application configuration before approval. Enable it by selecting the diff-approve deploy pipeline in the Environment settings. ([#424](https://github.com/epam/edp-tekton/issues/424))
+* The protected label has been added to the platform. When configured, it denies users to modify or delete a resource within the portal. ([#606](https://github.com/epam/edp-headlamp/issues/606))
+* The `Developer` role now allows to create, modify, and delete Deployment Flow and Environment resources. Additionally, the `Developers` group is also able to manage `codebasebranch` custom resources. ([#409](https://github.com/epam/edp-install/issues/409))([#400](https://github.com/epam/edp-install/issues/400))
+* KubeRocketCI now supports specifying `imagePullSecrets` for the Tekton service account. This is essential for pulling container images from private registries in Tekton pipelines. ([#427](https://github.com/epam/edp-install/issues/427))
+* External clusters can now be integrated using IRSA. ([#640](https://github.com/epam/edp-headlamp/issues/640))
+* Now users can create a private codebase when using the **Create from template** and **Clone project** creation strategies. To create a private codebase, select the **Private** checkbox. ([#676](https://github.com/epam/edp-headlamp/issues/676))
+* Java 21 language version support has been added into the platform. ([#584](https://github.com/epam/edp-headlamp/issues/584))
+* The **Delete Git Server** button has been added to the Version Control System tab of the Configuration section. Now users can delete Git Server using UI instead of running a `kubectl delete` command. ([#654](https://github.com/epam/edp-headlamp/issues/654))
+* Deployment Flows can now be filtered by application names they include. ([#648](https://github.com/epam/edp-headlamp/issues/648))
+
+### Enhancements
+
+* External cluster connection status is now displayed in the Configuration section. ([#686](https://github.com/epam/edp-headlamp/issues/686))
+* A new tab called **kubeconfig** has been added to the **Account settings** window. It allows to view user's `kubeconfig` file and generate a local `kubeconfig` file to manage Kubernetes resources via `kubectl` commands. Additionally, this tab also displays the time remaining to session expiration. ([#667](https://github.com/epam/edp-headlamp/issues/667))
+* The **About** tab of the **Platform settings** button now displays the platform version. ([#667](https://github.com/epam/edp-headlamp/issues/667))
+* The edp-config ConfigMap resource can be found by searching both **edp-config** and **krci-config**. ([#669](https://github.com/epam/edp-headlamp/issues/669))
+* The **Results** tab of the PipelineRun details page now supports component hyperlinks. ([#667](https://github.com/epam/edp-headlamp/issues/667))
+* Now users can edit Tekton Pipelines and Tasks resources directly in KubeRocketCI portal, in the Pipelines section. ([#665](https://github.com/epam/edp-headlamp/issues/665))
+* Tooltips with full text are displayed in fields with large texts. Hover the mouse cursor over the text to see it in full. ([#638](https://github.com/epam/edp-headlamp/issues/638))
+* Users can now select which columns to display and set column width. ([#613](https://github.com/epam/edp-headlamp/issues/613))
+* A copy button has been added next to the codebase name, codebase branch, and VCS tag in the codebase details page. This enhancement allows to easily copy the codebase information in one click. ([#598](https://github.com/epam/edp-headlamp/issues/598))
+* The term **edp** versioning has been updated to **semver** to align with community-recognized terminology. ([#650](https://github.com/epam/edp-headlamp/issues/650))
+* The Tekton tab has been excluded from the Configuration section. Now Tekton Pipelines and Tasks are shown in the Pipelines section of the KubeRocketCI portal. ([#382](https://github.com/epam/edp-install/issues/382))
+* The **Monitoring** tab is now disabled in the Environment details page if Grafana is not configured for the platform. ([#652](https://github.com/epam/edp-headlamp/issues/652))
+* Review and build pipelines are now displayed for the GitOps repositories in the codebase details page. ([#619](https://github.com/epam/edp-headlamp/issues/619))
+* The **Chat assistant** button has been moved to the top-right corner of the screen. ([#646](https://github.com/epam/edp-headlamp/issues/646))
+* The **Ingress** button has been added to the Environment preview in the Deployment Flow details page. It allows to quickly open the application endpoint. ([#592](https://github.com/epam/edp-headlamp/issues/592))
+* Users can now choose which columns to display and adjust their widths. ([#613](https://github.com/epam/edp-headlamp/issues/613))
+* The minimum number of items per page has been increased from 5 to 15 in the Components and Deployment Flows lists, and from 5 to 10 on the Environment details page. ([#588](https://github.com/epam/edp-headlamp/issues/588))
+* Now the **Build with parameters** option retrieves the pipeline from a corresponding TriggerTemplate resource to initiate a new pipeline run. If no TriggerTemplate is matched, the system defaults to the existing behavior for Tekton PipelineRun creation. ([#678](https://github.com/epam/edp-headlamp/issues/678))
+* The Clean and Deploy pipeline links with corresponding pipeline graphs have been added to the Environment overview page. This change will help users identify which pipelines are used in the Environment. ([#594](https://github.com/epam/edp-headlamp/issues/594))
+* The Deployment Flow description can now be updated using the **Edit** button. ([#590](https://github.com/epam/edp-headlamp/issues/590))
+* When the session token expires, users are redirected to the login page instead of being shown a message indicating they have insufficient permissions to view resources. ([#625](https://github.com/epam/edp-headlamp/issues/625))
+* The Login page has been redesigned when using SSO.
+
+### Fixed Issues
+
+* Fixed an issue when Kaniko refused to build and push the images to the Docker Registry using the specified custom certificates. ([#427](https://github.com/epam/edp-tekton/issues/427))
+* Fixed an issue when users could create a Deployment Flow with empty application list. ([#617](https://github.com/epam/edp-headlamp/issues/617))
+* Fixed an issue when user could get the page crash image when navigating to component details page. ([#623](https://github.com/epam/edp-headlamp/issues/623))
+* Fixed an issue when user was redirected to the **Add component info** stage in the codebase creation window if the branch field was empty. ([#680](https://github.com/epam/edp-headlamp/issues/680))
+* Fixed an issue when the **Use minimal editor** button didn't work with the build pipeline manifest when the **Build with parameters** option was used to build a codebase. ([#634](https://github.com/epam/edp-headlamp/issues/634))
+* Fixed an issue that caused infinite pipeline run list loading on the codebase details page. ([#627](https://github.com/epam/edp-headlamp/issues/627))
+* Fixed a UI crash when changing application pod on the application terminal/logs window on the environment details page. ([#629](https://github.com/epam/edp-headlamp/issues/629))
+* Fixed an issue when resource quota widget showed excessive amount of error messages in browser console. ([#615](https://github.com/epam/edp-headlamp/issues/615))
+* Fixed an issue when the **Account settings** windows unexpectedly crashed on the very first login attempt. ([#636](https://github.com/epam/edp-headlamp/issues/636))
+* Fixed an issue when the `APPLICATIONS_PAYLOAD` parameter contained corrupted data when the **Values Override** option was enabled. ([#611](https://github.com/epam/edp-headlamp/issues/611))
+* Fixed an issue when the `apiClusterEndpoint` paramter in `edp-config` ConfigMap caused Argo CD diff. ([#421](https://github.com/epam/edp-install/pull/421))([#344](https://github.com/epam/edp-install/issues/344))
+* Fixed an issue when KubeRocketCI Installation failed if the `env` parameter was empty when the `config.oidc.enabled` flag was set to `true`. ([#631](https://github.com/epam/edp-headlamp/issues/631))
+* Fixed a bunch of crashes when KubeRocketCI portal couldn't get data from Kubernetes. ([#682](https://github.com/epam/edp-headlamp/issues/682))
+
+* Fixed an incorrect PipelineRun count in the Overview widget. ([#581](https://github.com/epam/edp-headlamp/issues/581))
+
 
 ## Version 3.10.5 <a name="3.10.5"></a> (January 24, 2025)
 
