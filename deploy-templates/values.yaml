@@ -159,6 +159,10 @@ codebase-operator:
   # image:
   #   repository: epamedp/codebase-operator
   #   tag:
+  # -- Optional array of imagePullSecrets containing private registry credentials
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+  # imagePullSecrets: []
+  # - name: regcred
   # envs:
   #   - name: RECONCILATION_PERIOD
   #     value: "360"  # The value should be typed in minutes
@@ -180,6 +184,10 @@ cd-pipeline-operator:
   # image:
   #   repository: epamedp/cd-pipeline-operator
   #   tag:
+  # -- Optional array of imagePullSecrets containing private registry credentials
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+  # imagePullSecrets: []
+  # - name: regcred
   # -- Defines the type of the tenant engine that can be "none", "kiosk" or "capsule";
   # for Stages with external cluster tenancyEngine will be ignored. Default: none
   tenancyEngine: "none"
@@ -267,6 +275,10 @@ gerrit-operator:
   # image:
   #   repository: epamedp/gerrit-operator
   #   tag:
+  # -- Optional array of imagePullSecrets containing private registry credentials
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+  # imagePullSecrets: []
+  # - name: regcred
   # gerrit:
   #   deploy: true
   #   name: "gerrit"
@@ -357,6 +369,10 @@ edp-headlamp:
   # image:
   #   repository: epamedp/edp-headlamp
   #   tag:
+  # -- Optional array of imagePullSecrets containing private registry credentials
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+  # imagePullSecrets: []
+  # - name: regcred
 
 edp-tekton:
   enabled: true
@@ -428,6 +444,24 @@ edp-tekton:
     enabled: true
     # Tekton cache endpoint for pipeline-library helm chart. See charts/pipelines-library/templates/resources/cm-tekton-cache.yaml
     # url: http://tekton-cache:8080
+    # -- Optional array of imagePullSecrets containing private registry credentials
+    ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+    # imagePullSecrets: []
+    # - name: regcred
+
+  tekton:
+    pruner:
+      create: true
+      # -- List of ImagePullSecrets to be used by the pruner CronJob
+      # imagePullSecrets: []
+
+  interceptor:
+    # -- Deploy KubeRocketCI interceptor as a part of pipeline library when true. Default: true
+    enabled: true
+    # -- Optional array of imagePullSecrets containing private registry credentials
+    ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
+    # imagePullSecrets: []
+    # - name: regcred
 
   # -- Enable integration of tekton-pipelines metrics with Prometheus and Grafana monitoring stack
   # -- More details:
