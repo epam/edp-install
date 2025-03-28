@@ -270,6 +270,21 @@ plugins:
         pricing.md: https://docs.kuberocketci.io/pricing
         roadmap.md: https://docs.kuberocketci.io
         faq.md: https://docs.kuberocketci.io/faq/general-questions
+        operator-guide/delete-jenkins-job-provision.md: https://docs.kuberocketci.io
+        user-guide/dockerfile-stages.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
+        getting-started.md: https://docs.kuberocketci.io/docs/quick-start/quick-start-overview
+        operator-guide/overview-manage-jenkins-pipelines.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
+        operator-guide/perf-integration.md: https://docs.kuberocketci.io/docs/operator-guide
+        operator-guide/upgrade-edp-2.11.md: https://docs.kuberocketci.io/docs/operator-guide/upgrade/upgrade-edp-3.10
+        operator-guide/gitlab-integration.md: https://docs.kuberocketci.io/docs/user-guide/add-git-server
+        user-guide/ecr-to-docker-stages.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
+        user-guide/pipeline-framework.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
+        user-guide/add-custom-global-pipeline-lib.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
+        user-guide/customize-ci-pipeline.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
+        user-guide/customize-cd-pipeline.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
+        operator-guide/add-security-scanner.md: https://docs.kuberocketci.io/docs/operator-guide/add-security-scanner
+        user-guide/helm-release-deletion.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
+        user-guide/helm-stages.md: https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-overview
 
   - search:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
