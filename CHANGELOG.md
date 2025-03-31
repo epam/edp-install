@@ -10,6 +10,26 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Routine
+
+- Rename ConfigMap from 'edp-config' to 'krci-config'
+- Add ImagePullSecrets field for dependency charts ([#438](https://github.com/epam/edp-install/issues/438))
+- Update current development version ([#430](https://github.com/epam/edp-install/issues/430))
+
+### Documentation
+
+- Describe release 3-11-0 in RELEASES md ([#435](https://github.com/epam/edp-install/issues/435))
+- Add redirects for old pages ([#414](https://github.com/epam/edp-install/issues/414))
+
+
+<a name="v3.11.1"></a>
+## [v3.11.1] - 2025-03-31
+### Routine
+
+- Update current development version ([#442](https://github.com/epam/edp-install/issues/442))
+- Rename ConfigMap from 'edp-config' to 'krci-config'
+- Add ImagePullSecrets field for dependency charts ([#438](https://github.com/epam/edp-install/issues/438))
+
 
 <a name="v3.11.0"></a>
 ## [v3.11.0] - 2025-03-22
@@ -619,7 +639,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.11.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.11.1...HEAD
+[v3.11.1]: https://github.com/epam/edp-install/compare/v3.11.0...v3.11.1
 [v3.11.0]: https://github.com/epam/edp-install/compare/v3.10.5...v3.11.0
 [v3.10.5]: https://github.com/epam/edp-install/compare/v3.10.4...v3.10.5
 [v3.10.4]: https://github.com/epam/edp-install/compare/v3.10.3...v3.10.4
