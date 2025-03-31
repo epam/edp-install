@@ -11,8 +11,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.11.0"></a>
-## v3.11.0 - 2025-03-22
+<a name="v3.11.1"></a>
+## v3.11.1 - 2025-03-31
 ### Features
 
 - Enable flexible naming for default OIDC groups ([#378](https://github.com/epam/edp-install/issues/378))
@@ -76,6 +76,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#442](https://github.com/epam/edp-install/issues/442))
+- Rename ConfigMap from 'edp-config' to 'krci-config'
+- Add ImagePullSecrets field for dependency charts ([#438](https://github.com/epam/edp-install/issues/438))
 - Update current development version ([#430](https://github.com/epam/edp-install/issues/430))
 - Add imagePullSecrets field for Tekton ServiceAccount ([#427](https://github.com/epam/edp-install/issues/427))
 - Make Codemie QuickLink deployment optional ([#424](https://github.com/epam/edp-install/issues/424))
@@ -385,4 +388,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.11.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.11.1...HEAD
