@@ -23,27 +23,27 @@ sources:
 dependencies:
 - name: codebase-operator
   repository: "@epamedp"
-  version: "2.27.0"
+  version: "2.27.1"
   condition: codebase-operator.enabled
 
 - name: edp-headlamp
   repository: "@epamedp"
-  version: "0.21.0"
+  version: "0.21.2"
   condition: edp-headlamp.enabled
 
 - name: edp-tekton
   repository: "@epamedp"
-  version: "0.17.0"
+  version: "0.17.1"
   condition: edp-tekton.enabled
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.25.0"
+  version: "2.25.1"
   condition: cd-pipeline-operator.enabled
 
 - name: gerrit-operator
   repository: "@epamedp"
-  version: "2.23.0"
+  version: "2.23.1"
   condition: gerrit-operator.enabled
 
 annotations:
