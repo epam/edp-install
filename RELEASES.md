@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.11.1](#3.11.1)
 * [Version 3.11.0](#3.11.0)
 * [Version 3.10.5](#3.10.5)
 * [Version 3.10.4](#3.10.4)
@@ -64,6 +65,13 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.0](#2.6.0)
 </details>
 
+## Version 3.11.1 <a name="3.11.1"></a> (March 31, 2025)
+
+### Enhancements
+
+* The `edp-config` ConfigMap has been renamed to `krci-config`. ([#417](https://github.com/epam/edp-install/pull/417))
+* Now the `ImagePullSecrets` can be defined in the values.yaml file of the Helm chart. ([#438](https://github.com/epam/edp-install/issues/438))
+
 ## Version 3.11.0 <a name="3.11.0"></a> (March 22, 2025)
 
 ### What's new
@@ -101,7 +109,7 @@ As usual, the KubeRocketCI portal has undergone several visual improvements. The
 * External cluster connection status is now displayed in the Configuration section. ([#686](https://github.com/epam/edp-headlamp/issues/686))
 * A new tab called **kubeconfig** has been added to the **Account settings** window. It allows to view user's `kubeconfig` file and generate a local `kubeconfig` file to manage Kubernetes resources via `kubectl` commands. Additionally, this tab also displays the time remaining to session expiration. ([#667](https://github.com/epam/edp-headlamp/issues/667))
 * The **About** tab of the **Platform settings** button now displays the platform version. ([#667](https://github.com/epam/edp-headlamp/issues/667))
-* The edp-config ConfigMap resource can be found by searching both **edp-config** and **krci-config**. ([#669](https://github.com/epam/edp-headlamp/issues/669))
+* The `edp-config` ConfigMap resource can be found by searching both `edp-config` and `krci-config`. ([#669](https://github.com/epam/edp-headlamp/issues/669))
 * The **Results** tab of the PipelineRun details page now supports component hyperlinks. ([#667](https://github.com/epam/edp-headlamp/issues/667))
 * Now users can edit Tekton Pipelines and Tasks resources directly in KubeRocketCI portal, in the Pipelines section. ([#665](https://github.com/epam/edp-headlamp/issues/665))
 * Tooltips with full text are displayed in fields with large texts. Hover the mouse cursor over the text to see it in full. ([#638](https://github.com/epam/edp-headlamp/issues/638))
@@ -136,8 +144,58 @@ As usual, the KubeRocketCI portal has undergone several visual improvements. The
 * Fixed an issue when the `apiClusterEndpoint` paramter in `edp-config` ConfigMap caused Argo CD diff. ([#421](https://github.com/epam/edp-install/pull/421))([#344](https://github.com/epam/edp-install/issues/344))
 * Fixed an issue when KubeRocketCI Installation failed if the `env` parameter was empty when the `config.oidc.enabled` flag was set to `true`. ([#631](https://github.com/epam/edp-headlamp/issues/631))
 * Fixed a bunch of crashes when KubeRocketCI portal couldn't get data from Kubernetes. ([#682](https://github.com/epam/edp-headlamp/issues/682))
-
 * Fixed an incorrect PipelineRun count in the Overview widget. ([#581](https://github.com/epam/edp-headlamp/issues/581))
+
+### Documentation
+
+* The documentation site now supports the image zoom feature. ([#210](https://github.com/epam/edp-install/issues/210))
+* Documentation pages has been equipped with metadata to improve SEO performance. ([#405](https://github.com/epam/edp-install/issues/405)) ([#412](https://github.com/epam/edp-install/issues/412))
+* The FAQ section is no longer subject to documentation versioning. ([#173](https://github.com/epam/edp-install/issues/173))
+* All pages from old site now redirect links to the new site. ([#414](https://github.com/epam/edp-install/issues/414))
+* The site tab icon has been updated. ([#188](https://github.com/epam/edp-install/issues/188))
+* The sample namespace has been updated from **edp** to **krci** throughout site. ([#415](https://github.com/epam/edp-install/issues/415))
+* The **edp** versioning has been renamed to **semver** throughout site. ([#418](https://github.com/epam/edp-install/issues/418))
+* A new section called [How Tos](https://docs.kuberocketci.io/faq/how-to) has been added to the documentation. It serves as a hub of quick answers to the frequently asked question in a form of "question-answer". ([#402](https://github.com/epam/edp-install/issues/402))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+  * The [Artifact Versioning in KubeRocketCI](https://docs.kuberocketci.io/docs/next/user-guide/artifact-versioning) page has been added. ([#412](https://github.com/epam/edp-install/issues/412))
+  * The [Application and Pipeline Statuses](https://docs.kuberocketci.io/docs/user-guide/application-and-pipeline-statuses) page has been added. ([#195](https://github.com/KubeRocketCI/docs/pull/195))
+  * The [KubeRocketCI Widgets](https://docs.kuberocketci.io/docs/user-guide/widgets) page has been added. ([#166](https://github.com/KubeRocketCI/docs/pull/166))
+  * The [Components Overview](https://docs.kuberocketci.io/docs/user-guide/components/) page has been added. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Manage GitOps](https://docs.kuberocketci.io/docs/user-guide/gitops/) page has been added. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Overview](https://docs.kuberocketci.io/docs/user-guide/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Add Application](https://docs.kuberocketci.io/docs/user-guide/add-application/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Manage Applications](https://docs.kuberocketci.io/docs/user-guide/application/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Add Autotest](https://docs.kuberocketci.io/docs/user-guide/add-autotest/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Manage Autotests](https://docs.kuberocketci.io/docs/user-guide/autotest/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Add Library](https://docs.kuberocketci.io/docs/user-guide/add-library/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Manage Libraries](https://docs.kuberocketci.io/docs/user-guide/library/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Add Infrastructure](https://docs.kuberocketci.io/docs/user-guide/add-infrastructure/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Manage Infrastructures](https://docs.kuberocketci.io/docs/user-guide/infrastructure/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Manage Branches](https://docs.kuberocketci.io/docs/user-guide/manage-branches/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Add Environment](https://docs.kuberocketci.io/docs/user-guide/add-cd-pipeline/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Manage Environments](https://docs.kuberocketci.io/docs/user-guide/manage-environments/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Manage Quick Links](https://docs.kuberocketci.io/docs/user-guide/quick-links) page has been updated. ([#158](https://github.com/KubeRocketCI/docs/pull/158))
+  * The [Manage Git Servers](https://docs.kuberocketci.io/docs/user-guide/git-server-overview/) page has been updated. ([#429](https://github.com/epam/edp-install/issues/429))
+  * The [Manage Container Registries](https://docs.kuberocketci.io/docs/user-guide/manage-container-registries/) page has been updated. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [KubeRocketCI: Tekton Overview](https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines) page has been updated. ([#145](https://github.com/epam/edp-install/issues/145))
+
+The [Developer Guide](https://docs.kuberocketci.io/docs/developer-guide) section is updated with the following:
+  * The [KubeRocketCI Developer Guide: Architecture, Components, and Contribution Workflow](https://docs.kuberocketci.io/docs/next/developer-guide) page has been updated. ([#144](https://github.com/KubeRocketCI/docs/pull/144))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+  * The [KubeRocketCI Operator Guide: Installation, Configuration, and Administration](https://docs.kuberocketci.io/docs/operator-guide) page has been updated. ([#399](https://github.com/epam/edp-install/issues/399))
+  * The [Scaling with Karpenter and KEDA](https://docs.kuberocketci.io/docs/next/operator-guide/kubernetes-cluster-scaling/) page has been added. ([#146](https://github.com/KubeRocketCI/docs/pull/146))
+  * The [Deploy Application In Remote Cluster via IRSA](https://docs.kuberocketci.io/docs/next/operator-guide/cd/deploy-application-in-remote-cluster-via-irsa) page has been added. ([#176](https://github.com/KubeRocketCI/docs/pull/176))
+  * The [KrakenD Integration](https://docs.kuberocketci.io/docs/operator-guide/extensions/krakend) page has been updated. ([#169](https://github.com/KubeRocketCI/docs/pull/169))
+  * The [Authentication and Authorization: Overview](https://docs.kuberocketci.io/docs/operator-guide/auth/platform-auth-model) page has been updated. ([#172](https://github.com/KubeRocketCI/docs/pull/172))
+  * The [Integrate DefectDojo](https://docs.kuberocketci.io/docs/next/operator-guide/devsecops/defectdojo) page has been updated. ([#154](https://github.com/KubeRocketCI/docs/pull/154))
+  * The [Sonatype Nexus Repository OSS Integration](https://docs.kuberocketci.io/docs/operator-guide/artifacts-management/nexus-sonatype) page has been updated. ([#143](https://github.com/KubeRocketCI/docs/pull/143))
+
+The [Use Cases](https://docs.kuberocketci.io/docs/use-cases) section is updated with the following:
+  * The [Deploying Feature Branches With KubeRocketCI: A Comprehensive Guide for Efficient Application Testing and Deployment](https://docs.kuberocketci.io/docs/operator-guide/artifacts-management/nexus-sonatype) page has been added. ([#423](https://github.com/epam/edp-install/issues/423))
+  * The [Scaffold and Deploy FastAPI Application](https://docs.kuberocketci.io/docs/use-cases/application-scaffolding) page has been updated. ([#143](https://github.com/KubeRocketCI/docs/pull/164))
+
 
 
 ## Version 3.10.5 <a name="3.10.5"></a> (January 24, 2025)
