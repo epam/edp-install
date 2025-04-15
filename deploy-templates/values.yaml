@@ -253,6 +253,8 @@ cd-pipeline-operator:
     #       externalName: false
     #       loadBalancer: false
     #       nodePort: false
+  serviceAccount:
+    annotations: {}
 
   # -- should the operator manage(create/delete) namespaces for stages
   # Refer to the guide for managing namespace (https://docs.kuberocketci.io/docs/operator-guide/auth/namespace-management)
