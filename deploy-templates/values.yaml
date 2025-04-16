@@ -404,6 +404,7 @@ edp-tekton:
         dotnet3.1: false
         dotnet6.0: false
       docker: true
+      gitops: true
       groovy: true
       go:
         beego: true
@@ -416,6 +417,7 @@ edp-tekton:
         java8: false
         java11: true
         java17: true
+        java21: true
       js:
         angular: true
         antora: true
@@ -429,6 +431,7 @@ edp-tekton:
         flask: true
         fastapi: true
         python3.8: false
+      security: true
       terraform: true
 
     # -- This section allows to determine on which nodes to run tekton pipelines
