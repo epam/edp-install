@@ -392,9 +392,18 @@ edp-tekton:
     deployableResources:
       # -- This flag control the installation of the tasks.
       tasks: true
+      # -- This flag control the installation of the Build, Review and other pipelines.
+      pipelines: true
       # -- This flag control the installation of the Deploy pipelines.
       deploy: true
+      # -- This flag control the installation of the Triggers resources.
+      triggers: true
+      # -- This section control the installation of the tekton resources.
+      resources:
+        # -- This flag control the installation of the tekton RBAC resources.
+        rbac: true
       # -- This section control the installation of the review and build pipelines.
+      # If `pipelines` is set to `false`, this section will be ignored.
       c:
         cmake: true
         make: true
@@ -402,6 +411,7 @@ edp-tekton:
         dotnet3.1: false
         dotnet6.0: false
       docker: true
+      gitops: true
       groovy: true
       go:
         beego: true
@@ -414,6 +424,7 @@ edp-tekton:
         java8: false
         java11: true
         java17: true
+        java21: true
       js:
         angular: true
         antora: true
@@ -427,6 +438,7 @@ edp-tekton:
         flask: true
         fastapi: true
         python3.8: false
+      security: true
       terraform: true
 
     # -- This section allows to determine on which nodes to run tekton pipelines

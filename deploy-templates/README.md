@@ -53,10 +53,14 @@ A Helm chart for KubeRocketCI Platform
 | edp-tekton.gitServers | object | `{}` |  |
 | edp-tekton.grafana | object | `{"enabled":false}` | https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-monitoring |
 | edp-tekton.interceptor.enabled | bool | `true` | Deploy KubeRocketCI interceptor as a part of pipeline library when true. Default: true |
-| edp-tekton.pipelines.deployableResources | object | `{"c":{"cmake":true,"make":true},"cs":{"dotnet3.1":false,"dotnet6.0":false},"deploy":true,"docker":true,"go":{"beego":true,"gin":true,"operatorsdk":true},"groovy":true,"helm":true,"helm-pipeline":true,"infrastructure":true,"java":{"java11":true,"java17":true,"java8":false},"js":{"angular":true,"antora":true,"express":true,"next":true,"react":true,"vue":true},"opa":false,"python":{"ansible":true,"fastapi":true,"flask":true,"python3.8":false},"tasks":true,"terraform":true}` | This section contains the list of pipelines and tasks that will be installed. |
-| edp-tekton.pipelines.deployableResources.c | object | `{"cmake":true,"make":true}` | This section control the installation of the review and build pipelines. |
+| edp-tekton.pipelines.deployableResources | object | `{"c":{"cmake":true,"make":true},"cs":{"dotnet3.1":false,"dotnet6.0":false},"deploy":true,"docker":true,"gitops":true,"go":{"beego":true,"gin":true,"operatorsdk":true},"groovy":true,"helm":true,"helm-pipeline":true,"infrastructure":true,"java":{"java11":true,"java17":true,"java21":true,"java8":false},"js":{"angular":true,"antora":true,"express":true,"next":true,"react":true,"vue":true},"opa":false,"pipelines":true,"python":{"ansible":true,"fastapi":true,"flask":true,"python3.8":false},"resources":{"rbac":true},"security":true,"tasks":true,"terraform":true,"triggers":true}` | This section contains the list of pipelines and tasks that will be installed. |
+| edp-tekton.pipelines.deployableResources.c | object | `{"cmake":true,"make":true}` | This section control the installation of the review and build pipelines. If `pipelines` is set to `false`, this section will be ignored. |
 | edp-tekton.pipelines.deployableResources.deploy | bool | `true` | This flag control the installation of the Deploy pipelines. |
+| edp-tekton.pipelines.deployableResources.pipelines | bool | `true` | This flag control the installation of the Build, Review and other pipelines. |
+| edp-tekton.pipelines.deployableResources.resources | object | `{"rbac":true}` | This section control the installation of the tekton resources. |
+| edp-tekton.pipelines.deployableResources.resources.rbac | bool | `true` | This flag control the installation of the tekton RBAC resources. |
 | edp-tekton.pipelines.deployableResources.tasks | bool | `true` | This flag control the installation of the tasks. |
+| edp-tekton.pipelines.deployableResources.triggers | bool | `true` | This flag control the installation of the Triggers resources. |
 | edp-tekton.pipelines.image.registry | string | `"docker.io"` | Registry for tekton pipelines images. Default: docker.io |
 | edp-tekton.pipelines.imagePullSecrets | list | `[]` | List of image pull secrets used by the Tekton ServiceAccount for pulling images from private registries. Example: imagePullSecrets:   - name: regcred |
 | edp-tekton.pipelines.podTemplate | list | `[]` | This section allows to determine on which nodes to run tekton pipelines |
