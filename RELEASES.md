@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.11.2](#3.11.2)
 * [Version 3.11.1](#3.11.1)
 * [Version 3.11.0](#3.11.0)
 * [Version 3.10.5](#3.10.5)
@@ -65,12 +66,34 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.0](#2.6.0)
 </details>
 
+## Version 3.11.2 <a name="3.11.2"></a> (April 11, 2025)
+
+### New Functionality
+
+* Introduced custom widget functionality on the Overview page for displaying deployment statuses, including Deployment Flows, Environments utilizing the codebase, and deployed codebase versions. ([#709](https://github.com/epam/edp-headlamp/issues/709))
+
+### Enhancements
+
+* Documentation links have been updated across the KubeRocketCI portal to direct users to more relevant and helpful documentation pages. ([#704](https://github.com/epam/edp-headlamp/issues/704))
+* To speed up build process and make it possible to run security scans by demand, security steps, such as Dependency-Track and DefectDojo scans, have been moved to a separate pipeline. ([#464](https://github.com/epam/edp-tekton/issues/464))
+* Enhanced security by restricting access to source map files to prevent potential attackers from retrieving original frontend source code. ([#720](https://github.com/epam/edp-headlamp/issues/720))
+
+### Fixed Issues
+
+* Fixed an issue when users couldn't see the **Kubeconfig** tab on the **Account settings** windows on the first login. ([#672](https://github.com/epam/edp-headlamp/issues/672))
+* Fixed an issue when the **Delete git server** button was displayed in the Git Server integration blank. ([#714](https://github.com/epam/edp-headlamp/issues/714))
+* Fixed an issue when the build number in the **CodebaseBranch** custom resource was reset intermittently, preventing the building of new versions of components due to existing tags in the version control system. ([#194](https://github.com/epam/edp-codebase-operator/issues/194))
+* Fixed improper search filter input processing. ([#718](https://github.com/epam/edp-headlamp/issues/718))
+* Fixed unexpected notification crash when initiating a PipelineRun with parameters. ([#706](https://github.com/epam/edp-headlamp/issues/706))
+* Fixed broken pull request links in Pipelines.  ([#460](https://github.com/epam/edp-tekton/issues/460))
+
 ## Version 3.11.1 <a name="3.11.1"></a> (March 31, 2025)
 
 ### Enhancements
 
 * The `edp-config` ConfigMap has been renamed to `krci-config`. ([#417](https://github.com/epam/edp-install/pull/417))
 * Now the `ImagePullSecrets` can be defined in the values.yaml file of the Helm chart. ([#438](https://github.com/epam/edp-install/issues/438))
+* The `/recheck` and `/ok-to-test` command logic has been modified. Now users are required to enter only the command. Extra symbols are unacceptable. ([#458](https://github.com/epam/edp-tekton/issues/458))
 
 ## Version 3.11.0 <a name="3.11.0"></a> (March 22, 2025)
 
