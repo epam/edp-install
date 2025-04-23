@@ -141,6 +141,7 @@ plugins:
         operator-guide/index.md: https://docs.kuberocketci.io/docs/operator-guide
         operator-guide/installation-overview.md: https://docs.kuberocketci.io/docs/operator-guide/installation-overview
         operator-guide/add-ons-overview.md: https://docs.kuberocketci.io/docs/operator-guide/add-ons-overview
+        operator-guide/overview-multi-tenancy.md: https://docs.kuberocketci.io/docs/operator-guide/advanced-installation/capsule
         operator-guide/prerequisites.md: https://docs.kuberocketci.io/docs/operator-guide/prerequisites
         operator-guide/kubernetes-cluster-settings.md: https://docs.kuberocketci.io/docs/operator-guide/kubernetes-cluster-settings
         operator-guide/openshift-cluster-settings.md: https://docs.kuberocketci.io/docs/operator-guide/openshift-cluster-settings
@@ -218,7 +219,17 @@ plugins:
         operator-guide/ssl-automation-okd.md: https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/okd/ssl-automation-okd
         operator-guide/gitlab-debug-webhooks.md: https://docs.kuberocketci.io/docs/user-guide/add-git-server
         operator-guide/overview-sast.md: https://docs.kuberocketci.io/docs/operator-guide/devsecops/overview
+        operator-guide/troubleshooting/overview.md: https://docs.kuberocketci.io/docs/operator-guide/troubleshooting/overview
+        operator-guide/troubleshooting/troubleshoot-container-registries.md: https://docs.kuberocketci.io/docs/user-guide/change-container-registry
+        operator-guide/troubleshooting/troubleshoot-stages.md: https://docs.kuberocketci.io/docs/operator-guide/troubleshooting/sync-health-status-unknown
         operator-guide/troubleshooting/troubleshoot-git-server.md: https://docs.kuberocketci.io/docs/user-guide/add-git-server
+        operator-guide/troubleshooting/resource-observability.md: https://docs.kuberocketci.io/docs/operator-guide/troubleshooting/forbidden-messages
+        operator-guide/troubleshooting/troubleshoot-applications.md: https://docs.kuberocketci.io/docs/user-guide/manage-environments#troubleshoot-application
+        operator-guide/troubleshooting/application-not-built.md: https://docs.kuberocketci.io/docs/next/user-guide/manage-branches#build-branch
+        operator-guide/troubleshooting/invalid-codebase-name.md: https://docs.kuberocketci.io/docs/operator-guide/troubleshooting/codebase-creation-issues
+        operator-guide/import-strategy-tekton.md: https://docs.kuberocketci.io/docs/user-guide/add-git-server
+        operator-guide/upgrade-edp-3.0.md: https://docs.kuberocketci.io/docs/operator-guide/upgrade/upgrade-edp-3.0
+        operator-guide/install-via-helmfile.md: https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci
         operator-guide/edp-kiosk-usage.md: https://docs.kuberocketci.io
         user-guide/cd-pipeline-details.md: https://docs.kuberocketci.io/docs/user-guide/add-cd-pipeline
         user-guide/code-review-pipeline.md: https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines
@@ -249,6 +260,7 @@ plugins:
         user-guide/cicd-overview.md: https://docs.kuberocketci.io/docs/developer-guide/reference-cicd-pipeline
         user-guide/terraform-stages.md: https://docs.kuberocketci.io/docs/operator-guide/ci/ci-pipeline-terraform
         user-guide/opa-stages.md: https://docs.kuberocketci.io/docs/about-platform
+        user-guide/ci-pipeline-details.md: https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines
         developer-guide/index.md: https://docs.kuberocketci.io/docs/developer-guide
         developer-guide/reference-architecture.md: https://docs.kuberocketci.io/docs/developer-guide/reference-architecture
         developer-guide/kubernetes-deployment.md: https://docs.kuberocketci.io/docs/developer-guide/kubernetes-deployment
