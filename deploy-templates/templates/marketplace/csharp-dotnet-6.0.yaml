@@ -1,3 +1,4 @@
+{{ if .Values.marketplaceTemplates.enabled }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Template
 metadata:
@@ -24,3 +25,4 @@ spec:
   version: 0.1.0
   minEDPVersion: 3.4.0
   maturity: stable
+{{ end }}

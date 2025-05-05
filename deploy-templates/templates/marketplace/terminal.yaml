@@ -1,3 +1,4 @@
+{{ if .Values.marketplaceTemplates.enabled }}
 apiVersion: v2.edp.epam.com/v1alpha1
 kind: Template
 metadata:
@@ -31,3 +32,4 @@ spec:
   source: https://github.com/KubeRocketCI/template-terminal
   type: application
   version: 0.1.0
+{{ end }}
