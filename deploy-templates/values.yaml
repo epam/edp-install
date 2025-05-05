@@ -154,6 +154,10 @@ externalSecrets:
 
 annotations: {}
 
+# -- This block is a configuration section that controls the creation of the default marketplace templates.
+marketplaceTemplates:
+  enabled: true
+
 codebase-operator:
   enabled: true
   # image:
