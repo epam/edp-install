@@ -10,8 +10,15 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+
+- Add flag to disable default marketplace templates ([#465](https://github.com/epam/edp-install/issues/465))
+
 ### Routine
 
+- Align edp-tekton values ([#456](https://github.com/epam/edp-install/issues/456))
+- : Add annotation block for cd-pipeline-operator ([#453](https://github.com/epam/edp-install/issues/453))
+- Update current development version ([#449](https://github.com/epam/edp-install/issues/449))
 - Update current development version ([#442](https://github.com/epam/edp-install/issues/442))
 - Rename ConfigMap from 'edp-config' to 'krci-config'
 - Add ImagePullSecrets field for dependency charts ([#438](https://github.com/epam/edp-install/issues/438))
@@ -19,9 +26,18 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update link redirects in docs ([#460](https://github.com/epam/edp-install/issues/460))
+- Update RELEASES md file to contain 3-11-2 note ([#452](https://github.com/epam/edp-install/issues/452))
 - Add 3-11-1 release notes and doc updates ([#435](https://github.com/epam/edp-install/issues/435))
 - Describe release 3-11-0 in RELEASES md ([#435](https://github.com/epam/edp-install/issues/435))
 - Add redirects for old pages ([#414](https://github.com/epam/edp-install/issues/414))
+
+
+<a name="v3.11.3"></a>
+## [v3.11.3] - 2025-05-26
+### Routine
+
+- Update current development version ([#470](https://github.com/epam/edp-install/issues/470))
 
 
 <a name="v3.11.2"></a>
@@ -648,7 +664,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.11.2...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.11.3...HEAD
+[v3.11.3]: https://github.com/epam/edp-install/compare/v3.11.2...v3.11.3
 [v3.11.2]: https://github.com/epam/edp-install/compare/v3.11.1...v3.11.2
 [v3.11.1]: https://github.com/epam/edp-install/compare/v3.11.0...v3.11.1
 [v3.11.0]: https://github.com/epam/edp-install/compare/v3.10.5...v3.11.0
