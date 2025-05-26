@@ -10,9 +10,9 @@ dependencies:
   version: 0.18.0
 - name: cd-pipeline-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.25.1
+  version: 2.25.2
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.23.1
-digest: sha256:c680cbe1563fd739ba945dc2888d2368a7074a7f8fdff290c576270794ce302e
-generated: "2025-04-11T15:57:45.389851+03:00"
+digest: sha256:acd9f659a4f1ff83bc0cb3de128f202e45e384dd45c2ecb0197910dab1181491
+generated: "2025-05-26T18:45:09.388985+03:00"

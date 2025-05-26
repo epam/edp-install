@@ -38,7 +38,7 @@ dependencies:
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.25.1"
+  version: "2.25.2"
   condition: cd-pipeline-operator.enabled
 
 - name: gerrit-operator
