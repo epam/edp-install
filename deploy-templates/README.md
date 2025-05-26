@@ -21,7 +21,7 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.25.1 |
+| @epamedp | cd-pipeline-operator | 2.25.2 |
 | @epamedp | codebase-operator | 2.27.2 |
 | @epamedp | edp-headlamp | 0.22.0 |
 | @epamedp | edp-tekton | 0.18.0 |
