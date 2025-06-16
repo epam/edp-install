@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.11.3](#3.11.3)
 * [Version 3.11.2](#3.11.2)
 * [Version 3.11.1](#3.11.1)
 * [Version 3.11.0](#3.11.0)
@@ -65,6 +66,12 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.11.3 <a name="3.11.3"></a> (May 26, 2025)
+
+### Enhancements
+
+* Remote cluster connection status has been improved by using the lightweight "/api" endpoint, avoiding errors caused by insufficient RBAC permissions. ([#140](https://github.com/epam/edp-cd-pipeline-operator/issues/140))
 
 ## Version 3.11.2 <a name="3.11.2"></a> (April 11, 2025)
 
