@@ -20,7 +20,6 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### Routine
 
 - Update current development version ([#482](https://github.com/epam/edp-install/issues/482))
-- Update current development version ([#482](https://github.com/epam/edp-install/issues/482))
 - Update current development version ([#470](https://github.com/epam/edp-install/issues/470))
 - Align edp-tekton values ([#456](https://github.com/epam/edp-install/issues/456))
 - : Add annotation block for cd-pipeline-operator ([#453](https://github.com/epam/edp-install/issues/453))
