@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.12.0](#3.12.0)
 * [Version 3.11.3](#3.11.3)
 * [Version 3.11.2](#3.11.2)
 * [Version 3.11.1](#3.11.1)
@@ -14,11 +15,12 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 3.10.2](#3.10.2)
 * [Version 3.10.1](#3.10.1)
 * [Version 3.10.0](#3.10.0)
-* [Version 3.9.0](#3.9.0)
+
 
 <details>
   <summary>Earlier Versions</summary>
 
+* [Version 3.9.0](#3.9.0)
 * [Version 3.8.0](#3.8.0)
 * [Version 3.7.5](#3.7.5)
 * [Version 3.7.4](#3.7.4)
@@ -66,6 +68,105 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.12.0 <a name="3.12.0"></a> (July 22, 2025)
+
+### What's new
+
+A new "History" tab has been added to the Pipelines section. It displays the history of PipelineRun executions retrieved from external storage, allowing users to access historical data.
+
+Several new pipeline types have been introduced to the platform:
+
+  * **Security pipelines** run dedicated security scans using specialized tools. By separating security scanning from build pipelines, teams can identify vulnerabilities earlier while reducing overall build times.
+  * **Test pipelines** execute automated tests for environments independently of deployments. This allows teams to validate changes quickly without the overhead of full environment deployment.
+  * **Release pipelines** adapt to your organization's unique approval processes, ensuring consistent, compliant releases.
+
+These workflows operate independently, giving teams flexibility to optimize their product delivery for maximum efficiency.
+
+The KubeRocketCI portal now supports automatic discovery of Git accounts, repositories, and branches. Users no longer need to manually enter full repository paths or branch names — they can simply select them from a list. This significantly improves usability, reduces input errors, and speeds up onboarding and configuration within the platform.
+
+To help users get started and make the most of the platform, we continue to publish helpful video content on our [YouTube channel](https://www.youtube.com/@theplatformteam). Over the past three months, we’ve released a series of tutorials and overviews aimed at improving usability and deepening understanding of KubeRocketCI features. Here’s the latest content:
+
+  * 🎥[KubeRocketCI: Autotests Overview](https://youtu.be/ytaO-ZaQb0c?si=_SP7nQUB9gfgz7o5)
+  * 🎥[KubeRocketCI: GitOps Overview](https://youtu.be/gFR4HHdDoQM?si=awU9Te_QZjAQwrtn)
+  * 🎥[KubeRocketCI: Testing Changes With Feature Branch](https://youtu.be/V_xPrSgbMRg?si=OROGb6m2dNQz9b7q)
+  * 🎥[KubeRocketCI: Branches Management](https://youtu.be/AsWQKiRvNDY?si=EOc_m_BCOyL1HaA9)
+  * 🎥[KubeRocketCI: Deep Dive into CI/CD Pipelines](https://youtu.be/1DYKYpWOQP0?si=xiGxU5gqQ_-nktjw)
+  * 🎥[KubeRocketCI: Deep Dive into Codebases](https://youtu.be/uH2FVcEWtmg?si=Xi8R2e6C7Vgt9gdh)
+  * 🚀[KubeRocketCI v3.11 Release Demo | Key Features Overview](https://youtu.be/CLlPv4vKadM?si=2yk1Koe2vPt-7uxQ)
+  * 🎤[[Podcast] KubeRocketCI Codebase Overview](https://youtu.be/-s8eL6zpzGs?si=1zslCOrIaTKgsPGu)
+  * 🎤[[Podcast] KubeRocketCI Architecture Overview](https://youtu.be/Zu_YyHLYurE?si=xhZbuMrlV9ELF1XG)
+  * 🎤[[Podcast] KubeRocketCI Platform Overview](https://youtu.be/ip6B7g917ps?si=DImWO7u5k52SUI_o)
+
+### New Functionality
+
+* Several new pipeline types have been added to the platform: Security, Release, and Test. ([#755](https://github.com/epam/edp-headlamp/issues/755)) ([#757](https://github.com/epam/edp-headlamp/issues/757))
+* A "History" tab has been added to the Pipelines section. This tab shows the history of PipelineRun executions stored in OpenSearch. ([#740](https://github.com/epam/edp-headlamp/issues/740)) ([#741](https://github.com/epam/edp-headlamp/issues/741))
+* KubeRocketCI now supports deploying applications to remote clusters in Capsule tenants. ([#453](https://github.com/epam/edp-install/issues/453))
+* The ability to create a branch from another branch has been added to codebases. ([#214](https://github.com/epam/edp-codebase-operator/issues/214))
+* The ability to override [podSecurityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) and [securityContext](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) parameters has been added to the Helm chart configuration. This allows users to define custom security settings at the pod and container levels. ([#162](https://github.com/epam/edp-cd-pipeline-operator/issues/162))
+* The `deployableResources` parameter has been added to the platform configuration. It allows users to disable creation of default pipelines. ([#456](https://github.com/epam/edp-install/issues/456))
+* The `marketplaceTemplates` parameter has been added to the Marketplace template configuration. It allows users to disable template creation for default templates. ([#465](https://github.com/epam/edp-install/issues/465))
+* The `podTemplate` parameter has been added to all TriggerTemplate resources within the platform to allow users to control execution environment parameters such as resource limits, node selectors, tolerations, and custom containers. ([#498](https://github.com/epam/edp-tekton/issues/498))
+
+### Enhancements
+
+* To improve traceability, PipelineRuns in the Pipelines section are now ordered by creation date instead of completion date. ([#777](https://github.com/epam/edp-headlamp/issues/777))
+* The Git resource management has been improved. Previously, users had to type account name, repository name, and branch name in the KubeRocketCI portal. Now users select these resources in the drop-down lists. ([#758](https://github.com/epam/edp-headlamp/issues/758))
+* The Pipelines section now allows users to filter PipelineRuns by their type. ([#755](https://github.com/epam/edp-headlamp/issues/755))
+* Branch naming validation has been aligned with naming patterns supported by version control systems. ([#732](https://github.com/epam/edp-headlamp/issues/732))
+* A copy button has been added to the "Deployed Versions" column of the Environment details page. This button copies essential deployment information, such as Deployment Flow name, Environment name, namespace, deployed application name, and version. ([#730](https://github.com/epam/edp-headlamp/issues/730))
+* Various tooltips have been updated throughout the portal. ([#769](https://github.com/epam/edp-headlamp/issues/769)) ([#779](https://github.com/epam/edp-headlamp/issues/779)) ([#780](https://github.com/epam/edp-headlamp/issues/780))
+* A warning message has been added to the Environment details page when enabling the "Values override" option. ([#766](https://github.com/epam/edp-headlamp/issues/766))
+* The codebase build number now updates for every pipeline execution, regardless of how the pipeline was started (manual build, rerun, or pull request merge) or whether any tasks were skipped. This ensures that the build version always increments consistently for each successful pipeline execution. ([#509](https://github.com/epam/edp-tekton/issues/509))
+* Resource terminology has been updated within Tekton Pipelines and Tasks to align with new resource naming. ([#503](https://github.com/epam/edp-tekton/issues/503)) ([#500](https://github.com/epam/edp-tekton/issues/500))
+
+### Fixed Issues
+
+* Fixed UI flickering when setting or resetting filter values. ([#748](https://github.com/epam/edp-headlamp/issues/748))
+* Fixed incorrect placement of filter controls and reset button across the app. ([#748](https://github.com/epam/edp-headlamp/issues/748))
+* Fixed an issue where Git links returned 404 error codes and branches were missing after codebase creation using clone strategy from GitHub. ([#791](https://github.com/epam/edp-headlamp/issues/791))
+* Fixed an issue that caused infinite PipelineRun page loading if the API URL endpoint was incorrectly specified or missing in the "krci-config" Secret. ([#784](https://github.com/epam/edp-headlamp/issues/784))
+* Fixed an issue where the "get-version" step showed incorrect processing time when the PipelineRun failed. ([#780](https://github.com/epam/edp-headlamp/issues/780))
+* Fixed an issue where incorrect commit hash caused layout shift on the branch creation window. ([#780](https://github.com/epam/edp-headlamp/issues/780))
+* Fixed an issue where remote clusters created with bearer authentication tokens were incorrectly shown as IRSA. ([#780](https://github.com/epam/edp-headlamp/issues/780))
+* Fixed an issue where typing a slash in the GitLab account name input cleared the field. ([#780](https://github.com/epam/edp-headlamp/issues/780))
+* Fixed an issue where the "Undo Changes" button didn't clear the authentication type. ([#775](https://github.com/epam/edp-headlamp/issues/775))
+* Fixed an issue where GitLab repository paths were considered invalid. ([#750](https://github.com/epam/edp-headlamp/issues/750))
+* Fixed an issue where the "Clear" button for filters in the Pipelines section didn't work correctly. ([#748](https://github.com/epam/edp-headlamp/issues/748))
+* Fixed an issue causing the Marketplace to show no results after applying filters, even when matching applications were present. ([#748](https://github.com/epam/edp-headlamp/issues/748))
+* Fixed an issue where some Kubernetes labels were incorrectly filtered in the KubeRocketCI portal. ([#743](https://github.com/epam/edp-headlamp/issues/743))
+* Fixed an issue where the Pipelines section could show no PipelineRuns. ([#738](https://github.com/epam/edp-headlamp/issues/738))
+
+### Documentation
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+* The [Upgrade KubeRocketCI v3.10 to 3.11](https://docs.kuberocketci.io/docs/operator-guide/upgrade/upgrade-edp-3.11) page has been updated. ([#259](https://github.com/KubeRocketCI/docs/pull/259))
+* The [Deploy AWS EKS Cluster](https://docs.kuberocketci.io/docs/operator-guide/deploy-aws-eks) page has been updated. ([#256](https://github.com/KubeRocketCI/docs/pull/256)) ([#255](https://github.com/KubeRocketCI/docs/pull/255))
+* The [Install Tekton](https://docs.kuberocketci.io/docs/next/operator-guide/install-tekton) page has been updated. ([#280](https://github.com/KubeRocketCI/docs/pull/280))
+* The [Atlantis Installation](https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/atlantis-installation) page has been updated. ([#267](https://github.com/KubeRocketCI/docs/pull/267))
+* The [Deploy Application In Remote Cluster via IRSA](https://docs.kuberocketci.io/docs/operator-guide/cd/deploy-application-in-remote-cluster-via-irsa) page has been updated. ([#265](https://github.com/KubeRocketCI/docs/pull/265))
+* The [Install KubeRocketCI](https://docs.kuberocketci.io/docs/quick-start/platform-installation) page has been updated. ([#269](https://github.com/KubeRocketCI/docs/pull/269))
+
+The [FAQ](https://docs.kuberocketci.io/faq/general-questions) section is updated with the following:
+* The [How to Decrease Pipeline Processing Time?](https://docs.kuberocketci.io/faq/how-to/developer/pipeline-processing-time) page has been added. ([#264](https://github.com/KubeRocketCI/docs/pull/264))
+* The [How to View Grafana Metrics for an Application?](https://docs.kuberocketci.io/faq/how-to/developer/access-grafana-dashboard) page has been added. ([#264](https://github.com/KubeRocketCI/docs/pull/264))
+* The [How to Troubleshoot Issues in the Create Resource Window?](https://docs.kuberocketci.io/faq/how-to/developer/unprocessable-entity-message) page has been added. ([#264](https://github.com/KubeRocketCI/docs/pull/264))
+* The [How to Troubleshoot Git Server Connection?](https://docs.kuberocketci.io/faq/how-to/devops/troubleshoot-git-server-connection) page has been added. ([#264](https://github.com/KubeRocketCI/docs/pull/264))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+* The [Configuration Overview](https://docs.kuberocketci.io/docs/user-guide/configuration-overview) page has been updated. ([#280](https://github.com/KubeRocketCI/docs/pull/280))
+* The [Add Git Server](https://docs.kuberocketci.io/docs/user-guide/add-git-server) page has been updated. ([#277](https://github.com/KubeRocketCI/docs/pull/277))
+* The duplicate of the  [Deployment Strategies Overview](https://docs.kuberocketci.io/docs/user-guide/auto-stable-trigger-type) page has been deleted. ([#276](https://github.com/KubeRocketCI/docs/pull/276))
+* The [Pipelines Overview](https://docs.kuberocketci.io/docs/user-guide/pipelines) page has been updated. ([#268](https://github.com/KubeRocketCI/docs/pull/268))
+* The [Manage Branches](https://docs.kuberocketci.io/docs/user-guide/manage-branches) page has been updated. ([#266](https://github.com/KubeRocketCI/docs/pull/266))
+* The [Preview Argo CD Diff in Deploy Pipelines](https://docs.kuberocketci.io/docs/user-guide/argo-cd-preview) page has been updated. ([#271](https://github.com/KubeRocketCI/docs/pull/271))
+
+The [Developer Guide](https://docs.kuberocketci.io/docs/developer-guide) section is updated with the following:
+* The [Annotations and Labels](https://docs.kuberocketci.io/docs/developer-guide/annotations-and-labels) page has been updated. ([#257](https://github.com/KubeRocketCI/docs/pull/257))
+
+The [Getting Started](https://docs.kuberocketci.io/docs/about-platform) section is updated with the following:
+* The [Glossary](https://docs.kuberocketci.io/docs/glossary) page has been updated. ([#275](https://github.com/KubeRocketCI/docs/pull/275))
 
 ## Version 3.11.3 <a name="3.11.3"></a> (May 26, 2025)
 
