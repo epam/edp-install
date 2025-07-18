@@ -14,5 +14,8 @@ dependencies:
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.23.1
-digest: sha256:acd9f659a4f1ff83bc0cb3de128f202e45e384dd45c2ecb0197910dab1181491
-generated: "2025-05-26T18:56:50.669969+03:00"
+- name: gitfusion
+  repository: https://epam.github.io/edp-helm-charts/stable
+  version: 0.1.0
+digest: sha256:2c682fc44563de19d7b5233ea8d1463b36ac6706c73b620e683111a63b7a403e
+generated: "2025-07-18T12:37:31.285592+03:00"
