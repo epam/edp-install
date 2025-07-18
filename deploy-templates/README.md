@@ -26,6 +26,7 @@ A Helm chart for KubeRocketCI Platform
 | @epamedp | edp-headlamp | 0.22.0 |
 | @epamedp | edp-tekton | 0.18.0 |
 | @epamedp | gerrit-operator | 2.23.1 |
+| @epamedp | gitfusion | 0.1.0 |
 
 ## Values
 
@@ -77,6 +78,7 @@ A Helm chart for KubeRocketCI Platform
 | extraObjects | list | `[]` | Array of extra K8s manifests to deploy |
 | extraQuickLinks | object | `{}` | Define extra Quick Links, more details: https://github.com/epam/edp-codebase-operator/ |
 | gerrit-operator.enabled | bool | `false` |  |
+| gitfusion.enabled | bool | `false` |  |
 | global.adminGroupName | string | `""` |  |
 | global.apiClusterEndpoint | string | `""` | API Сluster Endpoint configuration for static kubeconfig generation |
 | global.apiGatewayUrl | string | `""` | API Gateway URL configuration for Widget Functionality |
