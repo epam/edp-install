@@ -10,12 +10,18 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.12.0"></a>
+## [v3.12.0] - 2025-07-22
 ### Features
 
 - Add flag to disable default marketplace templates ([#465](https://github.com/epam/edp-install/issues/465))
 
 ### Routine
 
+- Update current development version ([#482](https://github.com/epam/edp-install/issues/482))
+- Update current development version ([#482](https://github.com/epam/edp-install/issues/482))
+- Update current development version ([#470](https://github.com/epam/edp-install/issues/470))
 - Align edp-tekton values ([#456](https://github.com/epam/edp-install/issues/456))
 - : Add annotation block for cd-pipeline-operator ([#453](https://github.com/epam/edp-install/issues/453))
 - Update current development version ([#449](https://github.com/epam/edp-install/issues/449))
@@ -26,6 +32,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update RELEASES md to contain 3-11-3 notes ([#476](https://github.com/epam/edp-install/issues/476))
 - Update link redirects in docs ([#460](https://github.com/epam/edp-install/issues/460))
 - Update RELEASES md file to contain 3-11-2 note ([#452](https://github.com/epam/edp-install/issues/452))
 - Add 3-11-1 release notes and doc updates ([#435](https://github.com/epam/edp-install/issues/435))
@@ -664,7 +671,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.11.3...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.12.0...HEAD
+[v3.12.0]: https://github.com/epam/edp-install/compare/v3.11.3...v3.12.0
 [v3.11.3]: https://github.com/epam/edp-install/compare/v3.11.2...v3.11.3
 [v3.11.2]: https://github.com/epam/edp-install/compare/v3.11.1...v3.11.2
 [v3.11.1]: https://github.com/epam/edp-install/compare/v3.11.0...v3.11.1
