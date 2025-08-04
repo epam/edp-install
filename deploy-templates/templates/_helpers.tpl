@@ -75,3 +75,16 @@ Create the name of the secretstore to use
     {{- end }}
   {{- end }}
 {{- end }}
+
+{{/*
+Return the appropriate apiVersion for External Secrets
+*/}}
+{{- define "app.externalSecrets.apiVersion" -}}
+  {{- if .Capabilities.APIVersions.Has "external-secrets.io/v1" -}}
+    {{- print "external-secrets.io/v1" -}}
+  {{- else if .Capabilities.APIVersions.Has "external-secrets.io/v1beta1" -}}
+    {{- print "external-secrets.io/v1beta1" -}}
+  {{- else -}}
+    {{- print "external-secrets.io/v1beta1" -}}
+  {{- end -}}
+{{- end -}}
