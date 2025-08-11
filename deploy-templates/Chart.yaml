@@ -46,11 +46,6 @@ dependencies:
   version: "2.24.0"
   condition: gerrit-operator.enabled
 
-- name: gitfusion
-  repository: "@epamedp"
-  version: "0.1.1"
-  condition: gitfusion.enabled
-
 annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/operator: "true"
