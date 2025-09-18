@@ -1,55 +1,107 @@
-# Task: DevOps Consultation and Repository Guidance
+# Task: DevOps Consultation and Infrastructure Guidance
+
+---
+dependencies:
+  data:
+    - krci-ai/data/repository-best-practices.md
+    - krci-ai/data/repository-overview.md
+    - krci-ai/data/repository-structure.md
+
+---
 
 ## Description
+Provide expert DevOps consultation and guidance on infrastructure configuration, Helm chart management, and platform deployment following KubeRocketAI standards.
 
-<description>
-Provide comprehensive consultation and guidance on the edp-install repository structure, principles and setup.
-</description>
-
-### Reference Assets
+## Prerequisites
 
 <prerequisites>
-Dependencies:
+Required Framework Assets:
+- KubeRocketAI Core Framework Standards
+- Helm Chart Standards and Best Practices
+- Infrastructure Configuration Patterns
+- Platform Deployment Guidelines
 
-- Best practices for edp-install repository: [repository-best-practices.md](./.krci-ai/data/repository-best-practices.md)
-- Repository structure: edp-install [repository-structure](./.krci-ai/data/repository-structure.md)
-- Repository-overview: edp-install [repository-overview](./.krci-ai/data/repository-overview.md)
+Required Tools:
+- Access to Kubernetes cluster configuration
+- Helm installation and configuration
+- Required platform dependencies
 
-Validation: Verify the dependencies exist at the specified paths before proceeding. HALT if any are missing.
+Validation Steps:
+1. Verify all framework assets are accessible
+2. Confirm tool availability if specific technical guidance is needed
+3. Validate user permissions for infrastructure operations
 </prerequisites>
 
-## Overview
+## Reference Assets
 
-<overview>
-Your task is to provide expert guidance on the edp-install repository, leveraging the best practices and other documentation as the authoritative source of information. You should help users understand the repository structure, setup process, and how to perform common operations like deploying EDP components, managing configurations, and adding new resources.
-</overview>
-
-## Implementation Steps
+## Instructions
 
 <instructions>
-CRITICAL: In chat mode, your main goal is to assist users by providing accurate information based on the documentation. DO NOT run any commands or scripts. DO NOT check the pre-requisites or environment availability.
+CRITICAL PROCESSING REQUIREMENTS:
+1. NEVER include XML tags in user-facing output
+2. Always validate framework compliance before providing guidance
+3. Follow response templates for consistent formatting
+4. Break down complex topics into manageable sections
 
-IMPORTANT: Break down the answer into logical sections. DO NOT provide a single monolithic response about everything at once. For example, if a user still doesn't deploy EDP components, you don't need to provide the entire process of deploying all components, just focus on deploying the specific component.
+CONSULTATION WORKFLOW:
+1. Initial Assessment:
+   - Validate user's infrastructure context
+   - Identify specific DevOps requirements
+   - Check relevant framework standards
 
-IMPORTANT: DO NOT provide the additional commands that are not mentioned in the reference assets.
+2. Guidance Delivery:
+   - Use framework-approved templates
+   - Provide step-by-step instructions
+   - Include validation checkpoints
+   - Reference official documentation
 
-IMPORTANT: Wait for the user to ask questions. DO NOT provide unsolicited information.
-
-IMMEDIATELY upon activation, before ANY interaction with user, read and follow instructions from Reference Assets. This is MANDATORY and must be done FIRST. Load reference assets, validate their existence, and ONLY THEN proceed with user interaction following the task's guidance."
-
-### STEP-BY-STEP Implementation
-
-IMPORTANT: Before answering any user questions, thoroughly analyze the reference assets as they are the primary source of truth for all information regarding the edp-install repository. Rely exclusively on these documents to provide accurate and relevant answers.
-
-1. Analyze the reference assets to understand the repository structure, best practices and common operations. Refer to these documents as the authoritative source of information.
-
-2. When answering user questions:
-   - Provide accurate information based strictly on the documentation
-   - Use direct quotes or paraphrasing from the documentation when applicable
-   - If information is not explicitly in the documentation, clearly state that and provide best practices based on repository conventions
-   - Refer users to official documentation if they need more detailed information
-
-3. If a user question cannot be answered using the available documentation:
-   - Acknowledge the limitation
-   - Suggest the user refer to official KubeRocketCI documentation or support channels for further assistance
+3. Quality Controls:
+   - Verify all recommendations against standards
+   - Ensure security best practices
+   - Validate configuration patterns
+   - Document any limitations or risks
 </instructions>
+
+## Output Format
+
+<output_format>
+Responses must follow these formatting rules:
+1. Clear hierarchical structure with proper Markdown
+2. Code blocks with appropriate language tags
+3. Bulleted lists for steps and requirements
+4. Tables for comparison or configuration data
+5. Highlighted warnings and important notes
+</output_format>
+
+## Success Criteria
+
+<success_criteria>
+Guidance is successful when:
+1. All recommendations align with framework standards
+2. User understands the proposed solution
+3. Configuration follows security best practices
+4. Implementation steps are clear and actionable
+5. Risks and limitations are properly communicated
+</success_criteria>
+
+## Execution Checklist
+
+1. Framework Compliance
+   - [ ] Validate against core standards
+   - [ ] Check security requirements
+   - [ ] Verify pattern alignment
+
+2. User Interaction
+   - [ ] Understand specific needs
+   - [ ] Break down complex topics
+   - [ ] Provide clear guidance
+
+3. Documentation
+   - [ ] Reference official sources
+   - [ ] Include examples when needed
+   - [ ] Highlight important considerations
+
+4. Quality Assurance
+   - [ ] Verify technical accuracy
+   - [ ] Ensure completeness
+   - [ ] Check for clarity
