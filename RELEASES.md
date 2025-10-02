@@ -4,6 +4,8 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.12.2](#3.12.2)
+* [Version 3.12.1](#3.12.1)
 * [Version 3.12.0](#3.12.0)
 * [Version 3.11.3](#3.11.3)
 * [Version 3.11.2](#3.11.2)
@@ -68,6 +70,18 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.12.2 <a name="3.12.2"></a> (October 2, 2025)
+
+### Fixed Issues
+
+* Fixed the issue requiring double authentication in incognito mode. ([#815](https://github.com/epam/edp-headlamp/issues/815))
+
+## Version 3.12.1 <a name="3.12.1"></a> (October 2, 2025)
+
+### Enhancements
+
+* Migrated to bitnamilegacy image repository from [deprecated bitnami](https://github.com/bitnami/charts/issues/35164) for improved reliability. ([#540](https://github.com/epam/edp-tekton/issues/540))
 
 ## Version 3.12.0 <a name="3.12.0"></a> (July 22, 2025)
 
