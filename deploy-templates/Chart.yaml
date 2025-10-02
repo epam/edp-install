@@ -3,8 +3,8 @@ description: A Helm chart for KubeRocketCI Platform
 home: https://docs.kuberocketci.io/
 name: edp-install
 type: application
-version: 3.12.1
-appVersion: 3.12.1
+version: 3.12.2
+appVersion: 3.12.2
 icon: https://docs.kuberocketci.io/img/logo.svg
 keywords:
   - edp
