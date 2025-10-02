@@ -33,7 +33,7 @@ dependencies:
 
 - name: edp-tekton
   repository: "@epamedp"
-  version: "0.19.0"
+  version: "0.19.1"
   condition: edp-tekton.enabled
 
 - name: cd-pipeline-operator
