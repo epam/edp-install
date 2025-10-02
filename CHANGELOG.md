@@ -10,6 +10,24 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Routine
+
+- Setup KubeRocketAI DevOps Agent ([#491](https://github.com/epam/edp-install/issues/491))
+- Remove gitfusion as a part of edp-install ([#482](https://github.com/epam/edp-install/issues/482))
+- Migrate External Secrets resources to v1 API version ([#486](https://github.com/epam/edp-install/issues/486))
+- Update current development version ([#482](https://github.com/epam/edp-install/issues/482))
+
+### Documentation
+
+- Update the RELEASES md file for 3 12 ([#480](https://github.com/epam/edp-install/issues/480))
+
+
+<a name="v3.12.1"></a>
+## [v3.12.1] - 2025-10-02
+### Routine
+
+- Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
+
 
 <a name="v3.12.0"></a>
 ## [v3.12.0] - 2025-07-22
@@ -19,6 +37,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#482](https://github.com/epam/edp-install/issues/482))
 - Update current development version ([#482](https://github.com/epam/edp-install/issues/482))
 - Update current development version ([#470](https://github.com/epam/edp-install/issues/470))
 - Align edp-tekton values ([#456](https://github.com/epam/edp-install/issues/456))
@@ -670,7 +689,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.12.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.12.1...HEAD
+[v3.12.1]: https://github.com/epam/edp-install/compare/v3.12.0...v3.12.1
 [v3.12.0]: https://github.com/epam/edp-install/compare/v3.11.3...v3.12.0
 [v3.11.3]: https://github.com/epam/edp-install/compare/v3.11.2...v3.11.3
 [v3.11.2]: https://github.com/epam/edp-install/compare/v3.11.1...v3.11.2
