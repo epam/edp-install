@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.12.3](#3.12.3)
 * [Version 3.12.2](#3.12.2)
 * [Version 3.12.1](#3.12.1)
 * [Version 3.12.0](#3.12.0)
@@ -70,6 +71,12 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.12.3 <a name="3.12.3"></a> (October 6, 2025)
+
+### Fixed Issues
+
+* Rollback git-init image version to fix large repository cloning issues. ([#538](https://github.com/epam/edp-tekton/issues/538))
 
 ## Version 3.12.2 <a name="3.12.2"></a> (October 2, 2025)
 
