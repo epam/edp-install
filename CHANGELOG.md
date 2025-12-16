@@ -12,6 +12,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#506](https://github.com/epam/edp-install/issues/506))
 - Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
 - Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
 - Setup KubeRocketAI DevOps Agent ([#491](https://github.com/epam/edp-install/issues/491))
@@ -21,6 +22,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update the RELEASES.md file for 3.12.3 ([#504](https://github.com/epam/edp-install/issues/504))
 - Add 3-12-1 and 3-12-2 to RELEASES md ([#504](https://github.com/epam/edp-install/issues/504))
 - Update the RELEASES md file for 3 12 ([#480](https://github.com/epam/edp-install/issues/480))
 
