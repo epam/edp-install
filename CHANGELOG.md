@@ -11,8 +11,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.12.3"></a>
-## v3.12.3 - 2025-10-06
+<a name="v3.12.4"></a>
+## v3.12.4 - 2025-12-19
 ### Features
 
 - Add flag to disable default marketplace templates ([#465](https://github.com/epam/edp-install/issues/465))
@@ -77,6 +77,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#518](https://github.com/epam/edp-install/issues/518))
 - Update current development version ([#506](https://github.com/epam/edp-install/issues/506))
 - Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
 - Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
@@ -404,4 +405,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.12.3...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.12.4...HEAD
