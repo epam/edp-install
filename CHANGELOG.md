@@ -12,6 +12,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version ([#506](https://github.com/epam/edp-install/issues/506))
 - Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
 - Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
 - Setup KubeRocketAI DevOps Agent ([#491](https://github.com/epam/edp-install/issues/491))
@@ -21,8 +22,16 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update the RELEASES.md file for 3.12.3 ([#504](https://github.com/epam/edp-install/issues/504))
 - Add 3-12-1 and 3-12-2 to RELEASES md ([#504](https://github.com/epam/edp-install/issues/504))
 - Update the RELEASES md file for 3 12 ([#480](https://github.com/epam/edp-install/issues/480))
+
+
+<a name="v3.12.4"></a>
+## [v3.12.4] - 2025-12-19
+### Routine
+
+- Update current development version ([#518](https://github.com/epam/edp-install/issues/518))
 
 
 <a name="v3.12.3"></a>
@@ -706,7 +715,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.12.3...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.12.4...HEAD
+[v3.12.4]: https://github.com/epam/edp-install/compare/v3.12.3...v3.12.4
 [v3.12.3]: https://github.com/epam/edp-install/compare/v3.12.2...v3.12.3
 [v3.12.2]: https://github.com/epam/edp-install/compare/v3.12.1...v3.12.2
 [v3.12.1]: https://github.com/epam/edp-install/compare/v3.12.0...v3.12.1
