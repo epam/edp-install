@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.12.4](#3.12.4)
 * [Version 3.12.3](#3.12.3)
 * [Version 3.12.2](#3.12.2)
 * [Version 3.12.1](#3.12.1)
@@ -71,6 +72,13 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.12.4 <a name="3.12.4"></a> (December 19, 2025)
+
+### Fixed Issues
+
+* Fixed broken cluster mapping when integrating a remote cluster using the bearer token authentication. ([#834](https://github.com/epam/edp-headlamp/issues/834)) ([#835](https://github.com/epam/edp-headlamp/issues/835))
+* Fixed incorrect API endpoint in build pipelines for Bitbucket release branches. ([#558](https://github.com/epam/edp-tekton/issues/558))
 
 ## Version 3.12.3 <a name="3.12.3"></a> (October 6, 2025)
 
