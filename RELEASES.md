@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.12.4](#3.12.4)
 * [Version 3.12.3](#3.12.3)
 * [Version 3.12.2](#3.12.2)
 * [Version 3.12.1](#3.12.1)
@@ -71,6 +72,19 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.12.4 <a name="3.12.4"></a> (December 19, 2025)
+
+### Enhancements
+
+- To enhance observability and traceability of pipeline executions, PipelineRun information has been extended. Now it contains full commit SHA, branch name, PR/MR number, full repository path, and target branch (for review pipelines). ([#560](https://github.com/epam/edp-tekton/issues/560))
+- The `image.registry` parameter has been added to the edp-install Helm chart. It allows to specify the location to pull the edp-codebase-operator image from. ([#246](https://github.com/epam/edp-codebase-operator/issues/246))
+- The `podLabels` parameter has been added to the edp-install Helm chart. It allows to attach tags to the KubeRocketCI related pods. ([#246](https://github.com/epam/edp-codebase-operator/issues/246))
+
+### Fixed Issues
+
+- Fixed broken cluster mapping when integrating a remote cluster using the bearer token authentication. ([#834](https://github.com/epam/edp-headlamp/issues/834)) ([#835](https://github.com/epam/edp-headlamp/issues/835))
+- Fixed incorrect API endpoint in build pipelines for Bitbucket release branches. ([#558](https://github.com/epam/edp-tekton/issues/558))
 
 ## Version 3.12.3 <a name="3.12.3"></a> (October 6, 2025)
 
