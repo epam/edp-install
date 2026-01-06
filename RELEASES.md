@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.13.0](#3.13.0)
 * [Version 3.12.3](#3.12.3)
 * [Version 3.12.2](#3.12.2)
 * [Version 3.12.1](#3.12.1)
@@ -12,17 +13,16 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 3.11.2](#3.11.2)
 * [Version 3.11.1](#3.11.1)
 * [Version 3.11.0](#3.11.0)
+
+<details>
+  <summary>Earlier Versions</summary>
+
 * [Version 3.10.5](#3.10.5)
 * [Version 3.10.4](#3.10.4)
 * [Version 3.10.3](#3.10.3)
 * [Version 3.10.2](#3.10.2)
 * [Version 3.10.1](#3.10.1)
 * [Version 3.10.0](#3.10.0)
-
-
-<details>
-  <summary>Earlier Versions</summary>
-
 * [Version 3.9.0](#3.9.0)
 * [Version 3.8.0](#3.8.0)
 * [Version 3.7.5](#3.7.5)
@@ -71,6 +71,98 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.13.0 <a name="3.13.0"></a> (January XX, 2026)
+
+## What's New
+
+GitLab CI support is now available. In addition to Tekton, users can configure and run pipelines using GitLab CI. All Tekton pipeline templates have corresponding GitLab CI alternatives. The preferred CI system (Tekton or GitLab CI) can be selected during codebase creation.
+
+The user interface has been redesigned based on user feedback. Both new and legacy UI versions are operating and include support for Java 25 and the PNPM package manager for JavaScript.
+
+KubeRocketAI, an IDE-agnostic agent framework, is now available in a separate repository: [KubeRocketAI](https://github.com/KubeRocketCI/kuberocketai). It provides tools and structure for developing and managing custom AI agents.
+
+### Upgardes
+* The Gradle build tool has been updated to the [7.6.5](https://docs.gradle.org/7.6.5/release-notes.html) version. ([#549](https://github.com/epam/edp-tekton/issues/549))
+
+### New Functionality
+
+* KubeRocketAI Agents have been added to a number of KubeRocketCI repositories. ([#491](https://github.com/epam/edp-install/issues/491)) ([#535](https://github.com/epam/edp-tekton/issues/535)) ([#220](https://github.com/epam/edp-codebase-operator/issues/220))
+* Migrate External Secrets resources to v1 API version. ([#486](https://github.com/epam/edp-install/issues/486))
+* Java 25 language support has been added to the platform. Java 8 and Java 11 language support has been deprecated. ([#837](https://github.com/epam/edp-headlamp/issues/837)) ([#536](https://github.com/epam/edp-tekton/issues/536))
+* GitLab CI support has been added. User can now run GitLab CI pipelines. ([#824](https://github.com/epam/edp-headlamp/issues/824))
+* PNPM build tool support has been added to the platform. ([#801](https://github.com/epam/edp-headlamp/issues/801)) ([#525](https://github.com/epam/edp-tekton/issues/525))
+* Users can now onboard Git projects using access token instead of SSH keys. ([#231](https://github.com/epam/edp-codebase-operator/issues/231))
+
+### Breaking Change
+
+Tekton pipelines for Java 8 and Java 11 will be deprecated for all the codebase types.
+
+### Enhancements
+
+* The codebase creation window for clone strategy has been redesigned for better clarity, with better labels, tooltips, and placeholders. ([#812](https://github.com/epam/edp-headlamp/issues/812))
+* Out-of-the-box pipelines for autotests have been updated. ([#521](https://github.com/epam/edp-tekton/issues/521))
+* The `image-scan-remote` pipeline now supports scanning multiple Docker images per execution. ([#531](https://github.com/epam/edp-tekton/issues/531))
+* The Git URL Path validation in the codebase creation window has been updated. Now it can't contain spaces at the end. ([#236](https://github.com/epam/*dp-codebase-operator/issues/236))
+* AThe `CloneRepositoryCredentials` field has been added to the Codebase Custom Resource specification. This field allows users to specify the name of t*e secret containing credentials when creating Codebases via YAML using the clone strategy with private repositories. ([#234](https://github.com/epam/edp-codebase-operator/*ssues/234))
+* Add Docker registry and podLabels to helm chart ([#246](https://github.com/epam/edp-codebase-operator/issues/246)*
+* Status updates for Git resources are now ~60% faster. ([#227](https://github.com/epam/edp-codebase-operator/issues/227)*
+* Build pipelines for the .NET language have been updated to support newer Nexus versions. ([#529](https://github.com/epam/edp-tekton/issues/529)*
+
+### Fixed Issues
+
+* Fixed an issue when the secret for remote cluster integration wasn't created correctly. Now the "-cluster" suffix is automatically appended to the cluster name. ([#834](https://github.com/epam/edp-headlamp/issues/834)) ([#835](https://github.com/epam/edp-headlamp/issues/835))
+* Fixed an issue when release branches using semantic versioning and marked as protected did not update the build number and artifact version after running a build. ([#830](https://github.com/epam/edp-headlamp/issues/830))
+* Fixed an issue when the "Branch name" and "Commit hash" fields in the "Create branch" popup didn't work correctly if the "krci-config" ConfigMap wasn't configured properly. ([#812](https://github.com/epam/edp-headlamp/issues/812))
+* Fixed an issue when the "Type" filter on the Components page wasn't correctly reset when clicking the "Clear" button. ([#812](https://github.com/epam/edp-headlamp/issues/812))
+* Fixed an issue when the "Use the Push Account's credentials" in the Harbor registry integration page was active even when the secret was managed by External Secret Operator. ([#812](https://github.com/epam/edp-headlamp/issues/812))
+* Fixed an issue when users couldn't create a branch in codebases using Gerrit as a Version Control System. ([#791](https://github.com/epam/edp-headlamp/issues/791))
+* Fixed an issue when Tekton pipelines couldn't download large Git repositories. ([#538](https://github.com/epam/edp-tekton/issues/538))
+* Fixed an issue where the codebase creation process could get stuck in the "Creating" status. ([#240](https://github.com/epam/edp-codebase-operator/issues/240))
+* Removed a duplicated Overview element in the Task details window. ([#822](https://github.com/epam/edp-headlamp/issues/822))
+* Fixed invalid image parameter for Go review pipelines. ([#523](https://github.com/epam/edp-tekton/issues/523))
+* Fixed validation issues for the "Start version from" and "Suffix" fields in the codebase creation window. ([#812](https://github.com/epam/edp-headlamp/issues/812))
+
+
+### Documentation
+
+* The [landing page](https://kuberocketci.io/) has been added to the platform. ([#313](https://github.com/KubeRocketCI/docs/pull/313))
+* YouTube video links have been added to a number of pages. ([#315](https://github.com/KubeRocketCI/docs/pull/315))
+* The Technical Writer agent has been added to the repository. It will help contributors write/updates pages in this repository. ([#290](https://github.com/KubeRocketCI/docs/pull/290))
+
+The [Getting Started](https://docs.kuberocketci.io/docs/about-platform) section is updated with the following:
+* The [About the KubeRocketCI Platform](https://docs.kuberocketci.io/docs/about-platform) page has been updated. ([#308](https://github.com/KubeRocketCI/docs/pull/308))
+* The [Install KubeRocketCI](https://docs.kuberocketci.io/docs/quick-start/platform-installation) page has been updated. ([#308](https://github.com/KubeRocketCI/docs/pull/308))
+* The [Integrate Argo CD](https://docs.kuberocketci.io/docs/quick-start/integrate-argocd) page has been updated. ([#311](https://github.com/KubeRocketCI/docs/pull/311))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+* The [Install KubeRocketCI](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci) page has been updated. ([#308](https://github.com/KubeRocketCI/docs/pull/308))
+* The [Install Velero](https://docs.kuberocketci.io/docs/operator-guide/disaster-recovery/install-velero-add-ons) and IAM Roles for Velero Kubernetes Service Accounts pages have been merged into a single one and updated. ([#318](https://github.com/KubeRocketCI/docs/pull/318)) ([#319](https://github.com/KubeRocketCI/docs/pull/319))
+* The [Kubernetes Namespace Management](https://docs.kuberocketci.io/docs/operator-guide/auth/namespace-management) page has been updated. ([#309](https://github.com/KubeRocketCI/docs/pull/309))
+* The [Environment Creation Issues](https://docs.kuberocketci.io/docs/operator-guide/troubleshooting/environment-creation) page has been updated. ([#309](https://github.com/KubeRocketCI/docs/pull/309))
+* The [Enable Git Resource Discovery](https://docs.kuberocketci.io/docs/operator-guide/extensions/git-discovery) page has been added. ([#295](https://github.com/KubeRocketCI/docs/pull/295))
+* The [Scaling With Karpenter and KEDA](https://docs.kuberocketci.io/docs/operator-guide/kubernetes-cluster-scaling/namespace-and-cluster-autoscaling) page has been added. ([#302](https://github.com/KubeRocketCI/docs/pull/302))
+* The [Atlantis Installation](https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/atlantis-installation) page has been updated. ([#293](https://github.com/KubeRocketCI/docs/pull/293))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+* The [Add Application](https://docs.kuberocketci.io/docs/user-guide/add-application) page has been updated. ([#297](https://github.com/KubeRocketCI/docs/pull/297))
+* The [Add Library](https://docs.kuberocketci.io/docs/user-guide/add-library) page has been updated. ([#297](https://github.com/KubeRocketCI/docs/pull/297))
+* The [Add Autotest](https://docs.kuberocketci.io/docs/user-guide/add-autotest) page has been updated. ([#297](https://github.com/KubeRocketCI/docs/pull/297))
+* The [Add Deployment Flow](https://docs.kuberocketci.io/docs/user-guide/add-cd-pipeline) page has been updated. ([#288](https://github.com/KubeRocketCI/docs/pull/288))
+* The [Manage GitOps](https://docs.kuberocketci.io/docs/user-guide/gitops) page has been updated. ([#310](https://github.com/KubeRocketCI/docs/pull/310))
+* The [KubeRocketCI: Tekton Overview](https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines) page has been updated. ([#310](https://github.com/KubeRocketCI/docs/pull/310)) ([#296](https://github.com/KubeRocketCI/docs/pull/296))
+* The [Manage Branches](https://docs.kuberocketci.io/docs/user-guide/manage-branches) page has been updated. ([#310](https://github.com/KubeRocketCI/docs/pull/310)) ([#294](https://github.com/KubeRocketCI/docs/pull/294))
+* The [Add Git Server](https://docs.kuberocketci.io/docs/user-guide/add-git-server) page has been updated. ([#298](https://github.com/KubeRocketCI/docs/pull/298))
+
+The [Developer Guide](https://docs.kuberocketci.io/docs/developer-guide) section is updated with the following:
+* The [Overview](https://docs.kuberocketci.io/docs/developer-guide) page has been updated. ([#316](https://github.com/KubeRocketCI/docs/pull/316))
+* The [Quality Control](https://docs.kuberocketci.io/docs/developer-guide/autotest-coverage) page has been updated. ([#317](https://github.com/KubeRocketCI/docs/pull/317))
+
+The [FAQ](https://docs.kuberocketci.io/faq/general-questions) section is updated with the following:
+* The [Environment Creation Issues](https://docs.kuberocketci.io/faq/how-to/developer/how-to-view-cluster-resources) page has been added. ([#309](https://github.com/KubeRocketCI/docs/pull/309))
+* The [How Does KubeRocketCI Determine the Default Namespace on First Login?](https://docs.kuberocketci.io/faq/how-to/devops/determine-default-namespace-first-login) page has been added. ([#309](https://github.com/KubeRocketCI/docs/pull/309))
+* The [How Can I Set Namespaces in KubeRocketCI?](https://docs.kuberocketci.io/faq/how-to/devops/set-namespaces-kuberocketci) page has been added. ([#309](https://github.com/KubeRocketCI/docs/pull/309))
+
 
 ## Version 3.12.3 <a name="3.12.3"></a> (October 6, 2025)
 
