@@ -64,7 +64,6 @@ A Helm chart for KubeRocketCI Platform
 | edp-tekton.tekton-cache.enabled | bool | `true` |  |
 | edp-tekton.tekton.pruner.create | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for KubeRocketCI platform. Deploy SecretStore. Default: false |
-| externalSecrets.manageCodemieSecretsName | string | `"/edp/codemie-secrets"` |  |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for KubeRocketCI installation, using External Secret Operator |
 | externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |
 | externalSecrets.manageGitProviderSecretsName | string | `"/edp/git-provider-secrets"` |  |

@@ -67,10 +67,6 @@ rules:
       - nexuscleanuppolicies
       - nexusblobstores
       - nexuses
-      - codemieprojectsettings
-      - codemieprojects
-      - codemieapplications
-      - codemies
       - approvaltasks
     verbs:
       - get
