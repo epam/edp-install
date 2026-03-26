@@ -149,7 +149,6 @@ externalSecrets:
   manageEDPInstallSecrets: true
   # -- Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true
   manageEDPInstallSecretsName: /edp/deploy-secrets
-  manageCodemieSecretsName: /edp/codemie-secrets
   manageGitProviderSecretsName: /edp/git-provider-secrets
 
 annotations: {}
@@ -634,8 +633,6 @@ edp-tekton:
 quickLinks:
   # Base URL value for the argocd Quick Link
   argocd: ""
-  # Base URL value for the codemie Quick Link
-  codemie: ""
   # Base URL value for the defectdojo Quick Link
   defectdojo: ""
   # Base URL value for the dependency track Quick Link
