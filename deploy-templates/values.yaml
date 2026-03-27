@@ -708,3 +708,6 @@ extraObjects: []
   #         secretStoreRef:
   #           kind: SecretStore
   #           name: example-parameterstore
+
+gitfusion:
+  enabled: true
