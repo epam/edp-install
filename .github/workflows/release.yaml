@@ -5,7 +5,7 @@ on:
       - 'v*'
 
 env:
-    GOLANG_VERSION: '1.18'
+    GOLANG_VERSION: '1.25'
 
 jobs:
   prepare-release:
@@ -21,7 +21,7 @@ jobs:
           fetch-depth: '0'
 
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GOLANG_VERSION }}
 
@@ -32,7 +32,7 @@ jobs:
             RELEASE_TAG="${SOURCE_TAG##*/}"
 
             # install git-chglog
-            go install github.com/git-chglog/git-chglog/cmd/git-chglog@latest
+            go install github.com/git-chglog/git-chglog/cmd/git-chglog@0.15.4
 
             git-chglog --template .chglog/release.tpl.md -o release.md ${RELEASE_TAG}
 

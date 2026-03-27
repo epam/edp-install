@@ -1,26 +1,6 @@
-.PHONY: help docs build-docs changelog
+.PHONY: validate-docs changelog
 
 CURRENT_DIR=$(shell pwd)
-
-help:
-	@echo "Run make docs or make build-docs"
-
-## check documents http://localhost:8000
-docs: edp-docs-image
-	@docker run --rm -it \
-		-p 8000:8000 \
-		-v ${PWD}:/docs \
-		--entrypoint mkdocs \
-		edp-docs serve --dev-addr=0.0.0.0:8000
-
-build-docs: edp-docs-image
-	@docker run --rm -it \
-		-v ${PWD}:/docs \
-		--entrypoint mkdocs \
-		edp-docs build
-
-edp-docs-image:
-	@docker build -t edp-docs hack/mkdocs
 
 # use https://github.com/git-chglog/git-chglog/
 .PHONY: changelog
@@ -42,7 +22,7 @@ helm-docs: helmdocs	## generate helm docs
 HELMDOCS = ${CURRENT_DIR}/bin/helm-docs
 .PHONY: helmdocs
 helmdocs: ## Download helm-docs locally if necessary.
-	$(call go-get-tool,$(HELMDOCS),github.com/norwoodj/helm-docs/cmd/helm-docs,v1.10.0)
+	$(call go-get-tool,$(HELMDOCS),github.com/norwoodj/helm-docs/cmd/helm-docs,v1.14.2)
 
 GITCHGLOG = ${CURRENT_DIR}/bin/git-chglog
 .PHONY: git-chglog
