@@ -27,6 +27,7 @@ A Helm chart for KubeRocketCI Platform
 | @epamedp | edp-tekton | 0.20.0 |
 | @epamedp | gerrit-operator | 2.24.0 |
 | @epamedp | gitfusion | 0.3.0 |
+| @epamedp | krci-portal | 0.1.0 |
 
 ## Values
 
@@ -47,7 +48,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-headlamp.config.oidc.clientSecretName | string | `"keycloak-client-headlamp-secret"` | OIDC client secret name |
 | edp-headlamp.config.oidc.issuerUrl | string | `""` | Azure Entra: https://sts.windows.net/<tenant-id>/ |
 | edp-headlamp.config.oidc.scopes | string | `""` | OIDC scopes to be used |
-| edp-headlamp.enabled | bool | `true` |  |
+| edp-headlamp.enabled | bool | `false` |  |
 | edp-headlamp.ingress.annotations | object | `{}` | Annotations for Ingress resource |
 | edp-headlamp.ingress.enabled | bool | `true` | Enable external endpoint access. Default Ingress/Route host pattern: portal-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }} |
 | edp-headlamp.ingress.tls | list | `[]` | Ingress TLS configuration |
@@ -91,6 +92,30 @@ A Helm chart for KubeRocketCI Platform
 | global.gitProviders | list | `["github"]` | Can be gerrit, github, gitlab or bitbucket. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.viewerGroupName | string | `""` |  |
+| krci-portal.configEnv.API_PREFIX | string | `"/api"` |  |
+| krci-portal.configEnv.DEFAULT_CLUSTER_NAME | string | `"core"` |  |
+| krci-portal.configEnv.DEFAULT_CLUSTER_NAMESPACE | string | `"krci"` |  |
+| krci-portal.configEnv.DEPENDENCY_TRACK_URL | string | `"https://deptrack.example.com"` |  |
+| krci-portal.configEnv.DEPLOY_CLIENT_DIST_DIR | string | `"/app/static"` |  |
+| krci-portal.configEnv.GITFUSION_URL | string | `"http://gitfusion.krci:8080"` |  |
+| krci-portal.configEnv.OIDC_CLIENT_ID | string | `"portal"` |  |
+| krci-portal.configEnv.OIDC_CODE_CHALLENGE_METHOD | string | `"S256"` |  |
+| krci-portal.configEnv.OIDC_ISSUER_URL | string | `"https://keycloak.example.com/realms/shared"` |  |
+| krci-portal.configEnv.OIDC_SCOPE | string | `"openid profile email"` |  |
+| krci-portal.configEnv.PORTAL_URL | string | `"https://portal.example.com"` |  |
+| krci-portal.configEnv.SERVER_PORT | int | `3000` |  |
+| krci-portal.configEnv.SONAR_HOST_URL | string | `"https://sonar.example.com/"` |  |
+| krci-portal.configEnv.TEKTON_RESULTS_URL | string | `"https://tekton-results.example.com"` |  |
+| krci-portal.eso | object | `{"apiVersion":"external-secrets.io/v1","aws":{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"},"enabled":false,"provider":"aws","secretPath":"/edp/deploy-secrets"}` | Extends envFrom for the Deployment definition. we expect to deserialize key-value pairs from the secret, e.g FOO: "BAR" All sensitive data should be stored in the secret. extraEnvFrom:   - secretRef:       name: portal-secret   - configMapRef:       name: portal-config |
+| krci-portal.eso.apiVersion | string | `"external-secrets.io/v1"` | Defines API version for the ExternalSecret resource. |
+| krci-portal.eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
+| krci-portal.eso.aws.region | string | `"eu-central-1"` | AWS region. |
+| krci-portal.eso.aws.roleArn | string | `"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"` | AWS role ARN for the ExternalSecretOperator to assume. |
+| krci-portal.eso.enabled | bool | `false` | Install components of the ESO. |
+| krci-portal.eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
+| krci-portal.eso.secretPath | string | `"/edp/deploy-secrets"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
+| krci-portal.ingress.dnsWildcard | string | `""` |  |
+| krci-portal.ingress.enabled | bool | `true` |  |
 | marketplaceTemplates | object | `{"enabled":true}` | This block is a configuration section that controls the creation of the default marketplace templates. |
 | quickLinks | object | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ Example: "https://argocd.example.com" |
 | quickLinks.logging.provider | string | `""` | Define the provider name for correct URL generation. Available providers: "opensearch", "datadog". If the provider name is not specified, the base URL will be used. |

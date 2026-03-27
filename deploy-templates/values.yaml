@@ -335,7 +335,7 @@ gerrit-operator:
   #     keycloakUrl: https://keycloak.example.com/auth
 
 edp-headlamp:
-  enabled: true
+  enabled: false
   ingress:
     # -- Enable external endpoint access. Default Ingress/Route host pattern: portal-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
     enabled: true
@@ -711,3 +711,63 @@ extraObjects: []
 
 gitfusion:
   enabled: true
+
+krci-portal:
+  ingress:
+    enabled: true
+    dnsWildcard: ""
+
+  configEnv:
+    API_PREFIX: /api
+    DEFAULT_CLUSTER_NAME: core
+    DEFAULT_CLUSTER_NAMESPACE: krci
+    DEPLOY_CLIENT_DIST_DIR: "/app/static"
+    # SONAR_HOST_URL is used by the backend API client to communicate with SonarQube.
+    # SONAR_WEB_URL is an optional override for browser-facing links. When the internal API
+    # endpoint differs from the public URL (e.g. internal DNS vs external ingress), set
+    # SONAR_WEB_URL to the public URL. If not set, SONAR_HOST_URL is used for both.
+    SONAR_HOST_URL: https://sonar.example.com/
+    # SONAR_WEB_URL: https://sonar-public.example.com/
+    SERVER_PORT: 3000
+    # PORTAL_URL is the public-facing origin of the portal (scheme + host).
+    # Used for OIDC redirect URIs (login redirect_uri and post-logout redirect).
+    # Must match a registered redirect URI in the OIDC provider client configuration.
+    PORTAL_URL: https://portal.example.com
+    OIDC_ISSUER_URL: https://keycloak.example.com/realms/shared
+    OIDC_CLIENT_ID: portal
+    OIDC_SCOPE: openid profile email
+    OIDC_CODE_CHALLENGE_METHOD: S256
+    TEKTON_RESULTS_URL: https://tekton-results.example.com
+    # DEPENDENCY_TRACK_URL is used by the backend API client to communicate with Dependency Track.
+    # DEPENDENCY_TRACK_WEB_URL is an optional override for browser-facing links. When the internal
+    # API endpoint differs from the public URL, set DEPENDENCY_TRACK_WEB_URL to the public URL.
+    # If not set, DEPENDENCY_TRACK_URL is used for both.
+    DEPENDENCY_TRACK_URL: https://deptrack.example.com
+    # DEPENDENCY_TRACK_WEB_URL: https://deptrack-public.example.com
+    GITFUSION_URL: http://gitfusion.krci:8080
+
+  # -- Extends envFrom for the Deployment definition.
+  # we expect to deserialize key-value pairs from the secret, e.g
+  # FOO: "BAR"
+  # All sensitive data should be stored in the secret.
+  # extraEnvFrom:
+  #   - secretRef:
+  #       name: portal-secret
+  #   - configMapRef:
+  #       name: portal-config
+
+  eso:
+    # -- Install components of the ESO.
+    enabled: false
+    # -- Defines provider type. One of `aws`, `generic`, or `vault`.
+    provider: "aws"
+    # -- Defines API version for the ExternalSecret resource.
+    apiVersion: "external-secrets.io/v1"
+    # -- Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`.
+    secretPath: "/edp/deploy-secrets"
+    # -- AWS configuration (if provider is `aws`).
+    aws:
+      # -- AWS region.
+      region: "eu-central-1"
+      # -- AWS role ARN for the ExternalSecretOperator to assume.
+      roleArn: "arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"

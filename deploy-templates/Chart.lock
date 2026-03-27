@@ -17,5 +17,8 @@ dependencies:
 - name: gitfusion
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.3.0
-digest: sha256:af710479dd63ac327f899e22be962e64d88aa251503c22cd807ec9786b800123
-generated: "2026-03-27T09:36:11.195977+02:00"
+- name: krci-portal
+  repository: https://epam.github.io/edp-helm-charts/stable
+  version: 0.1.0
+digest: sha256:1874c93f726ff18039519647f5fefbd0b0911a92a04b7926257685462fa4da96
+generated: "2026-03-27T12:32:40.328412+02:00"
