@@ -51,6 +51,11 @@ dependencies:
   version: "0.3.0"
   condition: gitfusion.enabled
 
+- name: krci-portal
+  repository: "@epamedp"
+  version: "0.1.0"
+  condition: krci-portal.enabled
+
 annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/operator: "true"
