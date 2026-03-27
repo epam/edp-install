@@ -10,6 +10,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.13.0"></a>
+## [v3.13.0] - 2026-03-27
 ### Routine
 
 - Remove CodeMie Integration from Platform ([#535](https://github.com/epam/edp-install/issues/535))
@@ -718,7 +721,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.12.4...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.0...HEAD
+[v3.13.0]: https://github.com/epam/edp-install/compare/v3.12.4...v3.13.0
 [v3.12.4]: https://github.com/epam/edp-install/compare/v3.12.3...v3.12.4
 [v3.12.3]: https://github.com/epam/edp-install/compare/v3.12.2...v3.12.3
 [v3.12.2]: https://github.com/epam/edp-install/compare/v3.12.1...v3.12.2
