@@ -12,6 +12,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Remove CodeMie Integration from Platform ([#535](https://github.com/epam/edp-install/issues/535))
+- Update current development version ([#518](https://github.com/epam/edp-install/issues/518))
 - Update current development version ([#506](https://github.com/epam/edp-install/issues/506))
 - Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
 - Update current development version ([#499](https://github.com/epam/edp-install/issues/499))
@@ -22,6 +24,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- Update RELEASES md to contain 3-12-4 notes ([#523](https://github.com/epam/edp-install/issues/523))
 - Update the RELEASES.md file for 3.12.3 ([#504](https://github.com/epam/edp-install/issues/504))
 - Add 3-12-1 and 3-12-2 to RELEASES md ([#504](https://github.com/epam/edp-install/issues/504))
 - Update the RELEASES md file for 3 12 ([#480](https://github.com/epam/edp-install/issues/480))
