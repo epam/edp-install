@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.13.0](#3.13.0)
 * [Version 3.12.4](#3.12.4)
 * [Version 3.12.3](#3.12.3)
 * [Version 3.12.2](#3.12.2)
@@ -13,17 +14,17 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 3.11.2](#3.11.2)
 * [Version 3.11.1](#3.11.1)
 * [Version 3.11.0](#3.11.0)
+
+
+<details>
+  <summary>Earlier Versions</summary>
+
 * [Version 3.10.5](#3.10.5)
 * [Version 3.10.4](#3.10.4)
 * [Version 3.10.3](#3.10.3)
 * [Version 3.10.2](#3.10.2)
 * [Version 3.10.1](#3.10.1)
 * [Version 3.10.0](#3.10.0)
-
-
-<details>
-  <summary>Earlier Versions</summary>
-
 * [Version 3.9.0](#3.9.0)
 * [Version 3.8.0](#3.8.0)
 * [Version 3.7.5](#3.7.5)
@@ -72,6 +73,93 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 2.6.1](#2.6.1)
 * [Version 2.6.0](#2.6.0)
 </details>
+
+## Version 3.13.0 <a name="3.13.0"></a> (March 28, 2026)
+
+### What's new
+
+KubeRocketCI 3.13.0 introduces the **KubeRocketCI Portal** — a completely new platform UI built from the ground up with React 19, tRPC, and Radix UI. The new portal replaces the previous edp-headlamp component and brings a modern, full-stack architecture with significantly improved user experience and performance.
+
+The portal ships with a **Platform Overview Dashboard** featuring DORA metrics, resource health indicators, and pipeline activity trends. A new **Trivy Security suite** provides vulnerability scanning, configuration audit reports, cluster compliance reports, RBAC assessments, and exposed secrets detection. **SonarQube SAST integration** displays project quality gates, bugs, vulnerabilities, and code coverage directly in the portal. **Dependency Track SCA integration** enables software composition analysis visibility.
+
+**Image digest propagation** has been implemented across the entire pipeline — from build through deployment. Container image SHA256 digests are now stored in the CodebaseImageStream CRD and propagated through ArgoCD ApplicationSets, enabling immutable image references (`tag@sha256:digest`).
+
+The platform now supports **multi-CI environments** with the ability to run both Tekton and GitLab CI pipelines side by side. A new `tektonDisabled` field on GitServer resources allows disabling Tekton Stack for servers that use GitLab CI exclusively.
+
+**GitFusion** is now a core platform dependency (`enabled: true` by default), providing unified Git operations across GitHub, GitLab, and Bitbucket. A new pipeline listing API enables browsing CI/CD pipeline status directly from the portal.
+
+Container image scanning with **Trivy and Grype** has been added to the CI pipelines, with per-image DefectDojo engagements and per-branch scan isolation for improved security traceability.
+
+We continue to publish helpful video content on our [YouTube channel](https://www.youtube.com/@theplatformteam). Here's the latest content:
+
+  * [KubeRocketCI Portal Overview: Getting Started and Navigating the Platform](https://www.youtube.com/watch?v=bgfSDTQSopY)
+  * [Pipeline Tuning in KubeRocketCI](https://www.youtube.com/watch?v=f4LpMICI5OE)
+  * [Sensitive Data Management in KubeRocketCI](https://www.youtube.com/watch?v=J7jY7h_33Y4)
+  * [Quick Links in KubeRocketCI: How to Add and Customize Platform Navigation](https://www.youtube.com/watch?v=oXizHW3XlMw)
+  * [KubeRocketAI: AI Agents for IDEs](https://www.youtube.com/watch?v=so9E0xjEzp8)
+  * [Deploying Applications to Remote Kubernetes Clusters with KubeRocketCI and ArgoCD](https://www.youtube.com/watch?v=3Gm8YLj-0x4)
+
+### New Functionality
+
+* Introduced KubeRocketCI Portal (`krci-portal`) as a new platform UI component, replacing edp-headlamp. The portal is built with React 19, tRPC, and Radix UI and includes a Platform Overview Dashboard, Trivy Security suite, SonarQube SAST integration, and Dependency Track SCA integration. ([#537](https://github.com/epam/edp-install/issues/537))
+* Added image digest propagation across the platform. Container image SHA256 digests are now stored in CodebaseImageStream CRD tags and propagated through ArgoCD ApplicationSets for immutable image references. ([#246](https://github.com/epam/edp-codebase-operator/issues/246))
+* Added container image scanning with Trivy and Grype to CI pipelines with per-image DefectDojo engagements. ([#572](https://github.com/epam/edp-tekton/issues/572))
+* Implemented CIS-based image discovery in image-scan-chart task for automated security scanning of Helm chart images.
+* Added multi-CI support with `tektonDisabled` field on GitServer CRD and `ciTool` enum validation (`tekton`, `gitlab`) on Codebase CRD. ([#252](https://github.com/epam/edp-codebase-operator/issues/252))
+* Added annotation-based GitLab CI template selection via ConfigMap lookup, replacing fragile auto-discovery.
+* Added pipeline listing API (`GET /api/v1/pipelines`) to GitFusion across GitHub, GitLab, and Bitbucket with filtering, pagination, and caching. ([#54](https://github.com/KubeRocketCI/gitfusion/issues/54))
+* Added Bearer token authentication to protected tRPC procedures in the portal, enabling CLI and external client access.
+* Added Pull Request and Merge Request browsing in the portal via GitFusion integration.
+* Added interactive Portal Tours for guided onboarding of the Projects and Deployments modules.
+* Added deployment submit review step to the portal deployment workflow.
+* Added `security` pipeline field to CodebaseBranch CRD. ([#254](https://github.com/epam/edp-codebase-operator/issues/254))
+* Added support for Python 3.13.11 in Tekton pipelines. ([#597](https://github.com/epam/edp-tekton/issues/597))
+* Added support for Java 25 in Tekton build and autotest pipelines. ([#572](https://github.com/epam/edp-tekton/issues/572))
+
+### Enhancements
+
+* GitFusion is now included in the platform Helm chart and enabled by default. ([#539](https://github.com/epam/edp-install/issues/539))
+* Parameterized DefectDojo integration with per-branch scan isolation. Each git branch now gets its own engagement (e.g., `code-security-main`), preventing cross-branch finding contamination.
+* Parameterized container images in security tasks with `BASE_IMAGE` parameters for centralized registry configuration.
+* Migrated all Tekton resources from `v1beta1` to `v1` (GA) API. ([#573](https://github.com/epam/edp-tekton/issues/573))
+* Updated kubectl image from deprecated `bitnamilegacy/kubectl:1.25` to `alpine/kubectl:1.34.2` and migrated all task scripts from bash to POSIX sh for Alpine compatibility. ([#586](https://github.com/epam/edp-tekton/issues/586))
+* Migrated External Secrets resources from `v1beta1` to `v1` API version with automatic fallback for older clusters. ([#486](https://github.com/epam/edp-install/issues/486))
+* Replaced deprecated `sonar.login` SonarQube parameter with current supported alternative.
+* Added Docker registry and `podLabels` support to the codebase-operator Helm chart. ([#246](https://github.com/epam/edp-codebase-operator/issues/246))
+* Updated Go dependencies for Kubernetes 1.34 compatibility. ([#580](https://github.com/epam/edp-tekton/issues/580))
+* Updated Operator SDK from v1.39.2 to v1.42.0 across all operators. ([#252](https://github.com/epam/edp-codebase-operator/issues/252)) ([#180](https://github.com/epam/edp-cd-pipeline-operator/issues/180))
+* Bumped security scanner versions (Grype, Trivy, Gitleaks, Semgrep) to latest.
+* Consolidated Bitbucket event processing to eliminate code duplication.
+
+### Fixed Issues
+
+* Fixed update-cbis step with digest update during image digest propagation.
+* Fixed image-scan-remote to align with image-scan-chart approach, eliminating cross-contamination bug where shared engagements incorrectly closed findings from other images.
+* Fixed helm-lint and SonarQube configuration compatibility issues. ([#604](https://github.com/epam/edp-tekton/issues/604))
+* Fixed Java 21/25 deployment autotest support. ([#599](https://github.com/epam/edp-tekton/issues/599))
+* Fixed image tagging to use branch name instead of SHA. ([#596](https://github.com/epam/edp-tekton/issues/596))
+* Fixed cdxgen image registry from docker.io to ghcr.io.
+* Fixed git-sha value for GitLab when merge strategy doesn't create merge commit. ([#569](https://github.com/epam/edp-tekton/issues/569))
+* Fixed GitLab interceptor to use `merge_commit_sha` with fallback to `last_commit.id` for fast-forward merges. ([#569](https://github.com/epam/edp-tekton/issues/569))
+* Fixed Helm chart validation in CI pipeline and label indentation in gitlab-ci-default.yaml.
+* Added NEXUS_HOST_URL variable to autotests task. ([#613](https://github.com/epam/edp-tekton/issues/613))
+* Fixed auto-restart of K8s watch on API server timeout with improved stale data recovery in the portal.
+* Fixed form validation and error handling in portal edit wizards.
+* Fixed PipelineRun page offset and history selection issues in the portal.
+
+### Removals
+
+* Removed CodeMie integration from the platform chart and codebase-operator. ([#535](https://github.com/epam/edp-install/issues/535))
+* Deprecated edp-headlamp component (`enabled: false` by default), replaced by krci-portal.
+
+### Breaking Changes
+
+* **Tekton v1beta1 → v1 API migration** — requires Tekton Pipelines >= v0.44. ([#573](https://github.com/epam/edp-tekton/issues/573))
+* **Parameter renames in Tekton tasks**: `COMPONENT_NAME` → `CODEBASE_NAME`, `PROJECT_BRANCH` → `CODEBASE_BRANCH`. Custom TriggerTemplates and pipelines referencing old parameter names must be updated.
+* **DefectDojo engagement naming changed** to per-branch format. Historical findings will be orphaned under old engagement names. The hardcoded `product_type_name=Tenant` has been removed; use `DD_PRODUCT_TYPE_NAME` parameter.
+* **`ciTool` enum validation** added to Codebase CRD. Only `tekton` and `gitlab` values are accepted. Existing CRs with non-standard values will fail validation on next update.
+* **edp-headlamp deprecated** — migrated configuration values should be moved to the `krci-portal` section.
+* **GitFusion now enabled by default** — set `gitfusion.enabled: false` to opt out.
 
 ## Version 3.12.4 <a name="3.12.4"></a> (December 19, 2025)
 
