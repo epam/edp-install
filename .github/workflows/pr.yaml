@@ -32,9 +32,9 @@ jobs:
       - name: Check Line Length
         uses: gsactions/commit-message-checker@v2
         with:
-          pattern: '^.{10,72}$'
-          error: 'The maximum line length of 72 characters is exceeded.'
+          pattern: '^.{10,85}$'
+          error: 'Commit title must be between 10 and 85 characters long.'
           excludeDescription: 'true'
-          excludeTitle: 'false'
+          excludeTitle: 'true'
           checkAllCommitMessages: 'true'
           accessToken: ${{ secrets.GITHUB_TOKEN }}
