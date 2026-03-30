@@ -119,5 +119,5 @@ Automated dependency update commits are also allowed in the format `chore(deps):
 
 * Use the present tense ("Add feature" not "Added feature")
 * Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-* Limit the first line to 72 characters or less
+* Commit title must be between 10 and 85 characters long.
 * Reference issues and pull requests liberally after the first line
