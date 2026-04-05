@@ -22,19 +22,19 @@ For earlier releases, please refer to the [OLD-RELEASES.md](OLD-RELEASES.md) fil
 
 ### Fixed Issues
 
-* Fixed pagination failure in Tekton Results PipelineRun query and performance bottleneck caused by sequential summary lookups. Added promise coalescing to prevent thundering herd on cache miss. ([EPMDEDP-16623](https://jira.epam.com/jira/browse/EPMDEDP-16623), [#202](https://github.com/KubeRocketCI/krci-portal/pull/202), [#194](https://github.com/KubeRocketCI/krci-portal/pull/194))
-* Fixed live log subscription causing page freezing by adding throttling to subscription updates. ([EPMDEDP-16617](https://jira.epam.com/jira/browse/EPMDEDP-16617), [#191](https://github.com/KubeRocketCI/krci-portal/pull/191))
-* Fixed misaligned `inputDockerStreams` in CDPipeline edit form. ([EPMDEDP-16633](https://jira.epam.com/jira/browse/EPMDEDP-16633), [#197](https://github.com/KubeRocketCI/krci-portal/pull/197))
-* Fixed GitFusion HTTP status codes not being mapped to tRPC error codes; 404 and 401 errors now surface correctly in the portal. ([EPMDEDP-16620](https://jira.epam.com/jira/browse/EPMDEDP-16620), [#193](https://github.com/KubeRocketCI/krci-portal/pull/193))
-* Fixed security vulnerability in `go-git` library (5.16.5→5.17.1) in codebase-operator and cd-pipeline-operator. ([EPMDEDP-16599](https://jira.epam.com/jira/browse/EPMDEDP-16599), [#188](https://github.com/epam/edp-cd-pipeline-operator/pull/188))
+* Fixed pagination failure in Tekton Results PipelineRun query and performance bottleneck caused by sequential summary lookups. Added promise coalescing to prevent thundering herd on cache miss. ([EPMDEDP-16623](https://jiraeu.epam.com/browse/EPMDEDP-16623), [#202](https://github.com/KubeRocketCI/krci-portal/pull/202), [#194](https://github.com/KubeRocketCI/krci-portal/pull/194))
+* Fixed live log subscription causing page freezing by adding throttling to subscription updates. ([EPMDEDP-16617](https://jiraeu.epam.com/browse/EPMDEDP-16617), [#191](https://github.com/KubeRocketCI/krci-portal/pull/191))
+* Fixed misaligned `inputDockerStreams` in CDPipeline edit form. ([EPMDEDP-16633](https://jiraeu.epam.com/browse/EPMDEDP-16633), [#197](https://github.com/KubeRocketCI/krci-portal/pull/197))
+* Fixed GitFusion HTTP status codes not being mapped to tRPC error codes; 404 and 401 errors now surface correctly in the portal. ([EPMDEDP-16620](https://jiraeu.epam.com/browse/EPMDEDP-16620), [#193](https://github.com/KubeRocketCI/krci-portal/pull/193))
+* Fixed security vulnerability in `go-git` library (5.16.5→5.17.1) in codebase-operator and cd-pipeline-operator. ([EPMDEDP-16599](https://jiraeu.epam.com/browse/EPMDEDP-16599), [#188](https://github.com/epam/edp-cd-pipeline-operator/pull/188))
 
 ### Enhancements
 
-* OIDC issuer URL is now exposed in the `config.get` API response, enabling clients to discover the issuer without additional configuration. ([EPMDEDP-16577](https://jira.epam.com/jira/browse/EPMDEDP-16577), [#203](https://github.com/KubeRocketCI/krci-portal/pull/203))
-* Aligned security pages layouts across Trivy, SonarQube, and Dependency Track sections. ([EPMDEDP-16616](https://jira.epam.com/jira/browse/EPMDEDP-16616), [#192](https://github.com/KubeRocketCI/krci-portal/pull/192))
-* PipelineRun list migrated from records table to Tekton Results table for improved performance and reliability. ([EPMDEDP-16623](https://jira.epam.com/jira/browse/EPMDEDP-16623), [#196](https://github.com/KubeRocketCI/krci-portal/pull/196))
-* CDPipeline form handling refactored for improved reliability and state management. ([EPMDEDP-16628](https://jira.epam.com/jira/browse/EPMDEDP-16628), [#200](https://github.com/KubeRocketCI/krci-portal/pull/200))
-* GitFusion now disables `regcred` image pull secret usage by default, simplifying deployment in environments without private registries. ([EPMDEDP-16599](https://jira.epam.com/jira/browse/EPMDEDP-16599), [#58](https://github.com/KubeRocketCI/gitfusion/pull/58))
+* OIDC issuer URL is now exposed in the `config.get` API response, enabling clients to discover the issuer without additional configuration. ([EPMDEDP-16577](https://jiraeu.epam.com/browse/EPMDEDP-16577), [#203](https://github.com/KubeRocketCI/krci-portal/pull/203))
+* Aligned security pages layouts across Trivy, SonarQube, and Dependency Track sections. ([EPMDEDP-16616](https://jiraeu.epam.com/browse/EPMDEDP-16616), [#192](https://github.com/KubeRocketCI/krci-portal/pull/192))
+* PipelineRun list migrated from records table to Tekton Results table for improved performance and reliability. ([EPMDEDP-16623](https://jiraeu.epam.com/browse/EPMDEDP-16623), [#196](https://github.com/KubeRocketCI/krci-portal/pull/196))
+* CDPipeline form handling refactored for improved reliability and state management. ([EPMDEDP-16628](https://jiraeu.epam.com/browse/EPMDEDP-16628), [#200](https://github.com/KubeRocketCI/krci-portal/pull/200))
+* GitFusion now disables `regcred` image pull secret usage by default, simplifying deployment in environments without private registries. ([EPMDEDP-16599](https://jiraeu.epam.com/browse/EPMDEDP-16599), [#58](https://github.com/KubeRocketCI/gitfusion/pull/58))
 
 ## Version 3.13.0 <a name="3.13.0"></a> (March 28, 2026)
 
