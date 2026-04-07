@@ -40,7 +40,7 @@ options:
       test: Testing
 
   header:
-    pattern: "^(feat|fix|docs|style|refactor|test|chore)+!?:\\s(.*)$"
+    pattern: "^(?:[A-Z]+-\\d+:\\s)?(feat|fix|docs|style|refactor|test|chore)!?:\\s(.*)$"
     pattern_maps:
       - Type
       - Subject
