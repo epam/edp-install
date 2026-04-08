@@ -33,7 +33,7 @@ dependencies:
 
 - name: edp-tekton
   repository: "@epamedp"
-  version: "0.21.0"
+  version: "0.22.0"
   condition: edp-tekton.enabled
 
 - name: cd-pipeline-operator
@@ -53,7 +53,7 @@ dependencies:
 
 - name: krci-portal
   repository: "@epamedp"
-  version: "0.2.0"
+  version: "0.3.0"
   condition: krci-portal.enabled
 
 annotations:
