@@ -10,14 +10,47 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Routine
+
+- support Jira-prefixed CHANGELOG format
+- Update Release information
+- Update current development version
+- remove PR title length validation
+- Update current development version
+
+### Documentation
+
+- Fix links to jira issues in releases
+- Update notes for the 3_13_0 release
+- Add 3.13.0 release notes
+
+
+<a name="v3.13.2"></a>
+## [v3.13.2] - 2026-04-08
+### Routine
+
+- Update current development version
+- support Jira-prefixed CHANGELOG format
+
 
 <a name="v3.13.1"></a>
 ## [v3.13.1] - 2026-04-04
+### Routine
+
+- Update current development version
+- Update git-chglog
+
 
 <a name="v3.13.0"></a>
 ## [v3.13.0] - 2026-03-27
 ### Routine
 
+- Update current development version
+- Add krci-portal as a part of edp-install ([#537](https://github.com/epam/edp-install/issues/537))
+- Restore docs/assets/ai resources
+- Cleanup stale resources
+- Add gitfusion as a part of edp-install ([#539](https://github.com/epam/edp-install/issues/539))
+- validate commit title length and format
 - Remove CodeMie Integration from Platform ([#535](https://github.com/epam/edp-install/issues/535))
 - Update current development version ([#518](https://github.com/epam/edp-install/issues/518))
 - Update current development version ([#506](https://github.com/epam/edp-install/issues/506))
@@ -724,7 +757,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.1...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.2...HEAD
+[v3.13.2]: https://github.com/epam/edp-install/compare/v3.13.1...v3.13.2
 [v3.13.1]: https://github.com/epam/edp-install/compare/v3.13.0...v3.13.1
 [v3.13.0]: https://github.com/epam/edp-install/compare/v3.12.4...v3.13.0
 [v3.12.4]: https://github.com/epam/edp-install/compare/v3.12.3...v3.12.4
