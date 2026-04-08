@@ -11,8 +11,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.13.1"></a>
-## v3.13.1 - 2026-04-04
+<a name="v3.13.2"></a>
+## v3.13.2 - 2026-04-08
 ### Features
 
 - Add flag to disable default marketplace templates ([#465](https://github.com/epam/edp-install/issues/465))
@@ -77,6 +77,16 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version
+- support Jira-prefixed CHANGELOG format
+- Update current development version
+- Update git-chglog
+- Update current development version
+- Add krci-portal as a part of edp-install ([#537](https://github.com/epam/edp-install/issues/537))
+- Restore docs/assets/ai resources
+- Cleanup stale resources
+- Add gitfusion as a part of edp-install ([#539](https://github.com/epam/edp-install/issues/539))
+- validate commit title length and format
 - Remove CodeMie Integration from Platform ([#535](https://github.com/epam/edp-install/issues/535))
 - Update current development version ([#518](https://github.com/epam/edp-install/issues/518))
 - Update current development version ([#506](https://github.com/epam/edp-install/issues/506))
@@ -413,4 +423,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.1...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.2...HEAD
