@@ -11,8 +11,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.13.2"></a>
-## v3.13.2 - 2026-04-08
+<a name="v3.13.3"></a>
+## v3.13.3 - 2026-04-13
 ### Features
 
 - Add flag to disable default marketplace templates ([#465](https://github.com/epam/edp-install/issues/465))
@@ -77,6 +77,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update current development version
 - Update current development version
 - support Jira-prefixed CHANGELOG format
 - Update current development version
@@ -423,4 +424,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.2...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.3...HEAD
