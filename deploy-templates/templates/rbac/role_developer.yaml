@@ -17,29 +17,69 @@ rules:
       - tekton.dev
     resources:
       - pipelineruns
+      - taskruns
     verbs:
+      - get
+      - list
+      - watch
+      - create
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - pipelines
+      - tasks
+    verbs:
+      - get
+      - list
+      - watch
+      - patch
       - create
       - update
       - delete
+  - apiGroups:
+      - triggers.tekton.dev
+    resources:
+      - interceptors
+      - triggertemplates
+      - eventlisteners
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - triggers.tekton.dev
+    resources:
+      - triggerbindings
+      - triggers
+    verbs:
+      - get
+      - list
+      - watch
+      - create
   - apiGroups:
       - ''
     resources:
       - configmaps
     verbs:
       - '*'
-  - verbs:
-      - update
-    apiGroups:
+  - apiGroups:
       - edp.epam.com
     resources:
       - approvaltasks
-  - verbs:
-      - '*'
-    apiGroups:
+    verbs:
+      - update
+  - apiGroups:
       - v2.edp.epam.com
     resources:
       - codebasebranches
-  - verbs:
+    verbs:
+      - '*'
+  - apiGroups:
+      - v2.edp.epam.com
+    resources:
+      - stages
+      - cdpipelines
+    verbs:
       - get
       - list
       - watch
@@ -47,8 +87,3 @@ rules:
       - update
       - patch
       - delete
-    apiGroups:
-      - v2.edp.epam.com
-    resources:
-      - stages
-      - cdpipelines
