@@ -10,8 +10,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+
+- Add missing Tekton and Tekton Triggers permissions to developer role
+
 ### Routine
 
+- Update current development version
 - Update current development version
 - support Jira-prefixed CHANGELOG format
 - Update Release information
@@ -24,6 +29,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Fix links to jira issues in releases
 - Update notes for the 3_13_0 release
 - Add 3.13.0 release notes
+
+
+<a name="v3.13.4"></a>
+## [v3.13.4] - 2026-05-21
+### Routine
+
+- Update current development version
 
 
 <a name="v3.13.3"></a>
@@ -765,7 +777,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.3...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.4...HEAD
+[v3.13.4]: https://github.com/epam/edp-install/compare/v3.13.3...v3.13.4
 [v3.13.3]: https://github.com/epam/edp-install/compare/v3.13.2...v3.13.3
 [v3.13.2]: https://github.com/epam/edp-install/compare/v3.13.1...v3.13.2
 [v3.13.1]: https://github.com/epam/edp-install/compare/v3.13.0...v3.13.1
