@@ -4,6 +4,10 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.13.5](#3.13.5)
+* [Version 3.13.4](#3.13.4)
+* [Version 3.13.3](#3.13.3)
+* [Version 3.13.2](#3.13.2)
 * [Version 3.13.1](#3.13.1)
 * [Version 3.13.0](#3.13.0)
 * [Version 3.12.4](#3.12.4)
@@ -17,6 +21,81 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 3.11.0](#3.11.0)
 
 For earlier releases, please refer to the [OLD-RELEASES.md](OLD-RELEASES.md) file.
+
+
+## Version 3.13.5 <a name="3.13.5"></a> (May 22, 2026)
+
+## Upgrades
+
+Tekton cache is updated to the [0.4.4](https://artifacthub.io/packages/helm/epmdedp/tekton-cache/0.4.4) version.
+
+## Version 3.13.4 <a name="3.13.4"></a> (May 21, 2026)
+
+### What's New
+
+KubeRocketCI 3.13.4 expands the KubeRocketCI Portal with a Kubernetes mode, webhook trigger management, richer PipelineRun operations, and more detailed Stage Monitoring. Users can now inspect platform resources from the portal, trigger PipelineRuns through the new endpoint with CLI parameters, and analyze stage health with per-pod historical metrics, network and storage metrics, and native deployment metrics.
+
+Security and quality visibility were also improved. The portal now provides SCA findings APIs backed by Dependency-Track, server-side severity filtering with auto-paging and cancellation, SonarQube branch scope support, and SonarQube pull request proxy support.
+
+The [KubeRocketCI Command Line Interface](https://github.com/KubeRocketCI/cli) is introduced as a new way to monitor and manage platform resources without opening the KubeRocketCI Portal. It helps users perform common operational tasks directly from the terminal.
+
+### New Functionality
+
+* Restored Kubernetes mode in the portal with a resources explorer and create resource action.
+* Added REST and OpenAPI support used by the KubeRocketCI CLI, including accurate generated error response schemas for CLI and SDK consumers.
+* Extended Stage Monitoring with per-pod historical data, network and storage metrics, and native deployment metrics.
+* Added SCA REST endpoints with Dependency-Track integration and server-side severity filtering.
+
+### Enhancements
+
+* Replaced self-signed certificate generation with cert-manager.
+* Improved PipelineRun list querying and filtering across platform-registered projects, including payload-aware codebase detection.
+* Preserved pod templates and task scheduling configuration when rerunning PipelineRuns.
+* Aligned the portal Helm chart fullname override with the `krci-portal` component name.
+* Updated codebase-operator Kubernetes dependencies and bumped cd-pipeline-operator Argo CD dependencies.
+
+### Fixed Issues
+
+* Fixed Tekton cache failures caused by oversized `APPLICATIONS_PAYLOAD` results and conflicting files in cache archives.
+* Fixed Kubernetes watch reconnect storms caused by stale `resourceVersion` values.
+* Fixed branch deletion validation so branches used by deployment flows cannot be deleted.
+* Fixed Tekton Results schema handling for `protojson` null values and Kubernetes metadata fields.
+* Fixed broken portal links when configuration is not loaded and corrected PipelineRun visibility in stage details.
+* Fixed repository URL validation so it runs only when the codebase creation strategy is **Clone**.
+* Added a **Stop** action for running PipelineRuns with permission checks; the action is available in the list view and hidden in the PipelineRun details menu.
+
+## Version 3.13.3 <a name="3.13.3"></a> (April 13, 2026)
+
+### New Functionality
+
+* Historical PipelineRuns can now be rerun from the portal. The portal resolves full PipelineRun data for historical records before starting the rerun action.
+* The PipelineRun table now includes a sortable **Started at** column and a PipelineRun name search filter.
+* Step logs now include copy and download actions, making troubleshooting and sharing logs easier.
+
+### Fixed Issues
+
+* Fixed incorrect change indicators in the CDPipeline resource edit form when application branch values were unchanged.
+* Fixed branch diff rendering in the CDPipeline edit flow.
+* Fixed the Project details page tour and Pipeline page crashes caused by undefined TriggerTemplate parameters.
+
+## Version 3.13.2 <a name="3.13.2"></a> (April 8, 2026)
+
+### New Functionality
+
+* Added REST API endpoints to the portal and introduced OpenAPI specification generation.
+
+### Enhancements
+
+* Protected the portal `config.get` endpoint and moved cluster configuration under the authenticated application tree.
+* Updated the changelog and commit validation workflow to support Jira-prefixed changelog entries and remove the previous pull request title length requirement. (needs careful review)
+* Removed the legacy `krci-ai` framework from the portal.
+
+### Fixed Issues
+
+* Fixed Tekton trigger interceptor references by explicitly setting `kind: ClusterInterceptor`.
+* Improved responsiveness of generic portal components and pages.
+* Made `apiVersion` and `kind` optional for Kubernetes list items to improve compatibility with API responses.
+* Fixed stage breadcrumbs and deployment create button permissions. (needs careful review)
 
 ## Version 3.13.1 <a name="3.13.1"></a> (April 4, 2026)
 
