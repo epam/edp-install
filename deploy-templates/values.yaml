@@ -12,6 +12,9 @@ global:
   # The 'apiGatewayUrl' should be set to the external URL of the KrakenD API Gateway exposed via Ingress.
   # Example: https://api.domain.example.com
   # By default, this value is left empty, and widgets are disabled.
+  # -- Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...).
+  # Must match krci-portal configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of dnsWildCard
+  clusterName: ""
   # -- API Gateway URL configuration for Widget Functionality
   apiGatewayUrl: ""
   # The API endpoint for Kubernetes cluster. This should be the cluster's server endpoint
