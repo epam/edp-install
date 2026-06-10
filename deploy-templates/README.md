@@ -83,6 +83,7 @@ A Helm chart for KubeRocketCI Platform
 | global.apiClusterEndpoint | string | `""` | API Сluster Endpoint configuration for static kubeconfig generation |
 | global.apiGatewayUrl | string | `""` | API Gateway URL configuration for Widget Functionality |
 | global.availableClusters | string | `""` | Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3" |
+| global.clusterName | string | `""` | Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...). Must match krci-portal configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of dnsWildCard |
 | global.developerGroupName | string | `""` |  |
 | global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
 | global.dockerRegistry.awsRegion | string | `""` | Defines the geographic area where the (AWS) Elastic Container Registry repository is hosted (optional). E.g. "eu-central-1". Mandatory if 'global.dockerRegistry.type=ecr' for kaniko build-task. Ref: https://github.com/epam/edp-tekton/blob/release/0.10/charts/pipelines-library/templates/tasks/kaniko.yaml#L73 |
