@@ -52,6 +52,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-headlamp.ingress.annotations | object | `{}` | Annotations for Ingress resource |
 | edp-headlamp.ingress.enabled | bool | `true` | Enable external endpoint access. Default Ingress/Route host pattern: portal-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }} |
 | edp-headlamp.ingress.tls | list | `[]` | Ingress TLS configuration |
+| edp-tekton.clusterName | string | `""` | Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...). Must match krci-portal.configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of global.dnsWildCard. |
 | edp-tekton.enabled | bool | `true` |  |
 | edp-tekton.gitServers | object | `{}` |  |
 | edp-tekton.grafana | object | `{"enabled":false}` | https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-monitoring |
