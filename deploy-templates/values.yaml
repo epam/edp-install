@@ -38,6 +38,24 @@ global:
     # - gerrit
     # - bitbucket
 
+  # Gateway API parent Gateway that EventListener/webhook HTTPRoutes attach to.
+  # Shared by edp-tekton and codebase-operator; the Gateway itself must already exist
+  # (provisioned by Envoy Gateway, e.g. via edp-cluster-add-ons).
+  #
+  # Switching from nginx Ingress to Envoy Gateway (safe, per-gitServer, reversible):
+  #   1. Keep the default here (main-gateway/envoy-gateway-system) or point at your Gateway.
+  #   2. Per gitServer, set edp-tekton.gitServers.<name>.eventListener.httproute.enabled=true.
+  #      The Ingress stays rendered as a fallback, so the webhook keeps working during cutover.
+  #   3. Set codebase-operator.ingressController=envoy so the operator registers new webhooks
+  #      against the HTTPRoute host instead of the Ingress host.
+  #   4. Once traffic is confirmed on Envoy, set eventListener.ingress.enabled=false to drop nginx.
+  # These values are ignored while ingressController=nginx and no gitServer enables httproute.
+  gatewayApi:
+    # -- Name of the parent Gateway resource
+    gatewayName: "main-gateway"
+    # -- Namespace of the parent Gateway resource
+    gatewayNamespace: "envoy-gateway-system"
+
   # Define the Image Registry that will be used in Pipelines.
   # This section is optional, and users can configure the registry within the KubeRocketCI Portal user interface.
   # Ref: https://docs.kuberocketci.io/docs/user-guide/manage-container-registries#add-container-registry
@@ -162,6 +180,9 @@ marketplaceTemplates:
 
 codebase-operator:
   enabled: true
+  # -- Ingress controller for the GitServer EventListener webhook: "nginx" (Ingress) or "envoy" (Gateway API HTTPRoute).
+  # When set to "envoy", the operator attaches an HTTPRoute to global.gatewayApi.{gatewayName,gatewayNamespace}.
+  ingressController: "nginx"
   # image:
   #   repository: epamedp/codebase-operator
   #   tag:
@@ -527,6 +548,11 @@ edp-tekton:
   #         annotations: {}
   #         # -- Ingress TLS configuration
   #         tls: []
+  #       httproute:
+  #         # -- Enable Gateway API HTTPRoute (Envoy Gateway) for this EventListener
+  #         enabled: false
+  #         # -- HTTPRoute annotations
+  #         annotations: {}
 
   #   my-gitlab:
   #     gitProvider: gitlab
@@ -561,6 +587,11 @@ edp-tekton:
   #         annotations: {}
   #         # -- Ingress TLS configuration
   #         tls: []
+  #       httproute:
+  #         # -- Enable Gateway API HTTPRoute (Envoy Gateway) for this EventListener
+  #         enabled: false
+  #         # -- HTTPRoute annotations
+  #         annotations: {}
 
   #   my-gerrit:
   #     gitProvider: gerrit
@@ -599,6 +630,11 @@ edp-tekton:
   #         annotations: {}
   #         # -- Ingress TLS configuration
   #         tls: []
+  #       httproute:
+  #         # -- Enable Gateway API HTTPRoute (Envoy Gateway) for this EventListener
+  #         enabled: false
+  #         # -- HTTPRoute annotations
+  #         annotations: {}
 
   #   my-bitbucket:
   #     gitProvider: bitbucket
@@ -633,6 +669,11 @@ edp-tekton:
   #         annotations: {}
   #         # -- Ingress TLS configuration
   #         tls: []
+  #       httproute:
+  #         # -- Enable Gateway API HTTPRoute (Envoy Gateway) for this EventListener
+  #         enabled: false
+  #         # -- HTTPRoute annotations
+  #         annotations: {}
 
 # -- Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/
 # Example: "https://argocd.example.com"

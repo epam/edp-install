@@ -41,6 +41,7 @@ A Helm chart for KubeRocketCI Platform
 | cd-pipeline-operator.serviceAccount.annotations | object | `{}` |  |
 | cd-pipeline-operator.tenancyEngine | string | `"none"` | Defines the type of the tenant engine that can be "none", "kiosk" or "capsule"; for Stages with external cluster tenancyEngine will be ignored. Default: none |
 | codebase-operator.enabled | bool | `true` |  |
+| codebase-operator.ingressController | string | `"nginx"` | Ingress controller for the GitServer EventListener webhook: "nginx" (Ingress) or "envoy" (Gateway API HTTPRoute). When set to "envoy", the operator attaches an HTTPRoute to global.gatewayApi.{gatewayName,gatewayNamespace}. |
 | edp-headlamp.config.baseURL | string | `""` | base url path at which headlamp should run |
 | edp-headlamp.config.oidc | object | `{"clientID":"","clientSecretKey":"clientSecret","clientSecretName":"keycloak-client-headlamp-secret","enabled":false,"issuerUrl":"","scopes":""}` | For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc |
 | edp-headlamp.config.oidc.clientID | string | `""` | OIDC client ID |
@@ -91,6 +92,8 @@ A Helm chart for KubeRocketCI Platform
 | global.dockerRegistry.space | string | `""` | Defines project name. |
 | global.dockerRegistry.type | string | `""` | Defines type of registry. One of `ecr`, `harbor`, `dockerhub`, `openshift`, `nexus` or `ghcr`. 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'. |
 | global.dockerRegistry.url | string | `""` | Defines registry endpoint URL. |
+| global.gatewayApi.gatewayName | string | `"main-gateway"` | Name of the parent Gateway resource |
+| global.gatewayApi.gatewayNamespace | string | `"envoy-gateway-system"` | Namespace of the parent Gateway resource |
 | global.gitProviders | list | `["github"]` | Can be gerrit, github, gitlab or bitbucket. Default: github |
 | global.platform | string | `"kubernetes"` | platform type that can be "kubernetes" or "openshift" |
 | global.viewerGroupName | string | `""` |  |
