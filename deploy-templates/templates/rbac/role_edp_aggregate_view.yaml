@@ -80,3 +80,33 @@ rules:
       - list
       - get
       - watch
+  # Gateway API (Envoy Gateway migration): read access so viewers/developers can see
+  # routing objects (Gateways, HTTPRoutes) in the Portal Networking view.
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - gatewayclasses
+      - gateways
+      - httproutes
+      - referencegrants
+    verbs:
+      - get
+      - list
+      - watch
+  # Envoy Gateway CRDs: read access to the full resource family (proxies + policies)
+  # surfaced by the Portal Networking view.
+  - apiGroups:
+      - gateway.envoyproxy.io
+    resources:
+      - backends
+      - backendtrafficpolicies
+      - clienttrafficpolicies
+      - envoyextensionpolicies
+      - envoypatchpolicies
+      - envoyproxies
+      - httproutefilters
+      - securitypolicies
+    verbs:
+      - get
+      - list
+      - watch
