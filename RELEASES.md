@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.14.0](#3.14.0)
 * [Version 3.13.5](#3.13.5)
 * [Version 3.13.4](#3.13.4)
 * [Version 3.13.3](#3.13.3)
@@ -22,6 +23,62 @@ Get acquainted with the latest KubeRocketCI releases.
 
 For earlier releases, please refer to the [OLD-RELEASES.md](OLD-RELEASES.md) file.
 
+
+## Version 3.14.0 <a name="3.14.0"></a> (July 14, 2026)
+
+### What's New
+
+KubeRocketCI 3.14.0 adds **cancel-in-progress** for review pipelines, so superseded Tekton runs stop when a newer commit arrives on the same pull request or merge request. Enable it with `pipelines.cancelInProgress`; cancelled runs still execute `finally` tasks and report status to the git provider.
+
+The release also introduces **Envoy Gateway** support across the platform. HTTPRoute exposure is available for Tekton EventListeners, GitServer webhooks, application Helm chart scaffolding, and the portal Networking tab on stage details. The portal surfaces Gateway API resources, external URLs derived from HTTPRoutes, and optional HTTPRoute configuration in the chart.
+
+**Kubernetes mode** in the portal is significantly expanded with a redesigned cluster overview, custom resource and CRD browsing for users without cluster-wide CRD access, and scale, restart, and rollback actions for Deployments, StatefulSets, and DaemonSets. **GitLab CI** codebases now have a dedicated pipeline list and log viewer in the portal. Operators can sign in with a **Kubernetes Service Account token** when OIDC is not configured.
+
+### Upgrades
+
+* Tekton cache is updated to the [0.4.5](https://artifacthub.io/packages/helm/epmdedp/tekton-cache/0.4.5) version. ([EPMDEDP-17194](https://jiraeu.epam.com/browse/EPMDEDP-17194), [#655](https://github.com/epam/edp-tekton/pull/655))
+* Tekton Pipelines dependency bumped to 1.6.2. ([#642](https://github.com/epam/edp-tekton/pull/642))
+
+### New Functionality
+
+* Added cancel-in-progress for review PipelineRuns superseded by a new commit on the same change. Controlled by `pipelines.cancelInProgress`. ([EPMDEDP-17181](https://jiraeu.epam.com/browse/EPMDEDP-17181), [#654](https://github.com/epam/edp-tekton/pull/654))
+* Added Envoy Gateway and Gateway API support in the portal, including a Networking tab on stage details with Gateways, HTTPRoutes, and Ingresses, plus HTTPRoute-derived external URLs in the Applications table. ([EPMDEDP-17118](https://jiraeu.epam.com/browse/EPMDEDP-17118), [#311](https://github.com/KubeRocketCI/krci-portal/pull/311))
+* Added optional HTTPRoute support for Tekton EventListeners and propagated Envoy Gateway configuration through the platform Helm chart. ([EPMDEDP-17140](https://jiraeu.epam.com/browse/EPMDEDP-17140), [#651](https://github.com/epam/edp-tekton/pull/651)) ([EPMDEDP-17177](https://jiraeu.epam.com/browse/EPMDEDP-17177), [#294](https://github.com/epam/edp-codebase-operator/pull/294))
+* Added GitLab CI pipeline list and log viewer for codebases with `ciTool: gitlab`. ([EPMDEDP-17128](https://jiraeu.epam.com/browse/EPMDEDP-17128), [#314](https://github.com/KubeRocketCI/krci-portal/pull/314))
+* Added Service Account token login to the portal and made OIDC configuration optional. ([EPMDEDP-17085](https://jiraeu.epam.com/browse/EPMDEDP-17085), [#277](https://github.com/KubeRocketCI/krci-portal/pull/277))
+* Expanded Kubernetes mode with custom resource and CRD list and detail pages, permission-aware CR catalog, redesigned cluster overview, and scale, restart, and rollback actions for workloads. ([EPMDEDP-16788](https://jiraeu.epam.com/browse/EPMDEDP-16788), [#280](https://github.com/KubeRocketCI/krci-portal/pull/280))
+* Added an admin audit events page with role-based access control and a date-range filter. ([EPMDEDP-17179](https://jiraeu.epam.com/browse/EPMDEDP-17179), [#334](https://github.com/KubeRocketCI/krci-portal/pull/334))
+* Added a Monitoring tab on PipelineRun details with per-step CPU and memory metrics from Prometheus. ([EPMDEDP-17180](https://jiraeu.epam.com/browse/EPMDEDP-17180), [#338](https://github.com/KubeRocketCI/krci-portal/pull/338))
+* Added stale branch detection and cleanup in codebase-operator, with a stale badge in the portal for branches missing in git. ([EPMDEDP-17188](https://jiraeu.epam.com/browse/EPMDEDP-17188), [#297](https://github.com/epam/edp-codebase-operator/pull/297), [#339](https://github.com/KubeRocketCI/krci-portal/pull/339))
+* Added `clusterName` configuration for correct pipeline URLs in Tekton and the portal. ([EPMDEDP-17098](https://jiraeu.epam.com/browse/EPMDEDP-17098), [#647](https://github.com/epam/edp-tekton/pull/647))
+* Added **Triggered By** actor display on PipelineRun details. ([EPMDEDP-17150](https://jiraeu.epam.com/browse/EPMDEDP-17150), [#332](https://github.com/KubeRocketCI/krci-portal/pull/332))
+* Added current deployed version display in the stage deploy dropdown for CD promotion stages. ([EPMDEDP-17167](https://jiraeu.epam.com/browse/EPMDEDP-17167), [#330](https://github.com/KubeRocketCI/krci-portal/pull/330))
+* Added a branch column to the pipeline applications table. ([EPMDEDP-17031](https://jiraeu.epam.com/browse/EPMDEDP-17031), [#267](https://github.com/KubeRocketCI/krci-portal/pull/267))
+* Added scroll-to-top and scroll-to-bottom controls to the log viewer. ([EPMDEDP-17077](https://jiraeu.epam.com/browse/EPMDEDP-17077), [#272](https://github.com/KubeRocketCI/krci-portal/pull/272))
+
+### Enhancements
+
+* Added missing Tekton and Tekton Triggers permissions to the developer role. ([EPMDEDP-16728](https://jiraeu.epam.com/browse/EPMDEDP-16728), [#299](https://github.com/KubeRocketCI/krci-portal/pull/299))
+* PipelineRun list now uses numbered pagination instead of "Load More". ([EPMDEDP-17079](https://jiraeu.epam.com/browse/EPMDEDP-17079), [#316](https://github.com/KubeRocketCI/krci-portal/pull/316))
+* Reduced Kubernetes events volume on overview and detail views in Kubernetes mode. ([EPMDEDP-16788](https://jiraeu.epam.com/browse/EPMDEDP-16788), [#280](https://github.com/KubeRocketCI/krci-portal/pull/280))
+* Replaced the portal docs link with a YouTube channel card. ([EPMDEDP-17116](https://jiraeu.epam.com/browse/EPMDEDP-17116), [#333](https://github.com/KubeRocketCI/krci-portal/pull/333))
+* Upgraded Node.js to 24.18.0 for npm and pnpm Tekton pipelines. ([EPMDEDP-17170](https://jiraeu.epam.com/browse/EPMDEDP-17170), [#653](https://github.com/epam/edp-tekton/pull/653))
+* Enabled leader election in codebase-operator for improved HA. ([EPMDEDP-17188](https://jiraeu.epam.com/browse/EPMDEDP-17188), [#297](https://github.com/epam/edp-codebase-operator/pull/297))
+
+### Fixed Issues
+
+* Fixed Maven pipeline cache corruption by isolating the save-cache task from parallel push tasks. ([EPMDEDP-16759](https://jiraeu.epam.com/browse/EPMDEDP-16759), [#646](https://github.com/epam/edp-tekton/pull/646))
+* Fixed Entra ID member login by deriving OIDC identity from the ID token. ([EPMDEDP-17138](https://jiraeu.epam.com/browse/EPMDEDP-17138), [#320](https://github.com/KubeRocketCI/krci-portal/pull/320))
+* Fixed intermittent **Not Found** errors on Overview and namespace-scoped pages. ([EPMDEDP-17137](https://jiraeu.epam.com/browse/EPMDEDP-17137), [#319](https://github.com/KubeRocketCI/krci-portal/pull/319))
+* Fixed silent submit when creating an environment without a Clean Pipeline template selected. ([EPMDEDP-17135](https://jiraeu.epam.com/browse/EPMDEDP-17135), [#318](https://github.com/KubeRocketCI/krci-portal/pull/318))
+* Fixed deployed version dropdown population on CD promotion stages in multi-pipeline clusters. ([EPMDEDP-17124](https://jiraeu.epam.com/browse/EPMDEDP-17124), [#330](https://github.com/KubeRocketCI/krci-portal/pull/330))
+* Fixed Git URL Path validation persisting when switching Git server provider. ([EPMDEDP-17144](https://jiraeu.epam.com/browse/EPMDEDP-17144), [#329](https://github.com/KubeRocketCI/krci-portal/pull/329))
+* Fixed GitServer-owned credentials Secrets being treated as externally managed in the portal and garbage collection of credentials Secrets on GitServer deletion. ([EPMDEDP-17146](https://jiraeu.epam.com/browse/EPMDEDP-17146), [#288](https://github.com/epam/edp-codebase-operator/pull/288))
+* Fixed nil-pointer render when gateway API values are unset in codebase-operator. ([EPMDEDP-17177](https://jiraeu.epam.com/browse/EPMDEDP-17177), [#294](https://github.com/epam/edp-codebase-operator/pull/294))
+* Fixed allowed namespaces not being filtered in Kubernetes mode list views. ([EPMDEDP-17123](https://jiraeu.epam.com/browse/EPMDEDP-17123), [#308](https://github.com/KubeRocketCI/krci-portal/pull/308))
+* Fixed silent save failure in resource edit forms and aligned stage quality gate step name validation to a minimum of 2 characters. ([EPMDEDP-17077](https://jiraeu.epam.com/browse/EPMDEDP-17077), [#270](https://github.com/KubeRocketCI/krci-portal/pull/270))
+* Fixed release branches being creatable from a commit instead of a branch. ([EPMDEDP-17082](https://jiraeu.epam.com/browse/EPMDEDP-17082), [#275](https://github.com/KubeRocketCI/krci-portal/pull/275))
+* Fixed Stage ConfigMap **Add variable** button visibility before permissions resolve. ([EPMDEDP-17091](https://jiraeu.epam.com/browse/EPMDEDP-17091), [#327](https://github.com/KubeRocketCI/krci-portal/pull/327))
 
 ## Version 3.13.5 <a name="3.13.5"></a> (May 22, 2026)
 
