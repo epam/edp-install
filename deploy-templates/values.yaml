@@ -7,7 +7,7 @@ global:
    # -- platform type that can be "kubernetes" or "openshift"
   platform: "kubernetes"
   # -- a cluster DNS wildcard name
-  dnsWildCard:
+  dnsWildCard: ""
   # Specifies the URL of the API Gateway used by widgets in the platform.
   # The 'apiGatewayUrl' should be set to the external URL of the KrakenD API Gateway exposed via Ingress.
   # Example: https://api.domain.example.com
