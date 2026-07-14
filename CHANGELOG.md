@@ -10,12 +10,21 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.14.0"></a>
+## [v3.14.0] - 2026-07-14
 ### Features
 
+- Add Envoy Gateway resources to the view RBAC aggregation
+- Propagate Envoy Gateway configuration to dependent charts
+- Add clusterName configuration to edp-tekton values
+- Add clusterName configuration parameter for krci-portal pipeline URLs
 - Add missing Tekton and Tekton Triggers permissions to developer role
 
 ### Routine
 
+- Update current development version
+- Update current development version
 - Update current development version
 - Update current development version
 - Update current development version
@@ -27,6 +36,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Documentation
 
+- add CLAUDE.md with repository guidance
+- Describe 3-13-5 in RELEASES_md
 - Fix links to jira issues in releases
 - Update notes for the 3_13_0 release
 - Add 3.13.0 release notes
@@ -785,7 +796,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.13.5...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.14.0...HEAD
+[v3.14.0]: https://github.com/epam/edp-install/compare/v3.13.5...v3.14.0
 [v3.13.5]: https://github.com/epam/edp-install/compare/v3.13.4...v3.13.5
 [v3.13.4]: https://github.com/epam/edp-install/compare/v3.13.3...v3.13.4
 [v3.13.3]: https://github.com/epam/edp-install/compare/v3.13.2...v3.13.3
