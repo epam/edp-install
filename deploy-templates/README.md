@@ -21,13 +21,13 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.30.0 |
-| @epamedp | codebase-operator | 2.33.0 |
+| @epamedp | cd-pipeline-operator | 2.31.0 |
+| @epamedp | codebase-operator | 2.34.0 |
 | @epamedp | edp-headlamp | 0.25.0 |
-| @epamedp | edp-tekton | 0.24.0 |
+| @epamedp | edp-tekton | 0.25.0 |
 | @epamedp | gerrit-operator | 2.24.0 |
-| @epamedp | gitfusion | 0.5.0 |
-| @epamedp | krci-portal | 0.5.0 |
+| @epamedp | gitfusion | 0.6.0 |
+| @epamedp | krci-portal | 0.6.0 |
 
 ## Values
 
@@ -87,7 +87,7 @@ A Helm chart for KubeRocketCI Platform
 | global.availableClusters | string | `""` | Define the list of available remote clusters to deploy applications. Example: "cluster1, cluster2, cluster3" |
 | global.clusterName | string | `""` | Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...). Must match krci-portal configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of dnsWildCard |
 | global.developerGroupName | string | `""` |  |
-| global.dnsWildCard | string | `nil` | a cluster DNS wildcard name |
+| global.dnsWildCard | string | `""` | a cluster DNS wildcard name |
 | global.dockerRegistry.awsRegion | string | `""` | Defines the geographic area where the (AWS) Elastic Container Registry repository is hosted (optional). E.g. "eu-central-1". Mandatory if 'global.dockerRegistry.type=ecr' for kaniko build-task. Ref: https://github.com/epam/edp-tekton/blob/release/0.10/charts/pipelines-library/templates/tasks/kaniko.yaml#L73 |
 | global.dockerRegistry.space | string | `""` | Defines project name. |
 | global.dockerRegistry.type | string | `""` | Defines type of registry. One of `ecr`, `harbor`, `dockerhub`, `openshift`, `nexus` or `ghcr`. 'openshift' registry is available only in case if platform is deployed on the OpenShift cluster and the variable global.platform is set to 'openshift'. |
