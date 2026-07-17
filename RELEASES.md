@@ -58,7 +58,7 @@ The release also introduces **Envoy Gateway** support across the platform. HTTPR
 
 ### Enhancements
 
-* Added missing Tekton and Tekton Triggers permissions to the developer role. ([EPMDEDP-16728](https://jiraeu.epam.com/browse/EPMDEDP-16728), [#299](https://github.com/KubeRocketCI/krci-portal/pull/299))
+* Added missing Tekton and Tekton Triggers permissions to the developer role. ([EPMDEDP-16728](https://jiraeu.epam.com/browse/EPMDEDP-16728), [#561](https://github.com/epam/edp-install/pull/561))
 * PipelineRun list now uses numbered pagination instead of "Load More". ([EPMDEDP-17079](https://jiraeu.epam.com/browse/EPMDEDP-17079), [#316](https://github.com/KubeRocketCI/krci-portal/pull/316))
 * Reduced Kubernetes events volume on overview and detail views in Kubernetes mode. ([EPMDEDP-16788](https://jiraeu.epam.com/browse/EPMDEDP-16788), [#280](https://github.com/KubeRocketCI/krci-portal/pull/280))
 * Replaced the portal docs link with a YouTube channel card. ([EPMDEDP-17116](https://jiraeu.epam.com/browse/EPMDEDP-17116), [#333](https://github.com/KubeRocketCI/krci-portal/pull/333))
@@ -79,6 +79,9 @@ The release also introduces **Envoy Gateway** support across the platform. HTTPR
 * Fixed silent save failure in resource edit forms and aligned stage quality gate step name validation to a minimum of 2 characters. ([EPMDEDP-17077](https://jiraeu.epam.com/browse/EPMDEDP-17077), [#270](https://github.com/KubeRocketCI/krci-portal/pull/270))
 * Fixed release branches being creatable from a commit instead of a branch. ([EPMDEDP-17082](https://jiraeu.epam.com/browse/EPMDEDP-17082), [#275](https://github.com/KubeRocketCI/krci-portal/pull/275))
 * Fixed Stage ConfigMap **Add variable** button visibility before permissions resolve. ([EPMDEDP-17091](https://jiraeu.epam.com/browse/EPMDEDP-17091), [#327](https://github.com/KubeRocketCI/krci-portal/pull/327))
+* Fixed stale environment labels not being removed from CodebaseImageStream when an application is removed from a CD pipeline. ([EPMDEDP-17108](https://jiraeu.epam.com/browse/EPMDEDP-17108), [#202](https://github.com/epam/edp-cd-pipeline-operator/pull/202))
+* Replaced the portal chart `tlsSecret` value with a structured `tlsCertificateRef`. ([EPMDEDP-17133](https://jiraeu.epam.com/browse/EPMDEDP-17133), [#326](https://github.com/KubeRocketCI/krci-portal/pull/326))
+* Remediated dependency vulnerabilities in the portal and removed insecure TLS verification skip in GitFusion. ([EPMDEDP-17090](https://jiraeu.epam.com/browse/EPMDEDP-17090), [#281](https://github.com/KubeRocketCI/krci-portal/pull/281)) ([EPMDEDP-17112](https://jiraeu.epam.com/browse/EPMDEDP-17112), [#302](https://github.com/KubeRocketCI/krci-portal/pull/302)) ([EPMDEDP-17134](https://jiraeu.epam.com/browse/EPMDEDP-17134), [#70](https://github.com/KubeRocketCI/gitfusion/pull/70))
 
 ## Version 3.13.5 <a name="3.13.5"></a> (May 22, 2026)
 
