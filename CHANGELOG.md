@@ -10,6 +10,15 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Routine
+
+- Update current development version
+
+### Documentation
+
+- Complete 3.14.0 release notes with missing fixes
+- Add 3.14 release to RELEASES.md
+
 
 <a name="v3.14.0"></a>
 ## [v3.14.0] - 2026-07-14
