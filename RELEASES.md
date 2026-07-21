@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.14.1](#3.14.1)
 * [Version 3.14.0](#3.14.0)
 * [Version 3.13.5](#3.13.5)
 * [Version 3.13.4](#3.13.4)
@@ -24,6 +25,44 @@ Get acquainted with the latest KubeRocketCI releases.
 For earlier releases, please refer to the [OLD-RELEASES.md](OLD-RELEASES.md) file.
 
 
+## Version 3.14.1 <a name="3.14.1"></a> (July 20, 2026)
+
+### Upgrades
+
+Tekton cache is updated to the [0.4.5](https://artifacthub.io/packages/helm/epmdedp/tekton-cache/0.4.5) version.
+
+### New Functionality
+
+* Added review pipeline reporting to pull and merge requests: a finished review PipelineRun publishes a single self-updating comment with a per-task status table and the logs of any failed step, across GitHub, GitLab, and Bitbucket. The reporter ships as an independently toggleable `tekton-reporter` component. ([EPMDEDP-17196](https://jiraeu.epam.com/browse/EPMDEDP-17196), [#662](https://github.com/epam/edp-tekton/pull/662), [#663](https://github.com/epam/edp-tekton/pull/663), [#667](https://github.com/epam/edp-tekton/pull/667))
+* Added an in-app notifications hub to the portal that surfaces platform events such as failed PipelineRuns in real time, with a header bell, unread badge, popover list, toasts, and per-user read state. ([EPMDEDP-17227](https://jiraeu.epam.com/browse/EPMDEDP-17227), [#342](https://github.com/KubeRocketCI/krci-portal/pull/342), [#344](https://github.com/KubeRocketCI/krci-portal/pull/344))
+
+### Enhancements
+
+* Review PipelineRuns now post a QUEUED commit status at webhook time and report their final state from a single aggregate-driven task, so queued and cancelled runs no longer leave a stuck "in progress" check on the commit. ([EPMDEDP-17203](https://jiraeu.epam.com/browse/EPMDEDP-17203), [#665](https://github.com/epam/edp-tekton/pull/665), [#666](https://github.com/epam/edp-tekton/pull/666))
+* Superseded review pipelines (cancel-in-progress) now report a canceled commit status to the Git provider instead of a failure. ([EPMDEDP-17202](https://jiraeu.epam.com/browse/EPMDEDP-17202), [#664](https://github.com/epam/edp-tekton/pull/664))
+* The portal now renders cancelled PipelineRuns as a neutral "Cancelled" state, with a dedicated status filter, instead of showing them as failed. ([EPMDEDP-17203](https://jiraeu.epam.com/browse/EPMDEDP-17203), [#346](https://github.com/KubeRocketCI/krci-portal/pull/346))
+
+### Fixed Issues
+
+* Fixed GitHub review pipelines reporting under the "Build Pipeline" status check; review runs now surface under the correct "Review Pipeline" context. ([EPMDEDP-17195](https://jiraeu.epam.com/browse/EPMDEDP-17195), [#660](https://github.com/epam/edp-tekton/pull/660))
+* Fixed GitLab review pipelines retriggering on metadata-only merge request updates (label, assignee, title, or thread changes); only new commit pushes and comment commands now trigger a rerun. ([EPMDEDP-17223](https://jiraeu.epam.com/browse/EPMDEDP-17223), [#668](https://github.com/epam/edp-tekton/pull/668))
+
+### Documentation
+
+The [Getting Started](https://docs.kuberocketci.io/docs/about-platform) section is updated with the following:
+
+* The [Install KubeRocketCI](https://docs.kuberocketci.io/docs/quick-start/platform-installation) page has been updated for the 3.14.1 release. ([#398](https://github.com/KubeRocketCI/docs/pull/398))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+
+* The [Upgrade KubeRocketCI v3.13 to 3.14](https://docs.kuberocketci.io/docs/operator-guide/upgrade/upgrade-krci-3.14) page has been added. ([#394](https://github.com/KubeRocketCI/docs/pull/394), [#398](https://github.com/KubeRocketCI/docs/pull/398))
+* The [How to Install KubeRocketCI: Advanced Setup Guide](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci) page has been updated for the 3.14.1 release. ([#398](https://github.com/KubeRocketCI/docs/pull/398))
+* SEO metadata and interlinking were improved across the authentication and Microsoft Entra guides. ([#397](https://github.com/KubeRocketCI/docs/pull/397))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+
+* The [Add Git Server](https://docs.kuberocketci.io/docs/user-guide/add-git-server) page has been updated to document Git token comment scopes for pull request reporting. ([#393](https://github.com/KubeRocketCI/docs/pull/393))
+
 ## Version 3.14.0 <a name="3.14.0"></a> (July 14, 2026)
 
 ### What's New
@@ -33,6 +72,14 @@ KubeRocketCI 3.14.0 adds **cancel-in-progress** for review pipelines, so superse
 The release also introduces **Envoy Gateway** support across the platform. HTTPRoute exposure is available for Tekton EventListeners, GitServer webhooks, application Helm chart scaffolding, and the portal Networking tab on stage details. The portal surfaces Gateway API resources, external URLs derived from HTTPRoutes, and optional HTTPRoute configuration in the chart.
 
 **Kubernetes mode** in the portal is significantly expanded with a redesigned cluster overview, custom resource and CRD browsing for users without cluster-wide CRD access, and scale, restart, and rollback actions for Deployments, StatefulSets, and DaemonSets. **GitLab CI** codebases now have a dedicated pipeline list and log viewer in the portal. Operators can sign in with a **Kubernetes Service Account token** when OIDC is not configured.
+
+We continue to publish helpful video content on our [YouTube channel](https://www.youtube.com/@theplatformteam). Here's the latest content:
+
+* [KubeRocketCI: Deep Dive into CI/CD Pipelines](https://www.youtube.com/watch?v=lC97P1XOEmU)
+* [KubeRocketCI: Deep Dive into Projects](https://www.youtube.com/watch?v=P_L_R7z7fFY)
+* [KubeRocketCI Portal Overview: Getting Started and Navigating the Platform](https://www.youtube.com/watch?v=Qne8WT6VZ9I)
+* [KubeRocketCI v3.13 Release Demo | What's New](https://www.youtube.com/watch?v=i18BLlfScdM)
+* [Secure Secret Data With ESO and AWS Parameter Store](https://www.youtube.com/watch?v=oa16R_tS_k8)
 
 ### Upgrades
 
@@ -82,6 +129,42 @@ The release also introduces **Envoy Gateway** support across the platform. HTTPR
 * Fixed stale environment labels not being removed from CodebaseImageStream when an application is removed from a CD pipeline. ([EPMDEDP-17108](https://jiraeu.epam.com/browse/EPMDEDP-17108), [#202](https://github.com/epam/edp-cd-pipeline-operator/pull/202))
 * Replaced the portal chart `tlsSecret` value with a structured `tlsCertificateRef`. ([EPMDEDP-17133](https://jiraeu.epam.com/browse/EPMDEDP-17133), [#326](https://github.com/KubeRocketCI/krci-portal/pull/326))
 * Remediated dependency vulnerabilities in the portal and removed insecure TLS verification skip in GitFusion. ([EPMDEDP-17090](https://jiraeu.epam.com/browse/EPMDEDP-17090), [#281](https://github.com/KubeRocketCI/krci-portal/pull/281)) ([EPMDEDP-17112](https://jiraeu.epam.com/browse/EPMDEDP-17112), [#302](https://github.com/KubeRocketCI/krci-portal/pull/302)) ([EPMDEDP-17134](https://jiraeu.epam.com/browse/EPMDEDP-17134), [#70](https://github.com/KubeRocketCI/gitfusion/pull/70))
+
+### Documentation
+
+* The [landing page](https://kuberocketci.io/) has been updated. ([#376](https://github.com/KubeRocketCI/docs/pull/376))
+
+The [Getting Started](https://docs.kuberocketci.io/docs/about-platform) section is updated with the following:
+
+* The [Install KubeRocketCI](https://docs.kuberocketci.io/docs/quick-start/platform-installation) page has been updated. ([#392](https://github.com/KubeRocketCI/docs/pull/392))
+* The [Supported Versions and Compatibility](https://docs.kuberocketci.io/docs/supported-versions) page has been updated for the 3.14 release. ([#392](https://github.com/KubeRocketCI/docs/pull/392))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+
+* The [Kubernetes Audit Trails Setup](https://docs.kuberocketci.io/docs/operator-guide/monitoring-and-observability/audit-trails-setup) page has been added. ([#387](https://github.com/KubeRocketCI/docs/pull/387))
+* The [KubeRocketCI CLI Keycloak Client](https://docs.kuberocketci.io/docs/operator-guide/auth/krci-cli-client-for-keycloak) page has been updated. ([#385](https://github.com/KubeRocketCI/docs/pull/385))
+* The [EKS OIDC With Keycloak](https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks) page has been updated. ([#386](https://github.com/KubeRocketCI/docs/pull/386))
+* The [How to Install KubeRocketCI: Advanced Setup Guide](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci) page has been updated. ([#392](https://github.com/KubeRocketCI/docs/pull/392))
+* The [Enable Git Resource Discovery](https://docs.kuberocketci.io/docs/operator-guide/extensions/git-discovery) page has been updated. ([#381](https://github.com/KubeRocketCI/docs/pull/381))
+* The [Atlantis: Enterprise-Grade Terraform Automation for Kubernetes](https://docs.kuberocketci.io/docs/operator-guide/infrastructure-providers/atlantis-installation) page has been updated. ([#381](https://github.com/KubeRocketCI/docs/pull/381))
+* The KrakenD documentation page has been removed from versions 3.13 and higher. ([#371](https://github.com/KubeRocketCI/docs/pull/371))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+
+* The [Add Git Server](https://docs.kuberocketci.io/docs/user-guide/add-git-server) page has been updated. ([#382](https://github.com/KubeRocketCI/docs/pull/382)) ([#384](https://github.com/KubeRocketCI/docs/pull/384))
+* The [Pipelines Overview](https://docs.kuberocketci.io/docs/user-guide/pipelines) page has been updated. ([#387](https://github.com/KubeRocketCI/docs/pull/387))
+* The [KubeRocketCI: Tekton Overview](https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines) page has been updated. ([#387](https://github.com/KubeRocketCI/docs/pull/387))
+
+The [FAQ](https://docs.kuberocketci.io/faq/general-questions) section is updated with the following:
+
+* The [How to Troubleshoot Git Server Connection?](https://docs.kuberocketci.io/faq/how-to/devops/troubleshoot-git-server-connection) page has been updated. ([#382](https://github.com/KubeRocketCI/docs/pull/382))
+
+The [Use Cases](https://docs.kuberocketci.io/docs/use-cases) section is updated with the following:
+
+* The [Deploy Application From a Feature Branch](https://docs.kuberocketci.io/docs/use-cases/deploy-application-from-feature-branch) page has been updated. ([#379](https://github.com/KubeRocketCI/docs/pull/379))
+* The [Test Environment Using Environment Variables](https://docs.kuberocketci.io/docs/use-cases/cd-autotests-run-with-env-variables) page has been updated. ([#373](https://github.com/KubeRocketCI/docs/pull/373))
+* The [Application With Custom Build Tool/Framework](https://docs.kuberocketci.io/docs/use-cases/tekton-custom-pipelines) page has been updated. ([#372](https://github.com/KubeRocketCI/docs/pull/372))
+* The [Create and Use Custom Tekton Pipelines](https://docs.kuberocketci.io/docs/use-cases/custom-pipelines-flow) page has been updated. ([#370](https://github.com/KubeRocketCI/docs/pull/370))
 
 ## Version 3.13.5 <a name="3.13.5"></a> (May 22, 2026)
 
