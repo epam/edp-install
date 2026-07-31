@@ -358,51 +358,6 @@ gerrit-operator:
   #     # -- Keycloak URL.
   #     keycloakUrl: https://keycloak.example.com/auth
 
-edp-headlamp:
-  enabled: false
-  ingress:
-    # -- Enable external endpoint access. Default Ingress/Route host pattern: portal-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }}
-    enabled: true
-    # -- Annotations for Ingress resource
-    annotations:
-      {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
-    # -- Hostname(s) for the Ingress resource
-    # -- Ingress TLS configuration
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - portal-edp.example.com
-  config:
-    # -- base url path at which headlamp should run
-    baseURL: ""
-    # -- Ensure that the specified client is associated with cluster OIDC integration.
-    # -- For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc
-    oidc:
-      # Enable OIDC integration. Default: false
-      enabled: false
-      # -- OIDC Issuer URL for authentication.
-      # -- This URL identifies the OpenID Connect provider endpoint. Examples:
-      # -- Keycloak: https://keycloak.example.com/auth/realms/<realm-name>
-      # -- Azure Entra: https://sts.windows.net/<tenant-id>/
-      issuerUrl: ""
-      # -- OIDC client ID
-      clientID: ""
-      # -- OIDC client secret name
-      clientSecretName: "keycloak-client-headlamp-secret"
-      # -- OIDC client secret key
-      clientSecretKey: "clientSecret"
-      # -- OIDC scopes to be used
-      scopes: ""
-  # image:
-  #   repository: epamedp/edp-headlamp
-  #   tag:
-  # -- Optional array of imagePullSecrets containing private registry credentials
-  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
-  # imagePullSecrets: []
-  # - name: regcred
-
 edp-tekton:
   enabled: true
 

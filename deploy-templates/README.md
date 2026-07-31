@@ -23,7 +23,6 @@ A Helm chart for KubeRocketCI Platform
 |------------|------|---------|
 | @epamedp | cd-pipeline-operator | 2.31.0 |
 | @epamedp | codebase-operator | 2.34.0 |
-| @epamedp | edp-headlamp | 0.25.0 |
 | @epamedp | edp-tekton | 0.26.0 |
 | @epamedp | gerrit-operator | 2.24.0 |
 | @epamedp | gitfusion | 0.6.0 |
@@ -42,17 +41,6 @@ A Helm chart for KubeRocketCI Platform
 | cd-pipeline-operator.tenancyEngine | string | `"none"` | Defines the type of the tenant engine that can be "none", "kiosk" or "capsule"; for Stages with external cluster tenancyEngine will be ignored. Default: none |
 | codebase-operator.enabled | bool | `true` |  |
 | codebase-operator.ingressController | string | `"nginx"` | Ingress controller for the GitServer EventListener webhook: "nginx" (Ingress) or "envoy" (Gateway API HTTPRoute). When set to "envoy", the operator attaches an HTTPRoute to global.gatewayApi.{gatewayName,gatewayNamespace}. |
-| edp-headlamp.config.baseURL | string | `""` | base url path at which headlamp should run |
-| edp-headlamp.config.oidc | object | `{"clientID":"","clientSecretKey":"clientSecret","clientSecretName":"keycloak-client-headlamp-secret","enabled":false,"issuerUrl":"","scopes":""}` | For detailed instructions, refer to: https://docs.kuberocketci.io/docs/operator-guide/auth/configure-keycloak-oidc-eks, https://docs.kuberocketci.io/docs/operator-guide/auth/ui-portal-oidc |
-| edp-headlamp.config.oidc.clientID | string | `""` | OIDC client ID |
-| edp-headlamp.config.oidc.clientSecretKey | string | `"clientSecret"` | OIDC client secret key |
-| edp-headlamp.config.oidc.clientSecretName | string | `"keycloak-client-headlamp-secret"` | OIDC client secret name |
-| edp-headlamp.config.oidc.issuerUrl | string | `""` | Azure Entra: https://sts.windows.net/<tenant-id>/ |
-| edp-headlamp.config.oidc.scopes | string | `""` | OIDC scopes to be used |
-| edp-headlamp.enabled | bool | `false` |  |
-| edp-headlamp.ingress.annotations | object | `{}` | Annotations for Ingress resource |
-| edp-headlamp.ingress.enabled | bool | `true` | Enable external endpoint access. Default Ingress/Route host pattern: portal-{{ .Release.Namespace }}.{{ .Values.global.dnsWildCard }} |
-| edp-headlamp.ingress.tls | list | `[]` | Ingress TLS configuration |
 | edp-tekton.clusterName | string | `""` | Cluster name used to construct the krci-portal pipeline URL (/c/<clusterName>/...). Must match krci-portal.configEnv.DEFAULT_CLUSTER_NAME. If left empty, falls back to the first segment of global.dnsWildCard. |
 | edp-tekton.enabled | bool | `true` |  |
 | edp-tekton.gitServers | object | `{}` |  |
