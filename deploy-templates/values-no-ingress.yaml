@@ -30,28 +30,16 @@ cd-pipeline-operator:
   # Defines the secret manager to be used. Here, "own" indicates CDPipeline Operator will perform this action.
   secretManager: "own"
 
-# Configuration for EDP Headlamp, the user interface component of EDP.
-edp-headlamp:
-  # Enables the EDP Headlamp component.
-  enabled: true
+# Configuration for KubeRocketCI Portal (krci-portal), the platform UI.
+krci-portal:
   ingress:
-    # Disables the default ingress for EDP Headlamp, allowing for alternative traffic routing methods.
+    # Disables the default ingress for the portal, allowing for alternative traffic routing methods.
     enabled: false
-  config:
-    # Configuration for OpenID Connect (OIDC) authentication.
-    oidc:
-      enabled: true
-      # -- OIDC Issuer URL for authentication.
-      # -- This URL identifies the OpenID Connect provider endpoint. Examples:
-      # -- Keycloak: https://keycloak.example.com/auth/realms/<realm-name>
-      # -- Azure Entra: https://sts.windows.net/<tenant-id>/
-      issuerUrl: "https://keycloak.example.com/auth/realms/broker"
-      # The client ID for EDP Headlamp registered in Keycloak.
-      clientID: "edp"
-      # The Kubernetes secret containing the OIDC client secret.
-      clientSecretName: "keycloak-client-headlamp-secret"
-      # The key within the Kubernetes secret where the client secret is stored.
-      clientSecretKey: "clientSecret"
+  configEnv:
+    # PORTAL_URL is the public-facing origin of the portal (scheme + host).
+    PORTAL_URL: https://portal.example.com
+    OIDC_ISSUER_URL: https://keycloak.example.com/auth/realms/broker
+    OIDC_CLIENT_ID: portal
 
 # Configuration for Tekton, used for continuous integration and delivery within EDP.
 edp-tekton:

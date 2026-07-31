@@ -26,11 +26,6 @@ dependencies:
   version: "2.34.0"
   condition: codebase-operator.enabled
 
-- name: edp-headlamp
-  repository: "@epamedp"
-  version: "0.25.0"
-  condition: edp-headlamp.enabled
-
 - name: edp-tekton
   repository: "@epamedp"
   version: "0.26.0"

@@ -2,9 +2,6 @@ dependencies:
 - name: codebase-operator
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 2.34.0
-- name: edp-headlamp
-  repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.25.0
 - name: edp-tekton
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.26.0
@@ -20,5 +17,5 @@ dependencies:
 - name: krci-portal
   repository: https://epam.github.io/edp-helm-charts/stable
   version: 0.7.0
-digest: sha256:8af3e4275fda343d9a03d79e26af3a4e50e8f94450e0c47ca03fe0422a9c4c72
-generated: "2026-07-20T23:50:54.434514+03:00"
+digest: sha256:687d9a1ce21f922ca72a2e442f3990dfb51cc0938c53d946245c395233aca828
+generated: "2026-07-31T10:04:30.891157+03:00"

@@ -33,7 +33,6 @@ All sourced from `@epamedp` (`https://epam.github.io/edp-helm-charts/stable`):
 | `edp-tekton` | `edp-tekton.enabled` | `true` |
 | `gitfusion` | `gitfusion.enabled` | `true` |
 | `krci-portal` | `krci-portal.enabled` | `true` |
-| `edp-headlamp` | `edp-headlamp.enabled` | `false` |
 | `gerrit-operator` | `gerrit-operator.enabled` | `false` |
 
 ## Key Values Conventions
