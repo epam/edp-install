@@ -54,7 +54,6 @@ A Helm chart for KubeRocketCI Platform
 | edp-tekton.pipelines.imagePullSecrets | list | `[]` | List of image pull secrets used by the Tekton ServiceAccount for pulling images from private registries. Example: imagePullSecrets:   - name: regcred |
 | edp-tekton.pipelines.podTemplate | list | `[]` | This section allows to determine on which nodes to run tekton pipelines |
 | edp-tekton.tekton-cache.enabled | bool | `true` |  |
-| edp-tekton.tekton.pruner.create | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for KubeRocketCI platform. Deploy SecretStore. Default: false |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for KubeRocketCI installation, using External Secret Operator |
 | externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |
