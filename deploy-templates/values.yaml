@@ -440,12 +440,6 @@ edp-tekton:
     # imagePullSecrets: []
     # - name: regcred
 
-  tekton:
-    pruner:
-      create: true
-      # -- List of ImagePullSecrets to be used by the pruner CronJob
-      # imagePullSecrets: []
-
   interceptor:
     # -- Deploy KubeRocketCI interceptor as a part of pipeline library when true. Default: true
     enabled: true
