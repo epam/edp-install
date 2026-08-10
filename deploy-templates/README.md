@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.15.0-SNAPSHOT](https://img.shields.io/badge/Version-3.15.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.15.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.15.0--SNAPSHOT-informational?style=flat-square)
+![Version: 3.16.0-SNAPSHOT](https://img.shields.io/badge/Version-3.16.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.16.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.16.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
@@ -21,12 +21,12 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.31.0 |
-| @epamedp | codebase-operator | 2.34.0 |
-| @epamedp | edp-tekton | 0.26.0 |
-| @epamedp | gerrit-operator | 2.24.0 |
-| @epamedp | gitfusion | 0.6.0 |
-| @epamedp | krci-portal | 0.7.0 |
+| @epamedp | cd-pipeline-operator | 2.32.0 |
+| @epamedp | codebase-operator | 2.35.0 |
+| @epamedp | edp-tekton | 0.27.0 |
+| @epamedp | gerrit-operator | 2.25.0 |
+| @epamedp | gitfusion | 0.6.1 |
+| @epamedp | krci-portal | 0.8.0 |
 
 ## Values
 

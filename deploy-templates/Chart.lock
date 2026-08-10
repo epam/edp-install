@@ -1,21 +1,21 @@
 dependencies:
 - name: codebase-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.34.0
+  version: 2.35.0
 - name: edp-tekton
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.26.0
+  version: 0.27.0
 - name: cd-pipeline-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.31.0
+  version: 2.32.0
 - name: gerrit-operator
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 2.24.0
+  version: 2.25.0
 - name: gitfusion
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.6.0
+  version: 0.6.1
 - name: krci-portal
   repository: https://epam.github.io/edp-helm-charts/stable
-  version: 0.7.0
-digest: sha256:687d9a1ce21f922ca72a2e442f3990dfb51cc0938c53d946245c395233aca828
-generated: "2026-07-31T10:04:30.891157+03:00"
+  version: 0.8.0
+digest: sha256:740087a6f67267dff2e9c5b4649e6235ae1eb9b28e438c61b5dd2a0ba2299e49
+generated: "2026-08-10T18:07:56.939115+03:00"
