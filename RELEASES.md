@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.15.0](#3.15.0)
 * [Version 3.14.1](#3.14.1)
 * [Version 3.14.0](#3.14.0)
 * [Version 3.13.5](#3.13.5)
@@ -24,6 +25,107 @@ Get acquainted with the latest KubeRocketCI releases.
 
 For earlier releases, please refer to the [OLD-RELEASES.md](OLD-RELEASES.md) file.
 
+## Version 3.15.0 <a name="3.15.0"></a> (August 10, 2026)
+
+### What's New
+
+KubeRocketCI 3.15.0 is a **least-privilege release for the CI plane**. Tekton pipelines, the krci interceptor and the tekton-reporter no longer share a broad ServiceAccount: pipelines now run as `tekton-unprivileged` by default, every Role is reduced to the verbs it actually exercises, secret reads are scoped to named secrets, and configmap access is dropped entirely. Pipelines that legitimately call the Kubernetes API opt back in per Pipeline through the new `app.edp.epam.com/service-account` annotation. Review triggers on GitHub are additionally restricted to allowed pull request authors.
+
+The **pull request reporter** introduced in 3.14.1 is refined for real-world use. Publishing failed-step logs into report comments is now **off by default** and, when enabled, can be overridden per PipelineRun or per GitServer with `app.edp.epam.com/reporter-logs`. Report comments gained a re-run hint, bolded failed rows and an optional recreate strategy instead of in-place updates.
+
+The release also removes a large amount of superseded machinery: **Jira integration** is gone from Tekton pipelines and the portal, the **Tekton pruner** is replaced by Tekton Results, the legacy **Grafana/Prometheus** integration in pipelines-library gives way to the `tekton-monitoring` cluster add-on, and **edp-headlamp** is removed from the platform chart.
+
+**codebase-operator** gets a substantially more robust git layer: CodebaseBranch operations move to a packless transport instead of full clones, create-strategy provisioning becomes idempotent and refuses destructive pushes, SSH host keys are verified for all git, GitServer and Gerrit connections, and TLS certificates are verified in integration secret connection checks. **gerrit-operator** is aligned with Gerrit 3.14 and drops its deprecated Keycloak integration.
+
+We continue to publish helpful video content on our [YouTube channel](https://www.youtube.com/@theplatformteam).
+
+### Breaking Changes
+
+* Tekton pipelines now execute under the unprivileged `tekton-unprivileged` ServiceAccount by default, and pipeline, interceptor, autotest and reporter Roles are reduced to the verbs and named secrets they exercise. Custom pipelines whose tasks call the Kubernetes API must name a ServiceAccount with the `app.edp.epam.com/service-account` annotation on the Pipeline, or set `taskRunTemplate.serviceAccountName` in a custom TriggerTemplate. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#697](https://github.com/epam/edp-tekton/pull/697), [#696](https://github.com/epam/edp-tekton/pull/696), [#693](https://github.com/epam/edp-tekton/pull/693), [#691](https://github.com/epam/edp-tekton/pull/691), [#689](https://github.com/epam/edp-tekton/pull/689))
+* Failed-step log publishing in pull request report comments is disabled by default (`reporter.logsReporting: false`), replacing best-effort secret masking with not reading pipeline secrets at all. Opt in globally, or per PipelineRun and GitServer with the `app.edp.epam.com/reporter-logs` annotation. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#694](https://github.com/epam/edp-tekton/pull/694), [#695](https://github.com/epam/edp-tekton/pull/695))
+* The Tekton pruner is removed in favor of Tekton Results. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#690](https://github.com/epam/edp-tekton/pull/690), [#581](https://github.com/epam/edp-install/pull/581))
+* Jira integration is removed from Tekton pipelines and from the build PipelineRun draft in the portal. ([EPMDEDP-17236](https://jiraeu.epam.com/browse/EPMDEDP-17236), [#676](https://github.com/epam/edp-tekton/pull/676), [#684](https://github.com/epam/edp-tekton/pull/684), [#359](https://github.com/KubeRocketCI/krci-portal/pull/359))
+* The legacy Grafana/Prometheus integration is removed from pipelines-library, superseded by the `tekton-monitoring` cluster add-on. Enabling both caused Prometheus to scrape the same endpoint twice and double every `sum()`-based dashboard panel. ([EPMDEDP-17266](https://jiraeu.epam.com/browse/EPMDEDP-17266), [#702](https://github.com/epam/edp-tekton/pull/702), [#582](https://github.com/epam/edp-install/pull/582))
+* `edp-headlamp` is removed from the platform chart. ([EPMDEDP-17210](https://jiraeu.epam.com/browse/EPMDEDP-17210), [#580](https://github.com/epam/edp-install/pull/580))
+* The deprecated Keycloak integration is removed from gerrit-operator. ([#97](https://github.com/epam/edp-gerrit-operator/pull/97))
+
+### Upgrades
+
+* Go base image bumped to `golang:1.25-trixie` for edp-tekton. ([EPMDEDP-17238](https://jiraeu.epam.com/browse/EPMDEDP-17238), [#677](https://github.com/epam/edp-tekton/pull/677))
+* gerrit-operator upgraded to Go 1.25, the Kubernetes 1.34 API and golangci-lint v2, with the default Gerrit image bumped for Gerrit 3.14. ([#97](https://github.com/epam/edp-gerrit-operator/pull/97))
+* Dependency and vulnerability bumps across the platform: `golang.org/x/net` 0.52.0 → 0.55.0 in GitFusion, `golang.org/x/crypto` 0.50.0 → 0.52.0 and `go-git` 5.13.0 → 5.19.2 in gerrit-operator, and `cel-go`, `grpc`, `go-git` and `oras-go` in codebase-operator and cd-pipeline-operator. ([#73](https://github.com/KubeRocketCI/gitfusion/pull/73), [#95](https://github.com/epam/edp-gerrit-operator/pull/95), [#96](https://github.com/epam/edp-gerrit-operator/pull/96), [#101](https://github.com/epam/edp-gerrit-operator/pull/101), [#313](https://github.com/epam/edp-codebase-operator/pull/313), [#300](https://github.com/epam/edp-codebase-operator/pull/300), [#299](https://github.com/epam/edp-codebase-operator/pull/299), [#210](https://github.com/epam/edp-cd-pipeline-operator/pull/210), [#209](https://github.com/epam/edp-cd-pipeline-operator/pull/209), [#208](https://github.com/epam/edp-cd-pipeline-operator/pull/208), [#207](https://github.com/epam/edp-cd-pipeline-operator/pull/207))
+
+### New Functionality
+
+* Added a ServiceAccount resolution mechanism for PipelineRuns: the krci interceptor reads the `app.edp.epam.com/service-account` annotation from the Pipeline and falls back to `tekton.defaultServiceAccount`. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#697](https://github.com/epam/edp-tekton/pull/697))
+* Added declarative custom Tekton Trigger registration: codebase-operator reconciles an EventListener `labelSelector` and the portal surfaces it in list and topology views. ([EPMDEDP-17247](https://jiraeu.epam.com/browse/EPMDEDP-17247), [#303](https://github.com/epam/edp-codebase-operator/pull/303), [#360](https://github.com/KubeRocketCI/krci-portal/pull/360))
+* Added a `gitlab-set-label` task for merge request label voting. ([EPMDEDP-17247](https://jiraeu.epam.com/browse/EPMDEDP-17247), [#686](https://github.com/epam/edp-tekton/pull/686))
+* Added a best-effort Argo CD diff preview to the GitOps review pipeline, rendering an MR manifest diff through the `argocd-diff-preview` cluster add-on (ALPHA, GitLab only; requires two flags). ([EPMDEDP-17228](https://jiraeu.epam.com/browse/EPMDEDP-17228), [#671](https://github.com/epam/edp-tekton/pull/671), [#704](https://github.com/epam/edp-tekton/pull/704))
+* Added GitHub review pipeline trigger restriction to allowed pull request authors. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#692](https://github.com/epam/edp-tekton/pull/692))
+* Added a normalized `gitUrlPath` hash label on Codebases, letting the interceptor resolve Codebases by label with a full-scan fallback. ([EPMDEDP-17250](https://jiraeu.epam.com/browse/EPMDEDP-17250), [#304](https://github.com/epam/edp-codebase-operator/pull/304), [#698](https://github.com/epam/edp-tekton/pull/698))
+* Added validation of Codebase deletion against deployment usage, returning structured errors instead of silently orphaning resources. ([EPMDEDP-17271](https://jiraeu.epam.com/browse/EPMDEDP-17271), [#312](https://github.com/epam/edp-codebase-operator/pull/312))
+* Added optional persistence of the portal SQLite session store on a PVC. ([EPMDEDP-17231](https://jiraeu.epam.com/browse/EPMDEDP-17231), [#351](https://github.com/KubeRocketCI/krci-portal/pull/351))
+* Added inline duplicate project detection in the portal create wizard. ([EPMDEDP-17229](https://jiraeu.epam.com/browse/EPMDEDP-17229), [#349](https://github.com/KubeRocketCI/krci-portal/pull/349))
+* Added optional SSH host key injection to gerrit-operator for predictable Gerrit host keys. ([#98](https://github.com/epam/edp-gerrit-operator/pull/98))
+* Added a chart-wide `image` block to edp-tekton so the interceptor and reporter Deployments resolve their image from the values the deploy flow sets. ([EPMDEDP-17269](https://jiraeu.epam.com/browse/EPMDEDP-17269), [#705](https://github.com/epam/edp-tekton/pull/705))
+
+### Enhancements
+
+* Report comments now carry a re-run hint and drop emoji status icons. ([EPMDEDP-17196](https://jiraeu.epam.com/browse/EPMDEDP-17196), [#683](https://github.com/epam/edp-tekton/pull/683))
+* Failed task rows are bolded in the report comment table, and a recreate comment strategy is available as an alternative to in-place updates. ([EPMDEDP-17263](https://jiraeu.epam.com/browse/EPMDEDP-17263), [#701](https://github.com/epam/edp-tekton/pull/701))
+* GitServer annotations are passed through to the generated GitServer resource. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#695](https://github.com/epam/edp-tekton/pull/695))
+* SonarQube projects are created without going through the Kubernetes API, and the unused `TENANT_NAME` result is dropped from `init-values`. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#687](https://github.com/epam/edp-tekton/pull/687))
+* Host IPC access is denied in the interceptor SecurityContextConstraints on OpenShift. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#693](https://github.com/epam/edp-tekton/pull/693))
+* Chart tests and Python caches are excluded from the packaged edp-tekton chart. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#693](https://github.com/epam/edp-tekton/pull/693))
+* Removed dead git methods and vestigial CodebaseBranch workdir cleanup from codebase-operator. ([EPMDEDP-17257](https://jiraeu.epam.com/browse/EPMDEDP-17257), [#309](https://github.com/epam/edp-codebase-operator/pull/309))
+* Expanded gerrit-operator controller test coverage across all reconciliation paths. ([#97](https://github.com/epam/edp-gerrit-operator/pull/97))
+
+### Fixed Issues
+
+* Fixed build reporters voting on the wrong commit: GitHub, GitLab and Bitbucket build reporters now vote on the cloned commit, and a `Completed` aggregate without a cancel reason is reported as success. ([EPMDEDP-17241](https://jiraeu.epam.com/browse/EPMDEDP-17241), [#682](https://github.com/epam/edp-tekton/pull/682))
+* Fixed timed-out pipelines never reporting commit status by reserving a `finally` budget. ([EPMDEDP-17203](https://jiraeu.epam.com/browse/EPMDEDP-17203), [#679](https://github.com/epam/edp-tekton/pull/679))
+* Fixed the GitLab start commit status not always being posted as `running`. ([EPMDEDP-17203](https://jiraeu.epam.com/browse/EPMDEDP-17203), [#685](https://github.com/epam/edp-tekton/pull/685))
+* Fixed PipelineRuns being stopped abruptly in the portal, so `finally` tasks now report the VCS commit status. ([EPMDEDP-17203](https://jiraeu.epam.com/browse/EPMDEDP-17203), [#358](https://github.com/KubeRocketCI/krci-portal/pull/358))
+* Fixed archived PipelineRuns with an unfinalized Tekton Results summary rendering as **Running** instead of terminal. ([EPMDEDP-17203](https://jiraeu.epam.com/browse/EPMDEDP-17203), [#348](https://github.com/KubeRocketCI/krci-portal/pull/348))
+* Fixed PipelineRun history timestamps not resolving across both Tekton Results watcher generations. ([EPMDEDP-17264](https://jiraeu.epam.com/browse/EPMDEDP-17264), [#363](https://github.com/KubeRocketCI/krci-portal/pull/363))
+* Fixed Bitbucket review pipelines being retriggered on metadata-only pull request updates. ([EPMDEDP-17224](https://jiraeu.epam.com/browse/EPMDEDP-17224), [#674](https://github.com/epam/edp-tekton/pull/674))
+* Fixed Helm chart publishing to ECR. ([EPMDEDP-17239](https://jiraeu.epam.com/browse/EPMDEDP-17239), [#678](https://github.com/epam/edp-tekton/pull/678))
+* Fixed permanent report skips being logged at the wrong level. ([EPMDEDP-17196](https://jiraeu.epam.com/browse/EPMDEDP-17196), [#699](https://github.com/epam/edp-tekton/pull/699))
+* Replaced clone-based CodebaseBranch git operations with a packless transport. ([EPMDEDP-17251](https://jiraeu.epam.com/browse/EPMDEDP-17251), [#305](https://github.com/epam/edp-codebase-operator/pull/305))
+* Made create-strategy provisioning idempotent and made it refuse destructive pushes. ([EPMDEDP-17252](https://jiraeu.epam.com/browse/EPMDEDP-17252), [#308](https://github.com/epam/edp-codebase-operator/pull/308))
+* Fixed remote checkout to check the fetched ref namespace and force-fetch. ([EPMDEDP-17253](https://jiraeu.epam.com/browse/EPMDEDP-17253), [#307](https://github.com/epam/edp-codebase-operator/pull/307))
+* Removed a stray `init` master branch before pushing operator-authored repositories. ([EPMDEDP-17254](https://jiraeu.epam.com/browse/EPMDEDP-17254), [#306](https://github.com/epam/edp-codebase-operator/pull/306))
+* Added SSH host key verification for all git, GitServer and Gerrit connections. ([EPMDEDP-17256](https://jiraeu.epam.com/browse/EPMDEDP-17256), [#310](https://github.com/epam/edp-codebase-operator/pull/310))
+* Added TLS certificate verification to integration secret connection checks. ([EPMDEDP-17262](https://jiraeu.epam.com/browse/EPMDEDP-17262), [#311](https://github.com/epam/edp-codebase-operator/pull/311))
+* Fixed the scaffolded Helm chart README drifting from `helm-docs` output. ([EPMDEDP-17244](https://jiraeu.epam.com/browse/EPMDEDP-17244), [#302](https://github.com/epam/edp-codebase-operator/pull/302))
+* Fixed branch deletion in the portal being validated client-side by guesswork instead of against the operator webhook. ([EPMDEDP-17270](https://jiraeu.epam.com/browse/EPMDEDP-17270), [#365](https://github.com/KubeRocketCI/krci-portal/pull/365))
+* Fixed the TriggerTemplate ServiceAccount placeholder not resolving for portal-started PipelineRuns. ([EPMDEDP-17267](https://jiraeu.epam.com/browse/EPMDEDP-17267), [#364](https://github.com/KubeRocketCI/krci-portal/pull/364))
+* Fixed pipeline tasks not being bound to their own TaskRun. ([EPMDEDP-17234](https://jiraeu.epam.com/browse/EPMDEDP-17234), [#355](https://github.com/KubeRocketCI/krci-portal/pull/355))
+* Fixed the `edpDefault` HTTPRoute hostname sentinel in the portal chart template. ([EPMDEDP-17232](https://jiraeu.epam.com/browse/EPMDEDP-17232), [#352](https://github.com/KubeRocketCI/krci-portal/pull/352))
+* Fixed the portal SQLite database directory not being writable by the non-root runtime user. ([EPMDEDP-17231](https://jiraeu.epam.com/browse/EPMDEDP-17231), [#353](https://github.com/KubeRocketCI/krci-portal/pull/353))
+* Hardened portal integration configuration against SSRF probing and stored XSS, and removed a ReDoS-prone regex from git URL path normalization. ([EPMDEDP-17229](https://jiraeu.epam.com/browse/EPMDEDP-17229), [#350](https://github.com/KubeRocketCI/krci-portal/pull/350), [#354](https://github.com/KubeRocketCI/krci-portal/pull/354))
+* Fixed Gerrit caches not being flushed after installing the All-Projects ACL. ([#100](https://github.com/epam/edp-gerrit-operator/pull/100))
+* Aligned Gerrit provisioning with Gerrit 3.14: restore site-owner ownership of `All-Users` and `All-Projects` after provisioning, drop the `plugin-manager` plugin, and replace the fixed readiness delay with a startup probe. ([#97](https://github.com/epam/edp-gerrit-operator/pull/97))
+
+### Documentation
+
+The [Getting Started](https://docs.kuberocketci.io/docs/about-platform) section is updated with the following:
+
+* The [Supported Versions and Compatibility](https://docs.kuberocketci.io/docs/supported-versions) page has been updated for the 3.15 release.
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+
+* The Tekton pipeline monitoring documentation has been rewritten around the `tekton-monitoring` cluster add-on. ([EPMDEDP-17266](https://jiraeu.epam.com/browse/EPMDEDP-17266), [#407](https://github.com/KubeRocketCI/docs/pull/407))
+* The [Tekton Long-Term Storage](https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-long-term-storage) page has been aligned to Tekton Results v0.20.0 and documents the required database indexes. ([EPMDEDP-17261](https://jiraeu.epam.com/browse/EPMDEDP-17261), [#404](https://github.com/KubeRocketCI/docs/pull/404))
+* The remote cluster integration procedure has been corrected across the user and operator guides. ([EPMDEDP-17261](https://jiraeu.epam.com/browse/EPMDEDP-17261), [#405](https://github.com/KubeRocketCI/docs/pull/405))
+* A blog post on using vcluster as an isolated deployment target has been added. ([EPMDEDP-17261](https://jiraeu.epam.com/browse/EPMDEDP-17261), [#406](https://github.com/KubeRocketCI/docs/pull/406))
+* The upgrade guide details have been extended. ([EPMDEDP-17210](https://jiraeu.epam.com/browse/EPMDEDP-17210), [#401](https://github.com/KubeRocketCI/docs/pull/401))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+
+* A guide for declarative custom Tekton Trigger registration has been added. ([EPMDEDP-17247](https://jiraeu.epam.com/browse/EPMDEDP-17247), [#402](https://github.com/KubeRocketCI/docs/pull/402))
+* A guide for publishing SonarQube reports to pull requests has been added, together with pull request decorator troubleshooting details. ([EPMDEDP-17222](https://jiraeu.epam.com/browse/EPMDEDP-17222), [#399](https://github.com/KubeRocketCI/docs/pull/399), [#400](https://github.com/KubeRocketCI/docs/pull/400))
+* The Bitbucket token permissions have been updated. ([EPMDEDP-16708](https://jiraeu.epam.com/browse/EPMDEDP-16708), [#403](https://github.com/KubeRocketCI/docs/pull/403))
 
 ## Version 3.14.1 <a name="3.14.1"></a> (July 20, 2026)
 
