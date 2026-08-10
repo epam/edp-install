@@ -10,14 +10,30 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v3.15.0"></a>
+## [v3.15.0] - 2026-08-10
 ### Routine
 
+- Update current development version
+- Drop the edp-tekton grafana passthrough
+- Drop the edp-tekton pruner override
+- Remove edp-headlamp
+- Update current development version
 - Update current development version
 
 ### Documentation
 
+- Add 3.14.1 release to RELEASES.md
 - Complete 3.14.0 release notes with missing fixes
 - Add 3.14 release to RELEASES.md
+
+
+<a name="v3.14.1"></a>
+## [v3.14.1] - 2026-07-20
+### Routine
+
+- Update current development version
 
 
 <a name="v3.14.0"></a>
@@ -805,7 +821,9 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.14.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.15.0...HEAD
+[v3.15.0]: https://github.com/epam/edp-install/compare/v3.14.1...v3.15.0
+[v3.14.1]: https://github.com/epam/edp-install/compare/v3.14.0...v3.14.1
 [v3.14.0]: https://github.com/epam/edp-install/compare/v3.13.5...v3.14.0
 [v3.13.5]: https://github.com/epam/edp-install/compare/v3.13.4...v3.13.5
 [v3.13.4]: https://github.com/epam/edp-install/compare/v3.13.3...v3.13.4
