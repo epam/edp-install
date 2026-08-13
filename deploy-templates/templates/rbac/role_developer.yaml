@@ -23,6 +23,7 @@ rules:
       - list
       - watch
       - create
+      - patch
   - apiGroups:
       - tekton.dev
     resources:
