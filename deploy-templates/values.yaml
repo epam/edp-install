@@ -731,15 +731,14 @@ krci-portal:
     # DEPENDENCY_TRACK_WEB_URL: https://deptrack-public.example.com
     GITFUSION_URL: http://gitfusion.krci:8080
 
-  # -- Extends envFrom for the Deployment definition.
-  # we expect to deserialize key-value pairs from the secret, e.g
-  # FOO: "BAR"
-  # All sensitive data should be stored in the secret.
-  # extraEnvFrom:
-  #   - secretRef:
-  #       name: portal-secret
-  #   - configMapRef:
-  #       name: portal-config
+  # -- Sources of the portal environment (envFrom of the Deployment). The portal does not start without them.
+  # The `portal-config` ConfigMap is rendered from `configEnv`. The `portal-secret` Secret keeps the sensitive data:
+  # it must hold `SERVER_SECRET` and is created manually or by `eso`. Until the Secret exists, the pod stays in `CreateContainerConfigError`.
+  extraEnvFrom:
+    - secretRef:
+        name: portal-secret
+    - configMapRef:
+        name: portal-config
 
   eso:
     # -- Install components of the ESO.
