@@ -97,7 +97,6 @@ A Helm chart for KubeRocketCI Platform
 | krci-portal.configEnv.SERVER_PORT | int | `3000` |  |
 | krci-portal.configEnv.SONAR_HOST_URL | string | `"https://sonar.example.com/"` |  |
 | krci-portal.configEnv.TEKTON_RESULTS_URL | string | `"https://tekton-results.example.com"` |  |
-| krci-portal.eso | object | `{"apiVersion":"external-secrets.io/v1","aws":{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"},"enabled":false,"provider":"aws","secretPath":"/edp/deploy-secrets"}` | Extends envFrom for the Deployment definition. we expect to deserialize key-value pairs from the secret, e.g FOO: "BAR" All sensitive data should be stored in the secret. extraEnvFrom:   - secretRef:       name: portal-secret   - configMapRef:       name: portal-config |
 | krci-portal.eso.apiVersion | string | `"external-secrets.io/v1"` | Defines API version for the ExternalSecret resource. |
 | krci-portal.eso.aws | object | `{"region":"eu-central-1","roleArn":"arn:aws:iam::012345678910:role/AWSIRSA_Shared_ExternalSecretOperatorAccess"}` | AWS configuration (if provider is `aws`). |
 | krci-portal.eso.aws.region | string | `"eu-central-1"` | AWS region. |
@@ -105,6 +104,7 @@ A Helm chart for KubeRocketCI Platform
 | krci-portal.eso.enabled | bool | `false` | Install components of the ESO. |
 | krci-portal.eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
 | krci-portal.eso.secretPath | string | `"/edp/deploy-secrets"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
+| krci-portal.extraEnvFrom | list | `[{"secretRef":{"name":"portal-secret"}},{"configMapRef":{"name":"portal-config"}}]` | Sources of the portal environment (envFrom of the Deployment). The portal does not start without them. The `portal-config` ConfigMap is rendered from `configEnv`. The `portal-secret` Secret keeps the sensitive data: it must hold `SERVER_SECRET` and is created manually or by `eso`. Until the Secret exists, the pod stays in `CreateContainerConfigError`. |
 | krci-portal.ingress.dnsWildcard | string | `""` |  |
 | krci-portal.ingress.enabled | bool | `true` |  |
 | marketplaceTemplates | object | `{"enabled":true}` | This block is a configuration section that controls the creation of the default marketplace templates. |
