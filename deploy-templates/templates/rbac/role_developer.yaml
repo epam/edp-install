@@ -13,50 +13,40 @@ rules:
       - create
       - update
       - delete
+  # PipelineRuns: create starts a run, patch stops it.
   - apiGroups:
       - tekton.dev
     resources:
       - pipelineruns
-      - taskruns
     verbs:
       - get
       - list
       - watch
       - create
       - patch
+  # Pipeline, Task and trigger definitions change only through the GitOps repository.
   - apiGroups:
       - tekton.dev
     resources:
+      - taskruns
       - pipelines
       - tasks
     verbs:
       - get
       - list
       - watch
-      - patch
-      - create
-      - update
-      - delete
   - apiGroups:
       - triggers.tekton.dev
     resources:
       - interceptors
       - triggertemplates
       - eventlisteners
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - triggers.tekton.dev
-    resources:
       - triggerbindings
       - triggers
     verbs:
       - get
       - list
       - watch
-      - create
   - apiGroups:
       - ''
     resources:
