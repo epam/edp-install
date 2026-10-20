@@ -1,6 +1,6 @@
 # edp-install
 
-![Version: 3.16.0-SNAPSHOT](https://img.shields.io/badge/Version-3.16.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.16.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.16.0--SNAPSHOT-informational?style=flat-square)
+![Version: 3.17.0-SNAPSHOT](https://img.shields.io/badge/Version-3.17.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.17.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-3.17.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for KubeRocketCI Platform
 
@@ -21,12 +21,12 @@ A Helm chart for KubeRocketCI Platform
 
 | Repository | Name | Version |
 |------------|------|---------|
-| @epamedp | cd-pipeline-operator | 2.32.0 |
-| @epamedp | codebase-operator | 2.35.0 |
-| @epamedp | edp-tekton | 0.27.0 |
+| @epamedp | cd-pipeline-operator | 2.33.1 |
+| @epamedp | codebase-operator | 2.36.0 |
+| @epamedp | edp-tekton | 0.28.0 |
 | @epamedp | gerrit-operator | 2.25.0 |
-| @epamedp | gitfusion | 0.6.1 |
-| @epamedp | krci-portal | 0.8.0 |
+| @epamedp | gitfusion | 0.7.0 |
+| @epamedp | krci-portal | 0.9.0 |
 
 ## Values
 
@@ -105,8 +105,6 @@ A Helm chart for KubeRocketCI Platform
 | krci-portal.eso.provider | string | `"aws"` | Defines provider type. One of `aws`, `generic`, or `vault`. |
 | krci-portal.eso.secretPath | string | `"/edp/deploy-secrets"` | Defines the path to the secret in the provider. If provider is `vault`, this is the path must be prefixed with `secret/`. |
 | krci-portal.extraEnvFrom | list | `[{"secretRef":{"name":"portal-secret"}},{"configMapRef":{"name":"portal-config"}}]` | Sources of the portal environment (envFrom of the Deployment). The portal does not start without them. The `portal-config` ConfigMap is rendered from `configEnv`. The `portal-secret` Secret keeps the sensitive data: it must hold `SERVER_SECRET` and is created manually or by `eso`. Until the Secret exists, the pod stays in `CreateContainerConfigError`. |
-| krci-portal.ingress.dnsWildcard | string | `""` |  |
-| krci-portal.ingress.enabled | bool | `true` |  |
 | marketplaceTemplates | object | `{"enabled":true}` | This block is a configuration section that controls the creation of the default marketplace templates. |
 | quickLinks | object | `` | Define platform Quick Links, more details: https://github.com/epam/edp-codebase-operator/ Example: "https://argocd.example.com" |
 | quickLinks.logging.provider | string | `""` | Define the provider name for correct URL generation. Available providers: "opensearch", "datadog". If the provider name is not specified, the base URL will be used. |

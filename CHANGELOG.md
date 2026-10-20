@@ -11,6 +11,26 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
+<a name="v3.16.0"></a>
+## [v3.16.0] - 2026-10-20
+### Bug Fixes
+
+- Make Tekton definitions and TaskRuns read-only for developers
+- Wire the portal environment sources by default
+- allow developers to cancel pipeline and task runs
+
+### Routine
+
+- Update current development version
+- Bump Go to 1.26.9
+- Update current development version
+
+### Documentation
+
+- Polish 3-15 release notes
+- Add 3.15 release to RELEASES.md
+
+
 <a name="v3.15.0"></a>
 ## [v3.15.0] - 2026-08-10
 ### Routine
@@ -821,7 +841,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.15.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.16.0...HEAD
+[v3.16.0]: https://github.com/epam/edp-install/compare/v3.15.0...v3.16.0
 [v3.15.0]: https://github.com/epam/edp-install/compare/v3.14.1...v3.15.0
 [v3.14.1]: https://github.com/epam/edp-install/compare/v3.14.0...v3.14.1
 [v3.14.0]: https://github.com/epam/edp-install/compare/v3.13.5...v3.14.0
