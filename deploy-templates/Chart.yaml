@@ -23,17 +23,17 @@ sources:
 dependencies:
 - name: codebase-operator
   repository: "@epamedp"
-  version: "2.35.0"
+  version: "2.36.0"
   condition: codebase-operator.enabled
 
 - name: edp-tekton
   repository: "@epamedp"
-  version: "0.27.0"
+  version: "0.28.0"
   condition: edp-tekton.enabled
 
 - name: cd-pipeline-operator
   repository: "@epamedp"
-  version: "2.32.0"
+  version: "2.33.1"
   condition: cd-pipeline-operator.enabled
 
 - name: gerrit-operator
@@ -43,12 +43,12 @@ dependencies:
 
 - name: gitfusion
   repository: "@epamedp"
-  version: "0.6.1"
+  version: "0.7.0"
   condition: gitfusion.enabled
 
 - name: krci-portal
   repository: "@epamedp"
-  version: "0.8.0"
+  version: "0.9.0"
   condition: krci-portal.enabled
 
 annotations:

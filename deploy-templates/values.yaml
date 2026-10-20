@@ -698,10 +698,6 @@ gitfusion:
   enabled: true
 
 krci-portal:
-  ingress:
-    enabled: true
-    dnsWildcard: ""
-
   configEnv:
     API_PREFIX: /api
     DEFAULT_CLUSTER_NAME: core
