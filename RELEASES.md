@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.16.0](#3.16.0)
 * [Version 3.15.0](#3.15.0)
 * [Version 3.14.1](#3.14.1)
 * [Version 3.14.0](#3.14.0)
@@ -15,6 +16,118 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 3.13.0](#3.13.0)
 
 For earlier releases, please refer to the [OLD-RELEASES.md](OLD-RELEASES.md) file.
+
+## Version 3.16.0 <a name="3.16.0"></a> (October 20, 2026)
+
+### What's New
+
+KubeRocketCI 3.16.0 tightens who can change platform configuration. Developers now have read-only access to Tekton Pipelines, Tasks, Triggers and TriggerBindings in the platform namespace, and the Tekton configuration of the cluster add-ons rejects PipelineRuns and TaskRuns with an embedded spec, so what runs on the cluster comes from definitions managed through GitOps. Developers can still start and stop runs. The platform operators and the Tekton EventListener also run with reduced permissions.
+
+The **portal** is faster and more predictable: tabs, dialogs and lists load only what they show, and tabs keep their state when you switch back to them. Additionally, you can now stop several PipelineRuns at once from the list and resize table columns.
+
+Environments that KEDA scales to zero now **wake up on the first request**. The new `krci-env-daemon` add-on starts the environment and shows a waiting page while its workloads come up. A **Kyverno** add-on is also available for admission policies.
+
+We continue to publish helpful video content on our [YouTube channel](https://www.youtube.com/@theplatformteam). Here's the latest content:
+
+* [From Bug to PR - contributing to KubeRocketCI with AI agents](https://www.youtube.com/watch?v=cmS6t4dduWM)
+* [The Repo that Wires Your Cluster - Add-ons](https://www.youtube.com/watch?v=g_0wiMeY5gs)
+* [Pipelines Your Way - KubeRocketCI](https://www.youtube.com/watch?v=_zCDUgsKfo0)
+* [The Invisible Foundation of CICD - Git Servers](https://www.youtube.com/watch?v=LGl8XDg4Txc)
+* [AI-Ready CLI for CICD — KubeRocketCI](https://www.youtube.com/watch?v=MeXdWrmQDSc)
+* [KubeRocketCI: GitOps Overview](https://www.youtube.com/watch?v=wyN5u40KtkM)
+* [KubeRocketCI Quick Links: How to Add and Customize Navigation](https://www.youtube.com/watch?v=4L8u6RgcJWU)
+
+### Breaking Changes
+
+* The portal Ingress is no longer enabled by default: `krci-portal.ingress.enabled: true` is removed from the `edp-install` values, so the upgrade deletes the `krci-portal` Ingress and the portal stops being served at its Ingress host. Set `krci-portal.ingress.enabled: true`, or serve the portal through `krci-portal.httproute`, to keep it reachable. ([EPMDEDP-17408](https://jiraeu.epam.com/browse/EPMDEDP-17408), [#592](https://github.com/epam/edp-install/pull/592))
+* GitFusion health probe overrides that set `tcpSocket`, `exec` or `grpc` fail the upgrade, because the probes now use HTTP `/healthz`. ([EPMDEDP-17383](https://jiraeu.epam.com/browse/EPMDEDP-17383), [#88](https://github.com/KubeRocketCI/gitfusion/pull/88))
+* .NET builds with default versioning now take the version from the `<Version>` of the project and fail at the `get-version` task without it. Add a `<Version>` to every deployable `.csproj` before upgrading. ([EPMDEDP-17230](https://jiraeu.epam.com/browse/EPMDEDP-17230), [#672](https://github.com/epam/edp-tekton/pull/672))
+
+### Upgrades
+
+* GitFusion upgraded from 0.6.1 to 0.7.0. ([EPMDEDP-17381](https://jiraeu.epam.com/browse/EPMDEDP-17381), [#86](https://github.com/KubeRocketCI/gitfusion/pull/86), [#87](https://github.com/KubeRocketCI/gitfusion/pull/87), [#94](https://github.com/KubeRocketCI/gitfusion/pull/94), [#79](https://github.com/KubeRocketCI/gitfusion/pull/79), [#78](https://github.com/KubeRocketCI/gitfusion/pull/78)) ([EPMDEDP-17383](https://jiraeu.epam.com/browse/EPMDEDP-17383), [#96](https://github.com/KubeRocketCI/gitfusion/pull/96), [#92](https://github.com/KubeRocketCI/gitfusion/pull/92))
+* Go bumped to 1.26.9 across edp-install, edp-tekton, codebase-operator, cd-pipeline-operator, GitFusion and the portal. ([EPMDEDP-17381](https://jiraeu.epam.com/browse/EPMDEDP-17381), [#589](https://github.com/epam/edp-install/pull/589), [#717](https://github.com/epam/edp-tekton/pull/717), [#323](https://github.com/epam/edp-codebase-operator/pull/323), [#219](https://github.com/epam/edp-cd-pipeline-operator/pull/219), [#95](https://github.com/KubeRocketCI/gitfusion/pull/95), [#427](https://github.com/KubeRocketCI/krci-portal/pull/427))
+* The portal Node.js base image is bumped to 22.23.3, and vulnerable dependencies are updated for `@fastify/static` 10. ([EPMDEDP-17381](https://jiraeu.epam.com/browse/EPMDEDP-17381), [#428](https://github.com/KubeRocketCI/krci-portal/pull/428), [#429](https://github.com/KubeRocketCI/krci-portal/pull/429), [#430](https://github.com/KubeRocketCI/krci-portal/pull/430))
+
+### New Functionality
+
+* Added the `krci-env-daemon` add-on that wakes KEDA-scaled environments on the first request through Envoy Gateway, shows a waiting page while the workloads start, and lets KEDA scale them to zero after an idle window (15 minutes by default). It is disabled by default: enable it together with `krciEnvDaemon.enabled` in `envoy-gateway-resources` and `trigger: krci-env-daemon` in `keda-tenants`. ([EPMDEDP-17382](https://jiraeu.epam.com/browse/EPMDEDP-17382), [#460](https://github.com/epam/edp-cluster-add-ons/pull/460))
+* Added the Kyverno add-on (chart 3.9.0, Kyverno 1.19.0) in admission-only mode as the policy engine for admission guardrails. It is disabled by default and ships no policies yet. ([EPMDEDP-17300](https://jiraeu.epam.com/browse/EPMDEDP-17300), [#451](https://github.com/epam/edp-cluster-add-ons/pull/451))
+* Added bulk stopping of selected PipelineRuns from the portal list. Stopping stays graceful, so `finally` tasks still report the commit status. ([EPMDEDP-17362](https://jiraeu.epam.com/browse/EPMDEDP-17362), [#412](https://github.com/KubeRocketCI/krci-portal/pull/412))
+* Added the `POST /rest/v1/pipelineruns/build` REST endpoint that starts the build pipeline of a codebase branch like the **Build** button. ([EPMDEDP-17346](https://jiraeu.epam.com/browse/EPMDEDP-17346), [#403](https://github.com/KubeRocketCI/krci-portal/pull/403))
+* Added resizable table columns in the portal: drag the header edge to change a column width. ([EPMDEDP-17331](https://jiraeu.epam.com/browse/EPMDEDP-17331), [#381](https://github.com/KubeRocketCI/krci-portal/pull/381))
+* Added URL-driven filters on the Pipeline Metrics page, so the selected codebase and time range survive reloads and can be shared. ([EPMDEDP-17247](https://jiraeu.epam.com/browse/EPMDEDP-17247), [#380](https://github.com/KubeRocketCI/krci-portal/pull/380))
+* Added air-gapped cluster support in the portal: the YAML editor (Monaco) and fonts are served from the bundle instead of jsDelivr and Google Fonts. ([EPMDEDP-17341](https://jiraeu.epam.com/browse/EPMDEDP-17341), [#399](https://github.com/KubeRocketCI/krci-portal/pull/399))
+* Added a **Cluster Certificate** field to the portal when TLS verification is enabled, so clusters behind a private CA can be added. ([EPMDEDP-17286](https://jiraeu.epam.com/browse/EPMDEDP-17286), [#369](https://github.com/KubeRocketCI/krci-portal/pull/369))
+* Added Next.js to the JavaScript library frameworks in the portal. ([EPMDEDP-17293](https://jiraeu.epam.com/browse/EPMDEDP-17293), [#373](https://github.com/KubeRocketCI/krci-portal/pull/373))
+* Added permission for developers to cancel PipelineRuns and TaskRuns. ([EPMDEDP-17287](https://jiraeu.epam.com/browse/EPMDEDP-17287), [#587](https://github.com/epam/edp-install/pull/587))
+* Added a `REF` parameter to the `gitlab-set-status` task so a commit status can join a GitLab merge request pipeline. ([EPMDEDP-17350](https://jiraeu.epam.com/browse/EPMDEDP-17350), [#716](https://github.com/epam/edp-tekton/pull/716))
+* Added a `CACHE_MAX_AGE_DAYS` parameter to the `save-cache` task to configure how long the cache archive is considered fresh. ([EPMDEDP-17318](https://jiraeu.epam.com/browse/EPMDEDP-17318), [#713](https://github.com/epam/edp-tekton/pull/713))
+
+### Enhancements
+
+* Made Tekton Pipelines, Tasks, TaskRuns, Triggers and TriggerBindings read-only for developers in the platform namespace: developers keep `create` and `patch` on PipelineRuns, so the portal **Stop** action now needs `patch` instead of `update`. To keep editing, move definitions to a Git repository delivered through Argo CD, or add a Role through `extraObjects`. ([EPMDEDP-17405](https://jiraeu.epam.com/browse/EPMDEDP-17405), [#590](https://github.com/epam/edp-install/pull/590))
+* Disabled inline specs in the Tekton configuration of the cluster add-ons: PipelineRuns and TaskRuns must reference an existing Pipeline or Task. ([EPMDEDP-17300](https://jiraeu.epam.com/browse/EPMDEDP-17300), [#458](https://github.com/epam/edp-cluster-add-ons/pull/458))
+* Reduced the permissions of codebase-operator, cd-pipeline-operator, GitFusion and the Tekton EventListener ServiceAccount to those they use: the operators no longer hold the `admin` ClusterRole, the EventListener no longer reads Secrets, and cd-pipeline-operator uses leader election. ([EPMDEDP-17305](https://jiraeu.epam.com/browse/EPMDEDP-17305), [#316](https://github.com/epam/edp-codebase-operator/pull/316)) ([EPMDEDP-17306](https://jiraeu.epam.com/browse/EPMDEDP-17306), [#212](https://github.com/epam/edp-cd-pipeline-operator/pull/212)) ([EPMDEDP-17302](https://jiraeu.epam.com/browse/EPMDEDP-17302), [#75](https://github.com/KubeRocketCI/gitfusion/pull/75)) ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#711](https://github.com/epam/edp-tekton/pull/711))
+* Limited the `edp-system` SecretStore of each Environment to the `regcred` Secret, and added support for both v1 and v1beta1 External Secrets APIs. ([EPMDEDP-17307](https://jiraeu.epam.com/browse/EPMDEDP-17307), [#221](https://github.com/epam/edp-cd-pipeline-operator/pull/221))
+* Wired the portal environment sources by default: the portal reads the `portal-secret` Secret and the `portal-config` ConfigMap, and its pod no longer restarts in a loop without them. ([EPMDEDP-17380](https://jiraeu.epam.com/browse/EPMDEDP-17380), [#588](https://github.com/epam/edp-install/pull/588))
+* Improved portal loading speed: tabs, dialogs and the Codebase Dependencies tab load on first use, Applications tabs request only the named Codebases, CodebaseBranches and CodebaseImageStreams, the PipelineRun details page no longer lists all Tasks, and hashed client assets are cached. ([EPMDEDP-17367](https://jiraeu.epam.com/browse/EPMDEDP-17367), [#415](https://github.com/KubeRocketCI/krci-portal/pull/415), [#417](https://github.com/KubeRocketCI/krci-portal/pull/417), [#418](https://github.com/KubeRocketCI/krci-portal/pull/418), [#419](https://github.com/KubeRocketCI/krci-portal/pull/419)) ([EPMDEDP-17370](https://jiraeu.epam.com/browse/EPMDEDP-17370), [#416](https://github.com/KubeRocketCI/krci-portal/pull/416))
+* Unified table behavior in the portal: one table shell with server pagination, consistent text clipping in cells, restored column visibility, and one shared PipelineRun and TaskRun status classification. ([EPMDEDP-17337](https://jiraeu.epam.com/browse/EPMDEDP-17337), [#393](https://github.com/KubeRocketCI/krci-portal/pull/393), [#386](https://github.com/KubeRocketCI/krci-portal/pull/386), [#388](https://github.com/KubeRocketCI/krci-portal/pull/388), [#391](https://github.com/KubeRocketCI/krci-portal/pull/391)) ([EPMDEDP-17334](https://jiraeu.epam.com/browse/EPMDEDP-17334), [#382](https://github.com/KubeRocketCI/krci-portal/pull/382), [#383](https://github.com/KubeRocketCI/krci-portal/pull/383), [#384](https://github.com/KubeRocketCI/krci-portal/pull/384), [#385](https://github.com/KubeRocketCI/krci-portal/pull/385))
+* Full status and condition messages are shown on hover in the portal. ([EPMDEDP-17354](https://jiraeu.epam.com/browse/EPMDEDP-17354), [#409](https://github.com/KubeRocketCI/krci-portal/pull/409))
+* The **Platform Resource Usage** indicator finds tenant quotas labelled `projectcapsule.dev/tenant` (Capsule 0.14). ([EPMDEDP-17309](https://jiraeu.epam.com/browse/EPMDEDP-17309), [#435](https://github.com/KubeRocketCI/krci-portal/pull/435), [#437](https://github.com/KubeRocketCI/krci-portal/pull/437))
+* The git server secret name in the portal is derived from the server name. ([EPMDEDP-17319](https://jiraeu.epam.com/browse/EPMDEDP-17319), [#377](https://github.com/KubeRocketCI/krci-portal/pull/377))
+* The portal falls back to `global.dnsWildCard` for the default host. ([EPMDEDP-17380](https://jiraeu.epam.com/browse/EPMDEDP-17380), [#423](https://github.com/KubeRocketCI/krci-portal/pull/423))
+* GitFusion errors in the portal show the request ID and actionable text, and upstream failures of SonarQube, Dependency-Track and Tekton Results on REST routes map to `502`, `503` or `504` instead of `500`. ([EPMDEDP-17383](https://jiraeu.epam.com/browse/EPMDEDP-17383), [#425](https://github.com/KubeRocketCI/krci-portal/pull/425)) ([EPMDEDP-17377](https://jiraeu.epam.com/browse/EPMDEDP-17377), [#422](https://github.com/KubeRocketCI/krci-portal/pull/422))
+* The portal REST error envelope is built from allow-listed constants, and CEL filters are validated at the tRPC boundary. ([EPMDEDP-17385](https://jiraeu.epam.com/browse/EPMDEDP-17385), [#426](https://github.com/KubeRocketCI/krci-portal/pull/426)) ([EPMDEDP-17384](https://jiraeu.epam.com/browse/EPMDEDP-17384), [#424](https://github.com/KubeRocketCI/krci-portal/pull/424))
+* The pnpm task installs through the registry of the mounted npm settings ConfigMap, an overridden Python settings ConfigMap must exist and hold all four keys, and the shared npm task exports `NPM_CACHE_DIR` so cache paths resolve correctly. ([EPMDEDP-17290](https://jiraeu.epam.com/browse/EPMDEDP-17290), [#708](https://github.com/epam/edp-tekton/pull/708)) ([EPMDEDP-17292](https://jiraeu.epam.com/browse/EPMDEDP-17292), [#709](https://github.com/epam/edp-tekton/pull/709)) ([EPMDEDP-17291](https://jiraeu.epam.com/browse/EPMDEDP-17291), [#707](https://github.com/epam/edp-tekton/pull/707))
+
+### Fixed Issues
+
+* Fixed the Resource Health widget on the Platform Overview page: the donut now draws every counted state instead of 2 of 5, a failed watch is no longer shown as an empty namespace, and a background refresh no longer blanks the card. ([EPMDEDP-17337](https://jiraeu.epam.com/browse/EPMDEDP-17337), [#387](https://github.com/KubeRocketCI/krci-portal/pull/387))
+* Fixed security-scan PipelineRuns ending `Failed` with `CouldntGetPipelineResult` when DefectDojo is not configured: they now succeed with an empty `SCAN_REPORT_URL` result. ([EPMDEDP-17376](https://jiraeu.epam.com/browse/EPMDEDP-17376))
+* Fixed review reports being posted twice and being published for cancelled or stopped runs, which now get the `app.edp.epam.com/pipeline-reported: skipped` annotation. ([EPMDEDP-17301](https://jiraeu.epam.com/browse/EPMDEDP-17301), [#710](https://github.com/epam/edp-tekton/pull/710), [#436](https://github.com/KubeRocketCI/krci-portal/pull/436))
+* Fixed Gerrit helm review pipelines to run `helm-docs` after the checkout. ([EPMDEDP-17339](https://jiraeu.epam.com/browse/EPMDEDP-17339), [#715](https://github.com/epam/edp-tekton/pull/715))
+* Fixed deletion webhooks ignoring CDPipelines that are being deleted when checking whether a Codebase is in use, so deleting a Codebase now waits for its deployments to be gone. ([EPMDEDP-17289](https://jiraeu.epam.com/browse/EPMDEDP-17289), [#317](https://github.com/epam/edp-codebase-operator/pull/317))
+* Fixed the Delete action being disabled for every Environment when another Deployment in the namespace has more Environments. ([EPMDEDP-17314](https://jiraeu.epam.com/browse/EPMDEDP-17314), [#376](https://github.com/KubeRocketCI/krci-portal/pull/376))
+* Fixed the portal checking the Pipeline instead of the PipelineRun `create` permission when running a pipeline. ([EPMDEDP-17298](https://jiraeu.epam.com/browse/EPMDEDP-17298), [#371](https://github.com/KubeRocketCI/krci-portal/pull/371))
+* Fixed the re-run of a PipelineRun in the portal copying the pipeline-reported annotation, so re-runs are reported. ([EPMDEDP-17309](https://jiraeu.epam.com/browse/EPMDEDP-17309), [#436](https://github.com/KubeRocketCI/krci-portal/pull/436))
+* Fixed portal tabs losing or duplicating state after being hidden and shown again, including Monaco editors, live and static logs, unsaved stage variables, chart legends and table sizes. ([EPMDEDP-17368](https://jiraeu.epam.com/browse/EPMDEDP-17368), [#413](https://github.com/KubeRocketCI/krci-portal/pull/413), [#414](https://github.com/KubeRocketCI/krci-portal/pull/414))
+* Fixed portal lists showing partial data: custom resources are shown when one allowed namespace fails to list, the branch table stays in the loading state until its watch is ready, and session expiry is detected during streamed requests. ([EPMDEDP-17351](https://jiraeu.epam.com/browse/EPMDEDP-17351), [#404](https://github.com/KubeRocketCI/krci-portal/pull/404), [#405](https://github.com/KubeRocketCI/krci-portal/pull/405), [#406](https://github.com/KubeRocketCI/krci-portal/pull/406))
+* Fixed PipelineRun counts and history footers not matching the displayed rows. ([EPMDEDP-17363](https://jiraeu.epam.com/browse/EPMDEDP-17363), [#410](https://github.com/KubeRocketCI/krci-portal/pull/410), [#411](https://github.com/KubeRocketCI/krci-portal/pull/411))
+* Fixed table sorting for columns whose id differs from their sort key, and a corrupt saved table preference taking the page down. ([EPMDEDP-17342](https://jiraeu.epam.com/browse/EPMDEDP-17342), [#402](https://github.com/KubeRocketCI/krci-portal/pull/402)) ([EPMDEDP-17337](https://jiraeu.epam.com/browse/EPMDEDP-17337), [#398](https://github.com/KubeRocketCI/krci-portal/pull/398))
+* Fixed an undecodable QuickLink SVG icon breaking the page. ([EPMDEDP-17337](https://jiraeu.epam.com/browse/EPMDEDP-17337), [#397](https://github.com/KubeRocketCI/krci-portal/pull/397))
+* Fixed pinned items losing their identity in the portal. ([EPMDEDP-17353](https://jiraeu.epam.com/browse/EPMDEDP-17353), [#407](https://github.com/KubeRocketCI/krci-portal/pull/407))
+
+### Documentation
+
+* The [landing page](https://kuberocketci.io/) has been updated with new site messaging. ([EPMDEDP-17274](https://jiraeu.epam.com/browse/EPMDEDP-17274), [#411](https://github.com/KubeRocketCI/docs/pull/411))
+
+The [Getting Started](https://docs.kuberocketci.io/docs/about-platform) section is updated with the following:
+
+* The [About the KubeRocketCI Platform](https://docs.kuberocketci.io/docs/about-platform) page has been updated. ([EPMDEDP-17274](https://jiraeu.epam.com/browse/EPMDEDP-17274), [#411](https://github.com/KubeRocketCI/docs/pull/411)) ([EPMDEDP-16710](https://jiraeu.epam.com/browse/EPMDEDP-16710), [#415](https://github.com/KubeRocketCI/docs/pull/415))
+* The [Install KubeRocketCI: Helm Quick Start on Kubernetes](https://docs.kuberocketci.io/docs/quick-start/platform-installation) page has been updated. ([EPMDEDP-17380](https://jiraeu.epam.com/browse/EPMDEDP-17380), [#433](https://github.com/KubeRocketCI/docs/pull/433)) ([EPMDEDP-17414](https://jiraeu.epam.com/browse/EPMDEDP-17414), [#436](https://github.com/KubeRocketCI/docs/pull/436)) ([EPMDEDP-17413](https://jiraeu.epam.com/browse/EPMDEDP-17413), [#437](https://github.com/KubeRocketCI/docs/pull/437))
+* The [Supported Versions and Compatibility](https://docs.kuberocketci.io/docs/supported-versions) page has been updated for the 3.16 release. ([EPMDEDP-17414](https://jiraeu.epam.com/browse/EPMDEDP-17414), [#436](https://github.com/KubeRocketCI/docs/pull/436))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+
+* The [Upgrade KubeRocketCI v3.15 to 3.16](https://docs.kuberocketci.io/docs/operator-guide/upgrade/upgrade-krci-3.16) page has been added. ([EPMDEDP-17405](https://jiraeu.epam.com/browse/EPMDEDP-17405), [#435](https://github.com/KubeRocketCI/docs/pull/435)) ([EPMDEDP-17413](https://jiraeu.epam.com/browse/EPMDEDP-17413), [#437](https://github.com/KubeRocketCI/docs/pull/437))
+* The [Align Custom Tekton Pipelines with 3.15](https://docs.kuberocketci.io/docs/operator-guide/upgrade/migrate-custom-tekton-pipelines-3.15) page has been added. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#412](https://github.com/KubeRocketCI/docs/pull/412), [#413](https://github.com/KubeRocketCI/docs/pull/413))
+* The [krci CLI](https://docs.kuberocketci.io/docs/operator-guide/advanced-installation/krci-cli) page has been added. ([EPMDEDP-16710](https://jiraeu.epam.com/browse/EPMDEDP-16710), [#415](https://github.com/KubeRocketCI/docs/pull/415))
+* The [Authentication and Authorization: Overview](https://docs.kuberocketci.io/docs/operator-guide/auth/platform-auth-model) page has been updated. ([EPMDEDP-17248](https://jiraeu.epam.com/browse/EPMDEDP-17248), [#414](https://github.com/KubeRocketCI/docs/pull/414)) ([EPMDEDP-17405](https://jiraeu.epam.com/browse/EPMDEDP-17405), [#435](https://github.com/KubeRocketCI/docs/pull/435))
+* The [Install Capsule for Kubernetes Multi-Tenancy](https://docs.kuberocketci.io/docs/operator-guide/advanced-installation/capsule) page has been updated. ([EPMDEDP-17309](https://jiraeu.epam.com/browse/EPMDEDP-17309), [#431](https://github.com/KubeRocketCI/docs/pull/431))
+* The [Integrate Dependency-Track](https://docs.kuberocketci.io/docs/operator-guide/devsecops/dependency-track) page has been updated. ([EPMDEDP-17376](https://jiraeu.epam.com/browse/EPMDEDP-17376), [#432](https://github.com/KubeRocketCI/docs/pull/432)) ([EPMDEDP-16966](https://jiraeu.epam.com/browse/EPMDEDP-16966), [#438](https://github.com/KubeRocketCI/docs/pull/438))
+* The [Install and Integrate DefectDojo](https://docs.kuberocketci.io/docs/operator-guide/devsecops/defectdojo) page has been updated. ([EPMDEDP-17217](https://jiraeu.epam.com/browse/EPMDEDP-17217), [#422](https://github.com/KubeRocketCI/docs/pull/422))
+* The [How to Install KubeRocketCI: Advanced Setup Guide](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci) page has been updated. ([EPMDEDP-17380](https://jiraeu.epam.com/browse/EPMDEDP-17380), [#433](https://github.com/KubeRocketCI/docs/pull/433)) ([EPMDEDP-17414](https://jiraeu.epam.com/browse/EPMDEDP-17414), [#436](https://github.com/KubeRocketCI/docs/pull/436))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+
+* The [Add Custom Tekton Triggers](https://docs.kuberocketci.io/docs/user-guide/customize-ci-triggers) page has been updated. ([EPMDEDP-17405](https://jiraeu.epam.com/browse/EPMDEDP-17405), [#435](https://github.com/KubeRocketCI/docs/pull/435))
+* The [KubeRocketCI: Tekton Overview](https://docs.kuberocketci.io/docs/user-guide/tekton-pipelines) page has been updated. ([EPMDEDP-17405](https://jiraeu.epam.com/browse/EPMDEDP-17405), [#435](https://github.com/KubeRocketCI/docs/pull/435))
+* The [Pipelines Overview](https://docs.kuberocketci.io/docs/user-guide/pipelines) page has been updated. ([EPMDEDP-17405](https://jiraeu.epam.com/browse/EPMDEDP-17405), [#435](https://github.com/KubeRocketCI/docs/pull/435))
+
+The [Developer Guide](https://docs.kuberocketci.io/docs/developer-guide) section is updated with the following:
+
+* The [Annotations and Labels](https://docs.kuberocketci.io/docs/developer-guide/annotations-and-labels) page has been updated. ([EPMDEDP-17280](https://jiraeu.epam.com/browse/EPMDEDP-17280), [#413](https://github.com/KubeRocketCI/docs/pull/413)) ([EPMDEDP-17413](https://jiraeu.epam.com/browse/EPMDEDP-17413), [#437](https://github.com/KubeRocketCI/docs/pull/437))
 
 ## Version 3.15.0 <a name="3.15.0"></a> (August 10, 2026)
 
