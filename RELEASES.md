@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.17.0](#3.17.0)
 * [Version 3.16.0](#3.16.0)
 * [Version 3.15.0](#3.15.0)
 * [Version 3.14.1](#3.14.1)
@@ -16,6 +17,16 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 3.13.0](#3.13.0)
 
 For earlier releases, please refer to the [OLD-RELEASES.md](OLD-RELEASES.md) file.
+
+## Version 3.17.0 <a name="3.17.0"></a> (Unreleased)
+
+### Breaking Changes
+
+* The default Go build image is now `golang:1.27-trixie`. The official `golang` images set `GOTOOLCHAIN=local`, so Go codebases whose `go.mod` requires a Go version above 1.27 fail to build with the default pipelines. See [Upgrade KubeRocketCI v3.16 to 3.17](https://docs.kuberocketci.io/docs/next/operator-guide/upgrade/upgrade-krci-3.17).
+
+### Upgrades
+
+* Go base image bumped from `golang:1.25-trixie` to `golang:1.27-trixie` for the edp-tekton Go review and build pipelines and the `golang` task.
 
 ## Version 3.16.0 <a name="3.16.0"></a> (October 20, 2026)
 
