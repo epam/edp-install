@@ -5,7 +5,6 @@ metadata:
     {{- include "edp-install.labels" . | nindent 4 }}
   name: krci-config
 data:
-  api_gateway_url: {{ default "" .Values.global.apiGatewayUrl | quote }}
   api_cluster_endpoint: {{ default "" .Values.global.apiClusterEndpoint | quote }}
   {{- if .Values.global.availableClusters }}
   available_clusters: {{ .Values.global.availableClusters }}
