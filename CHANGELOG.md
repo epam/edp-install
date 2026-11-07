@@ -11,8 +11,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ## [Unreleased]
 
 
-<a name="v3.16.0"></a>
-## v3.16.0 - 2026-10-20
+<a name="v3.16.1"></a>
+## v3.16.1 - 2026-11-07
 ### Features
 
 - Add Envoy Gateway resources to the view RBAC aggregation
@@ -85,6 +85,7 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 
 ### Routine
 
+- Update component versions for the 3.16.1 release
 - Update current development version
 - Bump Go to 1.26.9
 - Update current development version
@@ -454,4 +455,4 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 - Align DefectDojo integration ([#50](https://github.com/epam/edp-install/issues/50))
 
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.16.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.16.1...HEAD
