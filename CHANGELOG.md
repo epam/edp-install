@@ -10,6 +10,23 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Routine
+
+- Update current development version
+- Remove unused apiGatewayUrl from krci-config
+- Update current development version
+
+### Documentation
+
+- Add 3.16 release to RELEASES.md
+
+
+<a name="v3.16.1"></a>
+## [v3.16.1] - 2026-11-07
+### Routine
+
+- Update component versions for the 3.16.1 release
+
 
 <a name="v3.16.0"></a>
 ## [v3.16.0] - 2026-10-20
@@ -122,13 +139,13 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 ### Routine
 
 - Update current development version
-- Update git-chglog
 
 
 <a name="v3.13.0"></a>
 ## [v3.13.0] - 2026-03-27
 ### Routine
 
+- Update git-chglog
 - Update current development version
 - Add krci-portal as a part of edp-install ([#537](https://github.com/epam/edp-install/issues/537))
 - Restore docs/assets/ai resources
@@ -841,7 +858,8 @@ _**NOTE**: For details on EDP releases, please refer to the [RELEASES.md](./RELE
 <a name="v3.4.0"></a>
 ## [v3.4.0] - 2023-08-18
 
-[Unreleased]: https://github.com/epam/edp-install/compare/v3.16.0...HEAD
+[Unreleased]: https://github.com/epam/edp-install/compare/v3.16.1...HEAD
+[v3.16.1]: https://github.com/epam/edp-install/compare/v3.16.0...v3.16.1
 [v3.16.0]: https://github.com/epam/edp-install/compare/v3.15.0...v3.16.0
 [v3.15.0]: https://github.com/epam/edp-install/compare/v3.14.1...v3.15.0
 [v3.14.1]: https://github.com/epam/edp-install/compare/v3.14.0...v3.14.1
