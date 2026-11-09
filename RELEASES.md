@@ -4,6 +4,7 @@
 
 Get acquainted with the latest KubeRocketCI releases.
 
+* [Version 3.16.1](#3.16.1)
 * [Version 3.16.0](#3.16.0)
 * [Version 3.15.0](#3.15.0)
 * [Version 3.14.1](#3.14.1)
@@ -16,6 +17,68 @@ Get acquainted with the latest KubeRocketCI releases.
 * [Version 3.13.0](#3.13.0)
 
 For earlier releases, please refer to the [OLD-RELEASES.md](OLD-RELEASES.md) file.
+
+## Version 3.16.1 <a name="3.16.1"></a> (November 7, 2026)
+
+### Breaking Changes
+
+* Environment namespaces that already exist must carry the `app.edp.epam.com/tenant=<namespace>` label, where `<namespace>` is the platform namespace. An Environment on an unlabeled namespace stops reconciling and fails with `namespace is not owned by the tenant`. Nothing is deleted, and the operator deletes only the namespaces it owns. Label the namespaces before you upgrade. ([EPMDEDP-17418](https://jiraeu.epam.com/browse/EPMDEDP-17418), [#226](https://github.com/epam/edp-cd-pipeline-operator/pull/226))
+* SSH connections to Bitbucket Cloud now use `ssh.bitbucket.org` instead of `bitbucket.org`: repository SSH URLs, the GitServer SSH check, Argo CD ApplicationSets, Tekton clone steps and PipelineRun source URLs in the portal. HTTPS URLs and self-hosted Bitbucket hosts do not change. Allow outbound TCP port 22 to `ssh.bitbucket.org`. ([EPMDEDP-17500](https://jiraeu.epam.com/browse/EPMDEDP-17500), [#330](https://github.com/epam/edp-codebase-operator/pull/330), [#230](https://github.com/epam/edp-cd-pipeline-operator/pull/230), [#725](https://github.com/epam/edp-tekton/pull/725), [#453](https://github.com/KubeRocketCI/krci-portal/pull/453))
+
+### Upgrades
+
+* Go bumped to 1.27.3 across edp-codebase-operator, edp-cd-pipeline-operator, edp-tekton, GitFusion, Gerrit operator and krci-cache. ([EPMDEDP-17470](https://jiraeu.epam.com/browse/EPMDEDP-17470), [#329](https://github.com/epam/edp-codebase-operator/pull/329), [#229](https://github.com/epam/edp-cd-pipeline-operator/pull/229), [#723](https://github.com/epam/edp-tekton/pull/723), [#100](https://github.com/KubeRocketCI/gitfusion/pull/100), [#104](https://github.com/epam/edp-gerrit-operator/pull/104), [#74](https://github.com/KubeRocketCI/krci-cache/pull/74))
+* The default Go build image in the Tekton pipelines is bumped to `golang:1.27-trixie`. ([EPMDEDP-17471](https://jiraeu.epam.com/browse/EPMDEDP-17471), [#722](https://github.com/epam/edp-tekton/pull/722))
+* The Tekton cache server is upgraded to krci-cache 0.4.0 (`tekton-cache` chart 0.4.6). ([EPMDEDP-17511](https://jiraeu.epam.com/browse/EPMDEDP-17511), [#726](https://github.com/epam/edp-tekton/pull/726), [#727](https://github.com/epam/edp-tekton/pull/727))
+
+### New Functionality
+
+* Added authentication to Tekton Results in the portal: it sends its projected ServiceAccount token over HTTPS, and the `tektonResults.caCert` chart value mounts the Tekton Results CA and restarts the portal when it changes. Access is granted by the opt-in `tektonResults.rbac.enabled` value. With a plain `http://` unauthenticated Results API nothing changes. ([EPMDEDP-17300](https://jiraeu.epam.com/browse/EPMDEDP-17300), [#442](https://github.com/KubeRocketCI/krci-portal/pull/442), [#446](https://github.com/KubeRocketCI/krci-portal/pull/446))
+
+### Enhancements
+
+* Changed the codebase-operator to run clone, push, checkout and commit through the `git` binary, so large repositories no longer exceed the operator memory limit. Pushes are atomic, and the Git pack memory is capped. The Gerrit operator image is built on Alpine 3.24 with a pinned `git`. ([EPMDEDP-17426](https://jiraeu.epam.com/browse/EPMDEDP-17426), [#327](https://github.com/epam/edp-codebase-operator/pull/327), [#328](https://github.com/epam/edp-codebase-operator/pull/328), [#103](https://github.com/epam/edp-gerrit-operator/pull/103))
+* The CDPipeline Stage webhook rejects a Stage whose order is already used by another Stage of the CDPipeline. An existing duplicate is repaired by patching `spec.order` to the next free order. ([EPMDEDP-17435](https://jiraeu.epam.com/browse/EPMDEDP-17435), [#228](https://github.com/epam/edp-cd-pipeline-operator/pull/228))
+* The portal error for a missing default host names every wildcard value it reads. ([EPMDEDP-17428](https://jiraeu.epam.com/browse/EPMDEDP-17428), [#441](https://github.com/KubeRocketCI/krci-portal/pull/441))
+
+### Fixed Issues
+
+* Fixed DefectDojo uploads: the `security`, `image-scan` and `image-scan-chart` tasks now fail when DefectDojo rejects the upload, for example with an expired token, instead of succeeding with report links that contain `null` ids. ([EPMDEDP-17438](https://jiraeu.epam.com/browse/EPMDEDP-17438), [#720](https://github.com/epam/edp-tekton/pull/720))
+* Fixed the Tekton cache archive packing the previous archive into the next one, which made it grow on every run. `get-cache` also fails on HTTP errors now. ([EPMDEDP-17473](https://jiraeu.epam.com/browse/EPMDEDP-17473), [#724](https://github.com/epam/edp-tekton/pull/724))
+* Fixed npm and pnpm package publishing including the cache and `HOME` files in the package. ([EPMDEDP-17423](https://jiraeu.epam.com/browse/EPMDEDP-17423), [#719](https://github.com/epam/edp-tekton/pull/719))
+* Fixed GitFusion reading the GitServer credentials Secret before it checks that the provider supports the operation. ([EPMDEDP-17429](https://jiraeu.epam.com/browse/EPMDEDP-17429), [#99](https://github.com/KubeRocketCI/gitfusion/pull/99))
+* Fixed the new Stage order in the portal: it is set to the highest existing order plus one, and taken at submit with a reset wizard form. ([EPMDEDP-17435](https://jiraeu.epam.com/browse/EPMDEDP-17435), [#448](https://github.com/KubeRocketCI/krci-portal/pull/448)) ([EPMDEDP-17432](https://jiraeu.epam.com/browse/EPMDEDP-17432), [#445](https://github.com/KubeRocketCI/krci-portal/pull/445))
+* Fixed portal forms and the Pull Requests tab failing without a reason: password, textarea and switch fields show their errors, **Save** in the Cluster, Git Server and Registry forms runs validation, GitFusion error details are shown, and Pull Requests are reported as not supported for Gerrit projects. ([EPMDEDP-17437](https://jiraeu.epam.com/browse/EPMDEDP-17437), [#451](https://github.com/KubeRocketCI/krci-portal/pull/451))
+* Fixed unknown `/rest/` paths in the portal returning the portal page: they now answer with a JSON `404`, and the `GET /rest/v1/pipeline-runs/{resultUid}/custom-runs` route from the OpenAPI document is served. ([EPMDEDP-17427](https://jiraeu.epam.com/browse/EPMDEDP-17427), [#440](https://github.com/KubeRocketCI/krci-portal/pull/440))
+* Fixed portal table sorting by label keys that contain dots, and by **Resource Name**, which now sorts by the displayed name. Table cells are aligned. ([EPMDEDP-17431](https://jiraeu.epam.com/browse/EPMDEDP-17431), [#443](https://github.com/KubeRocketCI/krci-portal/pull/443)) ([EPMDEDP-17436](https://jiraeu.epam.com/browse/EPMDEDP-17436), [#447](https://github.com/KubeRocketCI/krci-portal/pull/447))
+* Fixed archived PipelineRuns having a disabled checkbox with no explanation: it now shows "PipelineRun is archived". ([EPMDEDP-17467](https://jiraeu.epam.com/browse/EPMDEDP-17467), [#450](https://github.com/KubeRocketCI/krci-portal/pull/450))
+
+### Documentation
+
+* The [docs homepage](https://docs.kuberocketci.io/) has been redesigned around task-based navigation. ([EPMDEDP-17117](https://jiraeu.epam.com/browse/EPMDEDP-17117), [#441](https://github.com/KubeRocketCI/docs/pull/441))
+
+The [Getting Started](https://docs.kuberocketci.io/docs/about-platform) section is updated with the following:
+
+* The [Install KubeRocketCI: Helm Quick Start on Kubernetes](https://docs.kuberocketci.io/docs/quick-start/platform-installation) page has been updated for 3.16.1. ([EPMDEDP-17516](https://jiraeu.epam.com/browse/EPMDEDP-17516), [#445](https://github.com/KubeRocketCI/docs/pull/445))
+
+The [Operator Guide](https://docs.kuberocketci.io/docs/operator-guide) section is updated with the following:
+
+* The [Upgrade KubeRocketCI v3.15 to 3.16](https://docs.kuberocketci.io/docs/operator-guide/upgrade/upgrade-krci-3.16) page has been updated with the 3.16.0 to 3.16.1 upgrade section. ([EPMDEDP-17413](https://jiraeu.epam.com/browse/EPMDEDP-17413), [#444](https://github.com/KubeRocketCI/docs/pull/444)) ([EPMDEDP-17500](https://jiraeu.epam.com/browse/EPMDEDP-17500), [#443](https://github.com/KubeRocketCI/docs/pull/443)) ([EPMDEDP-17300](https://jiraeu.epam.com/browse/EPMDEDP-17300), [#439](https://github.com/KubeRocketCI/docs/pull/439))
+* The [Tekton Long-Term Log Storage](https://docs.kuberocketci.io/docs/operator-guide/ci/tekton-long-term-storage) page has been updated. ([EPMDEDP-17300](https://jiraeu.epam.com/browse/EPMDEDP-17300), [#439](https://github.com/KubeRocketCI/docs/pull/439)) ([EPMDEDP-17413](https://jiraeu.epam.com/browse/EPMDEDP-17413), [#444](https://github.com/KubeRocketCI/docs/pull/444))
+* The [Install Tekton](https://docs.kuberocketci.io/docs/operator-guide/install-tekton) page has been updated. ([EPMDEDP-17300](https://jiraeu.epam.com/browse/EPMDEDP-17300), [#439](https://github.com/KubeRocketCI/docs/pull/439))
+* The [Kubernetes Namespace Management](https://docs.kuberocketci.io/docs/operator-guide/auth/namespace-management) page has been updated. ([EPMDEDP-17413](https://jiraeu.epam.com/browse/EPMDEDP-17413), [#444](https://github.com/KubeRocketCI/docs/pull/444))
+* The [Environment Creation Issues](https://docs.kuberocketci.io/docs/operator-guide/troubleshooting/environment-creation) page has been updated. ([EPMDEDP-17413](https://jiraeu.epam.com/browse/EPMDEDP-17413), [#444](https://github.com/KubeRocketCI/docs/pull/444)) ([EPMDEDP-17516](https://jiraeu.epam.com/browse/EPMDEDP-17516), [#445](https://github.com/KubeRocketCI/docs/pull/445))
+* The [Argo CD Integration](https://docs.kuberocketci.io/docs/operator-guide/cd/argocd-integration) page has been updated. ([EPMDEDP-17500](https://jiraeu.epam.com/browse/EPMDEDP-17500), [#443](https://github.com/KubeRocketCI/docs/pull/443))
+* The [How to Install KubeRocketCI: Advanced Setup Guide](https://docs.kuberocketci.io/docs/operator-guide/install-kuberocketci) page has been updated. ([EPMDEDP-17516](https://jiraeu.epam.com/browse/EPMDEDP-17516), [#445](https://github.com/KubeRocketCI/docs/pull/445))
+
+The [User Guide](https://docs.kuberocketci.io/docs/user-guide) section is updated with the following:
+
+* The [Webhook Triggers in the KubeRocketCI Portal](https://docs.kuberocketci.io/docs/user-guide/webhook-triggers) page has been added. ([EPMDEDP-17117](https://jiraeu.epam.com/browse/EPMDEDP-17117), [#440](https://github.com/KubeRocketCI/docs/pull/440))
+* The [Add Git Server](https://docs.kuberocketci.io/docs/user-guide/add-git-server) page has been updated. ([EPMDEDP-17500](https://jiraeu.epam.com/browse/EPMDEDP-17500), [#443](https://github.com/KubeRocketCI/docs/pull/443))
+
+The [FAQ](https://docs.kuberocketci.io/faq/general-questions) section is updated with the following:
+
+* The [How to Troubleshoot Git Server Connection?](https://docs.kuberocketci.io/faq/how-to/devops/troubleshoot-git-server-connection) page has been updated. ([EPMDEDP-17500](https://jiraeu.epam.com/browse/EPMDEDP-17500), [#443](https://github.com/KubeRocketCI/docs/pull/443))
 
 ## Version 3.16.0 <a name="3.16.0"></a> (October 20, 2026)
 
