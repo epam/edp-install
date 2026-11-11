@@ -719,6 +719,25 @@ krci-portal:
     # If not set, DEPENDENCY_TRACK_URL is used for both.
     DEPENDENCY_TRACK_URL: https://deptrack.example.com
     # DEPENDENCY_TRACK_WEB_URL: https://deptrack-public.example.com
+    # DEFECTDOJO_URL, DEFECTDOJO_API_KEY (set in portal-secret) and DEFECTDOJO_WEB_URL are all
+    # required for the security summaries of codebases and environments: the backend reads CI and runtime findings from DefectDojo.
+    # While any of them is empty, the security endpoints answer 503 and the portal hides the Security tab and column.
+    # DEFECTDOJO_WEB_URL is the browser-facing address of DefectDojo, used for every link to it.
+    # The DefectDojo user behind DEFECTDOJO_API_KEY needs read access to the Product Type of the codebase and
+    # namespace products (default `KubeRocketCI`); the portal only reads.
+    # Runtime findings come from the krci-security-operator namespace products `<cluster>/<namespace>` of the Stages
+    # the user can read. DEFECTDOJO_CLUSTER_NAME is the clusterName of the operator on this cluster (default in-cluster);
+    # a Stage on another cluster uses its cluster name, so the operator there must use that name as its clusterName.
+    # DEFECTDOJO_TENANT_LABEL (optional) is a namespace label key, for example app.edp.epam.com/tenant, that the operator
+    # copies into tags (its namespaceLabelTags); the portal then reads only runtime tests that carry its tenant.
+    # Without the label the runtime scope rests on the Stage: the cd-pipeline-operator marks a Stage on a namespace of
+    # another tenant as not available, except on OpenShift and for in-cluster Stages under Capsule. Set the label there,
+    # and where tenants share a cluster.
+    # CI findings carry no tenant tag: use one DefectDojo per tenant, or keep codebase names unique across tenants.
+    # DEFECTDOJO_URL: https://defectdojo.example.com
+    # DEFECTDOJO_WEB_URL: https://defectdojo-public.example.com
+    # DEFECTDOJO_CLUSTER_NAME: in-cluster
+    # DEFECTDOJO_TENANT_LABEL: app.edp.epam.com/tenant
     GITFUSION_URL: http://gitfusion.krci:8080
 
   # -- Sources of the portal environment (envFrom of the Deployment). The portal does not start without them.
