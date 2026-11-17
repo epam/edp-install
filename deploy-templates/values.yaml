@@ -424,11 +424,11 @@ edp-tekton:
       #     operator: Equal
       #     value: tekton
 
-  tekton-cache:
-    # Deploy tekton-cache helm-chart.
+  krci-cache:
+    # Deploy krci-cache helm-chart.
     enabled: true
-    # Tekton cache endpoint for pipeline-library helm chart. See charts/pipelines-library/templates/resources/cm-tekton-cache.yaml
-    # url: http://tekton-cache:8080
+    # krci-cache endpoint for the pipeline-library helm chart. See charts/pipelines-library/templates/resources/cm-krci-cache.yaml
+    # url: http://krci-cache:8080
     # -- Optional array of imagePullSecrets containing private registry credentials
     ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry
     # imagePullSecrets: []

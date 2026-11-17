@@ -45,6 +45,7 @@ A Helm chart for KubeRocketCI Platform
 | edp-tekton.enabled | bool | `true` |  |
 | edp-tekton.gitServers | object | `{}` |  |
 | edp-tekton.interceptor.enabled | bool | `true` | Deploy KubeRocketCI interceptor as a part of pipeline library when true. Default: true |
+| edp-tekton.krci-cache.enabled | bool | `true` |  |
 | edp-tekton.pipelines.deployableResources | object | `{"c":{"cmake":true,"make":true},"cs":{"dotnet3.1":false,"dotnet6.0":false},"deploy":true,"docker":true,"gitops":true,"go":{"beego":true,"gin":true,"operatorsdk":true},"groovy":true,"helm":true,"helm-pipeline":true,"infrastructure":true,"java":{"java11":true,"java17":true,"java21":true,"java8":false},"js":{"angular":true,"antora":true,"express":true,"next":true,"react":true,"vue":true},"opa":false,"python":{"ansible":true,"fastapi":true,"flask":true,"python3.8":false},"security":true,"tasks":true,"terraform":true}` | This section contains the list of pipelines and tasks that will be installed. |
 | edp-tekton.pipelines.deployableResources.c | object | `{"cmake":true,"make":true}` | This section control the installation of the review and build pipelines. |
 | edp-tekton.pipelines.deployableResources.deploy | bool | `true` | This flag control the installation of the Deploy pipelines. |
@@ -52,7 +53,6 @@ A Helm chart for KubeRocketCI Platform
 | edp-tekton.pipelines.image.registry | string | `"docker.io"` | Registry for tekton pipelines images. Default: docker.io |
 | edp-tekton.pipelines.imagePullSecrets | list | `[]` | List of image pull secrets used by the Tekton ServiceAccount for pulling images from private registries. Example: imagePullSecrets:   - name: regcred |
 | edp-tekton.pipelines.podTemplate | list | `[]` | This section allows to determine on which nodes to run tekton pipelines |
-| edp-tekton.tekton-cache.enabled | bool | `true` |  |
 | externalSecrets.enabled | bool | `false` | Configure External Secrets for KubeRocketCI platform. Deploy SecretStore. Default: false |
 | externalSecrets.manageEDPInstallSecrets | bool | `true` | Create necessary secrets for KubeRocketCI installation, using External Secret Operator |
 | externalSecrets.manageEDPInstallSecretsName | string | `"/edp/deploy-secrets"` | Value name in AWS ParameterStore or AWS SecretsManager. Used when manageEDPInstallSecrets is true |
