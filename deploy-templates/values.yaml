@@ -720,6 +720,9 @@ krci-portal:
     DEPENDENCY_TRACK_URL: https://deptrack.example.com
     # DEPENDENCY_TRACK_WEB_URL: https://deptrack-public.example.com
     GITFUSION_URL: http://gitfusion.krci:8080
+    # AGENT_SUBSTRATE_URL enables the Portal Agent mode (alpha) and the WorkerPool RBAC in krci-agents.
+    # Cluster setup steps: krci-portal chart. The krci-agents namespace must exist.
+    # AGENT_SUBSTRATE_URL: https://api.ate-system.svc:443
 
   # -- Sources of the portal environment (envFrom of the Deployment). The portal does not start without them.
   # The `portal-config` ConfigMap is rendered from `configEnv`. The `portal-secret` Secret keeps the sensitive data:
