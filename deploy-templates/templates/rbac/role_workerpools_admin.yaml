@@ -1,0 +1,17 @@
+{{- if eq (include "edp-install.agentSubstrateEnabled" .) "true" }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: tenant-admin-{{ .Release.Namespace }}
+  namespace: krci-agents
+rules:
+  - apiGroups:
+      - ate.dev
+    resources:
+      - workerpools
+    verbs:
+      - create
+      - update
+      - patch
+      - delete
+{{- end }}

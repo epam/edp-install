@@ -77,6 +77,20 @@ Create the name of the secretstore to use
 {{- end }}
 
 {{/*
+Agent Substrate RBAC gate. Returns "true" when krci-portal is enabled and krci-portal.configEnv.AGENT_SUBSTRATE_URL is non-empty after trim.
+Unset krci-portal.enabled counts as enabled.
+*/}}
+{{- define "edp-install.agentSubstrateEnabled" -}}
+  {{- $portal := index .Values "krci-portal" | default dict -}}
+  {{- $enabled := ternary true $portal.enabled (kindIs "invalid" $portal.enabled) -}}
+  {{- $configEnv := $portal.configEnv | default dict -}}
+  {{- $url := $configEnv.AGENT_SUBSTRATE_URL | default "" | toString | trim -}}
+  {{- if and $enabled $url -}}
+    {{- print "true" -}}
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Return the appropriate apiVersion for External Secrets
 */}}
 {{- define "app.externalSecrets.apiVersion" -}}

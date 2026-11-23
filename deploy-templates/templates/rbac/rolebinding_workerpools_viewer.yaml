@@ -1,0 +1,22 @@
+{{- if eq (include "edp-install.agentSubstrateEnabled" .) "true" }}
+# Subjects: admin, developer, viewer groups. Grants no pods, ConfigMaps or Secrets in krci-agents.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: tenant-viewer-{{ .Release.Namespace }}
+  namespace: krci-agents
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edp-aggregate-view-{{ .Release.Namespace }}
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: {{ .Values.global.adminGroupName | default (printf "%s-oidc-admins" .Release.Namespace) | quote }}
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: {{ .Values.global.developerGroupName | default (printf "%s-oidc-developers" .Release.Namespace) | quote }}
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: {{ .Values.global.viewerGroupName | default (printf "%s-oidc-viewers" .Release.Namespace) | quote }}
+{{- end }}

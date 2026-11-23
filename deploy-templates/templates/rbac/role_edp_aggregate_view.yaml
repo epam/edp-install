@@ -110,3 +110,12 @@ rules:
       - get
       - list
       - watch
+  # Agent Substrate: WorkerPools for the Portal Agent mode.
+  - apiGroups:
+      - ate.dev
+    resources:
+      - workerpools
+    verbs:
+      - get
+      - list
+      - watch
